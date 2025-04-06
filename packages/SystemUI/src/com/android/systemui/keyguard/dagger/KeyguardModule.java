@@ -42,6 +42,7 @@ import com.android.systemui.broadcast.BroadcastDispatcher;
 import com.android.systemui.classifier.FalsingCollector;
 import com.android.systemui.classifier.FalsingModule;
 import com.android.systemui.communal.domain.interactor.CommunalSceneInteractor;
+import com.android.systemui.communal.domain.interactor.CommunalSettingsInteractor;
 import com.android.systemui.communal.ui.viewmodel.CommunalTransitionViewModel;
 import com.android.systemui.dagger.SysUISingleton;
 import com.android.systemui.dagger.qualifiers.Main;
@@ -182,6 +183,7 @@ public interface KeyguardModule {
             KeyguardInteractor keyguardInteractor,
             KeyguardTransitionBootInteractor transitionBootInteractor,
             Lazy<CommunalSceneInteractor> communalSceneInteractor,
+            Lazy<CommunalSettingsInteractor> communalSettingsInteractor,
             WindowManagerOcclusionManager windowManagerOcclusionManager) {
         return new KeyguardViewMediator(
                 context,
@@ -234,6 +236,7 @@ public interface KeyguardModule {
                 keyguardInteractor,
                 transitionBootInteractor,
                 communalSceneInteractor,
+                communalSettingsInteractor,
                 windowManagerOcclusionManager);
     }
 
@@ -247,14 +250,13 @@ public interface KeyguardModule {
     @Provides
     @SysUISingleton
     static BlurConfig provideBlurConfig(@Main Resources resources) {
-        int minBlurRadius = resources.getDimensionPixelSize(R.dimen.min_window_blur_radius);
         int maxBlurRadius =
                 Flags.notificationShadeBlur() || Flags.bouncerUiRevamp()
                         || Flags.glanceableHubBlurredBackground()
                         ? resources.getDimensionPixelSize(R.dimen.max_shade_window_blur_radius)
                         : resources.getDimensionPixelSize(R.dimen.max_window_blur_radius);
 
-        return new BlurConfig(minBlurRadius, maxBlurRadius);
+        return new BlurConfig(0.0f, maxBlurRadius);
     }
 
     /** */

@@ -13,9 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/*
+ * Changes from Qualcomm Innovation Center, Inc. are provided under the following license:
+ * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause-Clear
+ */
 #include "Bitmap.h"
 
 #include <android-base/file.h>
+
+#include "FeatureFlags.h"
 #include "HardwareBitmapUploader.h"
 #include "Properties.h"
 #ifdef __ANDROID__  // Layoutlib does not support render thread
@@ -68,6 +75,13 @@ namespace hwui_flags {
 constexpr bool bitmap_ashmem_long_name() { return false; }
 }
 #endif
+
+/* QTI_BEGIN */
+#include <cutils/properties.h>
+extern const char* __progname;
+#define UI_PERFMODE "debug.ui.perfmode.enable"
+#define UI_PERFMODE_PROCESS "debug.ui.perfmode.process"
+/* QTI_END */
 
 namespace android {
 
@@ -162,8 +176,13 @@ std::string Bitmap::getAshmemId(const char* tag, uint64_t bitmapId,
         android::base::ReadFileToString("/proc/self/cmdline", &temp);
         return temp;
     }();
-    return std::format("bitmap/{}-id_{}-{}x{}-size_{}-{}",
-                       tag, bitmapId, width, height, size, sCmdline);
+    /* counter is to ensure the uniqueness of the ashmem filename,
+     * e.g. a bitmap with same mId could be sent multiple times, an
+     * ashmem region is created each time
+     */
+    static std::atomic<uint32_t> counter{0};
+    return std::format("bitmap/{}_{}_{}x{}_size-{}_id-{}_{}",
+                       tag, counter.fetch_add(1), width, height, size, bitmapId, sCmdline);
 }
 
 sk_sp<Bitmap> Bitmap::allocateAshmemBitmap(SkBitmap* bitmap) {
@@ -547,9 +566,16 @@ BitmapPalette Bitmap::computePalette(const SkImageInfo& info, const void* addr, 
     }
 
     ALOGV("samples = %d, hue [min = %f, max = %f, avg = %f]; saturation [min = %f, max = %f, avg = "
-          "%f]",
+          "%f] %d x %d",
           sampledCount, hue.min(), hue.max(), hue.average(), saturation.min(), saturation.max(),
-          saturation.average());
+          saturation.average(), info.width(), info.height());
+
+    if (CC_UNLIKELY(view_accessibility_flags::force_invert_color())) {
+        if (saturation.delta() > 0.1f ||
+            (hue.delta() > 20 && saturation.average() > 0.2f && value.average() < 0.9f)) {
+            return BitmapPalette::Colorful;
+        }
+    }
 
     if (hue.delta() <= 20 && saturation.delta() <= .1f) {
         if (value.average() >= .5f) {
@@ -609,14 +635,37 @@ bool Bitmap::compress(const SkBitmap& bitmap, JavaCompressFormat format,
         return false;
     }
 
+    /* QTI_BEGIN */
+    bool ui_perf_enabled = false;
+    char value[PROPERTY_VALUE_MAX];
+    memset(value, 0 , sizeof(char)*PROPERTY_VALUE_MAX);
+    property_get(UI_PERFMODE, value, "false");
+    if (strncmp(value, "true", 4) == 0) {
+        memset(value, 0 , sizeof(char)*PROPERTY_VALUE_MAX);
+        property_get(UI_PERFMODE_PROCESS, value, "");
+        if (strncmp(__progname, value, 10) == 0) {
+            ui_perf_enabled = true;
+        }
+    }
+    /* QTI_END */
+
     switch (format) {
         case JavaCompressFormat::Jpeg: {
             SkJpegEncoder::Options options;
             options.fQuality = quality;
             return SkJpegEncoder::Encode(stream, bitmap.pixmap(), options);
         }
-        case JavaCompressFormat::Png:
+        case JavaCompressFormat::Png: {
+            /* QTI_BEGIN */
+            if (ui_perf_enabled) {
+                SkPngEncoder::Options options;
+                options.fZLibLevel = 0;
+                options.fFilterFlags = SkPngEncoder::FilterFlag::kNone;
+                return SkPngEncoder::Encode(stream, bitmap.pixmap(), options);
+            }
+            /* QTI_END */
             return SkPngEncoder::Encode(stream, bitmap.pixmap(), {});
+            }
         case JavaCompressFormat::Webp: {
             SkWebpEncoder::Options options;
             if (quality >= 100) {
@@ -634,6 +683,11 @@ bool Bitmap::compress(const SkBitmap& bitmap, JavaCompressFormat format,
             options.fQuality = quality;
             options.fCompression = format == JavaCompressFormat::WebpLossy ?
                     SkWebpEncoder::Compression::kLossy : SkWebpEncoder::Compression::kLossless;
+            /* QTI_BEGIN */
+            if (ui_perf_enabled) {
+                options.fCompression = SkWebpEncoder::Compression::kLossless;
+            }
+            /* QTI_END */
             return SkWebpEncoder::Encode(stream, bitmap.pixmap(), options);
         }
     }

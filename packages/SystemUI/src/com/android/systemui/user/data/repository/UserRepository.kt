@@ -33,7 +33,7 @@ import com.android.app.tracing.coroutines.launchTraced as launch
 import com.android.internal.statusbar.IStatusBarService
 import com.android.systemui.broadcast.BroadcastDispatcher
 import com.android.systemui.common.coroutine.ChannelExt.trySendWithFailureLogging
-import com.android.systemui.common.coroutine.ConflatedCallbackFlow.conflatedCallbackFlow
+import com.android.systemui.utils.coroutines.flow.conflatedCallbackFlow
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.dagger.qualifiers.Background
@@ -414,16 +414,15 @@ constructor(
         }
     }
 
+    private suspend fun SelectedUserModel.isEligibleForLogout(): Boolean {
+        return withContext(backgroundDispatcher) {
+            selectionStatus == SelectionStatus.SELECTION_COMPLETE &&
+                devicePolicyManager.logoutUser != null
+        }
+    }
+
     companion object {
         private const val TAG = "UserRepository"
         @VisibleForTesting const val SETTING_SIMPLE_USER_SWITCHER = "lockscreenSimpleUserSwitcher"
     }
-}
-
-fun SelectedUserModel.isEligibleForLogout(): Boolean {
-    // TODO(b/206032495): should call mDevicePolicyManager.getLogoutUserId() instead of
-    // hardcode it to USER_SYSTEM so it properly supports headless system user mode
-    // (and then call mDevicePolicyManager.clearLogoutUser() after switched)
-    return selectionStatus == SelectionStatus.SELECTION_COMPLETE &&
-        userInfo.id != android.os.UserHandle.USER_SYSTEM
 }

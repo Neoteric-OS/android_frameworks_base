@@ -42,15 +42,18 @@
     <string name="title_nearby_device_streaming" msgid="2727103756701741359">"&lt;strong&gt;<xliff:g id="APP_NAME">%1$s</xliff:g>&lt;/strong&gt; <xliff:g id="DEVICE_TYPE">%2$s</xliff:g>dagi ilovalarni &lt;strong&gt;<xliff:g id="DEVICE_NAME">%3$s</xliff:g>&lt;/strong&gt; qurilmasiga striming qilishiga ruxsat berasizmi?"</string>
     <string name="summary_nearby_device_streaming" msgid="70434958004946884">"<xliff:g id="APP_NAME_0">%1$s</xliff:g> <xliff:g id="DEVICE_NAME_1">%3$s</xliff:g>da koʻrinadigan yoki ijro etiladigan hamma narsaga, jumladan, audio, rasmlar, parollar va xabarlarga kirish huquqini oladi.&lt;br/&gt;&lt;br/&gt;Bu ruxsatni olib tashlamaguningizcha, <xliff:g id="APP_NAME_2">%1$s</xliff:g> ilovalarni <xliff:g id="DEVICE_NAME_3">%3$s</xliff:g> qurilmasiga striming qila oladi."</string>
     <string name="helper_summary_nearby_device_streaming" msgid="4712712177819370967">"<xliff:g id="APP_NAME">%1$s</xliff:g> <xliff:g id="DEVICE_NAME">%2$s</xliff:g> nomidan <xliff:g id="DEVICE_TYPE">%3$s</xliff:g> orqali ilovalarni uzatish uchun ruxsat olmoqchi"</string>
-    <string name="title_sensor_device_streaming" msgid="2395553261097861497">"Siz &lt;strong&gt;<xliff:g id="APP_NAME">%1$s</xliff:g>&lt;/strong&gt; ilovasiga <xliff:g id="DEVICE_TYPE">%2$s</xliff:g> va &lt;strong&gt;<xliff:g id="DEVICE_NAME">%3$s</xliff:g>&lt;/strong&gt; qurilmalari orasida audio striming qilish va tizim funksiyalariga ruxsat berasizmi?"</string>
-    <string name="summary_sensor_device_streaming" msgid="3413105061195145547">"<xliff:g id="APP_NAME_0">%1$s</xliff:g> ilovasi <xliff:g id="DEVICE_NAME_1">%3$s</xliff:g> qurilmangizda ijro etiladigan hamma narsaga kira oladi.&lt;br/&gt;&lt;br/&gt;Bu ruxsatni olib tashlamaguningizcha <xliff:g id="APP_NAME_2">%1$s</xliff:g> ilovasi <xliff:g id="DEVICE_NAME_3">%3$s</xliff:g> qurilmasiga audio striming qila oladi."</string>
-    <string name="helper_summary_sensor_device_streaming" msgid="8860174545653786353">"<xliff:g id="APP_NAME">%1$s</xliff:g> audio striming va qurilmalaringiz orasidagi tizim funksiyalari uchun <xliff:g id="DEVICE_NAME">%2$s</xliff:g> nomidan ruxsat soʻramoqda."</string>
+    <!-- no translation found for title_virtual_device (6556338763070329395) -->
+    <skip />
+    <!-- no translation found for summary_virtual_device (3502592544171322817) -->
+    <skip />
     <string name="profile_name_generic" msgid="6851028682723034988">"qurilma"</string>
     <string name="summary_generic" msgid="1761976003668044801">"Bu ilova telefoningiz va tanlangan qurilmada chaqiruvchining ismi kabi maʼlumotlarni sinxronlay oladi"</string>
     <string name="consent_yes" msgid="8344487259618762872">"Ruxsat"</string>
     <string name="consent_no" msgid="2640796915611404382">"Ruxsat berilmasin"</string>
     <string name="consent_cancel" msgid="5655005528379285841">"Bekor qilish"</string>
     <string name="consent_back" msgid="2560683030046918882">"Orqaga"</string>
+    <string name="downward_arrow_action" msgid="2327165938832076333">"Roʻyxatni pastga varaqlash"</string>
+    <string name="downward_arrow" msgid="2292427714411156088">"Pastga strelka"</string>
     <string name="permission_expand" msgid="893185038020887411">"Yoyish: <xliff:g id="PERMISSION_TYPE">%1$s</xliff:g>"</string>
     <string name="permission_collapse" msgid="3320833884220844084">"Yopish: <xliff:g id="PERMISSION_TYPE">%1$s</xliff:g>"</string>
     <string name="permission_sync_confirmation_title" msgid="4409622174437248702">"&lt;strong&gt;<xliff:g id="COMPANION_DEVICE_NAME">%1$s</xliff:g>&lt;/strong&gt; ilovalariga &lt;strong&gt;<xliff:g id="PRIMARY_DEVICE_NAME">%2$s</xliff:g>&lt;/strong&gt; qurilmasidagi kabi bir xil ruxsatlar berilsinmi?"</string>

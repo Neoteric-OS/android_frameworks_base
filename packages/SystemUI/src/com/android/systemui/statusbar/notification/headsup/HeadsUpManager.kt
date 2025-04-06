@@ -20,11 +20,14 @@ import android.graphics.Region
 import com.android.systemui.Dumpable
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.statusbar.notification.collection.NotificationEntry
+import com.android.systemui.statusbar.notification.row.ExpandableNotificationRow
 import dagger.Binds
 import dagger.Module
 import java.io.PrintWriter
 import java.util.stream.Stream
 import javax.inject.Inject
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 /**
  * A manager which handles heads up notifications which is a special mode where they simply peek
@@ -110,7 +113,7 @@ interface HeadsUpManager : Dumpable {
      * Returns the value of the tracking-heads-up flag. See the doc of {@code setTrackingHeadsUp} as
      * well.
      */
-    fun isTrackingHeadsUp(): Boolean
+    fun isTrackingHeadsUp(): StateFlow<Boolean>
 
     fun onExpandingFinished()
 
@@ -154,6 +157,12 @@ interface HeadsUpManager : Dumpable {
      * Set an entry to be expanded and therefore stick in the heads up area if it's pinned until
      * it's collapsed again.
      */
+    fun setExpanded(key: String, row: ExpandableNotificationRow, expanded: Boolean)
+
+    /**
+     * Set an entry to be expanded and therefore stick in the heads up area if it's pinned until
+     * it's collapsed again.
+     */
     fun setExpanded(entry: NotificationEntry, expanded: Boolean)
 
     /**
@@ -189,12 +198,12 @@ interface HeadsUpManager : Dumpable {
      * Notes that the user took an action on an entry that might indirectly cause the system or the
      * app to remove the notification.
      *
-     * @param entry the entry that might be indirectly removed by the user's action
+     * @param entry the key of the entry that might be indirectly removed by the user's action
      * @see
      *   com.android.systemui.statusbar.notification.collection.coordinator.HeadsUpCoordinator.mActionPressListener
      * @see .canRemoveImmediately
      */
-    fun setUserActionMayIndirectlyRemove(entry: NotificationEntry)
+    fun setUserActionMayIndirectlyRemove(entryKey: String)
 
     /**
      * Decides whether a click is invalid for a notification, i.e. it has not been shown long enough
@@ -284,11 +293,11 @@ class HeadsUpManagerEmptyImpl @Inject constructor() : HeadsUpManager {
 
     override fun isHeadsUpAnimatingAwayValue() = false
 
+    override fun isTrackingHeadsUp(): StateFlow<Boolean> = MutableStateFlow(false)
+
     override fun isSnoozed(packageName: String) = false
 
     override fun isSticky(key: String?) = false
-
-    override fun isTrackingHeadsUp() = false
 
     override fun onExpandingFinished() {}
 
@@ -308,6 +317,8 @@ class HeadsUpManagerEmptyImpl @Inject constructor() : HeadsUpManager {
 
     override fun setAnimationStateHandler(handler: AnimationStateHandler) {}
 
+    override fun setExpanded(key: String, row: ExpandableNotificationRow, expanded: Boolean) {}
+
     override fun setExpanded(entry: NotificationEntry, expanded: Boolean) {}
 
     override fun setGutsShown(entry: NotificationEntry, gutsShown: Boolean) {}
@@ -320,7 +331,7 @@ class HeadsUpManagerEmptyImpl @Inject constructor() : HeadsUpManager {
 
     override fun setUser(user: Int) {}
 
-    override fun setUserActionMayIndirectlyRemove(entry: NotificationEntry) {}
+    override fun setUserActionMayIndirectlyRemove(entryKey: String) {}
 
     override fun shouldSwallowClick(key: String): Boolean = false
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024 The Android Open Source Project
+ * Copyright (C) 2025 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,16 +21,14 @@ import android.provider.Settings
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.android.systemui.SysuiTestCase
-import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.kosmos.testScope
-import com.android.systemui.qs.tiles.base.actions.FakeQSTileIntentUserInputHandler
-import com.android.systemui.qs.tiles.base.actions.QSTileIntentUserInputHandlerSubject
-import com.android.systemui.qs.tiles.base.interactor.QSTileInputTestKtx
-import com.android.systemui.qs.tiles.dialog.InternetDetailsContentManager
-import com.android.systemui.qs.tiles.dialog.InternetDetailsViewModel
+import com.android.systemui.qs.tiles.base.domain.actions.FakeQSTileIntentUserInputHandler
+import com.android.systemui.qs.tiles.base.domain.actions.QSTileIntentUserInputHandlerSubject
+import com.android.systemui.qs.tiles.base.domain.model.QSTileInputTestKtx
 import com.android.systemui.qs.tiles.dialog.InternetDialogManager
 import com.android.systemui.qs.tiles.impl.internet.domain.model.InternetTileModel
 import com.android.systemui.statusbar.connectivity.AccessPointController
+import com.android.systemui.testKosmos
 import com.android.systemui.util.mockito.nullable
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
@@ -39,48 +37,31 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers.anyBoolean
 import org.mockito.ArgumentMatchers.eq
-import org.mockito.kotlin.any
 import org.mockito.kotlin.mock
-import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
-import org.mockito.kotlin.whenever
 
 @SmallTest
 @EnabledOnRavenwood
 @RunWith(AndroidJUnit4::class)
 class InternetTileUserActionInteractorTest : SysuiTestCase() {
-    private val kosmos = Kosmos()
+    private val kosmos = testKosmos()
     private val inputHandler = FakeQSTileIntentUserInputHandler()
 
     private lateinit var underTest: InternetTileUserActionInteractor
 
     private lateinit var internetDialogManager: InternetDialogManager
     private lateinit var controller: AccessPointController
-    private lateinit var internetDetailsViewModelFactory: InternetDetailsViewModel.Factory
-    private lateinit var internetDetailsContentManagerFactory: InternetDetailsContentManager.Factory
-    private lateinit var internetDetailsViewModel: InternetDetailsViewModel
 
     @Before
     fun setup() {
         internetDialogManager = mock<InternetDialogManager>()
         controller = mock<AccessPointController>()
-        internetDetailsViewModelFactory = mock<InternetDetailsViewModel.Factory>()
-        internetDetailsContentManagerFactory = mock<InternetDetailsContentManager.Factory>()
-        internetDetailsViewModel =
-            InternetDetailsViewModel(
-                onLongClick = {},
-                accessPointController = mock<AccessPointController>(),
-                contentManagerFactory = internetDetailsContentManagerFactory,
-            )
-        whenever(internetDetailsViewModelFactory.create(any())).thenReturn(internetDetailsViewModel)
-
         underTest =
             InternetTileUserActionInteractor(
                 kosmos.testScope.coroutineContext,
                 internetDialogManager,
                 controller,
                 inputHandler,
-                internetDetailsViewModelFactory,
             )
     }
 
@@ -126,13 +107,5 @@ class InternetTileUserActionInteractorTest : SysuiTestCase() {
             QSTileIntentUserInputHandlerSubject.assertThat(inputHandler).handledOneIntentInput {
                 assertThat(it.intent.action).isEqualTo(Settings.ACTION_WIFI_SETTINGS)
             }
-        }
-
-    @Test
-    fun detailsViewModel() =
-        kosmos.testScope.runTest {
-            assertThat(underTest.detailsViewModel.getTitle()).isEqualTo("Internet")
-            assertThat(underTest.detailsViewModel.getSubTitle())
-                .isEqualTo("Tab a network to connect")
         }
 }

@@ -72,7 +72,8 @@ public final class KeyGestureEvent {
     public static final int KEY_GESTURE_TYPE_ALL_APPS = 21;
     public static final int KEY_GESTURE_TYPE_LAUNCH_SEARCH = 22;
     public static final int KEY_GESTURE_TYPE_LANGUAGE_SWITCH = 23;
-    public static final int KEY_GESTURE_TYPE_ACCESSIBILITY_ALL_APPS = 24;
+    @Deprecated
+    public static final int DEPRECATED_KEY_GESTURE_TYPE_ACCESSIBILITY_ALL_APPS = 24;
     public static final int KEY_GESTURE_TYPE_TOGGLE_CAPS_LOCK = 25;
     public static final int KEY_GESTURE_TYPE_SYSTEM_MUTE = 26;
     public static final int KEY_GESTURE_TYPE_SPLIT_SCREEN_NAVIGATION_LEFT = 27;
@@ -108,7 +109,8 @@ public final class KeyGestureEvent {
     public static final int KEY_GESTURE_TYPE_ACCESSIBILITY_SHORTCUT_CHORD = 55;
     public static final int KEY_GESTURE_TYPE_RINGER_TOGGLE_CHORD = 56;
     public static final int KEY_GESTURE_TYPE_GLOBAL_ACTIONS = 57;
-    public static final int KEY_GESTURE_TYPE_TV_ACCESSIBILITY_SHORTCUT_CHORD = 58;
+    @Deprecated
+    public static final int DEPRECATED_KEY_GESTURE_TYPE_TV_ACCESSIBILITY_SHORTCUT_CHORD = 58;
     public static final int KEY_GESTURE_TYPE_TV_TRIGGER_BUG_REPORT = 59;
     public static final int KEY_GESTURE_TYPE_ACCESSIBILITY_SHORTCUT = 60;
     public static final int KEY_GESTURE_TYPE_CLOSE_ALL_DIALOGS = 61;
@@ -166,7 +168,6 @@ public final class KeyGestureEvent {
             KEY_GESTURE_TYPE_ALL_APPS,
             KEY_GESTURE_TYPE_LAUNCH_SEARCH,
             KEY_GESTURE_TYPE_LANGUAGE_SWITCH,
-            KEY_GESTURE_TYPE_ACCESSIBILITY_ALL_APPS,
             KEY_GESTURE_TYPE_TOGGLE_CAPS_LOCK,
             KEY_GESTURE_TYPE_SYSTEM_MUTE,
             KEY_GESTURE_TYPE_SPLIT_SCREEN_NAVIGATION_LEFT,
@@ -200,7 +201,6 @@ public final class KeyGestureEvent {
             KEY_GESTURE_TYPE_ACCESSIBILITY_SHORTCUT_CHORD,
             KEY_GESTURE_TYPE_RINGER_TOGGLE_CHORD,
             KEY_GESTURE_TYPE_GLOBAL_ACTIONS,
-            KEY_GESTURE_TYPE_TV_ACCESSIBILITY_SHORTCUT_CHORD,
             KEY_GESTURE_TYPE_TV_TRIGGER_BUG_REPORT,
             KEY_GESTURE_TYPE_ACCESSIBILITY_SHORTCUT,
             KEY_GESTURE_TYPE_CLOSE_ALL_DIALOGS,
@@ -525,8 +525,6 @@ public final class KeyGestureEvent {
                 return FrameworkStatsLog.KEYBOARD_SYSTEMS_EVENT_REPORTED__KEYBOARD_SYSTEM_EVENT__LAUNCH_SEARCH;
             case KEY_GESTURE_TYPE_LANGUAGE_SWITCH:
                 return FrameworkStatsLog.KEYBOARD_SYSTEMS_EVENT_REPORTED__KEYBOARD_SYSTEM_EVENT__LANGUAGE_SWITCH;
-            case KEY_GESTURE_TYPE_ACCESSIBILITY_ALL_APPS:
-                return FrameworkStatsLog.KEYBOARD_SYSTEMS_EVENT_REPORTED__KEYBOARD_SYSTEM_EVENT__ACCESSIBILITY_ALL_APPS;
             case KEY_GESTURE_TYPE_TOGGLE_CAPS_LOCK:
                 return FrameworkStatsLog.KEYBOARD_SYSTEMS_EVENT_REPORTED__KEYBOARD_SYSTEM_EVENT__TOGGLE_CAPS_LOCK;
             case KEY_GESTURE_TYPE_SYSTEM_MUTE:
@@ -707,8 +705,6 @@ public final class KeyGestureEvent {
                 return "KEY_GESTURE_TYPE_LAUNCH_SEARCH";
             case KEY_GESTURE_TYPE_LANGUAGE_SWITCH:
                 return "KEY_GESTURE_TYPE_LANGUAGE_SWITCH";
-            case KEY_GESTURE_TYPE_ACCESSIBILITY_ALL_APPS:
-                return "KEY_GESTURE_TYPE_ACCESSIBILITY_ALL_APPS";
             case KEY_GESTURE_TYPE_TOGGLE_CAPS_LOCK:
                 return "KEY_GESTURE_TYPE_TOGGLE_CAPS_LOCK";
             case KEY_GESTURE_TYPE_SYSTEM_MUTE:
@@ -777,8 +773,6 @@ public final class KeyGestureEvent {
                 return "KEY_GESTURE_TYPE_RINGER_TOGGLE_CHORD";
             case KEY_GESTURE_TYPE_GLOBAL_ACTIONS:
                 return "KEY_GESTURE_TYPE_GLOBAL_ACTIONS";
-            case KEY_GESTURE_TYPE_TV_ACCESSIBILITY_SHORTCUT_CHORD:
-                return "KEY_GESTURE_TYPE_TV_ACCESSIBILITY_SHORTCUT_CHORD";
             case KEY_GESTURE_TYPE_TV_TRIGGER_BUG_REPORT:
                 return "KEY_GESTURE_TYPE_TV_TRIGGER_BUG_REPORT";
             case KEY_GESTURE_TYPE_ACCESSIBILITY_SHORTCUT:

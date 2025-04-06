@@ -33,6 +33,7 @@ import com.android.internal.widget.remotecompose.core.operations.layout.measure.
 import com.android.internal.widget.remotecompose.core.operations.layout.measure.MeasurePass;
 import com.android.internal.widget.remotecompose.core.operations.layout.measure.Size;
 import com.android.internal.widget.remotecompose.core.operations.layout.modifiers.HeightInModifierOperation;
+import com.android.internal.widget.remotecompose.core.operations.layout.modifiers.ScrollModifierOperation;
 import com.android.internal.widget.remotecompose.core.operations.layout.utils.DebugLog;
 import com.android.internal.widget.remotecompose.core.serialize.MapSerializer;
 
@@ -138,7 +139,7 @@ public class ColumnLayout extends LayoutManager {
         for (Component c : mChildrenComponents) {
             c.measure(context, 0f, maxWidth, 0f, currentMaxHeight, measure);
             ComponentMeasure m = measure.get(c);
-            if (m.getVisibility() != Visibility.GONE) {
+            if (!m.isGone()) {
                 size.setWidth(Math.max(size.getWidth(), m.getW()));
                 size.setHeight(size.getHeight() + m.getH());
                 visibleChildrens++;
@@ -164,7 +165,7 @@ public class ColumnLayout extends LayoutManager {
         for (Component child : mChildrenComponents) {
             child.measure(context, minWidth, maxWidth, minHeight, mh, measure);
             ComponentMeasure m = measure.get(child);
-            if (m.getVisibility() != Visibility.GONE) {
+            if (!m.isGone()) {
                 mh -= m.getH();
             }
         }
@@ -172,11 +173,11 @@ public class ColumnLayout extends LayoutManager {
     }
 
     @Override
-    public float intrinsicHeight(@NonNull RemoteContext context) {
+    public float minIntrinsicHeight(@NonNull RemoteContext context) {
         float height = computeModifierDefinedHeight(context);
         float componentHeights = 0f;
         for (Component c : mChildrenComponents) {
-            componentHeights += c.intrinsicHeight(context);
+            componentHeights += c.minIntrinsicHeight(context);
         }
         return Math.max(height, componentHeights);
     }
@@ -225,7 +226,7 @@ public class ColumnLayout extends LayoutManager {
             float totalWeights = 0f;
             for (Component child : mChildrenComponents) {
                 ComponentMeasure childMeasure = measure.get(child);
-                if (childMeasure.getVisibility() == Visibility.GONE) {
+                if (childMeasure.isGone()) {
                     continue;
                 }
                 if (child instanceof LayoutComponent
@@ -242,7 +243,7 @@ public class ColumnLayout extends LayoutManager {
                     if (child instanceof LayoutComponent
                             && ((LayoutComponent) child).getHeightModifier().hasWeight()) {
                         ComponentMeasure childMeasure = measure.get(child);
-                        if (childMeasure.getVisibility() == Visibility.GONE) {
+                        if (childMeasure.isGone()) {
                             continue;
                         }
                         float weight = ((LayoutComponent) child).getHeightModifier().getValue();
@@ -280,7 +281,7 @@ public class ColumnLayout extends LayoutManager {
         int visibleChildrens = 0;
         for (Component child : mChildrenComponents) {
             ComponentMeasure childMeasure = measure.get(child);
-            if (childMeasure.getVisibility() == Visibility.GONE) {
+            if (childMeasure.isGone()) {
                 continue;
             }
             childrenWidth = Math.max(childrenWidth, childMeasure.getW());
@@ -307,17 +308,22 @@ public class ColumnLayout extends LayoutManager {
             case SPACE_BETWEEN:
                 for (Component child : mChildrenComponents) {
                     ComponentMeasure childMeasure = measure.get(child);
-                    if (childMeasure.getVisibility() == Visibility.GONE) {
+                    if (childMeasure.isGone()) {
                         continue;
                     }
                     total += childMeasure.getH();
                 }
-                verticalGap = (selfHeight - total) / (visibleChildrens - 1);
+                if (visibleChildrens > 1) {
+                    verticalGap = (selfHeight - total) / (visibleChildrens - 1);
+                } else {
+                    // we center the element
+                    ty = (selfHeight - childrenHeight) / 2f;
+                }
                 break;
             case SPACE_EVENLY:
                 for (Component child : mChildrenComponents) {
                     ComponentMeasure childMeasure = measure.get(child);
-                    if (childMeasure.getVisibility() == Visibility.GONE) {
+                    if (childMeasure.isGone()) {
                         continue;
                     }
                     total += childMeasure.getH();
@@ -328,7 +334,7 @@ public class ColumnLayout extends LayoutManager {
             case SPACE_AROUND:
                 for (Component child : mChildrenComponents) {
                     ComponentMeasure childMeasure = measure.get(child);
-                    if (childMeasure.getVisibility() == Visibility.GONE) {
+                    if (childMeasure.isGone()) {
                         continue;
                     }
                     total += childMeasure.getH();
@@ -353,7 +359,7 @@ public class ColumnLayout extends LayoutManager {
             }
             childMeasure.setX(tx);
             childMeasure.setY(ty);
-            if (childMeasure.getVisibility() == Visibility.GONE) {
+            if (childMeasure.isGone()) {
                 continue;
             }
             ty += childMeasure.getH();
@@ -365,6 +371,17 @@ public class ColumnLayout extends LayoutManager {
             ty += mSpacedBy;
         }
         DebugLog.e();
+    }
+
+    @Override
+    public void getLocationInWindow(@NonNull float[] value, boolean forSelf) {
+        super.getLocationInWindow(value, forSelf);
+
+        if (!forSelf && mVerticalScrollDelegate instanceof ScrollModifierOperation) {
+            ScrollModifierOperation smo = (ScrollModifierOperation) mVerticalScrollDelegate;
+
+            value[1] += smo.getScrollY();
+        }
     }
 
     /**

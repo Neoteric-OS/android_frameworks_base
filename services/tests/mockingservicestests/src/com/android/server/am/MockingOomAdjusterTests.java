@@ -43,6 +43,7 @@ import static android.app.ActivityManagerInternal.OOM_ADJ_REASON_ACTIVITY;
 import static android.app.ActivityManagerInternal.OOM_ADJ_REASON_NONE;
 import static android.app.ActivityManagerInternal.OOM_ADJ_REASON_SHORT_FGS_TIMEOUT;
 import static android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_SHORT_SERVICE;
+import static android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE;
 
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 
@@ -73,6 +74,10 @@ import static com.android.server.am.ProcessList.SERVICE_ADJ;
 import static com.android.server.am.ProcessList.SERVICE_B_ADJ;
 import static com.android.server.am.ProcessList.UNKNOWN_ADJ;
 import static com.android.server.am.ProcessList.VISIBLE_APP_ADJ;
+import static com.android.server.wm.WindowProcessController.ACTIVITY_STATE_FLAG_IS_PAUSING_OR_PAUSED;
+import static com.android.server.wm.WindowProcessController.ACTIVITY_STATE_FLAG_IS_STOPPING;
+import static com.android.server.wm.WindowProcessController.ACTIVITY_STATE_FLAG_IS_STOPPING_FINISHING;
+import static com.android.server.wm.WindowProcessController.ACTIVITY_STATE_FLAG_IS_VISIBLE;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -107,6 +112,7 @@ import android.os.PowerManagerInternal;
 import android.os.Process;
 import android.os.SystemClock;
 import android.os.UserHandle;
+import android.platform.test.annotations.DisableFlags;
 import android.platform.test.annotations.EnableFlags;
 import android.platform.test.annotations.Presubmit;
 import android.platform.test.flag.junit.SetFlagsRule;
@@ -542,7 +548,7 @@ public class MockingOomAdjusterTests {
                 MOCKAPP_PROCESSNAME, MOCKAPP_PACKAGENAME, true));
         WindowProcessController wpc = app.getWindowProcessController();
         doReturn(true).when(wpc).hasActivities();
-        doReturn(WindowProcessController.ACTIVITY_STATE_FLAG_IS_VISIBLE)
+        doReturn(ACTIVITY_STATE_FLAG_IS_VISIBLE)
                 .when(wpc).getActivityStateFlags();
         setWakefulness(PowerManagerInternal.WAKEFULNESS_AWAKE);
         updateOomAdj(app);
@@ -551,28 +557,58 @@ public class MockingOomAdjusterTests {
         assertFalse(app.mState.isCached());
         assertFalse(app.mState.isEmpty());
         assertEquals("vis-activity", app.mState.getAdjType());
+        assertCpuTime(app);
 
-        doReturn(WindowProcessController.ACTIVITY_STATE_FLAG_IS_VISIBLE
+        doReturn(ACTIVITY_STATE_FLAG_IS_VISIBLE
                 | WindowProcessController.ACTIVITY_STATE_FLAG_RESUMED_SPLIT_SCREEN)
                 .when(wpc).getActivityStateFlags();
         updateOomAdj(app);
         assertProcStates(app, PROCESS_STATE_TOP, VISIBLE_APP_ADJ, SCHED_GROUP_TOP_APP);
         assertEquals("resumed-split-screen-activity", app.mState.getAdjType());
+        assertCpuTime(app);
 
-        doReturn(WindowProcessController.ACTIVITY_STATE_FLAG_IS_VISIBLE
+        doReturn(ACTIVITY_STATE_FLAG_IS_VISIBLE
                 | WindowProcessController.ACTIVITY_STATE_FLAG_PERCEPTIBLE_FREEFORM)
                 .when(wpc).getActivityStateFlags();
         updateOomAdj(app);
         assertProcStates(app, PROCESS_STATE_TOP, VISIBLE_APP_ADJ, SCHED_GROUP_TOP_APP);
         assertEquals("perceptible-freeform-activity", app.mState.getAdjType());
+        assertCpuTime(app);
 
-        doReturn(WindowProcessController.ACTIVITY_STATE_FLAG_IS_VISIBLE
+        doReturn(ACTIVITY_STATE_FLAG_IS_VISIBLE
                 | WindowProcessController.ACTIVITY_STATE_FLAG_VISIBLE_MULTI_WINDOW_MODE)
                 .when(wpc).getActivityStateFlags();
         updateOomAdj(app);
         assertProcStates(app, PROCESS_STATE_TOP, VISIBLE_APP_ADJ,
                 SCHED_GROUP_FOREGROUND_WINDOW);
         assertEquals("vis-multi-window-activity", app.mState.getAdjType());
+        assertCpuTime(app);
+    }
+    @SuppressWarnings("GuardedBy")
+    @Test
+    public void testUpdateOomAdj_DoOne_PausingStoppingActivities() {
+        ProcessRecord app = spy(makeDefaultProcessRecord(MOCKAPP_PID, MOCKAPP_UID,
+                MOCKAPP_PROCESSNAME, MOCKAPP_PACKAGENAME, true));
+        WindowProcessController wpc = app.getWindowProcessController();
+        doReturn(true).when(wpc).hasActivities();
+        doReturn(ACTIVITY_STATE_FLAG_IS_PAUSING_OR_PAUSED).when(wpc).getActivityStateFlags();
+        setWakefulness(PowerManagerInternal.WAKEFULNESS_AWAKE);
+        updateOomAdj(app);
+        assertProcStates(app, PROCESS_STATE_TOP, PERCEPTIBLE_APP_ADJ, SCHED_GROUP_DEFAULT,
+                "pause-activity");
+        assertCpuTime(app);
+
+        doReturn(ACTIVITY_STATE_FLAG_IS_STOPPING).when(wpc).getActivityStateFlags();
+        updateOomAdj(app);
+        assertProcStates(app, PROCESS_STATE_LAST_ACTIVITY, PERCEPTIBLE_APP_ADJ,
+                SCHED_GROUP_BACKGROUND, "stop-activity");
+        assertCpuTime(app);
+
+        doReturn(ACTIVITY_STATE_FLAG_IS_STOPPING_FINISHING).when(wpc).getActivityStateFlags();
+        updateOomAdj(app);
+        assertProcStates(app, PROCESS_STATE_CACHED_ACTIVITY, CACHED_APP_MIN_ADJ,
+                SCHED_GROUP_BACKGROUND, "cch-act");
+        assertNoCpuTime(app);
     }
 
     @SuppressWarnings("GuardedBy")
@@ -698,7 +734,7 @@ public class MockingOomAdjusterTests {
 
     @SuppressWarnings("GuardedBy")
     @Test
-    @EnableFlags(Flags.FLAG_USE_CPU_TIME_CAPABILITY)
+    @EnableFlags({Flags.FLAG_USE_CPU_TIME_CAPABILITY, Flags.FLAG_PROTOTYPE_AGGRESSIVE_FREEZING})
     public void testUpdateOomAdjFreezeState_bindingFromShortFgs() {
         // Setting up a started short FGS within app1.
         final ServiceRecord s = ServiceRecord.newEmptyInstanceForTest(mService);
@@ -739,6 +775,75 @@ public class MockingOomAdjusterTests {
 
         assertNoCpuTime(app);
         assertNoCpuTime(app2);
+    }
+
+    @SuppressWarnings("GuardedBy")
+    @Test
+    @EnableFlags(Flags.FLAG_USE_CPU_TIME_CAPABILITY)
+    public void testUpdateOomAdjFreezeState_bindingWithAllowFreeze() {
+        ProcessRecord app = spy(makeDefaultProcessRecord(MOCKAPP_PID, MOCKAPP_UID,
+                MOCKAPP_PROCESSNAME, MOCKAPP_PACKAGENAME, true));
+        WindowProcessController wpc = app.getWindowProcessController();
+        doReturn(true).when(wpc).hasActivities();
+        doReturn(ACTIVITY_STATE_FLAG_IS_VISIBLE).when(wpc).getActivityStateFlags();
+
+        final ProcessRecord app2 = spy(makeDefaultProcessRecord(MOCKAPP2_PID, MOCKAPP2_UID,
+                MOCKAPP2_PROCESSNAME, MOCKAPP2_PACKAGENAME, false));
+
+        // App with a visible activity binds to app2 without any special flag.
+        bindService(app2, app, null, null, 0, mock(IBinder.class));
+
+        final ProcessRecord app3 = spy(makeDefaultProcessRecord(MOCKAPP3_PID, MOCKAPP3_UID,
+                MOCKAPP3_PROCESSNAME, MOCKAPP3_PACKAGENAME, false));
+
+        // App with a visible activity binds to app3 with ALLOW_FREEZE.
+        bindService(app3, app, null, null, Context.BIND_ALLOW_FREEZE, mock(IBinder.class));
+
+        setProcessesToLru(app, app2, app3);
+
+        updateOomAdj(app);
+
+        assertCpuTime(app);
+        assertCpuTime(app2);
+        assertNoCpuTime(app3);
+    }
+
+    @SuppressWarnings("GuardedBy")
+    @Test
+    @EnableFlags(Flags.FLAG_USE_CPU_TIME_CAPABILITY)
+    @DisableFlags(Flags.FLAG_PROTOTYPE_AGGRESSIVE_FREEZING)
+    public void testUpdateOomAdjFreezeState_bindingFromFgs() {
+        final ProcessRecord app = spy(makeDefaultProcessRecord(MOCKAPP_PID, MOCKAPP_UID,
+                MOCKAPP_PROCESSNAME, MOCKAPP_PACKAGENAME, true));
+        mProcessStateController.setHasForegroundServices(app.mServices, true,
+                FOREGROUND_SERVICE_TYPE_SPECIAL_USE, false);
+
+        final ProcessRecord app2 = spy(makeDefaultProcessRecord(MOCKAPP2_PID, MOCKAPP2_UID,
+                MOCKAPP2_PROCESSNAME, MOCKAPP2_PACKAGENAME, false));
+        // App with a foreground service binds to app2
+        bindService(app2, app, null, null, 0, mock(IBinder.class));
+
+        setProcessesToLru(app, app2);
+        updateOomAdj(app);
+
+        assertCpuTime(app);
+        assertCpuTime(app2);
+    }
+
+    @SuppressWarnings("GuardedBy")
+    @Test
+    @EnableFlags(Flags.FLAG_USE_CPU_TIME_CAPABILITY)
+    @DisableFlags(Flags.FLAG_PROTOTYPE_AGGRESSIVE_FREEZING)
+    public void testUpdateOomAdjFreezeState_soloFgs() {
+        final ProcessRecord app = spy(makeDefaultProcessRecord(MOCKAPP_PID, MOCKAPP_UID,
+                MOCKAPP_PROCESSNAME, MOCKAPP_PACKAGENAME, true));
+        mProcessStateController.setHasForegroundServices(app.mServices, true,
+                FOREGROUND_SERVICE_TYPE_SPECIAL_USE, false);
+
+        setProcessesToLru(app);
+        updateOomAdj(app);
+
+        assertCpuTime(app);
     }
 
     @SuppressWarnings("GuardedBy")
@@ -3413,12 +3518,14 @@ public class MockingOomAdjusterTests {
         // EXPECT: stale-perceptible-act adjustment
         doReturn(WindowProcessController.ACTIVITY_STATE_FLAG_IS_STOPPING_FINISHING)
                 .when(wpc).getActivityStateFlags();
+        assertNoCpuTime(app);
 
         doReturn(now - OomAdjuster.PERCEPTIBLE_TASK_TIMEOUT_MILLIS).when(
                 wpc).getPerceptibleTaskStoppedTimeMillis();
         updateOomAdj(app);
         assertProcStates(app, PROCESS_STATE_LAST_ACTIVITY, PREVIOUS_APP_ADJ,
                 SCHED_GROUP_BACKGROUND, "stale-perceptible-act");
+        assertNoCpuTime(app);
 
         // GIVEN: perceptible adjustment is is disabled
         // EXPECT: no perceptible adjustment
@@ -3428,15 +3535,17 @@ public class MockingOomAdjusterTests {
         updateOomAdj(app);
         assertProcStates(app, PROCESS_STATE_CACHED_ACTIVITY, CACHED_APP_MIN_ADJ,
                 SCHED_GROUP_BACKGROUND, "cch-act");
+        assertNoCpuTime(app);
 
         // GIVEN: perceptible app is in foreground
         // EXPECT: no perceptible adjustment
-        doReturn(WindowProcessController.ACTIVITY_STATE_FLAG_IS_VISIBLE)
+        doReturn(ACTIVITY_STATE_FLAG_IS_VISIBLE)
                 .when(wpc).getActivityStateFlags();
         doReturn(now).when(wpc).getPerceptibleTaskStoppedTimeMillis();
         updateOomAdj(app);
         assertProcStates(app, PROCESS_STATE_TOP, VISIBLE_APP_ADJ,
                 SCHED_GROUP_DEFAULT, "vis-activity");
+        assertCpuTime(app);
     }
 
     @SuppressWarnings("GuardedBy")

@@ -741,6 +741,9 @@
     <!-- label for screenshot item in power menu [CHAR LIMIT=24]-->
     <string name="global_action_screenshot">Screenshot</string>
 
+    <!-- label for standby item in power menu [CHAR LIMIT=24]-->
+    <string name="global_action_standby">Standby</string>
+
     <!-- Take bug report menu title [CHAR LIMIT=30] -->
     <string name="bugreport_title">Bug report</string>
     <!-- Message in bugreport dialog describing what it does [CHAR LIMIT=NONE] -->
@@ -5011,6 +5014,9 @@
     <!-- Title of hearing aids feature, shown in the warning dialog about the accessibility shortcut. [CHAR LIMIT=none] -->
     <string name="hearing_aids_feature_name">Hearing devices</string>
 
+    <!-- Title of autoclick feature, shown in the warning dialog about the accessibility shortcut. [CHAR LIMIT=none] -->
+    <string name="autoclick_feature_name">Autoclick</string>
+
     <!-- Text of hearing device disconnected state. [CHAR LIMIT=20] -->
     <string name="hearing_device_status_disconnected">Disconnected</string>
 
@@ -5062,8 +5068,6 @@
     <!-- Notification action button. Click it will open the bluetooth device details page for this hearing device. It will be shown when making a phone call with the hearing device. [CHAR LIMIT=none] -->
     <string name="hearing_device_notification_settings_button">Settings</string>
 
-    <!-- Text spoken when the current user is switched if accessibility is enabled. [CHAR LIMIT=none] -->
-    <string name="user_switched">Current user <xliff:g id="name" example="Bob">%1$s</xliff:g>.</string>
     <!-- Message shown when switching to a user [CHAR LIMIT=none] -->
     <string name="user_switching_message">Switching to <xliff:g id="name" example="Bob">%1$s</xliff:g>\u2026</string>
     <!-- Message when logging out a user on a split user system -->
@@ -5413,7 +5417,7 @@
     <!-- Notification shown when device owner silently installs a package [CHAR LIMIT=NONE] -->
     <string name="package_installed_device_owner">Installed by your admin.\nGo to settings to view granted permissions</string>
     <!-- Notification shown when device owner silently updates a package [CHAR LIMIT=NONE] -->
-    <string name="package_updated_device_owner">Updated by your admin</string>
+    <string name="package_updated_device_owner">Updated by your admin.\nGo to settings to view granted permissions</string>
     <!-- Notification shown when device owner silently deletes a package [CHAR LIMIT=NONE] -->
     <string name="package_deleted_device_owner">Deleted by your admin</string>
 
@@ -6227,6 +6231,18 @@
     <string name="accessibility_autoclick_pause">Pause</string>
     <!-- Label for autoclick position button [CHAR LIMIT=NONE] -->
     <string name="accessibility_autoclick_position">Position</string>
+    <!-- Label for autoclick scroll up button [CHAR LIMIT=NONE] -->
+    <string name="accessibility_autoclick_scroll_up">Scroll Up</string>
+    <!-- Label for autoclick scroll down button [CHAR LIMIT=NONE] -->
+    <string name="accessibility_autoclick_scroll_down">Scroll Down</string>
+    <!-- Label for autoclick scroll left button [CHAR LIMIT=NONE] -->
+    <string name="accessibility_autoclick_scroll_left">Scroll Left</string>
+    <!-- Label for autoclick scroll right button [CHAR LIMIT=NONE] -->
+    <string name="accessibility_autoclick_scroll_right">Scroll Right</string>
+    <!-- Label for autoclick scroll exit button [CHAR LIMIT=NONE] -->
+    <string name="accessibility_autoclick_scroll_exit">Exit Scroll Mode</string>
+    <!-- Label for autoclick scroll panel title [CHAR LIMIT=NONE] -->
+    <string name="accessibility_autoclick_scroll_panel_title">Scroll Panel</string>
 
     <!-- Text to tell the user that a package has been forced by themselves in the RESTRICTED bucket. [CHAR LIMIT=NONE] -->
     <string name="as_app_forced_to_restricted_bucket">
@@ -6699,6 +6715,8 @@ ul.</string>
     <string name="profile_label_test">Test</string>
     <!-- Communal profile label on a screen. This can be used as a tab label for this profile in tabbed views and can be used to represent the profile in sharing surfaces, etc. [CHAR LIMIT=20] -->
     <string name="profile_label_communal">Communal</string>
+    <!-- Supervising profile label on a screen. This can be used as a tab label for this profile in tabbed views and can be used to represent the profile in sharing surfaces, etc. [CHAR LIMIT=20] -->
+    <string name="profile_label_supervising">Supervising</string>
 
     <!-- Accessibility label for managed profile user type [CHAR LIMIT=30] -->
     <string name="accessibility_label_managed_profile">Work profile</string>
@@ -6851,4 +6869,10 @@ ul.</string>
     <string name="usb_apm_usb_plugged_in_when_locked_notification_text">USB device is plugged in when Android is locked. To use device, please unlock Android first and then reinsert USB device to use it.</string>
     <string name="usb_apm_usb_suspicious_activity_notification_title">Suspicious USB activity</string>
     <string name="usb_apm_usb_suspicious_activity_notification_text">USB data signal has been disabled.</string>
+
+    <!-- Fingerprint failed rate too high notification title -->
+    <string name="fingerprint_frr_notification_title">Having trouble with Fingerprint Unlock?</string>
+    <!-- Fingerprint failed rate too high notification msg -->
+    <string name="fingerprint_frr_notification_msg">Tap to review tips to improve your unlocking experience</string>
+
 </resources>

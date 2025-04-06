@@ -27,6 +27,7 @@ import com.android.internal.widget.remotecompose.core.WireBuffer;
 import com.android.internal.widget.remotecompose.core.documentation.DocumentationBuilder;
 import com.android.internal.widget.remotecompose.core.documentation.DocumentedOperation;
 import com.android.internal.widget.remotecompose.core.operations.Utils;
+import com.android.internal.widget.remotecompose.core.serialize.MapSerializer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,7 +117,7 @@ public class ImpulseOperation extends PaintOperation implements VariableSupport,
     @NonNull
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder("LoopOperation\n");
+        StringBuilder builder = new StringBuilder("ImpulseOperation\n");
         for (Operation operation : mList) {
             builder.append("  startAt: ");
             builder.append(mStartAt);
@@ -227,5 +228,13 @@ public class ImpulseOperation extends PaintOperation implements VariableSupport,
      */
     public void setProcess(ImpulseProcess impulseProcess) {
         mProcess = impulseProcess;
+    }
+
+    @Override
+    public void serialize(MapSerializer serializer) {
+        serializer
+                .addType(CLASS_NAME)
+                .add("duration", mDuration, mOutDuration)
+                .add("startAt", mStartAt, mOutStartAt);
     }
 }

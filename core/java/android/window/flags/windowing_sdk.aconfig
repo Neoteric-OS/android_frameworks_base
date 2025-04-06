@@ -7,13 +7,6 @@ container: "system"
 
 flag {
     namespace: "windowing_sdk"
-    name: "activity_embedding_overlay_presentation_flag"
-    description: "Whether the overlay presentation feature is enabled"
-    bug: "293370683"
-}
-
-flag {
-    namespace: "windowing_sdk"
     name: "task_fragment_system_organizer_flag"
     description: "Whether the TaskFragment system organizer feature is enabled"
     bug: "284050041"
@@ -62,16 +55,6 @@ flag {
 
 flag {
     namespace: "windowing_sdk"
-     name: "move_animation_options_to_change"
-     description: "Move AnimationOptions from TransitionInfo to each Change"
-     bug: "327332488"
-     metadata {
-         purpose: PURPOSE_BUGFIX
-     }
-}
-
-flag {
-    namespace: "windowing_sdk"
     name: "rear_display_disable_force_desktop_system_decorations"
     description: "Block system decorations from being added to a rear display when desktop mode is forced"
     bug: "346103150"
@@ -98,6 +81,16 @@ flag {
 
 flag {
     namespace: "windowing_sdk"
+    name: "activity_embedding_delay_task_fragment_finish_for_activity_launch"
+    description: "Fixes a race condition that we finish the TaskFragment too early when there is a pending activity launch."
+    bug: "390452023"
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    namespace: "windowing_sdk"
     name: "wlinfo_oncreate"
     description: "Makes WindowLayoutInfo accessible without racing in the Activity#onCreate()"
     bug: "337820752"
@@ -112,31 +105,10 @@ flag {
 
 flag {
     namespace: "windowing_sdk"
-    name: "allow_multiple_adjacent_task_fragments"
-    description: "Refactor to allow more than 2 adjacent TaskFragments"
-    bug: "373709676"
-    is_fixed_read_only: true
-    metadata {
-        purpose: PURPOSE_BUGFIX
-    }
-}
-
-flag {
-    namespace: "windowing_sdk"
     name: "track_system_ui_context_before_wms"
     description: "Keep track of SystemUiContext before WMS is initialized"
     bug: "384428048"
     is_fixed_read_only: true
-    metadata {
-        purpose: PURPOSE_BUGFIX
-    }
-}
-
-flag {
-    namespace: "windowing_sdk"
-    name: "normalize_home_intent"
-    description: "To ensure home is started in correct intent"
-    bug: "378505461"
     metadata {
         purpose: PURPOSE_BUGFIX
     }
@@ -153,18 +125,7 @@ flag {
 }
 
 flag {
-    namespace: "windowing_sdk"
-    name: "use_self_sync_transaction_for_layer"
-    description: "Always use this.getSyncTransaction for assignLayer"
-    bug: "388127825"
-    is_fixed_read_only: true
-    metadata {
-        purpose: PURPOSE_BUGFIX
-    }
-}
-
-flag {
-    namespace: "windowing_sdk"
+    namespace: "car_framework"
     name: "safe_region_letterboxing"
     description: "Enables letterboxing for a safe region"
     bug: "380132497"
@@ -179,4 +140,55 @@ flag {
     metadata {
         purpose: PURPOSE_BUGFIX
     }
+}
+
+flag {
+    namespace: "windowing_sdk"
+    name: "cleanup_dispatch_pending_transactions_remote_exception"
+    description: "Refactor to cleanup for RemoteException from dispatchPendingTransactions"
+    bug: "323801078"
+    is_fixed_read_only: true
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    namespace: "windowing_sdk"
+    name: "support_widget_intents_on_connected_display"
+    description: "Launch widget intents on originating display"
+    bug: "358368849"
+    is_fixed_read_only: true
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    namespace: "windowing_sdk"
+    name: "exclude_task_from_recents"
+    description: "Enables WCT to set whether the task should be excluded from the Recents list"
+    bug: "404726350"
+    is_fixed_read_only: true
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    namespace: "windowing_sdk"
+    name: "fix_view_root_call_trace"
+    description: "Do not set mAdded=true unless #setView finished successfully"
+    bug: "385705687"
+    is_fixed_read_only: true
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    namespace: "windowing_sdk"
+    name: "activity_embedding_metrics"
+    description: "Metrics for Activity Embedding usage in WM Extensions"
+    bug: "399465821"
 }

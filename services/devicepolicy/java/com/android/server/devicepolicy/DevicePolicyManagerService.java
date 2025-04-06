@@ -245,6 +245,7 @@ import static android.app.admin.ProvisioningException.ERROR_REMOVE_NON_REQUIRED_
 import static android.app.admin.ProvisioningException.ERROR_SETTING_PROFILE_OWNER_FAILED;
 import static android.app.admin.ProvisioningException.ERROR_SET_DEVICE_OWNER_FAILED;
 import static android.app.admin.ProvisioningException.ERROR_STARTING_PROFILE_FAILED;
+import static android.content.Context.RECEIVER_NOT_EXPORTED;
 import static android.content.Intent.ACTION_MANAGED_PROFILE_AVAILABLE;
 import static android.content.Intent.ACTION_MANAGED_PROFILE_UNAVAILABLE;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
@@ -275,6 +276,7 @@ import static com.android.internal.widget.LockPatternUtils.StrongAuthTracker.STR
 import static com.android.server.SystemTimeZone.TIME_ZONE_CONFIDENCE_HIGH;
 import static com.android.server.am.ActivityManagerService.STOCK_PM_FLAGS;
 import static com.android.server.devicepolicy.DevicePolicyEngine.DEFAULT_POLICY_SIZE_LIMIT;
+import static com.android.server.devicepolicy.DevicePolicyEngine.SYSTEM_SUPERVISION_ROLE;
 import static com.android.server.devicepolicy.DevicePolicyStatsLog.DEVICE_POLICY_MANAGEMENT_MODE;
 import static com.android.server.devicepolicy.DevicePolicyStatsLog.DEVICE_POLICY_MANAGEMENT_MODE__MANAGEMENT_MODE__COPE;
 import static com.android.server.devicepolicy.DevicePolicyStatsLog.DEVICE_POLICY_MANAGEMENT_MODE__MANAGEMENT_MODE__DEVICE_OWNER;
@@ -486,6 +488,7 @@ import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.telephony.data.ApnSetting;
+import android.telephony.euicc.EuiccManager;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.ArrayMap;
@@ -642,6 +645,14 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
     @VisibleForTesting
     static final String ACTION_PROFILE_OFF_DEADLINE =
             "com.android.server.ACTION_PROFILE_OFF_DEADLINE";
+
+    /** Broadcast action invoked when a managed eSIM is removed while deleting work profile. */
+    private static final String ACTION_ESIM_REMOVED_WITH_MANAGED_PROFILE =
+            "com.android.server.ACTION_ESIM_REMOVED_WITH_MANAGED_PROFILE";
+
+    /** Extra for the subscription ID of the managed eSIM removed while deleting work profile. */
+    private static final String EXTRA_REMOVED_ESIM_SUBSCRIPTION_ID =
+            "com.android.server.EXTRA_ESIM_REMOVED_WITH_MANAGED_PROFILE_SUBSCRIPTION_ID";
 
     private static final String CALLED_FROM_PARENT = "calledFromParent";
     private static final String NOT_CALLED_FROM_PARENT = "notCalledFromParent";
@@ -1266,6 +1277,8 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                 removeCredentialManagementApp(intent.getData().getSchemeSpecificPart());
             } else if (Intent.ACTION_MANAGED_PROFILE_ADDED.equals(action)) {
                 clearWipeProfileNotification();
+            } else if (Intent.ACTION_MANAGED_PROFILE_REMOVED.equals(action)) {
+                removeManagedEmbeddedSubscriptionsForUser(userHandle);
             } else if (Intent.ACTION_DATE_CHANGED.equals(action)
                     || Intent.ACTION_TIME_CHANGED.equals(action)) {
                 // Update freeze period record when clock naturally progresses to the next day
@@ -1298,6 +1311,13 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                 triggerPolicyComplianceCheckIfNeeded(userHandle, suspended);
             } else if (LOGIN_ACCOUNTS_CHANGED_ACTION.equals(action)) {
                 calculateHasIncompatibleAccounts();
+            } else if (ACTION_ESIM_REMOVED_WITH_MANAGED_PROFILE.equals(action)) {
+                int removedSubscriptionId = intent.getIntExtra(EXTRA_REMOVED_ESIM_SUBSCRIPTION_ID,
+                        -1);
+                Slogf.i(LOG_TAG,
+                        "Deleted subscription with ID %d because owning managed profile was "
+                                + "removed",
+                        removedSubscriptionId);
             }
         }
 
@@ -2219,9 +2239,14 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
         mContext.registerReceiverAsUser(mReceiver, UserHandle.ALL, filter, null, mHandler);
         filter = new IntentFilter();
         filter.addAction(Intent.ACTION_MANAGED_PROFILE_ADDED);
+        filter.addAction(Intent.ACTION_MANAGED_PROFILE_REMOVED);
         filter.addAction(Intent.ACTION_TIME_CHANGED);
         filter.addAction(Intent.ACTION_DATE_CHANGED);
         mContext.registerReceiverAsUser(mReceiver, UserHandle.ALL, filter, null, mHandler);
+        filter = new IntentFilter();
+        filter.addAction(ACTION_ESIM_REMOVED_WITH_MANAGED_PROFILE);
+        mContext.registerReceiverAsUser(mReceiver, UserHandle.ALL, filter, null,
+                mHandler, RECEIVER_NOT_EXPORTED);
 
         LocalServices.addService(DevicePolicyManagerInternal.class, mLocalService);
 
@@ -3582,14 +3607,7 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
 
     @GuardedBy("getLockObject()")
     private boolean maybeMigrateMemoryTaggingLocked(String backupId) {
-        if (!Flags.setMtePolicyCoexistence()) {
-            Slog.i(LOG_TAG, "Memory Tagging not migrated because coexistence "
-                    + "support is disabled.");
-            return false;
-        }
         if (mOwners.isMemoryTaggingMigrated()) {
-            // TODO: Remove log after Flags.setMtePolicyCoexistence full rollout.
-            Slog.v(LOG_TAG, "Memory Tagging was previously migrated to policy engine.");
             return false;
         }
 
@@ -3789,9 +3807,10 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                 // Update user switcher message to activity manager.
                 ActivityManagerInternal activityManagerInternal =
                         mInjector.getActivityManagerInternal();
-                activityManagerInternal.setSwitchingFromSystemUserMessage(
+                int deviceOwnerUserId = UserHandle.getUserId(deviceOwner.getUid());
+                activityManagerInternal.setSwitchingFromUserMessage(deviceOwnerUserId,
                         deviceOwner.startUserSessionMessage);
-                activityManagerInternal.setSwitchingToSystemUserMessage(
+                activityManagerInternal.setSwitchingToUserMessage(deviceOwnerUserId,
                         deviceOwner.endUserSessionMessage);
             }
 
@@ -3977,6 +3996,7 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
             deletedUsers.remove(userInfo.id);
         }
         for (Integer userId : deletedUsers) {
+            removeManagedEmbeddedSubscriptionsForUser(userId);
             removeUserData(userId);
             mDevicePolicyEngine.handleUserRemoved(userId);
         }
@@ -8106,6 +8126,45 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
         mInjector.getNotificationManager().cancel(SystemMessage.NOTE_PROFILE_WIPED);
     }
 
+    /**
+     * Remove eSIM subscriptions that are managed by any of the admin packages of the given
+     * userHandle.
+     */
+    private void removeManagedEmbeddedSubscriptionsForUser(int userHandle) {
+        if (!Flags.removeManagedEsimOnWorkProfileDeletion()) {
+            return;
+        }
+
+        Slogf.i(LOG_TAG,
+                "Managed profile with ID=%d deleted: going to remove managed embedded "
+                        + "subscriptions", userHandle);
+        String profileOwnerPackage = mOwners.getProfileOwnerPackage(userHandle);
+        if (profileOwnerPackage == null) {
+            Slogf.wtf(LOG_TAG, "Profile owner package for managed profile is null");
+            return;
+        }
+        IntArray managedSubscriptionIds = getSubscriptionIdsInternal(profileOwnerPackage);
+        deleteEmbeddedSubscriptions(managedSubscriptionIds);
+    }
+
+    private void deleteEmbeddedSubscriptions(IntArray subscriptionIds) {
+        EuiccManager euiccManager = mContext.getSystemService(EuiccManager.class);
+        for (int subscriptionId : subscriptionIds.toArray()) {
+            Slogf.i(LOG_TAG, "Deleting embedded subscription with ID %d", subscriptionId);
+            euiccManager.deleteSubscription(subscriptionId,
+                    createCallbackPendingIntentForRemovingManagedSubscription(
+                            subscriptionId));
+        }
+    }
+
+    private PendingIntent createCallbackPendingIntentForRemovingManagedSubscription(
+            Integer subscriptionId) {
+        Intent intent = new Intent(ACTION_ESIM_REMOVED_WITH_MANAGED_PROFILE);
+        intent.putExtra(EXTRA_REMOVED_ESIM_SUBSCRIPTION_ID, subscriptionId);
+        return PendingIntent.getBroadcast(mContext, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+    }
+
+
     @Override
     public void setFactoryResetProtectionPolicy(ComponentName who, String callerPackageName,
             @Nullable FactoryResetProtectionPolicy policy) {
@@ -9569,32 +9628,30 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                 }
             }
 
-            // TODO: with a quick glance this logic seems incomplete that it doesn't properly handle
-            // the different behaviour between a profile with separate challenge vs a profile with
-            // unified challenge, which was part of getActiveAdminsForLockscreenPoliciesLocked()
-            // before the migration.
             if (Flags.setKeyguardDisabledFeaturesCoexistence()) {
-                Integer features = mDevicePolicyEngine.getResolvedPolicy(
-                        PolicyDefinition.KEYGUARD_DISABLED_FEATURES,
-                        affectedUserId);
-
                 return Binder.withCleanCallingIdentity(() -> {
-                    int combinedFeatures = features == null ? 0 : features;
-                    List<UserInfo> profiles = mUserManager.getProfiles(affectedUserId);
-                    for (UserInfo profile : profiles) {
-                        int profileId = profile.id;
-                        if (profileId == affectedUserId) {
+                    if (!parent && isManagedProfile(userHandle)) {
+                        return mDevicePolicyEngine.getResolvedPolicy(
+                                PolicyDefinition.KEYGUARD_DISABLED_FEATURES, userHandle);
+                    }
+
+                    int targetUserId = getProfileParentUserIfRequested(userHandle, parent);
+
+                    int combinedPolicy = DevicePolicyManager.KEYGUARD_DISABLE_FEATURES_NONE;
+                    for (UserInfo profile : mUserManager.getProfiles(targetUserId)) {
+                        if (mLockPatternUtils.isSeparateProfileChallengeEnabled(profile.id)) {
                             continue;
                         }
-                        Integer profileFeatures = mDevicePolicyEngine.getResolvedPolicy(
-                                PolicyDefinition.KEYGUARD_DISABLED_FEATURES,
-                                profileId);
-                        if (profileFeatures != null) {
-                            combinedFeatures |= (profileFeatures
-                                    & PROFILE_KEYGUARD_FEATURES_AFFECT_OWNER);
+
+                        Integer profilePolicy = mDevicePolicyEngine.getResolvedPolicy(
+                                PolicyDefinition.KEYGUARD_DISABLED_FEATURES, profile.id);
+                        profilePolicy = profilePolicy == null ? 0 : profilePolicy;
+                        if (profile.id != userHandle) {
+                            profilePolicy &= PROFILE_KEYGUARD_FEATURES_AFFECT_OWNER;
                         }
+                        combinedPolicy |= profilePolicy;
                     }
-                    return combinedFeatures;
+                    return combinedPolicy;
                 });
             }
 
@@ -16238,6 +16295,13 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
         return null;
     }
 
+    /**
+     * When multiple admins enforce a policy, this method returns an admin according to this order:
+     * 1. Supervision
+     * 2. DPC
+     *
+     * Otherwise, it returns any other admin.
+     */
     private android.app.admin.EnforcingAdmin getEnforcingAdminInternal(int userId,
             String identifier) {
         Objects.requireNonNull(identifier);
@@ -16246,16 +16310,22 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
         if (admins.isEmpty()) {
             return null;
         }
-
-        final EnforcingAdmin admin;
         if (admins.size() == 1) {
-            admin = admins.iterator().next();
-        } else {
-            Optional<EnforcingAdmin> dpc = admins.stream()
-                    .filter(a -> a.hasAuthority(EnforcingAdmin.DPC_AUTHORITY)).findFirst();
-            admin = dpc.orElseGet(() -> admins.stream().findFirst().get());
+            return admins.iterator().next().getParcelableAdmin();
         }
-        return admin == null ? null : admin.getParcelableAdmin();
+        Optional<EnforcingAdmin> supervision = admins.stream()
+                .filter(a -> a.hasAuthority(
+                        EnforcingAdmin.getRoleAuthorityOf(SYSTEM_SUPERVISION_ROLE)))
+                .findFirst();
+        if (supervision.isPresent()) {
+            return supervision.get().getParcelableAdmin();
+        }
+        Optional<EnforcingAdmin> dpc = admins.stream()
+                .filter(a -> a.hasAuthority(EnforcingAdmin.DPC_AUTHORITY)).findFirst();
+        if (dpc.isPresent()) {
+            return dpc.get().getParcelableAdmin();
+        }
+        return admins.iterator().next().getParcelableAdmin();
     }
 
     private <V> Set<EnforcingAdmin> getEnforcingAdminsForIdentifier(int userId, String identifier) {
@@ -16354,7 +16424,7 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
     private static <V> PolicyDefinition<V> getPolicyDefinitionForIdentifier(
             @NonNull String identifier) {
         Objects.requireNonNull(identifier);
-        if (Flags.setMtePolicyCoexistence() && MEMORY_TAGGING_POLICY.equals(identifier)) {
+        if (MEMORY_TAGGING_POLICY.equals(identifier)) {
             return (PolicyDefinition<V>) PolicyDefinition.MEMORY_TAGGING;
         } else {
             return (PolicyDefinition<V>) getPolicyDefinitionForRestriction(identifier);
@@ -19659,7 +19729,7 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
         }
 
         mInjector.getActivityManagerInternal()
-                .setSwitchingFromSystemUserMessage(startUserSessionMessageString);
+                .setSwitchingFromUserMessage(caller.getUserId(), startUserSessionMessageString);
     }
 
     @Override
@@ -19684,7 +19754,7 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
         }
 
         mInjector.getActivityManagerInternal()
-                .setSwitchingToSystemUserMessage(endUserSessionMessageString);
+                .setSwitchingToUserMessage(caller.getUserId(), endUserSessionMessageString);
     }
 
     @Override
@@ -23759,46 +23829,21 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
             Preconditions.checkCallAuthorization(isDefaultDeviceOwner(caller));
         }
 
-        if (Flags.setMtePolicyCoexistence()) {
-            enforcePermission(MANAGE_DEVICE_POLICY_MTE, caller.getPackageName(),
-                    UserHandle.USER_ALL);
-        } else {
-            Preconditions.checkCallAuthorization(
-                    isDefaultDeviceOwner(caller)
-                    || isProfileOwnerOfOrganizationOwnedDevice(caller));
-        }
+        enforcePermission(MANAGE_DEVICE_POLICY_MTE, caller.getPackageName(),
+                UserHandle.USER_ALL);
 
         synchronized (getLockObject()) {
-            if (Flags.setMtePolicyCoexistence()) {
-                final EnforcingAdmin admin = enforcePermissionAndGetEnforcingAdmin(null,
-                        MANAGE_DEVICE_POLICY_MTE, callerPackageName, caller.getUserId());
-                if (flags != DevicePolicyManager.MTE_NOT_CONTROLLED_BY_POLICY) {
-                    mDevicePolicyEngine.setGlobalPolicy(
-                            PolicyDefinition.MEMORY_TAGGING,
-                            admin,
-                            new IntegerPolicyValue(flags));
-                } else {
-                    mDevicePolicyEngine.removeGlobalPolicy(
-                            PolicyDefinition.MEMORY_TAGGING,
-                            admin);
-                }
+            final EnforcingAdmin admin = enforcePermissionAndGetEnforcingAdmin(null,
+                    MANAGE_DEVICE_POLICY_MTE, callerPackageName, caller.getUserId());
+            if (flags != DevicePolicyManager.MTE_NOT_CONTROLLED_BY_POLICY) {
+                mDevicePolicyEngine.setGlobalPolicy(
+                        PolicyDefinition.MEMORY_TAGGING,
+                        admin,
+                        new IntegerPolicyValue(flags));
             } else {
-                ActiveAdmin admin =
-                        getDeviceOwnerOrProfileOwnerOfOrganizationOwnedDeviceLocked();
-                if (admin != null) {
-                    final String memtagProperty = "arm64.memtag.bootctl";
-                    if (flags == DevicePolicyManager.MTE_ENABLED) {
-                        mInjector.systemPropertiesSet(memtagProperty, "memtag");
-                    } else if (flags == DevicePolicyManager.MTE_DISABLED) {
-                        mInjector.systemPropertiesSet(memtagProperty, "memtag-off");
-                    } else if (flags == DevicePolicyManager.MTE_NOT_CONTROLLED_BY_POLICY) {
-                        if (admin.mtePolicy != DevicePolicyManager.MTE_NOT_CONTROLLED_BY_POLICY) {
-                            mInjector.systemPropertiesSet(memtagProperty, "default");
-                        }
-                    }
-                    admin.mtePolicy = flags;
-                    saveSettingsLocked(caller.getUserId());
-                }
+                mDevicePolicyEngine.removeGlobalPolicy(
+                        PolicyDefinition.MEMORY_TAGGING,
+                        admin);
             }
 
             DevicePolicyEventLogger.createEvent(DevicePolicyEnums.SET_MTE_POLICY)
@@ -23816,10 +23861,6 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
 
         Preconditions.checkCallAuthorization(isSystemUid(getCallerIdentity()),
                 "Only system services can call setMtePolicyBySystem");
-
-        if (!Flags.setMtePolicyCoexistence()) {
-            throw new UnsupportedOperationException("System can not set MTE policy only");
-        }
 
         EnforcingAdmin admin = EnforcingAdmin.createSystemEnforcingAdmin(systemEntity);
         if (policy != DevicePolicyManager.MTE_NOT_CONTROLLED_BY_POLICY) {
@@ -23858,31 +23899,15 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
     @Override
     public int getMtePolicy(String callerPackageName) {
         final CallerIdentity caller = getCallerIdentity(callerPackageName);
-        if (Flags.setMtePolicyCoexistence()) {
-            enforcePermission(MANAGE_DEVICE_POLICY_MTE, caller.getPackageName(),
-                    UserHandle.USER_ALL);
-        } else {
-            Preconditions.checkCallAuthorization(
-                    isDefaultDeviceOwner(caller)
-                    || isProfileOwnerOfOrganizationOwnedDevice(caller)
-                    || isSystemUid(caller));
-        }
+        enforcePermission(MANAGE_DEVICE_POLICY_MTE, caller.getPackageName(),
+                UserHandle.USER_ALL);
 
         synchronized (getLockObject()) {
-            if (Flags.setMtePolicyCoexistence()) {
-                final EnforcingAdmin admin = enforcePermissionAndGetEnforcingAdmin(null,
-                        MANAGE_DEVICE_POLICY_MTE, callerPackageName, caller.getUserId());
-                final Integer policyFromAdmin = mDevicePolicyEngine.getGlobalPolicySetByAdmin(
-                        PolicyDefinition.MEMORY_TAGGING, admin);
-                return (policyFromAdmin != null ? policyFromAdmin
-                        : DevicePolicyManager.MTE_NOT_CONTROLLED_BY_POLICY);
-            } else {
-                ActiveAdmin admin =
-                        getDeviceOwnerOrProfileOwnerOfOrganizationOwnedDeviceLocked();
-                return admin != null
-                        ? admin.mtePolicy
-                        : DevicePolicyManager.MTE_NOT_CONTROLLED_BY_POLICY;
-            }
+            final Integer policyFromAdmin = mDevicePolicyEngine.getResolvedPolicy(
+                    PolicyDefinition.MEMORY_TAGGING, UserHandle.USER_ALL);
+
+            return (policyFromAdmin != null ? policyFromAdmin
+                    : DevicePolicyManager.MTE_NOT_CONTROLLED_BY_POLICY);
         }
     }
 

@@ -202,6 +202,7 @@ import com.google.common.util.concurrent.SettableFuture;
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -300,7 +301,7 @@ public class ZenModeHelperTest extends UiServiceTestCase {
 
     @Parameters(name = "{0}")
     public static List<FlagsParameterization> getParams() {
-        return FlagsParameterization.allCombinationsOf(FLAG_MODES_UI, FLAG_BACKUP_RESTORE_LOGGING,
+        return FlagsParameterization.allCombinationsOf(FLAG_BACKUP_RESTORE_LOGGING,
                 com.android.server.notification.Flags.FLAG_FIX_CALLING_UID_FROM_CPS);
     }
 
@@ -2476,6 +2477,8 @@ public class ZenModeHelperTest extends UiServiceTestCase {
     }
 
     @Test
+    @Ignore("TODO: b/398023814 - disabled due to taking a long time; restore when we have a "
+            + "better approach to not timing out")
     public void testAddAutomaticZenRule_claimedSystemOwner() {
         // Make sure anything that claims to have a "system" owner but not actually part of the
         // system package still gets limited on number of rules

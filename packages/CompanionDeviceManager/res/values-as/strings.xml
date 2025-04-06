@@ -42,15 +42,18 @@
     <string name="title_nearby_device_streaming" msgid="2727103756701741359">"&lt;strong&gt;<xliff:g id="APP_NAME">%1$s</xliff:g>&lt;/strong&gt;ক আপোনাৰ <xliff:g id="DEVICE_TYPE">%2$s</xliff:g>ৰ এপ্‌সমূহ &lt;strong&gt;<xliff:g id="DEVICE_NAME">%3$s</xliff:g>&lt;/strong&gt;ত ষ্ট্ৰীম কৰিবলৈ দিবনে?"</string>
     <string name="summary_nearby_device_streaming" msgid="70434958004946884">"<xliff:g id="APP_NAME_0">%1$s</xliff:g>এ <xliff:g id="DEVICE_NAME_1">%3$s</xliff:g>ত দৃশ্যমান হোৱা বা প্লে’ কৰা অডিঅ’, ফট’ পাছৱৰ্ড আৰু বাৰ্তাকে ধৰি যিকোনো বস্তু এক্সেছ কৰিব পাৰিব।&lt;br/&gt;&lt;br/&gt;<xliff:g id="APP_NAME_2">%1$s</xliff:g>এ আপুনি এই অনুমতিৰ এক্সেছ আঁতৰাই নিদিয়া পৰ্যন্ত <xliff:g id="DEVICE_NAME_3">%3$s</xliff:g>ত এপ্‌সমূহ ষ্ট্ৰীম কৰিব পাৰিব।"</string>
     <string name="helper_summary_nearby_device_streaming" msgid="4712712177819370967">"<xliff:g id="APP_NAME">%1$s</xliff:g>এ আপোনাৰ <xliff:g id="DEVICE_NAME">%2$s</xliff:g>ৰ হৈ আপোনাৰ <xliff:g id="DEVICE_TYPE">%3$s</xliff:g>ৰ পৰা এপ্‌সমূহ ষ্ট্ৰীম কৰিবলৈ অনুমতি বিচাৰি অনুৰোধ জনাইছে"</string>
-    <string name="title_sensor_device_streaming" msgid="2395553261097861497">"&lt;strong&gt;<xliff:g id="APP_NAME">%1$s</xliff:g>&lt;/strong&gt;ক আপোনাৰ <xliff:g id="DEVICE_TYPE">%2$s</xliff:g> আৰু &lt;strong&gt;<xliff:g id="DEVICE_NAME">%3$s</xliff:g>&lt;/strong&gt;ৰ মাজত অডিঅ’ আৰু ছিষ্টেমৰ সুবিধাসমূহ ষ্ট্ৰীম কৰিবলৈ দিবনে?"</string>
-    <string name="summary_sensor_device_streaming" msgid="3413105061195145547">"আপোনাৰ <xliff:g id="DEVICE_NAME_1">%3$s</xliff:g>ত প্লে’ কৰা হোৱা আটাইবোৰ সমল <xliff:g id="APP_NAME_0">%1$s</xliff:g>এ এক্সেছ কৰিব পাৰিব।&lt;br/&gt;&lt;br/&gt;আপুনি এই অনুমতিটোৰ এক্সেছ আঁতৰাই নেপেলোৱালৈকে <xliff:g id="APP_NAME_2">%1$s</xliff:g>এ <xliff:g id="DEVICE_NAME_3">%3$s</xliff:g>ত অডিঅ’ ষ্ট্ৰীম কৰিব পাৰিব।"</string>
-    <string name="helper_summary_sensor_device_streaming" msgid="8860174545653786353">"<xliff:g id="APP_NAME">%1$s</xliff:g>এ আপোনাৰ ডিভাইচসমূহৰ মাজত অডিঅ’ আৰু ছিষ্টেমৰ সুবিধাসমূহ ষ্ট্ৰীম কৰিবলৈ <xliff:g id="DEVICE_NAME">%2$s</xliff:g>ৰ হৈ অনুমতি বিচাৰি অনুৰোধ জনাইছে।"</string>
+    <!-- no translation found for title_virtual_device (6556338763070329395) -->
+    <skip />
+    <!-- no translation found for summary_virtual_device (3502592544171322817) -->
+    <skip />
     <string name="profile_name_generic" msgid="6851028682723034988">"ডিভাইচ"</string>
     <string name="summary_generic" msgid="1761976003668044801">"এই এপ্‌টোৱে আপোনাৰ ফ’ন আৰু বাছনি কৰা ডিভাইচটোৰ মাজত কল কৰোঁতাৰ নামৰ দৰে তথ্য ছিংক কৰিব পাৰিব"</string>
     <string name="consent_yes" msgid="8344487259618762872">"অনুমতি দিয়ক"</string>
     <string name="consent_no" msgid="2640796915611404382">"অনুমতি নিদিব"</string>
     <string name="consent_cancel" msgid="5655005528379285841">"বাতিল কৰক"</string>
     <string name="consent_back" msgid="2560683030046918882">"উভতি যাওক"</string>
+    <string name="downward_arrow_action" msgid="2327165938832076333">"সূচীখনত তললৈ স্ক্ৰ’ল কৰক"</string>
+    <string name="downward_arrow" msgid="2292427714411156088">"তলমুৱা কাঁড়"</string>
     <string name="permission_expand" msgid="893185038020887411">"<xliff:g id="PERMISSION_TYPE">%1$s</xliff:g> বিস্তাৰ কৰক"</string>
     <string name="permission_collapse" msgid="3320833884220844084">"<xliff:g id="PERMISSION_TYPE">%1$s</xliff:g> সংকোচন কৰক"</string>
     <string name="permission_sync_confirmation_title" msgid="4409622174437248702">"এপ্‌সমূহক &lt;strong&gt;<xliff:g id="PRIMARY_DEVICE_NAME">%2$s</xliff:g>&lt;/strong&gt;ত দিয়াৰ দৰে &lt;strong&gt;<xliff:g id="COMPANION_DEVICE_NAME">%1$s</xliff:g>&lt;/strong&gt;তো একে অনুমতি প্ৰদান কৰিবনে?"</string>

@@ -17,17 +17,28 @@
 package com.android.systemui.statusbar.notification.collection;
 
 import android.content.Context;
+import android.service.notification.NotificationListenerService;
+import android.service.notification.StatusBarNotification;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.android.systemui.statusbar.notification.collection.notifcollection.NotifLifetimeExtender;
 import com.android.systemui.statusbar.notification.icon.IconPack;
+import com.android.systemui.statusbar.notification.people.PeopleNotificationIdentifier;
 import com.android.systemui.statusbar.notification.row.ExpandableNotificationRow;
+
+import kotlinx.coroutines.flow.StateFlow;
 
 /**
  * Adapter interface for UI to get relevant info.
  */
 public interface EntryAdapter {
+
+    /**
+     * Returns the hash code of the backing entry
+     */
+    int getBackingHashCode();
 
     /**
      * Gets the parent of this entry, or null if the entry's view is not attached
@@ -47,19 +58,14 @@ public interface EntryAdapter {
     /**
      * Gets the view that this entry is backing.
      */
-    @NonNull
+    @Nullable
     ExpandableNotificationRow getRow();
 
     /**
-     * Gets the EntryAdapter that is the nearest root of the collection of rows the given entry
-     * belongs to. If the given entry is a BundleEntry or an isolated child of a BundleEntry, the
-     * BundleEntry will be returned. If the given notification is a group summary NotificationEntry,
-     * or a child of a group summary, the summary NotificationEntry will be returned, even if that
-     * summary belongs to a BundleEntry. If the entry is a notification that does not belong to any
-     * group or bundle grouping, null will be returned.
+     * Whether this entry is the root of its collapsable 'group' - either a BundleEntry or a
+     * notification group summary
      */
-    @Nullable
-    EntryAdapter getGroupRoot();
+    boolean isGroupRoot();
 
     /**
      * @return whether the row can be removed with the 'Clear All' action
@@ -107,4 +113,93 @@ public interface EntryAdapter {
      * Retrieves the pack of icons associated with this entry
      */
     IconPack getIcons();
+
+    /**
+     * Returns whether the content of this entry is sensitive
+     */
+    StateFlow<Boolean> isSensitive();
+
+    /**
+     * Returns whether this row has a background color set by an app
+     */
+    boolean isColorized();
+
+    /**
+     * Returns the SBN that backs this row, if present
+     */
+    @Nullable
+    StatusBarNotification getSbn();
+
+    /**
+     * Returns the ranking that backs this row, if present
+     */
+    @Nullable
+    NotificationListenerService.Ranking getRanking();
+
+    void endLifetimeExtension(
+            @Nullable NotifLifetimeExtender.OnEndLifetimeExtensionCallback callback,
+            @NonNull NotifLifetimeExtender extender);
+
+
+    void onImportanceChanged();
+
+    /**
+     * Use when a change has been made to the underlying object that will both rerank the object
+     * in the shade and change something about its appearance to delay the appearance change until
+     * the ranking reordering is likely to have settled.
+     */
+    void markForUserTriggeredMovement();
+
+    /**
+     * Determines whether a row is considered 'high priority'.
+     *
+     * Notifications that are high priority are visible on the lock screen/status bar and in the top
+     * section in the shade.
+     */
+    boolean isHighPriority();
+
+    boolean isMarkedForUserTriggeredMovement();
+
+    void setInlineControlsShown(boolean currentlyVisible);
+
+    boolean isBlockable();
+
+    boolean canDragAndDrop();
+
+    boolean isBubble();
+
+    @Nullable String getStyle();
+
+    int getSectionBucket();
+
+    boolean isAmbient();
+
+    @PeopleNotificationIdentifier.Companion.PeopleNotificationType int getPeopleNotificationType();
+
+    /**
+     * Returns whether this row represents promoted ongoing notification.
+     */
+    boolean isPromotedOngoing();
+
+    default boolean isFullScreenCapable() {
+        return false;
+    }
+
+    void onDragSuccess();
+
+    /**
+     * Process a click on a notification bubble icon
+     */
+    void onNotificationBubbleIconClicked();
+
+    /**
+     * Processes a click on a notification action
+     */
+    void onNotificationActionClicked();
+
+    NotificationEntry.DismissState getDismissState();
+
+    void onEntryClicked(ExpandableNotificationRow row);
+
 }
+

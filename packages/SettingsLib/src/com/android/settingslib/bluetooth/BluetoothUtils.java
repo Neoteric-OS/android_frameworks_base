@@ -23,6 +23,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.hardware.input.InputManager;
 import android.media.AudioDeviceAttributes;
 import android.media.AudioDeviceInfo;
 import android.media.AudioManager;
@@ -34,6 +35,7 @@ import android.sysprop.BluetoothProperties;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
+import android.view.InputDevice;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
@@ -49,6 +51,8 @@ import com.android.settingslib.widget.AdaptiveOutlineDrawable;
 import com.google.common.collect.ImmutableSet;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -717,6 +721,30 @@ public class BluetoothUtils {
         }
     }
 
+    /** Check if the {@link CachedBluetoothDevice} is a media device */
+    @WorkerThread
+    public static boolean isMediaDevice(@Nullable CachedBluetoothDevice cachedDevice) {
+        if (cachedDevice == null) return false;
+        return cachedDevice.getProfiles().stream()
+                .anyMatch(
+                        profile ->
+                                profile instanceof A2dpProfile
+                                        || profile instanceof HearingAidProfile
+                                        || profile instanceof LeAudioProfile
+                                        || profile instanceof HeadsetProfile);
+    }
+
+    /** Check if the {@link CachedBluetoothDevice} supports LE Audio profile */
+    @WorkerThread
+    public static boolean isLeAudioSupported(@Nullable CachedBluetoothDevice cachedDevice) {
+        if (cachedDevice == null) return false;
+        return cachedDevice.getProfiles().stream()
+                .anyMatch(
+                        profile ->
+                                profile instanceof LeAudioProfile
+                                        && profile.isEnabled(cachedDevice.getDevice()));
+    }
+
     /** Returns if the broadcast is on-going. */
     @WorkerThread
     public static boolean isBroadcasting(@Nullable LocalBluetoothManager manager) {
@@ -1040,21 +1068,45 @@ public class BluetoothUtils {
     /** Get primary device Uri in broadcast. */
     @NonNull
     public static String getPrimaryGroupIdUriForBroadcast() {
+        // TODO: once API is stable, deprecate SettingsProvider solution
         return "bluetooth_le_broadcast_fallback_active_group_id";
     }
 
-    /** Get primary device group id in broadcast. */
+    /** Get primary device group id in broadcast from SettingsProvider. */
     @WorkerThread
     public static int getPrimaryGroupIdForBroadcast(@NonNull ContentResolver contentResolver) {
+        // TODO: once API is stable, deprecate SettingsProvider solution
         return Settings.Secure.getInt(
                 contentResolver,
                 getPrimaryGroupIdUriForBroadcast(),
                 BluetoothCsipSetCoordinator.GROUP_ID_INVALID);
     }
 
+    /**
+     * Get primary device group id in broadcast.
+     *
+     * If Flags.adoptPrimaryGroupManagementApiV2 is enabled, get group id by API,
+     * Otherwise, still get value from SettingsProvider.
+     */
+    @WorkerThread
+    public static int getPrimaryGroupIdForBroadcast(@NonNull ContentResolver contentResolver,
+            @Nullable LocalBluetoothManager manager) {
+        if (Flags.adoptPrimaryGroupManagementApiV2()) {
+            LeAudioProfile leaProfile = manager == null ? null :
+                    manager.getProfileManager().getLeAudioProfile();
+            if (leaProfile == null) {
+                Log.d(TAG, "getPrimaryGroupIdForBroadcast: profile is null");
+                return BluetoothCsipSetCoordinator.GROUP_ID_INVALID;
+            }
+            return leaProfile.getBroadcastToUnicastFallbackGroup();
+        } else {
+            return getPrimaryGroupIdForBroadcast(contentResolver);
+        }
+    }
+
     /** Get develop option value for audio sharing preview. */
     @WorkerThread
-    private static boolean getAudioSharingPreviewValue(@Nullable ContentResolver contentResolver) {
+    public static boolean getAudioSharingPreviewValue(@Nullable ContentResolver contentResolver) {
         if (contentResolver == null) return false;
         return Settings.Global.getInt(
                 contentResolver,
@@ -1073,7 +1125,7 @@ public class BluetoothUtils {
         LocalBluetoothLeBroadcast broadcast =
                 localBtManager.getProfileManager().getLeAudioBroadcastProfile();
         if (broadcast == null || !broadcast.isEnabled(null)) return null;
-        int primaryGroupId = getPrimaryGroupIdForBroadcast(contentResolver);
+        int primaryGroupId = getPrimaryGroupIdForBroadcast(contentResolver, localBtManager);
         if (primaryGroupId == BluetoothCsipSetCoordinator.GROUP_ID_INVALID) return null;
         LocalBluetoothLeBroadcastAssistant assistant =
                 localBtManager.getProfileManager().getLeAudioBroadcastAssistantProfile();
@@ -1192,5 +1244,65 @@ public class BluetoothUtils {
             }
         }
         device.setMetadata(METADATA_FAST_PAIR_CUSTOMIZED_FIELDS, fastPairCustomizedMeta.getBytes());
+    }
+
+    /**
+     * Returns the {@link InputDevice} of the given bluetooth address if the device is a input
+     * device.
+     *
+     * @param address The address of the bluetooth device
+     * @return The {@link InputDevice} of the given address if applicable
+     */
+    @Nullable
+    public static InputDevice getInputDevice(Context context, String address) {
+        InputManager im = context.getSystemService(InputManager.class);
+
+        if (im != null) {
+            for (int deviceId : im.getInputDeviceIds()) {
+                String btAddress = im.getInputDeviceBluetoothAddress(deviceId);
+
+                if (btAddress != null && btAddress.equals(address)) {
+                    return im.getInputDevice(deviceId);
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Identifies whether a device is a stylus using the associated {@link InputDevice} or
+     * {@link CachedBluetoothDevice}.
+     * InputDevices are only available when the device is USI or Bluetooth-connected, whereas
+     * CachedBluetoothDevices are available for Bluetooth devices when connected or paired,
+     * so to handle all cases, both are needed.
+     *
+     * @param inputDevice           The associated input device of the stylus
+     * @param cachedBluetoothDevice The associated bluetooth device of the stylus
+     */
+    public static boolean isDeviceStylus(@Nullable InputDevice inputDevice,
+            @Nullable CachedBluetoothDevice cachedBluetoothDevice) {
+        if (inputDevice != null && inputDevice.supportsSource(InputDevice.SOURCE_STYLUS)) {
+            return true;
+        }
+
+        if (cachedBluetoothDevice != null) {
+            BluetoothDevice bluetoothDevice = cachedBluetoothDevice.getDevice();
+            String deviceType = BluetoothUtils.getStringMetaData(bluetoothDevice,
+                    BluetoothDevice.METADATA_DEVICE_TYPE);
+            return TextUtils.equals(deviceType, BluetoothDevice.DEVICE_TYPE_STYLUS);
+        }
+
+        return false;
+    }
+
+    /** Gets key missing count of the device. This is a workaround before the API is rolled out. */
+    public static Integer getKeyMissingCount(BluetoothDevice device) {
+        try {
+            Method m = BluetoothDevice.class.getDeclaredMethod("getKeyMissingCount");
+            return (int) m.invoke(device);
+        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+            Log.w(TAG, "error happens when getKeyMissingCount.");
+            return null;
+        }
     }
 }

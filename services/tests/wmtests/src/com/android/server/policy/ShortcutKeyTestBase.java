@@ -44,7 +44,7 @@ import static com.android.dx.mockito.inline.extended.ExtendedMockito.spy;
 import static com.android.server.policy.WindowManagerPolicy.ACTION_PASS_TO_USER;
 
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyObject;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 
 import static java.util.Collections.unmodifiableMap;
@@ -111,7 +111,7 @@ class ShortcutKeyTestBase {
         mContext = spy(getInstrumentation().getTargetContext());
         mResources = spy(mContext.getResources());
         mPackageManager = spy(mContext.getPackageManager());
-        doReturn(mContext).when(mContext).createContextAsUser(anyObject(), anyInt());
+        doReturn(mContext).when(mContext).createContextAsUser(any(), anyInt());
         doReturn(mResources).when(mContext).getResources();
         doReturn(mSettingsProviderRule.mockContentResolver(mContext))
                 .when(mContext).getContentResolver();
@@ -238,33 +238,33 @@ class ShortcutKeyTestBase {
         sendKeyCombination(new int[]{keyCode}, durationMillis, false, DEFAULT_DISPLAY);
     }
 
-    boolean sendKeyGestureEventStart(int gestureType) {
-        return mPhoneWindowManager.sendKeyGestureEvent(
+    void sendKeyGestureEventStart(int gestureType) {
+        mPhoneWindowManager.sendKeyGestureEvent(
                 new KeyGestureEvent.Builder().setKeyGestureType(gestureType).setAction(
                         KeyGestureEvent.ACTION_GESTURE_START).build());
     }
 
-    boolean sendKeyGestureEventComplete(int gestureType) {
-        return mPhoneWindowManager.sendKeyGestureEvent(
+    void sendKeyGestureEventComplete(int gestureType) {
+        mPhoneWindowManager.sendKeyGestureEvent(
                 new KeyGestureEvent.Builder().setKeyGestureType(gestureType).setAction(
                         KeyGestureEvent.ACTION_GESTURE_COMPLETE).build());
     }
 
-    boolean sendKeyGestureEventCancel(int gestureType) {
-        return mPhoneWindowManager.sendKeyGestureEvent(
+    void sendKeyGestureEventCancel(int gestureType) {
+        mPhoneWindowManager.sendKeyGestureEvent(
                 new KeyGestureEvent.Builder().setKeyGestureType(gestureType).setAction(
                         KeyGestureEvent.ACTION_GESTURE_COMPLETE).setFlags(
                         KeyGestureEvent.FLAG_CANCELLED).build());
     }
 
-    boolean sendKeyGestureEventComplete(int gestureType, int modifierState) {
-        return mPhoneWindowManager.sendKeyGestureEvent(
+    void sendKeyGestureEventComplete(int gestureType, int modifierState) {
+        mPhoneWindowManager.sendKeyGestureEvent(
                 new KeyGestureEvent.Builder().setModifierState(modifierState).setKeyGestureType(
                         gestureType).setAction(KeyGestureEvent.ACTION_GESTURE_COMPLETE).build());
     }
 
-    boolean sendKeyGestureEventComplete(int keycode, int modifierState, int gestureType) {
-        return mPhoneWindowManager.sendKeyGestureEvent(
+    void sendKeyGestureEventComplete(int keycode, int modifierState, int gestureType) {
+        mPhoneWindowManager.sendKeyGestureEvent(
                 new KeyGestureEvent.Builder().setKeycodes(new int[]{keycode}).setModifierState(
                         modifierState).setKeyGestureType(gestureType).setAction(
                         KeyGestureEvent.ACTION_GESTURE_COMPLETE).build());

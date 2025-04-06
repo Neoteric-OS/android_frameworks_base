@@ -143,3 +143,33 @@ flag {
     is_fixed_read_only: true
     bug: "370928384"
 }
+
+flag {
+    name: "device_aware_settings_override"
+    namespace: "virtual_devices"
+    description: "Settings override for virtual devices"
+    bug: "371801645"
+}
+
+flag {
+    namespace: "virtual_devices"
+    name: "viewconfiguration_apis"
+    description: "APIs for setting ViewConfiguration attributes on virtual devices"
+    bug: "370720522"
+    is_exported: true
+}
+
+flag {
+    name: "virtual_sensor_additional_info"
+    namespace: "virtual_devices"
+    description: "API for injecting SensorAdditionalInfo for VirtualSensor"
+    bug: "393517834"
+    is_exported: true
+}
+
+flag {
+    name: "external_virtual_cameras"
+    namespace: "virtual_devices"
+    description: "Allow external virtual cameras visible only in the Context of the virtual device"
+    bug: "375609768"
+}

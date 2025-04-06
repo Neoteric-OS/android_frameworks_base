@@ -209,6 +209,23 @@ public class UserManager {
     public static final String USER_TYPE_PROFILE_COMMUNAL = "android.os.usertype.profile.COMMUNAL";
 
     /**
+     * User type representing a user who manages supervision on the device.
+     * When any full user on the device is supervised, the credentials for this profile will be
+     * required in order to perform certain actions for that user (i.e. those controlled by
+     * {@link android.app.supervision.SupervisionManager} or the
+     * {@link android.app.role.RoleManager#ROLE_SYSTEM_SUPERVISION supervision role holder}).
+     * There can only be one supervising profile per device, and the credentials set for that
+     * profile will be used to authorize actions for any supervised user on the device. This is
+     * distinct from a managed profile in that it functions only to authorize certain supervised
+     * actions; it does not represent the user to which restriction or management is applied.
+     * @hide
+     */
+    @FlaggedApi(android.multiuser.Flags.FLAG_ALLOW_SUPERVISING_PROFILE)
+    @SystemApi
+    public static final String USER_TYPE_PROFILE_SUPERVISING =
+            "android.os.usertype.profile.SUPERVISING";
+
+    /**
      * User type representing a {@link UserHandle#USER_SYSTEM system} user that is <b>not</b> a
      * human user.
      * This type of user cannot be created; it can only pre-exist on first boot.
@@ -3226,6 +3243,18 @@ public class UserManager {
     }
 
     /**
+     * Returns whether the user type is a
+     * {@link UserManager#USER_TYPE_PROFILE_SUPERVISING supervising profile}.
+     *
+     * @hide
+     */
+    @FlaggedApi(android.multiuser.Flags.FLAG_ALLOW_SUPERVISING_PROFILE)
+    @android.ravenwood.annotation.RavenwoodKeep
+    public static boolean isUserTypeSupervisingProfile(@Nullable String userType) {
+        return USER_TYPE_PROFILE_SUPERVISING.equals(userType);
+    }
+
+    /**
      * @hide
      * @deprecated Use {@link #isRestrictedProfile()}
      */
@@ -3324,8 +3353,7 @@ public class UserManager {
     @FlaggedApi(android.os.Flags.FLAG_ALLOW_PRIVATE_PROFILE)
     @RequiresPermission(anyOf = {
             Manifest.permission.MANAGE_USERS,
-            Manifest.permission.CREATE_USERS},
-            conditional = true)
+            Manifest.permission.CREATE_USERS})
     @UserHandleAware
     public boolean canAddPrivateProfile() {
         if (!android.multiuser.Flags.enablePrivateSpaceFeatures()) return false;
@@ -5873,7 +5901,7 @@ public class UserManager {
      * @param userHandle The user handle of the profile to be queried.
      * @return true if the profile is in quiet mode, false otherwise.
      */
-    @CachedProperty(modsFlagOnOrNone = {})
+    @CachedProperty(mods = {})
     public boolean isQuietModeEnabled(UserHandle userHandle) {
         if (android.multiuser.Flags.cacheQuietModeState()) {
             final int userId = userHandle.getIdentifier();
@@ -6634,7 +6662,7 @@ public class UserManager {
      * @hide
      */
     @UnsupportedAppUsage
-    @CachedProperty(modsFlagOnOrNone = {}, api = "user_manager_users")
+    @CachedProperty(mods = {}, api = "user_manager_users")
     public int getUserSerialNumber(@UserIdInt int userId) {
         // Read only flag should is to fix early access to this API
         // cacheUserSerialNumber to be removed after the

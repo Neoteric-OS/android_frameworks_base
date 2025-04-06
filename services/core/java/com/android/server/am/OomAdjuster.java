@@ -13,6 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/*
+ * Changes from Qualcomm Innovation Center, Inc. are provided under the following license:
+ * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause-Clear
+ */
 
 package com.android.server.am;
 
@@ -426,6 +431,7 @@ public class OomAdjuster {
 // QTI_BEGIN: 2019-06-26: Performance: perf: Use get API for perf Properties.
 
     public static BoostFramework mPerf = new BoostFramework();
+    private int mLegacyUiPerfHandler = -1;
 // QTI_END: 2019-06-26: Performance: perf: Use get API for perf Properties.
 
 // QTI_BEGIN: 2020-06-16: Performance: Send top-app's render thread tid to perf HAL
@@ -2818,7 +2824,7 @@ public class OomAdjuster {
         }
 
         capability |= getDefaultCapability(app, procState);
-        capability |= getCpuCapability(app, now);
+        capability |= getCpuCapability(app, now, foregroundActivities);
 
         // Procstates below BFGS should never have this capability.
         if (procState > PROCESS_STATE_BOUND_FOREGROUND_SERVICE) {
@@ -2977,7 +2983,7 @@ public class OomAdjuster {
         // we check the final procstate, and remove it if the procsate is below BFGS.
         capability |= getBfslCapabilityFromClient(client);
 
-        capability |= getCpuCapabilityFromClient(client);
+        capability |= getCpuCapabilityFromClient(cr, client);
 
         if (cr.notHasFlag(Context.BIND_WAIVE_PRIORITY)) {
             if (cr.hasFlag(Context.BIND_INCLUDE_CAPABILITIES)) {
@@ -3434,7 +3440,7 @@ public class OomAdjuster {
         // we check the final procstate, and remove it if the procsate is below BFGS.
         capability |= getBfslCapabilityFromClient(client);
 
-        capability |= getCpuCapabilityFromClient(client);
+        capability |= getCpuCapabilityFromClient(conn, client);
 
         if (clientProcState >= PROCESS_STATE_CACHED_ACTIVITY) {
             // If the other app is cached for any reason, for purposes here
@@ -3597,19 +3603,26 @@ public class OomAdjuster {
         return baseCapabilities | networkCapabilities;
     }
 
-    private static int getCpuCapability(ProcessRecord app, long nowUptime) {
+    private static int getCpuCapability(ProcessRecord app, long nowUptime,
+            boolean hasForegroundActivities) {
         // Note: persistent processes get all capabilities, including CPU_TIME.
         final UidRecord uidRec = app.getUidRecord();
         if (uidRec != null && uidRec.isCurAllowListed()) {
             // Process is in the power allowlist.
             return PROCESS_CAPABILITY_CPU_TIME;
         }
-        if (app.mState.getCachedHasVisibleActivities()) {
-            // Process has user visible activities.
+        if (hasForegroundActivities) {
+            // TODO: b/402987519 - This grants the Top Sleeping process CPU_TIME but eventually
+            //  should not.
+            // Process has user perceptible activities.
             return PROCESS_CAPABILITY_CPU_TIME;
         }
-        if (app.mServices.hasUndemotedShortForegroundService(nowUptime)) {
-            // It running a short fgs, just give it cpu time.
+        if (Flags.prototypeAggressiveFreezing()) {
+            if (app.mServices.hasUndemotedShortForegroundService(nowUptime)) {
+                // Grant cpu time for short FGS even when aggressively freezing.
+                return PROCESS_CAPABILITY_CPU_TIME;
+            }
+        } else if (app.mServices.hasForegroundServices()) {
             return PROCESS_CAPABILITY_CPU_TIME;
         }
         if (app.mReceivers.numberOfCurReceivers() > 0) {
@@ -3673,10 +3686,13 @@ public class OomAdjuster {
     /**
      * @return the CPU capability from a client (of a service binding or provider).
      */
-    private static int getCpuCapabilityFromClient(ProcessRecord client) {
-        // Just grant CPU capability every time
-        // TODO(b/370817323): Populate with reasons to not propagate cpu capability across bindings.
-        return client.mState.getCurCapability() & PROCESS_CAPABILITY_CPU_TIME;
+    private static int getCpuCapabilityFromClient(OomAdjusterModernImpl.Connection conn,
+            ProcessRecord client) {
+        if (conn == null || conn.transmitsCpuTime()) {
+            return client.mState.getCurCapability() & PROCESS_CAPABILITY_CPU_TIME;
+        } else {
+            return 0;
+        }
     }
 
     /**
@@ -3880,6 +3896,23 @@ public class OomAdjuster {
             try {
                 final int renderThreadTid = app.getRenderThreadTid();
                 if (curSchedGroup == SCHED_GROUP_TOP_APP) {
+                    /* QTI_BEGIN */
+                    if (mLegacyUiPerfHandler == -1) {
+                        int hint = mPerf.getLegacyUiPerfHint(mService.mContext,
+                                                             app.info.packageName);
+                        if (hint != -1) {
+                            mLegacyUiPerfHandler = mPerf.perfHint(hint, "android",
+                                                        Integer.MAX_VALUE, -1);
+                        }
+                    } else {
+                        int hint = mPerf.getLegacyUiPerfHint(mService.mContext,
+                                                             app.info.packageName);
+                        if (hint == -1) {
+                            mPerf.perfLockReleaseHandler(mLegacyUiPerfHandler);
+                            mLegacyUiPerfHandler = -1;
+                        }
+                    }
+                    /* QTI_END */
                     // do nothing if we already switched to RT
                     if (oldSchedGroup != SCHED_GROUP_TOP_APP) {
                         app.getWindowProcessController().onTopProcChanged();

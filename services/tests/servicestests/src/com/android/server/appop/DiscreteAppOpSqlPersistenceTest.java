@@ -97,7 +97,8 @@ public class DiscreteAppOpSqlPersistenceTest {
         mDiscreteRegistry.recordDiscreteAccess(opEvent2);
         List<DiscreteOp> discreteOps = mDiscreteRegistry.getAllDiscreteOps();
 
-        assertThat(discreteOps.size()).isEqualTo(1);
+        assertWithMessage("Expected list size is 1, but the list is: " + discreteOps)
+                .that(discreteOps.size()).isEqualTo(1);
         assertThat(discreteOps).contains(opEvent);
     }
 
@@ -226,9 +227,9 @@ public class DiscreteAppOpSqlPersistenceTest {
         mDiscreteRegistry.recordDiscreteAccess(event2);
     }
 
-    /** This clears in-memory cache and push records into the database. */
     private void flushDiscreteOpsToDatabase() {
-        mDiscreteRegistry.writeAndClearOldAccessHistory();
+        // This clears in-memory cache and push records from cache into the database.
+        mDiscreteRegistry.shutdown();
     }
 
     /**

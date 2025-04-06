@@ -42,15 +42,18 @@
     <string name="title_nearby_device_streaming" msgid="2727103756701741359">"გსურთ, &lt;strong&gt;<xliff:g id="APP_NAME">%1$s</xliff:g>&lt;/strong&gt;-ს მისცეთ თქვენი <xliff:g id="DEVICE_TYPE">%2$s</xliff:g>-ის აპების სტრიმინგის საშუალება &lt;strong&gt;<xliff:g id="DEVICE_NAME">%3$s</xliff:g>&lt;/strong&gt;-ზე?"</string>
     <string name="summary_nearby_device_streaming" msgid="70434958004946884">"<xliff:g id="APP_NAME_0">%1$s</xliff:g> მიიღებს წვდომას ყველაფერზე, რაც ჩანს ან უკრავს <xliff:g id="DEVICE_NAME_1">%3$s</xliff:g>-ზე, მათ შორის, აუდიოზე, ფოტოებზე, პაროლებსა და შეტყობინებებზე.&lt;br/&gt;&lt;br/&gt;<xliff:g id="APP_NAME_2">%1$s</xliff:g> შეძლებს აპების სტრიმინგს <xliff:g id="DEVICE_NAME_3">%3$s</xliff:g>-ზე მანამ, სანამ თქვენ არ გააუქმებთ წვდომას ამ ნებართვაზე."</string>
     <string name="helper_summary_nearby_device_streaming" msgid="4712712177819370967">"<xliff:g id="APP_NAME">%1$s</xliff:g> ითხოვს ნებართვას <xliff:g id="DEVICE_NAME">%2$s</xliff:g>-ის სახელით აპების სტრიმინგისთვის თქვენი <xliff:g id="DEVICE_TYPE">%3$s</xliff:g>-იდან"</string>
-    <string name="title_sensor_device_streaming" msgid="2395553261097861497">"გსურთ, ნება დართოთ &lt;strong&gt;<xliff:g id="APP_NAME">%1$s</xliff:g>&lt;/strong&gt;-ს აუდიოს და სისტემის ფუნქციების სტრიმინგზე თქვენს <xliff:g id="DEVICE_TYPE">%2$s</xliff:g>-სა და &lt;strong&gt;<xliff:g id="DEVICE_NAME">%3$s</xliff:g>&lt;/strong&gt;-ს შორის?"</string>
-    <string name="summary_sensor_device_streaming" msgid="3413105061195145547">"<xliff:g id="APP_NAME_0">%1$s</xliff:g> მიიღებს წვდომას ყველაფერზე, რაც უკრავს თქვენს <xliff:g id="DEVICE_NAME_1">%3$s</xliff:g>-ზე.&lt;br/&gt;&lt;br/&gt;<xliff:g id="APP_NAME_2">%1$s</xliff:g> შეძლებს აუდიოს სტრიმინგს <xliff:g id="DEVICE_NAME_3">%3$s</xliff:g>-ზე, სანამ თქვენ გააუქმებთ წვდომას ამ ნებართვაზე."</string>
-    <string name="helper_summary_sensor_device_streaming" msgid="8860174545653786353">"<xliff:g id="APP_NAME">%1$s</xliff:g> ითხოვს ნებართვას <xliff:g id="DEVICE_NAME">%2$s</xliff:g>-ის სახელით, რათა მოახდინოს აუდიოს და სისტემის სხვა ფუნქციების სტრიმინგი თქვენს მოწყობილობებს შორის."</string>
+    <!-- no translation found for title_virtual_device (6556338763070329395) -->
+    <skip />
+    <!-- no translation found for summary_virtual_device (3502592544171322817) -->
+    <skip />
     <string name="profile_name_generic" msgid="6851028682723034988">"მოწყობილობა"</string>
     <string name="summary_generic" msgid="1761976003668044801">"ეს აპი შეძლებს ინფორმაციის სინქრონიზებას თქვენს ტელეფონსა და თქვენ მიერ არჩეულ მოწყობილობას შორის, მაგალითად, იმ ადამიანის სახელის, რომელიც გირეკავთ"</string>
     <string name="consent_yes" msgid="8344487259618762872">"დაშვება"</string>
     <string name="consent_no" msgid="2640796915611404382">"არ დაიშვას"</string>
     <string name="consent_cancel" msgid="5655005528379285841">"გაუქმება"</string>
     <string name="consent_back" msgid="2560683030046918882">"უკან"</string>
+    <string name="downward_arrow_action" msgid="2327165938832076333">"გადაადგილება სიის ქვემოთ"</string>
+    <string name="downward_arrow" msgid="2292427714411156088">"ქვემოთ მიმართული ისარი"</string>
     <string name="permission_expand" msgid="893185038020887411">"<xliff:g id="PERMISSION_TYPE">%1$s</xliff:g>-ის გაფართოება"</string>
     <string name="permission_collapse" msgid="3320833884220844084">"<xliff:g id="PERMISSION_TYPE">%1$s</xliff:g>-ის ჩაკეცვა"</string>
     <string name="permission_sync_confirmation_title" msgid="4409622174437248702">"გსურთ აპებს &lt;strong&gt;<xliff:g id="COMPANION_DEVICE_NAME">%1$s</xliff:g>&lt;/strong&gt;-ზე იგივე ნებართვები მიანიჭოთ, როგორიც აქვს &lt;strong&gt;<xliff:g id="PRIMARY_DEVICE_NAME">%2$s</xliff:g>&lt;/strong&gt;-ზე?"</string>

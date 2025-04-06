@@ -18,14 +18,12 @@ package com.android.systemui.statusbar.data.repository
 
 import android.view.Display
 import android.view.WindowManager.LayoutParams.TYPE_NAVIGATION_BAR_PANEL
-import com.android.app.viewcapture.ViewCaptureAwareWindowManager
 import com.android.systemui.CoreStartable
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Background
 import com.android.systemui.display.data.repository.DisplayRepository
 import com.android.systemui.display.data.repository.DisplayWindowPropertiesRepository
 import com.android.systemui.display.data.repository.PerDisplayStore
-import com.android.systemui.display.data.repository.PerDisplayStoreImpl
 import com.android.systemui.statusbar.core.StatusBarConnectedDisplays
 import com.android.systemui.statusbar.events.PrivacyDotWindowController
 import dagger.Binds
@@ -49,13 +47,15 @@ constructor(
     private val windowControllerFactory: PrivacyDotWindowController.Factory,
     private val displayWindowPropertiesRepository: DisplayWindowPropertiesRepository,
     private val privacyDotViewControllerStore: PrivacyDotViewControllerStore,
-    private val viewCaptureAwareWindowManagerFactory: ViewCaptureAwareWindowManager.Factory,
 ) :
     PrivacyDotWindowControllerStore,
-    PerDisplayStoreImpl<PrivacyDotWindowController>(backgroundApplicationScope, displayRepository) {
+    StatusBarPerDisplayStoreImpl<PrivacyDotWindowController>(
+        backgroundApplicationScope,
+        displayRepository,
+    ) {
 
     init {
-        StatusBarConnectedDisplays.assertInNewMode()
+        StatusBarConnectedDisplays.unsafeAssertInNewMode()
     }
 
     override fun createInstanceForDisplay(displayId: Int): PrivacyDotWindowController? {
@@ -70,13 +70,16 @@ constructor(
         return windowControllerFactory.create(
             displayId = displayId,
             privacyDotViewController = privacyDotViewController,
-            viewCaptureAwareWindowManager =
-                viewCaptureAwareWindowManagerFactory.create(displayWindowProperties.windowManager),
+            windowManager = displayWindowProperties.windowManager,
             inflater = displayWindowProperties.layoutInflater,
         )
     }
 
     override val instanceClass = PrivacyDotWindowController::class.java
+
+    override suspend fun onDisplayRemovalAction(instance: PrivacyDotWindowController) {
+        instance.stop()
+    }
 }
 
 @Module

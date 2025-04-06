@@ -22,18 +22,15 @@ import com.android.systemui.lifecycle.ExclusiveActivatable
 import com.android.systemui.lifecycle.Hydrator
 import com.android.systemui.media.controls.domain.pipeline.interactor.MediaCarouselInteractor
 import com.android.systemui.scene.domain.interactor.SceneInteractor
-import com.android.systemui.scene.shared.model.Scenes
 import com.android.systemui.shade.domain.interactor.ShadeInteractor
 import com.android.systemui.shade.ui.viewmodel.ShadeHeaderViewModel
 import com.android.systemui.statusbar.disableflags.domain.interactor.DisableFlagsInteractor
-import com.android.systemui.statusbar.notification.domain.interactor.ActiveNotificationsInteractor
 import com.android.systemui.statusbar.notification.stack.ui.viewmodel.NotificationsPlaceholderViewModel
 import com.android.systemui.utils.coroutines.flow.flatMapLatestConflated
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flowOf
@@ -53,27 +50,9 @@ constructor(
     private val shadeInteractor: ShadeInteractor,
     disableFlagsInteractor: DisableFlagsInteractor,
     mediaCarouselInteractor: MediaCarouselInteractor,
-    activeNotificationsInteractor: ActiveNotificationsInteractor,
 ) : ExclusiveActivatable() {
 
     private val hydrator = Hydrator("NotificationsShadeOverlayContentViewModel.hydrator")
-
-    val showClock: Boolean by
-        hydrator.hydratedStateOf(
-            traceName = "showClock",
-            initialValue =
-                shouldShowClock(
-                    isShadeLayoutWide = shadeInteractor.isShadeLayoutWide.value,
-                    areAnyNotificationsPresent =
-                        activeNotificationsInteractor.areAnyNotificationsPresentValue,
-                ),
-            source =
-                combine(
-                    shadeInteractor.isShadeLayoutWide,
-                    activeNotificationsInteractor.areAnyNotificationsPresent,
-                    this::shouldShowClock,
-                ),
-        )
 
     val showMedia: Boolean by
         hydrator.hydratedStateOf(
@@ -96,18 +75,6 @@ constructor(
             launch { hydrator.activate() }
 
             launch {
-                sceneInteractor.currentScene.collect { currentScene ->
-                    when (currentScene) {
-                        // TODO(b/369513770): The ShadeSession should be preserved in this scenario.
-                        Scenes.Bouncer ->
-                            shadeInteractor.collapseNotificationsShade(
-                                loggingReason = "bouncer shown while shade is open"
-                            )
-                    }
-                }
-            }
-
-            launch {
                 shadeInteractor.isShadeTouchable
                     .distinctUntilChanged()
                     .filter { !it }
@@ -123,13 +90,6 @@ constructor(
 
     fun onScrimClicked() {
         shadeInteractor.collapseNotificationsShade(loggingReason = "shade scrim clicked")
-    }
-
-    private fun shouldShowClock(
-        isShadeLayoutWide: Boolean,
-        areAnyNotificationsPresent: Boolean,
-    ): Boolean {
-        return !isShadeLayoutWide && areAnyNotificationsPresent
     }
 
     @AssistedFactory

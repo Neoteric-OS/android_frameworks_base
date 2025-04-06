@@ -109,7 +109,7 @@ import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import android.Manifest;
 import android.app.ActivityManager;
@@ -953,11 +953,13 @@ public final class AlarmManagerServiceTest {
 
     @Test
     @EnableFlags(Flags.FLAG_ACQUIRE_WAKELOCK_BEFORE_SEND)
-    public void testWakelockOrdering() throws Exception {
+    public void testWakelockOrderingFirstAlarm() throws Exception {
         final long triggerTime = mNowElapsedTest + 5000;
         final PendingIntent alarmPi = getNewMockPendingIntent();
         setTestAlarm(ELAPSED_REALTIME_WAKEUP, triggerTime, alarmPi);
 
+        // Pretend that it is the first alarm in this batch, or no other alarms are still processing
+        mService.mBroadcastRefCount = 0;
         mNowElapsedTest = mTestTimer.getElapsed();
         mTestTimer.expire();
 
@@ -970,6 +972,72 @@ public final class AlarmManagerServiceTest {
                 onFinishedCaptor.capture(), any(Handler.class), isNull(), any());
         onFinishedCaptor.getValue().onSendFinished(alarmPi, null, 0, null, null);
 
+        inOrder.verify(mWakeLock).release();
+    }
+
+    @Test
+    @EnableFlags(Flags.FLAG_ACQUIRE_WAKELOCK_BEFORE_SEND)
+    public void testWakelockOrderingNonFirst() throws Exception {
+        final long triggerTime = mNowElapsedTest + 5000;
+        final PendingIntent alarmPi = getNewMockPendingIntent();
+        setTestAlarm(ELAPSED_REALTIME_WAKEUP, triggerTime, alarmPi);
+
+        // Pretend that some previous alarms are still processing.
+        mService.mBroadcastRefCount = 3;
+        mNowElapsedTest = mTestTimer.getElapsed();
+        mTestTimer.expire();
+
+        final ArgumentCaptor<PendingIntent.OnFinished> onFinishedCaptor =
+                ArgumentCaptor.forClass(PendingIntent.OnFinished.class);
+        verify(alarmPi).send(eq(mMockContext), eq(0), any(Intent.class), onFinishedCaptor.capture(),
+                any(Handler.class), isNull(), any());
+        onFinishedCaptor.getValue().onSendFinished(alarmPi, null, 0, null, null);
+
+        verify(mWakeLock, never()).acquire();
+        verify(mWakeLock, never()).release();
+    }
+
+    @Test
+    @EnableFlags(Flags.FLAG_ACQUIRE_WAKELOCK_BEFORE_SEND)
+    public void testWakelockReleasedWhenSendFails() throws Exception {
+        final PendingIntent alarmPi = getNewMockPendingIntent();
+        doThrow(new PendingIntent.CanceledException("test")).when(alarmPi).send(eq(mMockContext),
+                eq(0), any(Intent.class), any(), any(Handler.class), isNull(), any());
+
+        setTestAlarm(ELAPSED_REALTIME_WAKEUP, mNowElapsedTest + 5000, alarmPi);
+
+        // Pretend that it is the first alarm in this batch, or no other alarms are still processing
+        mService.mBroadcastRefCount = 0;
+        mNowElapsedTest = mTestTimer.getElapsed();
+        mTestTimer.expire();
+
+        final InOrder inOrder = Mockito.inOrder(mWakeLock);
+        inOrder.verify(mWakeLock).acquire();
+        inOrder.verify(mWakeLock).release();
+
+        setTestAlarm(ELAPSED_REALTIME_WAKEUP, mNowElapsedTest + 5000, alarmPi);
+
+        // Pretend that some previous alarms are still processing.
+        mService.mBroadcastRefCount = 4;
+        mNowElapsedTest = mTestTimer.getElapsed();
+        mTestTimer.expire();
+        inOrder.verifyNoMoreInteractions();
+    }
+
+    @Test
+    @EnableFlags(Flags.FLAG_ACQUIRE_WAKELOCK_BEFORE_SEND)
+    public void testWakelockReleasedOnListenerException() throws Exception {
+        final long triggerTime = mNowElapsedTest + 5000;
+        final IAlarmListener listener = getNewListener(() -> {
+            throw new RuntimeException("test");
+        });
+        setTestAlarmWithListener(ELAPSED_REALTIME_WAKEUP, triggerTime, listener);
+
+        mNowElapsedTest = mTestTimer.getElapsed();
+        mTestTimer.expire();
+
+        final InOrder inOrder = Mockito.inOrder(mWakeLock);
+        inOrder.verify(mWakeLock).acquire();
         inOrder.verify(mWakeLock).release();
     }
 
@@ -3656,8 +3724,8 @@ public final class AlarmManagerServiceTest {
         setDeviceConfigInt(KEY_TEMPORARY_QUOTA_BUMP, 0);
 
         mAppStandbyListener.triggerTemporaryQuotaBump(TEST_CALLING_PACKAGE, TEST_CALLING_USER);
-        verifyZeroInteractions(mPackageManagerInternal);
-        verifyZeroInteractions(mService.mHandler);
+        verifyNoMoreInteractions(mPackageManagerInternal);
+        verifyNoMoreInteractions(mService.mHandler);
     }
 
     private void testTemporaryQuota_bumpedAfterDeferral(int standbyBucket) throws Exception {

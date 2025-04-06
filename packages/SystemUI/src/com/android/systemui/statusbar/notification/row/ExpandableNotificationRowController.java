@@ -20,6 +20,7 @@ import static com.android.systemui.Dependency.ALLOW_NOTIFICATION_LONG_PRESS_NAME
 import static com.android.systemui.statusbar.NotificationRemoteInputManager.ENABLE_REMOTE_INPUT;
 import static com.android.systemui.statusbar.StatusBarState.KEYGUARD;
 import static com.android.systemui.statusbar.notification.NotificationUtils.logKey;
+import static com.android.systemui.util.kotlin.JavaAdapterKt.collectFlow;
 
 import android.net.Uri;
 import android.os.UserHandle;
@@ -35,8 +36,8 @@ import androidx.annotation.VisibleForTesting;
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.UiEventLogger;
 import com.android.internal.statusbar.IStatusBarService;
+import com.android.systemui.Flags;
 import com.android.systemui.flags.FeatureFlagsClassic;
-import com.android.systemui.flags.Flags;
 import com.android.systemui.plugins.FalsingManager;
 import com.android.systemui.plugins.PluginManager;
 import com.android.systemui.plugins.statusbar.NotificationMenuRowPlugin;
@@ -45,7 +46,8 @@ import com.android.systemui.scene.shared.flag.SceneContainerFlag;
 import com.android.systemui.statusbar.SmartReplyController;
 import com.android.systemui.statusbar.notification.ColorUpdateLogger;
 import com.android.systemui.statusbar.notification.FeedbackIcon;
-import com.android.systemui.statusbar.notification.collection.NotificationEntry;
+import com.android.systemui.statusbar.notification.collection.EntryAdapterFactory;
+import com.android.systemui.statusbar.notification.collection.PipelineEntry;
 import com.android.systemui.statusbar.notification.collection.provider.NotificationDismissibilityProvider;
 import com.android.systemui.statusbar.notification.collection.render.GroupExpansionManager;
 import com.android.systemui.statusbar.notification.collection.render.GroupMembershipManager;
@@ -64,6 +66,7 @@ import com.android.systemui.statusbar.phone.KeyguardBypassController;
 import com.android.systemui.statusbar.policy.SmartReplyConstants;
 import com.android.systemui.statusbar.policy.dagger.RemoteInputViewSubcomponent;
 import com.android.systemui.util.time.SystemClock;
+import com.android.systemui.window.domain.interactor.WindowRootViewBlurInteractor;
 
 import com.google.android.msdl.data.model.MSDLToken;
 import com.google.android.msdl.domain.MSDLPlayer;
@@ -118,8 +121,9 @@ public class ExpandableNotificationRowController implements NotifViewController 
     private final IStatusBarService mStatusBarService;
     private final UiEventLogger mUiEventLogger;
     private final MSDLPlayer mMSDLPlayer;
-
     private final NotificationSettingsController mSettingsController;
+    private final EntryAdapterFactory mEntryAdapterFactory;
+    private final WindowRootViewBlurInteractor mWindowRootViewBlurInteractor;
 
     @VisibleForTesting
     final NotificationSettingsController.Listener mSettingsListener =
@@ -127,7 +131,14 @@ public class ExpandableNotificationRowController implements NotifViewController 
                 @Override
                 public void onSettingChanged(Uri setting, int userId, String value) {
                     if (BUBBLES_SETTING_URI.equals(setting)) {
-                        final int viewUserId = mView.getEntry().getSbn().getUserId();
+                        if (NotificationBundleUi.isEnabled()
+                                && mView.getEntryAdapter().getSbn() == null) {
+                            // only valid for notification rows
+                            return;
+                        }
+                        final int viewUserId = NotificationBundleUi.isEnabled()
+                            ? mView.getEntryAdapter().getSbn().getUserId()
+                            : mView.getEntryLegacy().getSbn().getUserId();
                         if (viewUserId == UserHandle.USER_ALL || viewUserId == userId) {
                             mView.getPrivateLayout().setBubblesEnabledForUser(
                                     BUBBLES_SETTING_ENABLED_VALUE.equals(value));
@@ -278,7 +289,9 @@ public class ExpandableNotificationRowController implements NotifViewController 
             IStatusBarService statusBarService,
             UiEventLogger uiEventLogger,
             MSDLPlayer msdlPlayer,
-            NotificationRebindingTracker notificationRebindingTracker) {
+            NotificationRebindingTracker notificationRebindingTracker,
+            EntryAdapterFactory entryAdapterFactory,
+            WindowRootViewBlurInteractor windowRootViewBlurInteractor) {
         mView = view;
         mListContainer = listContainer;
         mRemoteInputViewSubcomponentFactory = rivSubcomponentFactory;
@@ -315,14 +328,17 @@ public class ExpandableNotificationRowController implements NotifViewController 
         mStatusBarService = statusBarService;
         mUiEventLogger = uiEventLogger;
         mMSDLPlayer = msdlPlayer;
+        mEntryAdapterFactory = entryAdapterFactory;
+        mWindowRootViewBlurInteractor = windowRootViewBlurInteractor;
     }
 
     /**
      * Initialize the controller.
      */
-    public void init(NotificationEntry entry) {
+    public void init(PipelineEntry entry) {
         mActivatableNotificationViewController.init();
         mView.initialize(
+                mEntryAdapterFactory.create(entry),
                 entry,
                 mRemoteInputViewSubcomponentFactory,
                 mAppName,
@@ -352,7 +368,8 @@ public class ExpandableNotificationRowController implements NotifViewController 
         );
         mView.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
         if (mAllowLongPress) {
-            if (mFeatureFlags.isEnabled(Flags.NOTIFICATION_DRAG_TO_CONTENTS)) {
+            if (mFeatureFlags.isEnabled(
+                    com.android.systemui.flags.Flags.NOTIFICATION_DRAG_TO_CONTENTS)) {
                 mView.setDragController(mDragController);
             }
 
@@ -376,8 +393,12 @@ public class ExpandableNotificationRowController implements NotifViewController 
             public void onViewAttachedToWindow(View v) {
                 if (NotificationBundleUi.isEnabled()) {
                     mView.setInitializationTime(mClock.elapsedRealtime());
+                    if (mView.getEntryAdapter().getSbn() != null) {
+                        mSettingsController.addCallback(BUBBLES_SETTING_URI, mSettingsListener);
+                    }
                 } else {
-                    mView.getEntry().setInitializationTime(mClock.elapsedRealtime());
+                    mView.getEntryLegacy().setInitializationTime(mClock.elapsedRealtime());
+                    mSettingsController.addCallback(BUBBLES_SETTING_URI, mSettingsListener);
                 }
                 mPluginManager.addPluginListener(mView,
                         NotificationMenuRowPlugin.class, false /* Allow multiple */);
@@ -385,7 +406,7 @@ public class ExpandableNotificationRowController implements NotifViewController 
                     mView.setOnKeyguard(mStatusBarStateController.getState() == KEYGUARD);
                     mStatusBarStateController.addCallback(mStatusBarStateListener);
                 }
-                mSettingsController.addCallback(BUBBLES_SETTING_URI, mSettingsListener);
+
             }
 
             @Override
@@ -397,6 +418,11 @@ public class ExpandableNotificationRowController implements NotifViewController 
                 mSettingsController.removeCallback(BUBBLES_SETTING_URI, mSettingsListener);
             }
         });
+
+        if (Flags.notificationRowTransparency()) {
+            collectFlow(mView, mWindowRootViewBlurInteractor.isBlurCurrentlySupported(),
+                    mView::setIsBlurSupported);
+        }
     }
 
     private final StatusBarStateController.StateListener mStatusBarStateListener =
@@ -410,7 +436,9 @@ public class ExpandableNotificationRowController implements NotifViewController 
     @Override
     @NonNull
     public String getNodeLabel() {
-        return NotificationBundleUi.isEnabled() ? mView.getLoggingKey() : logKey(mView.getEntry());
+        return NotificationBundleUi.isEnabled()
+                ? mView.getLoggingKey()
+                : logKey(mView.getEntryLegacy());
     }
 
     @Override

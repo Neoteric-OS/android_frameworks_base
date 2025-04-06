@@ -145,16 +145,6 @@ flag {
 }
 
 flag {
-    name: "enable_magnification_follows_mouse_bugfix"
-    namespace: "accessibility"
-    description: "Whether to enable mouse following for fullscreen magnification"
-    bug: "354696546"
-    metadata {
-      purpose: PURPOSE_BUGFIX
-    }
-}
-
-flag {
     name: "enable_magnification_follows_mouse_with_pointer_motion_filter"
     namespace: "accessibility"
     description: "Whether to enable mouse following using pointer motion filter"
@@ -233,6 +223,16 @@ flag {
 }
 
 flag {
+    name: "manager_lifecycle_user_change"
+    namespace: "accessibility"
+    description: "Use A11yManagerService's Lifecycle to change users, instead of listening for user changed events."
+    bug: "393626471"
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
     name: "motion_event_injector_cancel_fix"
     namespace: "accessibility"
     description: "Fix the ACTION_CANCEL logic used in MotionEventInjector to avoid InputDispatcher inconsistency"
@@ -267,6 +267,16 @@ flag {
     namespace: "accessibility"
     description: "Whether to set min span of ScaleGestureDetector to zero."
     bug: "295327792"
+}
+
+flag {
+    name: "pointer_up_motion_event_in_touch_exploration"
+    namespace: "accessibility"
+    description: "Allows POINTER_UP motionEvents to trigger during touch exploration."
+    bug: "374930391"
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
 }
 
 flag {
@@ -342,6 +352,16 @@ flag {
     namespace: "accessibility"
     description: "Skip onSomePackageChanged callback if the SwitchUser signal is not received yet."
     bug: "340927041"
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "hearing_input_change_when_comm_device"
+    namespace: "accessibility"
+    description: "Listen to the CommunicationDeviceChanged to show hearing device input notification."
+    bug: "394070235"
     metadata {
         purpose: PURPOSE_BUGFIX
     }

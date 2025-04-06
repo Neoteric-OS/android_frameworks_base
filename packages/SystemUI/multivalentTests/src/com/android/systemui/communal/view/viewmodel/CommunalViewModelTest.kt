@@ -33,6 +33,8 @@ import com.android.systemui.Flags.FLAG_GLANCEABLE_HUB_V2
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.bouncer.data.repository.fakeKeyguardBouncerRepository
 import com.android.systemui.communal.data.model.CommunalSmartspaceTimer
+import com.android.systemui.communal.data.model.FEATURE_MANUAL_OPEN
+import com.android.systemui.communal.data.model.SuppressionReason
 import com.android.systemui.communal.data.repository.FakeCommunalMediaRepository
 import com.android.systemui.communal.data.repository.FakeCommunalSceneRepository
 import com.android.systemui.communal.data.repository.FakeCommunalSmartspaceRepository
@@ -48,6 +50,8 @@ import com.android.systemui.communal.domain.interactor.communalInteractor
 import com.android.systemui.communal.domain.interactor.communalSceneInteractor
 import com.android.systemui.communal.domain.interactor.communalSettingsInteractor
 import com.android.systemui.communal.domain.interactor.communalTutorialInteractor
+import com.android.systemui.communal.domain.interactor.setCommunalEnabled
+import com.android.systemui.communal.domain.interactor.setCommunalV2ConfigEnabled
 import com.android.systemui.communal.domain.model.CommunalContentModel
 import com.android.systemui.communal.shared.log.CommunalMetricsLogger
 import com.android.systemui.communal.shared.model.CommunalContentSize
@@ -73,6 +77,8 @@ import com.android.systemui.keyguard.shared.model.StatusBarState
 import com.android.systemui.keyguard.shared.model.TransitionState
 import com.android.systemui.keyguard.shared.model.TransitionStep
 import com.android.systemui.keyguard.ui.transitions.blurConfig
+import com.android.systemui.kosmos.collectLastValue
+import com.android.systemui.kosmos.runTest
 import com.android.systemui.kosmos.testDispatcher
 import com.android.systemui.kosmos.testScope
 import com.android.systemui.log.logcatLogBuffer
@@ -85,6 +91,7 @@ import com.android.systemui.power.domain.interactor.powerInteractor
 import com.android.systemui.scene.data.repository.Idle
 import com.android.systemui.scene.data.repository.Transition
 import com.android.systemui.scene.data.repository.setTransition
+import com.android.systemui.scene.domain.interactor.sceneInteractor
 import com.android.systemui.scene.shared.flag.SceneContainerFlag
 import com.android.systemui.scene.shared.model.Scenes
 import com.android.systemui.settings.fakeUserTracker
@@ -121,7 +128,9 @@ import platform.test.runner.parameterized.Parameters
 @RunWith(ParameterizedAndroidJunit4::class)
 class CommunalViewModelTest(flags: FlagsParameterization) : SysuiTestCase() {
     @Mock private lateinit var mediaHost: MediaHost
+
     @Mock private lateinit var mediaCarouselScrollHandler: MediaCarouselScrollHandler
+
     @Mock private lateinit var metricsLogger: CommunalMetricsLogger
 
     private val kosmos = testKosmos()
@@ -205,11 +214,8 @@ class CommunalViewModelTest(flags: FlagsParameterization) : SysuiTestCase() {
     @Test
     fun tutorial_tutorialNotCompletedAndKeyguardVisible_showTutorialContent() =
         testScope.runTest {
-            // Keyguard showing, storage unlocked, main user, and tutorial not started.
             keyguardRepository.setKeyguardShowing(true)
-            keyguardRepository.setKeyguardOccluded(false)
-            userRepository.setUserUnlocked(FakeUserRepository.MAIN_USER_ID, true)
-            setIsMainUser(true)
+            kosmos.setCommunalEnabled(true)
             tutorialRepository.setTutorialSettingState(
                 Settings.Secure.HUB_MODE_TUTORIAL_NOT_STARTED
             )
@@ -602,6 +608,7 @@ class CommunalViewModelTest(flags: FlagsParameterization) : SysuiTestCase() {
                 flowOf(ObservableTransitionState.Idle(CommunalScenes.Communal))
             )
             // Transitioned to Glanceable hub.
+            kosmos.sceneInteractor.changeScene(Scenes.Communal, "")
             kosmos.setTransition(
                 sceneTransition = Idle(Scenes.Communal),
                 stateTransition =
@@ -656,6 +663,7 @@ class CommunalViewModelTest(flags: FlagsParameterization) : SysuiTestCase() {
             keyguardRepository.setKeyguardOccluded(true)
 
             // And on hub
+            kosmos.sceneInteractor.changeScene(Scenes.Communal, "")
             kosmos.setTransition(
                 sceneTransition = Idle(Scenes.Communal),
                 stateTransition =
@@ -673,6 +681,7 @@ class CommunalViewModelTest(flags: FlagsParameterization) : SysuiTestCase() {
             assertThat(isCommunalContentFlowFrozen).isEqualTo(true)
 
             // 3. When transitioned to OCCLUDED and activity shows
+            kosmos.sceneInteractor.changeScene(Scenes.Lockscreen, "")
             kosmos.setTransition(
                 sceneTransition = Idle(Scenes.Lockscreen),
                 stateTransition =
@@ -759,6 +768,7 @@ class CommunalViewModelTest(flags: FlagsParameterization) : SysuiTestCase() {
             keyguardRepository.setKeyguardOccluded(true)
 
             // And transitioned to hub
+            kosmos.sceneInteractor.changeScene(Scenes.Communal, "")
             kosmos.setTransition(
                 sceneTransition = Idle(Scenes.Communal),
                 stateTransition =
@@ -933,6 +943,31 @@ class CommunalViewModelTest(flags: FlagsParameterization) : SysuiTestCase() {
 
             kosmos.fakeKeyguardBouncerRepository.setPrimaryShow(false)
             assertThat(isUiBlurred).isFalse()
+        }
+
+    @Test
+    @EnableFlags(FLAG_GLANCEABLE_HUB_V2)
+    fun swipeToCommunal() =
+        kosmos.runTest {
+            setCommunalV2ConfigEnabled(true)
+            // Suppress manual opening
+            communalSettingsInteractor.setSuppressionReasons(
+                listOf(SuppressionReason.ReasonUnknown(FEATURE_MANUAL_OPEN))
+            )
+
+            val viewModel = createViewModel()
+            val swipeToHubEnabled by collectLastValue(viewModel.swipeToHubEnabled)
+            assertThat(swipeToHubEnabled).isFalse()
+
+            communalSettingsInteractor.setSuppressionReasons(emptyList())
+            assertThat(swipeToHubEnabled).isTrue()
+
+            keyguardTransitionRepository.sendTransitionStep(
+                from = KeyguardState.LOCKSCREEN,
+                to = KeyguardState.AOD,
+                transitionState = TransitionState.STARTED,
+            )
+            assertThat(swipeToHubEnabled).isFalse()
         }
 
     private suspend fun setIsMainUser(isMainUser: Boolean) {

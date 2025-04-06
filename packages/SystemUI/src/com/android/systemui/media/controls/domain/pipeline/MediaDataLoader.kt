@@ -51,6 +51,7 @@ import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.dagger.qualifiers.Background
 import com.android.systemui.dagger.qualifiers.Main
 import com.android.systemui.graphics.ImageLoader
+import com.android.systemui.media.NotificationMediaManager.isPlayingState
 import com.android.systemui.media.controls.shared.model.MediaAction
 import com.android.systemui.media.controls.shared.model.MediaButton
 import com.android.systemui.media.controls.shared.model.MediaData
@@ -60,7 +61,6 @@ import com.android.systemui.media.controls.util.MediaControllerFactory
 import com.android.systemui.media.controls.util.MediaDataUtils
 import com.android.systemui.media.controls.util.MediaFlags
 import com.android.systemui.res.R
-import com.android.systemui.statusbar.NotificationMediaManager.isPlayingState
 import com.android.systemui.statusbar.notification.row.HybridGroupManager
 import com.android.systemui.util.kotlin.logD
 import java.util.concurrent.ConcurrentHashMap
@@ -339,11 +339,7 @@ constructor(
                 desc.extras?.getLong(MediaConstants.METADATA_KEY_IS_EXPLICIT) ==
                     MediaConstants.METADATA_VALUE_ATTRIBUTE_PRESENT
 
-            val progress =
-                if (mediaFlags.isResumeProgressEnabled()) {
-                    MediaDataUtils.getDescriptionProgress(desc.extras)
-                } else null
-
+            val progress = MediaDataUtils.getDescriptionProgress(desc.extras)
             val mediaAction = getResumeMediaAction(resumeAction)
             return MediaDataLoaderResult(
                 appName = appName,
@@ -521,7 +517,7 @@ constructor(
         return MediaAction(
             Icon.createWithResource(context, iconId).setTint(themeText).loadDrawable(context),
             action,
-            context.getString(R.string.controls_media_resume),
+            context.getString(R.string.controls_media_button_play),
             if (Flags.mediaControlsUiUpdate()) {
                 context.getDrawable(R.drawable.ic_media_play_button_container)
             } else {

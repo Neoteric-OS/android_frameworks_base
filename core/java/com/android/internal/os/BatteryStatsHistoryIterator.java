@@ -24,6 +24,7 @@ import android.util.Slog;
 import android.util.SparseArray;
 
 import java.util.Iterator;
+import java.util.Queue;
 
 /**
  * An iterator for {@link BatteryStats.HistoryItem}'s.
@@ -47,6 +48,11 @@ public class BatteryStatsHistoryIterator implements Iterator<BatteryStats.Histor
     private boolean mClosed;
     private long mBaseMonotonicTime;
     private long mBaseTimeUtc;
+    private int mItemIndex = 0;
+    private final int mMaxHistoryItems;
+    private int mParcelDataPosition;
+
+    private Queue<BatteryStatsHistory.BatteryHistoryParcelContainer> mParcelContainers;
 
     public BatteryStatsHistoryIterator(@NonNull BatteryStatsHistory history, long startTimeMs,
             long endTimeMs) {
@@ -54,12 +60,17 @@ public class BatteryStatsHistoryIterator implements Iterator<BatteryStats.Histor
         mStartTimeMs = startTimeMs;
         mEndTimeMs = (endTimeMs != MonotonicClock.UNDEFINED) ? endTimeMs : Long.MAX_VALUE;
         mHistoryItem.clear();
+        mMaxHistoryItems = history.getEstimatedItemCount();
     }
 
     @Override
     public boolean hasNext() {
         if (!mNextItemReady) {
-            advance();
+            if (!advance()) {
+                mHistoryItem = null;
+                close();
+            }
+            mNextItemReady = true;
         }
 
         return mHistoryItem != null;
@@ -72,30 +83,48 @@ public class BatteryStatsHistoryIterator implements Iterator<BatteryStats.Histor
     @Override
     public BatteryStats.HistoryItem next() {
         if (!mNextItemReady) {
-            advance();
+            if (!advance()) {
+                mHistoryItem = null;
+                close();
+            }
         }
         mNextItemReady = false;
         return mHistoryItem;
     }
 
-    private void advance() {
-        while (true) {
-            Parcel p = mBatteryStatsHistory.getNextParcel(mStartTimeMs, mEndTimeMs);
-            if (p == null) {
-                break;
+    private boolean advance() {
+        if (mParcelContainers == null) {
+            mParcelContainers = mBatteryStatsHistory.getParcelContainers(mStartTimeMs, mEndTimeMs);
+        }
+
+        BatteryStatsHistory.BatteryHistoryParcelContainer container;
+        while ((container = mParcelContainers.peek()) != null) {
+            Parcel p = container.getParcel();
+            if (p == null || p.dataPosition() >= p.dataSize()) {
+                container.close();
+                mParcelContainers.remove();
+                mParcelDataPosition = 0;
+                continue;
             }
 
             if (!mTimeInitialized) {
-                mBaseMonotonicTime = mBatteryStatsHistory.getHistoryBufferStartTime(p);
+                mBaseMonotonicTime = container.getMonotonicStartTime();
                 mHistoryItem.time = mBaseMonotonicTime;
                 mTimeInitialized = true;
             }
 
             try {
                 readHistoryDelta(p, mHistoryItem);
+                int dataPosition = p.dataPosition();
+                if (dataPosition <= mParcelDataPosition) {
+                    Slog.wtf(TAG, "Corrupted battery history, parcel is not progressing: "
+                            + dataPosition + " of " + p.dataSize());
+                    return false;
+                }
+                mParcelDataPosition = dataPosition;
             } catch (Throwable t) {
                 Slog.wtf(TAG, "Corrupted battery history", t);
-                break;
+                return false;
             }
 
             if (mHistoryItem.cmd == BatteryStats.HistoryItem.CMD_CURRENT_TIME
@@ -103,20 +132,24 @@ public class BatteryStatsHistoryIterator implements Iterator<BatteryStats.Histor
                 mBaseTimeUtc = mHistoryItem.currentTime - (mHistoryItem.time - mBaseMonotonicTime);
             }
 
+            if (mHistoryItem.time < mStartTimeMs) {
+                continue;
+            }
+
+            if (mEndTimeMs != 0 && mEndTimeMs != MonotonicClock.UNDEFINED
+                    && mHistoryItem.time >= mEndTimeMs) {
+                return false;
+            }
+
+            if (mItemIndex++ > mMaxHistoryItems) {
+                Slog.wtfStack(TAG, "Number of battery history items is too large: " + mItemIndex);
+                return false;
+            }
+
             mHistoryItem.currentTime = mBaseTimeUtc + (mHistoryItem.time - mBaseMonotonicTime);
-
-            if (mEndTimeMs != 0 && mHistoryItem.time >= mEndTimeMs) {
-                break;
-            }
-            if (mHistoryItem.time >= mStartTimeMs) {
-                mNextItemReady = true;
-                return;
-            }
+            return true;
         }
-
-        mHistoryItem = null;
-        mNextItemReady = true;
-        close();
+        return false;
     }
 
     private void readHistoryDelta(Parcel src, BatteryStats.HistoryItem cur) {

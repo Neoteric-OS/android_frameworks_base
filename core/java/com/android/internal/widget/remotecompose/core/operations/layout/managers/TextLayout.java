@@ -31,6 +31,7 @@ import com.android.internal.widget.remotecompose.core.WireBuffer;
 import com.android.internal.widget.remotecompose.core.documentation.DocumentationBuilder;
 import com.android.internal.widget.remotecompose.core.operations.Utils;
 import com.android.internal.widget.remotecompose.core.operations.layout.Component;
+import com.android.internal.widget.remotecompose.core.operations.layout.measure.ComponentMeasure;
 import com.android.internal.widget.remotecompose.core.operations.layout.measure.MeasurePass;
 import com.android.internal.widget.remotecompose.core.operations.layout.measure.Size;
 import com.android.internal.widget.remotecompose.core.operations.paint.PaintBundle;
@@ -73,7 +74,10 @@ public class TextLayout extends LayoutManager implements VariableSupport, Access
     private float mTextW = -1;
     private float mTextH = -1;
 
+    private final Size mCachedSize = new Size(0f, 0f);
+
     @Nullable private String mCachedString = "";
+    @Nullable private String mNewString;
 
     Platform.ComputedTextLayout mComputedTextLayout;
 
@@ -96,7 +100,7 @@ public class TextLayout extends LayoutManager implements VariableSupport, Access
         if (cachedString != null && cachedString.equalsIgnoreCase(mCachedString)) {
             return;
         }
-        mCachedString = cachedString;
+        mNewString = cachedString;
         if (mType == -1) {
             if (mFontFamilyId != -1) {
                 String fontFamily = context.getText(mFontFamilyId);
@@ -116,8 +120,6 @@ public class TextLayout extends LayoutManager implements VariableSupport, Access
                 mType = 0;
             }
         }
-        mTextW = -1;
-        mTextH = -1;
 
         if (mHorizontalScrollDelegate != null) {
             mHorizontalScrollDelegate.reset();
@@ -230,6 +232,7 @@ public class TextLayout extends LayoutManager implements VariableSupport, Access
                 case TEXT_ALIGN_START:
                 default:
             }
+
             if (mTextW > (mWidth - mPaddingLeft - mPaddingRight)) {
                 context.save();
                 context.clipRect(
@@ -280,7 +283,7 @@ public class TextLayout extends LayoutManager implements VariableSupport, Access
                 + " x "
                 + mHeight
                 + ") "
-                + mVisibility;
+                + Visibility.toString(mVisibility);
     }
 
     @NonNull
@@ -308,12 +311,27 @@ public class TextLayout extends LayoutManager implements VariableSupport, Access
                         + ", "
                         + mHeight
                         + "] "
-                        + mVisibility
+                        + Visibility.toString(mVisibility)
                         + " ("
                         + mTextId
                         + ":\""
                         + mCachedString
                         + "\")");
+    }
+
+    @Override
+    public void computeSize(
+            @NonNull PaintContext context,
+            float minWidth,
+            float maxWidth,
+            float minHeight,
+            float maxHeight,
+            @NonNull MeasurePass measure) {
+        super.computeSize(context, minWidth, maxWidth, minHeight, maxHeight, measure);
+        computeWrapSize(context, maxWidth, maxHeight, true, true, measure, mCachedSize);
+        ComponentMeasure m = measure.get(this);
+        m.setW(mCachedSize.getWidth());
+        m.setH(mCachedSize.getHeight());
     }
 
     @Override
@@ -332,9 +350,14 @@ public class TextLayout extends LayoutManager implements VariableSupport, Access
         mPaint.setColor(mColor);
         context.replacePaint(mPaint);
         float[] bounds = new float[4];
+        if (mNewString != null && !mNewString.equals(mCachedString)) {
+            mCachedString = mNewString;
+        }
         if (mCachedString == null) {
             return;
         }
+
+        boolean forceComplex = false;
         int flags = PaintContext.TEXT_MEASURE_FONT_HEIGHT | PaintContext.TEXT_MEASURE_SPACES;
         if (mMaxLines == 1
                 && (mOverflow == OVERFLOW_START_ELLIPSIS
@@ -342,8 +365,20 @@ public class TextLayout extends LayoutManager implements VariableSupport, Access
                         || mOverflow == OVERFLOW_ELLIPSIS)) {
             flags |= PaintContext.TEXT_COMPLEX;
         }
-        context.getTextBounds(mTextId, 0, mCachedString.length(), flags, bounds);
-        if (bounds[2] - bounds[1] > maxWidth && mMaxLines > 1) {
+        if ((flags & PaintContext.TEXT_COMPLEX) != PaintContext.TEXT_COMPLEX) {
+            for (int i = 0; i < mCachedString.length(); i++) {
+                char c = mCachedString.charAt(i);
+                if ((c == '\n') || (c == '\t')) {
+                    flags |= PaintContext.TEXT_COMPLEX;
+                    forceComplex = true;
+                    break;
+                }
+            }
+        }
+        if (!forceComplex) {
+            context.getTextBounds(mTextId, 0, mCachedString.length(), flags, bounds);
+        }
+        if (forceComplex || bounds[2] - bounds[1] > maxWidth && mMaxLines > 1 && maxWidth > 0f) {
             mComputedTextLayout =
                     context.layoutComplexText(
                             mTextId,
@@ -375,12 +410,12 @@ public class TextLayout extends LayoutManager implements VariableSupport, Access
     }
 
     @Override
-    public float intrinsicHeight(@Nullable RemoteContext context) {
+    public float minIntrinsicHeight(@Nullable RemoteContext context) {
         return mTextH;
     }
 
     @Override
-    public float intrinsicWidth(@Nullable RemoteContext context) {
+    public float minIntrinsicWidth(@Nullable RemoteContext context) {
         return mTextW;
     }
 

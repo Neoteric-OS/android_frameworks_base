@@ -124,6 +124,7 @@ import com.android.internal.util.EmergencyAffordanceManager;
 import com.android.internal.util.FrameworkStatsLog;
 import com.android.internal.widget.ILockSettings;
 import com.android.internal.widget.LockSettingsInternal;
+import com.android.modules.utils.build.SdkLevel;
 import com.android.server.accessibility.AccessibilityManagerService;
 import com.android.server.accounts.AccountManagerService;
 import com.android.server.adb.AdbService;
@@ -374,6 +375,8 @@ public final class SystemServer implements Dumpable {
             "com.android.clockwork.time.WearTimeService";
     private static final String WEAR_SETTINGS_SERVICE_CLASS =
             "com.android.clockwork.settings.WearSettingsService";
+    private static final String WEAR_GESTURE_SERVICE_CLASS =
+            "com.android.clockwork.gesture.WearGestureService";
     private static final String WRIST_ORIENTATION_SERVICE_CLASS =
             "com.android.clockwork.wristorientation.WristOrientationService";
     private static final String IOT_SERVICE_CLASS =
@@ -1851,7 +1854,7 @@ public final class SystemServer implements Dumpable {
                 t.traceEnd();
             }
 
-            if (!isWatch && !isTv && !isAutomotive
+            if (!isWatch && !isTv && !isAutomotive && !isDesktop
                     && android.security.Flags.aapmApi()) {
                 t.traceBegin("StartAdvancedProtectionService");
                 mSystemServiceManager.startService(AdvancedProtectionService.Lifecycle.class);
@@ -2300,19 +2303,27 @@ public final class SystemServer implements Dumpable {
                 Slog.i(TAG, "Not starting VpnManagerService");
             }
 
-            t.traceBegin("StartVcnManagementService");
-            try {
-                if (VcnLocation.IS_VCN_IN_MAINLINE) {
-                    mSystemServiceManager.startServiceFromJar(
-                            CONNECTIVITY_SERVICE_INITIALIZER_B_CLASS,
-                            CONNECTIVITY_SERVICE_APEX_PATH);
-                } else {
-                    mSystemServiceManager.startService(CONNECTIVITY_SERVICE_INITIALIZER_B_CLASS);
+            // TODO: b/374174952 In the end state, VCN registration will be moved to Tethering
+            // module. Thus the following code block should be removed after Baklava is released
+            if (!VcnLocation.IS_VCN_IN_MAINLINE || !SdkLevel.isAtLeastB()) {
+                t.traceBegin("StartVcnManagementService");
+
+                try {
+                    if (!VcnLocation.IS_VCN_IN_MAINLINE) {
+                        mSystemServiceManager.startService(
+                                CONNECTIVITY_SERVICE_INITIALIZER_B_CLASS);
+                    } else {
+                        // When VCN is in mainline but the SDK level is B-, start the service with
+                        // the apex path. This path can only be hit on an unfinalized B platform
+                        mSystemServiceManager.startServiceFromJar(
+                                CONNECTIVITY_SERVICE_INITIALIZER_B_CLASS,
+                                CONNECTIVITY_SERVICE_APEX_PATH);
+                    }
+                } catch (Throwable e) {
+                    reportWtf("starting VCN Management Service", e);
                 }
-            } catch (Throwable e) {
-                reportWtf("starting VCN Management Service", e);
+                t.traceEnd();
             }
-            t.traceEnd();
 
 // QTI_BEGIN: 2019-03-26: WIGIG: frameworks/base: fix wigig service initialization
             if (enableWigig) {
@@ -2975,6 +2986,13 @@ public final class SystemServer implements Dumpable {
             if (enableWristOrientationService) {
                 t.traceBegin("StartWristOrientationService");
                 mSystemServiceManager.startService(WRIST_ORIENTATION_SERVICE_CLASS);
+                t.traceEnd();
+            }
+
+            if (android.server.Flags.wearGestureApi()
+                    && SystemProperties.getBoolean("config.enable_gesture_api", false)) {
+                t.traceBegin("StartWearGestureService");
+                mSystemServiceManager.startService(WEAR_GESTURE_SERVICE_CLASS);
                 t.traceEnd();
             }
         }

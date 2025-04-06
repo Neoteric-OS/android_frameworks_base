@@ -17,6 +17,7 @@
 package com.android.systemui.statusbar.phone;
 
 import static android.app.StatusBarManager.SESSION_KEYGUARD;
+import static android.service.dreams.Flags.dreamsV2;
 
 import android.annotation.IntDef;
 import android.content.res.Resources;
@@ -58,10 +59,10 @@ import com.android.systemui.keyguard.shared.model.KeyguardState;
 import com.android.systemui.keyguard.shared.model.TransitionState;
 import com.android.systemui.keyguard.shared.model.TransitionStep;
 import com.android.systemui.log.SessionTracker;
+import com.android.systemui.media.NotificationMediaManager;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
 import com.android.systemui.res.R;
 import com.android.systemui.scene.shared.model.Scenes;
-import com.android.systemui.statusbar.NotificationMediaManager;
 import com.android.systemui.statusbar.NotificationShadeWindowController;
 import com.android.systemui.statusbar.VibratorHelper;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
@@ -527,7 +528,8 @@ public class BiometricUnlockController extends KeyguardUpdateMonitorCallback imp
                 break;
             case MODE_SHOW_BOUNCER:
                 Trace.beginSection("MODE_SHOW_BOUNCER");
-                mKeyguardViewController.showPrimaryBouncer(true);
+                mKeyguardViewController.showPrimaryBouncer(true,
+                        "BiometricUnlockController#MODE_SHOW_BOUNCER");
                 Trace.endSection();
                 break;
             case MODE_WAKE_AND_UNLOCK_FROM_DREAM:
@@ -661,6 +663,9 @@ public class BiometricUnlockController extends KeyguardUpdateMonitorCallback imp
         final boolean deviceDreaming = mUpdateMonitor.isDreaming();
         final boolean bypass = mKeyguardBypassController.getBypassEnabled()
                 || mAuthController.isUdfpsFingerDown();
+        final boolean isBouncerShowing = mKeyguardViewController.primaryBouncerIsOrWillBeShowing()
+                || mKeyguardTransitionInteractor.getCurrentState()
+                    == KeyguardState.ALTERNATE_BOUNCER;
 
         logCalculateModeForPassiveAuth(unlockingAllowed, deviceInteractive, isKeyguardShowing,
                 deviceDreaming, bypass, isStrongBiometric);
@@ -684,15 +689,14 @@ public class BiometricUnlockController extends KeyguardUpdateMonitorCallback imp
             }
         }
         if (unlockingAllowed && deviceDreaming) {
-            return bypass ? MODE_WAKE_AND_UNLOCK_FROM_DREAM : MODE_ONLY_WAKE;
+            final boolean wakeAndUnlock = bypass || (dreamsV2() && isBouncerShowing);
+            return wakeAndUnlock ? MODE_WAKE_AND_UNLOCK_FROM_DREAM : MODE_ONLY_WAKE;
         }
         if (unlockingAllowed && mKeyguardStateController.isOccluded()) {
             return MODE_UNLOCK_COLLAPSING;
         }
         if (isKeyguardShowing) {
-            if ((mKeyguardViewController.primaryBouncerIsOrWillBeShowing()
-                    || mKeyguardTransitionInteractor.getCurrentState()
-                    == KeyguardState.ALTERNATE_BOUNCER) && unlockingAllowed) {
+            if (isBouncerShowing && unlockingAllowed) {
                 return MODE_DISMISS_BOUNCER;
             } else if (unlockingAllowed && bypass) {
                 return MODE_UNLOCK_COLLAPSING;

@@ -23,6 +23,7 @@ import android.view.WindowManager
 import android.view.WindowManager.LayoutParams
 import android.view.WindowManager.LayoutParams.TYPE_NOTIFICATION_SHADE
 import android.window.WindowContext
+import com.android.app.tracing.TrackGroupUtils.trackGroup
 import com.android.systemui.CoreStartable
 import com.android.systemui.common.ui.ConfigurationState
 import com.android.systemui.common.ui.ConfigurationStateImpl
@@ -34,8 +35,11 @@ import com.android.systemui.common.ui.view.ChoreographerUtils
 import com.android.systemui.common.ui.view.ChoreographerUtilsImpl
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Main
+import com.android.systemui.log.LogBuffer
+import com.android.systemui.log.LogBufferFactory
 import com.android.systemui.res.R
 import com.android.systemui.scene.ui.view.WindowRootView
+import com.android.systemui.shade.data.repository.MutableShadeDisplaysRepository
 import com.android.systemui.shade.data.repository.ShadeDisplaysRepository
 import com.android.systemui.shade.data.repository.ShadeDisplaysRepositoryImpl
 import com.android.systemui.shade.display.ShadeDisplayPolicyModule
@@ -48,6 +52,8 @@ import com.android.systemui.statusbar.notification.stack.NotificationStackRebind
 import com.android.systemui.statusbar.phone.ConfigurationControllerImpl
 import com.android.systemui.statusbar.phone.ConfigurationForwarder
 import com.android.systemui.statusbar.policy.ConfigurationController
+import com.android.systemui.utils.windowmanager.WindowManagerProvider
+import com.android.systemui.utils.windowmanager.WindowManagerUtils
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.ClassKey
@@ -110,9 +116,10 @@ object ShadeDisplayAwareModule {
     fun provideShadeWindowManager(
         defaultWindowManager: WindowManager,
         @ShadeDisplayAware context: Context,
+        windowManagerProvider: WindowManagerProvider
     ): WindowManager {
         return if (ShadeWindowGoesAround.isEnabled) {
-            context.getSystemService(WindowManager::class.java) as WindowManager
+            windowManagerProvider.getWindowManager(context)
         } else {
             defaultWindowManager
         }
@@ -205,7 +212,18 @@ object ShadeDisplayAwareModule {
 
     @SysUISingleton
     @Provides
-    fun provideShadePositionRepository(impl: ShadeDisplaysRepositoryImpl): ShadeDisplaysRepository {
+    fun provideShadePositionRepository(
+        impl: MutableShadeDisplaysRepository
+    ): ShadeDisplaysRepository {
+        ShadeWindowGoesAround.isUnexpectedlyInLegacyMode()
+        return impl
+    }
+
+    @SysUISingleton
+    @Provides
+    fun provideMutableShadePositionRepository(
+        impl: ShadeDisplaysRepositoryImpl
+    ): MutableShadeDisplaysRepository {
         ShadeWindowGoesAround.isUnexpectedlyInLegacyMode()
         return impl
     }
@@ -251,6 +269,20 @@ object ShadeDisplayAwareModule {
     @Provides
     @ShadeOnDefaultDisplayWhenLocked
     fun provideShadeOnDefaultDisplayWhenLocked(): Boolean = true
+
+    /** Provides a [LogBuffer] for use by classes related to shade movement */
+    @Provides
+    @SysUISingleton
+    @ShadeDisplayLog
+    fun provideShadeDisplayLogLogBuffer(factory: LogBufferFactory): LogBuffer {
+        val logBufferName = "ShadeDisplayLog"
+        return factory.create(
+            logBufferName,
+            maxSize = 400,
+            alwaysLogToLogcat = true,
+            systraceTrackName = trackGroup("shade", logBufferName),
+        )
+    }
 }
 
 /** Module that should be included only if the shade window [WindowRootView] is available. */
@@ -283,3 +315,6 @@ object ShadeDisplayAwareWithShadeWindowModule {
  * how well this solution behaves from the performance point of view.
  */
 @Qualifier @Retention(AnnotationRetention.RUNTIME) annotation class ShadeOnDefaultDisplayWhenLocked
+
+/** A [com.android.systemui.log.LogBuffer] for changes to the shade display. */
+@Qualifier @Retention(AnnotationRetention.RUNTIME) annotation class ShadeDisplayLog

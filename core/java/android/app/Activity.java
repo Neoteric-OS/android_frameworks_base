@@ -3174,6 +3174,15 @@ public class Activity extends ContextThemeWrapper
             throw new IllegalArgumentException("Expected non-null picture-in-picture params");
         }
         if (!mCanEnterPictureInPicture) {
+            if (isTvImplicitEnterPipProhibited()) {
+                // Don't throw exception on TV so that apps don't crash when not adapted to new
+                // restrictions.
+                Log.e(TAG,
+                        "Activity must be resumed to enter picture-in-picture and not about to be"
+                                + " paused. Implicit app entry is only permitted on TV if android"
+                                + ".permission.TV_IMPLICIT_ENTER_PIP is held by the app.");
+                return false;
+            }
             throw new IllegalStateException("Activity must be resumed to enter"
                     + " picture-in-picture");
         }
@@ -3212,7 +3221,7 @@ public class Activity extends ContextThemeWrapper
         return ActivityTaskManager.getMaxNumPictureInPictureActions(this);
     }
 
-    private boolean isImplicitEnterPipProhibited() {
+    private boolean isTvImplicitEnterPipProhibited() {
         PackageManager pm = getPackageManager();
         if (android.app.Flags.enableTvImplicitEnterPipRestriction()) {
             return pm.hasSystemFeature(PackageManager.FEATURE_LEANBACK)
@@ -7684,16 +7693,19 @@ public class Activity extends ContextThemeWrapper
     /**
      * Change the desired orientation of this activity. If the activity is currently in the
      * foreground or otherwise impacting the screen orientation, the screen is immediately changed
-     * (possibly causing the activity to be restarted). Otherwise, the requested orientation is used
-     * the next time the activity is visible.
+     * (possibly causing the activity to be restarted). Otherwise, the new orientation is used the
+     * next time the activity is visible.
      *
      * <aside class="note"><b>Note:</b>
      *     <ul>
-     *         <li>Device manufacturers can configure devices to override (ignore) calls to this
-     *             method to improve the layout of orientation-restricted apps.</li>
+     *         <li>To improve the layout of apps on form factors with smallest width >= 600dp, the
+     *             system ignores calls to this method for apps that target Android 16 (API level
+     *             36) or higher.</li>
+     *         <li>Device manufacturers can configure devices to ignore calls to this method to
+     *             improve the layout of orientation-restricted apps.</li>
      *         <li>On devices with Android 16 (API level 36) or higher installed, virtual device
-     *             owners (limited to select trusted and privileged apps) can optimize app layout on
-     *             displays they manage by ignoring calls to this method. See also
+     *             owners (select trusted and privileged apps) can optimize app layout on displays
+     *             they manage by ignoring calls to this method. See also
      *             <a href="https://source.android.com/docs/core/permissions/app-streaming">
      *               Companion app streaming</a>.</li>
      *     </ul>
@@ -7717,17 +7729,20 @@ public class Activity extends ContextThemeWrapper
     }
 
     /**
-     * Return the current requested orientation of the activity. This is either the orientation
-     * requested in the app manifest, or the last requested orientation given to
+     * Returns the current requested orientation of the activity, which is either the orientation
+     * requested in the app manifest or the last orientation given to
      * {@link #setRequestedOrientation(int)}.
      *
      * <aside class="note"><b>Note:</b>
      *     <ul>
+     *         <li>To improve the layout of apps on form factors with smallest width >= 600dp, the
+     *             system ignores calls to this method for apps that target Android 16 (API level
+     *             36) or higher.</li>
      *         <li>Device manufacturers can configure devices to ignore calls to this method to
      *             improve the layout of orientation-restricted apps.</li>
      *         <li>On devices with Android 16 (API level 36) or higher installed, virtual device
-     *             owners (limited to select trusted and privileged apps) can optimize app layout on
-     *             displays they manage by ignoring calls to this method. See also
+     *             owners (select trusted and privileged apps) can optimize app layout on displays
+     *             they manage by ignoring calls to this method. See also
      *             <a href="https://source.android.com/docs/core/permissions/app-streaming">
      *               Companion app streaming</a>.</li>
      *     </ul>
@@ -9340,7 +9355,7 @@ public class Activity extends ContextThemeWrapper
                     + mComponent.getClassName());
         }
 
-        if (isImplicitEnterPipProhibited()) {
+        if (isTvImplicitEnterPipProhibited()) {
             mCanEnterPictureInPicture = false;
         }
 
@@ -9370,7 +9385,7 @@ public class Activity extends ContextThemeWrapper
     final void performUserLeaving() {
         onUserInteraction();
 
-        if (isImplicitEnterPipProhibited()) {
+        if (isTvImplicitEnterPipProhibited()) {
             mCanEnterPictureInPicture = false;
         }
         onUserLeaveHint();
@@ -10054,9 +10069,11 @@ public class Activity extends ContextThemeWrapper
                     }
                 });
                 if (mJankTracker == null) {
-                    // TODO b/377960907 use the Choreographer attached to the ViewRootImpl instead.
-                    mJankTracker = new JankTracker(Choreographer.getInstance(),
-                            decorView);
+                    if (android.app.jank.Flags.viewrootChoreographer()) {
+                        mJankTracker = new JankTracker(decorView);
+                    } else {
+                        mJankTracker = new JankTracker(Choreographer.getInstance(), decorView);
+                    }
                 }
                 // TODO b/377674765 confirm this is the string we want logged.
                 mJankTracker.setActivityName(getComponentName().getClassName());

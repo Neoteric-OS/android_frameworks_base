@@ -30,7 +30,10 @@ import static android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
 import static android.os.Build.VERSION_CODES.P;
 import static android.os.Build.VERSION_CODES.Q;
 import static android.view.Display.DEFAULT_DISPLAY;
+import static android.view.Display.FLAG_ALLOWS_CONTENT_MODE_SWITCH;
 import static android.view.Display.FLAG_PRIVATE;
+import static android.view.Display.FLAG_SHOULD_SHOW_SYSTEM_DECORATIONS;
+import static android.view.Display.FLAG_TRUSTED;
 import static android.view.DisplayCutout.BOUNDS_POSITION_TOP;
 import static android.view.DisplayCutout.fromBoundingRect;
 import static android.view.Surface.ROTATION_0;
@@ -63,6 +66,9 @@ import static android.view.WindowManager.LayoutParams.TYPE_SCREENSHOT;
 import static android.view.WindowManager.LayoutParams.TYPE_STATUS_BAR;
 import static android.view.WindowManager.LayoutParams.TYPE_VOICE_INTERACTION;
 import static android.view.WindowManager.LayoutParams.TYPE_WALLPAPER;
+import static android.view.WindowManager.TRANSIT_FLAG_AOD_APPEARING;
+import static android.view.WindowManager.TRANSIT_FLAG_KEYGUARD_GOING_AWAY;
+import static android.view.WindowManager.TRANSIT_FLAG_KEYGUARD_APPEARING;
 import static android.window.DisplayAreaOrganizer.FEATURE_WINDOWED_MAGNIFICATION;
 
 import static com.android.dx.mockito.inline.extended.ExtendedMockito.any;
@@ -80,9 +86,11 @@ import static com.android.server.wm.SurfaceAnimator.ANIMATION_TYPE_TOKEN_TRANSFO
 import static com.android.server.wm.WindowContainer.AnimationFlags.PARENTS;
 import static com.android.server.wm.WindowContainer.POSITION_TOP;
 import static com.android.server.wm.WindowManagerService.UPDATE_FOCUS_NORMAL;
+import static com.android.server.wm.TransitionSubject.assertThat;
 import static com.android.window.flags.Flags.FLAG_ENABLE_CAMERA_COMPAT_FOR_DESKTOP_WINDOWING;
 import static com.android.window.flags.Flags.FLAG_ENABLE_DESKTOP_WINDOWING_MODE;
 import static com.android.server.display.feature.flags.Flags.FLAG_ENABLE_DISPLAY_CONTENT_MODE_MANAGEMENT;
+import static com.android.window.flags.Flags.FLAG_ENABLE_PERSISTING_DISPLAY_SIZE_FOR_CONNECTED_DISPLAYS;
 
 import static com.google.common.truth.Truth.assertThat;
 
@@ -146,6 +154,7 @@ import com.android.internal.logging.nano.MetricsProto;
 import com.android.server.LocalServices;
 import com.android.server.policy.WindowManagerPolicy;
 import com.android.server.wm.utils.WmDisplayCutout;
+import com.android.window.flags.Flags;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -1414,7 +1423,7 @@ public class DisplayContentTests extends WindowTestsBase {
         final DisplayContent dc = createNewDisplay();
         final WindowState win = newWindowBuilder("win", TYPE_BASE_APPLICATION).setDisplay(
                 dc).build();
-        win.getAttrs().flags |= FLAG_LAYOUT_IN_SCREEN | FLAG_LAYOUT_INSET_DECOR;
+        win.mAttrs.flags |= FLAG_LAYOUT_IN_SCREEN | FLAG_LAYOUT_INSET_DECOR;
         win.setSystemGestureExclusion(Collections.singletonList(new Rect(10, 20, 30, 40)));
 
         performLayout(dc);
@@ -1447,11 +1456,11 @@ public class DisplayContentTests extends WindowTestsBase {
         final DisplayContent dc = createNewDisplay();
         final WindowState win = newWindowBuilder("win", TYPE_BASE_APPLICATION).setDisplay(
                 dc).build();
-        win.getAttrs().flags |= FLAG_LAYOUT_IN_SCREEN | FLAG_LAYOUT_INSET_DECOR;
+        win.mAttrs.flags |= FLAG_LAYOUT_IN_SCREEN | FLAG_LAYOUT_INSET_DECOR;
         win.setSystemGestureExclusion(Collections.singletonList(new Rect(10, 20, 30, 40)));
 
         final WindowState win2 = newWindowBuilder("win2", TYPE_APPLICATION).setDisplay(dc).build();
-        win2.getAttrs().flags |= FLAG_LAYOUT_IN_SCREEN | FLAG_LAYOUT_INSET_DECOR;
+        win2.mAttrs.flags |= FLAG_LAYOUT_IN_SCREEN | FLAG_LAYOUT_INSET_DECOR;
         win2.setSystemGestureExclusion(Collections.singletonList(new Rect(20, 30, 40, 50)));
 
         performLayout(dc);
@@ -1476,14 +1485,14 @@ public class DisplayContentTests extends WindowTestsBase {
         final DisplayContent dc = createNewDisplay();
         final WindowState win = newWindowBuilder("base", TYPE_BASE_APPLICATION).setDisplay(
                 dc).build();
-        win.getAttrs().flags |= FLAG_LAYOUT_IN_SCREEN | FLAG_LAYOUT_INSET_DECOR;
+        win.mAttrs.flags |= FLAG_LAYOUT_IN_SCREEN | FLAG_LAYOUT_INSET_DECOR;
         win.setSystemGestureExclusion(Collections.singletonList(new Rect(0, 0, 1000, 1000)));
 
         final WindowState win2 = newWindowBuilder("modal", TYPE_APPLICATION).setDisplay(dc).build();
-        win2.getAttrs().flags |= FLAG_LAYOUT_IN_SCREEN | FLAG_LAYOUT_INSET_DECOR;
-        win2.getAttrs().privateFlags |= PRIVATE_FLAG_NO_MOVE_ANIMATION;
-        win2.getAttrs().width = 10;
-        win2.getAttrs().height = 10;
+        win2.mAttrs.flags |= FLAG_LAYOUT_IN_SCREEN | FLAG_LAYOUT_INSET_DECOR;
+        win2.mAttrs.privateFlags |= PRIVATE_FLAG_NO_MOVE_ANIMATION;
+        win2.mAttrs.width = 10;
+        win2.mAttrs.height = 10;
         win2.setSystemGestureExclusion(Collections.emptyList());
 
         performLayout(dc);
@@ -1502,10 +1511,10 @@ public class DisplayContentTests extends WindowTestsBase {
         final DisplayContent dc = createNewDisplay();
         final WindowState win = newWindowBuilder("win", TYPE_BASE_APPLICATION).setDisplay(
                 dc).build();
-        win.getAttrs().flags |= FLAG_LAYOUT_IN_SCREEN | FLAG_LAYOUT_INSET_DECOR;
-        win.getAttrs().layoutInDisplayCutoutMode = LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
-        win.getAttrs().privateFlags |= PRIVATE_FLAG_NO_MOVE_ANIMATION;
-        win.getAttrs().insetsFlags.behavior = BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE;
+        win.mAttrs.flags |= FLAG_LAYOUT_IN_SCREEN | FLAG_LAYOUT_INSET_DECOR;
+        win.mAttrs.layoutInDisplayCutoutMode = LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+        win.mAttrs.privateFlags |= PRIVATE_FLAG_NO_MOVE_ANIMATION;
+        win.mAttrs.insetsFlags.behavior = BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE;
         win.setRequestedVisibleTypes(0, navigationBars() | statusBars());
         win.mActivityRecord.mTargetSdk = P;
 
@@ -1527,9 +1536,9 @@ public class DisplayContentTests extends WindowTestsBase {
         final DisplayContent dc = createNewDisplay();
         final WindowState win = newWindowBuilder("win", TYPE_BASE_APPLICATION).setDisplay(
                 dc).build();
-        win.getAttrs().flags |= FLAG_LAYOUT_IN_SCREEN | FLAG_LAYOUT_INSET_DECOR;
-        win.getAttrs().layoutInDisplayCutoutMode = LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS;
-        win.getAttrs().privateFlags |= PRIVATE_FLAG_UNRESTRICTED_GESTURE_EXCLUSION;
+        win.mAttrs.flags |= FLAG_LAYOUT_IN_SCREEN | FLAG_LAYOUT_INSET_DECOR;
+        win.mAttrs.layoutInDisplayCutoutMode = LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS;
+        win.mAttrs.privateFlags |= PRIVATE_FLAG_UNRESTRICTED_GESTURE_EXCLUSION;
         win.setSystemGestureExclusion(Collections.singletonList(dc.getBounds()));
 
         performLayout(dc);
@@ -1700,8 +1709,6 @@ public class DisplayContentTests extends WindowTestsBase {
         app.setVisible(true);
         doReturn(false).when(app).inTransition();
         mDisplayContent.mFixedRotationTransitionListener.onAppTransitionFinishedLocked(app.token);
-        mStatusBarWindow.finishSeamlessRotation(t);
-        mNavBarWindow.finishSeamlessRotation(t);
 
         // The fixed rotation should be cleared and the new rotation is applied to display.
         assertFalse(app.hasFixedRotationTransform());
@@ -2619,30 +2626,52 @@ public class DisplayContentTests extends WindowTestsBase {
         final KeyguardController keyguard = mAtm.mKeyguardController;
         final ActivityRecord activity = new ActivityBuilder(mAtm).setCreateTask(true).build();
         final int displayId = mDisplayContent.getDisplayId();
+        final TestTransitionPlayer transitions = registerTestTransitionPlayer();
 
         final BooleanSupplier keyguardShowing = () -> keyguard.isKeyguardShowing(displayId);
         final BooleanSupplier keyguardGoingAway = () -> keyguard.isKeyguardGoingAway(displayId);
         final BooleanSupplier appVisible = activity::isVisibleRequested;
 
-        // Begin locked and in AOD
+        // Begin unlocked.
+        keyguard.setKeyguardShown(displayId, false /* keyguard */, false /* aod */);
+        transitions.flush();
+
+        // Lock and go to AOD.
         keyguard.setKeyguardShown(displayId, true /* keyguard */, true /* aod */);
         assertFalse(keyguardGoingAway.getAsBoolean());
         assertFalse(appVisible.getAsBoolean());
+        if (Flags.aodTransition()) {
+            assertThat(transitions.mLastTransit).flags().contains(TRANSIT_FLAG_AOD_APPEARING);
+        } else {
+            assertThat(transitions.mLastTransit).flags().doesNotContain(TRANSIT_FLAG_AOD_APPEARING);
+        }
+        transitions.flush();
 
         // Start unlocking from AOD.
         keyguard.keyguardGoingAway(displayId, 0x0 /* flags */);
         assertTrue(keyguardGoingAway.getAsBoolean());
         assertTrue(appVisible.getAsBoolean());
 
+        if (Flags.ensureKeyguardDoesTransitionStarting()) {
+            assertThat(transitions.mLastTransit).isNull();
+        } else {
+            assertThat(transitions.mLastTransit).flags()
+                    .containsExactly(TRANSIT_FLAG_KEYGUARD_GOING_AWAY);
+        }
+        transitions.flush();
+
         // Clear AOD. This does *not* clear the going-away status.
         keyguard.setKeyguardShown(displayId, true /* keyguard */, false /* aod */);
         assertTrue(keyguardGoingAway.getAsBoolean());
         assertTrue(appVisible.getAsBoolean());
+        assertThat(transitions.mLastTransit).isNull();
 
         // Finish unlock
         keyguard.setKeyguardShown(displayId, false /* keyguard */, false /* aod */);
         assertFalse(keyguardGoingAway.getAsBoolean());
         assertTrue(appVisible.getAsBoolean());
+
+        assertThat(transitions.mLastTransit).isNull();
     }
 
     @Test
@@ -2652,31 +2681,56 @@ public class DisplayContentTests extends WindowTestsBase {
         final KeyguardController keyguard = mAtm.mKeyguardController;
         final ActivityRecord activity = new ActivityBuilder(mAtm).setCreateTask(true).build();
         final int displayId = mDisplayContent.getDisplayId();
+        final TestTransitionPlayer transitions = registerTestTransitionPlayer();
 
         final BooleanSupplier keyguardShowing = () -> keyguard.isKeyguardShowing(displayId);
         final BooleanSupplier keyguardGoingAway = () -> keyguard.isKeyguardGoingAway(displayId);
         final BooleanSupplier appVisible = activity::isVisibleRequested;
 
-        // Begin locked and in AOD
+        // Begin unlocked.
+        keyguard.setKeyguardShown(displayId, false /* keyguard */, false /* aod */);
+        transitions.flush();
+
+        // Lock and go to AOD.
         keyguard.setKeyguardShown(displayId, true /* keyguard */, true /* aod */);
         assertFalse(keyguardGoingAway.getAsBoolean());
         assertFalse(appVisible.getAsBoolean());
+        if (Flags.aodTransition()) {
+            assertThat(transitions.mLastTransit).flags().contains(TRANSIT_FLAG_AOD_APPEARING);
+        } else {
+            assertThat(transitions.mLastTransit).flags().doesNotContain(TRANSIT_FLAG_AOD_APPEARING);
+        }
+        transitions.flush();
 
         // Start unlocking from AOD.
         keyguard.keyguardGoingAway(displayId, 0x0 /* flags */);
         assertTrue(keyguardGoingAway.getAsBoolean());
         assertTrue(appVisible.getAsBoolean());
 
+        if (!Flags.ensureKeyguardDoesTransitionStarting()) {
+            assertThat(transitions.mLastTransit).flags()
+                    .containsExactly(TRANSIT_FLAG_KEYGUARD_GOING_AWAY);
+        }
+        transitions.flush();
+
         // Clear AOD. This does *not* clear the going-away status.
         keyguard.setKeyguardShown(displayId, true /* keyguard */, false /* aod */);
         assertTrue(keyguardGoingAway.getAsBoolean());
         assertTrue(appVisible.getAsBoolean());
+        assertThat(transitions.mLastTransit).isNull();
 
         // Same API call a second time cancels the unlock, because AOD isn't changing.
         keyguard.setKeyguardShown(displayId, true /* keyguard */, false /* aod */);
         assertTrue(keyguardShowing.getAsBoolean());
         assertFalse(keyguardGoingAway.getAsBoolean());
         assertFalse(appVisible.getAsBoolean());
+
+        if (Flags.ensureKeyguardDoesTransitionStarting()) {
+            assertThat(transitions.mLastTransit).isNull();
+        } else {
+            assertThat(transitions.mLastTransit).flags()
+                    .containsExactly(TRANSIT_FLAG_KEYGUARD_APPEARING);
+        }
     }
 
     @Test
@@ -2874,9 +2928,49 @@ public class DisplayContentTests extends WindowTestsBase {
 
     @EnableFlags(FLAG_ENABLE_DISPLAY_CONTENT_MODE_MANAGEMENT)
     @Test
+    public void testSetShouldShowSystemDecorations_shouldShowSystemDecorationsDisplay() {
+        // Set up a non-default display with FLAG_SHOULD_SHOW_SYSTEM_DECORATIONS enabled
+        final DisplayInfo displayInfo = new DisplayInfo(mDisplayInfo);
+        displayInfo.displayId = DEFAULT_DISPLAY + 1;
+        displayInfo.flags = FLAG_SHOULD_SHOW_SYSTEM_DECORATIONS;
+        final DisplayContent dc = createNewDisplay(displayInfo);
+
+        dc.onDisplayInfoChangeApplied();
+        assertFalse(dc.mWmService.mDisplayWindowSettings.shouldShowSystemDecorsLocked(dc));
+    }
+
+    @EnableFlags(FLAG_ENABLE_DISPLAY_CONTENT_MODE_MANAGEMENT)
+    @Test
+    public void testSetShouldShowSystemDecorations_notAllowContentModeSwitchDisplay() {
+        // Set up a non-default display without FLAG_ALLOWS_CONTENT_MODE_SWITCH enabled
+        final DisplayInfo displayInfo = new DisplayInfo(mDisplayInfo);
+        displayInfo.displayId = DEFAULT_DISPLAY + 1;
+        displayInfo.flags = FLAG_TRUSTED;
+        final DisplayContent dc = createNewDisplay(displayInfo);
+
+        dc.onDisplayInfoChangeApplied();
+        assertFalse(dc.mWmService.mDisplayWindowSettings.shouldShowSystemDecorsLocked(dc));
+    }
+
+    @EnableFlags(FLAG_ENABLE_DISPLAY_CONTENT_MODE_MANAGEMENT)
+    @Test
+    public void testSetShouldShowSystemDecorations_untrustedDisplay() {
+        // Set up a non-default display without FLAG_TRUSTED enabled
+        final DisplayInfo displayInfo = new DisplayInfo(mDisplayInfo);
+        displayInfo.displayId = DEFAULT_DISPLAY + 1;
+        displayInfo.flags = FLAG_ALLOWS_CONTENT_MODE_SWITCH;
+        final DisplayContent dc = createNewDisplay(displayInfo);
+
+        dc.onDisplayInfoChangeApplied();
+        assertFalse(dc.mWmService.mDisplayWindowSettings.shouldShowSystemDecorsLocked(dc));
+    }
+
+    @EnableFlags(FLAG_ENABLE_DISPLAY_CONTENT_MODE_MANAGEMENT)
+    @Test
     public void testSetShouldShowSystemDecorations_nonDefaultNonPrivateDisplay() {
         final DisplayInfo displayInfo = new DisplayInfo(mDisplayInfo);
         displayInfo.displayId = DEFAULT_DISPLAY + 1;
+        displayInfo.flags = (FLAG_ALLOWS_CONTENT_MODE_SWITCH | FLAG_TRUSTED);
         final DisplayContent dc = createNewDisplay(displayInfo);
 
         spyOn(dc.mDisplay);
@@ -2887,6 +2981,109 @@ public class DisplayContentTests extends WindowTestsBase {
         doReturn(true).when(dc.mDisplay).canHostTasks();
         dc.onDisplayInfoChangeApplied();
         assertTrue(dc.mWmService.mDisplayWindowSettings.shouldShowSystemDecorsLocked(dc));
+    }
+
+    @EnableFlags(FLAG_ENABLE_DISPLAY_CONTENT_MODE_MANAGEMENT)
+    @Test
+    public void testRemove_displayWithSystemDecorations_emitRemoveSystemDecorations() {
+        final DisplayInfo displayInfo = new DisplayInfo(mDisplayInfo);
+        displayInfo.displayId = DEFAULT_DISPLAY + 1;
+        displayInfo.flags = (FLAG_ALLOWS_CONTENT_MODE_SWITCH | FLAG_TRUSTED);
+        final DisplayContent dc = createNewDisplay(displayInfo);
+        spyOn(dc.mDisplay);
+        doReturn(true).when(dc.mDisplay).canHostTasks();
+        dc.onDisplayInfoChangeApplied();
+        final DisplayPolicy displayPolicy = dc.getDisplayPolicy();
+        spyOn(displayPolicy);
+
+        dc.remove();
+
+        verify(displayPolicy).notifyDisplayRemoveSystemDecorations();
+    }
+
+    @EnableFlags(FLAG_ENABLE_DISPLAY_CONTENT_MODE_MANAGEMENT)
+    @Test
+    public void testRemove_displayWithoutSystemDecorations_dontEmitRemoveSystemDecorations() {
+        final DisplayInfo displayInfo = new DisplayInfo(mDisplayInfo);
+        displayInfo.displayId = DEFAULT_DISPLAY + 1;
+        displayInfo.flags = (FLAG_ALLOWS_CONTENT_MODE_SWITCH | FLAG_TRUSTED);
+        final DisplayContent dc = createNewDisplay(displayInfo);
+        spyOn(dc.mDisplay);
+        doReturn(false).when(dc.mDisplay).canHostTasks();
+        dc.onDisplayInfoChangeApplied();
+        final DisplayPolicy displayPolicy = dc.getDisplayPolicy();
+        spyOn(displayPolicy);
+
+        dc.remove();
+
+        verify(displayPolicy, never()).notifyDisplayRemoveSystemDecorations();
+    }
+
+    @EnableFlags(FLAG_ENABLE_PERSISTING_DISPLAY_SIZE_FOR_CONNECTED_DISPLAYS)
+    @Test
+    public void testForcedDensityRatioSet_persistDensityScaleFlagEnabled() {
+        final DisplayInfo displayInfo = new DisplayInfo(mDisplayInfo);
+        displayInfo.displayId = DEFAULT_DISPLAY + 1;
+        displayInfo.type = Display.TYPE_EXTERNAL;
+        final DisplayContent displayContent = createNewDisplay(displayInfo);
+        final int baseWidth = 1280;
+        final int baseHeight = 720;
+        final int baseDensity = 320;
+        final float baseXDpi = 60;
+        final float baseYDpi = 60;
+
+        displayContent.mInitialDisplayWidth = baseWidth;
+        displayContent.mInitialDisplayHeight = baseHeight;
+        displayContent.mInitialDisplayDensity = baseDensity;
+        displayContent.updateBaseDisplayMetrics(baseWidth, baseHeight, baseDensity, baseXDpi,
+                baseYDpi);
+
+        final int forcedDensity = 640;
+        displayContent.setForcedDensityRatio(
+                (float) forcedDensity / baseDensity, 0 /* userId */);
+
+        // Verify that density ratio is set correctly.
+        assertEquals((float) forcedDensity / baseDensity,
+                displayContent.mForcedDisplayDensityRatio, 0.01);
+        // Verify that density is set correctly.
+        assertEquals(forcedDensity,
+                displayContent.mBaseDisplayDensity);
+    }
+
+    @EnableFlags(FLAG_ENABLE_PERSISTING_DISPLAY_SIZE_FOR_CONNECTED_DISPLAYS)
+    @Test
+    public void testForcedDensityUpdateWithRatio_persistDensityScaleFlagEnabled() {
+        final DisplayInfo displayInfo = new DisplayInfo(mDisplayInfo);
+        displayInfo.displayId = DEFAULT_DISPLAY + 1;
+        displayInfo.type = Display.TYPE_EXTERNAL;
+        final DisplayContent displayContent = createNewDisplay(displayInfo);
+        final int baseWidth = 1280;
+        final int baseHeight = 720;
+        final int baseDensity = 320;
+        final float baseXDpi = 60;
+        final float baseYDpi = 60;
+
+        displayContent.mInitialDisplayWidth = baseWidth;
+        displayContent.mInitialDisplayHeight = baseHeight;
+        displayContent.mInitialDisplayDensity = baseDensity;
+        displayContent.updateBaseDisplayMetrics(baseWidth, baseHeight, baseDensity, baseXDpi,
+                baseYDpi);
+
+        final int forcedDensity = 640;
+        displayContent.setForcedDensityRatio(
+                (float) forcedDensity / baseDensity, 0 /* userId */);
+
+        // Verify that density ratio is set correctly.
+        assertEquals(2.0f,
+                displayContent.mForcedDisplayDensityRatio, 0.001);
+
+
+        displayContent.mInitialDisplayDensity = 160;
+        displayContent.updateBaseDisplayMetrics(baseWidth, baseHeight, baseDensity, baseXDpi,
+                baseYDpi);
+
+        // Verify that forced density is updated based on the ratio.
+        assertEquals(320, displayContent.mBaseDisplayDensity);
     }
 
     private void removeRootTaskTests(Runnable runnable) {

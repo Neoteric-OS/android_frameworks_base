@@ -679,62 +679,8 @@ public class TelephonyManager {
         static final int UNSUPPORTED = 4;
     }
 
-    /**
-     * Returns true if concurrent calls on both subscriptions are possible (ex: DSDA).
-     * Returns false for other cases.
-     */
-    /** {@hide} */
-    public static boolean isConcurrentCallsPossible() {
-        int mSimVoiceConfig = TelephonyProperties.multi_sim_voice_capability().orElse(
-                MultiSimVoiceCapability.UNKNOWN);
-        return mSimVoiceConfig == MultiSimVoiceCapability.DSDA;
-    }
-
 // QTI_END: 2021-07-13: Telephony: IMS: Define new property for multi sim voice capability
 // QTI_BEGIN: 2023-03-16: Telephony: DSDA: Add APIs to support DSDA -> DSDS transition use cases
-
-    /**
-     * Returns true if device is in DSDA mode where concurrent calls on both subscriptions are
-     * possible or if device is in a mode that supports DSDA features ex.DSDS Transition mode
-     * Returns false for other cases.
-     */
-    /** {@hide} */
-    public boolean isDsdaOrDsdsTransitionMode() {
-        return isConcurrentCallsPossible() || isDsdsTransitionMode();
-    }
-
-    /**
-     * DSDS Transition mode is a mode when the device in DSDA transitions into DSDS mode due
-     * to temporary RAT changes while still retaining the calls on both subscriptions.
-     * In this mode, incoming calls and call swap work like DSDA mode but outgoing concurrent
-     * calls are only allowed on the subscription that has a call in ACTIVE state. Outgoing
-     * calls made on the subscription with call(s) in non-ACTIVE state will result in framework
-     * disconnecting calls on the other subscription.
-     * This API is not guaranteed to work when invoked from ImsPhoneCallTracker as the call states
-     * might not be updated at the time of invocation.
-     *
-     * Returns true if there are calls on both subscriptions in DSDS mode
-     * Returns false otherwise
-     */
-    /** {@hide} */
-    public boolean isDsdsTransitionMode() {
-        if (!isDsdsTransitionSupported()) {
-            return false;
-        }
-
-        if (TelephonyProperties.multi_sim_voice_capability().orElse(
-                MultiSimVoiceCapability.UNKNOWN) != MultiSimVoiceCapability.DSDS) {
-            return false;
-        }
-
-        for (int i = 0; i < getActiveModemCount(); i++) {
-            if (getCallState(SubscriptionManager.getSubscriptionId(i))== CALL_STATE_IDLE) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     /**
      * Returns true if on multisim devices, DSDA features are supported in non-DSDA modes
      * Returns false otherwise
@@ -745,19 +691,7 @@ public class TelephonyManager {
     }
 
 // QTI_END: 2023-03-16: Telephony: DSDA: Add APIs to support DSDA -> DSDS transition use cases
-// QTI_BEGIN: 2023-03-19: Telephony: DSDA: Add API to support DSDS transition use cases
-    /**
-     * Returns true if Multi SIM voice capability is DSDS.
-     * Returns false for other cases.
-     */
-    /** {@hide} */
-    public static boolean isDsdsMode() {
-        int mSimVoiceConfig = TelephonyProperties.multi_sim_voice_capability().orElse(
-                MultiSimVoiceCapability.UNKNOWN);
-        return mSimVoiceConfig == MultiSimVoiceCapability.DSDS;
-    }
 
-// QTI_END: 2023-03-19: Telephony: DSDA: Add API to support DSDS transition use cases
     /**
      * Returns the number of phones available.
      *
@@ -791,7 +725,7 @@ public class TelephonyManager {
             case UNKNOWN:
                 modemCount = 1;
                 // check for voice and data support, 0 if not supported
-                if (!isVoiceCapable() && !isSmsCapable() && !isDataCapable()) {
+                if (!isDeviceVoiceCapable() && !isSmsCapable() && !isDataCapable()) {
                     modemCount = 0;
                 }
                 break;
@@ -1341,7 +1275,6 @@ public class TelephonyManager {
      * {@link #EXTRA_EMERGENCY_CALL_TO_SATELLITE_LAUNCH_INTENT} will not be included in the event
      * {@link #EVENT_DISPLAY_EMERGENCY_MESSAGE}.
      */
-    @FlaggedApi(Flags.FLAG_OEM_ENABLED_SATELLITE_FLAG)
     public static final String EVENT_DISPLAY_EMERGENCY_MESSAGE =
             "android.telephony.event.DISPLAY_EMERGENCY_MESSAGE";
 
@@ -1356,7 +1289,6 @@ public class TelephonyManager {
      * <p>
      * Set in the extras for the {@link #EVENT_DISPLAY_EMERGENCY_MESSAGE} connection event.
      */
-    @FlaggedApi(Flags.FLAG_OEM_ENABLED_SATELLITE_FLAG)
     public static final String EXTRA_EMERGENCY_CALL_TO_SATELLITE_HANDOVER_TYPE =
             "android.telephony.extra.EMERGENCY_CALL_TO_SATELLITE_HANDOVER_TYPE";
 
@@ -1364,7 +1296,6 @@ public class TelephonyManager {
      * Extra key used with the {@link #EVENT_DISPLAY_EMERGENCY_MESSAGE} for a {@link PendingIntent}
      * which will be launched by the Dialer app.
      */
-    @FlaggedApi(Flags.FLAG_OEM_ENABLED_SATELLITE_FLAG)
     public static final String EXTRA_EMERGENCY_CALL_TO_SATELLITE_LAUNCH_INTENT =
             "android.telephony.extra.EMERGENCY_CALL_TO_SATELLITE_LAUNCH_INTENT";
 
@@ -2926,7 +2857,7 @@ public class TelephonyManager {
      */
     @RequiresFeature(PackageManager.FEATURE_TELEPHONY)
     public int getPhoneType() {
-        if (!isVoiceCapable() && !isDataCapable()) {
+        if (!isDeviceVoiceCapable() && !isDataCapable()) {
             return PHONE_TYPE_NONE;
         }
         return getCurrentPhoneType();
@@ -3483,14 +3414,13 @@ public class TelephonyManager {
                 return telephony.getDataNetworkTypeForSubscriber(subId, getOpPackageName(),
                         getAttributionTag());
             } else {
-                // This can happen when the ITelephony interface is not up yet.
+                Log.e(TAG, "getDataNetworkType: ITelephony interface is not up yet");
                 return NETWORK_TYPE_UNKNOWN;
             }
-        } catch(RemoteException ex) {
-            // This shouldn't happen in the normal case
-            return NETWORK_TYPE_UNKNOWN;
-        } catch (NullPointerException ex) {
-            // This could happen before phone restarts due to crashing
+        } catch (RemoteException // Shouldn't happen in the normal case
+                | NullPointerException ex // Could happen before phone restarts due to crashing
+        ) {
+            Log.e(TAG, "getDataNetworkType: " + ex.getMessage());
             return NETWORK_TYPE_UNKNOWN;
         }
     }
@@ -10700,9 +10630,19 @@ public class TelephonyManager {
     public boolean hasCarrierPrivileges(int subId) {
         try {
             ITelephony telephony = getITelephony();
-            if (telephony != null) {
-                return telephony.getCarrierPrivilegeStatus(subId)
-                        == CARRIER_PRIVILEGE_STATUS_HAS_ACCESS;
+            if (telephony == null) {
+                Rlog.e(TAG, "hasCarrierPrivileges: no Telephony service");
+                return false;
+            }
+            int status = telephony.getCarrierPrivilegeStatus(subId);
+            switch (status) {
+                case CARRIER_PRIVILEGE_STATUS_HAS_ACCESS:
+                    return true;
+                case CARRIER_PRIVILEGE_STATUS_NO_ACCESS:
+                    return false;
+                default:
+                    Rlog.e(TAG, "hasCarrierPrivileges: " + status);
+                    return false;
             }
         } catch (RemoteException ex) {
             Rlog.e(TAG, "hasCarrierPrivileges RemoteException", ex);
@@ -15459,11 +15399,15 @@ public class TelephonyManager {
      * {@link android.Manifest.permission#MODIFY_PHONE_STATE MODIFY_PHONE_STATE}
      *
      * @throws UnsupportedOperationException If the device does not have
-     *          {@link PackageManager#FEATURE_TELEPHONY_CALLING}.
+     *          {@link PackageManager#FEATURE_TELEPHONY_CALLING} or
+     *          {@link PackageManager#FEATURE_TELEPHONY_MESSAGING}.
      * @hide
      */
     @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE)
-    @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CALLING)
+    @RequiresFeature(anyOf = {
+        PackageManager.FEATURE_TELEPHONY_CALLING,
+        PackageManager.FEATURE_TELEPHONY_MESSAGING
+    })
     @SystemApi
     public void notifyOtaEmergencyNumberDbInstalled() {
         try {
@@ -15488,11 +15432,15 @@ public class TelephonyManager {
      * {@link android.Manifest.permission#READ_ACTIVE_EMERGENCY_SESSION}
      *
      * @throws UnsupportedOperationException If the device does not have
-     *          {@link PackageManager#FEATURE_TELEPHONY_CALLING}.
+     *          {@link PackageManager#FEATURE_TELEPHONY_CALLING} or
+     *          {@link PackageManager#FEATURE_TELEPHONY_MESSAGING}.
      * @hide
      */
     @RequiresPermission(android.Manifest.permission.READ_ACTIVE_EMERGENCY_SESSION)
-    @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CALLING)
+    @RequiresFeature(anyOf = {
+        PackageManager.FEATURE_TELEPHONY_CALLING,
+        PackageManager.FEATURE_TELEPHONY_MESSAGING
+    })
     @SystemApi
     public void updateOtaEmergencyNumberDbFilePath(
             @NonNull ParcelFileDescriptor otaParcelFileDescriptor) {
@@ -15516,11 +15464,15 @@ public class TelephonyManager {
      * {@link android.Manifest.permission#READ_ACTIVE_EMERGENCY_SESSION}
      *
      * @throws UnsupportedOperationException If the device does not have
-     *          {@link PackageManager#FEATURE_TELEPHONY_CALLING}.
+     *          {@link PackageManager#FEATURE_TELEPHONY_CALLING} or
+     *          {@link PackageManager#FEATURE_TELEPHONY_MESSAGING}.
      * @hide
      */
     @RequiresPermission(android.Manifest.permission.READ_ACTIVE_EMERGENCY_SESSION)
-    @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CALLING)
+    @RequiresFeature(anyOf = {
+        PackageManager.FEATURE_TELEPHONY_CALLING,
+        PackageManager.FEATURE_TELEPHONY_MESSAGING
+    })
     @SystemApi
     public void resetOtaEmergencyNumberDbFilePath() {
         try {
@@ -15602,11 +15554,15 @@ public class TelephonyManager {
      * or throw a SecurityException if the caller does not have the permission.
      *
      * @throws UnsupportedOperationException If the device does not have
-     *          {@link PackageManager#FEATURE_TELEPHONY_CALLING}.
+     *          {@link PackageManager#FEATURE_TELEPHONY_CALLING} or
+     *          {@link PackageManager#FEATURE_TELEPHONY_MESSAGING}.
      */
     @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
     @NonNull
-    @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CALLING)
+    @RequiresFeature(anyOf = {
+        PackageManager.FEATURE_TELEPHONY_CALLING,
+        PackageManager.FEATURE_TELEPHONY_MESSAGING
+    })
     public Map<Integer, List<EmergencyNumber>> getEmergencyNumberList() {
         Map<Integer, List<EmergencyNumber>> emergencyNumberList = new HashMap<>();
         try {
@@ -15660,11 +15616,15 @@ public class TelephonyManager {
      * or throw a SecurityException if the caller does not have the permission.
      * @throws IllegalStateException if the Telephony process is not currently available.
      * @throws UnsupportedOperationException If the device does not have
-     *          {@link PackageManager#FEATURE_TELEPHONY_CALLING}.
+     *          {@link PackageManager#FEATURE_TELEPHONY_CALLING} or
+     *          {@link PackageManager#FEATURE_TELEPHONY_MESSAGING}.
      */
     @RequiresPermission(android.Manifest.permission.READ_PHONE_STATE)
     @NonNull
-    @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CALLING)
+    @RequiresFeature(anyOf = {
+        PackageManager.FEATURE_TELEPHONY_CALLING,
+        PackageManager.FEATURE_TELEPHONY_MESSAGING
+    })
     public Map<Integer, List<EmergencyNumber>> getEmergencyNumberList(
             @EmergencyServiceCategories int categories) {
         Map<Integer, List<EmergencyNumber>> emergencyNumberListForCategories = new HashMap<>();
@@ -15730,9 +15690,13 @@ public class TelephonyManager {
      * SIM card(s), Android database, modem, network or defaults; {@code false} otherwise.
      * @throws IllegalStateException if the Telephony process is not currently available.
      * @throws UnsupportedOperationException If the device does not have
-     *          {@link PackageManager#FEATURE_TELEPHONY_CALLING}.
+     *          {@link PackageManager#FEATURE_TELEPHONY_CALLING} or
+     *          {@link PackageManager#FEATURE_TELEPHONY_MESSAGING}.
      */
-    @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CALLING)
+    @RequiresFeature(anyOf = {
+        PackageManager.FEATURE_TELEPHONY_CALLING,
+        PackageManager.FEATURE_TELEPHONY_MESSAGING
+    })
     public boolean isEmergencyNumber(@NonNull String number) {
         try {
             ITelephony telephony = getITelephony();
@@ -15769,7 +15733,8 @@ public class TelephonyManager {
      * have the required permission/privileges
      * @throws IllegalStateException if the Telephony process is not currently available.
      * @throws UnsupportedOperationException If the device does not have
-     *          {@link PackageManager#FEATURE_TELEPHONY_CALLING}.
+     *          {@link PackageManager#FEATURE_TELEPHONY_CALLING} or
+     *          {@link PackageManager#FEATURE_TELEPHONY_MESSAGING}.
      *
      * @deprecated Please use {@link TelephonyManager#isEmergencyNumber(String)} instead.
      * @hide
@@ -15777,7 +15742,10 @@ public class TelephonyManager {
     @Deprecated
     @SystemApi
     @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
-    @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CALLING)
+    @RequiresFeature(anyOf = {
+        PackageManager.FEATURE_TELEPHONY_CALLING,
+        PackageManager.FEATURE_TELEPHONY_MESSAGING
+    })
     public boolean isPotentialEmergencyNumber(@NonNull String number) {
         try {
             ITelephony telephony = getITelephony();
@@ -15797,15 +15765,19 @@ public class TelephonyManager {
      * Returns the emergency number database version.
      *
      * <p>Requires Permission:
-     *   {@link android.Manifest.permission#READ_PRIVILEGED_PHONE_STATE READ_PRIVILEGED_PHONE_STATE}
+     *   {@link android.Manifest.permission#READ_PRIVILEGED_PHONE_STATE}
      *
      * @throws UnsupportedOperationException If the device does not have
-     *          {@link PackageManager#FEATURE_TELEPHONY_CALLING}.
+     *          {@link PackageManager#FEATURE_TELEPHONY_CALLING} or
+     *          {@link PackageManager#FEATURE_TELEPHONY_MESSAGING}.
      * @hide
      */
     @SystemApi
     @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
-    @RequiresFeature(PackageManager.FEATURE_TELEPHONY_CALLING)
+    @RequiresFeature(anyOf = {
+        PackageManager.FEATURE_TELEPHONY_CALLING,
+        PackageManager.FEATURE_TELEPHONY_MESSAGING
+    })
     public int getEmergencyNumberDbVersion() {
         try {
             ITelephony telephony = getITelephony();

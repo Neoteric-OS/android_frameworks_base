@@ -25,11 +25,17 @@ import java.util.Map;
 public interface MapSerializer {
 
     /**
+     * Adds a "type" field with this value
+     *
+     * @param type The name of the type
+     */
+    MapSerializer addType(String type);
+
+    /**
      * Add a float expression
      *
-     * @param key
-     * @param value
-     * @return
+     * @param key The key
+     * @param value The float src
      */
     MapSerializer addFloatExpressionSrc(String key, float[] value);
 
@@ -41,6 +47,14 @@ public interface MapSerializer {
      * @param mask For determining ID from int
      */
     MapSerializer addIntExpressionSrc(String key, int[] value, int mask);
+
+    /**
+     * Add a path
+     *
+     * @param key The key
+     * @param path The path
+     */
+    MapSerializer addPath(String key, float[] path);
 
     /**
      * Add metadata to this map for filtering by the data format generator.

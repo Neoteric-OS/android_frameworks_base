@@ -17,6 +17,7 @@
 package com.android.systemui.plugins.clocks
 
 import android.view.View
+import android.view.View.MeasureSpec
 import com.android.systemui.log.core.LogLevel
 import com.android.systemui.log.core.LogcatOnlyMessageBuffer
 import com.android.systemui.log.core.Logger
@@ -46,12 +47,18 @@ class ClockLogger(private val view: View?, buffer: MessageBuffer, tag: String) :
         }
     }
 
-    fun onMeasure() {
-        d("onMeasure()")
+    fun onMeasure(widthSpec: Int, heightSpec: Int) {
+        d({ "onMeasure(${getSpecText(int1)}, ${getSpecText(int2)})" }) {
+            int1 = widthSpec
+            int2 = heightSpec
+        }
     }
 
-    fun onLayout() {
-        d("onLayout()")
+    fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+        d({ "onLayout($bool1, ${VRect.fromLong(long1)})" }) {
+            bool1 = changed
+            long1 = VRect(left, top, right, bottom).toLong()
+        }
     }
 
     fun onDraw() {
@@ -83,22 +90,26 @@ class ClockLogger(private val view: View?, buffer: MessageBuffer, tag: String) :
         }
     }
 
-    fun updateAxes(lsFVar: String, aodFVar: String) {
-        i({ "updateAxes(LS = $str1, AOD = $str2)" }) {
+    fun updateAxes(lsFVar: String, aodFVar: String, isAnimated: Boolean) {
+        i({ "updateAxes(LS = $str1, AOD = $str2, isAnimated=$bool1)" }) {
             str1 = lsFVar
             str2 = aodFVar
+            bool1 = isAnimated
         }
     }
 
-    fun addView(child: View) {
-        d({ "addView($str1 @$int1)" }) {
+    fun onViewAdded(child: View) {
+        d({ "onViewAdded($str1 @$int1)" }) {
             str1 = child::class.simpleName!!
             int1 = child.id
         }
     }
 
-    fun animateDoze() {
-        d("animateDoze()")
+    fun animateDoze(isDozing: Boolean, isAnimated: Boolean) {
+        d({ "animateDoze(isDozing=$bool1, isAnimated=$bool2)" }) {
+            bool1 = isDozing
+            bool2 = isAnimated
+        }
     }
 
     fun animateCharge() {
@@ -106,10 +117,7 @@ class ClockLogger(private val view: View?, buffer: MessageBuffer, tag: String) :
     }
 
     fun animateFidget(x: Float, y: Float) {
-        d({ "animateFidget($str1, $str2)" }) {
-            str1 = x.toString()
-            str2 = y.toString()
-        }
+        d({ "animateFidget(${VPointF.fromLong(long1)})" }) { long1 = VPointF(x, y).toLong() }
     }
 
     companion object {
@@ -130,6 +138,20 @@ class ClockLogger(private val view: View?, buffer: MessageBuffer, tag: String) :
                 View.VISIBLE -> "VISIBLE"
                 else -> "$visibility"
             }
+        }
+
+        @JvmStatic
+        fun getSpecText(spec: Int): String {
+            val size = MeasureSpec.getSize(spec)
+            val mode = MeasureSpec.getMode(spec)
+            val modeText =
+                when (mode) {
+                    MeasureSpec.EXACTLY -> "EXACTLY"
+                    MeasureSpec.AT_MOST -> "AT MOST"
+                    MeasureSpec.UNSPECIFIED -> "UNSPECIFIED"
+                    else -> "$mode"
+                }
+            return "($size, $modeText)"
         }
 
         @JvmStatic

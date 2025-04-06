@@ -113,7 +113,7 @@ import java.util.Map;
 @SmallTest
 // TODO(b/381263619) there are more changes and tweaks required to match the new bouncer/shade specs
 // Disabling for now but it will be fixed before the flag is fully ramped up.
-@DisableFlags(Flags.FLAG_BOUNCER_UI_REVAMP)
+@DisableFlags({Flags.FLAG_BOUNCER_UI_REVAMP, Flags.FLAG_NOTIFICATION_SHADE_BLUR})
 public class ScrimControllerTest extends SysuiTestCase {
 
     @Rule public Expect mExpect = Expect.create();
@@ -296,6 +296,7 @@ public class ScrimControllerTest extends SysuiTestCase {
                 mKosmos.getTestDispatcher(),
                 mLinearLargeScreenShadeInterpolator,
                 new BlurConfig(0.0f, 0.0f),
+                mContext,
                 mKosmos::getWindowRootViewBlurInteractor);
         mScrimController.setScrimVisibleListener(visible -> mScrimVisibility = visible);
         mScrimController.attachViews(mScrimBehind, mNotificationsScrim, mScrimInFront);
@@ -1247,6 +1248,7 @@ public class ScrimControllerTest extends SysuiTestCase {
                 mKosmos.getTestDispatcher(),
                 mLinearLargeScreenShadeInterpolator,
                 new BlurConfig(0.0f, 0.0f),
+                mContext,
                 mKosmos::getWindowRootViewBlurInteractor);
         mScrimController.setScrimVisibleListener(visible -> mScrimVisibility = visible);
         mScrimController.attachViews(mScrimBehind, mNotificationsScrim, mScrimInFront);

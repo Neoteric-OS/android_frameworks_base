@@ -217,13 +217,13 @@ class AppCompatLetterboxPolicy {
         }
 
         final boolean shouldShowLetterboxUi =
-                (mActivityRecord.isInLetterboxAnimation() || mActivityRecord.isVisible()
+                (mActivityRecord.isVisible()
                         || mActivityRecord.isVisibleRequested())
                         && mainWindow.areAppWindowBoundsLetterboxed()
                         // Check for FLAG_SHOW_WALLPAPER explicitly instead of using
                         // WindowContainer#showWallpaper because the later will return true when
                         // this activity is using blurred wallpaper for letterbox background.
-                        && (mainWindow.getAttrs().flags & FLAG_SHOW_WALLPAPER) == 0;
+                        && (mainWindow.mAttrs.flags & FLAG_SHOW_WALLPAPER) == 0;
 
         mLastShouldShowLetterboxUi = shouldShowLetterboxUi;
 
@@ -334,7 +334,7 @@ class AppCompatLetterboxPolicy {
         if (w == null) {
             return true;
         }
-        final int type = w.getAttrs().type;
+        final int type = w.mAttrs.type;
         // Allow letterbox to be displayed early for base application or application starting
         // windows even if it is not on the top z order to prevent flickering when the
         // letterboxed window is brought to the top
@@ -360,8 +360,7 @@ class AppCompatLetterboxPolicy {
                         .mAppCompatController.getReachabilityPolicy();
                 mLetterbox = new Letterbox(() -> mActivityRecord.makeChildSurface(null),
                         mActivityRecord.mWmService.mTransactionFactory,
-                        reachabilityPolicy, letterboxOverrides,
-                        this::getLetterboxParentSurface);
+                        reachabilityPolicy, letterboxOverrides);
                 mActivityRecord.mAppCompatController.getReachabilityPolicy()
                         .setLetterboxInnerBoundsSupplier(mLetterbox::getInnerFrame);
             }
@@ -469,15 +468,6 @@ class AppCompatLetterboxPolicy {
         public boolean isFullyTransparentBarAllowed(@NonNull Rect rect) {
             return !isRunning() || mLetterbox.notIntersectsOrFullyContains(rect);
         }
-
-        @Nullable
-        private SurfaceControl getLetterboxParentSurface() {
-            if (mActivityRecord.isInLetterboxAnimation()) {
-                return mActivityRecord.getTask().getSurfaceControl();
-            }
-            return mActivityRecord.getSurfaceControl();
-        }
-
     }
 
     /**

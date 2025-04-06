@@ -45,13 +45,19 @@ constructor(
             )
             .setupWithoutSceneContainer(edge = Edge.create(OCCLUDED, PRIMARY_BOUNCER))
 
+    /**
+     * Reasserts that lockscreen content should not be visible. It is possible the keyguard alpha is
+     * set to 1f if coming from an expanded shade that collapsed to launch an occluding activity.
+     */
+    val lockscreenAlpha: Flow<Float> = transitionAnimation.immediatelyTransitionTo(0f)
+
     override val windowBlurRadius: Flow<Float> =
         shadeDependentFlows.transitionFlow(
             flowWhenShadeIsExpanded =
                 if (Flags.notificationShadeBlur()) {
                     transitionAnimation.immediatelyTransitionTo(blurConfig.maxBlurRadiusPx)
                 } else {
-                    emptyFlow()
+                    transitionAnimation.immediatelyTransitionTo(blurConfig.minBlurRadiusPx)
                 },
             flowWhenShadeIsNotExpanded =
                 transitionAnimation.immediatelyTransitionTo(blurConfig.maxBlurRadiusPx),

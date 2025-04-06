@@ -143,6 +143,7 @@ public class BatteryHistoryDirectory implements BatteryStatsHistory.BatteryHisto
     /**
      * Returns the maximum storage size allocated to battery history.
      */
+    @Override
     public int getMaxHistorySize() {
         return mMaxHistorySize;
     }
@@ -250,6 +251,10 @@ public class BatteryHistoryDirectory implements BatteryStatsHistory.BatteryHisto
         try (FileInputStream stream = file.openRead()) {
             byte[] header = new byte[FILE_FORMAT_BYTES];
             if (stream.read(header, 0, FILE_FORMAT_BYTES) == -1) {
+                if (file.getBaseFile().length() == 0) {
+                    return new byte[0];
+                }
+
                 Slog.e(TAG, "Invalid battery history file format " + file.getBaseFile());
                 deleteFragment(fragment);
                 return null;
@@ -369,6 +374,10 @@ public class BatteryHistoryDirectory implements BatteryStatsHistory.BatteryHisto
     @SuppressWarnings("unchecked")
     @Override
     public List<BatteryHistoryFragment> getFragments() {
+        if (!mLock.isHeldByCurrentThread()) {
+            throw new IllegalStateException("Reading battery history without a lock");
+        }
+
         ensureInitialized();
         return (List<BatteryHistoryFragment>)
                 (List<? extends BatteryHistoryFragment>) mHistoryFiles;
@@ -438,44 +447,6 @@ public class BatteryHistoryDirectory implements BatteryStatsHistory.BatteryHisto
     }
 
     @Override
-    public BatteryHistoryFragment getNextFragment(BatteryHistoryFragment current, long startTimeMs,
-            long endTimeMs) {
-        ensureInitialized();
-
-        if (!mLock.isHeldByCurrentThread()) {
-            throw new IllegalStateException("Iterating battery history without a lock");
-        }
-
-        int nextFileIndex = 0;
-        int firstFileIndex = 0;
-        // skip the last file because its data is in history buffer.
-        int lastFileIndex = mHistoryFiles.size() - 2;
-        for (int i = lastFileIndex; i >= 0; i--) {
-            BatteryHistoryFragment fragment = mHistoryFiles.get(i);
-            if (current != null && fragment.monotonicTimeMs == current.monotonicTimeMs) {
-                nextFileIndex = i + 1;
-            }
-            if (fragment.monotonicTimeMs > endTimeMs) {
-                lastFileIndex = i - 1;
-            }
-            if (fragment.monotonicTimeMs <= startTimeMs) {
-                firstFileIndex = i;
-                break;
-            }
-        }
-
-        if (nextFileIndex < firstFileIndex) {
-            nextFileIndex = firstFileIndex;
-        }
-
-        if (nextFileIndex <= lastFileIndex) {
-            return mHistoryFiles.get(nextFileIndex);
-        }
-
-        return null;
-    }
-
-    @Override
     public boolean hasCompletedFragments() {
         ensureInitialized();
 
@@ -534,7 +505,9 @@ public class BatteryHistoryDirectory implements BatteryStatsHistory.BatteryHisto
                 for (int i = 0; i < mHistoryFiles.size(); i++) {
                     size += (int) mHistoryFiles.get(i).atomicFile.getBaseFile().length();
                 }
-                while (size > mMaxHistorySize) {
+                // Trim until the directory size is within the limit or there is just one most
+                // recent file left in the directory
+                while (size > mMaxHistorySize && mHistoryFiles.size() > 1) {
                     BatteryHistoryFile oldest = mHistoryFiles.get(0);
                     int length = (int) oldest.atomicFile.getBaseFile().length();
                     oldest.atomicFile.delete();

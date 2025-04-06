@@ -26,7 +26,6 @@ import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Stable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -47,6 +46,7 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import com.android.internal.jank.InteractionJankMonitor
 import com.android.systemui.animation.ActivityTransitionAnimator
+import com.android.systemui.animation.ComposableControllerFactory
 import com.android.systemui.animation.DialogCuj
 import com.android.systemui.animation.DialogTransitionAnimator
 import com.android.systemui.animation.Expandable
@@ -77,6 +77,25 @@ fun rememberExpandableController(
     shape: Shape,
     contentColor: Color = contentColorFor(color),
     borderStroke: BorderStroke? = null,
+    transitionControllerFactory: ComposableControllerFactory? = null,
+): ExpandableController {
+    return rememberExpandableController(
+        color = { color },
+        shape = shape,
+        contentColor = contentColor,
+        borderStroke = borderStroke,
+        transitionControllerFactory = transitionControllerFactory,
+    )
+}
+
+/** Create an [ExpandableController] to control an [Expandable]. */
+@Composable
+fun rememberExpandableController(
+    color: () -> Color,
+    shape: Shape,
+    contentColor: Color = Color.Unspecified,
+    borderStroke: BorderStroke? = null,
+    transitionControllerFactory: ComposableControllerFactory? = null,
 ): ExpandableController {
     val composeViewRoot = LocalView.current
     val density = LocalDensity.current
@@ -95,6 +114,7 @@ fun rememberExpandableController(
             composeViewRoot,
             density,
             layoutDirection,
+            transitionControllerFactory,
         ) {
             ExpandableControllerImpl(
                 color,
@@ -103,6 +123,7 @@ fun rememberExpandableController(
                 borderStroke,
                 composeViewRoot,
                 density,
+                transitionControllerFactory,
                 layoutDirection,
                 { isComposed },
             )
@@ -121,12 +142,13 @@ fun rememberExpandableController(
 }
 
 internal class ExpandableControllerImpl(
-    internal val color: Color,
+    internal val color: () -> Color,
     internal val contentColor: Color,
     internal val shape: Shape,
     internal val borderStroke: BorderStroke?,
     internal val composeViewRoot: View,
     internal val density: Density,
+    internal val transitionControllerFactory: ComposableControllerFactory?,
     private val layoutDirection: LayoutDirection,
     private val isComposed: () -> Boolean,
 ) : ExpandableController {

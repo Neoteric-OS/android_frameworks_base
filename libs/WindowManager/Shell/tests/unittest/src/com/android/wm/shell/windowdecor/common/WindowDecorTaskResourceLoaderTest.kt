@@ -23,6 +23,7 @@ import android.content.pm.ActivityInfo
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
+import android.os.LocaleList
 import android.os.UserHandle
 import android.testing.AndroidTestingRunner
 import android.testing.TestableContext
@@ -39,6 +40,7 @@ import com.android.wm.shell.sysui.ShellInit
 import com.android.wm.shell.sysui.UserChangeListener
 import com.android.wm.shell.windowdecor.common.WindowDecorTaskResourceLoader.AppResources
 import com.google.common.truth.Truth.assertThat
+import java.util.Locale
 import org.junit.Assert.assertThrows
 import org.junit.Before
 import org.junit.Test
@@ -52,7 +54,7 @@ import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.spy
 import org.mockito.kotlin.verify
-import org.mockito.kotlin.verifyZeroInteractions
+import org.mockito.kotlin.verifyNoMoreInteractions
 import org.mockito.kotlin.whenever
 
 /**
@@ -116,17 +118,32 @@ class WindowDecorTaskResourceLoaderTest : ShellTestCase() {
     @Test
     fun testGetName_cached_returnsFromCache() {
         val task = createTaskInfo(context.userId)
+        task.configuration.setLocales(LocaleList(Locale.US))
         loader.onWindowDecorCreated(task)
         loader.taskToResourceCache[task.taskId] = AppResources("App Name", mock(), mock())
+        loader.localeListOnCache[task.taskId] = LocaleList(Locale.US)
 
         loader.getName(task)
 
-        verifyZeroInteractions(
+        verifyNoMoreInteractions(
             mockPackageManager,
             mockIconProvider,
             mockHeaderIconFactory,
             mockVeilIconFactory,
         )
+    }
+
+    @Test
+    fun testGetName_cached_localesChanged_loadsResourceAndCaches() {
+        val task = createTaskInfo(context.userId)
+        loader.onWindowDecorCreated(task)
+        loader.taskToResourceCache[task.taskId] = AppResources("App Name", mock(), mock())
+        loader.localeListOnCache[task.taskId] = LocaleList(Locale.US, Locale.FRANCE)
+        task.configuration.setLocales(LocaleList(Locale.FRANCE, Locale.US))
+        doReturn("App Name but in French").whenever(mockPackageManager).getApplicationLabel(any())
+
+        assertThat(loader.getName(task)).isEqualTo("App Name but in French")
+        assertThat(loader.taskToResourceCache[task.taskId]?.appName).isEqualTo("App Name but in French")
     }
 
     @Test
@@ -148,7 +165,7 @@ class WindowDecorTaskResourceLoaderTest : ShellTestCase() {
 
         loader.getHeaderIcon(task)
 
-        verifyZeroInteractions(mockPackageManager, mockIconProvider, mockHeaderIconFactory)
+        verifyNoMoreInteractions(mockPackageManager, mockIconProvider, mockHeaderIconFactory)
     }
 
     @Test
@@ -170,7 +187,7 @@ class WindowDecorTaskResourceLoaderTest : ShellTestCase() {
 
         loader.getVeilIcon(task)
 
-        verifyZeroInteractions(mockPackageManager, mockIconProvider, mockVeilIconFactory)
+        verifyNoMoreInteractions(mockPackageManager, mockIconProvider, mockVeilIconFactory)
     }
 
     @Test

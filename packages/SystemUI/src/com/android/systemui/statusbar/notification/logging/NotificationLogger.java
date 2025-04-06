@@ -19,7 +19,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.RemoteException;
 import android.os.ServiceManager;
-import android.os.SystemClock;
 import android.service.notification.NotificationListenerService;
 import android.util.ArrayMap;
 import android.util.ArraySet;
@@ -44,7 +43,9 @@ import com.android.systemui.statusbar.StatusBarState;
 import com.android.systemui.statusbar.notification.collection.NotifLiveDataStore;
 import com.android.systemui.statusbar.notification.collection.NotifPipeline;
 import com.android.systemui.statusbar.notification.collection.NotificationEntry;
+import com.android.systemui.statusbar.notification.collection.UseElapsedRealtimeForCreationTime;
 import com.android.systemui.statusbar.notification.collection.notifcollection.NotifCollectionListener;
+import com.android.systemui.statusbar.notification.collection.notifcollection.UpdateSource;
 import com.android.systemui.statusbar.notification.collection.render.NotificationVisibilityProvider;
 import com.android.systemui.statusbar.notification.dagger.NotificationsModule;
 import com.android.systemui.statusbar.notification.shared.NotificationsLiveDataStoreRefactor;
@@ -111,7 +112,7 @@ public class NotificationLogger implements StateListener, CoreStartable,
 
         @Override
         public void run() {
-            mLastVisibilityReportUptimeMs = SystemClock.uptimeMillis();
+            mLastVisibilityReportUptimeMs = UseElapsedRealtimeForCreationTime.getCurrentTime();
 
             // 1. Loop over active entries:
             //   A. Keep list of visible notifications.
@@ -234,7 +235,7 @@ public class NotificationLogger implements StateListener, CoreStartable,
     private void registerNewPipelineListener() {
         mNotifPipeline.addCollectionListener(new NotifCollectionListener() {
             @Override
-            public void onEntryUpdated(@NonNull NotificationEntry entry, boolean fromSystem) {
+            public void onEntryUpdated(@NonNull NotificationEntry entry, UpdateSource source) {
                 mExpansionStateLogger.onEntryUpdated(entry.getKey());
             }
 

@@ -44,7 +44,6 @@ import android.app.StatusBarManager.WindowVisibleState;
 import android.content.Context;
 import android.graphics.Rect;
 import android.hardware.display.DisplayManager;
-import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.InputMethodService.BackDispositionMode;
 import android.inputmethodservice.InputMethodService.ImeWindowVisibility;
 import android.os.Handler;
@@ -240,6 +239,7 @@ public class TaskbarDelegate implements CommandQueue.Callbacks,
     @Override
     public void onDisplayAddSystemDecorations(int displayId) {
         CommandQueue.Callbacks.super.onDisplayAddSystemDecorations(displayId);
+        mEdgeBackGestureHandler.onDisplayAddSystemDecorations(displayId);
         if (mLauncherProxyService.getProxy() == null) {
             return;
         }
@@ -254,6 +254,7 @@ public class TaskbarDelegate implements CommandQueue.Callbacks,
     @Override
     public void onDisplayRemoved(int displayId) {
         CommandQueue.Callbacks.super.onDisplayRemoved(displayId);
+        mEdgeBackGestureHandler.onDisplayRemoveSystemDecorations(displayId);
         if (mLauncherProxyService.getProxy() == null) {
             return;
         }
@@ -268,6 +269,7 @@ public class TaskbarDelegate implements CommandQueue.Callbacks,
     @Override
     public void onDisplayRemoveSystemDecorations(int displayId) {
         CommandQueue.Callbacks.super.onDisplayRemoveSystemDecorations(displayId);
+        mEdgeBackGestureHandler.onDisplayRemoveSystemDecorations(displayId);
         if (mLauncherProxyService.getProxy() == null) {
             return;
         }
@@ -503,9 +505,7 @@ public class TaskbarDelegate implements CommandQueue.Callbacks,
     @Override
     public void setImeWindowStatus(int displayId, @ImeWindowVisibility int vis,
             @BackDispositionMode int backDisposition, boolean showImeSwitcher) {
-        // Count imperceptible changes as visible so we transition taskbar out quickly.
-        final boolean isImeVisible = mNavBarHelper.isImeVisible(vis)
-                || (vis & InputMethodService.IME_VISIBLE_IMPERCEPTIBLE) != 0;
+        final boolean isImeVisible = mNavBarHelper.isImeVisible(vis);
         final int flags = Utilities.updateNavbarFlagsFromIme(mNavbarFlags, backDisposition,
                 isImeVisible, showImeSwitcher);
         if (flags == mNavbarFlags) {

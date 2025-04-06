@@ -17,7 +17,6 @@
 package com.android.systemui.statusbar.notification.collection.inflation;
 
 import static com.android.systemui.statusbar.NotificationLockscreenUserManager.REDACTION_TYPE_NONE;
-import static com.android.systemui.statusbar.NotificationLockscreenUserManager.REDACTION_TYPE_SENSITIVE_CONTENT;
 import static com.android.systemui.statusbar.notification.row.NotificationRowContentBinder.FLAG_CONTENT_VIEW_CONTRACTED;
 import static com.android.systemui.statusbar.notification.row.NotificationRowContentBinder.FLAG_CONTENT_VIEW_EXPANDED;
 import static com.android.systemui.statusbar.notification.row.NotificationRowContentBinder.FLAG_CONTENT_VIEW_PUBLIC;
@@ -136,9 +135,7 @@ public class NotificationRowBinderImpl implements NotificationRowBinder {
             @NonNull NotifInflater.Params params,
             NotificationRowContentBinder.InflationCallback callback)
             throws InflationException {
-        //TODO(b/217799515): Remove the entry parameter from getViewParentForNotification(), this
-        // function returns the NotificationStackScrollLayout regardless of the entry.
-        ViewGroup parent = mListContainer.getViewParentForNotification(entry);
+        ViewGroup parent = mListContainer.getViewParentForNotification();
 
         if (entry.rowExists()) {
             mLogger.logUpdatingRow(entry, params);
@@ -278,7 +275,7 @@ public class NotificationRowBinderImpl implements NotificationRowBinder {
 
         if (LockscreenOtpRedaction.isSingleLineViewEnabled()) {
             if (inflaterParams.isChildInGroup()
-                    && redactionType == REDACTION_TYPE_SENSITIVE_CONTENT) {
+                    && redactionType != REDACTION_TYPE_NONE) {
                 params.requireContentViews(FLAG_CONTENT_VIEW_PUBLIC_SINGLE_LINE);
             } else {
                 params.markContentViewsFreeable(FLAG_CONTENT_VIEW_PUBLIC_SINGLE_LINE);
@@ -301,6 +298,7 @@ public class NotificationRowBinderImpl implements NotificationRowBinder {
         mRowContentBindStage.requestRebind(entry, en -> {
             mLogger.logRebindComplete(entry);
             row.setIsMinimized(isMinimized);
+            row.setRedactionType(redactionType);
             if (inflationCallback != null) {
                 inflationCallback.onAsyncInflationFinished(en);
             }

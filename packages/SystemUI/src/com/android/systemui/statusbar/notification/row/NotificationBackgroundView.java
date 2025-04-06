@@ -36,7 +36,6 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.android.internal.graphics.ColorUtils;
 import com.android.internal.util.ContrastColorUtil;
 import com.android.systemui.Dumpable;
 import com.android.systemui.common.shared.colors.SurfaceEffectColors;
@@ -72,8 +71,7 @@ public class NotificationBackgroundView extends View implements Dumpable,
     private int mDrawableAlpha = 255;
     private final ColorStateList mLightColoredStatefulColors;
     private final ColorStateList mDarkColoredStatefulColors;
-    private final int mNormalColor;
-    private boolean mBgIsColorized = false;
+    private int mNormalColor;
     private final int convexR = 9;
     private final int concaveR = 22;
 
@@ -88,7 +86,7 @@ public class NotificationBackgroundView extends View implements Dumpable,
         mDarkColoredStatefulColors = getResources().getColorStateList(
                 R.color.notification_state_color_dark);
         if (notificationRowTransparency()) {
-            mNormalColor = SurfaceEffectColors.surfaceEffect1(getResources());
+            mNormalColor = SurfaceEffectColors.surfaceEffect1(getContext());
         } else  {
             mNormalColor = mContext.getColor(
                     com.android.internal.R.color.materialColorSurfaceContainerHigh);
@@ -139,21 +137,6 @@ public class NotificationBackgroundView extends View implements Dumpable,
 
             canvas.restore();
         }
-    }
-
-    /**
-     * A way to tell whether the background has been colorized.
-     */
-    public boolean isColorized() {
-        return mBgIsColorized;
-    }
-
-    /**
-     * A way to inform this class whether the background has been colorized.
-     * We need to know this, in order to *not* override that color.
-     */
-    public void setBgIsColorized(boolean b) {
-        mBgIsColorized = b;
     }
 
     private Path calculateDismissButtonCutoutPath(Rect backgroundBounds) {
@@ -312,27 +295,21 @@ public class NotificationBackgroundView extends View implements Dumpable,
         return ((LayerDrawable) mBackground).getDrawable(1);
     }
 
-    private void updateBaseLayerColor() {
-        // BG base layer being a drawable, there isn't a method like setColor() to color it.
-        // Instead, we set a color filter that essentially replaces every pixel of the drawable.
-        // For non-colorized notifications, this function specifies a new color token.
-        // For colorized notifications, this uses a color that matches the tint color at 90% alpha.
-        getBaseBackgroundLayer().setColorFilter(
-                new PorterDuffColorFilter(
-                        isColorized()
-                                ? ColorUtils.setAlphaComponent(mTintColor, (int) (255 * 0.9f))
-                                : SurfaceEffectColors.surfaceEffect1(getResources()),
-                        PorterDuff.Mode.SRC)); // SRC operator discards the drawable's color+alpha
-    }
-
     public void setTint(int tintColor) {
         Drawable baseLayer = getBaseBackgroundLayer();
-        baseLayer.mutate().setTintMode(PorterDuff.Mode.SRC_ATOP);
-        baseLayer.setTint(tintColor);
-        mTintColor = tintColor;
         if (notificationRowTransparency()) {
-            updateBaseLayerColor();
+            // BG base layer being a drawable, there isn't a method like setColor() to color it.
+            // Instead, we set a color filter that essentially replaces every pixel of the drawable.
+            baseLayer.setColorFilter(
+                    new PorterDuffColorFilter(
+                            tintColor,
+                            // SRC operator discards the drawable's color+alpha
+                            PorterDuff.Mode.SRC));
+        } else {
+            baseLayer.mutate().setTintMode(PorterDuff.Mode.SRC_ATOP);
+            baseLayer.setTint(tintColor);
         }
+        mTintColor = tintColor;
         setStatefulColors();
         invalidate();
     }

@@ -38,6 +38,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -45,6 +46,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
 
 /** An interactor for the notification chips shown in the status bar. */
 @SysUISingleton
@@ -73,7 +75,7 @@ constructor(
         _promotedNotificationChipTapEvent.asSharedFlow()
 
     suspend fun onPromotedNotificationChipTapped(key: String) {
-        StatusBarNotifChips.assertInNewMode()
+        StatusBarNotifChips.unsafeAssertInNewMode()
         _promotedNotificationChipTapEvent.emit(key)
     }
 
@@ -143,41 +145,48 @@ constructor(
 
     /**
      * Emits all notifications that are eligible to show as chips in the status bar. This is
-     * different from which chips will *actually* show, see [shownNotificationChips] for that.
+     * different from which chips will *actually* show, because
+     * [com.android.systemui.statusbar.chips.notification.ui.viewmodel.NotifChipsViewModel] will
+     * hide chips that have [NotificationChipModel.isAppVisible] as true.
      */
     val allNotificationChips: Flow<List<NotificationChipModel>> =
         if (StatusBarNotifChips.isEnabled) {
-            // For all our current interactors...
-            // TODO(b/364653005): When a promoted notification is added or removed, each individual
-            // interactor's [notificationChip] flow becomes un-collected then re-collected, which
-            // can cause some flows to remove then add callbacks when they don't need to. Is there a
-            // better structure for this? Maybe Channels or a StateFlow with a short timeout?
-            promotedNotificationInteractors.flatMapLatest { interactors ->
-                if (interactors.isNotEmpty()) {
-                    // Combine each interactor's [notificationChip] flow...
-                    val allNotificationChips: List<Flow<NotificationChipModel?>> =
-                        interactors.map { interactor -> interactor.notificationChip }
-                    combine(allNotificationChips) {
+                // For all our current interactors...
+                promotedNotificationInteractors.flatMapLatest { interactors ->
+                    if (interactors.isNotEmpty()) {
+                        // Combine each interactor's [notificationChip] flow...
+                        val allNotificationChips: List<Flow<NotificationChipModel?>> =
+                            interactors.map { interactor -> interactor.notificationChip }
+                        combine(allNotificationChips) {
                             // ... and emit just the non-null & sorted chips
                             it.filterNotNull().sortedWith(chipComparator)
                         }
-                        .logSort()
-                } else {
-                    flowOf(emptyList())
+                    } else {
+                        flowOf(emptyList())
+                    }
                 }
+            } else {
+                flowOf(emptyList())
             }
-        } else {
-            flowOf(emptyList())
-        }
-
-    /** Emits the notifications that should actually be *shown* as chips in the status bar. */
-    val shownNotificationChips: Flow<List<NotificationChipModel>> =
-        allNotificationChips.map { chipsList ->
-            // If the app that posted this notification is visible, we want to hide the chip
-            // because information between the status bar chip and the app itself could be
-            // out-of-sync (like a timer that's slightly off)
-            chipsList.filter { !it.isAppVisible }
-        }
+            .distinctUntilChanged()
+            .logSort()
+            .stateIn(
+                backgroundScope,
+                SharingStarted.WhileSubscribed(
+                    // When a promoted notification is added or removed, the `.flatMapLatest` above
+                    // will stop collection and then re-start collection on each individual
+                    // interactor's flow. (It will happen even for a chip that didn't change.) We
+                    // don't want the individual interactor flows to stop then re-start because they
+                    // may be maintaining values that would get thrown away when collection stops
+                    // (like an app's last visible time).
+                    // stopTimeoutMillis ensures we maintain those values even during the brief
+                    // moment (1-2ms) when `.flatMapLatest` causes collect to stop then immediately
+                    // restart.
+                    // Note: Channels could also work to solve this.
+                    stopTimeoutMillis = 1000
+                ),
+                initialValue = emptyList(),
+            )
 
     /*
     Stable sort the promoted notifications by two criteria:
@@ -199,14 +208,14 @@ constructor(
         }
 
     private fun Flow<List<NotificationChipModel>>.logSort(): Flow<List<NotificationChipModel>> {
-        return this.distinctUntilChanged().onEach { chips ->
+        return this.onEach { chips ->
             val logString =
                 chips.joinToString {
                     "{key=${it.key}. " +
                         "lastVisibleAppTime=${it.lastAppVisibleTime}. " +
                         "creationTime=${it.creationTime}}"
                 }
-            logger.d({ "Sorted chips: $str1" }) { str1 = logString }
+            logger.d({ "Sorted notif chips: $str1" }) { str1 = logString }
         }
     }
 }

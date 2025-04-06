@@ -56,7 +56,7 @@ constructor(
     private val shadeModeInteractor: ShadeModeInteractor,
 ) : BaseShadeInteractor {
     init {
-        SceneContainerFlag.assertInNewMode()
+        SceneContainerFlag.unsafeAssertInNewMode()
     }
 
     override val shadeExpansion: StateFlow<Float> =
@@ -187,12 +187,18 @@ constructor(
 
     override fun collapseNotificationsShade(loggingReason: String, transitionKey: TransitionKey?) {
         if (shadeModeInteractor.isDualShade) {
-            // TODO(b/356596436): Hide without animation if transitionKey is Instant.
-            sceneInteractor.hideOverlay(
-                overlay = Overlays.NotificationsShade,
-                loggingReason = loggingReason,
-                transitionKey = transitionKey,
-            )
+            if (transitionKey == Instant) {
+                sceneInteractor.instantlyHideOverlay(
+                    overlay = Overlays.NotificationsShade,
+                    loggingReason = loggingReason,
+                )
+            } else {
+                sceneInteractor.hideOverlay(
+                    overlay = Overlays.NotificationsShade,
+                    loggingReason = loggingReason,
+                    transitionKey = transitionKey,
+                )
+            }
         } else if (transitionKey == Instant) {
             // TODO(b/356596436): Define instant transition instead of snapToScene().
             sceneInteractor.snapToScene(
@@ -215,12 +221,18 @@ constructor(
         bypassNotificationsShade: Boolean,
     ) {
         if (shadeModeInteractor.isDualShade) {
-            // TODO(b/356596436): Hide without animation if transitionKey is Instant.
-            sceneInteractor.hideOverlay(
-                overlay = Overlays.QuickSettingsShade,
-                loggingReason = loggingReason,
-                transitionKey = transitionKey,
-            )
+            if (transitionKey == Instant) {
+                sceneInteractor.instantlyHideOverlay(
+                    overlay = Overlays.QuickSettingsShade,
+                    loggingReason = loggingReason,
+                )
+            } else {
+                sceneInteractor.hideOverlay(
+                    overlay = Overlays.QuickSettingsShade,
+                    loggingReason = loggingReason,
+                    transitionKey = transitionKey,
+                )
+            }
             return
         }
 
@@ -334,7 +346,7 @@ constructor(
                         } else if (state.fromContent == overlay) {
                             state.progress.map { progress -> 1 - progress }
                         } else {
-                            flowOf(0f)
+                            state.currentOverlays().map { if (overlay in it) 1f else 0f }
                         }
                 }
             }

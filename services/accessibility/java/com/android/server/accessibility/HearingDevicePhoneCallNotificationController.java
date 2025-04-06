@@ -17,6 +17,7 @@
 package com.android.server.accessibility;
 
 import android.Manifest;
+import android.annotation.CallbackExecutor;
 import android.annotation.NonNull;
 import android.annotation.SuppressLint;
 import android.app.Notification;
@@ -65,9 +66,9 @@ public class HearingDevicePhoneCallNotificationController {
     private final Executor mCallbackExecutor;
 
     public HearingDevicePhoneCallNotificationController(@NonNull Context context) {
-        mTelephonyListener = new CallStateListener(context);
         mTelephonyManager = context.getSystemService(TelephonyManager.class);
         mCallbackExecutor = Executors.newSingleThreadExecutor();
+        mTelephonyListener = new CallStateListener(context, mCallbackExecutor);
     }
 
     @VisibleForTesting
@@ -109,14 +110,29 @@ public class HearingDevicePhoneCallNotificationController {
                 AudioDeviceAttributes.ROLE_INPUT, AudioDeviceInfo.TYPE_BUILTIN_MIC, "");
 
         private final Context mContext;
+        private final Executor mCommDeviceChangedExecutor;
+        private final AudioManager.OnCommunicationDeviceChangedListener mCommDeviceChangedListener;
         private NotificationManager mNotificationManager;
         private AudioManager mAudioManager;
         private BroadcastReceiver mHearingDeviceActionReceiver;
         private BluetoothDevice mHearingDevice;
+        private boolean mIsCommDeviceChangedRegistered = false;
         private boolean mIsNotificationShown = false;
 
-        CallStateListener(@NonNull Context context) {
+        CallStateListener(@NonNull Context context, @NonNull Executor executor) {
             mContext = context;
+            mCommDeviceChangedExecutor = executor;
+            mCommDeviceChangedListener = device -> {
+                if (device == null) {
+                    return;
+                }
+                mHearingDevice = getSupportedInputHearingDeviceInfo(List.of(device));
+                if (mHearingDevice != null) {
+                    showNotificationIfNeeded();
+                } else {
+                    dismissNotificationIfNeeded();
+                }
+            };
         }
 
         @Override
@@ -134,6 +150,7 @@ public class HearingDevicePhoneCallNotificationController {
             }
 
             if (state == TelephonyManager.CALL_STATE_IDLE) {
+                removeOnCommunicationDeviceChangedListenerIfNeeded(mCommDeviceChangedListener);
                 dismissNotificationIfNeeded();
 
                 if (mHearingDevice != null) {
@@ -143,12 +160,39 @@ public class HearingDevicePhoneCallNotificationController {
                 mHearingDevice = null;
             }
             if (state == TelephonyManager.CALL_STATE_OFFHOOK) {
-                mHearingDevice = getSupportedInputHearingDeviceInfo(
-                        mAudioManager.getAvailableCommunicationDevices());
+                AudioDeviceInfo commDevice = mAudioManager.getCommunicationDevice();
+                if (commDevice == null) {
+                    return;
+                }
+                mHearingDevice = getSupportedInputHearingDeviceInfo(List.of(commDevice));
                 if (mHearingDevice != null) {
                     showNotificationIfNeeded();
+                } else {
+                    addOnCommunicationDeviceChangedListenerIfNeeded(mCommDeviceChangedExecutor,
+                            mCommDeviceChangedListener);
                 }
             }
+        }
+
+        private void addOnCommunicationDeviceChangedListenerIfNeeded(
+                @NonNull @CallbackExecutor Executor executor,
+                @NonNull AudioManager.OnCommunicationDeviceChangedListener listener) {
+            if (mIsCommDeviceChangedRegistered) {
+                return;
+            }
+
+            mIsCommDeviceChangedRegistered = true;
+            mAudioManager.addOnCommunicationDeviceChangedListener(executor, listener);
+        }
+
+        private void removeOnCommunicationDeviceChangedListenerIfNeeded(
+                @NonNull AudioManager.OnCommunicationDeviceChangedListener listener) {
+            if (!mIsCommDeviceChangedRegistered) {
+                return;
+            }
+
+            mAudioManager.removeOnCommunicationDeviceChangedListener(listener);
+            mIsCommDeviceChangedRegistered = false;
         }
 
         private void showNotificationIfNeeded() {
@@ -264,6 +308,10 @@ public class HearingDevicePhoneCallNotificationController {
                             PendingIntent.FLAG_IMMUTABLE);
                 }
                 case ACTION_BLUETOOTH_DEVICE_DETAILS -> {
+                    if (mHearingDevice == null) {
+                        return null;
+                    }
+
                     Bundle bundle = new Bundle();
                     bundle.putString(KEY_BLUETOOTH_ADDRESS, mHearingDevice.getAddress());
                     intent.putExtra(EXTRA_SHOW_FRAGMENT_ARGUMENTS, bundle);

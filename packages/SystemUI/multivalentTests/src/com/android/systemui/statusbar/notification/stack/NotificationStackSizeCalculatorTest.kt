@@ -29,9 +29,10 @@ import com.android.systemui.res.R
 import com.android.systemui.statusbar.LockscreenShadeTransitionController
 import com.android.systemui.statusbar.StatusBarState
 import com.android.systemui.statusbar.SysuiStatusBarStateController
+import com.android.systemui.statusbar.notification.collection.EntryAdapter
 import com.android.systemui.statusbar.notification.collection.NotificationEntry
 import com.android.systemui.statusbar.notification.domain.interactor.SeenNotificationsInteractor
-import com.android.systemui.statusbar.notification.promoted.PromotedNotificationUiForceExpanded
+import com.android.systemui.statusbar.notification.promoted.PromotedNotificationUi
 import com.android.systemui.statusbar.notification.row.ExpandableNotificationRow
 import com.android.systemui.statusbar.notification.row.ExpandableView
 import com.android.systemui.statusbar.policy.ResourcesSplitShadeStateController
@@ -154,7 +155,7 @@ class NotificationStackSizeCalculatorTest : SysuiTestCase() {
     }
 
     @Test
-    @EnableFlags(PromotedNotificationUiForceExpanded.FLAG_NAME)
+    @EnableFlags(PromotedNotificationUi.FLAG_NAME)
     fun maxKeyguardNotificationsForPromotedOngoing_onLockscreenSpaceForMinHeightButNotIntrinsicHeight_returnsOne() {
         setGapHeight(0f)
         // No divider height since we're testing one element where index = 0
@@ -282,7 +283,7 @@ class NotificationStackSizeCalculatorTest : SysuiTestCase() {
     }
 
     @Test
-    @EnableFlags(PromotedNotificationUiForceExpanded.FLAG_NAME)
+    @EnableFlags(PromotedNotificationUi.FLAG_NAME)
     fun getSpaceNeeded_onLockscreenEnoughSpacePromotedOngoing_intrinsicHeight() {
         setGapHeight(0f)
         // No divider height since we're testing one element where index = 0
@@ -341,7 +342,7 @@ class NotificationStackSizeCalculatorTest : SysuiTestCase() {
     }
 
     @Test
-    @EnableFlags(PromotedNotificationUiForceExpanded.FLAG_NAME)
+    @EnableFlags(PromotedNotificationUi.FLAG_NAME)
     fun getSpaceNeeded_onLockscreenSavingSpacePromotedOngoing_minHeight() {
         setGapHeight(0f)
         // No divider height since we're testing one element where index = 0
@@ -436,6 +437,9 @@ class NotificationStackSizeCalculatorTest : SysuiTestCase() {
         val row = mock(ExpandableNotificationRow::class.java)
         val entry = mock(NotificationEntry::class.java)
         whenever(entry.isStickyAndNotDemoted).thenReturn(isSticky)
+        val entryAdapter = mock(EntryAdapter::class.java)
+        whenever(entryAdapter.canPeek()).thenReturn(isSticky)
+        whenever(row.entryAdapter).thenReturn(entryAdapter)
         val sbn = mock(StatusBarNotification::class.java)
         whenever(entry.sbn).thenReturn(sbn)
         whenever(row.entry).thenReturn(entry)

@@ -24,7 +24,6 @@ import static android.content.res.Configuration.GRAMMATICAL_GENDER_NOT_SPECIFIED
 import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
 import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
 
-import static com.android.dx.mockito.inline.extended.ExtendedMockito.doNothing;
 import static com.android.dx.mockito.inline.extended.ExtendedMockito.never;
 import static com.android.dx.mockito.inline.extended.ExtendedMockito.spyOn;
 import static com.android.dx.mockito.inline.extended.ExtendedMockito.verify;
@@ -295,7 +294,7 @@ public class WindowProcessControllerTests extends WindowTestsBase {
 
     @Test
     public void testCachedStateConfigurationChange() throws RemoteException {
-        doNothing().when(mClientLifecycleManager).scheduleTransactionItemNow(any(), any());
+        doReturn(true).when(mClientLifecycleManager).scheduleTransactionItemNow(any(), any());
         final IApplicationThread thread = mWpc.getThread();
         final Configuration newConfig = new Configuration(mWpc.getConfiguration());
         newConfig.densityDpi += 100;
@@ -383,12 +382,17 @@ public class WindowProcessControllerTests extends WindowTestsBase {
         assertFalse(tracker.hasResumedActivity(mWpc.mUid));
         assertTrue(mWpc.hasForegroundActivities());
 
-        activity.setVisibility(false);
         activity.setVisibleRequested(false);
-        activity.setState(STOPPED, "test");
-
+        if (com.android.window.flags.Flags.useVisibleRequestedForProcessTracker()) {
+            assertTrue("PAUSING is visible", mWpc.hasVisibleActivities());
+            activity.setState(PAUSED, "test");
+        } else {
+            activity.setVisible(false);
+        }
         verify(tracker).onAllActivitiesInvisible(mWpc);
         assertFalse(mWpc.hasVisibleActivities());
+
+        activity.setState(STOPPED, "test");
         assertFalse(mWpc.hasForegroundActivities());
     }
 

@@ -34,8 +34,6 @@ import android.util.Printer;
 import android.util.SparseArray;
 import android.util.proto.ProtoOutputStream;
 
-import com.android.internal.ravenwood.RavenwoodEnvironment;
-
 import dalvik.annotation.optimization.NeverCompile;
 
 import java.io.FileDescriptor;
@@ -76,8 +74,13 @@ public final class MessageQueue {
     @SuppressWarnings("unused")
     private long mPtr; // used by native code
 
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(
+            maxTargetSdk = Build.VERSION_CODES.BAKLAVA,
+            publicAlternatives =
+                    "To manipulate the queue in Instrumentation tests, use {@link"
+                        + " android.os.TestLooperManager}")
     Message mMessages;
+
     private Message mLast;
     @UnsupportedAppUsage
     private final ArrayList<IdleHandler> mIdleHandlers = new ArrayList<IdleHandler>();
@@ -92,11 +95,8 @@ public final class MessageQueue {
     // queue for async messages when inserting a message at the tail.
     private int mAsyncMessageCount;
 
-    /**
-     * @hide
-     */
     private final AtomicLong mMessageCount = new AtomicLong();
-    private final Thread mThread;
+    private final String mThreadName;
     private final long mTid;
 
     /**
@@ -130,10 +130,10 @@ public final class MessageQueue {
 
     MessageQueue(boolean quitAllowed) {
         initIsProcessAllowedToUseConcurrent();
-        mUseConcurrent = sIsProcessAllowedToUseConcurrent && !isInstrumenting();
+        mUseConcurrent = sIsProcessAllowedToUseConcurrent;
         mQuitAllowed = quitAllowed;
         mPtr = nativeInit();
-        mThread = Thread.currentThread();
+        mThreadName = Thread.currentThread().getName();
         mTid = Process.myTid();
     }
 
@@ -142,9 +142,24 @@ public final class MessageQueue {
             return;
         }
 
-        if (RavenwoodEnvironment.getInstance().isRunningOnRavenwood()) {
+        // Holdback study.
+        if (Flags.messageQueueForceLegacy()) {
             sIsProcessAllowedToUseConcurrent = false;
             return;
+        }
+
+        if (Flags.forceConcurrentMessageQueue()) {
+            // b/379472827: Robolectric tests use reflection to access MessageQueue.mMessages.
+            // This is a hack to allow Robolectric tests to use the legacy implementation.
+            try {
+                Class.forName("org.robolectric.Robolectric");
+            } catch (ClassNotFoundException e) {
+                // This is not a Robolectric test.
+                sIsProcessAllowedToUseConcurrent = true;
+                return;
+            }
+            // This is a Robolectric test.
+            // Continue to the following checks.
         }
 
         final String processName = Process.myProcessName();
@@ -202,15 +217,6 @@ public final class MessageQueue {
         return;
     }
 
-    private static boolean isInstrumenting() {
-        final ActivityThread activityThread = ActivityThread.currentActivityThread();
-        if (activityThread == null) {
-            return false;
-        }
-        final Instrumentation instrumentation = activityThread.getInstrumentation();
-        return instrumentation != null && instrumentation.isInstrumenting();
-    }
-
     @Override
     protected void finalize() throws Throwable {
         try {
@@ -232,10 +238,10 @@ public final class MessageQueue {
 
         traceMessageCount();
         PerfettoTrace.instant(PerfettoTrace.MQ_CATEGORY, "message_queue_send")
-                .addFlow(msg.mEventId.get())
+                .setFlow(msg.mEventId.get())
                 .beginProto()
                 .beginNested(2004 /* message_queue */)
-                .addField(2 /* receiving_thread_name */, mThread.getName())
+                .addField(2 /* receiving_thread_name */, mThreadName)
                 .addField(3 /* message_code */, msg.what)
                 .addField(4 /* message_delay_ms */, when - SystemClock.uptimeMillis())
                 .endNested()
@@ -246,7 +252,7 @@ public final class MessageQueue {
     /** @hide */
     private void traceMessageCount() {
         PerfettoTrace.counter(PerfettoTrace.MQ_CATEGORY, mMessageCount.get())
-                .usingThreadCounterTrack(mTid, mThread.getName())
+                .usingThreadCounterTrack(mTid, mThreadName)
                 .emit();
     }
 
@@ -1007,7 +1013,11 @@ public final class MessageQueue {
         }
     }
 
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(
+            maxTargetSdk = Build.VERSION_CODES.BAKLAVA,
+            publicAlternatives =
+                    "To manipulate the queue in Instrumentation tests, use {@link"
+                        + " android.os.TestLooperManager}")
     Message next() {
         if (mUseConcurrent) {
             return nextConcurrent();
@@ -1109,7 +1119,6 @@ public final class MessageQueue {
 
             msg.markInUse();
             msg.arg1 = token;
-            incAndTraceMessageCount(msg, when);
 
             if (!enqueueMessageUnchecked(msg, when)) {
                 Log.wtf(TAG_C, "Unexpected error while adding sync barrier!");
@@ -1125,7 +1134,6 @@ public final class MessageQueue {
             msg.markInUse();
             msg.when = when;
             msg.arg1 = token;
-            incAndTraceMessageCount(msg, when);
 
             if (Flags.messageQueueTailTracking() && mLast != null && mLast.when <= when) {
                 /* Message goes to tail of list */

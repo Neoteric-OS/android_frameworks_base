@@ -22,6 +22,7 @@ import static android.Manifest.permission.READ_WALLPAPER_INTERNAL;
 import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND;
 import static android.app.Flags.fixWallpaperChanged;
 import static android.app.Flags.liveWallpaperContentHandling;
+import static android.app.Flags.notifyKeyguardEvents;
 import static android.app.Flags.removeNextWallpaperComponent;
 import static android.app.WallpaperManager.COMMAND_REAPPLY;
 import static android.app.WallpaperManager.FLAG_LOCK;
@@ -118,7 +119,6 @@ import android.service.wallpaper.WallpaperService;
 import android.system.ErrnoException;
 import android.system.Os;
 import android.text.TextUtils;
-import android.util.ArraySet;
 import android.util.EventLog;
 import android.util.IntArray;
 import android.util.Slog;
@@ -161,7 +161,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -743,10 +742,8 @@ public class WallpaperManagerService extends IWallpaperManager.Stub
     final WallpaperDisplayHelper mWallpaperDisplayHelper;
     final WallpaperCropper mWallpaperCropper;
 
-    // TODO(b/384519749): Remove this set after we introduce the aspect ratio check.
-    private final Set<Integer> mWallpaperCompatibleDisplaysForTest = new ArraySet<>();
-
-    private boolean isWallpaperCompatibleForDisplay(int displayId, WallpaperConnection connection) {
+    @VisibleForTesting
+    boolean isWallpaperCompatibleForDisplay(int displayId, WallpaperConnection connection) {
         if (connection == null) {
             return false;
         }
@@ -757,24 +754,12 @@ public class WallpaperManagerService extends IWallpaperManager.Stub
 
         // Image wallpaper
         if (isDeviceEligibleForDesktopExperienceWallpaper(mContext)) {
-            // TODO(b/384519749): check display's resolution and image wallpaper cropped image
-            //  aspect ratio.
-            return displayId == DEFAULT_DISPLAY
-                    || mWallpaperCompatibleDisplaysForTest.contains(displayId);
+            return mWallpaperCropper.isWallpaperCompatibleForDisplay(displayId,
+                    connection.mWallpaper);
         }
         // When enableConnectedDisplaysWallpaper is off, we assume the image wallpaper supports all
         // usable displays.
         return true;
-    }
-
-    @VisibleForTesting
-    void addWallpaperCompatibleDisplayForTest(int displayId) {
-        mWallpaperCompatibleDisplaysForTest.add(displayId);
-    }
-
-    @VisibleForTesting
-    void removeWallpaperCompatibleDisplayForTest(int displayId) {
-        mWallpaperCompatibleDisplaysForTest.remove(displayId);
     }
 
     private void updateFallbackConnection(int clientUid) {
@@ -844,7 +829,7 @@ public class WallpaperManagerService extends IWallpaperManager.Stub
                     // `which` flag.
                     DisplayConnector fallbackConnector =
                             mFallbackWallpaper.connection.getDisplayConnectorOrCreate(displayId);
-                    if (fallbackConnector != null && fallbackConnector.mEngine != null) {
+                    if (fallbackConnector != null) {
                         fallbackConnector.mWhich = which;
                         fallbackConnector.connectLocked(mFallbackWallpaper.connection,
                                 mFallbackWallpaper);
@@ -1189,12 +1174,19 @@ public class WallpaperManagerService extends IWallpaperManager.Stub
                     return;
                 }
 
-                final ComponentName wpService = mWallpaper.getComponent();
                 // The broadcast of package update could be delayed after service disconnected. Try
                 // to re-bind the service for 10 seconds.
                 mWallpaper.mBindSource = BindSource.CONNECTION_TRY_TO_REBIND;
-                if (bindWallpaperComponentLocked(
-                        wpService, true, false, mWallpaper, null)) {
+                boolean success;
+                if (liveWallpaperContentHandling()) {
+                    success = bindWallpaperDescriptionLocked(
+                            mWallpaper.getDescription(), /* force= */ true,
+                            /* fromUser= */ false, mWallpaper, /* reply= */ null);
+                } else {
+                    success = bindWallpaperComponentLocked(mWallpaper.getComponent(), /* force= */
+                            true, /* fromUser= */false, mWallpaper, /* reply= */ null);
+                }
+                if (success) {
                     mWallpaper.connection.scheduleTimeoutLocked();
                 } else if (SystemClock.uptimeMillis() - mWallpaper.lastDiedTime
                         < WALLPAPER_RECONNECT_TIMEOUT_MS) {
@@ -1205,7 +1197,7 @@ public class WallpaperManagerService extends IWallpaperManager.Stub
                     // Timeout
                     Slog.w(TAG, "Reverting to built-in wallpaper!");
                     clearWallpaperLocked(mWallpaper.mWhich, mWallpaper.userId, false, null);
-                    final String flattened = wpService.flattenToString();
+                    final String flattened = mWallpaper.getComponent().flattenToString();
                     EventLog.writeEvent(EventLogTags.WP_WALLPAPER_CRASHED,
                             flattened.substring(0, Math.min(flattened.length(),
                                     MAX_WALLPAPER_COMPONENT_LOG_LENGTH)));
@@ -1675,12 +1667,9 @@ public class WallpaperManagerService extends IWallpaperManager.Stub
         DisplayManager displayManager = mContext.getSystemService(DisplayManager.class);
         displayManager.registerDisplayListener(mDisplayListener, null /* handler */);
         WindowManager windowManager = mContext.getSystemService(WindowManager.class);
-        boolean isFoldable = mContext.getResources()
-                .getIntArray(R.array.config_foldedDeviceStates).length > 0;
         mWallpaperDisplayHelper = new WallpaperDisplayHelper(
-                displayManager, windowManager, mWindowManagerInternal, isFoldable);
+                displayManager, windowManager, mWindowManagerInternal, mContext.getResources());
         mWallpaperCropper = new WallpaperCropper(mWallpaperDisplayHelper);
-        mWindowManagerInternal.setWallpaperCropUtils(mWallpaperCropper::getCrop);
         mActivityManager = mContext.getSystemService(ActivityManager.class);
 
         if (mContext.getResources().getBoolean(
@@ -1721,7 +1710,31 @@ public class WallpaperManagerService extends IWallpaperManager.Stub
         mWallpaperDataParser = new WallpaperDataParser(mContext, mWallpaperDisplayHelper,
                 mWallpaperCropper);
         LocalServices.addService(WallpaperManagerInternal.class, new LocalService());
+
+        LocalServices.getService(ActivityTaskManagerInternal.class)
+                .registerScreenObserver(mKeyguardObserver);
+
     }
+
+    private final ActivityTaskManagerInternal.ScreenObserver mKeyguardObserver =
+            new ActivityTaskManagerInternal.ScreenObserver() {
+                @Override
+                public void onKeyguardStateChanged(boolean isShowing) {
+                    if (!notifyKeyguardEvents()) {
+                        return;
+                    }
+                    if (isShowing) {
+                        notifyKeyguardAppearing();
+                    } else {
+                        notifyKeyguardGoingAway();
+                    }
+                }
+
+                @Override
+                public void onKeyguardGoingAway() {
+                    notifyKeyguardGoingAway();
+                }
+            };
 
     private final class LocalService extends WallpaperManagerInternal {
         @Override
@@ -1744,11 +1757,6 @@ public class WallpaperManagerService extends IWallpaperManager.Stub
         @Override
         public void onScreenTurningOn(int displayId) {
             notifyScreenTurningOn(displayId);
-        }
-
-        @Override
-        public void onKeyguardGoingAway() {
-            notifyKeyguardGoingAway();
         }
     }
 
@@ -2519,9 +2527,11 @@ public class WallpaperManagerService extends IWallpaperManager.Stub
             List<Rect> result = new ArrayList<>();
             boolean rtl = TextUtils.getLayoutDirectionFromLocale(Locale.getDefault())
                     == View.LAYOUT_DIRECTION_RTL;
+            WallpaperDefaultDisplayInfo defaultDisplayInfo =
+                    mWallpaperDisplayHelper.getDefaultDisplayInfo();
             for (Point displaySize : displaySizes) {
-                result.add(mWallpaperCropper.getCrop(
-                        displaySize, croppedBitmapSize, adjustedRelativeSuggestedCrops, rtl));
+                result.add(WallpaperCropper.getCrop(displaySize, defaultDisplayInfo,
+                        croppedBitmapSize, adjustedRelativeSuggestedCrops, rtl));
             }
             if (originalBitmap) result = WallpaperCropper.getOriginalCropHints(wallpaper, result);
             return result;
@@ -2557,8 +2567,11 @@ public class WallpaperManagerService extends IWallpaperManager.Stub
         List<Rect> result = new ArrayList<>();
         boolean rtl = TextUtils.getLayoutDirectionFromLocale(Locale.getDefault())
                 == View.LAYOUT_DIRECTION_RTL;
+        WallpaperDefaultDisplayInfo defaultDisplayInfo =
+                mWallpaperDisplayHelper.getDefaultDisplayInfo();
         for (Point displaySize : displaySizes) {
-            result.add(mWallpaperCropper.getCrop(displaySize, bitmapSize, defaultCrops, rtl));
+            result.add(WallpaperCropper.getCrop(displaySize, defaultDisplayInfo, bitmapSize,
+                    defaultCrops, rtl));
         }
         return result;
     }
@@ -2576,6 +2589,18 @@ public class WallpaperManagerService extends IWallpaperManager.Stub
 
     private boolean hasPermission(String permission) {
         return mContext.checkCallingOrSelfPermission(permission) == PERMISSION_GRANTED;
+    }
+
+    private boolean hasPermission(WallpaperData data, String permission) {
+        try {
+            return PackageManager.PERMISSION_GRANTED == mIPackageManager.checkPermission(
+                    permission,
+                    data.getComponent().getPackageName(),
+                    data.userId);
+        } catch (RemoteException e) {
+            Slog.e(TAG, "Failed to check wallpaper service permission", e);
+            return false;
+        }
     }
 
     private boolean hasAppOpPermission(String permission, int callingUid, String callingPackage,
@@ -2880,16 +2905,37 @@ public class WallpaperManagerService extends IWallpaperManager.Stub
      * Propagate a keyguard going away event to the wallpaper engine.
      */
     private void notifyKeyguardGoingAway() {
+        dispatchKeyguardCommand(WallpaperManager.COMMAND_KEYGUARD_GOING_AWAY);
+    }
+
+    /**
+     * Propagate a keyguard appearing event to the wallpaper engine.
+     */
+    private void notifyKeyguardAppearing() {
+        dispatchKeyguardCommand(WallpaperManager.COMMAND_KEYGUARD_APPEARING);
+    }
+
+    /**
+     * Propagate a keyguard-related event to the wallpaper engine.
+     *
+     * When the flag below is enabled, the event will only be dispatched in case the recipient
+     * has {@link android.Manifest.pertmission.SUBSCRIBE_TO_KEYGUARD_LOCKED_STATE} permission.
+     */
+    private void dispatchKeyguardCommand(String command) {
         synchronized (mLock) {
             for (WallpaperData data : getActiveWallpapers()) {
+                if (notifyKeyguardEvents() && !hasPermission(
+                        data, android.Manifest.permission.SUBSCRIBE_TO_KEYGUARD_LOCKED_STATE)) {
+                    continue;
+                }
+
                 data.connection.forEachDisplayConnector(displayConnector -> {
                     if (displayConnector.mEngine != null) {
                         try {
                             displayConnector.mEngine.dispatchWallpaperCommand(
-                                    WallpaperManager.COMMAND_KEYGUARD_GOING_AWAY,
-                                    -1, -1, -1, new Bundle());
+                                    command, -1, -1, -1, new Bundle());
                         } catch (RemoteException e) {
-                            Slog.w(TAG, "Failed to notify that the keyguard is going away", e);
+                            Slog.w(TAG, "Failed to dispatch wallpaper command: " + command, e);
                         }
                     }
                 });

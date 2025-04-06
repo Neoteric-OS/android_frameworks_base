@@ -69,9 +69,9 @@ class DisplayTopologyCoordinator {
     private final SparseArray<String> mDisplayIdToUniqueIdMapping = new SparseArray<>();
 
     /**
-     * Check if extended displays are enabled. If not, a topology is not needed.
+     * Check if extended displays are allowed. If not, a topology is not needed.
      */
-    private final BooleanSupplier mIsExtendedDisplayEnabled;
+    private final BooleanSupplier mIsExtendedDisplayAllowed;
 
     /**
      * Callback used to send topology updates.
@@ -83,21 +83,21 @@ class DisplayTopologyCoordinator {
     private final DisplayManagerService.SyncRoot mSyncRoot;
     private final Runnable mTopologySavedCallback;
 
-    DisplayTopologyCoordinator(BooleanSupplier isExtendedDisplayEnabled,
+    DisplayTopologyCoordinator(BooleanSupplier isExtendedDisplayAllowed,
             Consumer<Pair<DisplayTopology, DisplayTopologyGraph>> onTopologyChangedCallback,
             Executor topologyChangeExecutor, DisplayManagerService.SyncRoot syncRoot,
             Runnable topologySavedCallback) {
-        this(new Injector(), isExtendedDisplayEnabled, onTopologyChangedCallback,
+        this(new Injector(), isExtendedDisplayAllowed, onTopologyChangedCallback,
                 topologyChangeExecutor, syncRoot, topologySavedCallback);
     }
 
     @VisibleForTesting
-    DisplayTopologyCoordinator(Injector injector, BooleanSupplier isExtendedDisplayEnabled,
+    DisplayTopologyCoordinator(Injector injector, BooleanSupplier isExtendedDisplayAllowed,
             Consumer<Pair<DisplayTopology, DisplayTopologyGraph>> onTopologyChangedCallback,
             Executor topologyChangeExecutor, DisplayManagerService.SyncRoot syncRoot,
             Runnable topologySavedCallback) {
         mTopology = injector.getTopology();
-        mIsExtendedDisplayEnabled = isExtendedDisplayEnabled;
+        mIsExtendedDisplayAllowed = isExtendedDisplayAllowed;
         mOnTopologyChangedCallback = onTopologyChangedCallback;
         mTopologyChangeExecutor = topologyChangeExecutor;
         mSyncRoot = syncRoot;
@@ -111,13 +111,14 @@ class DisplayTopologyCoordinator {
      * @param info The display info
      */
     void onDisplayAdded(DisplayInfo info) {
-        if (!isDisplayAllowedInTopology(info)) {
+        if (!isDisplayAllowedInTopology(info, /* shouldLog= */ true)) {
             return;
         }
         synchronized (mSyncRoot) {
             addDisplayIdMappingLocked(info);
             mDensities.put(info.displayId, info.logicalDensityDpi);
             mTopology.addDisplay(info.displayId, getWidth(info), getHeight(info));
+            Slog.i(TAG, "Display " + info.displayId + " added, new topology: " + mTopology);
             restoreTopologyLocked();
             sendTopologyUpdateLocked();
         }
@@ -128,7 +129,7 @@ class DisplayTopologyCoordinator {
      * @param info The new display info
      */
     void onDisplayChanged(DisplayInfo info) {
-        if (!isDisplayAllowedInTopology(info)) {
+        if (!isDisplayAllowedInTopology(info, /* shouldLog= */ false)) {
             return;
         }
         synchronized (mSyncRoot) {
@@ -149,6 +150,7 @@ class DisplayTopologyCoordinator {
         synchronized (mSyncRoot) {
             mDensities.delete(displayId);
             if (mTopology.removeDisplay(displayId)) {
+                Slog.i(TAG, "Display " + displayId + " removed, new topology: " + mTopology);
                 removeDisplayIdMappingLocked(displayId);
                 restoreTopologyLocked();
                 sendTopologyUpdateLocked();
@@ -249,27 +251,28 @@ class DisplayTopologyCoordinator {
         return pxToDp(info.logicalHeight, info.logicalDensityDpi);
     }
 
-    private boolean isDisplayAllowedInTopology(DisplayInfo info) {
+    private boolean isDisplayAllowedInTopology(DisplayInfo info, boolean shouldLog) {
         if (info.type != Display.TYPE_INTERNAL && info.type != Display.TYPE_EXTERNAL
                 && info.type != Display.TYPE_OVERLAY) {
-            Slog.d(TAG, "Display " + info.displayId + " not allowed in topology because "
-                    + "type is not INTERNAL, EXTERNAL or OVERLAY");
+            if (shouldLog) {
+                Slog.d(TAG, "Display " + info.displayId + " not allowed in topology because "
+                        + "type is not INTERNAL, EXTERNAL or OVERLAY");
+            }
             return false;
         }
         if (info.type == Display.TYPE_INTERNAL && info.displayId != Display.DEFAULT_DISPLAY) {
-            Slog.d(TAG, "Display " + info.displayId + " not allowed in topology because "
-                    + "it is a non-default internal display");
+            if (shouldLog) {
+                Slog.d(TAG, "Display " + info.displayId + " not allowed in topology because "
+                        + "it is a non-default internal display");
+            }
             return false;
         }
         if ((info.type == Display.TYPE_EXTERNAL || info.type == Display.TYPE_OVERLAY)
-                && !mIsExtendedDisplayEnabled.getAsBoolean()) {
-            Slog.d(TAG, "Display " + info.displayId + " not allowed in topology because "
-                    + "type is EXTERNAL or OVERLAY and !mIsExtendedDisplayEnabled");
-            return false;
-        }
-        if (info.displayGroupId != Display.DEFAULT_DISPLAY_GROUP) {
-            Slog.d(TAG, "Display " + info.displayId + " not allowed in topology because "
-                    + "it is not in the default display group");
+                && !mIsExtendedDisplayAllowed.getAsBoolean()) {
+            if (shouldLog) {
+                Slog.d(TAG, "Display " + info.displayId + " not allowed in topology because "
+                        + "type is EXTERNAL or OVERLAY and !mIsExtendedDisplayAllowed");
+            }
             return false;
         }
         return true;

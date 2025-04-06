@@ -28,8 +28,8 @@ import static android.provider.Settings.Global.HEADS_UP_NOTIFICATIONS_ENABLED;
 import static android.provider.Settings.Global.HEADS_UP_ON;
 
 import static com.android.systemui.Flags.FLAG_KEYBOARD_SHORTCUT_HELPER_REWRITE;
-import static com.android.systemui.Flags.FLAG_LIGHT_REVEAL_MIGRATION;
 import static com.android.systemui.flags.Flags.SHORTCUT_LIST_SEARCH_LAYOUT;
+import static com.android.systemui.shared.Flags.FLAG_AMBIENT_AOD;
 import static com.android.systemui.statusbar.StatusBarState.KEYGUARD;
 import static com.android.systemui.statusbar.StatusBarState.SHADE;
 import static com.android.systemui.statusbar.phone.CentralSurfaces.MSG_DISMISS_KEYBOARD_SHORTCUTS_MENU;
@@ -93,7 +93,6 @@ import android.view.WindowMetrics;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.SmallTest;
 
-import com.android.app.viewcapture.ViewCaptureAwareWindowManager;
 import com.android.compose.animation.scene.ObservableTransitionState;
 import com.android.internal.colorextraction.ColorExtractor;
 import com.android.internal.logging.UiEventLogger;
@@ -128,6 +127,7 @@ import com.android.systemui.keyguard.KeyguardViewMediator;
 import com.android.systemui.keyguard.ScreenLifecycle;
 import com.android.systemui.keyguard.WakefulnessLifecycle;
 import com.android.systemui.kosmos.KosmosJavaAdapter;
+import com.android.systemui.media.NotificationMediaManager;
 import com.android.systemui.navigationbar.NavigationBarController;
 import com.android.systemui.notetask.NoteTaskController;
 import com.android.systemui.plugins.ActivityStarter;
@@ -144,7 +144,7 @@ import com.android.systemui.scene.domain.startable.ScrimStartable;
 import com.android.systemui.scene.shared.flag.SceneContainerFlag;
 import com.android.systemui.settings.UserTracker;
 import com.android.systemui.settings.brightness.BrightnessSliderController;
-import com.android.systemui.settings.brightness.domain.interactor.BrightnessMirrorShowingInteractor;
+import com.android.systemui.settings.brightness.data.repository.BrightnessMirrorShowingRepository;
 import com.android.systemui.shade.CameraLauncher;
 import com.android.systemui.shade.GlanceableHubContainerController;
 import com.android.systemui.shade.NotificationPanelView;
@@ -164,7 +164,6 @@ import com.android.systemui.statusbar.KeyguardIndicationController;
 import com.android.systemui.statusbar.LightRevealScrim;
 import com.android.systemui.statusbar.LockscreenShadeTransitionController;
 import com.android.systemui.statusbar.NotificationLockscreenUserManager;
-import com.android.systemui.statusbar.NotificationMediaManager;
 import com.android.systemui.statusbar.NotificationPresenter;
 import com.android.systemui.statusbar.NotificationRemoteInputManager;
 import com.android.systemui.statusbar.NotificationShadeDepthController;
@@ -214,6 +213,7 @@ import com.android.systemui.util.settings.FakeGlobalSettings;
 import com.android.systemui.util.settings.FakeSettings;
 import com.android.systemui.util.settings.SystemSettings;
 import com.android.systemui.util.time.FakeSystemClock;
+import com.android.systemui.utils.windowmanager.WindowManagerProvider;
 import com.android.systemui.volume.VolumeComponent;
 import com.android.systemui.wallet.controller.QuickAccessWalletController;
 import com.android.wm.shell.bubbles.Bubbles;
@@ -242,7 +242,7 @@ import javax.inject.Provider;
 @SmallTest
 @RunWith(AndroidJUnit4.class)
 @RunWithLooper(setAsMainLooper = true)
-@EnableFlags(FLAG_LIGHT_REVEAL_MIGRATION)
+@EnableFlags(FLAG_AMBIENT_AOD)
 public class CentralSurfacesImplTest extends SysuiTestCase {
 
     private static final DeviceState FOLD_STATE_FOLDED = new DeviceState(
@@ -372,9 +372,10 @@ public class CentralSurfacesImplTest extends SysuiTestCase {
     @Mock private GlanceableHubContainerController mGlanceableHubContainerController;
     @Mock private EmergencyGestureIntentFactory mEmergencyGestureIntentFactory;
     @Mock private NotificationSettingsInteractor mNotificationSettingsInteractor;
-    @Mock private ViewCaptureAwareWindowManager mViewCaptureAwareWindowManager;
     @Mock private StatusBarLongPressGestureDetector mStatusBarLongPressGestureDetector;
     @Mock private QuickAccessWalletController mQuickAccessWalletController;
+    @Mock private WindowManager mWindowManager;
+    @Mock private WindowManagerProvider mWindowManagerProvider;
     private ShadeController mShadeController;
     private final FakeSystemClock mFakeSystemClock = new FakeSystemClock();
     private final FakeGlobalSettings mFakeGlobalSettings = new FakeGlobalSettings();
@@ -388,8 +389,8 @@ public class CentralSurfacesImplTest extends SysuiTestCase {
     private final ScreenLifecycle mScreenLifecycle = new ScreenLifecycle(mDumpManager);
     private MessageRouterImpl mMessageRouter = new MessageRouterImpl(mMainExecutor);
 
-    private final BrightnessMirrorShowingInteractor mBrightnessMirrorShowingInteractor =
-            mKosmos.getBrightnessMirrorShowingInteractor();
+    private final BrightnessMirrorShowingRepository mBrightnessMirrorShowingRepository =
+            mKosmos.getBrightnessMirrorShowingRepository();
 
     private final StatusBarModePerDisplayRepository mStatusBarModePerDisplayRepository =
             mKosmos.getStatusBarModePerDisplayRepository();
@@ -639,11 +640,12 @@ public class CentralSurfacesImplTest extends SysuiTestCase {
                 mAlternateBouncerInteractor,
                 mUserTracker,
                 mActivityStarter,
-                mBrightnessMirrorShowingInteractor,
+                mBrightnessMirrorShowingRepository,
                 mGlanceableHubContainerController,
                 mEmergencyGestureIntentFactory,
-                mViewCaptureAwareWindowManager,
-                mQuickAccessWalletController
+                mQuickAccessWalletController,
+                mWindowManager,
+                mWindowManagerProvider
         );
         mScreenLifecycle.addObserver(mCentralSurfaces.mScreenObserver);
         mCentralSurfaces.initShadeVisibilityListener();
@@ -1146,11 +1148,11 @@ public class CentralSurfacesImplTest extends SysuiTestCase {
         final ScrimStartable scrimStartable = mKosmos.getScrimStartable();
         scrimStartable.start();
 
-        mBrightnessMirrorShowingInteractor.setMirrorShowing(true);
+        mBrightnessMirrorShowingRepository.setMirrorShowing(true);
         mTestScope.getTestScheduler().runCurrent();
         verify(mScrimController, atLeastOnce()).transitionTo(ScrimState.BRIGHTNESS_MIRROR);
 
-        mBrightnessMirrorShowingInteractor.setMirrorShowing(false);
+        mBrightnessMirrorShowingRepository.setMirrorShowing(false);
         mTestScope.getTestScheduler().runCurrent();
         ArgumentCaptor<ScrimState> captor = ArgumentCaptor.forClass(ScrimState.class);
         // The default is to call the one with the callback argument
@@ -1162,12 +1164,12 @@ public class CentralSurfacesImplTest extends SysuiTestCase {
     @DisableSceneContainer
     @EnableFlags(QSComposeFragment.FLAG_NAME)
     public void brightnesShowingChanged_qsUiRefactorFlagEnabled_ScrimControllerNotified() {
-        mBrightnessMirrorShowingInteractor.setMirrorShowing(true);
+        mBrightnessMirrorShowingRepository.setMirrorShowing(true);
         mTestScope.getTestScheduler().runCurrent();
         verify(mScrimController, atLeastOnce()).legacyTransitionTo(ScrimState.BRIGHTNESS_MIRROR);
         clearInvocations(mScrimController);
 
-        mBrightnessMirrorShowingInteractor.setMirrorShowing(false);
+        mBrightnessMirrorShowingRepository.setMirrorShowing(false);
         mTestScope.getTestScheduler().runCurrent();
         ArgumentCaptor<ScrimState> captor = ArgumentCaptor.forClass(ScrimState.class);
         // The default is to call the one with the callback argument
@@ -1179,7 +1181,7 @@ public class CentralSurfacesImplTest extends SysuiTestCase {
     @DisableSceneContainer
     @DisableFlags(QSComposeFragment.FLAG_NAME)
     public void brightnesShowingChanged_flagsDisabled_ScrimControllerNotified() {
-        mBrightnessMirrorShowingInteractor.setMirrorShowing(true);
+        mBrightnessMirrorShowingRepository.setMirrorShowing(true);
         mTestScope.getTestScheduler().runCurrent();
         verify(mScrimController, never()).legacyTransitionTo(ScrimState.BRIGHTNESS_MIRROR);
         verify(mScrimController, never())
@@ -1363,15 +1365,13 @@ public class CentralSurfacesImplTest extends SysuiTestCase {
 
     private void switchToScreenSize(int widthDp, int heightDp) {
         WindowMetrics windowMetrics = Mockito.mock(WindowMetrics.class);
-        WindowManager windowManager = Mockito.mock(WindowManager.class);
 
         Configuration configuration = new Configuration();
         configuration.densityDpi = DisplayMetrics.DENSITY_DEFAULT;
         mContext.getOrCreateTestableResources().overrideConfiguration(configuration);
 
         when(windowMetrics.getBounds()).thenReturn(new Rect(0, 0, widthDp, heightDp));
-        when(windowManager.getCurrentWindowMetrics()).thenReturn(windowMetrics);
-        mContext.addMockSystemService(WindowManager.class, windowManager);
+        when(mWindowManager.getCurrentWindowMetrics()).thenReturn(windowMetrics);
     }
 
     /**

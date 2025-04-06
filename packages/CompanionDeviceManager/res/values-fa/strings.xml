@@ -42,15 +42,18 @@
     <string name="title_nearby_device_streaming" msgid="2727103756701741359">"‏به &lt;strong&gt;<xliff:g id="APP_NAME">%1$s</xliff:g>&lt;/strong&gt; اجازه می‌دهید برنامه‌های <xliff:g id="DEVICE_TYPE">%2$s</xliff:g> را در &lt;strong&gt;<xliff:g id="DEVICE_NAME">%3$s</xliff:g>&lt;/strong&gt; جاری‌سازی کند؟"</string>
     <string name="summary_nearby_device_streaming" msgid="70434958004946884">"‏‫<xliff:g id="APP_NAME_0">%1$s</xliff:g> به هرچیزی که در <xliff:g id="DEVICE_NAME_1">%3$s</xliff:g> شما نمایان است یا پخش می‌شود، ازجمله صداها، عکس‌ها، اطلاعات پرداخت، گذرواژه‌ها، و پیام‌ها دسترسی خواهد داشت.&lt;br/&gt;&lt;br/&gt;تا زمانی‌که دسترسی به این اجازه را حذف نکنید، <xliff:g id="APP_NAME_2">%1$s</xliff:g> می‌تواند برنامه‌ها را در <xliff:g id="DEVICE_NAME_3">%3$s</xliff:g> جاری‌سازی کند."</string>
     <string name="helper_summary_nearby_device_streaming" msgid="4712712177819370967">"‫<xliff:g id="APP_NAME">%1$s</xliff:g> ازطرف <xliff:g id="DEVICE_NAME">%2$s</xliff:g> اجازه می‌خواهد برنامه‌ها را از <xliff:g id="DEVICE_TYPE">%3$s</xliff:g> شما جاری‌سازی کند"</string>
-    <string name="title_sensor_device_streaming" msgid="2395553261097861497">"‏به &lt;strong&gt;<xliff:g id="APP_NAME">%1$s</xliff:g>&lt;/strong&gt; اجازه می‌دهید صدا و ویژگی‌های سیستم را بین <xliff:g id="DEVICE_TYPE">%2$s</xliff:g> و &lt;strong&gt;<xliff:g id="DEVICE_NAME">%3$s</xliff:g>&lt;/strong&gt; جاری‌سازی کند؟"</string>
-    <string name="summary_sensor_device_streaming" msgid="3413105061195145547">"‏‫«<xliff:g id="APP_NAME_0">%1$s</xliff:g>» به هرچیزی که در <xliff:g id="DEVICE_NAME_1">%3$s</xliff:g> پخش می‌شود دسترسی خواهد داشت.&lt;br/&gt;&lt;br/&gt;تا زمانی‌که دسترسی به این اجازه را حذف نکنید، <xliff:g id="APP_NAME_2">%1$s</xliff:g> می‌تواند صدا در <xliff:g id="DEVICE_NAME_3">%3$s</xliff:g> جاری‌سازی کند."</string>
-    <string name="helper_summary_sensor_device_streaming" msgid="8860174545653786353">"‫«<xliff:g id="APP_NAME">%1$s</xliff:g>» ازطرف <xliff:g id="DEVICE_NAME">%2$s</xliff:g> اجازه می‌خواهد صدا و ویژگی‌های سیستم را بین دستگاه‌های شما جاری‌سازی کند."</string>
+    <!-- no translation found for title_virtual_device (6556338763070329395) -->
+    <skip />
+    <!-- no translation found for summary_virtual_device (3502592544171322817) -->
+    <skip />
     <string name="profile_name_generic" msgid="6851028682723034988">"دستگاه"</string>
     <string name="summary_generic" msgid="1761976003668044801">"این برنامه مجاز می‌شود اطلاعتی مثل نام شخصی را که تماس می‌گیرد بین تلفن شما و دستگاه انتخاب‌شده همگام‌سازی کند"</string>
     <string name="consent_yes" msgid="8344487259618762872">"اجازه دادن"</string>
     <string name="consent_no" msgid="2640796915611404382">"اجازه ندادن"</string>
     <string name="consent_cancel" msgid="5655005528379285841">"لغو"</string>
     <string name="consent_back" msgid="2560683030046918882">"برگشتن"</string>
+    <string name="downward_arrow_action" msgid="2327165938832076333">"پیمایش به‌پایین فهرست"</string>
+    <string name="downward_arrow" msgid="2292427714411156088">"جهت‌نمای پایین"</string>
     <string name="permission_expand" msgid="893185038020887411">"ازهم بازکردن <xliff:g id="PERMISSION_TYPE">%1$s</xliff:g>"</string>
     <string name="permission_collapse" msgid="3320833884220844084">"جمع کردن <xliff:g id="PERMISSION_TYPE">%1$s</xliff:g>"</string>
     <string name="permission_sync_confirmation_title" msgid="4409622174437248702">"‏به برنامه‌های موجود در &lt;strong&gt;<xliff:g id="COMPANION_DEVICE_NAME">%1$s</xliff:g>&lt;/strong&gt; همان اجازه‌های &lt;strong&gt;<xliff:g id="PRIMARY_DEVICE_NAME">%2$s</xliff:g>&lt;/strong&gt; داده شود؟"</string>

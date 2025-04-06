@@ -86,6 +86,7 @@ public class ConversationLayout extends FrameLayout
     public static final Interpolator FAST_OUT_LINEAR_IN = new PathInterpolator(0.4f, 0f, 1f, 1f);
     public static final Interpolator FAST_OUT_SLOW_IN = new PathInterpolator(0.4f, 0f, 0.2f, 1f);
     public static final Interpolator OVERSHOOT = new PathInterpolator(0.4f, 0f, 0.2f, 1.4f);
+    private static final int MAX_SUMMARIZATION_LINES = 3;
     public static final int IMPORTANCE_ANIM_GROW_DURATION = 250;
     public static final int IMPORTANCE_ANIM_SHRINK_DURATION = 200;
     public static final int IMPORTANCE_ANIM_SHRINK_DELAY = 25;
@@ -400,9 +401,19 @@ public class ConversationLayout extends FrameLayout
     @RemotableViewMethod(asyncImpl = "setIsCollapsedAsync")
     public void setIsCollapsed(boolean isCollapsed) {
         mIsCollapsed = isCollapsed;
-        mMessagingLinearLayout.setMaxDisplayedLines(isCollapsed
-                ? TextUtils.isEmpty(mSummarizedContent) ? 1 : 2
-                : Integer.MAX_VALUE);
+        int maxLines = Integer.MAX_VALUE;
+        if (isCollapsed) {
+            if (!TextUtils.isEmpty(mSummarizedContent)) {
+                maxLines = MAX_SUMMARIZATION_LINES;
+            } else {
+                if (android.app.Flags.nmCollapsedLines()) {
+                    maxLines = 2;
+                } else {
+                    maxLines = 1;
+                }
+            }
+        }
+        mMessagingLinearLayout.setMaxDisplayedLines(maxLines);
         updateExpandButton();
         updateContentEndPaddings();
     }
@@ -1176,7 +1187,10 @@ public class ConversationLayout extends FrameLayout
                 nameOverride = mNameReplacement;
             }
             newGroup.setShowingAvatar(!mIsOneToOne && !mIsCollapsed);
-            newGroup.setSingleLine(mIsCollapsed && TextUtils.isEmpty(mSummarizedContent));
+            newGroup.setSingleLine(mIsCollapsed
+                    ? !android.app.Flags.nmCollapsedLines() && TextUtils.isEmpty(mSummarizedContent)
+                    : false);
+            newGroup.setIsCollapsed(mIsCollapsed);
             newGroup.setSender(sender, nameOverride);
             newGroup.setSending(groupIndex == (groups.size() - 1) && showSpinner);
             mGroups.add(newGroup);
@@ -1187,6 +1201,12 @@ public class ConversationLayout extends FrameLayout
                 mMessagingLinearLayout.addView(newGroup, groupIndex);
             }
             newGroup.setMessages(group);
+        }
+
+        if (Flags.dropNonExistingMessages()) {
+            // remove groups from mAddedGroups when they are no longer in mGroups.
+            mAddedGroups.removeIf(
+                    messagingGroup -> !mGroups.contains(messagingGroup));
         }
     }
 

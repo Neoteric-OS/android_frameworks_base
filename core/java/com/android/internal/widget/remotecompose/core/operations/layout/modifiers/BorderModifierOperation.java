@@ -250,7 +250,7 @@ public class BorderModifierOperation extends DecoratorModifierOperation {
         context.savePaint();
         paint.reset();
         paint.setColor(mR, mG, mB, mA);
-        paint.setStrokeWidth(mBorderWidth);
+        paint.setStrokeWidth(mBorderWidth * context.getContext().getDensity());
         paint.setStyle(PaintBundle.STYLE_STROKE);
         context.replacePaint(paint);
         if (mShapeType == ShapeType.RECTANGLE) {
@@ -290,7 +290,7 @@ public class BorderModifierOperation extends DecoratorModifierOperation {
     public void serialize(MapSerializer serializer) {
         serializer
                 .addTags(SerializeTags.MODIFIER)
-                .add("type", "BorderModifierOperation")
+                .addType("BorderModifierOperation")
                 .add("x", mX)
                 .add("y", mY)
                 .add("width", mWidth)

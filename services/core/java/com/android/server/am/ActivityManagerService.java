@@ -137,6 +137,7 @@ import static android.security.Flags.preventIntentRedirectThrowExceptionIfNested
 import static android.util.FeatureFlagUtils.SETTINGS_ENABLE_MONITOR_PHANTOM_PROCS;
 import static android.view.Display.INVALID_DISPLAY;
 
+import static com.android.internal.util.FrameworkStatsLog.EXTRA_INTENT_KEYS_COLLECTED_ON_SERVER;
 import static com.android.internal.util.FrameworkStatsLog.INTENT_CREATOR_TOKEN_ADDED;
 import static com.android.internal.util.FrameworkStatsLog.UNSAFE_INTENT_EVENT_REPORTED__EVENT_TYPE__NEW_MUTABLE_IMPLICIT_PENDING_INTENT_RETRIEVED;
 import static com.android.sdksandbox.flags.Flags.sdkSandboxInstrumentationInfo;
@@ -2058,7 +2059,7 @@ public class ActivityManagerService extends IActivityManager.Stub
                 new IAppOpsCallback.Stub() {
                     @Override public void opChanged(int op, int uid, String packageName,
                             String persistentDeviceId) {
-                        if (op == AppOpsManager.OP_RUN_IN_BACKGROUND && packageName != null) {
+                        if (op == AppOpsManager.OP_RUN_IN_BACKGROUND && uid >= 0) {
                             if (getAppOpsManager().checkOpNoThrow(op, uid, packageName)
                                     != AppOpsManager.MODE_ALLOWED) {
                                 runInBackgroundDisabled(uid);
@@ -16371,14 +16372,16 @@ public class ActivityManagerService extends IActivityManager.Stub
         return mUserController.switchUser(targetUserId);
     }
 
+    @Nullable
     @Override
-    public String getSwitchingFromUserMessage() {
-        return mUserController.getSwitchingFromSystemUserMessage();
+    public String getSwitchingFromUserMessage(@UserIdInt int userId) {
+        return mUserController.getSwitchingFromUserMessage(userId);
     }
 
+    @Nullable
     @Override
-    public String getSwitchingToUserMessage() {
-        return mUserController.getSwitchingToSystemUserMessage();
+    public String getSwitchingToUserMessage(@UserIdInt int userId) {
+        return mUserController.getSwitchingToUserMessage(userId);
     }
 
     @Override
@@ -17126,13 +17129,13 @@ public class ActivityManagerService extends IActivityManager.Stub
         }
 
         @Override
-        public void setSwitchingFromSystemUserMessage(String switchingFromSystemUserMessage) {
-            mUserController.setSwitchingFromSystemUserMessage(switchingFromSystemUserMessage);
+        public void setSwitchingFromUserMessage(@UserIdInt int userId, @Nullable String message) {
+            mUserController.setSwitchingFromUserMessage(userId, message);
         }
 
         @Override
-        public void setSwitchingToSystemUserMessage(String switchingToSystemUserMessage) {
-            mUserController.setSwitchingToSystemUserMessage(switchingToSystemUserMessage);
+        public void setSwitchingToUserMessage(@UserIdInt int userId, @Nullable String message) {
+            mUserController.setSwitchingToUserMessage(userId, message);
         }
 
         @Override
@@ -19601,12 +19604,14 @@ public class ActivityManagerService extends IActivityManager.Stub
         if (!preventIntentRedirect()) return;
         if (intent == null) return;
 
+        int callingUid = Binder.getCallingUid();
         if (((intent.getExtendedFlags() & Intent.EXTENDED_FLAG_NESTED_INTENT_KEYS_COLLECTED) == 0)
                 && intent.getExtras() != null && intent.getExtras().hasIntent()) {
             Slog.wtf(TAG,
                     "[IntentRedirect Hardening] The intent does not have its nested keys collected as a "
                             + "preparation for creating intent creator tokens. Intent: "
                             + intent + "; creatorPackage: " + creatorPackage);
+            FrameworkStatsLog.write(EXTRA_INTENT_KEYS_COLLECTED_ON_SERVER, callingUid);
             if (preventIntentRedirectShowToastIfNestedKeysNotCollectedRW()) {
                 UiThread.getHandler().post(
                         () -> Toast.makeText(mContext,
@@ -19633,7 +19638,7 @@ public class ActivityManagerService extends IActivityManager.Stub
                 targetPackage);
         final boolean noExtraIntentKeys =
                 intent.getExtraIntentKeys() == null || intent.getExtraIntentKeys().isEmpty();
-        final int creatorUid = noExtraIntentKeys ? DEFAULT_INTENT_CREATOR_UID : Binder.getCallingUid();
+        final int creatorUid = noExtraIntentKeys ? DEFAULT_INTENT_CREATOR_UID : callingUid;
 
         intent.forEachNestedCreatorToken(extraIntent -> {
             if (isCreatorSameAsTarget) {
@@ -19659,7 +19664,7 @@ public class ActivityManagerService extends IActivityManager.Stub
     /**
      * @hide
      */
-    @EnforcePermission("android.permission.INTERACT_ACROSS_USERS_FULL")
+    @EnforcePermission(INTERACT_ACROSS_USERS_FULL)
     public IBinder refreshIntentCreatorToken(Intent intent) {
         refreshIntentCreatorToken_enforcePermission();
         IBinder binder = intent.getCreatorToken();

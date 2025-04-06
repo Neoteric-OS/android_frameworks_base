@@ -36,11 +36,11 @@ import android.testing.ViewUtils
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import android.view.accessibility.AccessibilityManager
 import android.widget.ScrollView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
-import com.android.app.viewcapture.ViewCapture
 import com.android.internal.jank.InteractionJankMonitor
 import com.android.internal.widget.LockPatternUtils
 import com.android.internal.widget.LockPatternUtils.CREDENTIAL_TYPE_PATTERN
@@ -114,7 +114,7 @@ open class AuthContainerViewTest : SysuiTestCase() {
     @Mock lateinit var selectedUserInteractor: SelectedUserInteractor
     @Mock private lateinit var packageManager: PackageManager
     @Mock private lateinit var activityTaskManager: ActivityTaskManager
-    @Mock private lateinit var lazyViewCapture: Lazy<ViewCapture>
+    @Mock private lateinit var accessibilityManager: AccessibilityManager
 
     private lateinit var displayRepository: FakeDisplayRepository
     private lateinit var displayStateInteractor: DisplayStateInteractor
@@ -529,20 +529,23 @@ open class AuthContainerViewTest : SysuiTestCase() {
 
     @Test
     fun testLayoutParams_hasSecureWindowFlag() {
-        val layoutParams = AuthContainerView.getLayoutParams(windowToken, "")
+        val layoutParams =
+            AuthContainerView.getLayoutParams(windowToken, "", false /* isCredentialView */)
         assertThat((layoutParams.flags and WindowManager.LayoutParams.FLAG_SECURE) != 0).isTrue()
     }
 
     @Test
     fun testLayoutParams_hasShowWhenLockedFlag() {
-        val layoutParams = AuthContainerView.getLayoutParams(windowToken, "")
+        val layoutParams =
+            AuthContainerView.getLayoutParams(windowToken, "", false /* isCredentialView */)
         assertThat((layoutParams.flags and WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED) != 0)
             .isTrue()
     }
 
     @Test
     fun testLayoutParams_hasDimbehindWindowFlag() {
-        val layoutParams = AuthContainerView.getLayoutParams(windowToken, "")
+        val layoutParams =
+            AuthContainerView.getLayoutParams(windowToken, "", false /* isCredentialView */)
         val lpFlags = layoutParams.flags
         val lpDimAmount = layoutParams.dimAmount
 
@@ -552,7 +555,8 @@ open class AuthContainerViewTest : SysuiTestCase() {
 
     @Test
     fun testLayoutParams_excludesImeInsets() {
-        val layoutParams = AuthContainerView.getLayoutParams(windowToken, "")
+        val layoutParams =
+            AuthContainerView.getLayoutParams(windowToken, "", false /* isCredentialView */)
         assertThat((layoutParams.fitInsetsTypes and WindowInsets.Type.ime()) == 0).isTrue()
     }
 
@@ -678,11 +682,11 @@ open class AuthContainerViewTest : SysuiTestCase() {
                 udfpsUtils,
                 iconProvider,
                 activityTaskManager,
+                accessibilityManager,
             ),
             { credentialViewModel },
             fakeExecutor,
             vibrator,
-            lazyViewCapture,
             msdlPlayer,
         ) {
         override fun postOnAnimation(runnable: Runnable) {
@@ -703,7 +707,8 @@ open class AuthContainerViewTest : SysuiTestCase() {
 
     @Test
     fun testLayoutParams_hasCutoutModeAlwaysFlag() {
-        val layoutParams = AuthContainerView.getLayoutParams(windowToken, "")
+        val layoutParams =
+            AuthContainerView.getLayoutParams(windowToken, "", false /* isCredentialView */)
         val lpFlags = layoutParams.flags
 
         assertThat(
@@ -714,7 +719,8 @@ open class AuthContainerViewTest : SysuiTestCase() {
 
     @Test
     fun testLayoutParams_excludesSystemBarInsets() {
-        val layoutParams = AuthContainerView.getLayoutParams(windowToken, "")
+        val layoutParams =
+            AuthContainerView.getLayoutParams(windowToken, "", false /* isCredentialView */)
         assertThat((layoutParams.fitInsetsTypes and WindowInsets.Type.systemBars()) == 0).isTrue()
     }
 }

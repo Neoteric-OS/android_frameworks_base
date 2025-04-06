@@ -31,12 +31,15 @@ class DesksTransitionObserver(
     private val desktopUserRepositories: DesktopUserRepositories,
     private val desksOrganizer: DesksOrganizer,
 ) {
-    private val deskTransitions = mutableMapOf<IBinder, DeskTransition>()
+    private val deskTransitions = mutableMapOf<IBinder, MutableSet<DeskTransition>>()
 
     /** Adds a pending desk transition to be tracked. */
     fun addPendingTransition(transition: DeskTransition) {
         if (!DesktopExperienceFlags.ENABLE_MULTIPLE_DESKTOPS_BACKEND.isTrue) return
-        deskTransitions[transition.token] = transition
+        val transitions = deskTransitions[transition.token] ?: mutableSetOf()
+        transitions += transition
+        deskTransitions[transition.token] = transitions
+        logD("Added pending desk transition: %s", transition)
     }
 
     /**
@@ -45,7 +48,48 @@ class DesksTransitionObserver(
      */
     fun onTransitionReady(transition: IBinder, info: TransitionInfo) {
         if (!DesktopExperienceFlags.ENABLE_MULTIPLE_DESKTOPS_BACKEND.isTrue) return
-        val deskTransition = deskTransitions.remove(transition) ?: return
+        val deskTransitions = deskTransitions.remove(transition) ?: return
+        deskTransitions.forEach { deskTransition -> handleDeskTransition(info, deskTransition) }
+    }
+
+    /**
+     * Called when a transition is merged with another transition, which may include transitions not
+     * tracked by this observer.
+     */
+    fun onTransitionMerged(merged: IBinder, playing: IBinder) {
+        if (!DesktopExperienceFlags.ENABLE_MULTIPLE_DESKTOPS_BACKEND.isTrue) return
+        val transitions = deskTransitions.remove(merged) ?: return
+        deskTransitions[playing] =
+            transitions
+                .map { deskTransition -> deskTransition.copyWithToken(token = playing) }
+                .toMutableSet()
+    }
+
+    /**
+     * Called when any transition finishes, which may include transitions not tracked by this
+     * observer.
+     *
+     * Most [DeskTransition]s are not handled here because [onTransitionReady] handles them and
+     * removes them from the map. However, there can be cases where the transition was added after
+     * [onTransitionReady] had already been called and they need to be handled here, such as the
+     * swipe-to-home recents transition when there is no book-end transition.
+     */
+    fun onTransitionFinished(transition: IBinder) {
+        if (!DesktopExperienceFlags.ENABLE_MULTIPLE_DESKTOPS_BACKEND.isTrue) return
+        val deskTransitions = deskTransitions.remove(transition) ?: return
+        deskTransitions.forEach { deskTransition ->
+            if (deskTransition is DeskTransition.DeactivateDesk) {
+                handleDeactivateDeskTransition(null, deskTransition)
+            } else {
+                logW(
+                    "Unexpected desk transition finished without being handled: %s",
+                    deskTransition,
+                )
+            }
+        }
+    }
+
+    private fun handleDeskTransition(info: TransitionInfo, deskTransition: DeskTransition) {
         logD("Desk transition ready: %s", deskTransition)
         val desktopRepository = desktopUserRepositories.current
         when (deskTransition) {
@@ -60,16 +104,21 @@ class DesksTransitionObserver(
                 deskTransition.onDeskRemovedListener?.onDeskRemoved(displayId, deskId)
             }
             is DeskTransition.ActivateDesk -> {
-                val activeDeskChange =
+                val activateDeskChange =
                     info.changes.find { change ->
                         desksOrganizer.isDeskActiveAtEnd(change, deskTransition.deskId)
                     }
-                activeDeskChange?.let {
-                    desktopRepository.setActiveDesk(
-                        displayId = deskTransition.displayId,
-                        deskId = deskTransition.deskId,
-                    )
+                if (activateDeskChange == null) {
+                    // Always activate even if there is no change in the transition for the
+                    // activated desk. This is necessary because some activation requests, such as
+                    // those involving empty desks, may not contain visibility changes that are
+                    // reported in the transition change list.
+                    logD("Activating desk without transition change")
                 }
+                desktopRepository.setActiveDesk(
+                    displayId = deskTransition.displayId,
+                    deskId = deskTransition.deskId,
+                )
             }
             is DeskTransition.ActiveDeskWithTask -> {
                 val withTask =
@@ -91,39 +140,52 @@ class DesksTransitionObserver(
                     )
                 }
             }
-            is DeskTransition.DeactivateDesk -> {
-                var visibleDeactivation = false
-                for (change in info.changes) {
-                    val isDeskChange = desksOrganizer.isDeskChange(change, deskTransition.deskId)
-                    if (isDeskChange) {
-                        visibleDeactivation = true
-                        continue
-                    }
-                    val taskId = change.taskInfo?.taskId ?: continue
-                    val removedFromDesk =
-                        desktopRepository.getDeskIdForTask(taskId) == deskTransition.deskId &&
-                            desksOrganizer.getDeskAtEnd(change) == null
-                    if (removedFromDesk) {
-                        desktopRepository.removeTaskFromDesk(
-                            deskId = deskTransition.deskId,
-                            taskId = taskId,
-                        )
-                    }
-                }
-                // Always deactivate even if there's no change that confirms the desk was
-                // deactivated. Some interactions, such as the desk deactivating because it's
-                // occluded by a fullscreen task result in a transition change, but others, such
-                // as transitioning from an empty desk to home may not.
-                if (!visibleDeactivation) {
-                    logD("Deactivating desk without transition change")
-                }
-                desktopRepository.setDeskInactive(deskId = deskTransition.deskId)
+            is DeskTransition.DeactivateDesk -> handleDeactivateDeskTransition(info, deskTransition)
+        }
+    }
+
+    private fun handleDeactivateDeskTransition(
+        info: TransitionInfo?,
+        deskTransition: DeskTransition.DeactivateDesk,
+    ) {
+        logD("handleDeactivateDeskTransition: %s", deskTransition)
+        val desktopRepository = desktopUserRepositories.current
+        var deskChangeFound = false
+
+        val changes = info?.changes ?: emptyList()
+        for (change in changes) {
+            val isDeskChange = desksOrganizer.isDeskChange(change, deskTransition.deskId)
+            if (isDeskChange) {
+                deskChangeFound = true
+                continue
+            }
+            val taskId = change.taskInfo?.taskId ?: continue
+            val removedFromDesk =
+                desktopRepository.getDeskIdForTask(taskId) == deskTransition.deskId &&
+                    desksOrganizer.getDeskAtEnd(change) == null
+            if (removedFromDesk) {
+                desktopRepository.removeTaskFromDesk(
+                    deskId = deskTransition.deskId,
+                    taskId = taskId,
+                )
             }
         }
+        // Always deactivate even if there's no change that confirms the desk was
+        // deactivated. Some interactions, such as the desk deactivating because it's
+        // occluded by a fullscreen task result in a transition change, but others, such
+        // as transitioning from an empty desk to home may not.
+        if (!deskChangeFound) {
+            logD("Deactivating desk without transition change")
+        }
+        desktopRepository.setDeskInactive(deskId = deskTransition.deskId)
     }
 
     private fun logD(msg: String, vararg arguments: Any?) {
         ProtoLog.d(WM_SHELL_DESKTOP_MODE, "%s: $msg", TAG, *arguments)
+    }
+
+    private fun logW(msg: String, vararg arguments: Any?) {
+        ProtoLog.w(WM_SHELL_DESKTOP_MODE, "%s: $msg", TAG, *arguments)
     }
 
     private companion object {

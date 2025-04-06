@@ -115,7 +115,7 @@ constructor(
                 powerInteractor.isAwake
                     .debounce(50L)
                     .filterRelevantKeyguardStateAnd { isAwake -> isAwake }
-                    .sample(communalInteractor.shouldShowCommunal)
+                    .sample(communalSettingsInteractor.autoOpenEnabled)
                     .collect { shouldShowCommunal ->
                         if (shouldShowCommunal) {
                             // This case handles tapping the power button to transition through
@@ -316,5 +316,6 @@ constructor(
         val TO_LOCKSCREEN_DURATION = 1167.milliseconds
         val TO_AOD_DURATION = 300.milliseconds
         val TO_GONE_DURATION = DEFAULT_DURATION
+        val TO_PRIMARY_BOUNCER_DURATION = DEFAULT_DURATION
     }
 }

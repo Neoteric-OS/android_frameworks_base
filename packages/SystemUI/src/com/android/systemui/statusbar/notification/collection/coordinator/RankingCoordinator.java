@@ -16,11 +16,14 @@
 
 package com.android.systemui.statusbar.notification.collection.coordinator;
 
+import static android.app.NotificationChannel.SYSTEM_RESERVED_IDS;
+
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
-import com.android.systemui.statusbar.notification.collection.ListEntry;
+import com.android.systemui.statusbar.notification.collection.BundleEntry;
+import com.android.systemui.statusbar.notification.collection.PipelineEntry;
 import com.android.systemui.statusbar.notification.collection.NotifPipeline;
 import com.android.systemui.statusbar.notification.collection.NotificationEntry;
 import com.android.systemui.statusbar.notification.collection.coordinator.dagger.CoordinatorScope;
@@ -97,7 +100,10 @@ public class RankingCoordinator implements Coordinator {
     private final NotifSectioner mAlertingNotifSectioner = new NotifSectioner("Alerting",
             NotificationPriorityBucketKt.BUCKET_ALERTING) {
         @Override
-        public boolean isInSection(ListEntry entry) {
+        public boolean isInSection(PipelineEntry entry) {
+            if (BundleUtil.Companion.isClassified(entry)) {
+                return false;
+            }
             return mHighPriorityProvider.isHighPriority(entry);
         }
 
@@ -115,8 +121,15 @@ public class RankingCoordinator implements Coordinator {
     private final NotifSectioner mSilentNotifSectioner = new NotifSectioner("Silent",
             NotificationPriorityBucketKt.BUCKET_SILENT) {
         @Override
-        public boolean isInSection(ListEntry entry) {
+        public boolean isInSection(PipelineEntry entry) {
+            if (entry instanceof BundleEntry) {
+                return true;
+            }
+            if (BundleUtil.Companion.isClassified(entry)) {
+                return false;
+            }
             return !mHighPriorityProvider.isHighPriority(entry)
+                    && entry.getRepresentativeEntry() != null
                     && !entry.getRepresentativeEntry().isAmbient();
         }
 
@@ -128,10 +141,15 @@ public class RankingCoordinator implements Coordinator {
 
         @Nullable
         @Override
-        public void onEntriesUpdated(@NonNull List<ListEntry> entries) {
+        public void onEntriesUpdated(@NonNull List<PipelineEntry> entries) {
             mHasSilentEntries = false;
             for (int i = 0; i < entries.size(); i++) {
-                if (entries.get(i).getRepresentativeEntry().getSbn().isClearable()) {
+                NotificationEntry notifEntry = entries.get(i).getRepresentativeEntry();
+                if (notifEntry == null) {
+                    // TODO(b/395698521) Handle BundleEntry
+                    continue;
+                }
+                if (notifEntry.getSbn().isClearable()) {
                     mHasSilentEntries = true;
                     break;
                 }
@@ -144,8 +162,12 @@ public class RankingCoordinator implements Coordinator {
     private final NotifSectioner mMinimizedNotifSectioner = new NotifSectioner("Minimized",
             NotificationPriorityBucketKt.BUCKET_SILENT) {
         @Override
-        public boolean isInSection(ListEntry entry) {
+        public boolean isInSection(PipelineEntry entry) {
+            if (BundleUtil.Companion.isClassified(entry)) {
+                return false;
+            }
             return !mHighPriorityProvider.isHighPriority(entry)
+                    && entry.getRepresentativeEntry() != null
                     && entry.getRepresentativeEntry().isAmbient();
         }
 
@@ -157,10 +179,15 @@ public class RankingCoordinator implements Coordinator {
 
         @Nullable
         @Override
-        public void onEntriesUpdated(@NonNull List<ListEntry> entries) {
+        public void onEntriesUpdated(@NonNull List<PipelineEntry> entries) {
             mHasMinimizedEntries = false;
             for (int i = 0; i < entries.size(); i++) {
-                if (entries.get(i).getRepresentativeEntry().getSbn().isClearable()) {
+                NotificationEntry notifEntry = entries.get(i).getRepresentativeEntry();
+                if (notifEntry == null) {
+                    // TODO(b/395698521) Handle BundleEntry
+                    continue;
+                }
+                if (notifEntry.getSbn().isClearable()) {
                     mHasMinimizedEntries = true;
                     break;
                 }

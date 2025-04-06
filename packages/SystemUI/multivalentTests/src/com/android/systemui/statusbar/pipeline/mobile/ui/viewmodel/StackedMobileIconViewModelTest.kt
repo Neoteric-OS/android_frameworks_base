@@ -22,8 +22,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.common.shared.model.Icon
-import com.android.systemui.flags.Flags
-import com.android.systemui.flags.fakeFeatureFlagsClassic
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.kosmos.Kosmos.Fixture
 import com.android.systemui.kosmos.runTest
@@ -47,13 +45,12 @@ class StackedMobileIconViewModelTest : SysuiTestCase() {
     private val kosmos = testKosmos().useUnconfinedTestDispatcher()
     private val testScope = kosmos.testScope
 
-    private val Kosmos.underTest: StackedMobileIconViewModel by Fixture {
-        stackedMobileIconViewModel
+    private val Kosmos.underTest: StackedMobileIconViewModelImpl by Fixture {
+        stackedMobileIconViewModelImpl
     }
 
     @Before
     fun setUp() {
-        kosmos.fakeFeatureFlagsClassic.set(Flags.NEW_NETWORK_SLICE_UI, false)
         kosmos.underTest.activateIn(testScope)
     }
 

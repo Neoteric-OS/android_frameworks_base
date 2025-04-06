@@ -26,7 +26,7 @@ import static org.junit.Assert.fail;
 import android.app.PropertyInvalidatedCache;
 import android.app.PropertyInvalidatedCache.Args;
 import android.multiuser.Flags;
-import android.platform.test.annotations.IgnoreUnderRavenwood;
+import android.platform.test.annotations.DisabledOnRavenwood;
 import android.platform.test.annotations.RequiresFlagsEnabled;
 import android.platform.test.flag.junit.CheckFlagsRule;
 import android.platform.test.flag.junit.DeviceFlagsValueProvider;
@@ -452,22 +452,28 @@ public class IpcDataCacheTest {
         assertTrue(ec.isDisabled());
     }
 
-
     // Verify that invalidating the cache from an app process would fail due to lack of permissions.
     @Test
     @android.platform.test.annotations.DisabledOnRavenwood(
             reason = "SystemProperties doesn't have permission check")
     public void testPermissionFailure() {
-        // Create a cache that will write a system nonce.
-        TestCache sysCache = new TestCache(IpcDataCache.MODULE_SYSTEM, "mode1");
         try {
-            // Invalidate the cache, which writes the system property.  There must be a permission
-            // failure.
-            sysCache.invalidateCache();
-            fail("expected permission failure");
-        } catch (RuntimeException e) {
-            // The expected exception is a bare RuntimeException.  The test does not attempt to
-            // validate the text of the exception message.
+            // Disable test mode for this test.  Guarantee that the mode is enabled before the
+            // test exits.
+            IpcDataCache.setTestMode(false);
+            // Create a cache that will write a system nonce.
+            TestCache sysCache = new TestCache(IpcDataCache.MODULE_SYSTEM, "mode1");
+            try {
+                // Invalidate the cache, which writes the system property.  There must be a
+                // permission failure.
+                sysCache.invalidateCache();
+                fail("expected permission failure");
+            } catch (RuntimeException e) {
+                // The expected exception is a bare RuntimeException.  The test does not attempt
+                // to validate the text of the exception message.
+            }
+        } finally {
+            IpcDataCache.setTestMode(true);
         }
     }
 
@@ -510,6 +516,48 @@ public class IpcDataCacheTest {
 
         // Re-enable test mode (so that the cleanup for the test does not throw).
         IpcDataCache.setTestMode(true);
+    }
+
+    // Verify that test cache mode works properly.  This test is identical to testTestMode except
+    // that it uses the alternative name (the API that is visible to mainline modules).
+    @Test
+    public void testCacheTestMode() {
+        // Create a cache that will write a system nonce.
+        TestCache sysCache = new TestCache(IpcDataCache.MODULE_SYSTEM, "mode1");
+
+        sysCache.testPropertyName();
+        // Invalidate the cache.  This must succeed because the property has been marked for
+        // testing.
+        sysCache.invalidateCache();
+
+        // Create a cache that uses MODULE_TEST.  Invalidation succeeds whether or not the
+        // property is tagged as being tested.
+        TestCache testCache = new TestCache(IpcDataCache.MODULE_TEST, "mode2");
+        testCache.invalidateCache();
+        testCache.testPropertyName();
+        testCache.invalidateCache();
+
+        // Clear test mode.  This fails if test mode is not enabled.
+        IpcDataCache.setCacheTestMode(false);
+        try {
+            IpcDataCache.setCacheTestMode(false);
+            if (android.app.Flags.enforcePicTestmodeProtocol()) {
+                fail("expected an IllegalStateException");
+            }
+        } catch (IllegalStateException e) {
+            // The expected exception.
+        }
+        // Configuring a property for testing must fail if test mode is false.
+        TestCache cache2 = new TestCache(IpcDataCache.MODULE_SYSTEM, "mode3");
+        try {
+            cache2.testPropertyName();
+            fail("expected an IllegalStateException");
+        } catch (IllegalStateException e) {
+            // The expected exception.
+        }
+
+        // Re-enable test mode (so that the cleanup for the test does not throw).
+        IpcDataCache.setCacheTestMode(true);
     }
 
     @Test

@@ -23,6 +23,7 @@ import android.annotation.Nullable;
 import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.compat.annotation.UnsupportedAppUsage;
+import android.content.Intent;
 import android.content.pm.ServiceInfo;
 import android.net.Uri;
 import android.os.BadParcelableException;
@@ -30,6 +31,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ParcelFileDescriptor;
+import android.os.UserHandle;
 
 import com.android.internal.telecom.IVideoProvider;
 import com.android.server.telecom.flags.Flags;
@@ -680,6 +682,7 @@ public final class Call {
         private final @CallDirection int mCallDirection;
         private final @Connection.VerificationStatus int mCallerNumberVerificationStatus;
         private final Uri mContactPhotoUri;
+        private final UserHandle mAssociatedUser;
 
         /**
          * Whether the supplied capabilities  supports the specified capability.
@@ -1081,6 +1084,16 @@ public final class Call {
             return mCallerNumberVerificationStatus;
         }
 
+        /**
+         * Gets the user that originated the call
+         * @return The user
+         *
+         * @hide
+         */
+        public UserHandle getAssociatedUser() {
+            return mAssociatedUser;
+        }
+
         @Override
         public boolean equals(Object o) {
             if (o instanceof Details) {
@@ -1107,7 +1120,8 @@ public final class Call {
                         Objects.equals(mCallDirection, d.mCallDirection) &&
                         Objects.equals(mCallerNumberVerificationStatus,
                                 d.mCallerNumberVerificationStatus) &&
-                        Objects.equals(mContactPhotoUri, d.mContactPhotoUri);
+                        Objects.equals(mContactPhotoUri, d.mContactPhotoUri) &&
+                        Objects.equals(mAssociatedUser, d.mAssociatedUser);
             }
             return false;
         }
@@ -1133,7 +1147,8 @@ public final class Call {
                             mContactDisplayName,
                             mCallDirection,
                             mCallerNumberVerificationStatus,
-                    mContactPhotoUri);
+                            mContactPhotoUri,
+                    mAssociatedUser);
         }
 
         /** {@hide} */
@@ -1158,7 +1173,12 @@ public final class Call {
                 String contactDisplayName,
                 int callDirection,
                 int callerNumberVerificationStatus,
-                Uri contactPhotoUri) {
+                Uri contactPhotoUri,
+                UserHandle originatingUser) {
+            if (extras == null) {
+                extras = new Bundle();
+            }
+            extras.putParcelable(Intent.EXTRA_USER_HANDLE, originatingUser);
             mState = state;
             mTelecomCallId = telecomCallId;
             mHandle = handle;
@@ -1180,6 +1200,7 @@ public final class Call {
             mCallDirection = callDirection;
             mCallerNumberVerificationStatus = callerNumberVerificationStatus;
             mContactPhotoUri = contactPhotoUri;
+            mAssociatedUser = originatingUser;
         }
 
         /** {@hide} */
@@ -1205,7 +1226,8 @@ public final class Call {
                     parcelableCall.getContactDisplayName(),
                     parcelableCall.getCallDirection(),
                     parcelableCall.getCallerNumberVerificationStatus(),
-                    parcelableCall.getContactPhotoUri()
+                    parcelableCall.getContactPhotoUri(),
+                    parcelableCall.getAssociatedUser()
             );
         }
 
@@ -2631,7 +2653,8 @@ public final class Call {
                         mDetails.getContactDisplayName(),
                         mDetails.getCallDirection(),
                         mDetails.getCallerNumberVerificationStatus(),
-                        mDetails.getContactPhotoUri()
+                        mDetails.getContactPhotoUri(),
+                        mDetails.getAssociatedUser()
                         );
                 fireDetailsChanged(mDetails);
             }
@@ -2889,38 +2912,48 @@ public final class Call {
         if (bundle.size() != newBundle.size()) {
             return false;
         }
-
-        for(String key : bundle.keySet()) {
-            if (key != null) {
-                if (!newBundle.containsKey(key)) {
-                    return false;
-                }
-                // In case new call extra contains non-framework class objects, return false to
-                // force update the call extra
-                try {
-                    final Object value = bundle.get(key);
-                    final Object newValue = newBundle.get(key);
-                    if (value instanceof Bundle && newValue instanceof Bundle) {
-                        if (!areBundlesEqual((Bundle) value, (Bundle) newValue)) {
-                            return false;
-                        }
-                    }
-                    if (value instanceof byte[] && newValue instanceof byte[]) {
-                        if (!Arrays.equals((byte[]) value, (byte[]) newValue)) {
-                            return false;
-                        }
-                    } else if (!Objects.equals(value, newValue)) {
+        try {
+            for (String key : bundle.keySet()) {
+                if (key != null) {
+                    if (!newBundle.containsKey(key)) {
                         return false;
                     }
-                } catch (BadParcelableException e) {
-                    return false;
-                } catch (ClassCastException e) {
-                    Log.e(LOG_TAG, e, "areBundlesEqual: failure comparing bundle key %s", key);
-                    // until we know what is causing this, we should rethrow -- this is still not
-                    // expected.
-                    throw e;
+                    // In case new call extra contains non-framework class objects, return false to
+                    // force update the call extra
+                    try {
+                        final Object value = bundle.get(key);
+                        final Object newValue = newBundle.get(key);
+                        if (value instanceof Bundle && newValue instanceof Bundle) {
+                            if (!areBundlesEqual((Bundle) value, (Bundle) newValue)) {
+                                return false;
+                            }
+                        }
+                        if (value instanceof byte[] && newValue instanceof byte[]) {
+                            if (!Arrays.equals((byte[]) value, (byte[]) newValue)) {
+                                return false;
+                            }
+                        } else if (!Objects.equals(value, newValue)) {
+                            return false;
+                        }
+                    } catch (BadParcelableException e) {
+                        return false;
+                    }
                 }
             }
+        } catch (ClassCastException | ArrayIndexOutOfBoundsException e) {
+            // Unfortunately this may get raised when accessing the bundle's keyset, so we cannot
+            // determine WHY a class cast exception is happening.  We had tried in the past to do
+            // this down in the for loop so we could figure out which key is causing an issue.
+            // Bundles are not thread safe, so the most likely issue here is that the InCallService
+            // implementation is accessing the Bundle WHILE an incoming Telecom update comes in to
+            // potentially replace the Bundle.  We call "areBundlesEqual" to see if the newly
+            // unparceled Call.Details is the same as what is already in the current Call instance.
+            // If those two operations overleave, I can see the potential for concurrent
+            // modification and edit of the Bundle.  So we'll just catch here and assume the Bundles
+            // are not the same.  This means a Call.CallBack may fire the onCallDetails changed
+            // callback when the Bundle didn't actually change.
+            Log.e(LOG_TAG, e, "areBundlesEqual: failed!");
+            return false;
         }
         return true;
     }

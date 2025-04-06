@@ -206,12 +206,11 @@ public class LoopOperation extends PaintOperation
     @Override
     public void serialize(MapSerializer serializer) {
         serializer
-                .add("type", CLASS_NAME)
+                .addType(CLASS_NAME)
                 .add("indexVariableId", mIndexVariableId)
                 .add("until", mUntil, mUntilOut)
                 .add("from", mFrom, mFromOut)
                 .add("step", mStep, mStepOut)
-                .add("mUntilOut", mUntilOut)
                 .add("list", mList);
     }
 }

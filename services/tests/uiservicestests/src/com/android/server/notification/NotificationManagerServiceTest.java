@@ -24,6 +24,7 @@ import static android.app.ActivityManagerInternal.ServiceNotificationPolicy.NOT_
 import static android.app.ActivityManagerInternal.ServiceNotificationPolicy.SHOW_IMMEDIATELY;
 import static android.app.ActivityTaskManager.INVALID_TASK_ID;
 import static android.app.Flags.FLAG_KEYGUARD_PRIVATE_NOTIFICATIONS;
+import static android.app.Flags.FLAG_NM_SUMMARIZATION;
 import static android.app.Flags.FLAG_SORT_SECTION_BY_TIME;
 import static android.app.Notification.EXTRA_ALLOW_DURING_SETUP;
 import static android.app.Notification.EXTRA_PICTURE;
@@ -105,6 +106,7 @@ import static android.os.UserManager.USER_TYPE_PROFILE_PRIVATE;
 import static android.provider.Settings.Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS;
 import static android.service.notification.Adjustment.KEY_CONTEXTUAL_ACTIONS;
 import static android.service.notification.Adjustment.KEY_IMPORTANCE;
+import static android.service.notification.Adjustment.KEY_SUMMARIZATION;
 import static android.service.notification.Adjustment.KEY_TEXT_REPLIES;
 import static android.service.notification.Adjustment.KEY_TYPE;
 import static android.service.notification.Adjustment.KEY_USER_SENTIMENT;
@@ -168,10 +170,10 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThrows;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.isNull;
-import static org.mockito.Matchers.anyBoolean;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.atLeastOnce;
@@ -349,6 +351,7 @@ import com.android.server.wm.WindowManagerInternal;
 
 import com.google.android.collect.Lists;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
 
 import libcore.junit.util.compat.CoreCompatChangeRule.DisableCompatChanges;
 import libcore.junit.util.compat.CoreCompatChangeRule.EnableCompatChanges;
@@ -2788,8 +2791,8 @@ public class NotificationManagerServiceTest extends UiServiceTestCase {
                 nr1.getSbn().getId(), nr1.getSbn().getUserId());
         waitForIdle();
 
-        verify(mGroupHelper, times(1)).onNotificationRemoved(eq(nr0), any());
-        verify(mGroupHelper, times(1)).onNotificationRemoved(eq(nr1), any());
+        verify(mGroupHelper, times(1)).onNotificationRemoved(eq(nr0), any(), eq(false));
+        verify(mGroupHelper, times(1)).onNotificationRemoved(eq(nr1), any(), eq(false));
 
         // GroupHelper would send 'remove summary' event
         mService.clearAutogroupSummaryLocked(nr1.getUserId(), nr1.getSbn().getPackageName(),
@@ -3155,8 +3158,8 @@ public class NotificationManagerServiceTest extends UiServiceTestCase {
         waitForIdle();
 
         // Check that onGroupedNotificationRemovedWithDelay was called only once
-        verify(mGroupHelper, times(1)).onNotificationRemoved(eq(r1), any());
-        verify(mGroupHelper, times(1)).onNotificationRemoved(eq(r2), any());
+        verify(mGroupHelper, times(1)).onNotificationRemoved(eq(r1), any(), eq(false));
+        verify(mGroupHelper, times(1)).onNotificationRemoved(eq(r2), any(), eq(false));
         verify(mGroupHelper, times(1)).onGroupedNotificationRemovedWithDelay(eq(summary), any(),
                 any());
     }
@@ -3201,9 +3204,9 @@ public class NotificationManagerServiceTest extends UiServiceTestCase {
         waitForIdle();
 
         // Check that onGroupedNotificationRemovedWithDelay was never called: summary was canceled
-        verify(mGroupHelper, times(1)).onNotificationRemoved(eq(r1), any());
-        verify(mGroupHelper, times(1)).onNotificationRemoved(eq(r2), any());
-        verify(mGroupHelper, times(1)).onNotificationRemoved(eq(summary), any());
+        verify(mGroupHelper, times(1)).onNotificationRemoved(eq(r1), any(), eq(false));
+        verify(mGroupHelper, times(1)).onNotificationRemoved(eq(r2), any(), eq(false));
+        verify(mGroupHelper, times(1)).onNotificationRemoved(eq(summary), any(), eq(false));
         verify(mGroupHelper, never()).onGroupedNotificationRemovedWithDelay(any(), any(), any());
     }
 
@@ -5197,41 +5200,6 @@ public class NotificationManagerServiceTest extends UiServiceTestCase {
         doThrow(new SecurityException("no access")).when(mUgmInternal)
                 .checkGrantUriPermission(eq(Process.myUid()), any(), eq(soundUri),
                 anyInt(), eq(Process.myUserHandle().getIdentifier()));
-
-        mBinderService.updateNotificationChannelFromPrivilegedListener(
-                null, mPkg, Process.myUserHandle(), updatedNotificationChannel);
-
-        verify(mPreferencesHelper, times(1)).updateNotificationChannel(
-                anyString(), anyInt(), any(), anyBoolean(),  anyInt(), anyBoolean());
-
-        verify(mListeners, never()).notifyNotificationChannelChanged(eq(mPkg),
-                eq(Process.myUserHandle()), eq(mTestNotificationChannel),
-                eq(NotificationListenerService.NOTIFICATION_CHANNEL_OR_GROUP_UPDATED));
-    }
-
-    @Test
-    public void
-        updateNotificationChannelFromPrivilegedListener_oldSoundNoUriPerm_newSoundHasUriPerm()
-            throws Exception {
-        mService.setPreferencesHelper(mPreferencesHelper);
-        when(mCompanionMgr.getAssociations(mPkg, mUserId))
-                .thenReturn(singletonList(mock(AssociationInfo.class)));
-        when(mPreferencesHelper.getNotificationChannel(eq(mPkg), anyInt(),
-                eq(mTestNotificationChannel.getId()), anyBoolean()))
-                .thenReturn(mTestNotificationChannel);
-
-        // Missing Uri permissions for the old channel sound
-        final Uri oldSoundUri = Settings.System.DEFAULT_NOTIFICATION_URI;
-        doThrow(new SecurityException("no access")).when(mUgmInternal)
-                .checkGrantUriPermission(eq(Process.myUid()), any(), eq(oldSoundUri),
-                anyInt(), eq(Process.myUserHandle().getIdentifier()));
-
-        // Has Uri permissions for the old channel sound
-        final Uri newSoundUri = Uri.parse("content://media/test/sound/uri");
-        final NotificationChannel updatedNotificationChannel = new NotificationChannel(
-                TEST_CHANNEL_ID, TEST_CHANNEL_ID, IMPORTANCE_DEFAULT);
-        updatedNotificationChannel.setSound(newSoundUri,
-                updatedNotificationChannel.getAudioAttributes());
 
         mBinderService.updateNotificationChannelFromPrivilegedListener(
                 null, mPkg, Process.myUserHandle(), updatedNotificationChannel);
@@ -14122,9 +14090,10 @@ public class NotificationManagerServiceTest extends UiServiceTestCase {
         waitForIdle();
 
         // Check that child notifications are also removed
-        verify(mGroupHelper, times(1)).onNotificationRemoved(eq(aggregateSummary), any());
-        verify(mGroupHelper, times(1)).onNotificationRemoved(eq(nr0), any());
-        verify(mGroupHelper, times(1)).onNotificationRemoved(eq(nr1), any());
+        verify(mGroupHelper, times(1)).onNotificationRemoved(eq(aggregateSummary), any(),
+                eq(false));
+        verify(mGroupHelper, times(1)).onNotificationRemoved(eq(nr0), any(), eq(false));
+        verify(mGroupHelper, times(1)).onNotificationRemoved(eq(nr1), any(), eq(false));
 
         // Make sure the summary was removed and not re-posted
         assertThat(mService.getNotificationRecordCount()).isEqualTo(0);
@@ -16877,22 +16846,22 @@ public class NotificationManagerServiceTest extends UiServiceTestCase {
     public void updateAutomaticZenRule_implicitRuleWithoutCPS_disallowedFromApp() throws Exception {
         setUpRealZenTest();
         mService.setCallerIsNormalPackage();
-        assertThat(mBinderService.getAutomaticZenRules()).isEmpty();
+        assertThat(mBinderService.getAutomaticZenRules().getList()).isEmpty();
 
         // Create an implicit zen rule by calling setNotificationPolicy from an app.
         mBinderService.setNotificationPolicy(mPkg, new NotificationManager.Policy(0, 0, 0), false);
-        assertThat(mBinderService.getAutomaticZenRules()).hasSize(1);
-        Map.Entry<String, AutomaticZenRule> rule = getOnlyElement(
-                mBinderService.getAutomaticZenRules().entrySet());
-        assertThat(rule.getValue().getOwner()).isNull();
-        assertThat(rule.getValue().getConfigurationActivity()).isNull();
+        assertThat(mBinderService.getAutomaticZenRules().getList()).hasSize(1);
+        AutomaticZenRule.AzrWithId rule = getOnlyElement(
+                (List<AutomaticZenRule.AzrWithId>) mBinderService.getAutomaticZenRules().getList());
+        assertThat(rule.mRule.getOwner()).isNull();
+        assertThat(rule.mRule.getConfigurationActivity()).isNull();
 
         // Now try to update said rule (e.g. disable it). Should fail.
         // We also validate the exception message because NPE could be thrown by all sorts of test
         // issues (e.g. misconfigured mocks).
-        rule.getValue().setEnabled(false);
+        rule.mRule.setEnabled(false);
         NullPointerException e = assertThrows(NullPointerException.class,
-                () -> mBinderService.updateAutomaticZenRule(rule.getKey(), rule.getValue(), false));
+                () -> mBinderService.updateAutomaticZenRule(rule.mId, rule.mRule, false));
         assertThat(e.getMessage()).isEqualTo(
                 "Rule must have a ConditionProviderService and/or configuration activity");
     }
@@ -16902,24 +16871,24 @@ public class NotificationManagerServiceTest extends UiServiceTestCase {
     public void updateAutomaticZenRule_implicitRuleWithoutCPS_allowedFromSystem() throws Exception {
         setUpRealZenTest();
         mService.setCallerIsNormalPackage();
-        assertThat(mBinderService.getAutomaticZenRules()).isEmpty();
+        assertThat(mBinderService.getAutomaticZenRules().getList()).isEmpty();
 
         // Create an implicit zen rule by calling setNotificationPolicy from an app.
         mBinderService.setNotificationPolicy(mPkg, new NotificationManager.Policy(0, 0, 0), false);
-        assertThat(mBinderService.getAutomaticZenRules()).hasSize(1);
-        Map.Entry<String, AutomaticZenRule> rule = getOnlyElement(
-                mBinderService.getAutomaticZenRules().entrySet());
-        assertThat(rule.getValue().getOwner()).isNull();
-        assertThat(rule.getValue().getConfigurationActivity()).isNull();
+        assertThat(mBinderService.getAutomaticZenRules().getList()).hasSize(1);
+        AutomaticZenRule.AzrWithId rule = getOnlyElement(
+                (List<AutomaticZenRule.AzrWithId>) mBinderService.getAutomaticZenRules().getList());
+        assertThat(rule.mRule.getOwner()).isNull();
+        assertThat(rule.mRule.getConfigurationActivity()).isNull();
 
         // Now update said rule from Settings (e.g. disable it). Should work!
         mService.isSystemUid = true;
-        rule.getValue().setEnabled(false);
-        mBinderService.updateAutomaticZenRule(rule.getKey(), rule.getValue(), false);
+        rule.mRule.setEnabled(false);
+        mBinderService.updateAutomaticZenRule(rule.mId, rule.mRule, false);
 
-        Map.Entry<String, AutomaticZenRule> updatedRule = getOnlyElement(
-                mBinderService.getAutomaticZenRules().entrySet());
-        assertThat(updatedRule.getValue().isEnabled()).isFalse();
+        AutomaticZenRule.AzrWithId updatedRule = getOnlyElement(
+                (List<AutomaticZenRule.AzrWithId>) mBinderService.getAutomaticZenRules().getList());
+        assertThat(updatedRule.mRule.isEnabled()).isFalse();
     }
 
     @Test
@@ -17713,6 +17682,58 @@ public class NotificationManagerServiceTest extends UiServiceTestCase {
     }
 
     @Test
+    @EnableFlags({android.app.Flags.FLAG_API_RICH_ONGOING,
+            android.service.notification.Flags.FLAG_NOTIFICATION_CLASSIFICATION,
+            android.app.Flags.FLAG_NOTIFICATION_CLASSIFICATION_UI})
+    public void testApplyAdjustment_promotedOngoingNotification_doesNotApply() throws Exception {
+        // promoted ongoing notification which should not have the adjustment applied
+        Notification n = new Notification.Builder(mContext, mTestNotificationChannel.getId())
+                .setSmallIcon(android.R.drawable.sym_def_app_icon)
+                .setStyle(new Notification.BigTextStyle().setBigContentTitle("BIG"))
+                .setColor(Color.WHITE)
+                .setColorized(true)
+                .setOngoing(true)
+                .setFlag(FLAG_PROMOTED_ONGOING, true) // add manually since we're skipping post
+                .setFlag(FLAG_CAN_COLORIZE, true) // add manually since we're skipping post
+                .build();
+
+        StatusBarNotification sbn = new StatusBarNotification(mPkg, mPkg, 9, null, mUid, 0,
+                n, UserHandle.getUserHandleForUid(mUid), null, 0);
+        final NotificationRecord r = new NotificationRecord(mContext, sbn,
+                mTestNotificationChannel);
+
+        // regular notification record for contrast
+        final NotificationRecord r2 = generateNotificationRecord(mTestNotificationChannel);
+
+        mService.addNotification(r);
+        mService.addNotification(r2);
+        NotificationManagerService.WorkerHandler handler = mock(
+                NotificationManagerService.WorkerHandler.class);
+        mService.setHandler(handler);
+        when(mAssistants.isAdjustmentKeyTypeAllowed(anyInt())).thenReturn(true);
+        when(mAssistants.isAdjustmentAllowedForPackage(anyString(), anyString())).thenReturn(true);
+
+        Bundle signals = new Bundle();
+        signals.putInt(KEY_TYPE, TYPE_NEWS);
+        Bundle signals2 = new Bundle(signals);  // copy for the second adjustment
+        Adjustment adjustment = new Adjustment(
+                r.getSbn().getPackageName(), r.getKey(), signals, "", r.getUser().getIdentifier());
+        Adjustment a2 = new Adjustment(r2.getSbn().getPackageName(), r2.getKey(), signals2, "",
+                r2.getUser().getIdentifier());
+        when(mAssistants.isSameUser(any(), anyInt())).thenReturn(true);
+        mBinderService.applyAdjustmentsFromAssistant(null, List.of(adjustment, a2));
+
+        waitForIdle();
+
+        r.applyAdjustments();
+        r2.applyAdjustments();
+
+        // promoted ongoing notification does not get bundled; regular one does
+        assertThat(r.getChannel().getId()).isEqualTo(mTestNotificationChannel.getId());
+        assertThat(r2.getChannel().getId()).isEqualTo(NEWS_ID);
+    }
+
+    @Test
     @EnableFlags({android.app.Flags.FLAG_API_RICH_ONGOING})
     public void testSetCanBePromoted_granted_noui() throws Exception {
         testSetCanBePromoted_granted();
@@ -18341,9 +18362,11 @@ public class NotificationManagerServiceTest extends UiServiceTestCase {
         // Post some notifications and classify in different bundles
         final int numNotifications = NotificationChannel.SYSTEM_RESERVED_IDS.size();
         final int numNewsNotifications = 1;
+        List<String> postedNotificationKeys = new ArrayList();
         for (int i = 0; i < numNotifications; i++) {
             NotificationRecord r = generateNotificationRecord(mTestNotificationChannel, i, mUserId);
             mService.addNotification(r);
+            postedNotificationKeys.add(r.getKey());
             Bundle signals = new Bundle();
             final int adjustmentType = i + 1;
             signals.putInt(Adjustment.KEY_TYPE, adjustmentType);
@@ -18363,7 +18386,8 @@ public class NotificationManagerServiceTest extends UiServiceTestCase {
         waitForIdle();
 
         //Check that all notifications classified as TYPE_NEWS have been unbundled
-        for (NotificationRecord record : mService.mNotificationList) {
+        for (String key : postedNotificationKeys) {
+            NotificationRecord record= mService.mNotificationsByKey.get(key);
             // Check that the original channel was restored
             // for notifications classified as TYPE_NEWS
             if (record.getBundleType() == TYPE_NEWS) {
@@ -18388,7 +18412,8 @@ public class NotificationManagerServiceTest extends UiServiceTestCase {
 
         // Check that the bundle channel was restored
         verify(mRankingHandler, times(numNewsNotifications)).requestSort();
-        for (NotificationRecord record : mService.mNotificationList) {
+        for (String key : postedNotificationKeys) {
+            NotificationRecord record= mService.mNotificationsByKey.get(key);
             assertThat(record.getChannel().getId()).isIn(NotificationChannel.SYSTEM_RESERVED_IDS);
         }
     }
@@ -18455,6 +18480,36 @@ public class NotificationManagerServiceTest extends UiServiceTestCase {
         for (NotificationRecord record : mService.mNotificationList) {
             assertThat(record.getChannel().getId()).isIn(NotificationChannel.SYSTEM_RESERVED_IDS);
         }
+    }
+
+    @Test
+    @EnableFlags({FLAG_NM_SUMMARIZATION})
+    public void testDisableBundleAdjustmentByPkg_unsummarizesNotifications() throws Exception {
+        NotificationManagerService.WorkerHandler handler = mock(
+                NotificationManagerService.WorkerHandler.class);
+        mService.setHandler(handler);
+        when(mAssistants.isSameUser(any(), anyInt())).thenReturn(true);
+        when(mAssistants.isServiceTokenValidLocked(any())).thenReturn(true);
+        when(mAssistants.isAdjustmentKeyTypeAllowed(anyInt())).thenReturn(true);
+        when(mAssistants.isAdjustmentAllowedForPackage(anyString(), anyString())).thenReturn(true);
+
+        NotificationRecord r = generateNotificationRecord(mTestNotificationChannel, 0, mUserId);
+        mService.addNotification(r);
+        Bundle signals = new Bundle();
+        signals.putCharSequence(Adjustment.KEY_SUMMARIZATION, "hello");
+        Adjustment adjustment = new Adjustment(r.getSbn().getPackageName(), r.getKey(), signals,
+                "", r.getUser().getIdentifier());
+        mBinderService.applyAdjustmentFromAssistant(null, adjustment);
+        waitForIdle();
+        r.applyAdjustments();
+        Mockito.clearInvocations(mRankingHandler);
+
+        // Disable summarization for package
+        mBinderService.setAdjustmentSupportedForPackage(KEY_SUMMARIZATION, mPkg, false);
+        verify(mRankingHandler).requestSort();
+        mService.handleRankingSort();
+
+        assertThat(mService.mNotificationsByKey.get(r.getKey()).getSummarization()).isNull();
     }
 
     @Test
@@ -18659,4 +18714,98 @@ public class NotificationManagerServiceTest extends UiServiceTestCase {
         }
     }
 
+    @Test
+    @EnableFlags({FLAG_NM_SUMMARIZATION})
+    public void testDisableBundleAdjustment_unsummarizesNotifications() throws Exception {
+        NotificationManagerService.WorkerHandler handler = mock(
+                NotificationManagerService.WorkerHandler.class);
+        mService.setHandler(handler);
+        when(mAssistants.isSameUser(any(), anyInt())).thenReturn(true);
+        when(mAssistants.isServiceTokenValidLocked(any())).thenReturn(true);
+        when(mAssistants.isAdjustmentKeyTypeAllowed(anyInt())).thenReturn(true);
+        when(mAssistants.isAdjustmentAllowedForPackage(anyString(), anyString())).thenReturn(true);
+
+        NotificationRecord r = generateNotificationRecord(mTestNotificationChannel, 0, mUserId);
+        mService.addNotification(r);
+        Bundle signals = new Bundle();
+        signals.putCharSequence(Adjustment.KEY_SUMMARIZATION, "hello");
+        Adjustment adjustment = new Adjustment(r.getSbn().getPackageName(), r.getKey(), signals,
+                "", r.getUser().getIdentifier());
+        mBinderService.applyAdjustmentFromAssistant(null, adjustment);
+        waitForIdle();
+        r.applyAdjustments();
+        Mockito.clearInvocations(mRankingHandler);
+
+        // Disable summarization for package
+        mBinderService.disallowAssistantAdjustment(KEY_SUMMARIZATION);
+        verify(mRankingHandler).requestSort();
+        mService.handleRankingSort();
+
+        assertThat(mService.mNotificationsByKey.get(r.getKey()).getSummarization()).isNull();
+    }
+
+    @Test
+    @EnableFlags(FLAG_NOTIFICATION_FORCE_GROUPING)
+    public void clearAll_fromUser_willSendDeleteIntentForCachedSummaries() throws Exception {
+        NotificationRecord n = generateNotificationRecord(
+                mTestNotificationChannel, 1, "group", true);
+        mBinderService.enqueueNotificationWithTag(mPkg, mPkg, "tag",
+                n.getSbn().getId(), n.getSbn().getNotification(), n.getSbn().getUserId());
+        waitForIdle();
+        n = Iterables.getOnlyElement(mService.mNotificationList);
+
+        mService.mNotificationDelegate.onClearAll(mUid, Binder.getCallingPid(), n.getUserId());
+        waitForIdle();
+
+        verify(mGroupHelper).onNotificationRemoved(eq(n), any(), eq(true));
+    }
+
+    @Test
+    @EnableFlags(FLAG_NOTIFICATION_FORCE_GROUPING)
+    public void cancel_fromApp_willNotSendDeleteIntentForCachedSummaries() throws Exception {
+        NotificationRecord n = generateNotificationRecord(
+                mTestNotificationChannel, 1, "group", true);
+        mBinderService.enqueueNotificationWithTag(mPkg, mPkg, "tag",
+                n.getSbn().getId(), n.getSbn().getNotification(), n.getSbn().getUserId());
+        waitForIdle();
+        n = Iterables.getOnlyElement(mService.mNotificationList);
+
+        mBinderService.cancelAllNotifications(mPkg, mUserId);
+        waitForIdle();
+
+        verify(mGroupHelper).onNotificationRemoved(eq(n), any(), eq(false));
+    }
+
+    @Test
+    public void onDisplayRemoveSystemDecorations_cancelToasts() throws RemoteException {
+        final String testPackage = "testPackageName";
+        final INotificationManager service = ((INotificationManager) mService.mService);
+        final IBinder firstExternal = new Binder();
+        final IBinder secondExternal = new Binder();
+        final IBinder firstBuiltin = new Binder();
+        service.enqueueTextToast(testPackage,
+                firstExternal, "First external", TOAST_DURATION,
+                /* isUiContext= */ true, /* displayId= */ 10, /* callback= */ null);
+        service.enqueueTextToast(testPackage,
+                secondExternal, "Second external", TOAST_DURATION,
+                /* isUiContext= */ true, /* displayId= */ 10, /* callback= */ null);
+        service.enqueueTextToast(testPackage,
+                firstBuiltin, "First built-in", TOAST_DURATION, /* isUiContext= */ true,
+                /* displayId= */ DEFAULT_DISPLAY, /* callback= */ null);
+
+        mInternalService.onDisplayRemoveSystemDecorations(10);
+
+        verify(mStatusBar).showToast(anyInt(), eq(testPackage), eq(firstExternal),
+                any(String.class), any(IBinder.class), anyInt(), any(), eq(10));
+        verify(mStatusBar).hideToast(eq(testPackage), eq(firstExternal));
+        // The second toast has not been shown but invokes hide() anyway as
+        // NotificationManagerService does not remembered if it invoked show().
+        verify(mStatusBar, never()).showToast(anyInt(), eq(testPackage), eq(secondExternal),
+                any(String.class), any(IBinder.class), anyInt(), any(), eq(10));
+        verify(mStatusBar).hideToast(eq(testPackage), eq(secondExternal));
+        // The toast on the default display is shown as other notifications are cancelled.
+        verify(mStatusBar).showToast(anyInt(), eq(testPackage), eq(firstBuiltin), any(String.class),
+                any(IBinder.class), anyInt(), any(), eq(DEFAULT_DISPLAY));
+        verify(mStatusBar, never()).hideToast(eq(testPackage), eq(firstBuiltin));
+    }
 }

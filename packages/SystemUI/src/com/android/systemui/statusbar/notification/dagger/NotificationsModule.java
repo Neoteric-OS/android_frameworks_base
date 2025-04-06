@@ -37,6 +37,8 @@ import com.android.systemui.statusbar.NotificationListener;
 import com.android.systemui.statusbar.notification.NotificationActivityStarter;
 import com.android.systemui.statusbar.notification.NotificationLaunchAnimatorControllerProvider;
 import com.android.systemui.statusbar.notification.VisibilityLocationProvider;
+import com.android.systemui.statusbar.notification.collection.EntryAdapterFactory;
+import com.android.systemui.statusbar.notification.collection.EntryAdapterFactoryImpl;
 import com.android.systemui.statusbar.notification.collection.NotifInflaterImpl;
 import com.android.systemui.statusbar.notification.collection.NotifLiveDataStore;
 import com.android.systemui.statusbar.notification.collection.NotifLiveDataStoreImpl;
@@ -322,7 +324,7 @@ public interface NotificationsModule {
         if (PromotedNotificationContentModel.featureFlagEnabled()) {
             return implProvider.get();
         } else {
-            return (entry, recoveredBuilder, imageModelProvider) -> null;
+            return (entry, recoveredBuilder, redactionType, imageModelProvider) -> null;
         }
     }
 
@@ -340,4 +342,9 @@ public interface NotificationsModule {
             return MagneticNotificationRowManager.getEmpty();
         }
     }
+
+    /** Provides an instance of {@link EntryAdapterFactory} */
+    @Binds
+    EntryAdapterFactory provideEntryAdapterFactory(EntryAdapterFactoryImpl impl);
+
 }

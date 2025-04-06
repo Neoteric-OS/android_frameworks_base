@@ -386,8 +386,7 @@
     <string name="debug_hw_drawing_category" msgid="5830815169336975162">"Hardware accelerated rendering"</string>
     <string name="media_category" msgid="8122076702526144053">"Media"</string>
     <string name="debug_monitoring_category" msgid="1597387133765424994">"Monitoring"</string>
-    <!-- no translation found for window_management_category (2015535427098365170) -->
-    <skip />
+    <string name="window_management_category" msgid="2015535427098365170">"Window Management"</string>
     <string name="strict_mode" msgid="889864762140862437">"Strict mode enabled"</string>
     <string name="strict_mode_summary" msgid="1838248687233554654">"Flash screen when apps do long operations on main thread"</string>
     <string name="pointer_location" msgid="7516929526199520173">"Pointer location"</string>
@@ -540,6 +539,7 @@
     <string name="disabled_by_app_ops_text" msgid="8373595926549098012">"Controlled by Restricted Setting"</string>
     <string name="disabled_in_phone_call_text" msgid="6568931334337318320">"Unavailable during calls"</string>
     <string name="disabled" msgid="8017887509554714950">"Disabled"</string>
+    <string name="enabled" msgid="3997122818554810678">"Enabled"</string>
     <string name="external_source_trusted" msgid="1146522036773132905">"Allowed"</string>
     <string name="external_source_untrusted" msgid="5037891688911672227">"Not allowed"</string>
     <string name="install_other_apps" msgid="3232595082023199454">"Install unknown apps"</string>
@@ -627,6 +627,7 @@
     <string name="tv_media_transfer_internal_speakers" msgid="4662765121700213785">"Built-in speaker"</string>
     <string name="tv_media_transfer_hdmi_title" msgid="6715658310934507444">"TV Audio"</string>
     <string name="profile_connect_timeout_subtext" msgid="4043408193005851761">"Problem connecting. Turn device off &amp; back on"</string>
+    <string name="bluetooth_key_missing_subtext" msgid="1003639333895028298">"Can’t connect"</string>
     <string name="media_transfer_wired_device_name" msgid="4447880899964056007">"Wired audio device"</string>
     <string name="help_label" msgid="3528360748637781274">"Help and feedback"</string>
     <string name="storage_category" msgid="2287342585424631813">"Storage"</string>

@@ -100,7 +100,6 @@ import com.android.internal.util.XmlUtils;
 import com.android.modules.utils.TypedXmlPullParser;
 import com.android.modules.utils.TypedXmlSerializer;
 import com.android.server.notification.PermissionHelper.PackagePermission;
-import com.android.server.uri.UriGrantsManagerInternal;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -156,6 +155,7 @@ public class PreferencesHelper implements RankingConfig {
     private static final String ATT_VERSION = "version";
     private static final String ATT_NAME = "name";
     private static final String ATT_UID = "uid";
+    private static final String ATT_LAST_BUBBLES_VERSION_UPGRADE = "last_bubbles_version_upgrade";
 
     private static final String ATT_USERID = "userid";
     private static final String ATT_ID = "id";
@@ -227,7 +227,6 @@ public class PreferencesHelper implements RankingConfig {
     private final NotificationChannelLogger mNotificationChannelLogger;
     private final AppOpsManager mAppOps;
     private final ManagedServices.UserProfiles mUserProfiles;
-    private final UriGrantsManagerInternal mUgmInternal;
 
     private SparseBooleanArray mBadgingEnabled;
     private SparseBooleanArray mBubblesEnabled;
@@ -246,7 +245,6 @@ public class PreferencesHelper implements RankingConfig {
             ZenModeHelper zenHelper, PermissionHelper permHelper, PermissionManager permManager,
             NotificationChannelLogger notificationChannelLogger,
             AppOpsManager appOpsManager, ManagedServices.UserProfiles userProfiles,
-            UriGrantsManagerInternal ugmInternal,
             boolean showReviewPermissionsNotification, Clock clock) {
         mContext = context;
         mZenModeHelper = zenHelper;
@@ -257,7 +255,6 @@ public class PreferencesHelper implements RankingConfig {
         mNotificationChannelLogger = notificationChannelLogger;
         mAppOps = appOpsManager;
         mUserProfiles = userProfiles;
-        mUgmInternal = ugmInternal;
         mShowReviewPermissionsNotification = showReviewPermissionsNotification;
         mIsMediaNotificationFilteringEnabled = context.getResources()
                 .getBoolean(R.bool.config_quickSettingsShowMediaPlayer);
@@ -287,7 +284,8 @@ public class PreferencesHelper implements RankingConfig {
         if (!TAG_RANKING.equals(tag)) return;
 
         final int xmlVersion = parser.getAttributeInt(null, ATT_VERSION, -1);
-        boolean upgradeForBubbles = xmlVersion >= XML_VERSION_BUBBLES_UPGRADE;
+        boolean upgradeForBubbles = parser.getAttributeInt(null,
+                ATT_LAST_BUBBLES_VERSION_UPGRADE, -1) < Build.VERSION.SDK_INT;
         boolean migrateToPermission = (xmlVersion < XML_VERSION_NOTIF_PERMISSION);
         if (mShowReviewPermissionsNotification
                 && (xmlVersion < XML_VERSION_REVIEW_PERMISSIONS_NOTIFICATION)) {
@@ -689,6 +687,7 @@ public class PreferencesHelper implements RankingConfig {
     public void writeXml(TypedXmlSerializer out, boolean forBackup, int userId) throws IOException {
         out.startTag(null, TAG_RANKING);
         out.attributeInt(null, ATT_VERSION, XML_VERSION);
+        out.attributeInt(null, ATT_LAST_BUBBLES_VERSION_UPGRADE, Build.VERSION.SDK_INT);
         if (mHideSilentStatusBarIcons != DEFAULT_HIDE_SILENT_STATUS_BAR_ICONS) {
             out.startTag(null, TAG_STATUS_ICONS);
             out.attributeBoolean(null, ATT_HIDE_SILENT, mHideSilentStatusBarIcons);
@@ -1191,11 +1190,6 @@ public class PreferencesHelper implements RankingConfig {
                     channel.setImportantConversation(false);
                 }
                 clearLockedFieldsLocked(channel);
-
-                // Verify that the app has permission to read the sound Uri
-                // Only check for new channels, as regular apps can only set sound
-                // before creating. See: {@link NotificationChannel#setSound}
-                PermissionHelper.grantUriPermission(mUgmInternal, channel.getSound(), uid);
 
                 channel.setImportanceLockedByCriticalDeviceFunction(
                         r.defaultAppLockedImportance || r.fixedImportance);

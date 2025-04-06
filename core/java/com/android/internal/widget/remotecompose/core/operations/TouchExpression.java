@@ -494,7 +494,7 @@ public class TouchExpression extends Operation
         mTouchUpTime = context.getAnimationTime();
 
         float dest = getStopPosition(value, slope);
-        float time = mMaxTime * Math.abs(dest - value) / (2 * mMaxVelocity);
+        float time = Math.min(2, mMaxTime * Math.abs(dest - value) / (2 * mMaxVelocity));
         mEasyTouch.config(value, dest, slope, time, mMaxAcceleration, mMaxVelocity, null);
         mEasingToStop = true;
         context.needsRepaint();
@@ -716,9 +716,9 @@ public class TouchExpression extends Operation
     @Override
     public void serialize(MapSerializer serializer) {
         serializer
-                .add("type", CLASS_NAME)
+                .addType(CLASS_NAME)
                 .add("id", mId)
-                .add("mDefValue", mDefValue, mOutDefValue)
+                .add("defValue", mDefValue, mOutDefValue)
                 .add("min", mMin, mOutMin)
                 .add("max", mMax, mOutMax)
                 .add("mode", mMode)

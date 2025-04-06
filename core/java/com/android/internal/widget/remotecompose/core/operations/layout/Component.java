@@ -27,6 +27,7 @@ import com.android.internal.widget.remotecompose.core.SerializableToString;
 import com.android.internal.widget.remotecompose.core.TouchListener;
 import com.android.internal.widget.remotecompose.core.VariableSupport;
 import com.android.internal.widget.remotecompose.core.WireBuffer;
+import com.android.internal.widget.remotecompose.core.operations.BitmapData;
 import com.android.internal.widget.remotecompose.core.operations.ComponentValue;
 import com.android.internal.widget.remotecompose.core.operations.TextData;
 import com.android.internal.widget.remotecompose.core.operations.TouchExpression;
@@ -57,8 +58,8 @@ public class Component extends PaintOperation
     protected float mHeight;
     @Nullable protected Component mParent;
     protected int mAnimationId = -1;
-    @NonNull public Visibility mVisibility = Visibility.VISIBLE;
-    @NonNull public Visibility mScheduledVisibility = Visibility.VISIBLE;
+    public int mVisibility = Visibility.VISIBLE;
+    public int mScheduledVisibility = Visibility.VISIBLE;
     @NonNull public ArrayList<Operation> mList = new ArrayList<>();
     public PaintOperation mPreTranslate; // todo, can we initialize this here and make it NonNull?
     public boolean mNeedsMeasure = true;
@@ -174,20 +175,25 @@ public class Component extends PaintOperation
                             + mComponentId);
         }
         for (ComponentValue v : mComponentValues) {
-            switch (v.getType()) {
-                case ComponentValue.WIDTH:
-                    context.loadFloat(v.getValueId(), mWidth);
-                    if (DEBUG) {
-                        System.out.println("Updating WIDTH for " + mComponentId + " to " + mWidth);
-                    }
-                    break;
-                case ComponentValue.HEIGHT:
-                    context.loadFloat(v.getValueId(), mHeight);
-                    if (DEBUG) {
-                        System.out.println(
-                                "Updating HEIGHT for " + mComponentId + " to " + mHeight);
-                    }
-                    break;
+            if (context.getMode() == RemoteContext.ContextMode.DATA) {
+                context.loadFloat(v.getValueId(), 1f);
+            } else {
+                switch (v.getType()) {
+                    case ComponentValue.WIDTH:
+                        context.loadFloat(v.getValueId(), mWidth);
+                        if (DEBUG) {
+                            System.out.println(
+                                    "Updating WIDTH for " + mComponentId + " to " + mWidth);
+                        }
+                        break;
+                    case ComponentValue.HEIGHT:
+                        context.loadFloat(v.getValueId(), mHeight);
+                        if (DEBUG) {
+                            System.out.println(
+                                    "Updating HEIGHT for " + mComponentId + " to " + mHeight);
+                        }
+                        break;
+                }
             }
         }
     }
@@ -288,22 +294,42 @@ public class Component extends PaintOperation
     }
 
     /**
-     * Returns the intrinsic width of the layout
+     * Returns the min intrinsic width of the layout
      *
      * @param context
      * @return the width in pixels
      */
-    public float intrinsicWidth(@Nullable RemoteContext context) {
+    public float minIntrinsicWidth(@Nullable RemoteContext context) {
         return getWidth();
     }
 
     /**
-     * Returns the intrinsic height of the layout
+     * Returns the max intrinsic width of the layout
+     *
+     * @param context
+     * @return the width in pixels
+     */
+    public float maxIntrinsicWidth(@Nullable RemoteContext context) {
+        return getWidth();
+    }
+
+    /**
+     * Returns the min intrinsic height of the layout
      *
      * @param context
      * @return the height in pixels
      */
-    public float intrinsicHeight(@Nullable RemoteContext context) {
+    public float minIntrinsicHeight(@Nullable RemoteContext context) {
+        return getHeight();
+    }
+
+    /**
+     * Returns the max intrinsic height of the layout
+     *
+     * @param context
+     * @return the height in pixels
+     */
+    public float maxIntrinsicHeight(@Nullable RemoteContext context) {
         return getHeight();
     }
 
@@ -338,10 +364,119 @@ public class Component extends PaintOperation
         // Nothing here
     }
 
-    public enum Visibility {
-        GONE,
-        VISIBLE,
-        INVISIBLE
+    public static class Visibility {
+
+        public static final int GONE = 0;
+        public static final int VISIBLE = 1;
+        public static final int INVISIBLE = 2;
+        public static final int OVERRIDE_GONE = 16;
+        public static final int OVERRIDE_VISIBLE = 32;
+        public static final int OVERRIDE_INVISIBLE = 64;
+        public static final int CLEAR_OVERRIDE = 128;
+
+        /**
+         * Returns a string representation of the field
+         *
+         * @param value
+         * @return
+         */
+        public static String toString(int value) {
+            switch (value) {
+                case GONE:
+                    return "GONE";
+                case VISIBLE:
+                    return "VISIBLE";
+                case INVISIBLE:
+                    return "INVISIBLE";
+            }
+            if ((value >> 4) > 0) {
+                if ((value & OVERRIDE_GONE) == OVERRIDE_GONE) {
+                    return "OVERRIDE_GONE";
+                }
+                if ((value & OVERRIDE_VISIBLE) == OVERRIDE_VISIBLE) {
+                    return "OVERRIDE_VISIBLE";
+                }
+                if ((value & OVERRIDE_INVISIBLE) == OVERRIDE_INVISIBLE) {
+                    return "OVERRIDE_INVISIBLE";
+                }
+            }
+            return "" + value;
+        }
+
+        /**
+         * Returns true if gone
+         *
+         * @param value
+         * @return
+         */
+        public static boolean isGone(int value) {
+            if ((value >> 4) > 0) {
+                return (value & OVERRIDE_GONE) == OVERRIDE_GONE;
+            }
+            return value == GONE;
+        }
+
+        /**
+         * Returns true if visible
+         *
+         * @param value
+         * @return
+         */
+        public static boolean isVisible(int value) {
+            if ((value >> 4) > 0) {
+                return (value & OVERRIDE_VISIBLE) == OVERRIDE_VISIBLE;
+            }
+            return value == VISIBLE;
+        }
+
+        /**
+         * Returns true if invisible
+         *
+         * @param value
+         * @return
+         */
+        public static boolean isInvisible(int value) {
+            if ((value >> 4) > 0) {
+                return (value & OVERRIDE_INVISIBLE) == OVERRIDE_INVISIBLE;
+            }
+            return value == INVISIBLE;
+        }
+
+        /**
+         * Returns true if the field has an override
+         *
+         * @param value
+         * @return
+         */
+        public static boolean hasOverride(int value) {
+            return (value >> 4) > 0;
+        }
+
+        /**
+         * Clear the override values
+         *
+         * @param value
+         * @return
+         */
+        public static int clearOverride(int value) {
+            return value & 15;
+        }
+
+        /**
+         * Add an override value
+         *
+         * @param value
+         * @param visibility
+         * @return
+         */
+        public static int add(int value, int visibility) {
+            int v = value & 15;
+            v += visibility;
+            if ((v & CLEAR_OVERRIDE) == CLEAR_OVERRIDE) {
+                v = v & 15;
+            }
+            return v;
+        }
     }
 
     /**
@@ -350,13 +485,28 @@ public class Component extends PaintOperation
      * @return
      */
     public boolean isVisible() {
-        if (mVisibility != Visibility.VISIBLE || mParent == null) {
-            return mVisibility == Visibility.VISIBLE;
+        if (mParent == null || !Visibility.isVisible(mVisibility)) {
+            return Visibility.isVisible(mVisibility);
         }
-        if (mParent != null) { // TODO: this is always true -- bbade@
-            return mParent.isVisible();
-        }
-        return true;
+        return mParent.isVisible();
+    }
+
+    /**
+     * Returns true if the component is gone
+     *
+     * @return
+     */
+    public boolean isGone() {
+        return Visibility.isGone(mVisibility);
+    }
+
+    /**
+     * Returns true if the component is invisible
+     *
+     * @return
+     */
+    public boolean isInvisible() {
+        return Visibility.isInvisible(mVisibility);
     }
 
     /**
@@ -364,7 +514,7 @@ public class Component extends PaintOperation
      *
      * @param visibility can be VISIBLE, INVISIBLE or GONE
      */
-    public void setVisibility(@NonNull Visibility visibility) {
+    public void setVisibility(int visibility) {
         if (visibility != mVisibility || visibility != mScheduledVisibility) {
             mScheduledVisibility = visibility;
             invalidateMeasure();
@@ -412,6 +562,7 @@ public class Component extends PaintOperation
         ComponentMeasure m = measure.get(this);
         if (!mFirstLayout
                 && context.isAnimationEnabled()
+                && mAnimationSpec.isAnimationEnabled()
                 && !(this instanceof LayoutComponentContent)) {
             if (mAnimateMeasure == null) {
                 ComponentMeasure origin =
@@ -678,13 +829,25 @@ public class Component extends PaintOperation
      *
      * @param value a 2 dimension float array that will receive the horizontal and vertical position
      *     of the component.
+     * @param forSelf whether the location is for this container or a child, relevant for scrollable
+     *     items.
      */
-    public void getLocationInWindow(@NonNull float[] value) {
+    public void getLocationInWindow(@NonNull float[] value, boolean forSelf) {
         value[0] += mX;
         value[1] += mY;
         if (mParent != null) {
-            mParent.getLocationInWindow(value);
+            mParent.getLocationInWindow(value, false);
         }
+    }
+
+    /**
+     * Returns the location of the component relative to the root component
+     *
+     * @param value a 2 dimension float array that will receive the horizontal and vertical position
+     *     of the component.
+     */
+    public void getLocationInWindow(@NonNull float[] value) {
+        getLocationInWindow(value, true);
     }
 
     @NonNull
@@ -705,7 +868,7 @@ public class Component extends PaintOperation
                 + "] "
                 + textContent()
                 + " Visibility ("
-                + mVisibility
+                + Visibility.toString(mVisibility)
                 + ") ";
     }
 
@@ -732,7 +895,7 @@ public class Component extends PaintOperation
                         + ", "
                         + mHeight
                         + "] "
-                        + mVisibility;
+                        + Visibility.toString(mVisibility);
         //        + " [" + mNeedsMeasure + ", " + mNeedsRepaint + "]"
         serializer.append(indent, content);
     }
@@ -966,7 +1129,7 @@ public class Component extends PaintOperation
         if (applyAnimationAsNeeded(context)) {
             return;
         }
-        if (mVisibility == Visibility.GONE || mVisibility == Visibility.INVISIBLE) {
+        if (isGone() || isInvisible()) {
             return;
         }
         paintingComponent(context);
@@ -985,26 +1148,15 @@ public class Component extends PaintOperation
         }
     }
 
-    /** Extract CanvasOperations if present */
-    public @Nullable CanvasOperations getCanvasOperations(LayoutComponent layoutComponent) {
-        for (Operation op : mList) {
-            if (op instanceof CanvasOperations) {
-                ((CanvasOperations) op).setComponent(layoutComponent);
-                return (CanvasOperations) op;
-            }
-        }
-        return null;
-    }
-
     /**
-     * Extract child TextData elements
+     * Extract child Data elements
      *
-     * @param data an ArrayList that will be populated with the TextData elements (if any)
+     * @param data an ArrayList that will be populated with the Data elements (if any)
      */
-    public void getData(@NonNull ArrayList<TextData> data) {
+    public void getData(@NonNull ArrayList<Operation> data) {
         for (Operation op : mList) {
-            if (op instanceof TextData) {
-                data.add((TextData) op);
+            if (op instanceof TextData || op instanceof BitmapData) {
+                data.add(op);
             }
         }
     }
@@ -1071,13 +1223,13 @@ public class Component extends PaintOperation
     @Override
     public void serialize(MapSerializer serializer) {
         serializer.addTags(SerializeTags.COMPONENT);
-        serializer.add("type", getSerializedName());
+        serializer.addType(getSerializedName());
         serializer.add("id", mComponentId);
         serializer.add("x", mX);
         serializer.add("y", mY);
         serializer.add("width", mWidth);
         serializer.add("height", mHeight);
-        serializer.add("visibility", mVisibility);
+        serializer.add("visibility", Visibility.toString(mVisibility));
         serializer.add("list", mList);
     }
 

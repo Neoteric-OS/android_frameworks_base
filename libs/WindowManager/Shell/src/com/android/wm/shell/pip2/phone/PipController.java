@@ -31,7 +31,10 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Debug;
+import android.util.Log;
 import android.view.SurfaceControl;
+import android.window.DesktopExperienceFlags;
 import android.window.DisplayAreaInfo;
 import android.window.WindowContainerTransaction;
 
@@ -41,7 +44,6 @@ import androidx.annotation.Nullable;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.protolog.ProtoLog;
 import com.android.internal.util.Preconditions;
-import com.android.window.flags.Flags;
 import com.android.wm.shell.R;
 import com.android.wm.shell.ShellTaskOrganizer;
 import com.android.wm.shell.common.DisplayChangeController;
@@ -238,7 +240,10 @@ public class PipController implements ConfigurationChangeListener,
             @Override
             public void onActivityRestartAttempt(ActivityManager.RunningTaskInfo task,
                     boolean homeTaskVisible, boolean clearedTask, boolean wasVisible) {
-                if (task.getWindowingMode() != WINDOWING_MODE_PINNED) {
+                ProtoLog.d(ShellProtoLogGroup.WM_SHELL_PICTURE_IN_PICTURE,
+                        "onActivityRestartAttempt: topActivity=%s, wasVisible=%b",
+                        task.topActivity, wasVisible);
+                if (task.getWindowingMode() != WINDOWING_MODE_PINNED || !wasVisible) {
                     return;
                 }
                 mPipScheduler.scheduleExitPipViaExpand();
@@ -303,7 +308,8 @@ public class PipController implements ConfigurationChangeListener,
     public void onDisplayRemoved(int displayId) {
         // If PiP was active on an external display that is removed, clean up states and set
         // {@link PipDisplayLayoutState} to DEFAULT_DISPLAY.
-        if (Flags.enableConnectedDisplaysPip() && mPipTransitionState.isInPip()
+        if (DesktopExperienceFlags.ENABLE_CONNECTED_DISPLAYS_PIP.isTrue()
+                && mPipTransitionState.isInPip()
                 && displayId == mPipDisplayLayoutState.getDisplayId()
                 && displayId != DEFAULT_DISPLAY) {
             mPipTransitionState.setState(PipTransitionState.EXITING_PIP);
@@ -336,7 +342,8 @@ public class PipController implements ConfigurationChangeListener,
             mPipDisplayLayoutState.rotateTo(toRotation);
         }
 
-        if (!mPipTransitionState.isInPip()) {
+        if (!mPipTransitionState.isInPip()
+                && mPipTransitionState.getState() != PipTransitionState.ENTERING_PIP) {
             // Skip the PiP-relevant updates if we aren't in a valid PiP state.
             if (mPipTransitionState.isInFixedRotation()) {
                 ProtoLog.e(ShellProtoLogGroup.WM_SHELL_TRANSITIONS,
@@ -345,7 +352,6 @@ public class PipController implements ConfigurationChangeListener,
             return;
         }
 
-        mPipTouchHandler.updateMinMaxSize(mPipBoundsState.getAspectRatio());
         mPipMenuController.hideMenu();
 
         if (mPipTransitionState.isInFixedRotation()) {
@@ -365,7 +371,15 @@ public class PipController implements ConfigurationChangeListener,
             mPipBoundsAlgorithm.applySnapFraction(toBounds, snapFraction);
             mPipBoundsState.setBounds(toBounds);
         }
-        t.setBounds(mPipTransitionState.getPipTaskToken(), mPipBoundsState.getBounds());
+        if (mPipTransitionState.getPipTaskToken() == null) {
+            Log.wtf(TAG, "PipController.onDisplayChange no PiP task token"
+                    + " state=" + mPipTransitionState.getState()
+                    + " callers=\n" + Debug.getCallers(4, "    "));
+        } else {
+            t.setBounds(mPipTransitionState.getPipTaskToken(), mPipBoundsState.getBounds());
+        }
+        // Update the size spec in PipBoundsState afterwards.
+        mPipBoundsState.updateMinMaxSize(mPipBoundsState.getAspectRatio());
     }
 
     private void setDisplayLayout(DisplayLayout layout) {
@@ -384,7 +398,7 @@ public class PipController implements ConfigurationChangeListener,
 
         // If PiP is enabled on Connected Displays, update PipDisplayLayoutState to have the correct
         // display info that PiP is entering in.
-        if (Flags.enableConnectedDisplaysPip()) {
+        if (DesktopExperienceFlags.ENABLE_CONNECTED_DISPLAYS_PIP.isTrue()) {
             final DisplayLayout displayLayout = mDisplayController.getDisplayLayout(displayId);
             if (displayLayout != null) {
                 mPipDisplayLayoutState.setDisplayId(displayId);

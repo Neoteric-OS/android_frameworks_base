@@ -25,22 +25,28 @@ import com.android.systemui.animation.GSFAxes
 import com.android.systemui.customization.R
 import com.android.systemui.plugins.clocks.AlarmData
 import com.android.systemui.plugins.clocks.ClockAnimations
+import com.android.systemui.plugins.clocks.ClockAxisStyle
 import com.android.systemui.plugins.clocks.ClockEvents
 import com.android.systemui.plugins.clocks.ClockFaceConfig
 import com.android.systemui.plugins.clocks.ClockFaceController
 import com.android.systemui.plugins.clocks.ClockFaceEvents
 import com.android.systemui.plugins.clocks.ClockFaceLayout
-import com.android.systemui.plugins.clocks.ClockFontAxisSetting
+import com.android.systemui.plugins.clocks.ClockFontAxis.Companion.merge
 import com.android.systemui.plugins.clocks.DefaultClockFaceLayout
 import com.android.systemui.plugins.clocks.ThemeConfig
 import com.android.systemui.plugins.clocks.WeatherData
 import com.android.systemui.plugins.clocks.ZenData
+import com.android.systemui.shared.clocks.FlexClockController.Companion.getDefaultAxes
+import com.android.systemui.shared.clocks.FontUtils.get
+import com.android.systemui.shared.clocks.FontUtils.set
+import com.android.systemui.shared.clocks.ViewUtils.computeLayoutDiff
 import com.android.systemui.shared.clocks.view.FlexClockView
 import com.android.systemui.shared.clocks.view.HorizontalAlignment
 import com.android.systemui.shared.clocks.view.VerticalAlignment
 import java.util.Locale
 import java.util.TimeZone
 import kotlin.math.max
+import kotlin.math.roundToInt
 
 // TODO(b/364680879): Merge w/ ComposedDigitalLayerController
 class FlexClockFaceController(clockCtx: ClockContext, private val isLargeClock: Boolean) :
@@ -127,22 +133,6 @@ class FlexClockFaceController(clockCtx: ClockContext, private val isLargeClock: 
             layerController.faceEvents.onThemeChanged(theme)
         }
 
-        override fun onFontAxesChanged(settings: List<ClockFontAxisSetting>) {
-            var axes = settings
-            if (!isLargeClock) {
-                axes =
-                    axes.map { axis ->
-                        if (axis.key == GSFAxes.WIDTH && axis.value > SMALL_CLOCK_MAX_WDTH) {
-                            axis.copy(value = SMALL_CLOCK_MAX_WDTH)
-                        } else {
-                            axis
-                        }
-                    }
-            }
-
-            layerController.events.onFontAxesChanged(axes)
-        }
-
         /**
          * targetRegion passed to all customized clock applies counter translationY of Keyguard and
          * keyguard_large_clock_top_margin from default clock
@@ -168,17 +158,17 @@ class FlexClockFaceController(clockCtx: ClockContext, private val isLargeClock: 
                         else targetRegion.height() / maxHeight
 
                     FrameLayout.LayoutParams(
-                        (maxWidth * scale).toInt(),
-                        (maxHeight * scale).toInt(),
+                        (maxWidth * scale).roundToInt(),
+                        (maxHeight * scale).roundToInt(),
                     )
                 }
 
             lp.gravity = Gravity.CENTER
             view.layoutParams = lp
             targetRegion?.let {
-                val (xDiff, yDiff) = computeLayoutDiff(view, it, isLargeClock)
-                view.translationX = xDiff
-                view.translationY = yDiff
+                val diff = view.computeLayoutDiff(it, isLargeClock)
+                view.translationX = diff.x
+                view.translationY = diff.y
             }
         }
 
@@ -235,6 +225,15 @@ class FlexClockFaceController(clockCtx: ClockContext, private val isLargeClock: 
             override fun onFidgetTap(x: Float, y: Float) {
                 layerController.animations.onFidgetTap(x, y)
             }
+
+            override fun onFontAxesChanged(style: ClockAxisStyle) {
+                var axes = ClockAxisStyle(getDefaultAxes(clockCtx.settings).merge(style))
+                if (!isLargeClock && axes[GSFAxes.WIDTH] > SMALL_CLOCK_MAX_WDTH) {
+                    axes[GSFAxes.WIDTH] = SMALL_CLOCK_MAX_WDTH
+                }
+
+                layerController.animations.onFontAxesChanged(axes)
+            }
         }
 
     companion object {
@@ -245,7 +244,7 @@ class FlexClockFaceController(clockCtx: ClockContext, private val isLargeClock: 
                 timespec = DigitalTimespec.TIME_FULL_FORMAT,
                 style = FontTextStyle(fontSizeScale = 0.98f),
                 aodStyle = FontTextStyle(),
-                alignment = DigitalAlignment(HorizontalAlignment.LEFT, VerticalAlignment.CENTER),
+                alignment = DigitalAlignment(HorizontalAlignment.START, VerticalAlignment.CENTER),
                 dateTimeFormat = "h:mm",
             )
     }

@@ -27,7 +27,7 @@ import com.android.systemui.keyguard.ui.transitions.BlurConfig
 import com.android.systemui.keyguard.ui.transitions.DeviceEntryIconTransition
 import com.android.systemui.keyguard.ui.transitions.PrimaryBouncerTransition
 import com.android.systemui.scene.shared.flag.SceneContainerFlag
-import com.android.systemui.scene.shared.model.Scenes
+import com.android.systemui.scene.shared.model.Overlays
 import com.android.systemui.scene.ui.composable.transitions.TO_BOUNCER_FADE_FRACTION
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.milliseconds
@@ -50,7 +50,7 @@ constructor(
         animationFlow
             .setup(
                 duration = FromLockscreenTransitionInteractor.TO_PRIMARY_BOUNCER_DURATION,
-                edge = Edge.create(from = LOCKSCREEN, to = Scenes.Bouncer),
+                edge = Edge.create(from = LOCKSCREEN, to = Overlays.Bouncer),
             )
             .setupWithoutSceneContainer(edge = Edge.create(from = LOCKSCREEN, to = PRIMARY_BOUNCER))
 
@@ -64,8 +64,11 @@ constructor(
 
     val shortcutsAlpha: Flow<Float> =
         transitionAnimation.sharedFlow(
-            duration = FromLockscreenTransitionInteractor.TO_PRIMARY_BOUNCER_DURATION,
+            duration = 200.milliseconds,
             onStep = alphaForAnimationStep,
+            // Rapid swipes to bouncer, and may end up skipping intermediate values that would've
+            // caused a complete fade out of lockscreen elements. Ensure it goes to 0f.
+            onFinish = { 0f },
         )
 
     val lockscreenAlpha: Flow<Float> = shortcutsAlpha

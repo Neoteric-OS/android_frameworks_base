@@ -111,13 +111,13 @@ class ConversationNotificationProcessorTest : SysuiTestCase() {
             .isNotNull()
 
         val processedSummary = nb.build().extras.getCharSequence(EXTRA_SUMMARIZED_CONTENT)
-        assertThat(processedSummary.toString()).isEqualTo("x$summarization")
+        assertThat(processedSummary.toString()).isEqualTo("x $summarization")
 
         val checkSpans = SpannableStringBuilder(processedSummary)
         assertThat(
                 checkSpans.getSpans(
                     /* queryStart = */ 0,
-                    /* queryEnd = */ 1,
+                    /* queryEnd = */ 2,
                     /* kind = */ ImageSpan::class.java,
                 )
             )
@@ -137,9 +137,28 @@ class ConversationNotificationProcessorTest : SysuiTestCase() {
 
     @Test
     @EnableFlags(Flags.FLAG_NM_SUMMARIZATION)
+    fun processNotification_messagingStyleUpdateSummarizationToNull() {
+        val nb = getMessagingNotification()
+        val newRow: ExpandableNotificationRow = testHelper.createRow(nb.build())
+        newRow.entry.setRanking(
+            RankingBuilder(newRow.entry.ranking).setSummarization("hello").build()
+        )
+        assertThat(conversationNotificationProcessor.processNotification(newRow.entry, nb, logger))
+            .isNotNull()
+
+        newRow.entry.setRanking(RankingBuilder(newRow.entry.ranking).setSummarization(null).build())
+
+        assertThat(conversationNotificationProcessor.processNotification(newRow.entry, nb, logger))
+            .isNotNull()
+        assertThat(nb.build().extras.getCharSequence(EXTRA_SUMMARIZED_CONTENT)).isNull()
+    }
+
+    @Test
+    @EnableFlags(Flags.FLAG_NM_SUMMARIZATION)
     fun processNotification_messagingStyleWithoutSummarization() {
         val nb = getMessagingNotification()
         val newRow: ExpandableNotificationRow = testHelper.createRow(nb.build())
+
         assertThat(conversationNotificationProcessor.processNotification(newRow.entry, nb, logger))
             .isNotNull()
         assertThat(nb.build().extras.getCharSequence(EXTRA_SUMMARIZED_CONTENT)).isNull()

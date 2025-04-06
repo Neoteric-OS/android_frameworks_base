@@ -51,13 +51,12 @@ import com.android.systemui.common.ui.view.onLayoutChanged
 import com.android.systemui.common.ui.view.onTouchListener
 import com.android.systemui.customization.R as customR
 import com.android.systemui.deviceentry.domain.interactor.DeviceEntryHapticsInteractor
-import com.android.systemui.keyguard.domain.interactor.KeyguardClockInteractor
 import com.android.systemui.keyguard.shared.model.KeyguardState
 import com.android.systemui.keyguard.ui.view.layout.sections.AodPromotedNotificationSection
 import com.android.systemui.keyguard.ui.viewmodel.BurnInParameters
 import com.android.systemui.keyguard.ui.viewmodel.KeyguardBlueprintViewModel
-import com.android.systemui.keyguard.ui.viewmodel.KeyguardClockViewModel
 import com.android.systemui.keyguard.ui.viewmodel.KeyguardRootViewModel
+import com.android.systemui.keyguard.ui.viewmodel.KeyguardSmartspaceViewModel
 import com.android.systemui.keyguard.ui.viewmodel.OccludingAppDeviceEntryMessageViewModel
 import com.android.systemui.keyguard.ui.viewmodel.TransitionData
 import com.android.systemui.keyguard.ui.viewmodel.ViewStateAccessor
@@ -69,9 +68,9 @@ import com.android.systemui.plugins.FalsingManager
 import com.android.systemui.res.R
 import com.android.systemui.scene.shared.flag.SceneContainerFlag
 import com.android.systemui.shade.domain.interactor.ShadeInteractor
+import com.android.systemui.shared.R as sharedR
 import com.android.systemui.statusbar.CrossFadeHelper
 import com.android.systemui.statusbar.VibratorHelper
-import com.android.systemui.statusbar.phone.ScreenOffAnimationController
 import com.android.systemui.statusbar.phone.StatusBarKeyguardViewManager
 import com.android.systemui.temporarydisplay.ViewPriority
 import com.android.systemui.temporarydisplay.chipbar.ChipbarCoordinator
@@ -88,7 +87,6 @@ import kotlin.math.min
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.DisposableHandle
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 
@@ -103,10 +101,8 @@ object KeyguardRootViewBinder {
         configuration: ConfigurationState,
         occludingAppDeviceEntryMessageViewModel: OccludingAppDeviceEntryMessageViewModel?,
         chipbarCoordinator: ChipbarCoordinator?,
-        screenOffAnimationController: ScreenOffAnimationController,
         shadeInteractor: ShadeInteractor,
-        clockInteractor: KeyguardClockInteractor,
-        clockViewModel: KeyguardClockViewModel,
+        smartspaceViewModel: KeyguardSmartspaceViewModel,
         deviceEntryHapticsInteractor: DeviceEntryHapticsInteractor?,
         vibratorHelper: VibratorHelper?,
         falsingManager: FalsingManager?,
@@ -135,7 +131,10 @@ object KeyguardRootViewBinder {
                         } else if (
                             event.action == MotionEvent.ACTION_UP && !event.isTouchscreenSource()
                         ) {
-                            statusBarKeyguardViewManager?.showBouncer(true)
+                            statusBarKeyguardViewManager?.showBouncer(
+                                true,
+                                "KeyguardRootViewBinder: click on lockscreen",
+                            )
                             consumed = true
                         }
                     }
@@ -188,6 +187,9 @@ object KeyguardRootViewBinder {
                         viewModel.translationY.collect { y ->
                             childViews[burnInLayerId]?.translationY = y
                             childViews[largeClockId]?.translationY = y
+                            if (com.android.systemui.shared.Flags.clockReactiveSmartspaceLayout()) {
+                                childViews[largeClockDateId]?.translationY = y
+                            }
                             childViews[aodPromotedNotificationId]?.translationY = y
                             childViews[aodNotificationIconContainerId]?.translationY = y
                         }
@@ -203,6 +205,7 @@ object KeyguardRootViewBinder {
                                     childViews[aodPromotedNotificationId]?.translationX = px
                                     childViews[aodNotificationIconContainerId]?.translationX = px
                                 }
+
                                 state.isToOrFrom(KeyguardState.GLANCEABLE_HUB) -> {
                                     for ((key, childView) in childViews.entries) {
                                         when (key) {
@@ -212,6 +215,7 @@ object KeyguardRootViewBinder {
                                             deviceEntryIcon -> {
                                                 // Do not move these views
                                             }
+
                                             else -> childView.translationX = px
                                         }
                                     }
@@ -318,7 +322,7 @@ object KeyguardRootViewBinder {
                                 if (isFullyAnyExpanded) {
                                     INVISIBLE
                                 } else {
-                                    View.VISIBLE
+                                    VISIBLE
                                 }
                         }
                     }
@@ -327,7 +331,7 @@ object KeyguardRootViewBinder {
 
                     if (deviceEntryHapticsInteractor != null && vibratorHelper != null) {
                         launch {
-                            deviceEntryHapticsInteractor.playSuccessHaptic.collect {
+                            deviceEntryHapticsInteractor.playSuccessHapticOnDeviceEntry.collect {
                                 if (msdlFeedback()) {
                                     msdlPlayer?.playToken(
                                         MSDLToken.UNLOCK,
@@ -374,16 +378,8 @@ object KeyguardRootViewBinder {
                     if (wallpaperFocalAreaViewModel.hasFocalArea.value) {
                         launch {
                             wallpaperFocalAreaViewModel.wallpaperFocalAreaBounds.collect {
-                                wallpaperFocalAreaBounds ->
-                                wallpaperFocalAreaViewModel.setFocalAreaBounds(
-                                    wallpaperFocalAreaBounds
-                                )
+                                wallpaperFocalAreaViewModel.setFocalAreaBounds(it)
                             }
-                        }
-                        launch {
-                            wallpaperFocalAreaViewModel.wallpaperFocalAreaBounds
-                                .filterNotNull()
-                                .collect { wallpaperFocalAreaViewModel.setFocalAreaBounds(it) }
                         }
                     }
                 }
@@ -394,7 +390,7 @@ object KeyguardRootViewBinder {
                 OnLayoutChange(
                     viewModel,
                     blueprintViewModel,
-                    clockViewModel,
+                    smartspaceViewModel,
                     childViews,
                     burnInParams,
                     Logger(blueprintLog, TAG),
@@ -452,7 +448,7 @@ object KeyguardRootViewBinder {
     private class OnLayoutChange(
         private val viewModel: KeyguardRootViewModel,
         private val blueprintViewModel: KeyguardBlueprintViewModel,
-        private val clockViewModel: KeyguardClockViewModel,
+        private val smartspaceViewModel: KeyguardSmartspaceViewModel,
         private val childViews: Map<Int, View>,
         private val burnInParams: MutableStateFlow<BurnInParameters>,
         private val logger: Logger,
@@ -470,13 +466,17 @@ object KeyguardRootViewBinder {
             oldRight: Int,
             oldBottom: Int,
         ) {
+            val prevSmartspaceVisibility = smartspaceViewModel.bcSmartspaceVisibility.value
+            val smartspaceVisibility = childViews[bcSmartspaceId]?.visibility ?: GONE
+            val smartspaceVisibilityChanged = prevSmartspaceVisibility != smartspaceVisibility
+
             // After layout, ensure the notifications are positioned correctly
             childViews[nsslPlaceholderId]?.let { notificationListPlaceholder ->
                 // Do not update a second time while a blueprint transition is running
                 val transition = blueprintViewModel.currentTransition.value
                 val shouldAnimate = transition != null && transition.config.type.animateNotifChanges
-                if (prevTransition == transition && shouldAnimate) {
-                    logger.w("Skipping; layout during transition")
+                if (prevTransition == transition && shouldAnimate && !smartspaceVisibilityChanged) {
+                    logger.w("Skipping onNotificationContainerBoundsChanged during transition")
                     return
                 }
 
@@ -484,7 +484,7 @@ object KeyguardRootViewBinder {
                 viewModel.onNotificationContainerBoundsChanged(
                     notificationListPlaceholder.top.toFloat(),
                     notificationListPlaceholder.bottom.toFloat(),
-                    animate = shouldAnimate,
+                    animate = (shouldAnimate || smartspaceVisibilityChanged),
                 )
             }
 
@@ -582,6 +582,9 @@ object KeyguardRootViewBinder {
     private val aodPromotedNotificationId = AodPromotedNotificationSection.viewId
     private val aodNotificationIconContainerId = R.id.aod_notification_icon_container
     private val largeClockId = customR.id.lockscreen_clock_view_large
+    private val largeClockDateId = sharedR.id.date_smartspace_view_large
+    private val largeClockWeatherId = sharedR.id.weather_smartspace_view_large
+    private val bcSmartspaceId = sharedR.id.bc_smartspace_view
     private val smallClockId = customR.id.lockscreen_clock_view
     private val indicationArea = R.id.keyguard_indication_area
     private val startButton = R.id.start_button

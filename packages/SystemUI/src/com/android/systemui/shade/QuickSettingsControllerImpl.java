@@ -102,16 +102,18 @@ import com.android.systemui.statusbar.policy.KeyguardStateController;
 import com.android.systemui.statusbar.policy.SplitShadeStateController;
 import com.android.systemui.util.LargeScreenUtils;
 import com.android.systemui.util.kotlin.JavaAdapter;
+import com.android.systemui.utils.windowmanager.WindowManagerProvider;
 
 import dalvik.annotation.optimization.NeverCompile;
+
+import dagger.Lazy;
+
+import kotlin.Unit;
 
 import java.io.PrintWriter;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
-
-import dagger.Lazy;
-import kotlin.Unit;
 
 /** Handles QuickSettings touch handling, expansion and animation state. */
 @SysUISingleton
@@ -298,6 +300,8 @@ public class QuickSettingsControllerImpl implements QuickSettingsController, Dum
     private final Runnable mQsCollapseExpandAction = this::collapseOrExpandQs;
     private final QS.ScrollListener mQsScrollListener = this::onScroll;
 
+    private final WindowManagerProvider mWindowManagerProvider;
+
     @Inject
     public QuickSettingsControllerImpl(
             Lazy<NotificationPanelViewController> panelViewControllerLazy,
@@ -335,7 +339,8 @@ public class QuickSettingsControllerImpl implements QuickSettingsController, Dum
             CastController castController,
             SplitShadeStateController splitShadeStateController,
             Lazy<CommunalTransitionViewModel> communalTransitionViewModelLazy,
-            Lazy<LargeScreenHeaderHelper> largeScreenHeaderHelperLazy
+            Lazy<LargeScreenHeaderHelper> largeScreenHeaderHelperLazy,
+            WindowManagerProvider windowManagerProvider
     ) {
         SceneContainerFlag.assertInLegacyMode();
         mPanelViewControllerLazy = panelViewControllerLazy;
@@ -386,6 +391,8 @@ public class QuickSettingsControllerImpl implements QuickSettingsController, Dum
 
         mLockscreenShadeTransitionController.addCallback(new LockscreenShadeTransitionCallback());
         dumpManager.registerDumpable(this);
+
+        mWindowManagerProvider = windowManagerProvider;
     }
 
     @VisibleForTesting
@@ -531,7 +538,7 @@ public class QuickSettingsControllerImpl implements QuickSettingsController, Dum
      *  on ACTION_DOWN, and safely queried repeatedly thereafter during ACTION_MOVE events.
      */
     void updateGestureInsetsCache() {
-        WindowManager wm = this.mPanelView.getContext().getSystemService(WindowManager.class);
+        WindowManager wm = mWindowManagerProvider.getWindowManager(this.mPanelView.getContext());
         WindowMetrics windowMetrics = wm.getCurrentWindowMetrics();
         mCachedGestureInsets = windowMetrics.getWindowInsets().getInsets(
                 WindowInsets.Type.systemGestures());
@@ -958,6 +965,7 @@ public class QuickSettingsControllerImpl implements QuickSettingsController, Dum
     void setShadeExpansion(float expandedHeight, float expandedFraction) {
         mShadeExpandedHeight = expandedHeight;
         mShadeExpandedFraction = expandedFraction;
+        mMediaHierarchyManager.setShadeExpandedFraction(expandedFraction);
     }
 
     @VisibleForTesting
@@ -2157,6 +2165,8 @@ public class QuickSettingsControllerImpl implements QuickSettingsController, Dum
 
     /** */
     public final class QsFragmentListener implements FragmentHostManager.FragmentListener {
+        private boolean mPreviouslyVisibleMedia = false;
+
         /** */
         @Override
         public void onFragmentViewCreated(String tag, Fragment fragment) {
@@ -2182,7 +2192,12 @@ public class QuickSettingsControllerImpl implements QuickSettingsController, Dum
                     setAnimateNextNotificationBounds(
                             StackStateAnimator.ANIMATION_DURATION_STANDARD, 0);
                     mNotificationStackScrollLayoutController.animateNextTopPaddingChange();
+                    if (QSComposeFragment.isEnabled() && mPreviouslyVisibleMedia && !visible) {
+                        updateHeightsOnShadeLayoutChange();
+                        mPanelViewControllerLazy.get().positionClockAndNotifications();
+                    }
                 }
+                mPreviouslyVisibleMedia = visible;
             });
             mLockscreenShadeTransitionController.setQS(mQs);
             if (QSComposeFragment.isEnabled()) {
@@ -2365,16 +2380,8 @@ public class QuickSettingsControllerImpl implements QuickSettingsController, Dum
             return;
         }
         if (startTracing) {
-            if (mQs != null) {
-                mQs.setQSExpandingOrCollapsing(true);
-            }
-
             monitor.begin(mPanelView, Cuj.CUJ_NOTIFICATION_SHADE_QS_EXPAND_COLLAPSE);
         } else {
-            if (mQs != null) {
-                mQs.setQSExpandingOrCollapsing(false);
-            }
-
             if (wasCancelled) {
                 monitor.cancel(Cuj.CUJ_NOTIFICATION_SHADE_QS_EXPAND_COLLAPSE);
             } else {

@@ -37,6 +37,7 @@ import java.util.function.Supplier;
 public final class PerfettoTrackEventExtra {
     private static final boolean DEBUG = false;
     private static final int DEFAULT_EXTRA_CACHE_SIZE = 5;
+    private static final Builder NO_OP_BUILDER = new Builder(/* extra= */ null, /* isCategoryEnabled= */ false);
     private static final ThreadLocal<PerfettoTrackEventExtra> sTrackEventExtra =
             new ThreadLocal<PerfettoTrackEventExtra>() {
                 @Override
@@ -153,8 +154,8 @@ public final class PerfettoTrackEventExtra {
 
         private Builder mParent;
         private FieldContainer mCurrentContainer;
-        private boolean mIsCategoryEnabled;
 
+        private final boolean mIsCategoryEnabled;
         private final CounterInt64 mCounterInt64;
         private final CounterDouble mCounterDouble;
         private final Proto mProto;
@@ -172,29 +173,32 @@ public final class PerfettoTrackEventExtra {
         private final Pool<FieldDouble> mFieldDoubleCache;
         private final Pool<FieldString> mFieldStringCache;
         private final Pool<FieldNested> mFieldNestedCache;
-        private final Pool<Flow> mFlowCache;
         private final Pool<Builder> mBuilderCache;
 
         private Builder() {
-            mExtra = sTrackEventExtra.get();
-            mNamedTrackCache = mExtra.mNamedTrackCache;
-            mCounterTrackCache = mExtra.mCounterTrackCache;
-            mArgInt64Cache = mExtra.mArgInt64Cache;
-            mArgDoubleCache = mExtra.mArgDoubleCache;
-            mArgBoolCache = mExtra.mArgBoolCache;
-            mArgStringCache = mExtra.mArgStringCache;
-            mFieldInt64Cache = mExtra.mFieldInt64Cache;
-            mFieldDoubleCache = mExtra.mFieldDoubleCache;
-            mFieldStringCache = mExtra.mFieldStringCache;
-            mFieldNestedCache = mExtra.mFieldNestedCache;
-            mFlowCache = mExtra.mFlowCache;
-            mBuilderCache = mExtra.mBuilderCache;
+            this(sTrackEventExtra.get(), true);
+        }
 
-            mCounterInt64 = mExtra.getCounterInt64();
-            mCounterDouble = mExtra.getCounterDouble();
-            mProto = mExtra.getProto();
-            mFlow = mExtra.getFlow();
-            mTerminatingFlow = mExtra.getTerminatingFlow();
+        public Builder(PerfettoTrackEventExtra extra, boolean isCategoryEnabled) {
+            mIsCategoryEnabled = isCategoryEnabled;
+            mExtra = extra;
+            mNamedTrackCache = mExtra == null ? null : mExtra.mNamedTrackCache;
+            mCounterTrackCache = mExtra == null ? null : mExtra.mCounterTrackCache;
+            mArgInt64Cache = mExtra == null ? null : mExtra.mArgInt64Cache;
+            mArgDoubleCache = mExtra == null ? null : mExtra.mArgDoubleCache;
+            mArgBoolCache = mExtra == null ? null : mExtra.mArgBoolCache;
+            mArgStringCache = mExtra == null ? null : mExtra.mArgStringCache;
+            mFieldInt64Cache = mExtra == null ? null : mExtra.mFieldInt64Cache;
+            mFieldDoubleCache = mExtra == null ? null : mExtra.mFieldDoubleCache;
+            mFieldStringCache = mExtra == null ? null : mExtra.mFieldStringCache;
+            mFieldNestedCache = mExtra == null ? null : mExtra.mFieldNestedCache;
+            mBuilderCache = mExtra == null ? null : mExtra.mBuilderCache;
+
+            mCounterInt64 = mExtra == null ? null : mExtra.getCounterInt64();
+            mCounterDouble = mExtra == null ? null : mExtra.getCounterDouble();
+            mProto = mExtra == null ? null : mExtra.getProto();
+            mFlow = mExtra == null ? null : mExtra.getFlow();
+            mTerminatingFlow = mExtra == null ? null : mExtra.getTerminatingFlow();
         }
 
         /**
@@ -216,9 +220,10 @@ public final class PerfettoTrackEventExtra {
          * Initialize the builder for a new trace event.
          */
         public Builder init(int traceType, PerfettoTrace.Category category) {
-            if (!category.isEnabled()) {
+            if (!mIsCategoryEnabled) {
                 return this;
             }
+
             mTraceType = traceType;
             mCategory = category;
             mEventName = "";
@@ -227,11 +232,10 @@ public final class PerfettoTrackEventExtra {
             mFieldStringCache.reset();
             mFieldNestedCache.reset();
             mBuilderCache.reset();
-            mFlowCache.reset();
 
             mExtra.reset();
             // Reset after on init in case the thread created builders without calling emit
-            return initInternal(this, null, true);
+            return initInternal(this, null);
         }
 
         /**
@@ -325,39 +329,7 @@ public final class PerfettoTrackEventExtra {
         /**
          * Adds a flow with {@code id}.
          */
-        public Builder addFlow(int id) {
-            if (!mIsCategoryEnabled) {
-                return this;
-            }
-            if (DEBUG) {
-                checkParent();
-            }
-            Flow flow = mFlowCache.get(sFlowSupplier);
-            flow.setProcessFlow(id);
-            mExtra.addPerfettoPointer(flow);
-            return this;
-        }
-
-        /**
-         * Adds a terminating flow with {@code id}.
-         */
-        public Builder addTerminatingFlow(int id) {
-            if (!mIsCategoryEnabled) {
-                return this;
-            }
-            if (DEBUG) {
-                checkParent();
-            }
-            Flow flow = mFlowCache.get(sFlowSupplier);
-            flow.setProcessTerminatingFlow(id);
-            mExtra.addPerfettoPointer(flow);
-            return this;
-        }
-
-        /**
-         * Adds a flow with {@code id}.
-         */
-        public Builder setFlow(int id) {
+        public Builder setFlow(long id) {
             if (!mIsCategoryEnabled) {
                 return this;
             }
@@ -372,7 +344,7 @@ public final class PerfettoTrackEventExtra {
         /**
          * Adds a terminating flow with {@code id}.
          */
-        public Builder setTerminatingFlow(int id) {
+        public Builder setTerminatingFlow(long id) {
             if (!mIsCategoryEnabled) {
                 return this;
             }
@@ -567,7 +539,7 @@ public final class PerfettoTrackEventExtra {
             }
             mProto.clearFields();
             mExtra.addPerfettoPointer(mProto);
-            return mBuilderCache.get(sBuilderSupplier).initInternal(this, mProto, true);
+            return mBuilderCache.get(sBuilderSupplier).initInternal(this, mProto);
         }
 
         /**
@@ -598,7 +570,7 @@ public final class PerfettoTrackEventExtra {
             FieldNested field = mFieldNestedCache.get(sFieldNestedSupplier);
             field.setId(id);
             mExtra.addPerfettoPointer(mCurrentContainer, field);
-            return mBuilderCache.get(sBuilderSupplier).initInternal(this, field, true);
+            return mBuilderCache.get(sBuilderSupplier).initInternal(this, field);
         }
 
         /**
@@ -615,11 +587,9 @@ public final class PerfettoTrackEventExtra {
         }
 
 
-        private Builder initInternal(Builder parent, FieldContainer field,
-                boolean isCategoryEnabled) {
+        private Builder initInternal(Builder parent, FieldContainer field) {
             mParent = parent;
             mCurrentContainer = field;
-            mIsCategoryEnabled = isCategoryEnabled;
             mIsBuilt = false;
 
             return this;
@@ -651,9 +621,12 @@ public final class PerfettoTrackEventExtra {
     /**
      * Start a {@link Builder} to build a {@link PerfettoTrackEventExtra}.
      */
-    public static Builder builder() {
-        return sTrackEventExtra.get().mBuilderCache.get(sBuilderSupplier).initInternal(null, null,
-            false);
+    public static Builder builder(boolean isCategoryEnabled) {
+        if (isCategoryEnabled) {
+            return sTrackEventExtra.get().mBuilderCache.get(sBuilderSupplier)
+                .initInternal(null, null);
+        }
+        return NO_OP_BUILDER;
     }
 
     private final RingBuffer<NamedTrack> mNamedTrackCache =
@@ -670,7 +643,6 @@ public final class PerfettoTrackEventExtra {
     private final Pool<FieldDouble> mFieldDoubleCache = new Pool(DEFAULT_EXTRA_CACHE_SIZE);
     private final Pool<FieldString> mFieldStringCache = new Pool(DEFAULT_EXTRA_CACHE_SIZE);
     private final Pool<FieldNested> mFieldNestedCache = new Pool(DEFAULT_EXTRA_CACHE_SIZE);
-    private final Pool<Flow> mFlowCache = new Pool(DEFAULT_EXTRA_CACHE_SIZE);
     private final Pool<Builder> mBuilderCache = new Pool(DEFAULT_EXTRA_CACHE_SIZE);
 
     private static final NativeAllocationRegistry sRegistry =
@@ -713,6 +685,7 @@ public final class PerfettoTrackEventExtra {
     /**
      * Resets the track event extra.
      */
+    @android.ravenwood.annotation.RavenwoodReplace
     public void reset() {
         native_clear_args(mPtr);
         mPendingPointers.clear();
@@ -1341,5 +1314,9 @@ public final class PerfettoTrackEventExtra {
     private Flow getTerminatingFlow$ravenwood() {
         // Tracing currently completely disabled under Ravenwood
         return null;
+    }
+
+    private void reset$ravenwood() {
+        // Tracing currently completely disabled under Ravenwood
     }
 }

@@ -18,7 +18,6 @@ package com.android.systemui.qs.panels.ui.compose
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -41,6 +40,7 @@ import com.android.systemui.res.R
 fun ContentScope.QuickQuickSettings(
     viewModel: QuickQuickSettingsViewModel,
     modifier: Modifier = Modifier,
+    listening: () -> Boolean,
 ) {
 
     val sizedTiles = viewModel.tileViewModels
@@ -51,13 +51,7 @@ fun ContentScope.QuickQuickSettings(
 
     val spans by remember(sizedTiles) { derivedStateOf { sizedTiles.fastMap { it.width } } }
 
-    DisposableEffect(tiles) {
-        val token = Any()
-        tiles.forEach { it.startListening(token) }
-        onDispose { tiles.forEach { it.stopListening(token) } }
-    }
     val columns = viewModel.columns
-    var cellIndex = 0
     Box(modifier = modifier) {
         GridAnchor()
         VerticalSpannedGrid(
@@ -67,21 +61,32 @@ fun ContentScope.QuickQuickSettings(
             spans = spans,
             modifier = Modifier.sysuiResTag("qqs_tile_layout"),
             keys = { sizedTiles[it].tile.spec },
-        ) { spanIndex ->
+        ) { spanIndex, column, isFirstInColumn, isLastInColumn ->
             val it = sizedTiles[spanIndex]
-            val column = cellIndex % columns
-            cellIndex += it.width
-            Tile(
-                tile = it.tile,
-                iconOnly = it.isIcon,
-                modifier = Modifier.element(it.tile.spec.toElementKey(spanIndex)),
-                squishiness = { squishiness },
-                coroutineScope = scope,
-                bounceableInfo = bounceables.bounceableInfo(it, spanIndex, column, columns),
-                tileHapticsViewModelFactoryProvider = viewModel.tileHapticsViewModelFactoryProvider,
-                // There should be no QuickQuickSettings when the details view is enabled.
-                detailsViewModel = null,
-            )
+            Element(it.tile.spec.toElementKey(spanIndex), Modifier) {
+                Tile(
+                    tile = it.tile,
+                    iconOnly = it.isIcon,
+                    squishiness = { squishiness },
+                    coroutineScope = scope,
+                    bounceableInfo =
+                        bounceables.bounceableInfo(
+                            it,
+                            index = spanIndex,
+                            column = column,
+                            columns = columns,
+                            isFirstInRow = isFirstInColumn,
+                            isLastInRow = isLastInColumn,
+                        ),
+                    tileHapticsViewModelFactoryProvider =
+                        viewModel.tileHapticsViewModelFactoryProvider,
+                    // There should be no QuickQuickSettings when the details view is enabled.
+                    detailsViewModel = null,
+                    isVisible = listening,
+                )
+            }
         }
     }
+
+    TileListener(tiles, listening)
 }

@@ -27,12 +27,14 @@ import com.android.internal.widget.remotecompose.core.PaintOperation;
 import com.android.internal.widget.remotecompose.core.RemoteContext;
 import com.android.internal.widget.remotecompose.core.WireBuffer;
 import com.android.internal.widget.remotecompose.core.documentation.DocumentationBuilder;
+import com.android.internal.widget.remotecompose.core.serialize.MapSerializer;
 import com.android.internal.widget.remotecompose.core.types.LongConstant;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /** Operation to perform time related calculation */
@@ -82,6 +84,9 @@ public class TimeAttribute extends PaintOperation {
 
     /** the year */
     public static final short TIME_YEAR = 12;
+
+    /** (value - doc_load_time) * 1E-3 */
+    public static final short TIME_FROM_LOAD_SEC = 14;
 
     /**
      * creates a new operation
@@ -224,6 +229,7 @@ public class TimeAttribute extends PaintOperation {
         int val = mType & 255;
         int flags = mType >> 8;
         RemoteContext ctx = context.getContext();
+        long load_time = ctx.getDocLoadTime();
         LongConstant longConstant = (LongConstant) ctx.getObject(mTimeId);
         long value = longConstant.getValue();
         long delta = 0;
@@ -260,10 +266,12 @@ public class TimeAttribute extends PaintOperation {
             case TIME_FROM_NOW_SEC:
             case TIME_FROM_ARG_SEC:
                 ctx.loadFloat(mId, (delta) * 1E-3f);
+                ctx.needsRepaint();
                 break;
             case TIME_FROM_ARG_MIN:
             case TIME_FROM_NOW_MIN:
                 ctx.loadFloat(mId, (float) (delta * 1E-3 / 60));
+                ctx.needsRepaint();
                 break;
             case TIME_FROM_ARG_HR:
             case TIME_FROM_NOW_HR:
@@ -273,7 +281,7 @@ public class TimeAttribute extends PaintOperation {
                 ctx.loadFloat(mId, time.getSecond());
                 break;
             case TIME_IN_MIN:
-                ctx.loadFloat(mId, time.getDayOfMonth());
+                ctx.loadFloat(mId, time.getMinute());
                 break;
             case TIME_IN_HR:
                 ctx.loadFloat(mId, time.getHour());
@@ -290,6 +298,56 @@ public class TimeAttribute extends PaintOperation {
             case TIME_YEAR:
                 ctx.loadFloat(mId, time.getYear());
                 break;
+            case TIME_FROM_LOAD_SEC:
+                ctx.loadFloat(mId, (value - load_time) * 1E-3f);
+                ctx.needsRepaint();
+                break;
+        }
+    }
+
+    @Override
+    public void serialize(MapSerializer serializer) {
+        serializer
+                .addType(CLASS_NAME)
+                .add("id", mId)
+                .add("timeId", mTimeId)
+                .addType(getTypeString())
+                .add("args", Collections.singletonList(mArgs));
+    }
+
+    private String getTypeString() {
+        int val = mType & 255;
+        switch (val) {
+            case TIME_FROM_NOW_SEC:
+                return "TIME_FROM_NOW_SEC";
+            case TIME_FROM_NOW_MIN:
+                return "TIME_FROM_NOW_MIN";
+            case TIME_FROM_NOW_HR:
+                return "TIME_FROM_NOW_HR";
+            case TIME_FROM_ARG_SEC:
+                return "TIME_FROM_ARG_SEC";
+            case TIME_FROM_ARG_MIN:
+                return "TIME_FROM_ARG_MIN";
+            case TIME_FROM_ARG_HR:
+                return "TIME_FROM_ARG_HR";
+            case TIME_IN_SEC:
+                return "TIME_IN_SEC";
+            case TIME_IN_MIN:
+                return "TIME_IN_MIN";
+            case TIME_IN_HR:
+                return "TIME_IN_HR";
+            case TIME_DAY_OF_MONTH:
+                return "TIME_DAY_OF_MONTH";
+            case TIME_MONTH_VALUE:
+                return "TIME_MONTH_VALUE";
+            case TIME_DAY_OF_WEEK:
+                return "TIME_DAY_OF_WEEK";
+            case TIME_YEAR:
+                return "TIME_YEAR";
+            case TIME_FROM_LOAD_SEC:
+                return "TIME_FROM_LOAD_SEC";
+            default:
+                return "INVALID_TIME_TYPE";
         }
     }
 }

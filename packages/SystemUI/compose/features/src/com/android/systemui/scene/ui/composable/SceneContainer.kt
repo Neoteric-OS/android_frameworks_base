@@ -16,6 +16,7 @@
 
 package com.android.systemui.scene.ui.composable
 
+import android.os.Build
 import androidx.compose.foundation.LocalOverscrollFactory
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
@@ -56,6 +57,7 @@ import com.android.systemui.scene.shared.model.SceneDataSourceDelegator
 import com.android.systemui.scene.shared.model.Scenes
 import com.android.systemui.scene.ui.view.SceneJankMonitor
 import com.android.systemui.scene.ui.viewmodel.SceneContainerViewModel
+import com.android.systemui.shade.ui.composable.OverlayShade
 import com.android.systemui.shade.ui.composable.isFullWidthShade
 import javax.inject.Provider
 
@@ -100,9 +102,13 @@ fun SceneContainer(
         rememberActivated(traceName = "sceneJankMonitor") { sceneJankMonitorFactory.create() }
 
     val hapticFeedback = LocalHapticFeedback.current
+    val shadeExpansionMotion = OverlayShade.rememberShadeExpansionMotion(isFullWidthShade())
     val sceneTransitions =
-        remember(hapticFeedback) {
-            transitionsBuilder.build(viewModel.hapticsViewModel.getRevealHaptics(hapticFeedback))
+        remember(hapticFeedback, shadeExpansionMotion) {
+            transitionsBuilder.build(
+                shadeExpansionMotion,
+                viewModel.hapticsViewModel.getRevealHaptics(hapticFeedback),
+            )
         }
 
     val state =
@@ -245,15 +251,17 @@ fun SceneContainer(
             }
         }
 
-        BottomRightCornerRibbon(
-            content = { Text(text = "flexi\uD83E\uDD43", color = Color.White) },
-            colorSaturation = { viewModel.ribbonColorSaturation },
-            modifier =
-                Modifier.align(Alignment.BottomEnd)
-                    .burnInAware(
-                        viewModel = viewModel.burnIn,
-                        params = rememberBurnIn(viewModel.clock).parameters,
-                    ),
-        )
+        if (Build.IS_ENG) {
+            BottomRightCornerRibbon(
+                content = { Text(text = "flexi\uD83E\uDD43", color = Color.White) },
+                colorSaturation = { viewModel.ribbonColorSaturation },
+                modifier =
+                    Modifier.align(Alignment.BottomEnd)
+                        .burnInAware(
+                            viewModel = viewModel.burnIn,
+                            params = rememberBurnIn(viewModel.clock).parameters,
+                        ),
+            )
+        }
     }
 }

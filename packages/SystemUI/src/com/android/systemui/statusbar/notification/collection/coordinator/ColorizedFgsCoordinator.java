@@ -24,9 +24,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.android.systemui.dagger.qualifiers.Application;
-import com.android.systemui.statusbar.notification.collection.ListEntry;
 import com.android.systemui.statusbar.notification.collection.NotifPipeline;
 import com.android.systemui.statusbar.notification.collection.NotificationEntry;
+import com.android.systemui.statusbar.notification.collection.PipelineEntry;
 import com.android.systemui.statusbar.notification.collection.coordinator.dagger.CoordinatorScope;
 import com.android.systemui.statusbar.notification.collection.listbuilder.pluggable.NotifComparator;
 import com.android.systemui.statusbar.notification.collection.listbuilder.pluggable.NotifPromoter;
@@ -96,12 +96,15 @@ public class ColorizedFgsCoordinator implements Coordinator {
     private final NotifSectioner mNotifSectioner = new NotifSectioner("ColorizedSectioner",
             NotificationPriorityBucketKt.BUCKET_FOREGROUND_SERVICE) {
         @Override
-        public boolean isInSection(ListEntry entry) {
-            NotificationEntry notificationEntry = entry.getRepresentativeEntry();
-            if (notificationEntry != null) {
-                return isRichOngoing(notificationEntry);
+        public boolean isInSection(PipelineEntry entry) {
+            NotificationEntry notifEntry = entry.getRepresentativeEntry();
+            if (notifEntry == null) {
+                return false;
             }
-            return false;
+            if (BundleUtil.Companion.isClassified(notifEntry)) {
+                return false;
+            }
+            return isRichOngoing(notifEntry) || isPromotedNotifChip(notifEntry);
         }
 
         /** get the sort key for any entry in the ongoing section */
@@ -117,7 +120,7 @@ public class ColorizedFgsCoordinator implements Coordinator {
         private final NotifComparator mOngoingComparator = new NotifComparator(
                 "OngoingComparator") {
             @Override
-            public int compare(@NonNull ListEntry o1, @NonNull ListEntry o2) {
+            public int compare(@NonNull PipelineEntry o1, @NonNull PipelineEntry o2) {
                 return Integer.compare(
                         getSortKey(o1.getRepresentativeEntry()),
                         getSortKey(o2.getRepresentativeEntry())
@@ -157,5 +160,11 @@ public class ColorizedFgsCoordinator implements Coordinator {
         Notification notification = entry.getSbn().getNotification();
         return entry.getImportance() > IMPORTANCE_MIN
                 && notification.isStyle(Notification.CallStyle.class);
+    }
+
+    private boolean isPromotedNotifChip(NotificationEntry entry) {
+        return PromotedNotificationUi.isEnabled()
+                && entry.getImportance() > IMPORTANCE_MIN
+                && mOrderedPromotedNotifKeys.contains(entry.getKey());
     }
 }

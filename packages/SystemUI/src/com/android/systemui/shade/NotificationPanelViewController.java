@@ -42,6 +42,8 @@ import static com.android.systemui.statusbar.notification.stack.StackStateAnimat
 import static com.android.systemui.util.DumpUtilsKt.asIndenting;
 import static com.android.systemui.util.kotlin.JavaAdapterKt.collectFlow;
 
+import static kotlinx.coroutines.flow.StateFlowKt.MutableStateFlow;
+
 import static java.lang.Float.isNaN;
 
 import android.animation.Animator;
@@ -57,11 +59,13 @@ import android.graphics.Rect;
 import android.graphics.Region;
 import android.graphics.RenderEffect;
 import android.graphics.Shader;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Trace;
 import android.util.IndentingPrintWriter;
 import android.util.Log;
 import android.util.MathUtils;
+import android.view.Display;
 import android.view.HapticFeedbackConstants;
 import android.view.InputDevice;
 import android.view.MotionEvent;
@@ -95,6 +99,7 @@ import com.android.systemui.Gefingerpoken;
 import com.android.systemui.bouncer.domain.interactor.AlternateBouncerInteractor;
 import com.android.systemui.classifier.Classifier;
 import com.android.systemui.classifier.FalsingCollector;
+import com.android.systemui.common.domain.interactor.SysUIStateDisplaysInteractor;
 import com.android.systemui.dagger.SysUISingleton;
 import com.android.systemui.dagger.qualifiers.DisplayId;
 import com.android.systemui.dagger.qualifiers.Main;
@@ -118,6 +123,7 @@ import com.android.systemui.keyguard.ui.viewmodel.KeyguardTouchHandlingViewModel
 import com.android.systemui.media.controls.domain.pipeline.MediaDataManager;
 import com.android.systemui.media.controls.ui.controller.KeyguardMediaController;
 import com.android.systemui.media.controls.ui.controller.MediaHierarchyManager;
+import com.android.systemui.model.StateChange;
 import com.android.systemui.model.SysUiState;
 import com.android.systemui.navigationbar.NavigationBarController;
 import com.android.systemui.navigationbar.NavigationModeController;
@@ -133,8 +139,10 @@ import com.android.systemui.power.shared.model.WakefulnessModel;
 import com.android.systemui.qs.flags.QSComposeFragment;
 import com.android.systemui.res.R;
 import com.android.systemui.scene.shared.flag.SceneContainerFlag;
+import com.android.systemui.settings.brightness.data.repository.BrightnessMirrorShowingRepository;
 import com.android.systemui.settings.brightness.domain.interactor.BrightnessMirrorShowingInteractor;
 import com.android.systemui.shade.data.repository.FlingInfo;
+import com.android.systemui.shade.data.repository.ShadeDisplaysRepository;
 import com.android.systemui.shade.data.repository.ShadeRepository;
 import com.android.systemui.shade.domain.interactor.ShadeAnimationInteractor;
 import com.android.systemui.shade.shared.flag.ShadeWindowGoesAround;
@@ -199,10 +207,13 @@ import dalvik.annotation.optimization.NeverCompile;
 import com.google.android.msdl.data.model.MSDLToken;
 import com.google.android.msdl.domain.MSDLPlayer;
 
+import dagger.Lazy;
+
 import kotlin.Unit;
 
 import kotlinx.coroutines.CoroutineDispatcher;
 import kotlinx.coroutines.flow.Flow;
+import kotlinx.coroutines.flow.MutableStateFlow;
 import kotlinx.coroutines.flow.StateFlow;
 
 import java.io.PrintWriter;
@@ -216,7 +227,8 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 
 @SysUISingleton
-public final class NotificationPanelViewController implements ShadeSurface, Dumpable {
+public final class NotificationPanelViewController implements
+        ShadeSurface, Dumpable, BrightnessMirrorShowingInteractor {
 
     public static final String TAG = NotificationPanelView.class.getSimpleName();
     private static final boolean DEBUG_LOGCAT = Compile.IS_DEBUG && Log.isLoggable(TAG, Log.DEBUG);
@@ -243,6 +255,8 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
     private static final String COUNTER_PANEL_OPEN_PEEK = "panel_open_peek";
     private static final Rect M_DUMMY_DIRTY_RECT = new Rect(0, 0, 1, 1);
     private static final Rect EMPTY_RECT = new Rect();
+    //TODO(b/394977231) delete this temporary workaround used only by tests
+    private static final boolean DISABLE_LONG_PRESS_EXPAND = Build.HARDWARE.equals("cutf_cvm");
     /**
      * Whether the Shade should animate to reflect Back gesture progress.
      * To minimize latency at runtime, we cache this, else we'd be reading it every time
@@ -389,7 +403,7 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
     /** Whether the notifications are displayed full width (no margins on the side). */
     private boolean mIsFullWidth;
     private boolean mBlockingExpansionForCurrentTouch;
-     // Following variables maintain state of events when input focus transfer may occur.
+    // Following variables maintain state of events when input focus transfer may occur.
     private boolean mExpectingSynthesizedDown;
     private boolean mLastEventSynthesizedDown;
 
@@ -409,6 +423,18 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
             mTrackingHeadsUpListeners = new ArrayList<>();
     private HeadsUpAppearanceController mHeadsUpAppearanceController;
 
+    private final BrightnessMirrorShowingRepository mBrightnessMirrorShowingRepository;
+    /**
+     * This flow would track whether the brightness mirror should be showing, but aware of the
+     * alpha transitions of NPV.
+     *
+     * When the repository flow emits true, this will also emit true (and start the alpha animation
+     * of NPV to go to 0f). However, when the repository emits false, this will first animate the
+     * alpha to 1f, and then emit false. This guarantees that the mirror is always showing while
+     * the alpha of NPV is animating.
+     */
+    private final MutableStateFlow<Boolean> mIsBrightnessMirrorShowing = MutableStateFlow(false);
+
     private int mPanelAlpha;
     private Runnable mPanelAlphaEndAction;
     private final AnimatableProperty mPanelAlphaAnimator = AnimatableProperty.from("panelAlpha",
@@ -426,6 +452,9 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
                 if (mPanelAlphaEndAction != null) {
                     mPanelAlphaEndAction.run();
                 }
+                // Once the animation for the alpha has finished (NPV is visible again), dismiss
+                // the mirror
+                postToView(() -> mIsBrightnessMirrorShowing.setValue(false));
             }).setCustomInterpolator(
                     mPanelAlphaAnimator.getProperty(), Interpolators.ALPHA_IN);
 
@@ -433,7 +462,10 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
     private final MediaDataManager mMediaDataManager;
     @PanelState
     private int mCurrentPanelState = STATE_CLOSED;
+    @Deprecated // Use SysUIStateInteractor instead
     private final SysUiState mSysUiState;
+    private final SysUIStateDisplaysInteractor mSysUIStateDisplaysInteractor;
+    private final Lazy<ShadeDisplaysRepository> mShadeDisplaysRepository;
     private final NotificationShadeDepthController mDepthController;
     private final NavigationBarController mNavigationBarController;
     private final int mDisplayId;
@@ -536,7 +568,6 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
     };
 
     private final ActivityStarter mActivityStarter;
-    private final BrightnessMirrorShowingInteractor mBrightnessMirrorShowingInteractor;
 
     @Nullable
     private RenderEffect mBlurRenderEffect = null;
@@ -591,6 +622,7 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
             ShadeRepository shadeRepository,
             Optional<SysUIUnfoldComponent> unfoldComponent,
             SysUiState sysUiState,
+            SysUIStateDisplaysInteractor sysUIStateDisplaysInteractor,
             KeyguardUnlockAnimationController keyguardUnlockAnimationController,
             KeyguardIndicationController keyguardIndicationController,
             NotificationListContainer notificationListContainer,
@@ -615,8 +647,9 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
             PowerInteractor powerInteractor,
             KeyguardClockPositionAlgorithm keyguardClockPositionAlgorithm,
             MSDLPlayer msdlPlayer,
-            BrightnessMirrorShowingInteractor brightnessMirrorShowingInteractor,
-            BlurConfig blurConfig) {
+            BrightnessMirrorShowingRepository brightnessMirrorShowingRepository,
+            BlurConfig blurConfig,
+            Lazy<ShadeDisplaysRepository> shadeDisplaysRepository) {
         mBlurConfig = blurConfig;
         SceneContainerFlag.assertInLegacyMode();
         keyguardStateController.addCallback(new KeyguardStateController.Callback() {
@@ -724,6 +757,8 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
         mMediaDataManager = mediaDataManager;
         mTapAgainViewController = tapAgainViewController;
         mSysUiState = sysUiState;
+        mSysUIStateDisplaysInteractor = sysUIStateDisplaysInteractor;
+        mShadeDisplaysRepository = shadeDisplaysRepository;
         mKeyguardBypassController = bypassController;
         mUpdateMonitor = keyguardUpdateMonitor;
         mLockscreenShadeTransitionController = lockscreenShadeTransitionController;
@@ -773,7 +808,10 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
                 },
                 mFalsingManager);
         mActivityStarter = activityStarter;
-        mBrightnessMirrorShowingInteractor = brightnessMirrorShowingInteractor;
+        mBrightnessMirrorShowingRepository = brightnessMirrorShowingRepository;
+        mIsBrightnessMirrorShowing.setValue(
+                mBrightnessMirrorShowingRepository.isShowing().getValue()
+        );
         onFinishInflate();
         keyguardUnlockAnimationController.addKeyguardUnlockAnimationListener(
                 new KeyguardUnlockAnimationController.KeyguardUnlockAnimationListener() {
@@ -901,10 +939,30 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
                 mMainDispatcher);
         if (QSComposeFragment.isEnabled()) {
             collectFlow(mView,
-                    mBrightnessMirrorShowingInteractor.isShowing(),
-                    isShowing -> setAlpha(isShowing ? 0 : 255, true)
+                    mBrightnessMirrorShowingRepository.isShowing(),
+                    this::onBrightnessMirrorShowingChanged
             );
         }
+    }
+
+    private void onBrightnessMirrorShowingChanged(boolean isShowing) {
+        if (!mIsBrightnessMirrorShowing.getValue()) {
+            // Immediately set the value of the mirror if we are not showing the mirror, and then
+            // start fading the shade.
+            mIsBrightnessMirrorShowing.setValue(isShowing);
+        }
+        setAlpha(isShowing ? 0 : 255, true);
+    }
+
+    @androidx.annotation.NonNull
+    @Override
+    public StateFlow<Boolean> isShowing() {
+        return mIsBrightnessMirrorShowing;
+    }
+
+    @Override
+    public void setMirrorShowing(boolean showing) {
+        mBrightnessMirrorShowingRepository.setMirrorShowing(showing);
     }
 
     @VisibleForTesting
@@ -939,8 +997,10 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
                         mBlurConfig.getMaxBlurRadiusPx(),
                         Shader.TileMode.CLAMP);
             }
+            debugLog("Applying blur RenderEffect to shade.");
             mView.setRenderEffect(mBlurRenderEffect);
         } else {
+            debugLog("Resetting blur RenderEffect on shade.");
             mView.setRenderEffect(null);
         }
     }
@@ -1793,7 +1853,8 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
         // height - which means user is swiping down. Otherwise shade QS will either not show at all
         // with HUN movement or it will blink when touching HUN initially
         boolean qsShouldExpandWithHeadsUp = !mSplitShadeEnabled
-                || (!mHeadsUpManager.isTrackingHeadsUp() || expandedHeight > mHeadsUpStartHeight);
+                || (!mHeadsUpManager.isTrackingHeadsUp().getValue()
+                || expandedHeight > mHeadsUpStartHeight);
         if (goingBetweenClosedShadeAndExpandedQs && qsShouldExpandWithHeadsUp) {
             float qsExpansionFraction;
             if (mSplitShadeEnabled) {
@@ -2053,7 +2114,7 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
         // motion has the expected speed. We also only want this on non-lockscreen for now.
         if (mSplitShadeEnabled && mBarState == SHADE) {
             boolean transitionFromHeadsUp = (mHeadsUpManager != null
-                    && mHeadsUpManager.isTrackingHeadsUp()) || mExpandingFromHeadsUp;
+                    && mHeadsUpManager.isTrackingHeadsUp().getValue()) || mExpandingFromHeadsUp;
             // heads-up starting height is too close to mSplitShadeFullTransitionDistance and
             // when dragging HUN transition is already 90% complete. It makes shade become
             // immediately visible when starting to drag. We want to set distance so that
@@ -2210,7 +2271,12 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
     @Deprecated
     public void onStatusBarLongPress(MotionEvent event) {
         Log.i(TAG, "Status Bar was long pressed.");
-        ShadeExpandsOnStatusBarLongPress.assertInNewMode();
+        if (DISABLE_LONG_PRESS_EXPAND) {
+            //TODO(b/394977231) delete this temporary workaround used only by tests
+            Log.i(TAG, "Ignoring status Bar long press on virtualized test device.");
+            return;
+        }
+        ShadeExpandsOnStatusBarLongPress.unsafeAssertInNewMode();
         mStatusBarLongPressDowntime = event.getDownTime();
         if (isTracking()) {
             onTrackingStopped(true);
@@ -2658,13 +2724,50 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
             Log.d(TAG, "Updating panel sysui state flags: fullyExpanded="
                     + isFullyExpanded() + " inQs=" + mQsController.getExpanded());
         }
+        if (ShadeWindowGoesAround.isEnabled()) {
+            setPerDisplaySysUIStateFlags();
+        } else {
+            setDefaultDisplayFlags();
+        }
+    }
+
+    private int getShadeDisplayId() {
+        if (ShadeWindowGoesAround.isEnabled()) {
+            var pendingDisplayId =
+                    mShadeDisplaysRepository.get().getPendingDisplayId().getValue();
+            // Use the pendingDisplayId from the repository, *not* the Shade's context.
+            // This ensures correct UI state updates also if this method is called just *before*
+            // the Shade window moves to another display.
+            // The pendingDisplayId is guaranteed to be updated before this method is called.
+            return pendingDisplayId;
+        } else {
+            return Display.DEFAULT_DISPLAY;
+        }
+    }
+
+    private void setPerDisplaySysUIStateFlags() {
+        mSysUIStateDisplaysInteractor.setFlagsExclusivelyToDisplay(
+                getShadeDisplayId(),
+                new StateChange()
+                        .setFlag(SYSUI_STATE_NOTIFICATION_PANEL_VISIBLE,
+                                isPanelExpanded() && !isCollapsing())
+                        .setFlag(SYSUI_STATE_NOTIFICATION_PANEL_EXPANDED,
+                                isFullyExpanded() && !mQsController.getExpanded())
+                        .setFlag(SYSUI_STATE_QUICK_SETTINGS_EXPANDED,
+                                isFullyExpanded() && mQsController.getExpanded())
+        );
+    }
+
+    @Deprecated
+    private void setDefaultDisplayFlags() {
         mSysUiState
                 .setFlag(SYSUI_STATE_NOTIFICATION_PANEL_VISIBLE,
                         isPanelExpanded() && !isCollapsing())
                 .setFlag(SYSUI_STATE_NOTIFICATION_PANEL_EXPANDED,
                         isFullyExpanded() && !mQsController.getExpanded())
                 .setFlag(SYSUI_STATE_QUICK_SETTINGS_EXPANDED,
-                        isFullyExpanded() && mQsController.getExpanded()).commitUpdate(mDisplayId);
+                        isFullyExpanded() && mQsController.getExpanded()).commitUpdate(
+                        mDisplayId);
     }
 
     private void debugLog(String fmt, Object... args) {
@@ -4175,7 +4278,8 @@ public final class NotificationPanelViewController implements ShadeSurface, Dump
                     == AccessibilityNodeInfo.AccessibilityAction.ACTION_SCROLL_FORWARD.getId()
                     || action
                     == AccessibilityNodeInfo.AccessibilityAction.ACTION_SCROLL_UP.getId()) {
-                mStatusBarKeyguardViewManager.showPrimaryBouncer(true);
+                mStatusBarKeyguardViewManager.showPrimaryBouncer(true,
+                        "NotificationPanelViewController#performAccessibilityAction");
                 return true;
             }
             return super.performAccessibilityAction(host, action, args);

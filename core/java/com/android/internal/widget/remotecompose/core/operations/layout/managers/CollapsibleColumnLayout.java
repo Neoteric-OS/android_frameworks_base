@@ -21,12 +21,16 @@ import android.annotation.Nullable;
 import com.android.internal.widget.remotecompose.core.Operation;
 import com.android.internal.widget.remotecompose.core.Operations;
 import com.android.internal.widget.remotecompose.core.PaintContext;
+import com.android.internal.widget.remotecompose.core.RemoteContext;
 import com.android.internal.widget.remotecompose.core.WireBuffer;
 import com.android.internal.widget.remotecompose.core.operations.layout.Component;
+import com.android.internal.widget.remotecompose.core.operations.layout.LayoutComponent;
 import com.android.internal.widget.remotecompose.core.operations.layout.measure.ComponentMeasure;
 import com.android.internal.widget.remotecompose.core.operations.layout.measure.MeasurePass;
 import com.android.internal.widget.remotecompose.core.operations.layout.measure.Size;
+import com.android.internal.widget.remotecompose.core.operations.layout.modifiers.CollapsiblePriorityModifierOperation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CollapsibleColumnLayout extends ColumnLayout {
@@ -134,7 +138,25 @@ public class CollapsibleColumnLayout extends ColumnLayout {
     }
 
     @Override
-    protected boolean hasVerticalIntrinsicDimension() {
+    public float minIntrinsicHeight(@NonNull RemoteContext context) {
+        float height = computeModifierDefinedHeight(context);
+        if (!mChildrenComponents.isEmpty()) {
+            height += mChildrenComponents.get(0).minIntrinsicHeight(context);
+        }
+        return height;
+    }
+
+    @Override
+    public float minIntrinsicWidth(@NonNull RemoteContext context) {
+        float width = computeModifierDefinedWidth(context);
+        if (!mChildrenComponents.isEmpty()) {
+            width += mChildrenComponents.get(0).minIntrinsicWidth(context);
+        }
+        return width;
+    }
+
+    @Override
+    public boolean hasVerticalIntrinsicDimension() {
         return true;
     }
 
@@ -147,29 +169,108 @@ public class CollapsibleColumnLayout extends ColumnLayout {
             boolean verticalWrap,
             @NonNull MeasurePass measure,
             @NonNull Size size) {
-        super.computeWrapSize(
-                context, maxWidth, Float.MAX_VALUE, horizontalWrap, verticalWrap, measure, size);
+        computeVisibleChildren(
+                context, maxWidth, maxHeight, horizontalWrap, verticalWrap, measure, size);
     }
 
     @Override
-    public boolean applyVisibility(
-            float selfWidth, float selfHeight, @NonNull MeasurePass measure) {
-        float childrenWidth = 0f;
-        float childrenHeight = 0f;
-        boolean changedVisibility = false;
-        for (Component child : mChildrenComponents) {
-            ComponentMeasure childMeasure = measure.get(child);
-            if (childMeasure.getVisibility() == Visibility.GONE) {
-                continue;
+    public void computeSize(
+            @NonNull PaintContext context,
+            float minWidth,
+            float maxWidth,
+            float minHeight,
+            float maxHeight,
+            @NonNull MeasurePass measure) {
+        computeVisibleChildren(context, maxWidth, maxHeight, false, false, measure, null);
+    }
+
+    @Override
+    public void internalLayoutMeasure(@NonNull PaintContext context, @NonNull MeasurePass measure) {
+        // if needed, take care of weight calculations
+        super.internalLayoutMeasure(context, measure);
+        // Check again for visibility
+        ComponentMeasure m = measure.get(this);
+        computeVisibleChildren(context, m.getW(), m.getH(), false, false, measure, null);
+    }
+
+    private void computeVisibleChildren(
+            @NonNull PaintContext context,
+            float maxWidth,
+            float maxHeight,
+            boolean horizontalWrap,
+            boolean verticalWrap,
+            @NonNull MeasurePass measure,
+            @Nullable Size size) {
+        int visibleChildren = 0;
+        ComponentMeasure self = measure.get(this);
+        self.addVisibilityOverride(Visibility.OVERRIDE_VISIBLE);
+        float currentMaxHeight = maxHeight;
+        boolean hasPriorities = false;
+        for (Component c : mChildrenComponents) {
+            if (!measure.contains(c.getComponentId())) {
+                // No need to remeasure here if already done
+                if (c instanceof CollapsibleColumnLayout) {
+                    c.measure(context, 0f, maxWidth, 0f, currentMaxHeight, measure);
+                } else {
+                    c.measure(context, 0f, maxWidth, 0f, Float.MAX_VALUE, measure);
+                }
             }
-            if (childrenHeight + childMeasure.getH() > selfHeight) {
-                childMeasure.setVisibility(Visibility.GONE);
-                changedVisibility = true;
-            } else {
-                childrenHeight += childMeasure.getH();
-                childrenWidth = Math.max(childrenWidth, childMeasure.getW());
+
+            ComponentMeasure m = measure.get(c);
+            if (!m.isGone()) {
+                if (size != null) {
+                    size.setWidth(Math.max(size.getWidth(), m.getW()));
+                    size.setHeight(size.getHeight() + m.getH());
+                }
+                visibleChildren++;
+                currentMaxHeight -= m.getH();
+            }
+            if (c instanceof LayoutComponent) {
+                LayoutComponent lc = (LayoutComponent) c;
+                CollapsiblePriorityModifierOperation priority =
+                        lc.selfOrModifier(CollapsiblePriorityModifierOperation.class);
+                if (priority != null) {
+                    hasPriorities = true;
+                }
             }
         }
-        return changedVisibility;
+        if (!mChildrenComponents.isEmpty() && size != null) {
+            size.setHeight(size.getHeight() + (mSpacedBy * (visibleChildren - 1)));
+        }
+
+        float childrenWidth = 0f;
+        float childrenHeight = 0f;
+
+        boolean overflow = false;
+        ArrayList<Component> children = mChildrenComponents;
+        if (hasPriorities) {
+            // TODO: We need to cache this.
+            children =
+                    CollapsiblePriority.sortWithPriorities(
+                            mChildrenComponents, CollapsiblePriority.VERTICAL);
+        }
+        for (Component child : children) {
+            ComponentMeasure childMeasure = measure.get(child);
+            if (overflow || childMeasure.isGone()) {
+                childMeasure.addVisibilityOverride(Visibility.OVERRIDE_GONE);
+                continue;
+            }
+            float childHeight = childMeasure.getH();
+            boolean childDoesNotFits = childrenHeight + childHeight > maxHeight;
+            if (childDoesNotFits) {
+                childMeasure.addVisibilityOverride(Visibility.OVERRIDE_GONE);
+                overflow = true;
+            } else {
+                childrenHeight += childHeight;
+                childrenWidth = Math.max(childrenWidth, childMeasure.getW());
+                visibleChildren++;
+            }
+        }
+        if (verticalWrap && size != null) {
+            size.setHeight(Math.min(maxHeight, childrenHeight));
+        }
+        if (visibleChildren == 0 || (size != null && size.getHeight() <= 0f)) {
+            self.addVisibilityOverride(Visibility.OVERRIDE_GONE);
+        }
     }
 }

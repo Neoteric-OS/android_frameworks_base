@@ -71,7 +71,6 @@ import static android.window.DisplayAreaOrganizer.FEATURE_UNDEFINED;
 
 import static com.android.internal.protolog.WmProtoLogGroups.WM_DEBUG_ANIM;
 import static com.android.internal.protolog.WmProtoLogGroups.WM_DEBUG_SCREEN_ON;
-import static com.android.server.display.feature.flags.Flags.enableDisplayContentModeManagement;
 import static com.android.server.policy.PhoneWindowManager.TOAST_WINDOW_TIMEOUT;
 import static com.android.server.policy.WindowManagerPolicy.TRANSIT_PREVIEW_DONE;
 import static com.android.server.policy.WindowManagerPolicy.WindowManagerFuncs.LID_ABSENT;
@@ -118,6 +117,7 @@ import android.view.InsetsFlags;
 import android.view.InsetsFrameProvider;
 import android.view.InsetsSource;
 import android.view.InsetsState;
+import android.view.PrivacyIndicatorBounds;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewDebug;
@@ -130,6 +130,7 @@ import android.view.WindowManager.LayoutParams;
 import android.view.WindowManagerGlobal;
 import android.view.accessibility.AccessibilityManager;
 import android.window.ClientWindowFrames;
+import android.window.DesktopExperienceFlags;
 import android.window.DesktopModeFlags;
 
 import com.android.internal.R;
@@ -147,6 +148,7 @@ import com.android.internal.view.AppearanceRegion;
 import com.android.internal.widget.PointerLocationView;
 import com.android.server.LocalServices;
 import com.android.server.UiThread;
+import com.android.server.notification.NotificationManagerInternal;
 import com.android.server.policy.WindowManagerPolicy.ScreenOnListener;
 import com.android.server.policy.WindowManagerPolicy.WindowManagerFuncs;
 import com.android.server.statusbar.StatusBarManagerInternal;
@@ -994,7 +996,7 @@ public class DisplayPolicy {
     }
 
     void updateHasNavigationBarIfNeeded() {
-        if (!enableDisplayContentModeManagement()) {
+        if (!DesktopExperienceFlags.ENABLE_DISPLAY_CONTENT_MODE_MANAGEMENT.isTrue()) {
             Slog.e(TAG, "mHasNavigationBar shouldn't be updated when the flag is off.");
         }
 
@@ -2122,18 +2124,47 @@ public class DisplayPolicy {
     }
 
     void notifyDisplayAddSystemDecorations() {
-        mHandler.post(() -> {
+        if (DesktopExperienceFlags.ENABLE_DISPLAY_CONTENT_MODE_MANAGEMENT.isTrue()) {
             final int displayId = getDisplayId();
-            StatusBarManagerInternal statusBar = getStatusBarManagerInternal();
-            if (statusBar != null) {
-                statusBar.onDisplayAddSystemDecorations(displayId);
-            }
-            final WallpaperManagerInternal wpMgr = LocalServices
-                    .getService(WallpaperManagerInternal.class);
-            if (wpMgr != null) {
-                wpMgr.onDisplayAddSystemDecorations(displayId);
-            }
-        });
+            final boolean isSystemDecorationsSupported =
+                    mDisplayContent.isSystemDecorationsSupported();
+            final boolean isHomeSupported = mDisplayContent.isHomeSupported();
+            final boolean eligibleForDesktopMode =
+                    isSystemDecorationsSupported && (mDisplayContent.isDefaultDisplay
+                            || mDisplayContent.allowContentModeSwitch());
+            mHandler.post(() -> {
+                if (isSystemDecorationsSupported) {
+                    StatusBarManagerInternal statusBar = getStatusBarManagerInternal();
+                    if (statusBar != null) {
+                        statusBar.onDisplayAddSystemDecorations(displayId);
+                    }
+                }
+                if (isHomeSupported) {
+                    final WallpaperManagerInternal wpMgr =
+                            LocalServices.getService(WallpaperManagerInternal.class);
+                    if (wpMgr != null) {
+                        wpMgr.onDisplayAddSystemDecorations(displayId);
+                    }
+                }
+                if (eligibleForDesktopMode) {
+                    mService.mDisplayNotificationController.dispatchDesktopModeEligibleChanged(
+                            displayId);
+                }
+            });
+        } else {
+            mHandler.post(() -> {
+                final int displayId = getDisplayId();
+                StatusBarManagerInternal statusBar = getStatusBarManagerInternal();
+                if (statusBar != null) {
+                    statusBar.onDisplayAddSystemDecorations(displayId);
+                }
+                final WallpaperManagerInternal wpMgr = LocalServices
+                        .getService(WallpaperManagerInternal.class);
+                if (wpMgr != null) {
+                    wpMgr.onDisplayAddSystemDecorations(displayId);
+                }
+            });
+        }
     }
 
     void notifyDisplayRemoveSystemDecorations() {
@@ -2148,6 +2179,13 @@ public class DisplayPolicy {
                             LocalServices.getService(WallpaperManagerInternal.class);
                     if (wpMgr != null) {
                         wpMgr.onDisplayRemoveSystemDecorations(displayId);
+                    }
+                    mService.mDisplayNotificationController.dispatchDesktopModeEligibleChanged(
+                            displayId);
+                    final NotificationManagerInternal notificationManager =
+                            LocalServices.getService(NotificationManagerInternal.class);
+                    if (notificationManager != null) {
+                        notificationManager.onDisplayRemoveSystemDecorations(displayId);
                     }
                 });
     }
@@ -2346,6 +2384,8 @@ public class DisplayPolicy {
         }
 
         private static class Cache {
+            static final int TYPE_REGULAR_BARS = WindowInsets.Type.statusBars()
+                    | WindowInsets.Type.navigationBars();
             /**
              * If {@link #mPreserveId} is this value, it is in the middle of updating display
              * configuration before a transition is started. Then the active cache should be used.
@@ -2355,6 +2395,14 @@ public class DisplayPolicy {
             int mPreserveId;
             boolean mActive;
 
+            /**
+             * When display switches, mRegularBarsInsets will assign to mPreservedInsets, and the
+             * insets sources of previous device state will copy to mRegularBarsInsets.
+             */
+            ArrayList<InsetsSource> mPreservedInsets;
+            ArrayList<InsetsSource> mRegularBarsInsets;
+            PrivacyIndicatorBounds mPrivacyIndicatorBounds;
+
             Cache(DisplayContent dc) {
                 mDecorInsets = new DecorInsets(dc);
             }
@@ -2362,6 +2410,17 @@ public class DisplayPolicy {
             boolean canPreserve() {
                 return mPreserveId == ID_UPDATING_CONFIG || mDecorInsets.mDisplayContent
                         .mTransitionController.inTransition(mPreserveId);
+            }
+
+            static ArrayList<InsetsSource> copyRegularBarInsets(InsetsState srcState) {
+                final ArrayList<InsetsSource> state = new ArrayList<>();
+                for (int i = srcState.sourceSize() - 1; i >= 0; i--) {
+                    final InsetsSource source = srcState.sourceAt(i);
+                    if ((source.getType() & TYPE_REGULAR_BARS) != 0) {
+                        state.add(new InsetsSource(source));
+                    }
+                }
+                return state;
             }
         }
     }
@@ -2438,21 +2497,57 @@ public class DisplayPolicy {
     @VisibleForTesting
     void updateCachedDecorInsets() {
         DecorInsets prevCache = null;
+        PrivacyIndicatorBounds privacyIndicatorBounds = null;
         if (mCachedDecorInsets == null) {
             mCachedDecorInsets = new DecorInsets.Cache(mDisplayContent);
         } else {
             prevCache = new DecorInsets(mDisplayContent);
             prevCache.setTo(mCachedDecorInsets.mDecorInsets);
+            privacyIndicatorBounds = mCachedDecorInsets.mPrivacyIndicatorBounds;
+            mCachedDecorInsets.mPreservedInsets = mCachedDecorInsets.mRegularBarsInsets;
         }
         // Set a special id to preserve it before a real id is available from transition.
         mCachedDecorInsets.mPreserveId = DecorInsets.Cache.ID_UPDATING_CONFIG;
         // Cache the current insets.
         mCachedDecorInsets.mDecorInsets.setTo(mDecorInsets);
+        if (com.android.window.flags.Flags.useCachedInsetsForDisplaySwitch()) {
+            mCachedDecorInsets.mRegularBarsInsets = DecorInsets.Cache.copyRegularBarInsets(
+                    mDisplayContent.mDisplayFrames.mInsetsState);
+            mCachedDecorInsets.mPrivacyIndicatorBounds =
+                    mDisplayContent.mCurrentPrivacyIndicatorBounds;
+        } else {
+            mCachedDecorInsets.mRegularBarsInsets = null;
+            mCachedDecorInsets.mPrivacyIndicatorBounds = null;
+        }
         // Switch current to previous cache.
         if (prevCache != null) {
             mDecorInsets.setTo(prevCache);
+            if (privacyIndicatorBounds != null) {
+                mDisplayContent.mCurrentPrivacyIndicatorBounds = privacyIndicatorBounds;
+            }
             mCachedDecorInsets.mActive = true;
         }
+    }
+
+    /**
+     * This returns a new InsetsState with replacing the insets in target device state when the
+     * display is switching (e.g. fold/unfold). Otherwise, it returns the original state. This is
+     * to avoid dispatching old insets source before the insets providers update new insets.
+     */
+    InsetsState replaceInsetsSourcesIfNeeded(InsetsState originalState, boolean copyState) {
+        if (mCachedDecorInsets == null || mCachedDecorInsets.mPreservedInsets == null
+                || !shouldKeepCurrentDecorInsets()) {
+            return originalState;
+        }
+        final ArrayList<InsetsSource> preservedSources = mCachedDecorInsets.mPreservedInsets;
+        final InsetsState state = copyState ? new InsetsState(originalState) : originalState;
+        for (int i = preservedSources.size() - 1; i >= 0; i--) {
+            final InsetsSource cacheSource = preservedSources.get(i);
+            if (state.peekSource(cacheSource.getId()) != null) {
+                state.addSource(new InsetsSource(cacheSource));
+            }
+        }
+        return state;
     }
 
     /**
@@ -2612,7 +2707,7 @@ public class DisplayPolicy {
 
         // Immersive mode confirmation should never affect the system bar visibility, otherwise
         // it will unhide the navigation bar and hide itself.
-        if ((winCandidate.getAttrs().privateFlags
+        if ((winCandidate.mAttrs.privateFlags
                 & PRIVATE_FLAG_IMMERSIVE_CONFIRMATION_WINDOW) != 0) {
             if (mNotificationShade != null && mNotificationShade.canReceiveKeys()) {
                 // Let notification shade control the system bar visibility.
@@ -2789,7 +2884,7 @@ public class DisplayPolicy {
             final int rootDisplayAreaId = root == null ? FEATURE_UNDEFINED : root.mFeatureId;
             // TODO(b/277290737): Move this to the client side, instead of using a proxy.
             callStatusBarSafely(statusBar -> statusBar.immersiveModeChanged(getDisplayId(),
-                        rootDisplayAreaId, isImmersiveMode));
+                        rootDisplayAreaId, isImmersiveMode, win.getWindowType()));
         }
 
         // Show transient bars for panic if needed.
@@ -2880,9 +2975,9 @@ public class DisplayPolicy {
         }
 
         final boolean drawsSystemBars =
-                (win.getAttrs().flags & FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS) != 0;
+                (win.mAttrs.flags & FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS) != 0;
         final boolean forceDrawsSystemBars =
-                (win.getAttrs().privateFlags & PRIVATE_FLAG_FORCE_DRAW_BAR_BACKGROUNDS) != 0;
+                (win.mAttrs.privateFlags & PRIVATE_FLAG_FORCE_DRAW_BAR_BACKGROUNDS) != 0;
 
         return forceDrawsSystemBars || drawsSystemBars;
     }

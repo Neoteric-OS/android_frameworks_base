@@ -18,10 +18,14 @@
 
 package com.android.wm.shell.desktopmode
 
-import android.annotation.DimenRes
 import android.app.ActivityManager.RunningTaskInfo
 import android.app.TaskInfo
-import android.content.Context
+import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
+import android.content.Intent.FLAG_ACTIVITY_MULTIPLE_TASK
+import android.content.pm.ActivityInfo.LAUNCH_MULTIPLE
+import android.content.pm.ActivityInfo.LAUNCH_SINGLE_INSTANCE
+import android.content.pm.ActivityInfo.LAUNCH_SINGLE_INSTANCE_PER_TASK
+import android.content.pm.ActivityInfo.LAUNCH_SINGLE_TASK
 import android.content.pm.ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
 import android.content.pm.ActivityInfo.isFixedOrientationLandscape
 import android.content.pm.ActivityInfo.isFixedOrientationPortrait
@@ -30,7 +34,8 @@ import android.content.res.Configuration.ORIENTATION_PORTRAIT
 import android.graphics.Rect
 import android.os.SystemProperties
 import android.util.Size
-import com.android.wm.shell.R
+import android.window.DesktopModeFlags
+import com.android.wm.shell.ShellTaskOrganizer
 import com.android.wm.shell.common.DisplayController
 import com.android.wm.shell.common.DisplayLayout
 import kotlin.math.ceil
@@ -63,6 +68,7 @@ fun calculateInitialBounds(
     taskInfo: RunningTaskInfo,
     scale: Float = DESKTOP_MODE_INITIAL_BOUNDS_SCALE,
     captionInsets: Int = 0,
+    requestedScreenOrientation: Int? = null,
 ): Rect {
     val screenBounds = Rect(0, 0, displayLayout.width(), displayLayout.height())
     val appAspectRatio = calculateAspectRatio(taskInfo)
@@ -79,12 +85,13 @@ fun calculateInitialBounds(
     }
     val topActivityInfo =
         taskInfo.topActivityInfo ?: return positionInScreen(idealSize, stableBounds)
+    val screenOrientation = requestedScreenOrientation ?: topActivityInfo.screenOrientation
 
     val initialSize: Size =
         when (taskInfo.configuration.orientation) {
             ORIENTATION_LANDSCAPE -> {
                 if (taskInfo.canChangeAspectRatio) {
-                    if (isFixedOrientationPortrait(topActivityInfo.screenOrientation)) {
+                    if (isFixedOrientationPortrait(screenOrientation)) {
                         // For portrait resizeable activities, respect apps fullscreen width but
                         // apply ideal size height.
                         Size(
@@ -98,14 +105,20 @@ fun calculateInitialBounds(
                 } else {
                     // If activity is unresizeable, regardless of orientation, calculate maximum
                     // size (within the ideal size) maintaining original aspect ratio.
-                    maximizeSizeGivenAspectRatio(taskInfo, idealSize, appAspectRatio, captionInsets)
+                    maximizeSizeGivenAspectRatio(
+                        taskInfo,
+                        idealSize,
+                        appAspectRatio,
+                        captionInsets,
+                        screenOrientation,
+                    )
                 }
             }
             ORIENTATION_PORTRAIT -> {
                 val customPortraitWidthForLandscapeApp =
                     screenBounds.width() - (DESKTOP_MODE_LANDSCAPE_APP_PADDING * 2)
                 if (taskInfo.canChangeAspectRatio) {
-                    if (isFixedOrientationLandscape(topActivityInfo.screenOrientation)) {
+                    if (isFixedOrientationLandscape(screenOrientation)) {
                         // For landscape resizeable activities, respect apps fullscreen height and
                         // apply custom app width.
                         Size(
@@ -117,7 +130,7 @@ fun calculateInitialBounds(
                         idealSize
                     }
                 } else {
-                    if (isFixedOrientationLandscape(topActivityInfo.screenOrientation)) {
+                    if (isFixedOrientationLandscape(screenOrientation)) {
                         // For landscape unresizeable activities, apply custom app width to ideal
                         // size and calculate maximum size with this area while maintaining original
                         // aspect ratio.
@@ -126,6 +139,7 @@ fun calculateInitialBounds(
                             Size(customPortraitWidthForLandscapeApp, idealSize.height),
                             appAspectRatio,
                             captionInsets,
+                            screenOrientation,
                         )
                     } else {
                         // For portrait unresizeable activities, calculate maximum size (within the
@@ -135,6 +149,7 @@ fun calculateInitialBounds(
                             idealSize,
                             appAspectRatio,
                             captionInsets,
+                            screenOrientation,
                         )
                     }
                 }
@@ -184,13 +199,16 @@ fun maximizeSizeGivenAspectRatio(
     targetArea: Size,
     aspectRatio: Float,
     captionInsets: Int = 0,
+    requestedScreenOrientation: Int? = null,
 ): Size {
     val targetHeight = targetArea.height - captionInsets
     val targetWidth = targetArea.width
     val finalHeight: Int
     val finalWidth: Int
     // Get orientation either through top activity or task's orientation
-    if (taskInfo.hasPortraitTopActivity()) {
+    val screenOrientation =
+        requestedScreenOrientation ?: taskInfo.topActivityInfo?.screenOrientation
+    if (taskInfo.hasPortraitTopActivity(screenOrientation)) {
         val tempWidth = ceil(targetHeight / aspectRatio).toInt()
         if (tempWidth <= targetWidth) {
             finalHeight = targetHeight
@@ -256,12 +274,55 @@ fun isTaskBoundsEqual(taskBounds: Rect, stableBounds: Rect): Boolean {
     return taskBounds == stableBounds
 }
 
-/** Returns the app header height in desktop mode in pixels. */
-fun getAppHeaderHeight(context: Context): Int =
-    context.resources.getDimensionPixelSize(getAppHeaderHeightId())
+/**
+ * Returns the task bounds a launching task should inherit from an existing running instance.
+ * Returns null if there are no bounds to inherit.
+ */
+fun getInheritedExistingTaskBounds(
+    taskRepository: DesktopRepository,
+    shellTaskOrganizer: ShellTaskOrganizer,
+    task: RunningTaskInfo,
+    deskId: Int,
+): Rect? {
+    if (!DesktopModeFlags.INHERIT_TASK_BOUNDS_FOR_TRAMPOLINE_TASK_LAUNCHES.isTrue) return null
+    val activeTask = taskRepository.getExpandedTasksIdsInDeskOrdered(deskId).firstOrNull()
+    if (activeTask == null) return null
+    val lastTask = shellTaskOrganizer.getRunningTaskInfo(activeTask)
+    val lastTaskTopActivity = lastTask?.topActivity
+    val currentTaskTopActivity = task.topActivity
+    val intentFlags = task.baseIntent.flags
+    val launchMode = task.topActivityInfo?.launchMode ?: LAUNCH_MULTIPLE
+    return when {
+        // No running task activity to inherit bounds from.
+        lastTaskTopActivity == null -> null
+        // No current top activity to set bounds for.
+        currentTaskTopActivity == null -> null
+        // Top task is not an instance of the launching activity, do not inherit its bounds.
+        lastTaskTopActivity.packageName != currentTaskTopActivity.packageName -> null
+        // Top task is an instance of launching activity. Activity will be launching in a new
+        // task with the existing task also being closed. Inherit existing task bounds to
+        // prevent new task jumping.
+        (isLaunchingNewSingleTask(launchMode) && isClosingExitingInstance(intentFlags)) ->
+            lastTask.configuration.windowConfiguration.bounds
+        else -> null
+    }
+}
 
-/** Returns the resource id of the app header height in desktop mode. */
-@DimenRes fun getAppHeaderHeightId(): Int = R.dimen.desktop_mode_freeform_decor_caption_height
+/**
+ * Returns true if the launch mode will result in a single new task being created for the activity.
+ */
+private fun isLaunchingNewSingleTask(launchMode: Int) =
+    launchMode == LAUNCH_SINGLE_TASK ||
+        launchMode == LAUNCH_SINGLE_INSTANCE ||
+        launchMode == LAUNCH_SINGLE_INSTANCE_PER_TASK
+
+/**
+ * Returns true if the intent will result in an existing task instance being closed if a new one
+ * appears.
+ */
+private fun isClosingExitingInstance(intentFlags: Int) =
+    (intentFlags and FLAG_ACTIVITY_CLEAR_TASK) != 0 ||
+        (intentFlags and FLAG_ACTIVITY_MULTIPLE_TASK) == 0
 
 /**
  * Calculates the desired initial bounds for applications in desktop windowing. This is done as a
@@ -303,9 +364,8 @@ fun centerInArea(desiredSize: Size, areaBounds: Rect, leftStart: Int, topStart: 
     return Rect(newLeft, newTop, newRight, newBottom)
 }
 
-private fun TaskInfo.hasPortraitTopActivity(): Boolean {
-    val topActivityScreenOrientation =
-        topActivityInfo?.screenOrientation ?: SCREEN_ORIENTATION_UNSPECIFIED
+private fun TaskInfo.hasPortraitTopActivity(screenOrientation: Int?): Boolean {
+    val topActivityScreenOrientation = screenOrientation ?: SCREEN_ORIENTATION_UNSPECIFIED
     val appBounds = configuration.windowConfiguration.appBounds
 
     return when {

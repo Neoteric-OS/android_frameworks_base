@@ -85,6 +85,7 @@ class BackNavigationController {
     private boolean mShowWallpaper;
     private Runnable mPendingAnimation;
     private final NavigationMonitor mNavigationMonitor = new NavigationMonitor();
+    private RemoteCallback mGestureRequest;
 
     private AnimationHandler mAnimationHandler;
 
@@ -111,6 +112,35 @@ class BackNavigationController {
 
     void onEmbeddedWindowGestureTransferred(@NonNull WindowState host) {
         mNavigationMonitor.onEmbeddedWindowGestureTransferred(host);
+    }
+
+    void registerBackGestureDelegate(@NonNull RemoteCallback requestObserver) {
+        if (!sPredictBackEnable) {
+            return;
+        }
+        synchronized (mWindowManagerService.mGlobalLock) {
+            mGestureRequest = requestObserver;
+            try {
+                requestObserver.getInterface().asBinder().linkToDeath(() -> {
+                    synchronized (mWindowManagerService.mGlobalLock) {
+                        mGestureRequest = null;
+                    }
+                }, 0 /* flags */);
+            } catch (RemoteException r) {
+                Slog.e(TAG, "Failed to link to death");
+                mGestureRequest = null;
+            }
+        }
+    }
+
+    boolean requestBackGesture() {
+        synchronized (mWindowManagerService.mGlobalLock) {
+            if (mGestureRequest == null) {
+                return false;
+            }
+            mGestureRequest.sendResult(null);
+            return true;
+        }
     }
 
     /**
@@ -222,7 +252,7 @@ class BackNavigationController {
                     }
                 }
             }
-            final boolean canInterruptInView = (window.getAttrs().privateFlags
+            final boolean canInterruptInView = (window.mAttrs.privateFlags
                     & PRIVATE_FLAG_APP_PROGRESS_GENERATION_ALLOWED) != 0;
             infoBuilder.setAppProgressAllowed(canInterruptInView && !transferGestureToEmbedded
                     && callbackInfo.isAnimationCallback());
@@ -479,21 +509,16 @@ class BackNavigationController {
                 }
             } else {
                 // If adjacent TF has companion to current TF, those two TF will be closed together.
-                final TaskFragment adjacentTF;
-                if (Flags.allowMultipleAdjacentTaskFragments()) {
-                    if (currTF.getAdjacentTaskFragments().size() > 2) {
-                        throw new IllegalStateException(
-                                "Not yet support 3+ adjacent for non-Task TFs");
-                    }
-                    final TaskFragment[] tmpAdjacent = new TaskFragment[1];
-                    currTF.forOtherAdjacentTaskFragments(tf -> {
-                        tmpAdjacent[0] = tf;
-                        return true;
-                    });
-                    adjacentTF = tmpAdjacent[0];
-                } else {
-                    adjacentTF = currTF.getAdjacentTaskFragment();
+                if (currTF.getAdjacentTaskFragments().size() > 2) {
+                    throw new IllegalStateException(
+                            "Not yet support 3+ adjacent for non-Task TFs");
                 }
+                final TaskFragment[] tmpAdjacent = new TaskFragment[1];
+                currTF.forOtherAdjacentTaskFragments(tf -> {
+                    tmpAdjacent[0] = tf;
+                    return true;
+                });
+                final TaskFragment adjacentTF = tmpAdjacent[0];
                 if (isSecondCompanionToFirst(currTF, adjacentTF)) {
                     // The two TFs are adjacent (visually displayed side-by-side), search if any
                     // activity below the lowest one.
@@ -553,15 +578,6 @@ class BackNavigationController {
         if (!prevTF.hasAdjacentTaskFragment()) {
             return;
         }
-        if (!Flags.allowMultipleAdjacentTaskFragments()) {
-            final TaskFragment prevTFAdjacent = prevTF.getAdjacentTaskFragment();
-            final ActivityRecord prevActivityAdjacent =
-                    prevTFAdjacent.getTopNonFinishingActivity();
-            if (prevActivityAdjacent != null) {
-                outPrevActivities.add(prevActivityAdjacent);
-            }
-            return;
-        }
         prevTF.forOtherAdjacentTaskFragments(prevTFAdjacent -> {
             final ActivityRecord prevActivityAdjacent =
                     prevTFAdjacent.getTopNonFinishingActivity();
@@ -575,14 +591,6 @@ class BackNavigationController {
             @NonNull ArrayList<ActivityRecord> outList) {
         final TaskFragment mainTF = mainActivity.getTaskFragment();
         if (mainTF == null || !mainTF.hasAdjacentTaskFragment()) {
-            return;
-        }
-        if (!Flags.allowMultipleAdjacentTaskFragments()) {
-            final TaskFragment adjacentTF = mainTF.getAdjacentTaskFragment();
-            final ActivityRecord topActivity = adjacentTF.getTopNonFinishingActivity();
-            if (topActivity != null) {
-                outList.add(topActivity);
-            }
             return;
         }
         mainTF.forOtherAdjacentTaskFragments(adjacentTF -> {
@@ -691,8 +699,8 @@ class BackNavigationController {
             return false;
         }
         if (window.mAttrs.windowAnimations != 0) {
-            final TransitionAnimation transitionAnimation = window.getDisplayContent()
-                    .mAppTransition.mTransitionAnimation;
+            final TransitionAnimation transitionAnimation = window.mDisplayContent
+                    .mTransitionAnimation;
             final int attr = com.android.internal.R.styleable
                     .WindowAnimation_activityCloseExitAnimation;
             final int appResId = transitionAnimation.getAnimationResId(
@@ -1552,7 +1560,7 @@ class BackNavigationController {
             }
 
             void createStartingSurface(@Nullable TaskSnapshot snapshot) {
-                if (Flags.deferPredictiveAnimationIfNoSnapshot() && snapshot == null) {
+                if (snapshot == null) {
                     return;
                 }
                 if (mAdaptors[0].mSwitchType == DIALOG_CLOSE) {

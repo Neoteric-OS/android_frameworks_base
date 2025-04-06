@@ -1115,14 +1115,12 @@ abstract class AbstractAccessibilityServiceConnection extends IAccessibilityServ
         if (svcConnTracingEnabled()) {
             logTraceSvcConn("performGlobalAction", "action=" + action);
         }
-        int currentUserId;
         synchronized (mLock) {
             if (!hasRightsToCurrentUserLocked()) {
                 return false;
             }
-            currentUserId = mSystemSupport.getCurrentUserIdLocked();
         }
-        enforceCurrentUserIfVisibleBackgroundEnabled(currentUserId);
+        enforceCurrentUserIfVisibleBackgroundEnabled();
         final long identity = Binder.clearCallingIdentity();
         try {
             return mSystemActionPerformer.performSystemAction(action);
@@ -1944,14 +1942,9 @@ abstract class AbstractAccessibilityServiceConnection extends IAccessibilityServ
     }
 
     public void notifyGesture(AccessibilityGestureEvent gestureEvent) {
-        if (android.view.accessibility.Flags.copyEventsForGestureDetection()) {
-            // We will use this event async, so copy it because it contains MotionEvents.
-            mInvocationHandler.obtainMessage(InvocationHandler.MSG_ON_GESTURE,
-                    gestureEvent.copyForAsync()).sendToTarget();
-        } else {
-            mInvocationHandler.obtainMessage(InvocationHandler.MSG_ON_GESTURE,
-                    gestureEvent).sendToTarget();
-        }
+        // We will use this event async, so copy it because it contains MotionEvents.
+        mInvocationHandler.obtainMessage(InvocationHandler.MSG_ON_GESTURE,
+                gestureEvent.copyForAsync()).sendToTarget();
     }
 
     public void notifySystemActionsChangedLocked() {
@@ -2428,9 +2421,7 @@ abstract class AbstractAccessibilityServiceConnection extends IAccessibilityServ
                 case MSG_ON_GESTURE: {
                     if (message.obj instanceof AccessibilityGestureEvent gesture) {
                         notifyGestureInternal(gesture);
-                        if (android.view.accessibility.Flags.copyEventsForGestureDetection()) {
-                            gesture.recycle();
-                        }
+                        gesture.recycle();
                     }
                 } break;
                 case MSG_CLEAR_ACCESSIBILITY_CACHE: {
@@ -2791,11 +2782,7 @@ abstract class AbstractAccessibilityServiceConnection extends IAccessibilityServ
     @RequiresNoPermission
     @Override
     public void setAnimationScale(float scale) {
-        int currentUserId;
-        synchronized (mLock) {
-            currentUserId = mSystemSupport.getCurrentUserIdLocked();
-        }
-        enforceCurrentUserIfVisibleBackgroundEnabled(currentUserId);
+        enforceCurrentUserIfVisibleBackgroundEnabled();
         final long identity = Binder.clearCallingIdentity();
         try {
             Settings.Global.putFloat(

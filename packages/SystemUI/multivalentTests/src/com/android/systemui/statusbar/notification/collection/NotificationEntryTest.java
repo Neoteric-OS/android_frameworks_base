@@ -28,13 +28,10 @@ import static android.app.NotificationManager.Policy.SUPPRESSED_EFFECT_AMBIENT;
 import static com.android.systemui.statusbar.NotificationEntryHelper.modifyRanking;
 import static com.android.systemui.statusbar.NotificationEntryHelper.modifySbn;
 
-import static com.google.common.truth.Truth.assertThat;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
 
 import android.app.ActivityManager;
 import android.app.Notification;
@@ -61,9 +58,8 @@ import com.android.systemui.res.R;
 import com.android.systemui.statusbar.RankingBuilder;
 import com.android.systemui.statusbar.SbnBuilder;
 import com.android.systemui.statusbar.chips.notification.shared.StatusBarNotifChips;
+import com.android.systemui.statusbar.notification.collection.UseElapsedRealtimeForCreationTime;
 import com.android.systemui.statusbar.notification.promoted.PromotedNotificationUi;
-import com.android.systemui.statusbar.notification.row.ExpandableNotificationRow;
-import com.android.systemui.statusbar.notification.shared.NotificationBundleUi;
 import com.android.systemui.util.time.FakeSystemClock;
 
 import org.junit.Before;
@@ -156,7 +152,8 @@ public class NotificationEntryTest extends SysuiTestCase {
                 .build();
 
         NotificationEntry entry =
-                new NotificationEntry(sbn, ranking, mClock.uptimeMillis());
+                new NotificationEntry(sbn, ranking,
+                        UseElapsedRealtimeForCreationTime.getCurrentTime(mClock));
 
         assertFalse(entry.isBlockable());
     }
@@ -256,7 +253,8 @@ public class NotificationEntryTest extends SysuiTestCase {
                 .build();
 
         NotificationEntry entry =
-                new NotificationEntry(sbn, ranking, mClock.uptimeMillis());
+                new NotificationEntry(sbn, ranking,
+                        UseElapsedRealtimeForCreationTime.getCurrentTime(mClock));
 
         assertEquals(systemGeneratedSmartActions, entry.getSmartActions());
         assertEquals(NOTIFICATION_CHANNEL, entry.getChannel());
@@ -311,24 +309,6 @@ public class NotificationEntryTest extends SysuiTestCase {
     }
 
     @Test
-    @EnableFlags(PromotedNotificationUi.FLAG_NAME)
-    @DisableFlags(StatusBarNotifChips.FLAG_NAME)
-    public void isPromotedOngoing_uiFlagOnAndNotifHasFlag_true() {
-        mEntry.getSbn().getNotification().flags |= FLAG_PROMOTED_ONGOING;
-
-        assertTrue(mEntry.isPromotedOngoing());
-    }
-
-    @Test
-    @EnableFlags(StatusBarNotifChips.FLAG_NAME)
-    @DisableFlags(PromotedNotificationUi.FLAG_NAME)
-    public void isPromotedOngoing_statusBarNotifChipsFlagOnAndNotifHasFlag_true() {
-        mEntry.getSbn().getNotification().flags |= FLAG_PROMOTED_ONGOING;
-
-        assertTrue(mEntry.isPromotedOngoing());
-    }
-
-    @Test
     public void testIsNotificationVisibilityPrivate_true() {
         assertTrue(mEntry.isNotificationVisibilityPrivate());
     }
@@ -370,7 +350,8 @@ public class NotificationEntryTest extends SysuiTestCase {
                 .setKey(sbn.getKey())
                 .build();
         NotificationEntry entry =
-                new NotificationEntry(sbn, ranking, mClock.uptimeMillis());
+                new NotificationEntry(sbn, ranking,
+                        UseElapsedRealtimeForCreationTime.getCurrentTime(mClock));
 
         assertFalse(entry.isChannelVisibilityPrivate());
     }
@@ -383,7 +364,8 @@ public class NotificationEntryTest extends SysuiTestCase {
                 .setKey(sbn.getKey())
                 .build();
         NotificationEntry entry =
-                new NotificationEntry(sbn, ranking, mClock.uptimeMillis());
+                new NotificationEntry(sbn, ranking,
+                        UseElapsedRealtimeForCreationTime.getCurrentTime(mClock));
 
         assertFalse(entry.isChannelVisibilityPrivate());
     }
@@ -452,216 +434,6 @@ public class NotificationEntryTest extends SysuiTestCase {
         entry.isLastMessageFromReply();
 
         // no crash, good
-    }
-
-    @Test
-    @EnableFlags(NotificationBundleUi.FLAG_NAME)
-    public void getParent_adapter() {
-        GroupEntry ge = new GroupEntryBuilder()
-                .build();
-        Notification notification = new Notification.Builder(mContext, "")
-                .setSmallIcon(R.drawable.ic_person)
-                .build();
-
-        NotificationEntry entry = new NotificationEntryBuilder()
-                .setPkg(TEST_PACKAGE_NAME)
-                .setOpPkg(TEST_PACKAGE_NAME)
-                .setUid(TEST_UID)
-                .setChannel(mChannel)
-                .setId(mId++)
-                .setNotification(notification)
-                .setUser(new UserHandle(ActivityManager.getCurrentUser()))
-                .setParent(ge)
-                .build();
-
-        assertThat(entry.getEntryAdapter().getParent()).isEqualTo(entry.getParent());
-    }
-
-    @Test
-    @EnableFlags(NotificationBundleUi.FLAG_NAME)
-    public void isTopLevelEntry_adapter() {
-        Notification notification = new Notification.Builder(mContext, "")
-                .setSmallIcon(R.drawable.ic_person)
-                .build();
-
-        NotificationEntry entry = new NotificationEntryBuilder()
-                .setPkg(TEST_PACKAGE_NAME)
-                .setOpPkg(TEST_PACKAGE_NAME)
-                .setUid(TEST_UID)
-                .setChannel(mChannel)
-                .setId(mId++)
-                .setNotification(notification)
-                .setUser(new UserHandle(ActivityManager.getCurrentUser()))
-                .setParent(GroupEntry.ROOT_ENTRY)
-                .build();
-
-        assertThat(entry.getEntryAdapter().isTopLevelEntry()).isTrue();
-    }
-
-    @Test
-    @EnableFlags(NotificationBundleUi.FLAG_NAME)
-    public void getKey_adapter() {
-        Notification notification = new Notification.Builder(mContext, "")
-                .setSmallIcon(R.drawable.ic_person)
-                .build();
-
-        NotificationEntry entry = new NotificationEntryBuilder()
-                .setPkg(TEST_PACKAGE_NAME)
-                .setOpPkg(TEST_PACKAGE_NAME)
-                .setUid(TEST_UID)
-                .setChannel(mChannel)
-                .setId(mId++)
-                .setNotification(notification)
-                .setUser(new UserHandle(ActivityManager.getCurrentUser()))
-                .build();
-
-        assertThat(entry.getEntryAdapter().getKey()).isEqualTo(entry.getKey());
-    }
-
-    @Test
-    @EnableFlags(NotificationBundleUi.FLAG_NAME)
-    public void getRow_adapter() {
-        ExpandableNotificationRow row = mock(ExpandableNotificationRow.class);
-        Notification notification = new Notification.Builder(mContext, "")
-                .setSmallIcon(R.drawable.ic_person)
-                .build();
-
-        NotificationEntry entry = new NotificationEntryBuilder()
-                .setPkg(TEST_PACKAGE_NAME)
-                .setOpPkg(TEST_PACKAGE_NAME)
-                .setUid(TEST_UID)
-                .setChannel(mChannel)
-                .setId(mId++)
-                .setNotification(notification)
-                .setUser(new UserHandle(ActivityManager.getCurrentUser()))
-                .build();
-        entry.setRow(row);
-
-        assertThat(entry.getEntryAdapter().getRow()).isEqualTo(entry.getRow());
-    }
-
-    @Test
-    @EnableFlags(NotificationBundleUi.FLAG_NAME)
-    public void getGroupRoot_adapter_groupSummary() {
-        ExpandableNotificationRow row = mock(ExpandableNotificationRow.class);
-        Notification notification = new Notification.Builder(mContext, "")
-                .setSmallIcon(R.drawable.ic_person)
-                .setGroupSummary(true)
-                .setGroup("key")
-                .build();
-
-        NotificationEntry entry = new NotificationEntryBuilder()
-                .setPkg(TEST_PACKAGE_NAME)
-                .setOpPkg(TEST_PACKAGE_NAME)
-                .setUid(TEST_UID)
-                .setChannel(mChannel)
-                .setId(mId++)
-                .setNotification(notification)
-                .setUser(new UserHandle(ActivityManager.getCurrentUser()))
-                .setParent(GroupEntry.ROOT_ENTRY)
-                .build();
-        entry.setRow(row);
-
-        assertThat(entry.getEntryAdapter().getGroupRoot()).isNull();
-    }
-
-    @Test
-    @EnableFlags(NotificationBundleUi.FLAG_NAME)
-    public void getGroupRoot_adapter_groupChild() {
-        Notification notification = new Notification.Builder(mContext, "")
-                .setSmallIcon(R.drawable.ic_person)
-                .setGroupSummary(true)
-                .setGroup("key")
-                .build();
-
-        NotificationEntry parent = new NotificationEntryBuilder()
-                .setParent(GroupEntry.ROOT_ENTRY)
-                .build();
-        GroupEntryBuilder groupEntry = new GroupEntryBuilder()
-                .setSummary(parent);
-
-        NotificationEntry entry = new NotificationEntryBuilder()
-                .setPkg(TEST_PACKAGE_NAME)
-                .setOpPkg(TEST_PACKAGE_NAME)
-                .setUid(TEST_UID)
-                .setChannel(mChannel)
-                .setId(mId++)
-                .setNotification(notification)
-                .setUser(new UserHandle(ActivityManager.getCurrentUser()))
-                .setParent(groupEntry.build())
-                .build();
-
-        assertThat(entry.getEntryAdapter().getGroupRoot()).isEqualTo(parent.getEntryAdapter());
-    }
-
-    @Test
-    @EnableFlags(NotificationBundleUi.FLAG_NAME)
-    public void isClearable_adapter() {
-        ExpandableNotificationRow row = mock(ExpandableNotificationRow.class);
-        Notification notification = new Notification.Builder(mContext, "")
-                .setSmallIcon(R.drawable.ic_person)
-                .build();
-
-        NotificationEntry entry = new NotificationEntryBuilder()
-                .setPkg(TEST_PACKAGE_NAME)
-                .setOpPkg(TEST_PACKAGE_NAME)
-                .setUid(TEST_UID)
-                .setChannel(mChannel)
-                .setId(mId++)
-                .setNotification(notification)
-                .setUser(new UserHandle(ActivityManager.getCurrentUser()))
-                .build();
-        entry.setRow(row);
-
-        assertThat(entry.getEntryAdapter().isClearable()).isEqualTo(entry.isClearable());
-    }
-
-    @Test
-    @EnableFlags(NotificationBundleUi.FLAG_NAME)
-    public void getSummarization_adapter() {
-        ExpandableNotificationRow row = mock(ExpandableNotificationRow.class);
-        Notification notification = new Notification.Builder(mContext, "")
-                .setSmallIcon(R.drawable.ic_person)
-                .build();
-
-        NotificationEntry entry = new NotificationEntryBuilder()
-                .setPkg(TEST_PACKAGE_NAME)
-                .setOpPkg(TEST_PACKAGE_NAME)
-                .setUid(TEST_UID)
-                .setChannel(mChannel)
-                .setId(mId++)
-                .setNotification(notification)
-                .setUser(new UserHandle(ActivityManager.getCurrentUser()))
-                .build();
-        Ranking ranking = new RankingBuilder(entry.getRanking())
-                .setSummarization("hello")
-                .build();
-        entry.setRanking(ranking);
-        entry.setRow(row);
-
-        assertThat(entry.getEntryAdapter().getSummarization()).isEqualTo("hello");
-    }
-
-    @Test
-    @EnableFlags(NotificationBundleUi.FLAG_NAME)
-    public void getIcons_adapter() {
-        ExpandableNotificationRow row = mock(ExpandableNotificationRow.class);
-        Notification notification = new Notification.Builder(mContext, "")
-                .setSmallIcon(R.drawable.ic_person)
-                .build();
-
-        NotificationEntry entry = new NotificationEntryBuilder()
-                .setPkg(TEST_PACKAGE_NAME)
-                .setOpPkg(TEST_PACKAGE_NAME)
-                .setUid(TEST_UID)
-                .setChannel(mChannel)
-                .setId(mId++)
-                .setNotification(notification)
-                .setUser(new UserHandle(ActivityManager.getCurrentUser()))
-                .build();
-        entry.setRow(row);
-
-        assertThat(entry.getEntryAdapter().getIcons()).isEqualTo(entry.getIcons());
     }
 
     private Notification.Action createContextualAction(String title) {

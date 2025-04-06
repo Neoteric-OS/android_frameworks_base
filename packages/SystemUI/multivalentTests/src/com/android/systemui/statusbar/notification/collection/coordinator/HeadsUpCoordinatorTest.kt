@@ -17,7 +17,11 @@ package com.android.systemui.statusbar.notification.collection.coordinator
 
 import android.app.Notification.GROUP_ALERT_ALL
 import android.app.Notification.GROUP_ALERT_SUMMARY
+import android.app.NotificationChannel
+import android.app.NotificationChannel.SYSTEM_RESERVED_IDS
+import android.app.NotificationManager.IMPORTANCE_LOW
 import android.platform.test.annotations.EnableFlags
+import android.service.notification.Flags.FLAG_NOTIFICATION_CLASSIFICATION
 import android.testing.TestableLooper.RunWithLooper
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
@@ -28,6 +32,7 @@ import com.android.systemui.log.logcatLogBuffer
 import com.android.systemui.statusbar.NotificationRemoteInputManager
 import com.android.systemui.statusbar.chips.notification.domain.interactor.statusBarNotificationChipsInteractor
 import com.android.systemui.statusbar.chips.notification.shared.StatusBarNotifChips
+import com.android.systemui.statusbar.chips.uievents.statusBarChipsUiEventLogger
 import com.android.systemui.statusbar.notification.NotifPipelineFlags
 import com.android.systemui.statusbar.notification.collection.GroupEntryBuilder
 import com.android.systemui.statusbar.notification.collection.NotifPipeline
@@ -38,6 +43,7 @@ import com.android.systemui.statusbar.notification.collection.listbuilder.OnBefo
 import com.android.systemui.statusbar.notification.collection.listbuilder.pluggable.NotifPromoter
 import com.android.systemui.statusbar.notification.collection.listbuilder.pluggable.NotifSectioner
 import com.android.systemui.statusbar.notification.collection.mockNotifCollection
+import com.android.systemui.statusbar.notification.collection.makeClassifiedConversation
 import com.android.systemui.statusbar.notification.collection.notifcollection.NotifCollectionListener
 import com.android.systemui.statusbar.notification.collection.notifcollection.NotifLifetimeExtender
 import com.android.systemui.statusbar.notification.collection.notifcollection.NotifLifetimeExtender.OnEndLifetimeExtensionCallback
@@ -49,7 +55,10 @@ import com.android.systemui.statusbar.notification.interruption.HeadsUpViewBinde
 import com.android.systemui.statusbar.notification.interruption.NotificationInterruptStateProvider.FullScreenIntentDecision
 import com.android.systemui.statusbar.notification.interruption.NotificationInterruptStateProviderWrapper.DecisionImpl
 import com.android.systemui.statusbar.notification.interruption.NotificationInterruptStateProviderWrapper.FullScreenIntentDecisionImpl
+import com.android.systemui.statusbar.notification.interruption.VisualInterruptionDecisionLogger
 import com.android.systemui.statusbar.notification.interruption.VisualInterruptionDecisionProvider
+import com.android.systemui.statusbar.notification.row.mockNotificationActionClickManager
+import com.android.systemui.statusbar.notification.shared.NotificationBundleUi
 import com.android.systemui.statusbar.phone.NotificationGroupTestHelper
 import com.android.systemui.testKosmos
 import com.android.systemui.util.concurrency.FakeExecutor
@@ -58,7 +67,6 @@ import com.android.systemui.util.mockito.eq
 import com.android.systemui.util.mockito.mock
 import com.android.systemui.util.mockito.withArgCaptor
 import com.android.systemui.util.time.FakeSystemClock
-import java.util.ArrayList
 import java.util.function.Consumer
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -70,6 +78,7 @@ import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers.anyString
 import org.mockito.BDDMockito.clearInvocations
 import org.mockito.BDDMockito.given
+import org.mockito.Mockito
 import org.mockito.Mockito.never
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
@@ -102,6 +111,7 @@ class HeadsUpCoordinatorTest : SysuiTestCase() {
 
     private val notifPipeline: NotifPipeline = mock()
     private val logger = HeadsUpCoordinatorLogger(logcatLogBuffer(), verbose = true)
+    private val interruptLogger: VisualInterruptionDecisionLogger = mock()
     private val headsUpManager: HeadsUpManagerImpl = mock()
     private val headsUpViewBinder: HeadsUpViewBinder = mock()
     private val visualInterruptionDecisionProvider: VisualInterruptionDecisionProvider = mock()
@@ -132,15 +142,18 @@ class HeadsUpCoordinatorTest : SysuiTestCase() {
             HeadsUpCoordinator(
                 kosmos.applicationCoroutineScope,
                 logger,
+                interruptLogger,
                 systemClock,
                 notifCollection,
                 headsUpManager,
                 headsUpViewBinder,
                 visualInterruptionDecisionProvider,
                 remoteInputManager,
+                kosmos.mockNotificationActionClickManager,
                 launchFullScreenIntentProvider,
                 flags,
                 statusBarNotificationChipsInteractor,
+                kosmos.statusBarChipsUiEventLogger,
                 headerController,
                 executor,
             )
@@ -161,9 +174,15 @@ class HeadsUpCoordinatorTest : SysuiTestCase() {
             verify(notifPipeline).addOnBeforeFinalizeFilterListener(capture())
         }
         onHeadsUpChangedListener = withArgCaptor { verify(headsUpManager).addListener(capture()) }
-        actionPressListener = withArgCaptor {
-            verify(remoteInputManager).addActionPressListener(capture())
-        }
+        actionPressListener =
+            if (NotificationBundleUi.isEnabled) {
+                withArgCaptor {
+                    verify(kosmos.mockNotificationActionClickManager)
+                        .addActionClickListener(capture())
+                }
+            } else {
+                withArgCaptor { verify(remoteInputManager).addActionPressListener(capture()) }
+            }
         given(headsUpManager.allEntries).willAnswer { huns.stream() }
         given(headsUpManager.isHeadsUpEntry(anyString())).willAnswer { invocation ->
             val key = invocation.getArgument<String>(0)
@@ -260,7 +279,7 @@ class HeadsUpCoordinatorTest : SysuiTestCase() {
         addHUN(entry)
 
         actionPressListener.accept(entry)
-        verify(headsUpManager, times(1)).setUserActionMayIndirectlyRemove(entry)
+        verify(headsUpManager, times(1)).setUserActionMayIndirectlyRemove(entry.key)
 
         whenever(headsUpManager.canRemoveImmediately(anyString())).thenReturn(true)
         assertFalse(notifLifetimeExtender.maybeExtendLifetime(entry, 0))
@@ -348,7 +367,7 @@ class HeadsUpCoordinatorTest : SysuiTestCase() {
     }
 
     @Test
-    fun testIncludeInSectionCurrentHUN() {
+    fun testHeadsUpSectioner_accepts_currentHUN() {
         // GIVEN the current HUN is set to mEntry
         addHUN(entry)
 
@@ -357,6 +376,13 @@ class HeadsUpCoordinatorTest : SysuiTestCase() {
         assertFalse(
             notifSectioner.isInSection(NotificationEntryBuilder().setPkg("test-package").build())
         )
+    }
+
+    @Test
+    fun testHeadsUpSectioner_rejects_classifiedConversation() {
+        for (id in SYSTEM_RESERVED_IDS) {
+            assertFalse(notifSectioner.isInSection(kosmos.makeClassifiedConversation(id)))
+        }
     }
 
     @Test
@@ -549,7 +575,7 @@ class HeadsUpCoordinatorTest : SysuiTestCase() {
 
     @Test
     @EnableFlags(StatusBarNotifChips.FLAG_NAME)
-    fun onPromotedNotificationChipTapped_chipTappedTwice_hunHiddenOnSecondTap() =
+    fun onPromotedNotificationChipTapped_chipTappedTwice_hunHiddenOnSecondTapImmediately() =
         testScope.runTest {
             whenever(notifCollection.getEntry(entry.key)).thenReturn(entry)
 
@@ -570,8 +596,9 @@ class HeadsUpCoordinatorTest : SysuiTestCase() {
             executor.runAllReady()
             beforeFinalizeFilterListener.onBeforeFinalizeFilter(listOf(entry))
 
-            // THEN HUN is hidden
-            verify(headsUpManager).removeNotification(eq(entry.key), eq(false), any())
+            // THEN HUN is hidden and it's hidden immediately
+            verify(headsUpManager)
+                .removeNotification(eq(entry.key), /* releaseImmediately= */ eq(true), any())
         }
 
     @Test
@@ -906,6 +933,48 @@ class HeadsUpCoordinatorTest : SysuiTestCase() {
         verify(headsUpManager).showNotification(groupChild1)
         verify(headsUpManager, never()).showNotification(groupChild2)
         assertFalse(groupSummary.hasInterrupted())
+    }
+
+    private fun helpTestNoTransferToBundleChildForChannel(channelId: String) {
+        // Set up for normal alert transfer from summary to child
+        // but here child is classified so it should not happen
+        val bundleChild =
+            helper.createClassifiedEntry(/* isSummary= */ false, GROUP_ALERT_SUMMARY, channelId);
+        setShouldHeadsUp(bundleChild, true)
+        setShouldHeadsUp(groupSummary, true)
+        whenever(notifPipeline.allNotifs).thenReturn(listOf(groupSummary, bundleChild))
+
+        collectionListener.onEntryAdded(groupSummary)
+        collectionListener.onEntryAdded(bundleChild)
+
+        beforeTransformGroupsListener.onBeforeTransformGroups(listOf(groupSummary, bundleChild))
+        beforeFinalizeFilterListener.onBeforeFinalizeFilter(listOf(groupSummary, bundleChild))
+
+        verify(headsUpViewBinder, never()).bindHeadsUpView(eq(groupSummary), any(), any())
+        verify(headsUpViewBinder, never()).bindHeadsUpView(eq(bundleChild), any(), any())
+
+        verify(headsUpManager, never()).showNotification(groupSummary)
+        verify(headsUpManager, never()).showNotification(bundleChild)
+
+        // Capture last param
+        val decision = withArgCaptor {
+            verify(interruptLogger)
+                .logDecision(capture(), capture(), capture())
+        }
+        assertFalse(decision.shouldInterrupt)
+        assertEquals(decision.logReason, "disqualified-transfer-target")
+
+        // Must clear invocations, otherwise these calls get stored for the next call from the same
+        // test, which complains that there are more invocations than expected
+        clearInvocations(interruptLogger)
+    }
+
+    @Test
+    @EnableFlags(FLAG_NOTIFICATION_CLASSIFICATION)
+    fun testNoTransfer_toBundleChild() {
+        for (id in SYSTEM_RESERVED_IDS) {
+            helpTestNoTransferToBundleChildForChannel(id)
+        }
     }
 
     @Test

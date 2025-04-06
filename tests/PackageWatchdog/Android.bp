@@ -28,6 +28,7 @@ android_test {
     static_libs: [
         "PlatformProperties",
         "androidx.test.rules",
+        "androidx.test.runner",
         "flag-junit",
         "frameworks-base-testutils",
         "junit",
@@ -54,4 +55,8 @@ android_test {
         "mts-crashrecovery",
     ],
     min_sdk_version: "36",
+
+    // Test coverage system runs on different devices. Need to
+    // compile for all architecture.
+    compile_multilib: "both",
 }

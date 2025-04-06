@@ -227,7 +227,7 @@ class ElementTest {
             to = SceneB,
             transitionLayout = { state ->
                 coroutineScope = rememberCoroutineScope()
-                SceneTransitionLayout(state) {
+                SceneTransitionLayoutForTesting(state) {
                     scene(SceneA) {
                         Box(Modifier.size(layoutSize)) {
                             // Transformed element
@@ -633,7 +633,7 @@ class ElementTest {
 
         val scope =
             rule.setContentAndCreateMainScope {
-                SceneTransitionLayout(state) {
+                SceneTransitionLayoutForTesting(state) {
                     scene(SceneA) { Box(Modifier.element(TestElements.Foo).size(20.dp)) }
                     scene(SceneB) {}
                 }
@@ -674,7 +674,7 @@ class ElementTest {
             CompositionLocalProvider(
                 LocalOverscrollFactory provides rememberOffsetOverscrollEffectFactory()
             ) {
-                SceneTransitionLayout(state, Modifier.size(layoutWidth, layoutHeight)) {
+                SceneTransitionLayoutForTesting(state, Modifier.size(layoutWidth, layoutHeight)) {
                     scene(key = SceneA, userActions = mapOf(Swipe.Down to SceneB)) {
                         Spacer(Modifier.fillMaxSize())
                     }
@@ -734,7 +734,7 @@ class ElementTest {
             CompositionLocalProvider(
                 LocalOverscrollFactory provides rememberOffsetOverscrollEffectFactory()
             ) {
-                SceneTransitionLayout(state, Modifier.size(layoutWidth, layoutHeight)) {
+                SceneTransitionLayoutForTesting(state, Modifier.size(layoutWidth, layoutHeight)) {
                     scene(key = SceneA, userActions = mapOf(Swipe.Down to SceneB)) {
                         Spacer(
                             Modifier.overscroll(verticalOverscrollEffect)
@@ -834,7 +834,7 @@ class ElementTest {
             CompositionLocalProvider(
                 LocalOverscrollFactory provides rememberOffsetOverscrollEffectFactory()
             ) {
-                SceneTransitionLayout(state, Modifier.size(layoutWidth, layoutHeight)) {
+                SceneTransitionLayoutForTesting(state, Modifier.size(layoutWidth, layoutHeight)) {
                     scene(key = SceneA, userActions = mapOf(Swipe.Down to SceneB)) {
                         Spacer(Modifier.fillMaxSize())
                     }
@@ -893,7 +893,7 @@ class ElementTest {
             CompositionLocalProvider(
                 LocalOverscrollFactory provides rememberOffsetOverscrollEffectFactory()
             ) {
-                SceneTransitionLayout(
+                SceneTransitionLayoutForTesting(
                     state = state,
                     modifier = Modifier.size(layoutWidth, layoutHeight),
                 ) {
@@ -970,7 +970,7 @@ class ElementTest {
 
         rule.setContent {
             touchSlop = LocalViewConfiguration.current.touchSlop
-            SceneTransitionLayout(
+            SceneTransitionLayoutForTesting(
                 state = state,
                 modifier = Modifier.size(layoutWidth, layoutHeight),
             ) {
@@ -1057,7 +1057,7 @@ class ElementTest {
         rule.setContent {
             coroutineScope = rememberCoroutineScope()
 
-            SceneTransitionLayout(state) {
+            SceneTransitionLayoutForTesting(state) {
                 scene(SceneA) {
                     Box(Modifier.size(layoutSize)) {
                         Box(
@@ -1163,7 +1163,7 @@ class ElementTest {
         @Composable
         fun ContentScope.Foo(size: Dp, value: Float, modifier: Modifier = Modifier) {
             val contentKey = this.contentKey
-            Element(TestElements.Foo, modifier.size(size)) {
+            ElementWithValues(TestElements.Foo, modifier.size(size)) {
                 val animatedValue = animateElementFloatAsState(value, TestValues.Value1)
                 LaunchedEffect(animatedValue) {
                     snapshotFlow { animatedValue.value }.collect { lastValues[contentKey] = it }
@@ -1374,7 +1374,7 @@ class ElementTest {
 
         val scope =
             rule.setContentAndCreateMainScope {
-                SceneTransitionLayout(state, Modifier.size(layoutSize)) {
+                SceneTransitionLayoutForTesting(state, Modifier.size(layoutSize)) {
                     scene(SceneA) {
                         Box(Modifier.fillMaxSize()) { Foo(Modifier.align(Alignment.TopStart)) }
                     }
@@ -1742,7 +1742,7 @@ class ElementTest {
 
         val scope =
             rule.setContentAndCreateMainScope {
-                SceneTransitionLayout(state, Modifier.size(200.dp)) {
+                SceneTransitionLayoutForTesting(state, Modifier.size(200.dp)) {
                     scene(SceneA) { Foo(offset = 0.dp) }
                     scene(SceneB) { Foo(offset = 20.dp) }
                     scene(SceneC) { Foo(offset = 40.dp) }
@@ -1828,7 +1828,7 @@ class ElementTest {
 
         val scope =
             rule.setContentAndCreateMainScope {
-                SceneTransitionLayout(state) {
+                SceneTransitionLayoutForTesting(state) {
                     scene(SceneB) { Foo(Modifier.offset(40.dp, 60.dp)) }
 
                     // Define A after B so that Foo is placed in A during A <=> B.
@@ -1887,7 +1887,7 @@ class ElementTest {
 
         val scope =
             rule.setContentAndCreateMainScope {
-                SceneTransitionLayout(state) {
+                SceneTransitionLayoutForTesting(state) {
                     scene(SceneA) { Foo() }
                     scene(SceneB) { Foo(Modifier.offset(40.dp, 60.dp)) }
                 }
@@ -2090,11 +2090,9 @@ class ElementTest {
             TestContentScope(currentScene = SceneA) {
                 Column {
                     Element(TestElements.Foo, Modifier.size(40.dp)) {
-                        content {
-                            // Modifier.size() sets a preferred size and this should be ignored
-                            // because of the previously set 40dp size.
-                            Box(Modifier.testTag(contentTestTag).size(20.dp))
-                        }
+                        // Modifier.size() sets a preferred size and this should be ignored because
+                        // of the previously set 40dp size.
+                        Box(Modifier.testTag(contentTestTag).size(20.dp))
                     }
 
                     MovableElement(movable, Modifier.size(40.dp)) {
@@ -2282,5 +2280,108 @@ class ElementTest {
             .onNode(isElement(TestElements.Foo))
             .assertSizeIsEqualTo(50.dp)
             .assertPositionInRootIsEqualTo(100.dp, 100.dp)
+    }
+
+    @Test
+    fun elementContentIsNotRecomposedWhenATransitionStarts() {
+        var compositions = 0
+        val state = rule.runOnUiThread { MutableSceneTransitionLayoutStateForTests(SceneA) }
+        val scope =
+            rule.setContentAndCreateMainScope {
+                SceneTransitionLayoutForTesting(state) {
+                    scene(SceneA) {
+                        Box(Modifier.fillMaxSize()) {
+                            Element(TestElements.Foo, Modifier) { SideEffect { compositions++ } }
+                        }
+                    }
+                    scene(SceneB) { Box(Modifier.fillMaxSize()) }
+                    scene(SceneC) { Box(Modifier.fillMaxSize()) }
+                }
+            }
+
+        assertThat(compositions).isEqualTo(1)
+
+        scope.launch { state.startTransition(transition(SceneA, SceneB)) }
+        rule.waitForIdle()
+
+        scope.launch { state.startTransition(transition(SceneA, SceneC)) }
+        rule.waitForIdle()
+
+        scope.launch { state.startTransition(transition(SceneA, SceneB)) }
+        rule.waitForIdle()
+
+        assertThat(compositions).isEqualTo(1)
+    }
+
+    @Test
+    fun measureElementApproachSizeBeforeChildren() {
+        val state =
+            rule.runOnUiThread {
+                MutableSceneTransitionLayoutStateForTests(SceneA, SceneTransitions.Empty)
+            }
+
+        lateinit var fooHeight: () -> Dp?
+        val fooHeightPreChildMeasure = mutableListOf<Dp?>()
+
+        val scope =
+            rule.setContentAndCreateMainScope {
+                val density = LocalDensity.current
+                SceneTransitionLayoutForTesting(state) {
+                    scene(SceneA) {
+                        fooHeight = {
+                            with(density) { TestElements.Foo.approachSize(SceneA)?.height?.toDp() }
+                        }
+                        Box(Modifier.element(TestElements.Foo).size(200.dp)) {
+                            Box(
+                                Modifier.approachLayout(
+                                    isMeasurementApproachInProgress = { false },
+                                    approachMeasure = { measurable, constraints ->
+                                        fooHeightPreChildMeasure += fooHeight()
+                                        measurable.measure(constraints).run {
+                                            layout(width, height) {}
+                                        }
+                                    },
+                                )
+                            )
+                        }
+                    }
+                    scene(SceneB) { Box(Modifier.element(TestElements.Foo).size(100.dp)) }
+                }
+            }
+
+        var progress by mutableFloatStateOf(0f)
+        val transition = transition(from = SceneA, to = SceneB, progress = { progress })
+        var countApproachPass = fooHeightPreChildMeasure.size
+
+        // Idle state: Scene A.
+        assertThat(state.isTransitioning()).isFalse()
+        assertThat(fooHeight()).isNull()
+
+        // Start transition: Scene A -> Scene B (progress 0%).
+        scope.launch { state.startTransition(transition) }
+        rule.waitForIdle()
+        assertThat(state.isTransitioning()).isTrue()
+        assertThat(fooHeightPreChildMeasure[countApproachPass]?.value).isWithin(.5f).of(200f)
+        assertThat(fooHeight()).isNotNull()
+        countApproachPass = fooHeightPreChildMeasure.size
+
+        // progress 50%: height is going from 200dp to 100dp, so 150dp is expected now.
+        progress = 0.5f
+        rule.waitForIdle()
+        assertThat(fooHeightPreChildMeasure[countApproachPass]?.value).isWithin(.5f).of(150f)
+        assertThat(fooHeight()).isNotNull()
+        countApproachPass = fooHeightPreChildMeasure.size
+
+        progress = 1f
+        rule.waitForIdle()
+        assertThat(fooHeightPreChildMeasure[countApproachPass]?.value).isWithin(.5f).of(100f)
+        assertThat(fooHeight()).isNotNull()
+        countApproachPass = fooHeightPreChildMeasure.size
+
+        transition.finish()
+        rule.waitForIdle()
+        assertThat(state.isTransitioning()).isFalse()
+        assertThat(fooHeight()).isNull()
+        assertThat(fooHeightPreChildMeasure.size).isEqualTo(countApproachPass)
     }
 }

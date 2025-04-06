@@ -168,7 +168,7 @@ constructor(
     override val isCommunalContentFlowFrozen: Flow<Boolean> =
         allOf(
                 keyguardTransitionInteractor.isFinishedIn(
-                    scene = Scenes.Communal,
+                    content = Scenes.Communal,
                     stateWithoutSceneContainer = KeyguardState.GLANCEABLE_HUB,
                 ),
                 keyguardInteractor.isKeyguardOccluded,
@@ -204,7 +204,7 @@ constructor(
     override val isFocusable: Flow<Boolean> =
         combine(
                 keyguardTransitionInteractor.isFinishedIn(
-                    scene = Scenes.Communal,
+                    content = Scenes.Communal,
                     stateWithoutSceneContainer = KeyguardState.GLANCEABLE_HUB,
                 ),
                 communalInteractor.isIdleOnCommunal,
@@ -229,7 +229,7 @@ constructor(
             MutableStateFlow(false)
         }
 
-    val blurRadiusPx: Float = blurConfig.maxBlurRadiusPx / 2.0f
+    val blurRadiusPx: Float = blurConfig.maxBlurRadiusPx
 
     init {
         // Initialize our media host for the UMO. This only needs to happen once and must be done
@@ -247,7 +247,7 @@ constructor(
                 showsOnlyActiveMedia = false
             }
             falsingProtectionNeeded = false
-            disablePagination = true
+            disableScrolling = true
             init(MediaHierarchyManager.LOCATION_COMMUNAL_HUB)
         }
     }
@@ -367,13 +367,29 @@ constructor(
     /** See [CommunalSettingsInteractor.isV2FlagEnabled] */
     fun v2FlagEnabled(): Boolean = communalSettingsInteractor.isV2FlagEnabled()
 
-    val swipeToHubEnabled: StateFlow<Boolean> by lazy {
+    val swipeToHubEnabled: Flow<Boolean> by lazy {
+        val inAllowedDeviceState =
+            if (v2FlagEnabled()) {
+                communalSettingsInteractor.manualOpenEnabled
+            } else {
+                MutableStateFlow(swipeToHub)
+            }
+
         if (v2FlagEnabled()) {
-            communalInteractor.shouldShowCommunal
+            val inAllowedKeyguardState =
+                keyguardTransitionInteractor.startedKeyguardTransitionStep.map {
+                    it.to == KeyguardState.LOCKSCREEN || it.to == KeyguardState.GLANCEABLE_HUB
+                }
+            allOf(inAllowedDeviceState, inAllowedKeyguardState)
         } else {
-            MutableStateFlow(swipeToHub)
+            inAllowedDeviceState
         }
     }
+
+    val swipeFromHubInLandscape: Flow<Boolean> = communalSceneInteractor.willRotateToPortrait
+
+    fun onOrientationChange(orientation: Int) =
+        communalSceneInteractor.setCommunalContainerOrientation(orientation)
 
     companion object {
         const val POPUP_AUTO_HIDE_TIMEOUT_MS = 12000L

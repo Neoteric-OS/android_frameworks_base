@@ -28,6 +28,7 @@ import static android.app.admin.DevicePolicyResources.Strings.Core.PACKAGE_INSTA
 import static android.app.admin.DevicePolicyResources.Strings.Core.PACKAGE_UPDATED_BY_DO;
 import static android.content.pm.DataLoaderType.INCREMENTAL;
 import static android.content.pm.DataLoaderType.STREAMING;
+import static android.content.pm.Flags.cloudCompilationVerification;
 import static android.content.pm.PackageInstaller.LOCATION_DATA_APP;
 import static android.content.pm.PackageInstaller.UNARCHIVAL_OK;
 import static android.content.pm.PackageInstaller.UNARCHIVAL_STATUS_UNSET;
@@ -3141,8 +3142,17 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
                         mInternalProgress = 0.5f;
                         computeProgressLocked(true);
                     }
+                    final File libDir = new File(stageDir, NativeLibraryHelper.LIB_DIR_NAME);
+                    if (!mayInheritNativeLibs()) {
+                        // Start from a clean slate
+                        NativeLibraryHelper.removeNativeBinariesFromDirLI(libDir, true);
+                    }
+                    // Skip native libraries processing for archival installation.
+                    if (isArchivedInstallation()) {
+                        return;
+                    }
                     extractNativeLibraries(
-                            mPackageLite, stageDir, params.abiOverride, mayInheritNativeLibs());
+                            mPackageLite, libDir, params.abiOverride);
                 }
             }
         }
@@ -3635,10 +3645,8 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
 
         // Needs to happen before the first v4 signature verification, which happens in
         // getAddedApkLitesLocked.
-        if (android.security.Flags.extendVbChainToUpdatedApk()) {
-            if (!isIncrementalInstallation()) {
-                enableFsVerityToAddedApksWithIdsig();
-            }
+        if (!isIncrementalInstallation()) {
+            enableFsVerityToAddedApksWithIdsig();
         }
 
         final List<ApkLite> addedFiles = getAddedApkLitesLocked();
@@ -3720,6 +3728,10 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
             // Collect the requiredSplitTypes and staged splitTypes
             CollectionUtils.addAll(requiredSplitTypes, apk.getRequiredSplitTypes());
             CollectionUtils.addAll(stagedSplitTypes, apk.getSplitTypes());
+        }
+
+        if (cloudCompilationVerification()) {
+            verifySdmSignatures(artManagedFilePaths, mSigningDetails);
         }
 
         if (removeSplitList.size() > 0) {
@@ -4063,6 +4075,14 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
             File targetArtManagedFile = new File(
                     ArtManagedInstallFileHelper.getTargetPathForApk(path, targetFile.getPath()));
             stageFileLocked(artManagedFile, targetArtManagedFile);
+            if (!artManagedFile.equals(targetArtManagedFile)) {
+                // The file has been renamed. Update the list to reflect the change.
+                for (int i = 0; i < artManagedFilePaths.size(); ++i) {
+                    if (artManagedFilePaths.get(i).equals(path)) {
+                        artManagedFilePaths.set(i, targetArtManagedFile.getAbsolutePath());
+                    }
+                }
+            }
         }
     }
 
@@ -4137,8 +4157,7 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
         stageFileLocked(origFile, targetFile);
 
         // Stage APK's v4 signature if present, and fs-verity is supported.
-        if (android.security.Flags.extendVbChainToUpdatedApk()
-                && VerityUtils.isFsVeritySupported()) {
+        if (VerityUtils.isFsVeritySupported()) {
             maybeStageV4SignatureLocked(origFile, targetFile);
         }
         // Stage ART managed install files (e.g., dex metadata (.dm)) and corresponding fs-verity
@@ -4165,9 +4184,7 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
     private void inheritFileLocked(File origFile, List<String> artManagedFilePaths) {
         mResolvedInheritedFiles.add(origFile);
 
-        if (android.security.Flags.extendVbChainToUpdatedApk()) {
-            maybeInheritV4SignatureLocked(origFile);
-        }
+        maybeInheritV4SignatureLocked(origFile);
 
         // Inherit ART managed install files (e.g., dex metadata (.dm)) if present.
         if (com.android.art.flags.Flags.artServiceV3()) {
@@ -4344,6 +4361,37 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
     }
 
     /**
+     * Verifies the signatures of SDM files.
+     *
+     * SDM is a file format that contains the cloud compilation artifacts. As a requirement, the SDM
+     * file should be signed with the same key as the APK.
+     *
+     * TODO(b/377474232): Move this logic to ART Service.
+     */
+    private static void verifySdmSignatures(List<String> artManagedFilePaths,
+            SigningDetails expectedSigningDetails) throws PackageManagerException {
+        ParseTypeImpl input = ParseTypeImpl.forDefaultParsing();
+        for (String path : artManagedFilePaths) {
+            if (!path.endsWith(".sdm")) {
+                continue;
+            }
+            // SDM is a format introduced in Android 16, so we don't need to support older
+            // signature schemes.
+            int minSignatureScheme = SigningDetails.SignatureSchemeVersion.SIGNING_BLOCK_V3;
+            ParseResult<SigningDetails> verified =
+                    ApkSignatureVerifier.verify(input, path, minSignatureScheme);
+            if (verified.isError()) {
+                throw new PackageManagerException(
+                        INSTALL_FAILED_INVALID_APK, "Failed to verify SDM signatures");
+            }
+            if (!expectedSigningDetails.signaturesMatchExactly(verified.getResult())) {
+                throw new PackageManagerException(
+                        INSTALL_FAILED_INVALID_APK, "SDM signatures are inconsistent with APK");
+            }
+        }
+    }
+
+    /**
      * @return the uid of the owner this session
      */
     public int getInstallerUid() {
@@ -4496,21 +4544,10 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
         Slog.d(TAG, "Copied " + fromFiles.size() + " files into " + toDir);
     }
 
-    private void extractNativeLibraries(PackageLite packageLite, File packageDir,
-            String abiOverride, boolean inherit)
+    private void extractNativeLibraries(PackageLite packageLite, File libDir,
+            String abiOverride)
             throws PackageManagerException {
         Objects.requireNonNull(packageLite);
-        final File libDir = new File(packageDir, NativeLibraryHelper.LIB_DIR_NAME);
-        if (!inherit) {
-            // Start from a clean slate
-            NativeLibraryHelper.removeNativeBinariesFromDirLI(libDir, true);
-        }
-
-        // Skip native libraries processing for archival installation.
-        if (isArchivedInstallation()) {
-            return;
-        }
-
         NativeLibraryHelper.Handle handle = null;
         try {
             handle = NativeLibraryHelper.Handle.create(packageLite);
@@ -5230,7 +5267,9 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
                     "Session " + sessionId + " is a parent of multi-package session and "
                             + "requestUserPreapproval on the parent session isn't supported.");
         }
-
+        if (statusReceiver == null) {
+            throw new IllegalArgumentException("Status receiver cannot be null.");
+        }
         synchronized (mLock) {
             assertPreparedAndNotSealedLocked("request of session " + sessionId);
             mPreapprovalDetails = details;
@@ -5583,6 +5622,10 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
      */
     private static void sendOnUserActionRequired(Context context, IntentSender target,
             int sessionId, Intent intent) {
+        if (target == null) {
+            Slog.e(TAG, "Missing receiver for pending user action.");
+            return;
+        }
         final Intent fillIn = new Intent();
         fillIn.putExtra(PackageInstaller.EXTRA_SESSION_ID, sessionId);
         fillIn.putExtra(PackageInstaller.EXTRA_STATUS, PackageInstaller.STATUS_PENDING_USER_ACTION);

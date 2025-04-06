@@ -21,12 +21,15 @@ import android.content.Context
 import androidx.annotation.VisibleForTesting
 import com.android.app.tracing.coroutines.flow.flowName
 import com.android.systemui.Flags.glanceableHubV2
+import com.android.systemui.bouncer.domain.interactor.BouncerInteractor
 import com.android.systemui.common.shared.model.NotificationContainerBounds
 import com.android.systemui.common.ui.domain.interactor.ConfigurationInteractor
 import com.android.systemui.communal.domain.interactor.CommunalSceneInteractor
+import com.android.systemui.communal.shared.model.CommunalScenes
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.dump.DumpManager
+import com.android.systemui.kairos.awaitClose
 import com.android.systemui.keyguard.domain.interactor.KeyguardInteractor
 import com.android.systemui.keyguard.domain.interactor.KeyguardTransitionInteractor
 import com.android.systemui.keyguard.shared.model.Edge
@@ -50,7 +53,6 @@ import com.android.systemui.keyguard.ui.viewmodel.AodToGoneTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.AodToLockscreenTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.AodToOccludedTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.AodToPrimaryBouncerTransitionViewModel
-import com.android.systemui.keyguard.ui.viewmodel.DozingToDreamingTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.DozingToGlanceableHubTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.DozingToLockscreenTransitionViewModel
 import com.android.systemui.keyguard.ui.viewmodel.DozingToOccludedTransitionViewModel
@@ -76,6 +78,7 @@ import com.android.systemui.keyguard.ui.viewmodel.PrimaryBouncerToLockscreenTran
 import com.android.systemui.keyguard.ui.viewmodel.ViewStateAccessor
 import com.android.systemui.res.R
 import com.android.systemui.scene.shared.flag.SceneContainerFlag
+import com.android.systemui.scene.shared.model.Overlays
 import com.android.systemui.scene.shared.model.Scenes
 import com.android.systemui.shade.LargeScreenHeaderHelper
 import com.android.systemui.shade.ShadeDisplayAware
@@ -94,6 +97,7 @@ import com.android.systemui.util.kotlin.BooleanFlowOperators.not
 import com.android.systemui.util.kotlin.FlowDumperImpl
 import com.android.systemui.util.kotlin.Utils.Companion.sample as sampleCombine
 import com.android.systemui.util.kotlin.sample
+import com.android.systemui.utils.coroutines.flow.conflatedCallbackFlow
 import dagger.Lazy
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
@@ -106,7 +110,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.combineTransform
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
@@ -132,6 +135,7 @@ constructor(
     private val keyguardInteractor: KeyguardInteractor,
     private val keyguardTransitionInteractor: KeyguardTransitionInteractor,
     private val shadeInteractor: ShadeInteractor,
+    private val bouncerInteractor: BouncerInteractor,
     shadeModeInteractor: ShadeModeInteractor,
     notificationStackAppearanceInteractor: NotificationStackAppearanceInteractor,
     private val alternateBouncerToGoneTransitionViewModel:
@@ -143,7 +147,6 @@ constructor(
     private val aodToOccludedTransitionViewModel: AodToOccludedTransitionViewModel,
     private val aodToGlanceableHubTransitionViewModel: AodToGlanceableHubTransitionViewModel,
     private val aodToPrimaryBouncerTransitionViewModel: AodToPrimaryBouncerTransitionViewModel,
-    private val dozingToDreamingTransitionViewModel: DozingToDreamingTransitionViewModel,
     dozingToGlanceableHubTransitionViewModel: DozingToGlanceableHubTransitionViewModel,
     private val dozingToLockscreenTransitionViewModel: DozingToLockscreenTransitionViewModel,
     private val dozingToOccludedTransitionViewModel: DozingToOccludedTransitionViewModel,
@@ -245,7 +248,7 @@ constructor(
     val configurationBasedDimensions: Flow<ConfigurationBasedDimensions> =
         if (SceneContainerFlag.isEnabled) {
                 combine(
-                    shadeInteractor.isShadeLayoutWide,
+                    shadeModeInteractor.isShadeLayoutWide,
                     shadeModeInteractor.shadeMode,
                     configurationInteractor.onAnyConfigurationChange,
                 ) { isShadeLayoutWide, shadeMode, _ ->
@@ -307,7 +310,7 @@ constructor(
             keyguardTransitionInteractor.transitionValue(ALTERNATE_BOUNCER).map { it > 0f },
             keyguardTransitionInteractor
                 .transitionValue(
-                    scene = Scenes.Bouncer,
+                    content = Overlays.Bouncer,
                     stateWithoutSceneContainer = PRIMARY_BOUNCER,
                 )
                 .map { it > 0f },
@@ -357,14 +360,31 @@ constructor(
             )
             .dumpValue("isOnLockscreenWithoutShade")
 
+    private val aboutToTransitionToHub: Flow<Unit> =
+        if (SceneContainerFlag.isEnabled) {
+            emptyFlow()
+        } else {
+            conflatedCallbackFlow {
+                val callback =
+                    CommunalSceneInteractor.OnSceneAboutToChangeListener { toScene, _ ->
+                        if (toScene == CommunalScenes.Communal) {
+                            trySend(Unit)
+                        }
+                    }
+                communalSceneInteractor.registerSceneStateProcessor(callback)
+                awaitClose { communalSceneInteractor.unregisterSceneStateProcessor(callback) }
+            }
+        }
+
     /** If the user is visually on the glanceable hub or transitioning to/from it */
     private val isOnGlanceableHub: Flow<Boolean> =
-        combine(
-                keyguardTransitionInteractor.isFinishedIn(
-                    scene = Scenes.Communal,
-                    stateWithoutSceneContainer = GLANCEABLE_HUB,
-                ),
+        merge(
+                aboutToTransitionToHub.map { true },
                 anyOf(
+                    keyguardTransitionInteractor.isFinishedIn(
+                        content = Scenes.Communal,
+                        stateWithoutSceneContainer = GLANCEABLE_HUB,
+                    ),
                     keyguardTransitionInteractor.isInTransition(
                         edge = Edge.create(to = Scenes.Communal),
                         edgeWithoutSceneContainer = Edge.create(to = GLANCEABLE_HUB),
@@ -374,9 +394,7 @@ constructor(
                         edgeWithoutSceneContainer = Edge.create(from = GLANCEABLE_HUB),
                     ),
                 ),
-            ) { isOnGlanceableHub, transitioningToOrFromHub ->
-                isOnGlanceableHub || transitioningToOrFromHub
-            }
+            )
             .distinctUntilChanged()
             .dumpWhileCollecting("isOnGlanceableHub")
 
@@ -517,8 +535,13 @@ constructor(
                             combineTransform(
                                 shadeInteractor.shadeExpansion,
                                 shadeInteractor.qsExpansion,
-                            ) { shadeExpansion, qsExpansion ->
-                                if (qsExpansion == 1f) {
+                                bouncerInteractor.bouncerExpansion,
+                            ) { shadeExpansion, qsExpansion, bouncerExpansion ->
+                                if (bouncerExpansion == 1f) {
+                                    emit(0f)
+                                } else if (bouncerExpansion > 0f) {
+                                    emit(1 - bouncerExpansion)
+                                } else if (qsExpansion == 1f) {
                                     // Ensure HUNs will be visible in QS shade (at least while
                                     // unlocked)
                                     emit(1f)
@@ -527,19 +550,38 @@ constructor(
                                     emit(1f - qsExpansion)
                                 }
                             }
-                        Split -> isAnyExpanded.filter { it }.map { 1f }
+
+                        Split ->
+                            combineTransform(isAnyExpanded, bouncerInteractor.bouncerExpansion) {
+                                isAnyExpanded,
+                                bouncerExpansion ->
+                                if (bouncerExpansion == 1f) {
+                                    emit(0f)
+                                } else if (bouncerExpansion > 0f) {
+                                    emit(1 - bouncerExpansion)
+                                } else if (isAnyExpanded) {
+                                    emit(1f)
+                                }
+                            }
+
                         Dual ->
                             combineTransform(
                                 shadeModeInteractor.isShadeLayoutWide,
                                 headsUpNotificationInteractor.get().isHeadsUpOrAnimatingAway,
                                 shadeInteractor.shadeExpansion,
                                 shadeInteractor.qsExpansion,
+                                bouncerInteractor.bouncerExpansion,
                             ) {
                                 isShadeLayoutWide,
                                 isHeadsUpOrAnimatingAway,
                                 shadeExpansion,
-                                qsExpansion ->
-                                if (isShadeLayoutWide) {
+                                qsExpansion,
+                                bouncerExpansion ->
+                                if (bouncerExpansion == 1f) {
+                                    emit(0f)
+                                } else if (bouncerExpansion > 0f) {
+                                    emit(1 - bouncerExpansion)
+                                } else if (isShadeLayoutWide) {
                                     if (shadeExpansion > 0f) {
                                         emit(1f)
                                     }
@@ -602,7 +644,6 @@ constructor(
             aodToOccludedTransitionViewModel.lockscreenAlpha(viewState),
             aodToGlanceableHubTransitionViewModel.lockscreenAlpha(viewState),
             aodToPrimaryBouncerTransitionViewModel.notificationAlpha,
-            dozingToDreamingTransitionViewModel.notificationAlpha,
             dozingToLockscreenTransitionViewModel.lockscreenAlpha,
             dozingToOccludedTransitionViewModel.lockscreenAlpha(viewState),
             dozingToPrimaryBouncerTransitionViewModel.notificationAlpha,
@@ -638,7 +679,7 @@ constructor(
                 anyOf(
                     isKeyguardOccluded,
                     keyguardTransitionInteractor
-                        .transitionValue(scene = Scenes.Gone, stateWithoutSceneContainer = GONE)
+                        .transitionValue(content = Scenes.Gone, stateWithoutSceneContainer = GONE)
                         .map { it == 1f },
                 )
             }

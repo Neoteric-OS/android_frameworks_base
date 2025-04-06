@@ -25,6 +25,9 @@ import static android.app.admin.DevicePolicyResources.Drawables.WORK_PROFILE_ICO
 import static android.app.admin.DevicePolicyResources.UNDEFINED;
 import static android.graphics.drawable.Icon.TYPE_URI;
 import static android.graphics.drawable.Icon.TYPE_URI_ADAPTIVE_BITMAP;
+import static android.util.TypedValue.COMPLEX_UNIT_PX;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import static java.util.Objects.requireNonNull;
 
@@ -1980,7 +1983,7 @@ public class Notification implements Parcelable
          * treatment.
          * @hide
          */
-        public static final String EXTRA_IS_MAGIC = "android.extra.IS_MAGIC";
+        public static final String EXTRA_IS_ANIMATED = "android.extra.IS_ANIMATED";
 
         private final Bundle mExtras;
         @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
@@ -3250,9 +3253,24 @@ public class Notification implements Parcelable
      * @hide
      */
     public boolean hasTitle() {
-        return extras != null
-                && (!TextUtils.isEmpty(extras.getCharSequence(EXTRA_TITLE))
-                || !TextUtils.isEmpty(extras.getCharSequence(EXTRA_TITLE_BIG)));
+        if (extras == null) {
+            return false;
+        }
+        // CallStyle notifications only use the other person's name as the title.
+        if (isStyle(CallStyle.class)) {
+            Person person = extras.getParcelable(EXTRA_CALL_PERSON, Person.class);
+            return person != null && !TextUtils.isEmpty(person.getName());
+        }
+        // non-CallStyle notifications can use EXTRA_TITLE
+        if (!TextUtils.isEmpty(extras.getCharSequence(EXTRA_TITLE))) {
+            return true;
+        }
+        // BigTextStyle notifications first use EXTRA_TITLE_BIG
+        if (isStyle(BigTextStyle.class)) {
+            return !TextUtils.isEmpty(extras.getCharSequence(EXTRA_TITLE_BIG));
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -3263,7 +3281,6 @@ public class Notification implements Parcelable
         final Class<? extends Style> notificationStyle = getNotificationStyle();
 
         return notificationStyle == null
-                || BigPictureStyle.class.equals(notificationStyle)
                 || BigTextStyle.class.equals(notificationStyle)
                 || CallStyle.class.equals(notificationStyle)
                 || ProgressStyle.class.equals(notificationStyle);
@@ -3278,12 +3295,23 @@ public class Notification implements Parcelable
      */
     @FlaggedApi(Flags.FLAG_API_RICH_ONGOING)
     public boolean hasPromotableCharacteristics() {
-        return isColorizedRequested()
-                && isOngoingEvent()
-                && hasTitle()
-                && !isGroupSummary()
-                && !containsCustomViews()
-                && hasPromotableStyle();
+        if (!isOngoingEvent() || isGroupSummary() || containsCustomViews() || !hasTitle()) {
+            return false;
+        }
+        // Only "Ongoing CallStyle" notifications are promotable without EXTRA_COLORIZED
+        if (isOngoingCallStyle()) {
+            return true;
+        }
+        return isColorizedRequested() && hasPromotableStyle();
+    }
+
+    /** Returns whether the notification is CallStyle.forOngoingCall(). */
+    private boolean isOngoingCallStyle() {
+        if (!isStyle(CallStyle.class)) {
+            return false;
+        }
+        int callType = extras.getInt(EXTRA_CALL_TYPE, CallStyle.CALL_TYPE_UNKNOWN);
+        return callType == CallStyle.CALL_TYPE_ONGOING;
     }
 
     /**
@@ -6001,6 +6029,8 @@ public class Notification implements Parcelable
                 contentView.setViewVisibility(p.mTextViewId, View.GONE);
                 contentView.setTextViewText(p.mTextViewId, null);
             }
+
+            updateExpanderAlignment(contentView, p, hasSecondLine);
             setHeaderlessVerticalMargins(contentView, p, hasSecondLine);
 
             // Update margins to leave space for the top line (but not for headerless views like
@@ -6010,10 +6040,27 @@ public class Notification implements Parcelable
                 int margin = getContentMarginTop(mContext,
                         R.dimen.notification_2025_content_margin_top);
                 contentView.setViewLayoutMargin(R.id.notification_main_column,
-                        RemoteViews.MARGIN_TOP, margin, TypedValue.COMPLEX_UNIT_PX);
+                        RemoteViews.MARGIN_TOP, margin, COMPLEX_UNIT_PX);
             }
 
             return contentView;
+        }
+
+        private static void updateExpanderAlignment(RemoteViews contentView,
+                StandardTemplateParams p, boolean hasSecondLine) {
+            if (notificationsRedesignTemplates() && p.mHeaderless) {
+                if (!hasSecondLine) {
+                    // If there's no text, let's center the expand button vertically to align things
+                    // more nicely. This is handled separately for notifications that use a
+                    // NotificationHeaderView, see NotificationHeaderView#centerTopLine.
+                    contentView.setViewLayoutHeight(R.id.expand_button, MATCH_PARENT,
+                            COMPLEX_UNIT_PX);
+                } else {
+                    // Otherwise, just use the default height for the button to keep it top-aligned.
+                    contentView.setViewLayoutHeight(R.id.expand_button, WRAP_CONTENT,
+                            COMPLEX_UNIT_PX);
+                }
+            }
         }
 
         private static void setHeaderlessVerticalMargins(RemoteViews contentView,
@@ -6075,6 +6122,21 @@ public class Notification implements Parcelable
             return mColors;
         }
 
+        private void updateHeaderBackgroundColor(RemoteViews contentView,
+                StandardTemplateParams p) {
+            if (!Flags.uiRichOngoing()) {
+                return;
+            }
+            if (isBackgroundColorized(p)) {
+                contentView.setInt(R.id.notification_header, "setBackgroundColor",
+                        getBackgroundColor(p));
+            } else {
+                // Clear it!
+                contentView.setInt(R.id.notification_header, "setBackgroundResource",
+                        0);
+            }
+        }
+
         private void updateBackgroundColor(RemoteViews contentView,
                 StandardTemplateParams p) {
             if (isBackgroundColorized(p)) {
@@ -6122,6 +6184,20 @@ public class Notification implements Parcelable
                 result.mTitleMarginSet.applyToView(contentView, p.mTextViewId);
                 contentView.setInt(p.mTextViewId, "setNumIndentLines", p.hasTitle() ? 0 : 1);
             }
+            // The expand button uses paddings rather than margins, so we'll adjust it
+            // separately.
+            adjustExpandButtonPadding(contentView, result.mRightIconVisible);
+        }
+
+        private void adjustExpandButtonPadding(RemoteViews contentView, boolean rightIconVisible) {
+            if (notificationsRedesignTemplates()) {
+                final Resources res = mContext.getResources();
+                int normalPadding = res.getDimensionPixelSize(R.dimen.notification_2025_margin);
+                int iconSpacing = res.getDimensionPixelSize(
+                        R.dimen.notification_2025_expand_button_right_icon_spacing);
+                contentView.setInt(R.id.expand_button, "setStartPadding",
+                        rightIconVisible ? iconSpacing : normalPadding);
+            }
         }
 
         // This code is executed on behalf of other apps' notifications, sometimes even by 3p apps,
@@ -6133,12 +6209,21 @@ public class Notification implements Parcelable
                 @NonNull TemplateBindResult result) {
             final Resources resources = mContext.getResources();
             final float density = resources.getDisplayMetrics().density;
-            final float iconMarginDp = resources.getDimension(
-                    R.dimen.notification_right_icon_content_margin) / density;
+            int iconMarginId = notificationsRedesignTemplates()
+                    ? R.dimen.notification_2025_right_icon_content_margin
+                    : R.dimen.notification_right_icon_content_margin;
+            final float iconMarginDp = resources.getDimension(iconMarginId) / density;
             final float contentMarginDp = resources.getDimension(
                     R.dimen.notification_content_margin_end) / density;
-            final float expanderSizeDp = resources.getDimension(
-                    R.dimen.notification_header_expand_icon_size) / density - contentMarginDp;
+            float spaceForExpanderDp;
+            if (notificationsRedesignTemplates()) {
+                spaceForExpanderDp = resources.getDimension(
+                        R.dimen.notification_2025_right_icon_expanded_margin_end) / density
+                        - contentMarginDp;
+            } else {
+                spaceForExpanderDp = resources.getDimension(
+                        R.dimen.notification_header_expand_icon_size) / density - contentMarginDp;
+            }
             final float viewHeightDp = resources.getDimension(
                     R.dimen.notification_right_icon_size) / density;
             float viewWidthDp = viewHeightDp;  // icons are 1:1 by default
@@ -6155,9 +6240,10 @@ public class Notification implements Parcelable
                     }
                 }
             }
+            // Margin needed for the header to accommodate the icon when shown
             final float extraMarginEndDpIfVisible = viewWidthDp + iconMarginDp;
             result.setRightIconState(rightIcon != null /* visible */, viewWidthDp,
-                    viewHeightDp, extraMarginEndDpIfVisible, expanderSizeDp);
+                    viewHeightDp, extraMarginEndDpIfVisible, spaceForExpanderDp);
         }
 
         /**
@@ -6408,45 +6494,49 @@ public class Notification implements Parcelable
             return mN.showsTime() || mN.showsChronometer();
         }
 
-        private void resetStandardTemplateWithActions(RemoteViews big) {
+        private void resetStandardTemplateWithActions(RemoteViews contentView) {
             // actions_container is only reset when there are no actions to avoid focus issues with
             // remote inputs.
-            big.setViewVisibility(R.id.actions, View.GONE);
-            big.removeAllViews(R.id.actions);
+            contentView.setViewVisibility(R.id.actions, View.GONE);
+            contentView.removeAllViews(R.id.actions);
 
-            big.setViewVisibility(R.id.notification_material_reply_container, View.GONE);
-            big.setTextViewText(R.id.notification_material_reply_text_1, null);
-            big.setViewVisibility(R.id.notification_material_reply_text_1_container, View.GONE);
-            big.setViewVisibility(R.id.notification_material_reply_progress, View.GONE);
+            contentView.setViewVisibility(R.id.notification_material_reply_container, View.GONE);
+            contentView.setTextViewText(R.id.notification_material_reply_text_1, null);
+            contentView.setViewVisibility(R.id.notification_material_reply_text_1_container,
+                    View.GONE);
+            contentView.setViewVisibility(R.id.notification_material_reply_progress, View.GONE);
 
-            big.setViewVisibility(R.id.notification_material_reply_text_2, View.GONE);
-            big.setTextViewText(R.id.notification_material_reply_text_2, null);
-            big.setViewVisibility(R.id.notification_material_reply_text_3, View.GONE);
-            big.setTextViewText(R.id.notification_material_reply_text_3, null);
+            contentView.setViewVisibility(R.id.notification_material_reply_text_2, View.GONE);
+            contentView.setTextViewText(R.id.notification_material_reply_text_2, null);
+            contentView.setViewVisibility(R.id.notification_material_reply_text_3, View.GONE);
+            contentView.setTextViewText(R.id.notification_material_reply_text_3, null);
 
-            // This may get erased by bindSnoozeAction
-            big.setViewLayoutMarginDimen(R.id.notification_action_list_margin_target,
-                    RemoteViews.MARGIN_BOTTOM, R.dimen.notification_content_margin);
+            if (!notificationsRedesignTemplates()) {
+                // This may get erased by bindSnoozeAction, or if we're showing the bubble icon
+                contentView.setViewLayoutMarginDimen(R.id.notification_action_list_margin_target,
+                        RemoteViews.MARGIN_BOTTOM, R.dimen.notification_content_margin);
+            }
         }
 
-        private void bindSnoozeAction(RemoteViews big, StandardTemplateParams p) {
+        private boolean bindSnoozeAction(RemoteViews contentView, StandardTemplateParams p) {
             boolean hideSnoozeButton = mN.isFgsOrUij()
                     || mN.fullScreenIntent != null
                     || isBackgroundColorized(p)
                     || p.mViewType != StandardTemplateParams.VIEW_TYPE_EXPANDED;
-            big.setBoolean(R.id.snooze_button, "setEnabled", !hideSnoozeButton);
+            contentView.setBoolean(R.id.snooze_button, "setEnabled", !hideSnoozeButton);
             if (hideSnoozeButton) {
                 // Only hide; NotificationContentView will show it when it adds the click listener
-                big.setViewVisibility(R.id.snooze_button, View.GONE);
+                contentView.setViewVisibility(R.id.snooze_button, View.GONE);
             }
 
             final boolean snoozeEnabled = !hideSnoozeButton
                     && mContext.getContentResolver() != null
                     && isSnoozeSettingEnabled();
-            if (snoozeEnabled) {
-                big.setViewLayoutMarginDimen(R.id.notification_action_list_margin_target,
+            if (!notificationsRedesignTemplates() && snoozeEnabled) {
+                contentView.setViewLayoutMarginDimen(R.id.notification_action_list_margin_target,
                         RemoteViews.MARGIN_BOTTOM, 0);
             }
+            return snoozeEnabled;
         }
 
         private boolean isSnoozeSettingEnabled() {
@@ -6481,16 +6571,14 @@ public class Notification implements Parcelable
 
         private RemoteViews applyStandardTemplateWithActions(int layoutId,
                 StandardTemplateParams p, TemplateBindResult result) {
-            RemoteViews big = applyStandardTemplate(layoutId, p, result);
+            RemoteViews contentView = applyStandardTemplate(layoutId, p, result);
 
-            resetStandardTemplateWithActions(big);
-            bindSnoozeAction(big, p);
+            resetStandardTemplateWithActions(contentView);
+            boolean snoozeEnabled = bindSnoozeAction(contentView, p);
             // color the snooze and bubble actions with the theme color
             ColorStateList actionColor = ColorStateList.valueOf(getStandardActionColor(p));
-            big.setColorStateList(R.id.snooze_button, "setImageTintList", actionColor);
-            big.setColorStateList(R.id.bubble_button, "setImageTintList", actionColor);
-
-            boolean validRemoteInput = false;
+            contentView.setColorStateList(R.id.snooze_button, "setImageTintList", actionColor);
+            contentView.setColorStateList(R.id.bubble_button, "setImageTintList", actionColor);
 
             // In the UI, contextual actions appear separately from the standard actions, so we
             // filter them out here.
@@ -6504,47 +6592,38 @@ public class Notification implements Parcelable
             if (p.mCallStyleActions) {
                 // Clear view padding to allow buttons to start on the left edge.
                 // This must be done before 'setEmphasizedMode' which sets top/bottom margins.
-                big.setViewPadding(R.id.actions, 0, 0, 0, 0);
+                contentView.setViewPadding(R.id.actions, 0, 0, 0, 0);
                 if (!Flags.notificationsRedesignTemplates()) {
                     // Add an optional indent that will make buttons start at the correct column
                     // when there is enough space to do so (and fall back to the left edge if not).
                     // This is handled directly in NotificationActionListLayout in the new design.
-                    big.setInt(R.id.actions, "setCollapsibleIndentDimen",
+                    contentView.setInt(R.id.actions, "setCollapsibleIndentDimen",
                             R.dimen.call_notification_collapsible_indent);
                 }
                 if (evenlyDividedCallStyleActionLayout()) {
                     if (CallStyle.DEBUG_NEW_ACTION_LAYOUT) {
                         Log.d(TAG, "setting evenly divided mode on action list");
                     }
-                    big.setBoolean(R.id.actions, "setEvenlyDividedMode", true);
+                    contentView.setBoolean(R.id.actions, "setEvenlyDividedMode", true);
                 }
             }
-            big.setBoolean(R.id.actions, "setEmphasizedMode", emphasizedMode);
+            if (!notificationsRedesignTemplates()) {
+                contentView.setBoolean(R.id.actions, "setEmphasizedMode", emphasizedMode);
+            }
+
+            boolean validRemoteInput = false;
+            // With the new design, the actions_container should always be visible to act as padding
+            // when there are no actions. We're making its child GONE instead.
+            int actionsContainerForVisibilityChange = notificationsRedesignTemplates()
+                    ? R.id.actions_container_layout : R.id.actions_container;
             if (numActions > 0 && !p.mHideActions) {
-                big.setViewVisibility(R.id.actions_container, View.VISIBLE);
-                big.setViewVisibility(R.id.actions, View.VISIBLE);
-                big.setViewLayoutMarginDimen(R.id.notification_action_list_margin_target,
-                        RemoteViews.MARGIN_BOTTOM, 0);
-                for (int i = 0; i < numActions; i++) {
-                    Action action = nonContextualActions.get(i);
-
-                    boolean actionHasValidInput = hasValidRemoteInput(action);
-                    validRemoteInput |= actionHasValidInput;
-
-                    final RemoteViews button = generateActionButton(action, emphasizedMode, p);
-                    if (actionHasValidInput && !emphasizedMode) {
-                        // Clear the drawable
-                        button.setInt(R.id.action0, "setBackgroundResource", 0);
-                    }
-                    if (emphasizedMode && i > 0) {
-                        // Clear start margin from non-first buttons to reduce the gap between them.
-                        //  (8dp remaining gap is from all buttons' standard 4dp inset).
-                        button.setViewLayoutMarginDimen(R.id.action0, RemoteViews.MARGIN_START, 0);
-                    }
-                    big.addView(R.id.actions, button);
-                }
+                contentView.setViewVisibility(actionsContainerForVisibilityChange, View.VISIBLE);
+                contentView.setViewVisibility(R.id.actions, View.VISIBLE);
+                updateMarginsForActions(contentView, emphasizedMode);
+                validRemoteInput = populateActionsContainer(contentView, p, nonContextualActions,
+                        numActions, emphasizedMode);
             } else {
-                big.setViewVisibility(R.id.actions_container, View.GONE);
+                contentView.setViewVisibility(actionsContainerForVisibilityChange, View.GONE);
             }
 
             RemoteInputHistoryItem[] replyText = getParcelableArrayFromBundle(
@@ -6553,37 +6632,89 @@ public class Notification implements Parcelable
                     && !TextUtils.isEmpty(replyText[0].getText())
                     && p.maxRemoteInputHistory > 0) {
                 boolean showSpinner = mN.extras.getBoolean(EXTRA_SHOW_REMOTE_INPUT_SPINNER);
-                big.setViewVisibility(R.id.notification_material_reply_container, View.VISIBLE);
-                big.setViewVisibility(R.id.notification_material_reply_text_1_container,
+                contentView.setViewVisibility(R.id.notification_material_reply_container,
                         View.VISIBLE);
-                big.setTextViewText(R.id.notification_material_reply_text_1,
+                contentView.setViewVisibility(R.id.notification_material_reply_text_1_container,
+                        View.VISIBLE);
+                contentView.setTextViewText(R.id.notification_material_reply_text_1,
                         ensureColorSpanContrastOrStripStyling(replyText[0].getText(), p));
-                setTextViewColorSecondary(big, R.id.notification_material_reply_text_1, p);
-                big.setViewVisibility(R.id.notification_material_reply_progress,
+                setTextViewColorSecondary(contentView, R.id.notification_material_reply_text_1, p);
+                contentView.setViewVisibility(R.id.notification_material_reply_progress,
                         showSpinner ? View.VISIBLE : View.GONE);
-                big.setProgressIndeterminateTintList(
+                contentView.setProgressIndeterminateTintList(
                         R.id.notification_material_reply_progress,
                         ColorStateList.valueOf(getPrimaryAccentColor(p)));
 
                 if (replyText.length > 1 && !TextUtils.isEmpty(replyText[1].getText())
                         && p.maxRemoteInputHistory > 1) {
-                    big.setViewVisibility(R.id.notification_material_reply_text_2, View.VISIBLE);
-                    big.setTextViewText(R.id.notification_material_reply_text_2,
+                    contentView.setViewVisibility(R.id.notification_material_reply_text_2,
+                            View.VISIBLE);
+                    contentView.setTextViewText(R.id.notification_material_reply_text_2,
                             ensureColorSpanContrastOrStripStyling(replyText[1].getText(), p));
-                    setTextViewColorSecondary(big, R.id.notification_material_reply_text_2, p);
+                    setTextViewColorSecondary(contentView, R.id.notification_material_reply_text_2,
+                            p);
 
                     if (replyText.length > 2 && !TextUtils.isEmpty(replyText[2].getText())
                             && p.maxRemoteInputHistory > 2) {
-                        big.setViewVisibility(
+                        contentView.setViewVisibility(
                                 R.id.notification_material_reply_text_3, View.VISIBLE);
-                        big.setTextViewText(R.id.notification_material_reply_text_3,
+                        contentView.setTextViewText(R.id.notification_material_reply_text_3,
                                 ensureColorSpanContrastOrStripStyling(replyText[2].getText(), p));
-                        setTextViewColorSecondary(big, R.id.notification_material_reply_text_3, p);
+                        setTextViewColorSecondary(contentView,
+                                R.id.notification_material_reply_text_3, p);
                     }
                 }
             }
 
-            return big;
+            return contentView;
+        }
+
+        private void updateMarginsForActions(RemoteViews contentView, boolean emphasizedMode) {
+            if (notificationsRedesignTemplates()) {
+                if (emphasizedMode) {
+                    // Emphasized actions look similar to smart replies, so let's use the same
+                    // margins.
+                    contentView.setViewLayoutMarginDimen(R.id.actions_container,
+                            RemoteViews.MARGIN_TOP,
+                            R.dimen.notification_2025_smart_reply_container_margin);
+                    contentView.setViewLayoutMarginDimen(R.id.actions_container,
+                            RemoteViews.MARGIN_BOTTOM,
+                            R.dimen.notification_2025_smart_reply_container_margin);
+                } else {
+                    contentView.setViewLayoutMarginDimen(R.id.actions_container,
+                            RemoteViews.MARGIN_TOP, 0);
+                    contentView.setViewLayoutMarginDimen(R.id.actions_container,
+                            RemoteViews.MARGIN_BOTTOM,
+                            R.dimen.notification_2025_action_list_margin_bottom);
+                }
+            } else {
+                contentView.setViewLayoutMarginDimen(R.id.notification_action_list_margin_target,
+                        RemoteViews.MARGIN_BOTTOM, 0);
+            }
+        }
+
+        private boolean populateActionsContainer(RemoteViews contentView, StandardTemplateParams p,
+                List<Action> nonContextualActions, int numActions, boolean emphasizedMode) {
+            boolean validRemoteInput = false;
+            for (int i = 0; i < numActions; i++) {
+                Action action = nonContextualActions.get(i);
+
+                boolean actionHasValidInput = hasValidRemoteInput(action);
+                validRemoteInput |= actionHasValidInput;
+
+                final RemoteViews button = generateActionButton(action, emphasizedMode, p);
+                if (actionHasValidInput && !emphasizedMode) {
+                    // Clear the drawable
+                    button.setInt(R.id.action0, "setBackgroundResource", 0);
+                }
+                if (emphasizedMode && i > 0) {
+                    // Clear start margin from non-first buttons to reduce the gap between them.
+                    //  (8dp remaining gap is from all buttons' standard 4dp inset).
+                    button.setViewLayoutMarginDimen(R.id.action0, RemoteViews.MARGIN_START, 0);
+                }
+                contentView.addView(R.id.actions, button);
+            }
+            return validRemoteInput;
         }
 
         /**
@@ -6810,7 +6941,7 @@ public class Notification implements Parcelable
          * @hide
          */
         public RemoteViews makeNotificationGroupHeader() {
-            return makeNotificationHeader(mParams.reset()
+            return makeNotificationHeader(mParams.reset().disallowColorization()
                     .viewType(StandardTemplateParams.VIEW_TYPE_GROUP_HEADER)
                     .fillTextsFrom(this));
         }
@@ -6822,12 +6953,11 @@ public class Notification implements Parcelable
          * @param p the template params to inflate this with
          */
         private RemoteViews makeNotificationHeader(StandardTemplateParams p) {
-            // Headers on their own are never colorized
-            p.disallowColorization();
             RemoteViews header = new BuilderRemoteViews(mContext.getApplicationInfo(),
                     getHeaderLayoutResource());
             resetNotificationHeader(header);
             bindNotificationHeader(header, p);
+            updateHeaderBackgroundColor(header, p);
             if (Flags.notificationsRedesignTemplates()
                     && (p.mViewType == StandardTemplateParams.VIEW_TYPE_MINIMIZED
                     || p.mViewType == StandardTemplateParams.VIEW_TYPE_PUBLIC)) {
@@ -6951,6 +7081,10 @@ public class Notification implements Parcelable
                     savedBundle.getBoolean(EXTRA_SHOW_CHRONOMETER));
             publicExtras.putBoolean(EXTRA_CHRONOMETER_COUNT_DOWN,
                     savedBundle.getBoolean(EXTRA_CHRONOMETER_COUNT_DOWN));
+            if (mN.isPromotedOngoing()) {
+                publicExtras.putBoolean(EXTRA_COLORIZED,
+                        savedBundle.getBoolean(EXTRA_COLORIZED));
+            }
             String appName = savedBundle.getString(EXTRA_SUBSTITUTE_APP_NAME);
             if (appName != null) {
                 publicExtras.putString(EXTRA_SUBSTITUTE_APP_NAME, appName);
@@ -6962,6 +7096,9 @@ public class Notification implements Parcelable
                     .fillTextsFrom(this);
             if (isLowPriority) {
                 params.highlightExpander(false);
+            }
+            if (!mN.isPromotedOngoing()) {
+                params.disallowColorization();
             }
             view = makeNotificationHeader(params);
             view.setBoolean(R.id.notification_header, "setExpandOnlyOnButton", true);
@@ -6982,7 +7119,7 @@ public class Notification implements Parcelable
          * @hide
          */
         public RemoteViews makeLowPriorityContentView(boolean useRegularSubtext) {
-            StandardTemplateParams p = mParams.reset()
+            StandardTemplateParams p = mParams.reset().disallowColorization()
                     .viewType(StandardTemplateParams.VIEW_TYPE_MINIMIZED)
                     .highlightExpander(false)
                     .fillTextsFrom(this);
@@ -9504,14 +9641,21 @@ public class Notification implements Parcelable
                     .viewType(viewType)
                     .highlightExpander(isConversationLayout)
                     .hideProgress(true)
-                    .text(null)
                     .hideLeftIcon(isOneToOne)
                     .hideRightIcon(hideRightIcons || isOneToOne);
             if (notificationsRedesignTemplates()) {
+                String lastMessage = !mMessages.isEmpty()
+                        ? mMessages.getLast().mText.toString() : null;
+
                 p.title(conversationTitle)
+                        // The text is not actually displayed like this (since we're using a
+                        // MessagingLinearLayout instead of the regular text), but we're using it to
+                        // know whether the notification will have a second line in practice.
+                        .text(lastMessage)
                         .hideAppName(isCollapsed);
             } else {
                 p.title(isLegacyHeaderless ? conversationTitle : null)
+                        .text(null)
                         .headerTextSecondary(isLegacyHeaderless ? null : conversationTitle);
             }
             RemoteViews contentView = mBuilder.applyStandardTemplateWithActions(
@@ -9560,7 +9704,7 @@ public class Notification implements Parcelable
                 int marginStart = res.getDimensionPixelSize(
                         R.dimen.notification_2025_content_margin_start);
                 contentView.setViewLayoutMargin(R.id.title,
-                        RemoteViews.MARGIN_START, marginStart, TypedValue.COMPLEX_UNIT_PX);
+                        RemoteViews.MARGIN_START, marginStart, COMPLEX_UNIT_PX);
             }
             if (isLegacyHeaderless) {
                 // Collapsed legacy messaging style has a 1-line limit.
@@ -9613,7 +9757,11 @@ public class Notification implements Parcelable
                     return sender.getName();
                 }
             }
-            return null;
+            // If we've reached this point without finding a sender that doesn't match the user, it
+            // likely points to an incorrect use of our API, where the user isn't being set
+            // correctly. It's either that, or perhaps the user actually is having a conversation
+            // with themselves ¯\_(ツ)_/¯ so let's not leave the name empty.
+            return notificationsRedesignTemplates() ? mUser.getName() : null;
         }
 
         private boolean hasOnlyWhiteSpaceSenders() {
@@ -14630,13 +14778,19 @@ public class Notification implements Parcelable
         public final MarginSet mTitleMarginSet = new MarginSet();
 
         public void setRightIconState(boolean visible, float widthDp, float heightDp,
-                float marginEndDpIfVisible, float expanderSizeDp) {
+                float marginEndDpIfVisible, float spaceForExpanderDp) {
             mRightIconVisible = visible;
             mRightIconWidthDp = widthDp;
             mRightIconHeightDp = heightDp;
-            mHeadingExtraMarginSet.setValues(0, marginEndDpIfVisible);
-            mHeadingFullMarginSet.setValues(expanderSizeDp, marginEndDpIfVisible + expanderSizeDp);
-            mTitleMarginSet.setValues(0, marginEndDpIfVisible + expanderSizeDp);
+            mHeadingExtraMarginSet.setValues(
+                    /* valueIfGone = */ 0,
+                    /* valueIfVisible = */ marginEndDpIfVisible);
+            mHeadingFullMarginSet.setValues(
+                    /* valueIfGone = */ spaceForExpanderDp,
+                    /* valueIfVisible = */ marginEndDpIfVisible + spaceForExpanderDp);
+            mTitleMarginSet.setValues(
+                    /* valueIfGone = */ 0,
+                    /* valueIfVisible = */ marginEndDpIfVisible + spaceForExpanderDp);
         }
 
         /**

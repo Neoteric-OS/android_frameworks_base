@@ -521,6 +521,9 @@
 <!-- QTI_END: 2020-02-02: Android_UI: SettingsProvider: add time format default value settings-->
     <bool name="def_double_tap_to_wake">true</bool>
 
+    <!-- Default setting for double tap to sleep (Settings.Secure.DOUBLE_TAP_TO_SLEEP) -->
+    <bool name="def_double_tap_to_sleep">false</bool>
+
     <!-- Default for Settings.Secure.NFC_PAYMENT_DEFAULT_COMPONENT -->
 <!-- QTI_BEGIN: 2020-02-02: Android_UI: SettingsProvider: add time format default value settings-->
 <!-- QTI_END: 2020-02-02: Android_UI: SettingsProvider: add time format default value settings-->
@@ -738,4 +741,7 @@
 
     <!-- The default ringer mode. See `AudioManager` for list of valid values. -->
     <integer name="def_ringer_mode">2</integer>
+
+    <!-- Caps minsum contrast from -1.0 (Material API) to 0.0 (Android Support)-->
+    <bool name="config_increaseMinContrast">true</bool>
 </resources>

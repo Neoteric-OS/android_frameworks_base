@@ -82,6 +82,7 @@ abstract class AbsAppSnapshotController<TYPE extends WindowContainer,
      */
     @VisibleForTesting
     static final int SNAPSHOT_MODE_NONE = 2;
+    static final float THEME_SNAPSHOT_MIN_Length = 128.0f;
 
     protected final WindowManagerService mService;
     protected final float mHighResSnapshotScale;
@@ -128,6 +129,10 @@ abstract class AbsAppSnapshotController<TYPE extends WindowContainer,
      */
     protected void initialize(CACHE cache) {
         mCache = cache;
+    }
+
+    void setSnapshotReleaser(Consumer<HardwareBuffer> releaser) {
+        mCache.setSafeSnapshotReleaser(releaser);
     }
 
     void setSnapshotEnabled(boolean enabled) {
@@ -334,7 +339,7 @@ abstract class AbsAppSnapshotController<TYPE extends WindowContainer,
         builder.setId(System.currentTimeMillis());
         builder.setContentInsets(contentInsets);
         builder.setLetterboxInsets(letterboxInsets);
-        final boolean isWindowTranslucent = mainWindow.getAttrs().format != PixelFormat.OPAQUE;
+        final boolean isWindowTranslucent = mainWindow.mAttrs.format != PixelFormat.OPAQUE;
         final boolean isShowWallpaper = mainWindow.hasWallpaper();
         int pixelFormat = builder.getPixelFormat();
         if (pixelFormat == PixelFormat.UNKNOWN) {
@@ -432,18 +437,25 @@ abstract class AbsAppSnapshotController<TYPE extends WindowContainer,
         final ActivityManager.TaskDescription taskDescription = getTaskDescription(source);
         final int color = ColorUtils.setAlphaComponent(
                 taskDescription.getBackgroundColor(), 255);
-        final WindowManager.LayoutParams attrs = mainWindow.getAttrs();
+        final WindowManager.LayoutParams attrs = mainWindow.mAttrs;
         final Rect taskBounds = source.getBounds();
         final InsetsState insetsState = mainWindow.getInsetsStateWithVisibilityOverride();
         final Rect systemBarInsets = getSystemBarInsets(mainWindow.getFrame(), insetsState);
+        final int taskWidth = taskBounds.width();
+        final int taskHeight = taskBounds.height();
+        float scale = mHighResSnapshotScale;
+        if (Flags.reduceTaskSnapshotMemoryUsage()) {
+            final int minLength = Math.min(taskWidth, taskHeight);
+            if (THEME_SNAPSHOT_MIN_Length < minLength) {
+                scale = Math.min(THEME_SNAPSHOT_MIN_Length / minLength, scale);
+            }
+        }
         final SnapshotDrawerUtils.SystemBarBackgroundPainter
                 decorPainter = new SnapshotDrawerUtils.SystemBarBackgroundPainter(attrs.flags,
                 attrs.privateFlags, attrs.insetsFlags.appearance, taskDescription,
-                mHighResSnapshotScale, mainWindow.getRequestedVisibleTypes());
-        final int taskWidth = taskBounds.width();
-        final int taskHeight = taskBounds.height();
-        final int width = (int) (taskWidth * mHighResSnapshotScale);
-        final int height = (int) (taskHeight * mHighResSnapshotScale);
+                scale, mainWindow.getRequestedVisibleTypes());
+        final int width = (int) (taskWidth * scale);
+        final int height = (int) (taskHeight * scale);
         final RenderNode node = RenderNode.create("SnapshotController", null);
         node.setLeftTopRightBottom(0, 0, width, height);
         node.setClipToBounds(false);

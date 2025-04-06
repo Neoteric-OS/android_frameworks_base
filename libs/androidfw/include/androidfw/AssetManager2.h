@@ -21,6 +21,7 @@
 
 #include <array>
 #include <limits>
+#include <optional>
 #include <set>
 #include <span>
 #include <unordered_map>
@@ -167,9 +168,7 @@ class AssetManager2 {
     return configurations_;
   }
 
-  inline void SetDefaultLocale(uint32_t default_locale) {
-    default_locale_ = default_locale;
-  }
+  void SetDefaultLocale(const std::optional<ResTable_config> default_locale);
 
   void SetOverlayConstraints(int32_t display_id, int32_t device_id);
 
@@ -190,8 +189,8 @@ class AssetManager2 {
   // ('android' package, other libraries) will be excluded from the list.
   // If `merge_equivalent_languages` is set to true, resource locales will be canonicalized
   // and de-duped in the resulting list.
-  std::set<std::string> GetResourceLocales(bool exclude_system = false,
-                                           bool merge_equivalent_languages = false) const;
+  LoadedPackage::Locales GetResourceLocales(
+      bool exclude_system = false, bool merge_equivalent_languages = false) const;
 
   // Searches the set of APKs loaded by this AssetManager and opens the first one found located
   // in the assets/ directory.
@@ -258,6 +257,7 @@ class AssetManager2 {
         : cookie(entry.cookie),
           data(entry.value.data),
           type(entry.value.dataType),
+          entry_flags(0U),
           flags(bag->type_spec_flags),
           resid(0U),
           config() {
@@ -272,6 +272,9 @@ class AssetManager2 {
     // Type of the data value.
     uint8_t type;
 
+    // The bitmask of ResTable_entry flags
+    uint16_t entry_flags;
+
     // The bitmask of configuration axis that this resource varies with.
     // See ResTable_config::CONFIG_*.
     uint32_t flags;
@@ -284,9 +287,10 @@ class AssetManager2 {
 
    private:
     SelectedValue(uint8_t value_type, Res_value::data_type value_data, ApkAssetsCookie cookie,
-                  uint32_t type_flags, uint32_t resid, ResTable_config config) :
-                  cookie(cookie), data(value_data), type(value_type), flags(type_flags),
-                  resid(resid), config(std::move(config)) {}
+                  uint16_t entry_flags, uint32_t type_flags, uint32_t resid, ResTable_config config)
+        :
+                  cookie(cookie), data(value_data), type(value_type), entry_flags(entry_flags),
+                  flags(type_flags), resid(resid), config(std::move(config)) {}
   };
 
   // Retrieves the best matching resource value with ID `resid`.
@@ -481,7 +485,7 @@ class AssetManager2 {
   // without taking too much memory.
   std::array<uint8_t, std::numeric_limits<uint8_t>::max() + 1> package_ids_ = {};
 
-  uint32_t default_locale_ = 0;
+  std::optional<ResTable_config> default_locale_;
 
   // The current configurations set for this AssetManager. When this changes, cached resources
   // may need to be purged.

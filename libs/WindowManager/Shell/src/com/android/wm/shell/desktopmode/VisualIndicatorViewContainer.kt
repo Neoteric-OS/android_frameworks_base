@@ -18,6 +18,7 @@ package com.android.wm.shell.desktopmode
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.animation.AnimatorSet
 import android.animation.RectEvaluator
 import android.animation.ValueAnimator
 import android.app.ActivityManager
@@ -32,6 +33,8 @@ import android.view.View
 import android.view.WindowManager
 import android.view.WindowlessWindowManager
 import android.view.animation.DecelerateInterpolator
+import android.widget.FrameLayout
+import androidx.core.animation.doOnEnd
 import com.android.internal.annotations.VisibleForTesting
 import com.android.window.flags.Flags
 import com.android.wm.shell.R
@@ -42,8 +45,10 @@ import com.android.wm.shell.common.SyncTransactionQueue
 import com.android.wm.shell.desktopmode.DesktopModeVisualIndicator.IndicatorType
 import com.android.wm.shell.shared.annotations.ShellDesktopThread
 import com.android.wm.shell.shared.annotations.ShellMainThread
+import com.android.wm.shell.shared.bubbles.BubbleAnythingFlagHelper
 import com.android.wm.shell.shared.bubbles.BubbleDropTargetBoundsProvider
 import com.android.wm.shell.windowdecor.WindowDecoration.SurfaceControlViewHostFactory
+import com.android.wm.shell.windowdecor.tiling.SnapEventHandler
 
 /**
  * Container for the view / viewhost of the indicator, ensuring it is created / animated off the
@@ -60,8 +65,11 @@ constructor(
     private val surfaceControlViewHostFactory: SurfaceControlViewHostFactory =
         object : SurfaceControlViewHostFactory {},
     private val bubbleBoundsProvider: BubbleDropTargetBoundsProvider?,
+    private val snapEventHandler: SnapEventHandler,
 ) {
     @VisibleForTesting var indicatorView: View? = null
+    // Optional extra indicator showing the outline of the bubble bar
+    private var barIndicatorView: View? = null
     private var indicatorViewHost: SurfaceControlViewHost? = null
     // Below variables and the SyncTransactionQueue are the only variables that should
     // be accessed from shell main thread. Everything else should be used exclusively
@@ -91,7 +99,12 @@ constructor(
                 screenWidth = metrics.widthPixels
                 screenHeight = metrics.heightPixels
             }
-            indicatorView = View(context)
+            indicatorView =
+                if (BubbleAnythingFlagHelper.enableBubbleToFullscreen()) {
+                    FrameLayout(context)
+                } else {
+                    View(context)
+                }
             val leash =
                 indicatorBuilder
                     .setName("Desktop Mode Visual Indicator")
@@ -126,6 +139,12 @@ constructor(
             indicatorView?.let { indicatorViewHost?.setView(it, lp) }
             showIndicator(taskSurface, leash)
         }
+    }
+
+    /** Reparent the indicator to {@code newParent}. */
+    fun reparentLeash(t: SurfaceControl.Transaction, newParent: SurfaceControl) {
+        val leash = indicatorLeash ?: return
+        t.reparent(leash, newParent)
     }
 
     private fun showIndicator(taskSurface: SurfaceControl, leash: SurfaceControl) {
@@ -164,23 +183,70 @@ constructor(
                 displayController.getDisplayLayout(taskInfo.displayId)
                     ?: error("Expected to find DisplayLayout for taskId${taskInfo.taskId}.")
             if (currentType == IndicatorType.NO_INDICATOR) {
-                fadeInIndicator(layout, newType)
+                fadeInIndicatorInternal(layout, newType, taskInfo.displayId, snapEventHandler)
             } else if (newType == IndicatorType.NO_INDICATOR) {
-                fadeOutIndicator(layout, currentType, /* finishCallback= */ null)
+                fadeOutIndicator(
+                    layout,
+                    currentType,
+                    /* finishCallback= */ null,
+                    taskInfo.displayId,
+                    snapEventHandler,
+                )
             } else {
                 val animStartType = IndicatorType.valueOf(currentType.name)
-                val animator =
-                    indicatorView?.let {
-                        VisualIndicatorAnimator.animateIndicatorType(
-                            it,
-                            layout,
-                            animStartType,
-                            newType,
-                            bubbleBoundsProvider,
-                        )
-                    } ?: return@execute
+                val indicator = indicatorView ?: return@execute
+                var animator: Animator =
+                    VisualIndicatorAnimator.animateIndicatorType(
+                        indicator,
+                        layout,
+                        animStartType,
+                        newType,
+                        bubbleBoundsProvider,
+                        taskInfo.displayId,
+                        snapEventHandler,
+                    )
+                if (BubbleAnythingFlagHelper.enableBubbleToFullscreen()) {
+                    if (currentType.isBubbleType() || newType.isBubbleType()) {
+                        animator = addBarIndicatorAnimation(animator, currentType, newType)
+                    }
+                }
                 animator.start()
             }
+        }
+    }
+
+    private fun addBarIndicatorAnimation(
+        visualIndicatorAnimator: Animator,
+        currentType: IndicatorType,
+        newType: IndicatorType,
+    ): Animator {
+        if (newType.isBubbleType()) {
+            getOrCreateBubbleBarIndicator(newType)?.let { bar ->
+                return AnimatorSet().apply {
+                    playTogether(visualIndicatorAnimator, fadeBarIndicatorIn(bar))
+                }
+            }
+        }
+        if (currentType.isBubbleType()) {
+            barIndicatorView?.let { bar ->
+                barIndicatorView = null
+                return AnimatorSet().apply {
+                    playTogether(visualIndicatorAnimator, fadeBarIndicatorOut(bar))
+                }
+            }
+        }
+        return visualIndicatorAnimator
+    }
+
+    /**
+     * Fade indicator in as provided type.
+     *
+     * Animator fades the indicator in while expanding the bounds outwards.
+     */
+    fun fadeInIndicator(layout: DisplayLayout, type: IndicatorType, displayId: Int) {
+        if (isReleased) return
+        desktopExecutor.execute {
+            fadeInIndicatorInternal(layout, type, displayId, snapEventHandler)
         }
     }
 
@@ -188,12 +254,27 @@ constructor(
      * Fade indicator in as provided type. Animator fades it in while expanding the bounds outwards.
      */
     @VisibleForTesting
-    fun fadeInIndicator(layout: DisplayLayout, type: IndicatorType) {
+    fun fadeInIndicatorInternal(
+        layout: DisplayLayout,
+        type: IndicatorType,
+        displayId: Int,
+        snapEventHandler: SnapEventHandler,
+    ) {
         desktopExecutor.assertCurrentThread()
-        indicatorView?.let {
-            it.setBackgroundResource(R.drawable.desktop_windowing_transition_background)
-            val animator =
-                VisualIndicatorAnimator.fadeBoundsIn(it, type, layout, bubbleBoundsProvider)
+        indicatorView?.let { indicator ->
+            indicator.setBackgroundResource(R.drawable.desktop_windowing_transition_background)
+            var animator: Animator =
+                VisualIndicatorAnimator.fadeBoundsIn(
+                    indicator,
+                    type,
+                    layout,
+                    bubbleBoundsProvider,
+                    displayId,
+                    snapEventHandler,
+                )
+            if (BubbleAnythingFlagHelper.enableBubbleToFullscreen()) {
+                animator = addBarIndicatorAnimation(animator, IndicatorType.NO_INDICATOR, type)
+            }
             animator.start()
         }
     }
@@ -207,6 +288,8 @@ constructor(
         layout: DisplayLayout,
         currentType: IndicatorType,
         finishCallback: Runnable?,
+        displayId: Int,
+        snapEventHandler: SnapEventHandler,
     ) {
         if (currentType == IndicatorType.NO_INDICATOR) {
             // In rare cases, fade out can be requested before the indicator has determined its
@@ -217,13 +300,19 @@ constructor(
         desktopExecutor.execute {
             indicatorView?.let {
                 val animStartType = IndicatorType.valueOf(currentType.name)
-                val animator =
+                var animator: Animator =
                     VisualIndicatorAnimator.fadeBoundsOut(
                         it,
                         animStartType,
                         layout,
                         bubbleBoundsProvider,
+                        displayId,
+                        snapEventHandler,
                     )
+                if (BubbleAnythingFlagHelper.enableBubbleToFullscreen()) {
+                    animator =
+                        addBarIndicatorAnimation(animator, currentType, IndicatorType.NO_INDICATOR)
+                }
                 animator.addListener(
                     object : AnimatorListenerAdapter() {
                         override fun onAnimationEnd(animation: Animator) {
@@ -256,6 +345,38 @@ constructor(
             }
         }
         isReleased = true
+    }
+
+    private fun getOrCreateBubbleBarIndicator(type: IndicatorType): View? {
+        val container = indicatorView as? FrameLayout ?: return null
+        val onLeft = type == IndicatorType.TO_BUBBLE_LEFT_INDICATOR
+        val bounds = bubbleBoundsProvider?.getBarDropTargetBounds(onLeft) ?: return null
+        val lp = FrameLayout.LayoutParams(bounds.width(), bounds.height())
+        lp.leftMargin = bounds.left
+        lp.topMargin = bounds.top
+        if (barIndicatorView == null) {
+            val indicator = View(container.context)
+            indicator.setBackgroundResource(R.drawable.desktop_windowing_transition_background)
+            container.addView(indicator, lp)
+            barIndicatorView = indicator
+        } else {
+            barIndicatorView?.layoutParams = lp
+        }
+        return barIndicatorView
+    }
+
+    private fun fadeBarIndicatorIn(barIndicator: View): Animator {
+        // Use layout bounds as the end bounds in case the view has not been laid out yet
+        val lp = barIndicator.layoutParams
+        val endBounds = Rect(0, 0, lp.width, lp.height)
+        return VisualIndicatorAnimator.fadeBoundsIn(barIndicator, endBounds)
+    }
+
+    private fun fadeBarIndicatorOut(barIndicator: View): Animator {
+        val startBounds = Rect(0, 0, barIndicator.width, barIndicator.height)
+        val barAnimator = VisualIndicatorAnimator.fadeBoundsOut(barIndicator, startBounds)
+        barAnimator.doOnEnd { (indicatorView as? FrameLayout)?.removeView(barIndicator) }
+        return barAnimator
     }
 
     /**
@@ -328,11 +449,24 @@ constructor(
                 type: IndicatorType,
                 displayLayout: DisplayLayout,
                 bubbleBoundsProvider: BubbleDropTargetBoundsProvider?,
+                displayId: Int,
+                snapEventHandler: SnapEventHandler,
             ): VisualIndicatorAnimator {
-                val endBounds = getIndicatorBounds(displayLayout, type, bubbleBoundsProvider)
+                val endBounds =
+                    getIndicatorBounds(
+                        displayLayout,
+                        type,
+                        bubbleBoundsProvider,
+                        displayId,
+                        snapEventHandler,
+                    )
+                return fadeBoundsIn(view, endBounds)
+            }
+
+            @ShellDesktopThread
+            fun fadeBoundsIn(view: View, endBounds: Rect): VisualIndicatorAnimator {
                 val startBounds = getMinBounds(endBounds)
                 view.background.bounds = startBounds
-
                 val animator = VisualIndicatorAnimator(view, startBounds, endBounds)
                 animator.interpolator = DecelerateInterpolator()
                 setupIndicatorAnimation(animator, AlphaAnimType.ALPHA_FADE_IN_ANIM)
@@ -345,11 +479,24 @@ constructor(
                 type: IndicatorType,
                 displayLayout: DisplayLayout,
                 bubbleBoundsProvider: BubbleDropTargetBoundsProvider?,
+                displayId: Int,
+                snapEventHandler: SnapEventHandler,
             ): VisualIndicatorAnimator {
-                val startBounds = getIndicatorBounds(displayLayout, type, bubbleBoundsProvider)
+                val startBounds =
+                    getIndicatorBounds(
+                        displayLayout,
+                        type,
+                        bubbleBoundsProvider,
+                        displayId,
+                        snapEventHandler,
+                    )
+                return fadeBoundsOut(view, startBounds)
+            }
+
+            @ShellDesktopThread
+            fun fadeBoundsOut(view: View, startBounds: Rect): VisualIndicatorAnimator {
                 val endBounds = getMinBounds(startBounds)
                 view.background.bounds = startBounds
-
                 val animator = VisualIndicatorAnimator(view, startBounds, endBounds)
                 animator.interpolator = DecelerateInterpolator()
                 setupIndicatorAnimation(animator, AlphaAnimType.ALPHA_FADE_OUT_ANIM)
@@ -375,9 +522,25 @@ constructor(
                 origType: IndicatorType,
                 newType: IndicatorType,
                 bubbleBoundsProvider: BubbleDropTargetBoundsProvider?,
+                displayId: Int,
+                snapEventHandler: SnapEventHandler,
             ): VisualIndicatorAnimator {
-                val startBounds = getIndicatorBounds(displayLayout, origType, bubbleBoundsProvider)
-                val endBounds = getIndicatorBounds(displayLayout, newType, bubbleBoundsProvider)
+                val startBounds =
+                    getIndicatorBounds(
+                        displayLayout,
+                        origType,
+                        bubbleBoundsProvider,
+                        displayId,
+                        snapEventHandler,
+                    )
+                val endBounds =
+                    getIndicatorBounds(
+                        displayLayout,
+                        newType,
+                        bubbleBoundsProvider,
+                        displayId,
+                        snapEventHandler,
+                    )
                 val animator = VisualIndicatorAnimator(view, startBounds, endBounds)
                 animator.interpolator = DecelerateInterpolator()
                 setupIndicatorAnimation(animator, AlphaAnimType.ALPHA_NO_CHANGE_ANIM)
@@ -389,6 +552,8 @@ constructor(
                 layout: DisplayLayout,
                 type: IndicatorType,
                 bubbleBoundsProvider: BubbleDropTargetBoundsProvider?,
+                displayId: Int,
+                snapEventHandler: SnapEventHandler,
             ): Rect {
                 val desktopStableBounds = Rect()
                 layout.getStableBounds(desktopStableBounds)
@@ -417,21 +582,25 @@ constructor(
                         )
                     }
 
-                    IndicatorType.TO_SPLIT_LEFT_INDICATOR ->
+                    IndicatorType.TO_SPLIT_LEFT_INDICATOR -> {
+                        val currentLeftBounds = snapEventHandler.getLeftSnapBoundsIfTiled(displayId)
                         return Rect(
                             padding,
                             padding,
-                            desktopStableBounds.width() / 2 - padding,
+                            currentLeftBounds.right - padding,
                             desktopStableBounds.height(),
                         )
-
-                    IndicatorType.TO_SPLIT_RIGHT_INDICATOR ->
+                    }
+                    IndicatorType.TO_SPLIT_RIGHT_INDICATOR -> {
+                        val currentRightBounds =
+                            snapEventHandler.getRightSnapBoundsIfTiled(displayId)
                         return Rect(
-                            desktopStableBounds.width() / 2 + padding,
+                            currentRightBounds.left + padding,
                             padding,
                             desktopStableBounds.width() - padding,
                             desktopStableBounds.height(),
                         )
+                    }
                     IndicatorType.TO_BUBBLE_LEFT_INDICATOR ->
                         return bubbleBoundsProvider?.getBubbleBarExpandedViewDropTargetBounds(
                             /* onLeft= */ true
@@ -487,5 +656,10 @@ constructor(
                 )
             }
         }
+    }
+
+    private fun IndicatorType.isBubbleType(): Boolean {
+        return this == IndicatorType.TO_BUBBLE_LEFT_INDICATOR ||
+            this == IndicatorType.TO_BUBBLE_RIGHT_INDICATOR
     }
 }

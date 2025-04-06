@@ -28,6 +28,7 @@ import android.graphics.Point
 import android.graphics.Rect
 import android.graphics.drawable.BitmapDrawable
 import android.hardware.biometrics.BiometricFingerprintConstants
+import android.hardware.biometrics.BiometricPrompt
 import android.hardware.biometrics.PromptContentItemBulletedText
 import android.hardware.biometrics.PromptContentView
 import android.hardware.biometrics.PromptContentViewWithMoreOptionsButton
@@ -42,6 +43,7 @@ import android.platform.test.annotations.EnableFlags
 import android.view.HapticFeedbackConstants
 import android.view.MotionEvent
 import android.view.Surface
+import android.view.accessibility.accessibilityManager
 import androidx.test.filters.SmallTest
 import com.android.app.activityTaskManager
 import com.android.keyguard.AuthInteractionProperties
@@ -71,9 +73,9 @@ import com.android.systemui.coroutines.collectLastValue
 import com.android.systemui.coroutines.collectValues
 import com.android.systemui.display.data.repository.displayStateRepository
 import com.android.systemui.keyguard.shared.model.AcquiredFingerprintAuthenticationStatus
-import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.kosmos.testScope
 import com.android.systemui.res.R
+import com.android.systemui.testKosmos
 import com.android.systemui.util.mockito.withArgCaptor
 import com.google.android.msdl.data.model.MSDLToken
 import com.google.common.truth.Truth.assertThat
@@ -187,7 +189,7 @@ internal class PromptViewModelTest(private val testCase: TestCase) : SysuiTestCa
     private lateinit var promptContentViewWithMoreOptionsButton:
         PromptContentViewWithMoreOptionsButton
 
-    private val kosmos = Kosmos()
+    private val kosmos = testKosmos()
 
     @Before
     fun setup() {
@@ -200,6 +202,8 @@ internal class PromptViewModelTest(private val testCase: TestCase) : SysuiTestCa
         overrideResource(R.dimen.biometric_dialog_face_icon_size, mockFaceIconSize)
 
         kosmos.applicationContext = context
+        whenever(kosmos.accessibilityManager.getRecommendedTimeoutMillis(anyInt(), anyInt()))
+            .thenReturn(BiometricPrompt.HIDE_DIALOG_DELAY)
 
         if (testCase.fingerprint?.isAnyUdfpsType == true) {
             kosmos.authController = authController
@@ -1468,13 +1472,21 @@ internal class PromptViewModelTest(private val testCase: TestCase) : SysuiTestCa
         whenever(kosmos.udfpsUtils.onTouchOutsideOfSensorArea(any(), any(), any(), any(), any()))
             .thenReturn("Direction")
 
-        kosmos.promptViewModel.onAnnounceAccessibilityHint(
+        kosmos.promptViewModel.onUpdateAccessibilityHint(
             obtainMotionEvent(MotionEvent.ACTION_HOVER_ENTER),
             true,
         )
 
         if (testCase.modalities.hasUdfps) {
             assertThat(hint?.isNotBlank()).isTrue()
+        } else {
+            assertThat(hint.isNullOrBlank()).isTrue()
+        }
+
+        kosmos.promptViewModel.onClearUdfpsGuidanceHint(true)
+
+        if (testCase.modalities.hasUdfps) {
+            assertThat(hint).isNull()
         } else {
             assertThat(hint.isNullOrBlank()).isTrue()
         }
@@ -1493,7 +1505,7 @@ internal class PromptViewModelTest(private val testCase: TestCase) : SysuiTestCa
         whenever(kosmos.udfpsUtils.onTouchOutsideOfSensorArea(any(), any(), any(), any(), any()))
             .thenReturn("Direction")
 
-        kosmos.promptViewModel.onAnnounceAccessibilityHint(
+        kosmos.promptViewModel.onUpdateAccessibilityHint(
             obtainMotionEvent(MotionEvent.ACTION_HOVER_ENTER),
             true,
         )

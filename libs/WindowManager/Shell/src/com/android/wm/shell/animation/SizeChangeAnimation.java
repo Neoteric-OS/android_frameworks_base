@@ -34,6 +34,8 @@ import android.view.animation.ScaleAnimation;
 import android.view.animation.Transformation;
 import android.view.animation.TranslateAnimation;
 
+import com.android.wm.shell.shared.animation.Interpolators;
+
 import java.util.function.Consumer;
 
 /**
@@ -66,7 +68,7 @@ public class SizeChangeAnimation {
      * The maximum of stretching applied to any surface during interpolation (since the animation
      * is a combination of stretching/cropping/fading).
      */
-    private static final float SCALE_FACTOR = 0.7f;
+    private static final float DEFAULT_SCALE_FACTOR = 0.7f;
 
     /**
      * Since this animation is made of several sub-animations, we want to pre-arrange the
@@ -82,9 +84,27 @@ public class SizeChangeAnimation {
      */
     private static final int ANIMATION_RESOLUTION = 1000;
 
+    /**
+     * Initialize a size-change animation from start to end bounds
+     */
     public SizeChangeAnimation(Rect startBounds, Rect endBounds) {
-        mAnimation = buildContainerAnimation(startBounds, endBounds);
-        mSnapshotAnim = buildSnapshotAnimation(startBounds, endBounds);
+        this(startBounds, endBounds, 1f, DEFAULT_SCALE_FACTOR);
+    }
+
+    /**
+     * Initialize a size-change animation from start to end bounds.
+     * <p>
+     * Allows specifying the initial scale factor, {@code initialScale}, that is applied to the
+     * start bounds. This can be useful for example when a task is scaled down when the size change
+     * animation starts.
+     * <p>
+     * By default the max scale applied to any surface is {@link #DEFAULT_SCALE_FACTOR}. Use
+     * {@code scaleFactor} to override it.
+     */
+    public SizeChangeAnimation(Rect startBounds, Rect endBounds, float initialScale,
+            float scaleFactor) {
+        mAnimation = buildContainerAnimation(startBounds, endBounds, initialScale, scaleFactor);
+        mSnapshotAnim = buildSnapshotAnimation(startBounds, endBounds, scaleFactor);
     }
 
     /**
@@ -167,28 +187,43 @@ public class SizeChangeAnimation {
     }
 
     /** Animation for the whole container (snapshot is inside this container). */
-    private static AnimationSet buildContainerAnimation(Rect startBounds, Rect endBounds) {
+    private static AnimationSet buildContainerAnimation(Rect startBounds, Rect endBounds,
+            float initialScale, float scaleFactor) {
         final long duration = ANIMATION_RESOLUTION;
         boolean growing = endBounds.width() - startBounds.width()
                 + endBounds.height() - startBounds.height() >= 0;
-        long scalePeriod = (long) (duration * SCALE_FACTOR);
-        float startScaleX = SCALE_FACTOR * ((float) startBounds.width()) / endBounds.width()
-                + (1.f - SCALE_FACTOR);
-        float startScaleY = SCALE_FACTOR * ((float) startBounds.height()) / endBounds.height()
-                + (1.f - SCALE_FACTOR);
+        long scalePeriod = (long) (duration * scaleFactor);
+        float startScaleX = scaleFactor * ((float) startBounds.width()) / endBounds.width()
+                + (1.f - scaleFactor);
+        float startScaleY = scaleFactor * ((float) startBounds.height()) / endBounds.height()
+                + (1.f - scaleFactor);
         final AnimationSet animSet = new AnimationSet(true);
+        // Use a linear interpolator so the driving ValueAnimator sets the interpolation
+        animSet.setInterpolator(Interpolators.LINEAR);
 
         final Animation scaleAnim = new ScaleAnimation(startScaleX, 1, startScaleY, 1);
         scaleAnim.setDuration(scalePeriod);
+        long scaleStartOffset = 0;
         if (!growing) {
-            scaleAnim.setStartOffset(duration - scalePeriod);
+            scaleStartOffset = duration - scalePeriod;
         }
+        scaleAnim.setStartOffset(scaleStartOffset);
         animSet.addAnimation(scaleAnim);
+
+        if (initialScale != 1f) {
+            final Animation initialScaleAnim = new ScaleAnimation(initialScale, 1f, initialScale,
+                    1f);
+            initialScaleAnim.setDuration(scalePeriod);
+            initialScaleAnim.setStartOffset(scaleStartOffset);
+            animSet.addAnimation(initialScaleAnim);
+        }
+
         final Animation translateAnim = new TranslateAnimation(startBounds.left,
                 endBounds.left, startBounds.top, endBounds.top);
         translateAnim.setDuration(duration);
         animSet.addAnimation(translateAnim);
         Rect startClip = new Rect(startBounds);
+        startClip.scale(initialScale);
         Rect endClip = new Rect(endBounds);
         startClip.offsetTo(0, 0);
         endClip.offsetTo(0, 0);
@@ -201,17 +236,20 @@ public class SizeChangeAnimation {
     }
 
     /** The snapshot surface is assumed to be a child of the container surface. */
-    private static AnimationSet buildSnapshotAnimation(Rect startBounds, Rect endBounds) {
+    private static AnimationSet buildSnapshotAnimation(Rect startBounds, Rect endBounds,
+            float scaleFactor) {
         final long duration = ANIMATION_RESOLUTION;
         boolean growing = endBounds.width() - startBounds.width()
                 + endBounds.height() - startBounds.height() >= 0;
-        long scalePeriod = (long) (duration * SCALE_FACTOR);
-        float endScaleX = 1.f / (SCALE_FACTOR * ((float) startBounds.width()) / endBounds.width()
-                + (1.f - SCALE_FACTOR));
-        float endScaleY = 1.f / (SCALE_FACTOR * ((float) startBounds.height()) / endBounds.height()
-                + (1.f - SCALE_FACTOR));
+        long scalePeriod = (long) (duration * scaleFactor);
+        float endScaleX = 1.f / (scaleFactor * ((float) startBounds.width()) / endBounds.width()
+                + (1.f - scaleFactor));
+        float endScaleY = 1.f / (scaleFactor * ((float) startBounds.height()) / endBounds.height()
+                + (1.f - scaleFactor));
 
         AnimationSet snapAnimSet = new AnimationSet(true);
+        // Use a linear interpolator so the driving ValueAnimator sets the interpolation
+        snapAnimSet.setInterpolator(Interpolators.LINEAR);
         // Animation for the "old-state" snapshot that is atop the task.
         final Animation snapAlphaAnim = new AlphaAnimation(1.f, 0.f);
         snapAlphaAnim.setDuration(scalePeriod);

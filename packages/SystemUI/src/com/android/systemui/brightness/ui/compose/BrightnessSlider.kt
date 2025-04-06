@@ -19,6 +19,7 @@ package com.android.systemui.brightness.ui.compose
 import android.content.Context
 import android.view.MotionEvent
 import androidx.annotation.VisibleForTesting
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.VectorConverter
@@ -36,10 +37,12 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderColors
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -70,6 +73,8 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.android.app.tracing.coroutines.launchTraced as launch
+import com.android.compose.modifiers.padding
+import com.android.compose.theme.LocalAndroidColorScheme
 import com.android.compose.ui.graphics.drawInOverlay
 import com.android.systemui.Flags
 import com.android.systemui.biometrics.Utils.toBitmap
@@ -136,7 +141,7 @@ fun BrightnessSlider(
         } else {
             null
         }
-    val colors = SliderDefaults.colors()
+    val colors = colors()
 
     // The value state is recreated every time gammaValue changes, so we recreate this derivedState
     // We have to use value as that's the value that changes when the user is dragging (gammaValue
@@ -164,20 +169,15 @@ fun BrightnessSlider(
 
     val activeIconColor = colors.activeTickColor
     val inactiveIconColor = colors.inactiveTickColor
-    val trackIcon: DrawScope.(Offset, Color, Float) -> Unit =
-        remember(painter) {
-            { offset, color, alpha ->
-                translate(offset.x + IconPadding.toPx(), offset.y) {
-                    with(painter) {
-                        draw(
-                            IconSize.toSize(),
-                            colorFilter = ColorFilter.tint(color),
-                            alpha = alpha,
-                        )
-                    }
+    val trackIcon: DrawScope.(Offset, Color, Float) -> Unit = remember {
+        { offset, color, alpha ->
+            translate(offset.x + IconPadding.toPx(), offset.y) {
+                with(painter) {
+                    draw(IconSize.toSize(), colorFilter = ColorFilter.tint(color), alpha = alpha)
                 }
             }
         }
+    }
 
     Slider(
         value = animatedValue,
@@ -213,6 +213,7 @@ fun BrightnessSlider(
                 interactionSource = interactionSource,
                 enabled = enabled,
                 thumbSize = DpSize(4.dp, 52.dp),
+                colors = colors,
             )
         },
         track = { sliderState ->
@@ -295,6 +296,7 @@ fun BrightnessSlider(
                 trackInsideCornerSize = 2.dp,
                 drawStopIndicator = null,
                 thumbTrackGapSize = ThumbTrackGapSize,
+                colors = colors,
             )
         },
     )
@@ -327,7 +329,7 @@ private fun Modifier.sliderBackground(color: Color) = drawWithCache {
 fun BrightnessSliderContainer(
     viewModel: BrightnessSliderViewModel,
     modifier: Modifier = Modifier,
-    containerColor: Color = colorResource(R.color.shade_scrim_background_dark),
+    containerColors: ContainerColors,
 ) {
     val gamma = viewModel.currentBrightness.value
     if (gamma == BrightnessSliderViewModel.initialValue.value) { // Ignore initial negative value.
@@ -348,7 +350,23 @@ fun BrightnessSliderContainer(
 
     DisposableEffect(Unit) { onDispose { viewModel.setIsDragging(false) } }
 
-    Box(modifier = modifier.fillMaxWidth().sysuiResTag("brightness_slider")) {
+    var dragging by remember { mutableStateOf(false) }
+
+    // Use dragging instead of viewModel.showMirror so the color starts changing as soon as the
+    // dragging state changes. If not, we may be waiting for the background to finish fading in
+    // when stopping dragging
+    val containerColor by
+        animateColorAsState(
+            if (dragging) containerColors.mirrorColor else containerColors.idleColor
+        )
+
+    Box(
+        modifier =
+            modifier
+                .padding(vertical = { SliderBackgroundFrameSize.height.roundToPx() })
+                .fillMaxWidth()
+                .sysuiResTag("brightness_slider")
+    ) {
         BrightnessSlider(
             gammaValue = gamma,
             valueRange = viewModel.minBrightness.value..viewModel.maxBrightness.value,
@@ -358,10 +376,12 @@ fun BrightnessSliderContainer(
             onRestrictedClick = viewModel::showPolicyRestrictionDialog,
             onDrag = {
                 viewModel.setIsDragging(true)
+                dragging = true
                 coroutineScope.launch { viewModel.onDrag(Drag.Dragging(GammaBrightness(it))) }
             },
             onStop = {
                 viewModel.setIsDragging(false)
+                dragging = false
                 coroutineScope.launch { viewModel.onDrag(Drag.Stopped(GammaBrightness(it))) }
             },
             modifier =
@@ -390,6 +410,15 @@ fun BrightnessSliderContainer(
     }
 }
 
+data class ContainerColors(val idleColor: Color, val mirrorColor: Color) {
+    companion object {
+        fun singleColor(color: Color) = ContainerColors(color, color)
+
+        val defaultContainerColor: Color
+            @Composable @ReadOnlyComposable get() = colorResource(R.color.shade_panel_fallback)
+    }
+}
+
 private object Dimensions {
     val SliderBackgroundFrameSize = DpSize(10.dp, 6.dp)
     val SliderBackgroundRoundedCorner = 24.dp
@@ -415,4 +444,14 @@ object BrightnessSliderMotionTestKeys {
     val AnimatingIcon = MotionTestValueKey<Boolean>("animatingIcon")
     val ActiveIconAlpha = MotionTestValueKey<Float>("activeIconAlpha")
     val InactiveIconAlpha = MotionTestValueKey<Float>("inactiveIconAlpha")
+}
+
+@Composable
+private fun colors(): SliderColors {
+    return SliderDefaults.colors()
+        .copy(
+            inactiveTrackColor = LocalAndroidColorScheme.current.surfaceEffect2,
+            activeTickColor = MaterialTheme.colorScheme.onPrimary,
+            inactiveTickColor = MaterialTheme.colorScheme.onSurface,
+        )
 }

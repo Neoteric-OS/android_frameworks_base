@@ -42,15 +42,18 @@
     <string name="title_nearby_device_streaming" msgid="2727103756701741359">"&lt;strong&gt;<xliff:g id="APP_NAME">%1$s</xliff:g>&lt;/strong&gt; колдонмосуна <xliff:g id="DEVICE_TYPE">%2$s</xliff:g> түзмөгүңүздөгү колдонмолорду &lt;strong&gt;<xliff:g id="DEVICE_NAME">%3$s</xliff:g>&lt;/strong&gt; түзмөгүнө алып ойнотууга уруксат бересизби?"</string>
     <string name="summary_nearby_device_streaming" msgid="70434958004946884">"<xliff:g id="APP_NAME_0">%1$s</xliff:g> <xliff:g id="DEVICE_NAME_1">%3$s</xliff:g> түзмөгүңүздө көрүнгөн же ойнотулган бардык нерселерге, анын ичинде аудио, сүрөттөр, төлөм маалыматы, сырсөздөр жана билдирүүлөргө кире алат.&lt;br/&gt;&lt;br/&gt;Бул уруксатты алып салмайынча, <xliff:g id="APP_NAME_2">%1$s</xliff:g> <xliff:g id="DEVICE_NAME_3">%3$s</xliff:g> түзмөгүндөгү колдонмолорду алып ойното алат."</string>
     <string name="helper_summary_nearby_device_streaming" msgid="4712712177819370967">"<xliff:g id="APP_NAME">%1$s</xliff:g> <xliff:g id="DEVICE_TYPE">%3$s</xliff:g> түзмөгүңүздөн колдонмолорду алып ойнотуу үчүн <xliff:g id="DEVICE_NAME">%2$s</xliff:g> түзмөгүнүн атынан уруксат сурап жатат"</string>
-    <string name="title_sensor_device_streaming" msgid="2395553261097861497">"&lt;strong&gt;<xliff:g id="APP_NAME">%1$s</xliff:g>&lt;/strong&gt; колдонмосуна <xliff:g id="DEVICE_TYPE">%2$s</xliff:g> жана &lt;strong&gt;<xliff:g id="DEVICE_NAME">%3$s</xliff:g>&lt;/strong&gt; түзмөктөрүнүн ортосунда аудиону жана тутумдун башка функцияларын алып ойнотууга уруксат бересизби?"</string>
-    <string name="summary_sensor_device_streaming" msgid="3413105061195145547">"<xliff:g id="APP_NAME_0">%1$s</xliff:g> <xliff:g id="DEVICE_NAME_1">%3$s</xliff:g> түзмөгүндө ойнотулган бардык нерселерге мүмкүнчүлүк ала алат.&lt;br/&gt;&lt;br/&gt;Бул уруксатты алып салмайынча, <xliff:g id="APP_NAME_2">%1$s</xliff:g> аудиону <xliff:g id="DEVICE_NAME_3">%3$s</xliff:g> түзмөгүнө алып ойното алат."</string>
-    <string name="helper_summary_sensor_device_streaming" msgid="8860174545653786353">"<xliff:g id="APP_NAME">%1$s</xliff:g> <xliff:g id="DEVICE_NAME">%2$s</xliff:g> түзмөгүңүздүн атынан түзмөктөрдүн ортосунда аудиону жана тутумдун башка функцияларын алып ойнотууга уруксат сурап жатат."</string>
+    <!-- no translation found for title_virtual_device (6556338763070329395) -->
+    <skip />
+    <!-- no translation found for summary_virtual_device (3502592544171322817) -->
+    <skip />
     <string name="profile_name_generic" msgid="6851028682723034988">"түзмөк"</string>
     <string name="summary_generic" msgid="1761976003668044801">"Бул колдонмо маалыматты шайкештире алат, мисалы, чалып жаткан кишинин атын телефон жана тандалган түзмөк менен шайкештирет"</string>
     <string name="consent_yes" msgid="8344487259618762872">"Ооба"</string>
     <string name="consent_no" msgid="2640796915611404382">"Уруксат берилбесин"</string>
     <string name="consent_cancel" msgid="5655005528379285841">"Жок"</string>
     <string name="consent_back" msgid="2560683030046918882">"Артка"</string>
+    <string name="downward_arrow_action" msgid="2327165938832076333">"Тизменин ылдый жагына сыдыруу"</string>
+    <string name="downward_arrow" msgid="2292427714411156088">"Ылдый караган жебе"</string>
     <string name="permission_expand" msgid="893185038020887411">"<xliff:g id="PERMISSION_TYPE">%1$s</xliff:g> жайып көрсөтүү"</string>
     <string name="permission_collapse" msgid="3320833884220844084">"<xliff:g id="PERMISSION_TYPE">%1$s</xliff:g> жыйыштыруу"</string>
     <string name="permission_sync_confirmation_title" msgid="4409622174437248702">"&lt;strong&gt;<xliff:g id="COMPANION_DEVICE_NAME">%1$s</xliff:g>&lt;/strong&gt; түзмөгүнө да &lt;strong&gt;<xliff:g id="PRIMARY_DEVICE_NAME">%2$s</xliff:g>&lt;/strong&gt; түзмөгүнө берилген уруксаттар берилсинби?"</string>

@@ -60,7 +60,7 @@ import com.android.systemui.qs.panels.ui.viewmodel.MediaInRowInLandscapeViewMode
 import com.android.systemui.qs.panels.ui.viewmodel.QuickQuickSettingsViewModel
 import com.android.systemui.qs.ui.viewmodel.QuickSettingsContainerViewModel
 import com.android.systemui.res.R
-import com.android.systemui.scene.shared.model.Scenes
+import com.android.systemui.scene.shared.model.Overlays
 import com.android.systemui.shade.LargeScreenHeaderHelper
 import com.android.systemui.shade.ShadeDisplayAware
 import com.android.systemui.shade.domain.interactor.ShadeInteractor
@@ -306,7 +306,16 @@ constructor(
     val animateTilesExpansion: Boolean
         get() = inFirstPage && !mediaSuddenlyAppearingInLandscape
 
-    var isQSExpandingOrCollapsing by mutableStateOf(false)
+    val isEditing by
+        hydrator.hydratedStateOf(
+            traceName = "isEditing",
+            source = containerViewModel.editModeViewModel.isEditing,
+        )
+
+    /** True if we are not in an expansion (from Gone to QQS/QS) animation. */
+    val isNotTransitioning by derivedStateOf {
+        viewTranslationY == 0f && viewAlpha == 1f && constrainedSquishinessFraction == 1f
+    }
 
     private val inFirstPage: Boolean
         get() = inFirstPageViewModel.inFirstPage
@@ -434,7 +443,7 @@ constructor(
             initialValue = false,
             source =
                 keyguardTransitionInteractor.isInTransition(
-                    Edge.create(to = Scenes.Bouncer),
+                    Edge.create(to = Overlays.Bouncer),
                     Edge.create(to = KeyguardState.PRIMARY_BOUNCER),
                 ),
         )
@@ -541,7 +550,6 @@ constructor(
                 println("proposedTranslation", proposedTranslation)
                 println("expansionState", expansionState)
                 println("forceQS", forceQs)
-                println("isShadeExpandingOrCollapsing", isQSExpandingOrCollapsing)
                 printSection("Derived values") {
                     println("headerTranslation", headerTranslation)
                     println("translationScaleY", translationScaleY)

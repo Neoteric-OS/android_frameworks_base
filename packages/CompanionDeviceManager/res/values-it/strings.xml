@@ -42,15 +42,18 @@
     <string name="title_nearby_device_streaming" msgid="2727103756701741359">"Consentire all\'app &lt;strong&gt;<xliff:g id="APP_NAME">%1$s</xliff:g>&lt;/strong&gt; di riprodurre in streaming le app <xliff:g id="DEVICE_TYPE">%2$s</xliff:g> su &lt;strong&gt;<xliff:g id="DEVICE_NAME">%3$s</xliff:g>&lt;/strong&gt;?"</string>
     <string name="summary_nearby_device_streaming" msgid="70434958004946884">"<xliff:g id="APP_NAME_0">%1$s</xliff:g> avrà accesso a tutti i contenuti visibili o riprodotti dal tuo <xliff:g id="DEVICE_NAME_1">%3$s</xliff:g>, inclusi audio, foto, dati di pagamento, password e messaggi.&lt;br/&gt;&lt;br/&gt;<xliff:g id="APP_NAME_2">%1$s</xliff:g> sarà in grado di riprodurre in streaming le app su <xliff:g id="DEVICE_NAME_3">%3$s</xliff:g> finché non rimuoverai l\'accesso a questa autorizzazione."</string>
     <string name="helper_summary_nearby_device_streaming" msgid="4712712177819370967">"<xliff:g id="APP_NAME">%1$s</xliff:g> richiede l\'autorizzazione per conto di <xliff:g id="DEVICE_NAME">%2$s</xliff:g> per riprodurre in streaming le app dal tuo <xliff:g id="DEVICE_TYPE">%3$s</xliff:g>"</string>
-    <string name="title_sensor_device_streaming" msgid="2395553261097861497">"Consentire all\'app &lt;strong&gt;<xliff:g id="APP_NAME">%1$s</xliff:g>&lt;/strong&gt; di riprodurre in streaming funzionalità di sistema e audio tra <xliff:g id="DEVICE_TYPE">%2$s</xliff:g> e &lt;strong&gt;<xliff:g id="DEVICE_NAME">%3$s</xliff:g>&lt;/strong&gt;?"</string>
-    <string name="summary_sensor_device_streaming" msgid="3413105061195145547">"<xliff:g id="APP_NAME_0">%1$s</xliff:g> avrà accesso a tutto ciò che viene riprodotto sul tuo <xliff:g id="DEVICE_NAME_1">%3$s</xliff:g>.&lt;br/&gt;&lt;br/&gt;<xliff:g id="APP_NAME_2">%1$s</xliff:g> sarà in grado di riprodurre in streaming l\'audio su <xliff:g id="DEVICE_NAME_3">%3$s</xliff:g> finché non rimuoverai l\'accesso a questa autorizzazione."</string>
-    <string name="helper_summary_sensor_device_streaming" msgid="8860174545653786353">"<xliff:g id="APP_NAME">%1$s</xliff:g> richiede l\'autorizzazione per conto di <xliff:g id="DEVICE_NAME">%2$s</xliff:g> per riprodurre in streaming funzionalità di sistema e audio tra i tuoi dispositivi."</string>
+    <!-- no translation found for title_virtual_device (6556338763070329395) -->
+    <skip />
+    <!-- no translation found for summary_virtual_device (3502592544171322817) -->
+    <skip />
     <string name="profile_name_generic" msgid="6851028682723034988">"dispositivo"</string>
     <string name="summary_generic" msgid="1761976003668044801">"Questa app potrà sincronizzare informazioni, ad esempio il nome di un chiamante, tra lo smartphone e il dispositivo scelto"</string>
     <string name="consent_yes" msgid="8344487259618762872">"Consenti"</string>
     <string name="consent_no" msgid="2640796915611404382">"Non consentire"</string>
     <string name="consent_cancel" msgid="5655005528379285841">"Annulla"</string>
     <string name="consent_back" msgid="2560683030046918882">"Indietro"</string>
+    <string name="downward_arrow_action" msgid="2327165938832076333">"Scorri l\'elenco verso il basso"</string>
+    <string name="downward_arrow" msgid="2292427714411156088">"Freccia verso il basso"</string>
     <string name="permission_expand" msgid="893185038020887411">"Espandi <xliff:g id="PERMISSION_TYPE">%1$s</xliff:g>"</string>
     <string name="permission_collapse" msgid="3320833884220844084">"Comprimi <xliff:g id="PERMISSION_TYPE">%1$s</xliff:g>"</string>
     <string name="permission_sync_confirmation_title" msgid="4409622174437248702">"Vuoi dare alle app su &lt;strong&gt;<xliff:g id="COMPANION_DEVICE_NAME">%1$s</xliff:g>&lt;/strong&gt; le stesse autorizzazioni che hai dato su &lt;strong&gt;<xliff:g id="PRIMARY_DEVICE_NAME">%2$s</xliff:g>&lt;/strong&gt;?"</string>

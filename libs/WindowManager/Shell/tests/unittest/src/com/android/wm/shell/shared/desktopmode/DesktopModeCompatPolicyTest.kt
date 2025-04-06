@@ -42,10 +42,13 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.ArgumentMatchers.anyString
 import org.mockito.kotlin.any
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.times
+import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
 /**
@@ -85,7 +88,7 @@ class DesktopModeCompatPolicyTest : ShellTestCase() {
     @Test
     @EnableFlags(Flags.FLAG_ENABLE_MODALS_FULLSCREEN_WITH_PERMISSION)
     fun testIsTopActivityExemptWithPermission_onlyTransparentActivitiesInStack() {
-        allowOverlayPermission(arrayOf(SYSTEM_ALERT_WINDOW))
+        allowOverlayPermissionForAllUsers(arrayOf(SYSTEM_ALERT_WINDOW))
         assertTrue(desktopModeCompatPolicy.isTopActivityExemptFromDesktopWindowing(
             createFreeformTask(/* displayId */ 0)
                 .apply {
@@ -99,7 +102,7 @@ class DesktopModeCompatPolicyTest : ShellTestCase() {
     @Test
     @EnableFlags(Flags.FLAG_ENABLE_MODALS_FULLSCREEN_WITH_PERMISSION)
     fun testIsTopActivityExemptWithNoPermission_onlyTransparentActivitiesInStack() {
-        allowOverlayPermission(arrayOf())
+        allowOverlayPermissionForAllUsers(arrayOf())
         assertFalse(desktopModeCompatPolicy.isTopActivityExemptFromDesktopWindowing(
             createFreeformTask(/* displayId */ 0)
                 .apply {
@@ -108,6 +111,49 @@ class DesktopModeCompatPolicyTest : ShellTestCase() {
                     numActivities = 1
                     baseActivity = baseActivityTest
                 }))
+    }
+
+    @Test
+    @EnableFlags(Flags.FLAG_ENABLE_MODALS_FULLSCREEN_WITH_PERMISSION)
+    fun testIsTopActivityExemptCachedPermissionCheckIsUsed() {
+        allowOverlayPermissionForAllUsers(arrayOf())
+        assertFalse(desktopModeCompatPolicy.isTopActivityExemptFromDesktopWindowing(
+            createFreeformTask(/* displayId */ 0)
+                .apply {
+                    isActivityStackTransparent = true
+                    isTopActivityNoDisplay = false
+                    numActivities = 1
+                    baseActivity = baseActivityTest
+                    userId = 10
+                }))
+        assertFalse(desktopModeCompatPolicy.isTopActivityExemptFromDesktopWindowing(
+            createFreeformTask(/* displayId */ 0)
+                .apply {
+                    isActivityStackTransparent = true
+                    isTopActivityNoDisplay = false
+                    numActivities = 1
+                    baseActivity = baseActivityTest
+                    userId = 10
+                }))
+        assertFalse(desktopModeCompatPolicy.isTopActivityExemptFromDesktopWindowing(
+            createFreeformTask(/* displayId */ 0)
+                .apply {
+                    isActivityStackTransparent = true
+                    isTopActivityNoDisplay = false
+                    numActivities = 1
+                    baseActivity = baseActivityTest
+                    userId = 0
+                }))
+        verify(packageManager, times(1)).getPackageInfoAsUser(
+            eq("com.test.dummypackage"),
+            eq(PackageManager.GET_PERMISSIONS),
+            eq(10)
+        )
+        verify(packageManager, times(1)).getPackageInfoAsUser(
+            eq("com.test.dummypackage"),
+            eq(PackageManager.GET_PERMISSIONS),
+            eq(0)
+        )
     }
 
     @Test
@@ -256,13 +302,14 @@ class DesktopModeCompatPolicyTest : ShellTestCase() {
             }
         }
 
-    fun allowOverlayPermission(permissions: Array<String>) {
+    fun allowOverlayPermissionForAllUsers(permissions: Array<String>) {
         val packageInfo = mock<PackageInfo>()
         packageInfo.requestedPermissions = permissions
         whenever(
-            packageManager.getPackageInfo(
+            packageManager.getPackageInfoAsUser(
                 anyString(),
-                eq(PackageManager.GET_PERMISSIONS)
+                eq(PackageManager.GET_PERMISSIONS),
+                anyInt(),
             )
         ).thenReturn(packageInfo)
     }

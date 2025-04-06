@@ -475,6 +475,7 @@ public final class DisplayManagerGlobal {
         synchronized (mLock) {
             if (!mShouldImplicitlyRegisterRrChanges) {
                 mShouldImplicitlyRegisterRrChanges = true;
+                Slog.i(TAG, "Implicitly registering for refresh rate");
                 updateCallbackIfNeededLocked();
             }
         }
@@ -1499,7 +1500,7 @@ public final class DisplayManagerGlobal {
     }
 
     @VisibleForTesting
-    static final class DisplayListenerDelegate {
+    public static final class DisplayListenerDelegate {
         public final DisplayListener mListener;
         public volatile long mInternalEventFlagsMask;
 
@@ -1536,7 +1537,7 @@ public final class DisplayManagerGlobal {
         }
 
         @VisibleForTesting
-        boolean isEventFilterExplicit() {
+        public boolean isEventFilterExplicit() {
             return mIsEventFilterExplicit;
         }
 
@@ -1759,6 +1760,9 @@ public final class DisplayManagerGlobal {
         synchronized (mLock) {
             mDispatchNativeCallbacks = true;
             if (Flags.delayImplicitRrRegistrationUntilRrAccessed()) {
+                if (!mShouldImplicitlyRegisterRrChanges) {
+                    Slog.i(TAG, "Choreographer implicitly registered for the refresh rate.");
+                }
                 mShouldImplicitlyRegisterRrChanges = true;
             }
             registerCallbackIfNeededLocked();
@@ -1892,7 +1896,7 @@ public final class DisplayManagerGlobal {
     }
 
     @VisibleForTesting
-    CopyOnWriteArrayList<DisplayListenerDelegate> getDisplayListeners() {
+    public CopyOnWriteArrayList<DisplayListenerDelegate> getDisplayListeners() {
         return mDisplayListeners;
     }
 }

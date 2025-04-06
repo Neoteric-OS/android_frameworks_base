@@ -25,7 +25,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.click
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onAllNodesWithText
+import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performCustomAccessibilityActionWithLabel
 import androidx.compose.ui.test.performTouchInput
@@ -34,6 +35,7 @@ import androidx.compose.ui.test.swipeRight
 import androidx.compose.ui.text.AnnotatedString
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
+import com.android.compose.theme.PlatformTheme
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.common.shared.model.ContentDescription
 import com.android.systemui.common.shared.model.Icon
@@ -60,19 +62,21 @@ class ResizingTest : SysuiTestCase() {
         listState: EditTileListState,
         onResize: (TileSpec, Boolean) -> Unit,
     ) {
-        DefaultEditTileGrid(
-            listState = listState,
-            otherTiles = listOf(),
-            columns = 4,
-            largeTilesSpan = 4,
-            modifier = Modifier.fillMaxSize(),
-            onAddTile = {},
-            onRemoveTile = {},
-            onSetTiles = {},
-            onResize = onResize,
-            onStopEditing = {},
-            onReset = null,
-        )
+        PlatformTheme {
+            DefaultEditTileGrid(
+                listState = listState,
+                otherTiles = listOf(),
+                columns = 4,
+                largeTilesSpan = 4,
+                modifier = Modifier.fillMaxSize(),
+                onAddTile = { _, _ -> },
+                onRemoveTile = {},
+                onSetTiles = {},
+                onResize = onResize,
+                onStopEditing = {},
+                onReset = null,
+            )
+        }
     }
 
     @Test
@@ -85,7 +89,8 @@ class ResizingTest : SysuiTestCase() {
         composeRule.waitForIdle()
 
         composeRule
-            .onNodeWithContentDescription("tileA")
+            .onAllNodesWithText("tileA")
+            .onFirst()
             .performCustomAccessibilityActionWithLabel(
                 context.getString(R.string.accessibility_qs_edit_toggle_tile_size_action)
             )
@@ -103,7 +108,8 @@ class ResizingTest : SysuiTestCase() {
         composeRule.waitForIdle()
 
         composeRule
-            .onNodeWithContentDescription("tileD_large")
+            .onAllNodesWithText("tileD_large")
+            .onFirst()
             .performCustomAccessibilityActionWithLabel(
                 context.getString(R.string.accessibility_qs_edit_toggle_tile_size_action)
             )
@@ -121,7 +127,8 @@ class ResizingTest : SysuiTestCase() {
         composeRule.waitForIdle()
 
         composeRule
-            .onNodeWithContentDescription("tileA")
+            .onAllNodesWithText("tileA")
+            .onFirst()
             .performClick() // Select
             .performTouchInput { // Tap on resizing handle
                 click(centerRight)
@@ -141,7 +148,8 @@ class ResizingTest : SysuiTestCase() {
         composeRule.waitForIdle()
 
         composeRule
-            .onNodeWithContentDescription("tileD_large")
+            .onAllNodesWithText("tileD_large")
+            .onFirst()
             .performClick() // Select
             .performTouchInput { // Tap on resizing handle
                 click(centerRight)
@@ -161,7 +169,8 @@ class ResizingTest : SysuiTestCase() {
         composeRule.waitForIdle()
 
         composeRule
-            .onNodeWithContentDescription("tileA")
+            .onAllNodesWithText("tileA")
+            .onFirst()
             .performClick() // Select
             .performTouchInput { // Resize up
                 swipeRight(startX = right, endX = right * 2)
@@ -181,7 +190,8 @@ class ResizingTest : SysuiTestCase() {
         composeRule.waitForIdle()
 
         composeRule
-            .onNodeWithContentDescription("tileD_large")
+            .onAllNodesWithText("tileD_large")
+            .onFirst()
             .performClick() // Select
             .performTouchInput { // Resize down
                 swipeLeft()

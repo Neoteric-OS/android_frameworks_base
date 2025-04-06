@@ -122,6 +122,9 @@ internal class SceneTransitionLayoutImpl(
      * This is used to enable transformations and shared elements across NestedSTLs.
      */
     internal val ancestors: List<Ancestor> = emptyList(),
+
+    /** Whether elements and scene should be tagged using `Modifier.testTag`. */
+    internal val implicitTestTags: Boolean = false,
     lookaheadScope: LookaheadScope? = null,
     defaultEffectFactory: OverscrollFactory,
 ) {
@@ -203,6 +206,9 @@ internal class SceneTransitionLayoutImpl(
      */
     private val nestedScrollDispatcher = NestedScrollDispatcher()
     private val nestedScrollConnection = object : NestedScrollConnection {}
+
+    // TODO(b/399825091): Remove this.
+    private var scenesToAlwaysCompose: MutableList<Scene>? = null
 
     init {
         updateContents(builder, layoutDirection, defaultEffectFactory)
@@ -309,6 +315,7 @@ internal class SceneTransitionLayoutImpl(
                     key: SceneKey,
                     userActions: Map<UserAction, UserActionResult>,
                     effectFactory: OverscrollFactory?,
+                    alwaysCompose: Boolean,
                     content: @Composable InternalContentScope.() -> Unit,
                 ) {
                     require(!overlaysDefined) { "all scenes must be defined before overlays" }
@@ -321,6 +328,10 @@ internal class SceneTransitionLayoutImpl(
                         Content.calculateGlobalZIndex(parentZIndex, ++zIndex, ancestors.size)
                     val factory = effectFactory ?: defaultEffectFactory
                     if (scene != null) {
+                        check(alwaysCompose == scene.alwaysCompose) {
+                            "scene.alwaysCompose can not change"
+                        }
+
                         // Update an existing scene.
                         scene.content = content
                         scene.userActions = resolvedUserActions
@@ -329,7 +340,7 @@ internal class SceneTransitionLayoutImpl(
                         scene.maybeUpdateEffects(factory)
                     } else {
                         // New scene.
-                        scenes[key] =
+                        val scene =
                             Scene(
                                 key,
                                 this@SceneTransitionLayoutImpl,
@@ -338,7 +349,16 @@ internal class SceneTransitionLayoutImpl(
                                 zIndex.toFloat(),
                                 globalZIndex,
                                 factory,
+                                alwaysCompose,
                             )
+
+                        scenes[key] = scene
+
+                        if (alwaysCompose) {
+                            (scenesToAlwaysCompose
+                                    ?: mutableListOf<Scene>().also { scenesToAlwaysCompose = it })
+                                .add(scene)
+                        }
                     }
                 }
 
@@ -442,7 +462,9 @@ internal class SceneTransitionLayoutImpl(
                 // swipes.
                 .swipeToScene(horizontalDraggableHandler)
                 .swipeToScene(verticalDraggableHandler)
-                .then(LayoutElement(layoutImpl = this))
+                .then(
+                    LayoutElement(layoutImpl = this, transitionState = this.state.transitionState)
+                )
         ) {
             LookaheadScope {
                 if (_lookaheadScope == null) {
@@ -467,22 +489,24 @@ internal class SceneTransitionLayoutImpl(
 
     @Composable
     private fun Scenes() {
-        scenesToCompose().fastForEach { scene -> key(scene.key) { scene.Content() } }
+        scenesToCompose().fastForEach { (scene, isInvisible) ->
+            key(scene.key) { scene.Content(isInvisible = isInvisible) }
+        }
     }
 
-    private fun scenesToCompose(): List<Scene> {
+    private fun scenesToCompose(): List<SceneToCompose> {
         val transitions = state.currentTransitions
-        return if (transitions.isEmpty()) {
-            listOf(scene(state.transitionState.currentScene))
-        } else {
-            buildList {
-                val visited = mutableSetOf<SceneKey>()
-                fun maybeAdd(sceneKey: SceneKey) {
-                    if (visited.add(sceneKey)) {
-                        add(scene(sceneKey))
-                    }
+        return buildList {
+            val visited = mutableSetOf<SceneKey>()
+            fun maybeAdd(sceneKey: SceneKey, isInvisible: Boolean = false) {
+                if (visited.add(sceneKey)) {
+                    add(SceneToCompose(scene(sceneKey), isInvisible))
                 }
+            }
 
+            if (transitions.isEmpty()) {
+                maybeAdd(state.transitionState.currentScene)
+            } else {
                 // Compose the new scene we are going to first.
                 transitions.fastForEachReversed { transition ->
                     when (transition) {
@@ -501,8 +525,12 @@ internal class SceneTransitionLayoutImpl(
                 // Make sure that the current scene is always composed.
                 maybeAdd(transitions.last().currentScene)
             }
+
+            scenesToAlwaysCompose?.fastForEach { maybeAdd(it.key, isInvisible = true) }
         }
     }
+
+    private data class SceneToCompose(val scene: Scene, val isInvisible: Boolean)
 
     @Composable
     private fun BoxScope.Overlays() {
@@ -597,23 +625,28 @@ internal class SceneTransitionLayoutImpl(
     @VisibleForTesting internal fun overlaysOrNullForTest(): Map<OverlayKey, Overlay>? = _overlays
 }
 
-private data class LayoutElement(private val layoutImpl: SceneTransitionLayoutImpl) :
-    ModifierNodeElement<LayoutNode>() {
-    override fun create(): LayoutNode = LayoutNode(layoutImpl)
+private data class LayoutElement(
+    private val layoutImpl: SceneTransitionLayoutImpl,
+    private val transitionState: TransitionState,
+) : ModifierNodeElement<LayoutNode>() {
+    override fun create(): LayoutNode = LayoutNode(layoutImpl, transitionState)
 
     override fun update(node: LayoutNode) {
         node.layoutImpl = layoutImpl
+        node.transitionState = transitionState
     }
 }
 
-private class LayoutNode(var layoutImpl: SceneTransitionLayoutImpl) :
-    Modifier.Node(), ApproachLayoutModifierNode, LayoutAwareModifierNode {
+private class LayoutNode(
+    var layoutImpl: SceneTransitionLayoutImpl,
+    var transitionState: TransitionState,
+) : Modifier.Node(), ApproachLayoutModifierNode, LayoutAwareModifierNode {
     override fun onRemeasured(size: IntSize) {
         layoutImpl.lastSize = size
     }
 
     override fun isMeasurementApproachInProgress(lookaheadSize: IntSize): Boolean {
-        return layoutImpl.state.isTransitioning()
+        return transitionState is TransitionState.Transition.ChangeScene
     }
 
     @ExperimentalComposeUiApi
@@ -626,8 +659,7 @@ private class LayoutNode(var layoutImpl: SceneTransitionLayoutImpl) :
 
         val width: Int
         val height: Int
-        val transition =
-            layoutImpl.state.currentTransition as? TransitionState.Transition.ChangeScene
+        val transition = transitionState as? TransitionState.Transition.ChangeScene
         if (transition == null) {
             width = placeable.width
             height = placeable.height
@@ -635,6 +667,9 @@ private class LayoutNode(var layoutImpl: SceneTransitionLayoutImpl) :
             // Interpolate the size.
             val fromSize = layoutImpl.scene(transition.fromScene).targetSize
             val toSize = layoutImpl.scene(transition.toScene).targetSize
+
+            check(fromSize != Element.SizeUnspecified) { "fromSize is unspecified " }
+            check(toSize != Element.SizeUnspecified) { "toSize is unspecified" }
 
             // Optimization: make sure we don't read state.progress if fromSize ==
             // toSize to avoid running this code every frame when the layout size does

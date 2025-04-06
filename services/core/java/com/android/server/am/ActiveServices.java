@@ -407,6 +407,15 @@ public final class ActiveServices {
     @Overridable
     public static final long FGS_SAW_RESTRICTIONS = 319471980L;
 
+    /**
+     * Allows system to manage foreground state of service with type
+     * <li>{@link android.content.pm.ServiceInfo#FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK}</li>
+     */
+    @ChangeId
+    @EnabledSince(targetSdkVersion = VERSION_CODES.VANILLA_ICE_CREAM)
+    @Overridable
+    public static final long MEDIA_FGS_STATE_TRANSITION = 281762171L;
+
     final ActivityManagerService mAm;
 
     // Maximum number of services that we allow to start in the background
@@ -829,7 +838,7 @@ public final class ActiveServices {
                 "SHORT_FGS_TIMEOUT");
         this.mServiceFGAnrTimer = new ServiceAnrTimer(service,
                 ActivityManagerService.SERVICE_FOREGROUND_TIMEOUT_MSG,
-                "SERVICE_FOREGROUND_TIMEOUT");
+                "SERVICE_FOREGROUND_TIMEOUT", new AnrTimer.Args().extend(true));
 // QTI_BEGIN: 2023-10-16: Frameworks: Add check if vendor is supporting AIDL or HIDL
         try {
             if (ServiceManager.isDeclared(AIDL_SERVICE)){
@@ -2728,6 +2737,13 @@ public final class ActiveServices {
                     }
                     notification.flags |= Notification.FLAG_FOREGROUND_SERVICE;
                     r.foregroundNoti = notification;
+                    if (r.isForeground && foregroundServiceType != previousFgsType) {
+                        // An already foreground service is being started with a different fgs type
+                        // which results in the type changing without typical startForeground
+                        // logging.
+                        Slog.w(TAG_SERVICE, "FGS type change for " + r.shortInstanceName
+                                + " from " + previousFgsType + " to " + foregroundServiceType);
+                    }
                     mAm.mProcessStateController.setForegroundServiceType(r, foregroundServiceType);
                     if (!r.isForeground) {
                         final ServiceMap smap = getServiceMapLocked(r.userId);
@@ -8123,6 +8139,11 @@ public final class ActiveServices {
             super(Objects.requireNonNull(am).mHandler, msg, label);
         }
 
+        ServiceAnrTimer(ActivityManagerService am, int msg, String label,
+                @NonNull AnrTimer.Args args) {
+            super(Objects.requireNonNull(am).mHandler, msg, label, args);
+        }
+
         @Override
         public int getPid(@NonNull ServiceRecord service) {
             return (service.app != null) ? service.app.getPid() : 0;
@@ -9619,7 +9640,9 @@ public final class ActiveServices {
         } else {
             synchronized (mAm.mPidsSelfLocked) {
                 callerApp = mAm.mPidsSelfLocked.get(callingPid);
-                caller = callerApp.getThread();
+                if (callerApp != null) {
+                    caller = callerApp.getThread();
+                }
             }
         }
         if (callerApp == null) {
@@ -9778,20 +9801,32 @@ public final class ActiveServices {
                         == ServiceInfo.FOREGROUND_SERVICE_TYPE_NONE
                         && sr.foregroundId == notificationId) {
                     // check if service is explicitly requested by app to not be in foreground.
-                    if (sr.systemRequestedFgToBg) {
-                        Slog.d(TAG,
-                                "System initiated service transition to foreground "
-                                        + "for package "
-                                        + packageName);
-                        setServiceForegroundInnerLocked(sr, sr.foregroundId,
-                                sr.foregroundNoti, /* flags */ 0,
-                                ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK,
-                                /* callingUidStart */ 0, /* systemRequestedTransition */ true);
+                    if (sr.systemRequestedFgToBg && CompatChanges.isChangeEnabled(
+                            MEDIA_FGS_STATE_TRANSITION, sr.appInfo.uid)) {
+                        if (DEBUG_FOREGROUND_SERVICE) {
+                            Slog.d(TAG,
+                                    "System initiated service transition to foreground "
+                                            + "for package "
+                                            + packageName);
+                        }
+                        try {
+                            setServiceForegroundInnerLocked(sr, sr.foregroundId,
+                                    sr.foregroundNoti, /* flags */ 0,
+                                    ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK,
+                                    /* callingUidStart */ 0, /* systemRequestedTransition */ true);
+                        } catch (Exception e) {
+                            Slog.w(TAG,
+                                    "Exception in system initiated foreground service transition "
+                                            + "for package " + packageName
+                                            + ":" + e.toString());
+                        }
                     } else {
-                        Slog.d(TAG,
-                                "Ignoring system initiated foreground service transition for "
-                                        + "package"
-                                        + packageName);
+                        if (DEBUG_FOREGROUND_SERVICE) {
+                            Slog.d(TAG,
+                                    "Ignoring system initiated foreground service transition for "
+                                            + "package "
+                                            + packageName);
+                        }
                     }
                 }
             }
@@ -9825,14 +9860,32 @@ public final class ActiveServices {
                 if (sr.foregroundServiceType
                         == ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK
                         && sr.foregroundId == notificationId) {
-                    Slog.d(TAG,
-                            "System initiated transition of foreground service(type:media) to bg "
-                                    + "for package"
-                                    + packageName);
-                    setServiceForegroundInnerLocked(sr, /* id */ 0,
-                            /* notification */ null, /* flags */ 0,
-                            /* foregroundServiceType */ 0, /* callingUidStart */ 0,
-                            /* systemRequestedTransition */ true);
+                    if (CompatChanges.isChangeEnabled(MEDIA_FGS_STATE_TRANSITION, sr.appInfo.uid)) {
+                        if (DEBUG_FOREGROUND_SERVICE) {
+                            Slog.d(TAG,
+                                    "System initiated transition of foreground service"
+                                            + "(type:media) to"
+                                            + " bg "
+                                            + "for package "
+                                            + packageName);
+                        }
+                        try {
+                            setServiceForegroundInnerLocked(sr, /* id */ 0,
+                                    /* notification */ null, /* flags */ 0,
+                                    /* foregroundServiceType */ 0, /* callingUidStart */ 0,
+                                    /* systemRequestedTransition */ true);
+                        } catch (Exception e) {
+                            Slog.wtf(TAG,
+                                    "Exception in system initiated background service transition "
+                                            + "for package " + packageName
+                                            + ":" + e.toString());
+                        }
+                    } else {
+                        if (DEBUG_FOREGROUND_SERVICE) {
+                            Slog.d(TAG, "Ignoring system initiated transition of foreground"
+                                    + " service(type:media)to bg for package " + packageName);
+                        }
+                    }
                 }
             }
         }

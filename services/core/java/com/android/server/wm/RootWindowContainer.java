@@ -36,6 +36,7 @@ import static android.view.WindowManager.TRANSIT_NONE;
 import static android.view.WindowManager.TRANSIT_PIP;
 import static android.view.WindowManager.TRANSIT_SLEEP;
 import static android.view.WindowManager.TRANSIT_WAKE;
+import static android.window.DesktopExperienceFlags.ENABLE_DISPLAY_CONTENT_MODE_MANAGEMENT;
 
 import static com.android.internal.protolog.WmProtoLogGroups.WM_DEBUG_FOCUS_LIGHT;
 import static com.android.internal.protolog.WmProtoLogGroups.WM_DEBUG_KEEP_SCREEN_ON;
@@ -45,7 +46,6 @@ import static com.android.internal.protolog.WmProtoLogGroups.WM_DEBUG_STATES;
 import static com.android.internal.protolog.WmProtoLogGroups.WM_DEBUG_TASKS;
 import static com.android.internal.protolog.WmProtoLogGroups.WM_DEBUG_WALLPAPER;
 import static com.android.internal.protolog.WmProtoLogGroups.WM_SHOW_SURFACE_ALLOC;
-import static com.android.server.display.feature.flags.Flags.enableDisplayContentModeManagement;
 import static com.android.server.policy.PhoneWindowManager.SYSTEM_DIALOG_REASON_ASSIST;
 import static com.android.server.policy.WindowManagerPolicy.FINISH_LAYOUT_REDO_LAYOUT;
 import static com.android.server.policy.WindowManagerPolicy.FINISH_LAYOUT_REDO_WALLPAPER;
@@ -80,8 +80,6 @@ import static com.android.server.wm.WindowManagerDebugConfig.TAG_WM;
 import static com.android.server.wm.WindowManagerService.UPDATE_FOCUS_NORMAL;
 import static com.android.server.wm.WindowManagerService.UPDATE_FOCUS_PLACING_SURFACES;
 import static com.android.server.wm.WindowManagerService.UPDATE_FOCUS_WILL_PLACE_SURFACES;
-import static com.android.server.wm.WindowSurfacePlacer.SET_UPDATE_ROTATION;
-import static com.android.server.wm.WindowSurfacePlacer.SET_WALLPAPER_ACTION_PENDING;
 
 import static java.lang.Integer.MAX_VALUE;
 
@@ -670,9 +668,6 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
         final int count = mChildren.size();
         for (int i = 0; i < count; ++i) {
             final int pendingChanges = mChildren.get(i).pendingLayoutChanges;
-            if ((pendingChanges & FINISH_LAYOUT_REDO_WALLPAPER) != 0) {
-                animator.mBulkUpdateParams |= SET_WALLPAPER_ACTION_PENDING;
-            }
             if (pendingChanges != 0) {
                 hasChanges = true;
             }
@@ -873,7 +868,8 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
 
         // Post these on a handler such that we don't call into power manager service while
         // holding the window manager lock to avoid lock contention with power manager lock.
-        mHandler.obtainMessage(SET_SCREEN_BRIGHTNESS_OVERRIDE, mDisplayBrightnessOverrides)
+        // Send a copy of the brightness overrides as they may be cleared before being sent out.
+        mHandler.obtainMessage(SET_SCREEN_BRIGHTNESS_OVERRIDE, mDisplayBrightnessOverrides.clone())
                 .sendToTarget();
         mHandler.obtainMessage(SET_USER_ACTIVITY_TIMEOUT, mUserActivityTimeout).sendToTarget();
 
@@ -1037,18 +1033,6 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
             }
         }
         return changed;
-    }
-
-    boolean copyAnimToLayoutParams() {
-        boolean doRequest = false;
-
-        final int bulkUpdateParams = mWmService.mAnimator.mBulkUpdateParams;
-        if ((bulkUpdateParams & SET_UPDATE_ROTATION) != 0) {
-            mUpdateRotation = true;
-            doRequest = true;
-        }
-
-        return doRequest;
     }
 
     private final class MyHandler extends Handler {
@@ -1386,7 +1370,8 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
         // When display content mode management flag is enabled, the task display area is marked as
         // removed when switching from extended display to mirroring display. We need to restart the
         // task display area before starting the home.
-        if (enableDisplayContentModeManagement() && taskDisplayArea.shouldKeepNoTask()) {
+        if (ENABLE_DISPLAY_CONTENT_MODE_MANAGEMENT.isTrue()
+                && taskDisplayArea.shouldKeepNoTask()) {
             taskDisplayArea.setShouldKeepNoTask(false);
         }
 
@@ -1746,26 +1731,14 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
                     activityAssistInfos.clear();
                     activityAssistInfos.add(new ActivityAssistInfo(top));
                     // Check if the activity on the split screen.
-                    if (Flags.allowMultipleAdjacentTaskFragments()) {
-                        top.getTask().forOtherAdjacentTasks(task -> {
-                            final ActivityRecord adjacentActivityRecord =
-                                    task.getTopNonFinishingActivity();
-                            if (adjacentActivityRecord != null) {
-                                activityAssistInfos.add(
-                                        new ActivityAssistInfo(adjacentActivityRecord));
-                            }
-                        });
-                    } else {
-                        final Task adjacentTask = top.getTask().getAdjacentTask();
-                        if (adjacentTask != null) {
-                            final ActivityRecord adjacentActivityRecord =
-                                    adjacentTask.getTopNonFinishingActivity();
-                            if (adjacentActivityRecord != null) {
-                                activityAssistInfos.add(
-                                        new ActivityAssistInfo(adjacentActivityRecord));
-                            }
+                    top.getTask().forOtherAdjacentTasks(task -> {
+                        final ActivityRecord adjacentActivityRecord =
+                                task.getTopNonFinishingActivity();
+                        if (adjacentActivityRecord != null) {
+                            activityAssistInfos.add(
+                                    new ActivityAssistInfo(adjacentActivityRecord));
                         }
-                    }
+                    });
                     if (rootTask == topFocusedRootTask) {
                         topVisibleActivities.addAll(0, activityAssistInfos);
                     } else {
@@ -2945,10 +2918,17 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
                 return;
             }
 
-            if (enableDisplayContentModeManagement() && display.allowContentModeSwitch()) {
-                mWindowManager.mDisplayWindowSettings
-                        .setShouldShowSystemDecorsInternalLocked(display,
-                                display.mDisplay.canHostTasks());
+            if (ENABLE_DISPLAY_CONTENT_MODE_MANAGEMENT.isTrue()) {
+                if (display.allowContentModeSwitch()) {
+                    mWindowManager.mDisplayWindowSettings
+                            .setShouldShowSystemDecorsInternalLocked(display,
+                                    display.mDisplay.canHostTasks());
+                }
+
+                final boolean inTopology = mWindowManager.mDisplayWindowSettings
+                        .shouldShowSystemDecorsLocked(display);
+                mWmService.mDisplayManagerInternal.onDisplayBelongToTopologyChanged(displayId,
+                        inTopology);
             }
 
             startSystemDecorations(display, "displayAdded");
@@ -2968,13 +2948,7 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
         }
 
         startHomeOnDisplay(mCurrentUser, reason, displayContent.getDisplayId());
-        if (enableDisplayContentModeManagement()) {
-            if (displayContent.isSystemDecorationsSupported()) {
-                displayContent.getDisplayPolicy().notifyDisplayAddSystemDecorations();
-            }
-        } else {
-            displayContent.getDisplayPolicy().notifyDisplayAddSystemDecorations();
-        }
+        displayContent.getDisplayPolicy().notifyDisplayAddSystemDecorations();
     }
 
     @Override
@@ -3003,7 +2977,7 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
                 displayContent.requestDisplayUpdate(
                         () -> {
                             clearDisplayInfoCaches(displayId);
-                            if (enableDisplayContentModeManagement()) {
+                            if (ENABLE_DISPLAY_CONTENT_MODE_MANAGEMENT.isTrue()) {
                                 displayContent.onDisplayInfoChangeApplied();
                             }
                         });

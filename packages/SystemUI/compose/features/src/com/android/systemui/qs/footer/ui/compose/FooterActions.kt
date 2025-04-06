@@ -38,6 +38,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
@@ -73,7 +74,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import com.android.compose.animation.Expandable
 import com.android.compose.animation.scene.ContentScope
-import com.android.compose.modifiers.fadingBackground
+import com.android.compose.modifiers.animatedBackground
 import com.android.compose.theme.colorAttr
 import com.android.systemui.Flags.notificationShadeBlur
 import com.android.systemui.animation.Expandable
@@ -81,6 +82,7 @@ import com.android.systemui.common.shared.model.Icon
 import com.android.systemui.common.ui.compose.Icon
 import com.android.systemui.compose.modifiers.sysuiResTag
 import com.android.systemui.qs.flags.QSComposeFragment
+import com.android.systemui.qs.flags.QsInCompose
 import com.android.systemui.qs.footer.ui.viewmodel.FooterActionsButtonViewModel
 import com.android.systemui.qs.footer.ui.viewmodel.FooterActionsForegroundServicesButtonViewModel
 import com.android.systemui.qs.footer.ui.viewmodel.FooterActionsSecurityButtonViewModel
@@ -116,11 +118,9 @@ fun ContentScope.FooterActionsWithAnimatedVisibility(
         QuickSettingsTheme {
             // This view has its own horizontal padding
             // TODO(b/321716470) This should use a lifecycle tied to the scene.
-            FooterActions(
-                viewModel = viewModel,
-                qsVisibilityLifecycleOwner = lifecycleOwner,
-                modifier = Modifier.element(QuickSettings.Elements.FooterActions),
-            )
+            Element(QuickSettings.Elements.FooterActions, Modifier) {
+                FooterActions(viewModel = viewModel, qsVisibilityLifecycleOwner = lifecycleOwner)
+            }
         }
     }
 }
@@ -143,7 +143,7 @@ fun FooterActions(
         mutableStateOf<FooterActionsForegroundServicesButtonViewModel?>(null)
     }
     var userSwitcher by remember { mutableStateOf<FooterActionsButtonViewModel?>(null) }
-    var power by remember { mutableStateOf<FooterActionsButtonViewModel?>(null) }
+    var power by remember { mutableStateOf(viewModel.initialPower()) }
 
     LaunchedEffect(
         context,
@@ -174,8 +174,8 @@ fun FooterActions(
     val backgroundTopRadius = dimensionResource(R.dimen.qs_corner_radius)
     val backgroundModifier =
         remember(backgroundColor, backgroundAlphaValue, backgroundTopRadius) {
-            Modifier.fadingBackground(
-                backgroundColor,
+            Modifier.animatedBackground(
+                { backgroundColor },
                 backgroundAlphaValue,
                 RoundedCornerShape(topStart = backgroundTopRadius, topEnd = backgroundTopRadius),
             )
@@ -220,23 +220,19 @@ fun FooterActions(
             }
 
             val useModifierBasedExpandable = remember { QSComposeFragment.isEnabled }
-            security?.let { SecurityButton(it, useModifierBasedExpandable, Modifier.weight(1f)) }
-            foregroundServices?.let { ForegroundServicesButton(it, useModifierBasedExpandable) }
-            userSwitcher?.let {
-                IconButton(
-                    it,
-                    useModifierBasedExpandable,
-                    Modifier.sysuiResTag("multi_user_switch"),
-                )
-            }
+            SecurityButton({ security }, useModifierBasedExpandable, Modifier.weight(1f))
+            ForegroundServicesButton({ foregroundServices }, useModifierBasedExpandable)
             IconButton(
-                viewModel.settings,
+                { userSwitcher },
+                useModifierBasedExpandable,
+                Modifier.sysuiResTag("multi_user_switch"),
+            )
+            IconButton(
+                { viewModel.settings },
                 useModifierBasedExpandable,
                 Modifier.sysuiResTag("settings_button_container"),
             )
-            power?.let {
-                IconButton(it, useModifierBasedExpandable, Modifier.sysuiResTag("pm_lite"))
-            }
+            IconButton({ power }, useModifierBasedExpandable, Modifier.sysuiResTag("pm_lite"))
         }
     }
 }
@@ -244,10 +240,11 @@ fun FooterActions(
 /** The security button. */
 @Composable
 private fun SecurityButton(
-    model: FooterActionsSecurityButtonViewModel,
+    model: () -> FooterActionsSecurityButtonViewModel?,
     useModifierBasedExpandable: Boolean,
     modifier: Modifier = Modifier,
 ) {
+    val model = model() ?: return
     val onClick: ((Expandable) -> Unit)? =
         model.onClick?.let { onClick ->
             val context = LocalContext.current
@@ -267,9 +264,10 @@ private fun SecurityButton(
 /** The foreground services button. */
 @Composable
 private fun RowScope.ForegroundServicesButton(
-    model: FooterActionsForegroundServicesButtonViewModel,
+    model: () -> FooterActionsForegroundServicesButtonViewModel?,
     useModifierBasedExpandable: Boolean,
 ) {
+    val model = model() ?: return
     if (model.displayText) {
         TextButton(
             Icon.Resource(R.drawable.ic_info_outline, contentDescription = null),
@@ -288,6 +286,17 @@ private fun RowScope.ForegroundServicesButton(
             useModifierBasedExpandable,
         )
     }
+}
+
+/** A button with an icon. */
+@Composable
+fun IconButton(
+    model: () -> FooterActionsButtonViewModel?,
+    useModifierBasedExpandable: Boolean,
+    modifier: Modifier = Modifier,
+) {
+    val model = model() ?: return
+    IconButton(model, useModifierBasedExpandable, modifier)
 }
 
 /** A button with an icon. */
@@ -381,6 +390,7 @@ private fun NewChangesDot(modifier: Modifier = Modifier) {
 }
 
 /** A larger button with an icon, some text and an optional dot (to indicate new changes). */
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun TextButton(
     icon: Icon,
@@ -415,10 +425,13 @@ private fun TextButton(
             Text(
                 text,
                 Modifier.weight(1f),
-                style = MaterialTheme.typography.bodyMedium,
-                // TODO(b/242040009): Remove this letter spacing. We should only use the M3 text
-                // styles without modifying them.
-                letterSpacing = 0.01.em,
+                style =
+                    if (QsInCompose.isEnabled) {
+                        MaterialTheme.typography.labelLarge
+                    } else {
+                        MaterialTheme.typography.bodyMedium
+                    },
+                letterSpacing = if (QsInCompose.isEnabled) 0.em else 0.01.em,
                 color = colorAttr(R.attr.onShadeInactiveVariant),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,

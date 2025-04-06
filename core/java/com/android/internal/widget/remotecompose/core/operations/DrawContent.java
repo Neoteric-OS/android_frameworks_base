@@ -46,7 +46,7 @@ public class DrawContent extends PaintOperation implements Serializable {
      *
      * @param component
      */
-    public void setComponent(LayoutComponent component) {
+    public void setComponent(@Nullable LayoutComponent component) {
         mComponent = component;
     }
 
@@ -114,6 +114,6 @@ public class DrawContent extends PaintOperation implements Serializable {
 
     @Override
     public void serialize(MapSerializer serializer) {
-        serializer.add("type", CLASS_NAME);
+        serializer.addType(CLASS_NAME);
     }
 }

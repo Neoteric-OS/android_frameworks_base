@@ -46,6 +46,7 @@ public class TracePerfTest {
 
     private static final String FOO = "foo";
     private static final Category FOO_CATEGORY = new Category(FOO);
+    private static final Category UNREGISTERED_CATEGORY = new Category("unregistered");
     private static PerfettoTrace.Session sPerfettoSession;
 
     @BeforeClass
@@ -147,7 +148,7 @@ public class TracePerfTest {
                 .addField(1 /* sending_thread_name */, "foo")
                 .endNested()
                 .endProto()
-                .addTerminatingFlow(5)
+                .setTerminatingFlow(5)
                 .emit();
 
         BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
@@ -158,7 +159,31 @@ public class TracePerfTest {
                     .addField(1 /* sending_thread_name */, "foo")
                     .endNested()
                     .endProto()
-                    .addTerminatingFlow(5)
+                    .setTerminatingFlow(5)
+                    .emit();
+        }
+    }
+
+    @Test
+    public void testInstantPerfettoWithProtoUnregistered() {
+        PerfettoTrace.begin(UNREGISTERED_CATEGORY, "message_queue_receive")
+                .beginProto()
+                .beginNested(2004 /* message_queue */)
+                .addField(1 /* sending_thread_name */, "foo")
+                .endNested()
+                .endProto()
+                .setTerminatingFlow(5)
+                .emit();
+
+        BenchmarkState state = mPerfStatusReporter.getBenchmarkState();
+        while (state.keepRunning()) {
+            PerfettoTrace.begin(UNREGISTERED_CATEGORY, "message_queue_receive")
+                    .beginProto()
+                    .beginNested(2004 /* message_queue */)
+                    .addField(1 /* sending_thread_name */, "foo")
+                    .endNested()
+                    .endProto()
+                    .setTerminatingFlow(5)
                     .emit();
         }
     }

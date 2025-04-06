@@ -1458,13 +1458,14 @@ public abstract class WebSettings {
     public abstract void setNeedInitialFocus(boolean flag);
 
     /**
-     * Sets the priority of the Render thread. Unlike the other settings, this
+     * Sets the CPU scheduling priority of the Render thread. Unlike the other settings, this
      * one only needs to be called once per process. The default value is
      * {@link RenderPriority#NORMAL}.
      *
      * @param priority the priority
-     * @deprecated It is not recommended to adjust thread priorities, and this will
-     *             not be supported in future versions.
+     * @deprecated This is no longer supported. See {@link WebView#setRendererPriorityPolicy} if you
+     *             instead want to control how freely the system should kill the renderer process
+     *             under low memory conditions.
      */
     @Deprecated
     public abstract void setRenderPriority(RenderPriority priority);
@@ -1788,17 +1789,4 @@ public abstract class WebSettings {
      * @see #setDisabledActionModeMenuItems
      */
     public static final int MENU_ITEM_PROCESS_TEXT = 1 << 2;
-
-    /**
-     * Enable CHIPS for webview.
-     * This provides a means to check if partitioned cookies are enabled by default.
-     * CHIPS will only be enabled by default for apps targeting Android B or above.
-     *
-     * @hide
-     */
-    @ChangeId
-    @EnabledAfter(targetSdkVersion = android.os.Build.VERSION_CODES.VANILLA_ICE_CREAM)
-    @FlaggedApi(android.webkit.Flags.FLAG_ENABLE_CHIPS)
-    @SystemApi
-    public static final long ENABLE_CHIPS = 380890146L;
 }

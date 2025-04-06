@@ -233,7 +233,7 @@ public class RegisteredServicesCacheTest extends AndroidTestCase {
     /**
      * Mock implementation of {@link android.content.pm.RegisteredServicesCache} for testing
      */
-    private class TestServicesCache extends RegisteredServicesCache<TestServiceType> {
+    public class TestServicesCache extends RegisteredServicesCache<TestServiceType> {
         static final String SERVICE_INTERFACE = "RegisteredServicesCacheTest";
         static final String SERVICE_META_DATA = "RegisteredServicesCacheTest";
         static final String ATTRIBUTES_NAME = "test";
@@ -332,7 +332,7 @@ public class RegisteredServicesCacheTest extends AndroidTestCase {
         }
     }
 
-    static class TestSerializer implements XmlSerializerAndParser<TestServiceType> {
+    public static class TestSerializer implements XmlSerializerAndParser<TestServiceType> {
 
         public void writeAsXml(TestServiceType item, TypedXmlSerializer out) throws IOException {
             out.attribute(null, "type", item.type);
@@ -347,7 +347,7 @@ public class RegisteredServicesCacheTest extends AndroidTestCase {
         }
     }
 
-    static class TestServiceType implements Parcelable {
+    public static class TestServiceType implements Parcelable {
         final String type;
         final String value;
 

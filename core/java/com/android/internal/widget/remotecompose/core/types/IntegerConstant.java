@@ -34,12 +34,21 @@ import java.util.List;
 public class IntegerConstant extends Operation implements Serializable {
     private static final String CLASS_NAME = "IntegerConstant";
 
-    private final int mValue;
-    private final int mId;
+    private int mValue;
+    public final int mId;
 
     IntegerConstant(int id, int value) {
         mId = id;
         mValue = value;
+    }
+
+    /**
+     * Updates the value of the integer constant
+     *
+     * @param ic the integer constant to copy
+     */
+    public void update(IntegerConstant ic) {
+        mValue = ic.mValue;
     }
 
     @Override
@@ -123,6 +132,6 @@ public class IntegerConstant extends Operation implements Serializable {
 
     @Override
     public void serialize(MapSerializer serializer) {
-        serializer.add("type", CLASS_NAME).add("id", mId).add("value", mValue);
+        serializer.addType(CLASS_NAME).add("id", mId).add("value", mValue);
     }
 }

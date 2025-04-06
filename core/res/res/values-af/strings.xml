@@ -353,14 +353,10 @@
     <string name="permgroupdesc_sensors" msgid="2610631290633747752">"toegang te verkry tot sensordata oor jou lewenstekens"</string>
     <string name="permgrouplab_notifications" msgid="5472972361980668884">"Kennisgewings"</string>
     <string name="permgroupdesc_notifications" msgid="4608679556801506580">"wys kennisgewings"</string>
-    <!-- no translation found for permgrouplab_xr_tracking (7418994009794287471) -->
-    <skip />
-    <!-- no translation found for permgroupdesc_xr_tracking (6777198859446500821) -->
-    <skip />
-    <!-- no translation found for permgrouplab_xr_tracking_sensitive (1194833982988144536) -->
-    <skip />
-    <!-- no translation found for permgroupdesc_xr_tracking_sensitive (9178027369004805829) -->
-    <skip />
+    <string name="permgrouplab_xr_tracking" msgid="7418994009794287471">"UR-nasporingdata"</string>
+    <string name="permgroupdesc_xr_tracking" msgid="6777198859446500821">"toegang tot UR-data oor jou en die omgewing rondom jou te verkry"</string>
+    <string name="permgrouplab_xr_tracking_sensitive" msgid="1194833982988144536">"sensitiewe UR-nasporingdata"</string>
+    <string name="permgroupdesc_xr_tracking_sensitive" msgid="9178027369004805829">"toegang tot sensitiewe nasporingdata, soos oogblik, te verkry"</string>
     <string name="capability_title_canRetrieveWindowContent" msgid="7554282892101587296">"Venster-inhoud ophaal"</string>
     <string name="capability_desc_canRetrieveWindowContent" msgid="6195610527625237661">"Die inhoud ondersoek van \'n venster waarmee jy interaksie het."</string>
     <string name="capability_title_canRequestTouchExploration" msgid="327598364696316213">"Verken-met-raak aanskakel"</string>
@@ -656,38 +652,22 @@
     <string name="permdesc_imagesWrite" msgid="5195054463269193317">"Laat die app toe om jou fotoversameling te wysig."</string>
     <string name="permlab_mediaLocation" msgid="7368098373378598066">"lees liggings in jou mediaversameling"</string>
     <string name="permdesc_mediaLocation" msgid="597912899423578138">"Laat die app toe om liggings in jou mediaversameling te lees."</string>
-    <!-- no translation found for permlab_eye_tracking_coarse (7989596289790269059) -->
-    <skip />
-    <!-- no translation found for permdesc_eye_tracking_coarse (870510233930553355) -->
-    <skip />
-    <!-- no translation found for permlab_eye_tracking_fine (6914457357027049512) -->
-    <skip />
-    <!-- no translation found for permdesc_eye_tracking_fine (5788889152304524730) -->
-    <skip />
-    <!-- no translation found for permlab_face_tracking (2272048395128283324) -->
-    <skip />
-    <!-- no translation found for permdesc_face_tracking (2622783922311211866) -->
-    <skip />
-    <!-- no translation found for permlab_hand_tracking (6478233866595566940) -->
-    <skip />
-    <!-- no translation found for permdesc_hand_tracking (8639715900104966456) -->
-    <skip />
-    <!-- no translation found for permlab_head_tracking (1309731456372087270) -->
-    <skip />
-    <!-- no translation found for permdesc_head_tracking (231597390513699188) -->
-    <skip />
-    <!-- no translation found for permlab_scene_understanding_coarse (6518646430502858641) -->
-    <skip />
-    <!-- no translation found for permdesc_scene_understanding_coarse (4508880777646198656) -->
-    <skip />
-    <!-- no translation found for permlab_scene_understanding_fine (409126403264393251) -->
-    <skip />
-    <!-- no translation found for permdesc_scene_understanding_fine (6223368011593524179) -->
-    <skip />
-    <!-- no translation found for permlab_xr_tracking_in_background (7117098718465619023) -->
-    <skip />
-    <!-- no translation found for permdesc_xr_tracking_in_background (939504041387836853) -->
-    <skip />
+    <string name="permlab_eye_tracking_coarse" msgid="7989596289790269059">"jou benaderde oogblik na te spoor"</string>
+    <string name="permdesc_eye_tracking_coarse" msgid="870510233930553355">"Laat die app toe om jou benaderde oogblik na te spoor."</string>
+    <string name="permlab_eye_tracking_fine" msgid="6914457357027049512">"waar jy kyk na te spoor"</string>
+    <string name="permdesc_eye_tracking_fine" msgid="5788889152304524730">"Gee die app toegang tot presiese oogblikdata."</string>
+    <string name="permlab_face_tracking" msgid="2272048395128283324">"jou gesig na te spoor"</string>
+    <string name="permdesc_face_tracking" msgid="2622783922311211866">"Gee die app toegang tot gesignasporingdata."</string>
+    <string name="permlab_hand_tracking" msgid="6478233866595566940">"jou hande na te spoor"</string>
+    <string name="permdesc_hand_tracking" msgid="8639715900104966456">"Gee die app toegang tot handbewegingnasporingdata."</string>
+    <string name="permlab_head_tracking" msgid="1309731456372087270">"jou kop na te spoor"</string>
+    <string name="permdesc_head_tracking" msgid="231597390513699188">"Gee die app toegang tot kopsporingdata."</string>
+    <string name="permlab_scene_understanding_coarse" msgid="6518646430502858641">"jou onmiddellike omgewing te verstaan"</string>
+    <string name="permdesc_scene_understanding_coarse" msgid="4508880777646198656">"Gee die app toegang tot nasporingdata oor die omgewing direk rondom jou."</string>
+    <string name="permlab_scene_understanding_fine" msgid="409126403264393251">"jou onmiddellike omgewing in fyn detail te verstaan"</string>
+    <string name="permdesc_scene_understanding_fine" msgid="6223368011593524179">"Gee die app toegang tot hoogs gedetailleerde spoordata oor die omgewing direk rondom jou."</string>
+    <string name="permlab_xr_tracking_in_background" msgid="7117098718465619023">"toegang tot UR-data te verkry terwyl dit nie op die voorgrond is nie"</string>
+    <string name="permdesc_xr_tracking_in_background" msgid="939504041387836853">"Gee die app toegang tot UR-data terwyl dit nie in die voorgrond is nie."</string>
     <string name="biometric_app_setting_name" msgid="3339209978734534457">"Gebruik biometrie"</string>
     <string name="biometric_or_screen_lock_app_setting_name" msgid="5348462421758257752">"Gebruik biometrie of skermslot"</string>
     <string name="biometric_dialog_default_title" msgid="55026799173208210">"Verifieer dat dit jy is"</string>
@@ -1823,6 +1803,7 @@
     <string name="one_handed_mode_feature_name" msgid="2334330034828094891">"Eenhandmodus"</string>
     <string name="reduce_bright_colors_feature_name" msgid="3222994553174604132">"Ekstra donker"</string>
     <string name="hearing_aids_feature_name" msgid="1125892105105852542">"Gehoortoestelle"</string>
+    <string name="autoclick_feature_name" msgid="8149248738736949630">"Outoklik"</string>
     <string name="hearing_device_status_disconnected" msgid="497547752953543832">"Ontkoppel"</string>
     <string name="hearing_device_status_connected" msgid="2149385149669918764">"Gekoppel"</string>
     <string name="hearing_device_status_active" msgid="4770378695482566032">"Aktief"</string>
@@ -1843,7 +1824,6 @@
     <string name="hearing_device_switch_hearing_mic_notification_text" msgid="8288368365767284208">"Jy kan jou gehoortoestel en mikrofoon vir handvrye oproepe gebruik. Dit skakel net jou mikrofoon tydens die oproep oor."</string>
     <string name="hearing_device_notification_switch_button" msgid="3619524619430941300">"Skakel oor"</string>
     <string name="hearing_device_notification_settings_button" msgid="6673651052880279178">"Instellings"</string>
-    <string name="user_switched" msgid="7249833311585228097">"Huidige gebruiker <xliff:g id="NAME">%1$s</xliff:g> ."</string>
     <string name="user_switching_message" msgid="1912993630661332336">"Skakel tans oor na <xliff:g id="NAME">%1$s</xliff:g> …"</string>
     <string name="user_logging_out_message" msgid="7216437629179710359">"Meld <xliff:g id="NAME">%1$s</xliff:g> tans af …"</string>
     <string name="owner_name" msgid="8713560351570795743">"Eienaar"</string>
@@ -1985,7 +1965,7 @@
     <string name="lock_to_app_unlock_pattern" msgid="2694204070499712503">"Vra ontsluitpatroon voordat jy ontspeld"</string>
     <string name="lock_to_app_unlock_password" msgid="9126722403506560473">"Vra wagwoord voordat jy ontspeld"</string>
     <string name="package_installed_device_owner" msgid="8684974629306529138">"Deur jou admin geïnstalleer.\nGaan na instellings om toegestaande toestemmings te sien"</string>
-    <string name="package_updated_device_owner" msgid="7560272363805506941">"Opgedateer deur jou administrateur"</string>
+    <string name="package_updated_device_owner" msgid="7770195449213776218">"Deur jou admin opgedateer.\nGaan na instellings om toegestaande toestemmings te sien"</string>
     <string name="package_deleted_device_owner" msgid="2292335928930293023">"Uitgevee deur jou administrateur"</string>
     <string name="confirm_battery_saver" msgid="5247976246208245754">"OK"</string>
     <string name="battery_saver_description_with_learn_more" msgid="5444908404021316250">"Batterybespaarder skakel Donkertema aan en beperk of skakel agtergrondaktiwiteit, sommige visuele effekte, sekere kenmerke en sommige netwerkverbindings af"</string>
@@ -2293,6 +2273,12 @@
     <string name="accessibility_autoclick_scroll" msgid="3499385943728726933">"Rollees"</string>
     <string name="accessibility_autoclick_pause" msgid="3272200156172573568">"Onderbreek"</string>
     <string name="accessibility_autoclick_position" msgid="2933660969907663545">"Posisie"</string>
+    <string name="accessibility_autoclick_scroll_up" msgid="2044948780797117443">"Rollees op"</string>
+    <string name="accessibility_autoclick_scroll_down" msgid="3733401063292018116">"Rollees af"</string>
+    <string name="accessibility_autoclick_scroll_left" msgid="8564421367992824198">"Rollees na links"</string>
+    <string name="accessibility_autoclick_scroll_right" msgid="8932417330753984265">"Rollees na regs"</string>
+    <string name="accessibility_autoclick_scroll_exit" msgid="3788610039146769696">"Gaan uit Rolleesmodus"</string>
+    <string name="accessibility_autoclick_scroll_panel_title" msgid="7120598166296447036">"Rolleespaneel"</string>
     <string name="as_app_forced_to_restricted_bucket" msgid="8233871289353898964">"<xliff:g id="PACKAGE_NAME">%1$s</xliff:g> is in die BEPERK-groep geplaas"</string>
     <string name="conversation_single_line_name_display" msgid="8958948312915255999">"<xliff:g id="SENDER_NAME">%1$s</xliff:g>:"</string>
     <string name="conversation_single_line_image_placeholder" msgid="6983271082911936900">"het \'n prent gestuur"</string>
@@ -2500,6 +2486,7 @@
     <string name="profile_label_work_3" msgid="4834572253956798917">"Werk 3"</string>
     <string name="profile_label_test" msgid="9168641926186071947">"Toets"</string>
     <string name="profile_label_communal" msgid="8743921499944800427">"Gemeenskaplik"</string>
+    <string name="profile_label_supervising" msgid="5649312778545745371">"Toesighoudend"</string>
     <string name="accessibility_label_managed_profile" msgid="3366526886209832641">"Werkprofiel"</string>
     <string name="accessibility_label_private_profile" msgid="1436459319135548969">"Privaat ruimte"</string>
     <string name="accessibility_label_clone_profile" msgid="7579118375042398784">"Kloon"</string>

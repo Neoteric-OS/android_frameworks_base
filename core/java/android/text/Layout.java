@@ -69,14 +69,18 @@ import java.util.Locale;
  * which will be updated as the text changes.
  * For text that will not change, use a {@link StaticLayout}.
  */
+@android.ravenwood.annotation.RavenwoodKeepWholeClass
 public abstract class Layout {
 
     // These should match the constants in framework/base/libs/hwui/hwui/DrawTextFunctor.h
     private static final float HIGH_CONTRAST_TEXT_BORDER_WIDTH_MIN_PX = 0f;
     private static final float HIGH_CONTRAST_TEXT_BORDER_WIDTH_FACTOR = 0f;
-    private static final float HIGH_CONTRAST_TEXT_BACKGROUND_CORNER_RADIUS_DP = 5f;
     // since we're not using soft light yet, this needs to be much lower than the spec'd 0.8
     private static final float HIGH_CONTRAST_TEXT_BACKGROUND_ALPHA_PERCENTAGE = 0.7f;
+    @VisibleForTesting
+    static final float HIGH_CONTRAST_TEXT_BACKGROUND_CORNER_RADIUS_MIN_DP = 5f;
+    @VisibleForTesting
+    static final float HIGH_CONTRAST_TEXT_BACKGROUND_CORNER_RADIUS_FACTOR = 0.5f;
 
     /** @hide */
     @IntDef(prefix = { "BREAK_STRATEGY_" }, value = {
@@ -1029,7 +1033,9 @@ public abstract class Layout {
 
         var padding = Math.max(HIGH_CONTRAST_TEXT_BORDER_WIDTH_MIN_PX,
                 mPaint.getTextSize() * HIGH_CONTRAST_TEXT_BORDER_WIDTH_FACTOR);
-        var cornerRadius = mPaint.density * HIGH_CONTRAST_TEXT_BACKGROUND_CORNER_RADIUS_DP;
+        var cornerRadius = Math.max(
+                mPaint.density * HIGH_CONTRAST_TEXT_BACKGROUND_CORNER_RADIUS_MIN_DP,
+                mPaint.getTextSize() * HIGH_CONTRAST_TEXT_BACKGROUND_CORNER_RADIUS_FACTOR);
 
         // We set the alpha on the color itself instead of Paint.setAlpha(), because that function
         // actually mutates the color in... *ehem* very strange ways. Also the color might get reset
@@ -1068,14 +1074,14 @@ public abstract class Layout {
                     public void onCharacterBounds(int index, int lineNum, float left, float top,
                             float right, float bottom) {
 
-                        var newBackground = determineContrastingBackgroundColor(index);
-                        var hasBgColorChanged = newBackground != bgPaint.getColor();
-
                         // Skip processing if the character is a space or a tap to avoid
                         // rendering an abrupt, empty rectangle.
                         if (TextLine.isLineEndSpace(mText.charAt(index))) {
                             return;
                         }
+
+                        var newBackground = determineContrastingBackgroundColor(index);
+                        var hasBgColorChanged = newBackground != bgPaint.getColor();
 
                         // To avoid highlighting emoji sequences, we use Extended_Pictgraphs as a
                         // heuristic. Highlighting is skipped based on code points, not glyph type

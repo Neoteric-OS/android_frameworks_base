@@ -26,10 +26,10 @@ import com.android.systemui.customization.R
 import com.android.systemui.log.core.Logger
 import com.android.systemui.plugins.clocks.AlarmData
 import com.android.systemui.plugins.clocks.ClockAnimations
+import com.android.systemui.plugins.clocks.ClockAxisStyle
 import com.android.systemui.plugins.clocks.ClockEvents
 import com.android.systemui.plugins.clocks.ClockFaceConfig
 import com.android.systemui.plugins.clocks.ClockFaceEvents
-import com.android.systemui.plugins.clocks.ClockFontAxisSetting
 import com.android.systemui.plugins.clocks.ThemeConfig
 import com.android.systemui.plugins.clocks.WeatherData
 import com.android.systemui.plugins.clocks.ZenData
@@ -85,6 +85,7 @@ open class SimpleDigitalHandLayerController(
     override val view = SimpleDigitalClockTextView(clockCtx, isLargeClock)
     private val logger = Logger(clockCtx.messageBuffer, TAG)
     val timespec = DigitalTimespecHandler(layerCfg.timespec, layerCfg.dateTimeFormat)
+    override var onViewBoundsChanged by view::onViewBoundsChanged
 
     @VisibleForTesting
     override var fakeTimeMills: Long?
@@ -170,10 +171,6 @@ open class SimpleDigitalHandLayerController(
             override fun onAlarmDataChanged(data: AlarmData) {}
 
             override fun onZenDataChanged(data: ZenData) {}
-
-            override fun onFontAxesChanged(axes: List<ClockFontAxisSetting>) {
-                view.updateAxes(axes)
-            }
         }
 
     override val animations =
@@ -192,6 +189,13 @@ open class SimpleDigitalHandLayerController(
                     if (hasChanged) view.animateDoze(dozeState!!.isActive, !hasJumped)
                 }
                 view.dozeFraction = fraction
+            }
+
+            private var hasFontAxes = false
+
+            override fun onFontAxesChanged(style: ClockAxisStyle) {
+                view.updateAxes(style, isAnimated = hasFontAxes)
+                hasFontAxes = true
             }
 
             override fun fold(fraction: Float) {
@@ -228,15 +232,7 @@ open class SimpleDigitalHandLayerController(
             }
 
             override fun onThemeChanged(theme: ThemeConfig) {
-                val color =
-                    when {
-                        theme.seedColor != null -> theme.seedColor!!
-                        theme.isDarkTheme ->
-                            clockCtx.resources.getColor(android.R.color.system_accent1_100)
-                        else -> clockCtx.resources.getColor(android.R.color.system_accent2_600)
-                    }
-
-                view.updateColor(color)
+                view.updateColor(theme.getDefaultColor(clockCtx.context))
                 refreshTime()
             }
 

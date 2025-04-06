@@ -24,8 +24,8 @@ import android.content.Context
 import android.view.View
 import androidx.annotation.VisibleForTesting
 import com.android.app.tracing.coroutines.launchTraced as launch
+import com.android.internal.logging.InstanceId
 import com.android.systemui.CoreStartable
-import com.android.systemui.Dumpable
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.dagger.qualifiers.Main
@@ -39,7 +39,7 @@ import com.android.systemui.statusbar.chips.ui.view.ChipChronometer
 import com.android.systemui.statusbar.data.repository.StatusBarModeRepositoryStore
 import com.android.systemui.statusbar.gesture.SwipeStatusBarAwayGestureHandler
 import com.android.systemui.statusbar.notification.domain.interactor.ActiveNotificationsInteractor
-import com.android.systemui.statusbar.notification.promoted.shared.model.PromotedNotificationContentModel
+import com.android.systemui.statusbar.notification.promoted.shared.model.PromotedNotificationContentModels
 import com.android.systemui.statusbar.notification.shared.ActiveNotificationModel
 import com.android.systemui.statusbar.notification.shared.CallType
 import com.android.systemui.statusbar.phone.ongoingcall.data.repository.OngoingCallRepository
@@ -72,7 +72,7 @@ constructor(
     private val swipeStatusBarAwayGestureHandler: SwipeStatusBarAwayGestureHandler,
     private val statusBarModeRepository: StatusBarModeRepositoryStore,
     @OngoingCallLog private val logger: LogBuffer,
-) : CallbackController<OngoingCallListener>, Dumpable, CoreStartable {
+) : CallbackController<OngoingCallListener>, CoreStartable {
     private var isFullscreen: Boolean = false
     /** Non-null if there's an active call notification. */
     private var callNotificationInfo: CallNotificationInfo? = null
@@ -162,6 +162,11 @@ constructor(
                 notificationKey = currentInfo.key,
                 appName = currentInfo.appName,
                 promotedContent = currentInfo.promotedContent,
+                // [hasOngoingCall()] filters out the case in which the call is ongoing but the app
+                // is visible (we issue [OngoingCallModel.NoCall] below in that case), so this can
+                // be safely made false.
+                isAppVisible = false,
+                notificationInstanceId = currentInfo.instanceId,
             )
         } else {
             return OngoingCallModel.NoCall
@@ -219,6 +224,7 @@ constructor(
                     notifModel.contentIntent,
                     notifModel.uid,
                     notifModel.appName,
+                    notifModel.instanceId,
                     notifModel.promotedContent,
                     isOngoing = true,
                     statusBarSwipedAway = callNotificationInfo?.statusBarSwipedAway ?: false,
@@ -340,11 +346,12 @@ constructor(
         val intent: PendingIntent?,
         val uid: Int,
         val appName: String,
+        val instanceId: InstanceId?,
         /**
          * If the call notification also meets promoted notification criteria, this field is filled
          * in with the content related to promotion. Otherwise null.
          */
-        val promotedContent: PromotedNotificationContentModel?,
+        val promotedContent: PromotedNotificationContentModels?,
         /** True if the call is currently ongoing (as opposed to incoming, screening, etc.). */
         val isOngoing: Boolean,
         /** True if the user has swiped away the status bar while in this phone call. */

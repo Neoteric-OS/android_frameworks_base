@@ -41,7 +41,6 @@ import android.util.Log;
 import com.android.internal.os.ApplicationSharedMemory;
 
 import android.platform.test.annotations.DisabledOnRavenwood;
-import android.platform.test.annotations.IgnoreUnderRavenwood;
 import android.platform.test.annotations.RequiresFlagsEnabled;
 import android.platform.test.flag.junit.CheckFlagsRule;
 import android.platform.test.flag.junit.DeviceFlagsValueProvider;
@@ -414,16 +413,23 @@ public class PropertyInvalidatedCacheTests {
     @Test
     @DisabledOnRavenwood(reason = "SystemProperties doesn't have permission check")
     public void testPermissionFailure() {
-        // Create a cache that will write a system nonce.
-        TestCache sysCache = new TestCache(MODULE_SYSTEM, "mode1");
         try {
-            // Invalidate the cache, which writes the system property.  There must be a permission
-            // failure.
-            sysCache.invalidateCache();
-            fail("expected permission failure");
-        } catch (RuntimeException e) {
-            // The expected exception is a bare RuntimeException.  The test does not attempt to
-            // validate the text of the exception message.
+            // Disable the test mode for this test, but ensure that it will be enabled when the
+            // test exits.
+            PropertyInvalidatedCache.setTestMode(false);
+            // Create a cache that will write a system nonce.
+            TestCache sysCache = new TestCache(MODULE_SYSTEM, "mode1");
+            try {
+                // Invalidate the cache, which writes the system property.  There must be a
+                // permission failure.
+                sysCache.invalidateCache();
+                fail("expected permission failure");
+            } catch (RuntimeException e) {
+                // The expected exception is a bare RuntimeException.  The test does not attempt
+                // to validate the text of the exception message.
+            }
+        } finally {
+            PropertyInvalidatedCache.setTestMode(true);
         }
     }
 

@@ -290,8 +290,8 @@ public class AndroidPaintContext extends PaintContext {
         }
 
         if ((flags & PaintContext.TEXT_MEASURE_FONT_HEIGHT) != 0) {
-            bounds[1] = Math.round(mCachedFontMetrics.top);
-            bounds[3] = Math.round(mCachedFontMetrics.bottom);
+            bounds[1] = Math.round(mCachedFontMetrics.ascent);
+            bounds[3] = Math.round(mCachedFontMetrics.descent);
         } else {
             bounds[1] = mTmpRect.top;
             bounds[3] = mTmpRect.bottom;
@@ -344,6 +344,7 @@ public class AndroidPaintContext extends PaintContext {
             default:
         }
         staticLayoutBuilder.setMaxLines(maxLines);
+        staticLayoutBuilder.setIncludePad(false);
 
         StaticLayout staticLayout = staticLayoutBuilder.build();
         return new AndroidComputedTextLayout(
@@ -804,6 +805,24 @@ public class AndroidPaintContext extends PaintContext {
         float[] p = getPathArray(path1, path2, tween);
         AndroidRemoteContext androidContext = (AndroidRemoteContext) mContext;
         androidContext.mRemoteComposeState.putPathData(out, p);
+    }
+
+    @Override
+    public void combinePath(int out, int path1, int path2, byte operation) {
+        Path p1 = getPath(path1, 0, 1);
+        Path p2 = getPath(path2, 0, 1);
+        Path.Op[] op = {
+            Path.Op.DIFFERENCE,
+            Path.Op.INTERSECT,
+            Path.Op.REVERSE_DIFFERENCE,
+            Path.Op.UNION,
+            Path.Op.XOR,
+        };
+        Path p = new Path(p1);
+        p.op(p2, op[operation]);
+
+        AndroidRemoteContext androidContext = (AndroidRemoteContext) mContext;
+        androidContext.mRemoteComposeState.putPath(out, p);
     }
 
     @Override

@@ -17,8 +17,8 @@
 package com.android.systemui.volume.dialog
 
 import android.content.Context
-import android.graphics.PixelFormat
 import android.os.Bundle
+import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -29,7 +29,7 @@ import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.lifecycle.repeatWhenAttached
 import com.android.systemui.res.R
 import com.android.systemui.volume.Events
-import com.android.systemui.volume.dialog.dagger.VolumeDialogComponent
+import com.android.systemui.volume.dialog.dagger.factory.VolumeDialogComponentFactory
 import com.android.systemui.volume.dialog.domain.interactor.VolumeDialogVisibilityInteractor
 import javax.inject.Inject
 import kotlinx.coroutines.awaitCancellation
@@ -38,7 +38,7 @@ class VolumeDialog
 @Inject
 constructor(
     @Application context: Context,
-    private val componentFactory: VolumeDialogComponent.Factory,
+    private val componentFactory: VolumeDialogComponentFactory,
     private val visibilityInteractor: VolumeDialogVisibilityInteractor,
 ) : ComponentDialog(context, R.style.Theme_SystemUI_Dialog_Volume) {
 
@@ -51,17 +51,17 @@ constructor(
                     WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED
             )
             addPrivateFlags(WindowManager.LayoutParams.PRIVATE_FLAG_TRUSTED_OVERLAY)
-
             setType(WindowManager.LayoutParams.TYPE_VOLUME_OVERLAY)
             setWindowAnimations(-1)
-            setFormat(PixelFormat.TRANSLUCENT)
 
             attributes =
                 attributes.apply {
                     title = "VolumeDialog" // Not the same as Window#setTitle
                 }
-            setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            setGravity(Gravity.END)
         }
+        setCancelable(false)
         setCanceledOnTouchOutside(true)
     }
 

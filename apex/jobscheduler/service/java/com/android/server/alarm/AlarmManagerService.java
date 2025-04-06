@@ -2995,6 +2995,8 @@ public class AlarmManagerService extends SystemService {
             pw.print(Flags.FLAG_START_USER_BEFORE_SCHEDULED_ALARMS,
                     Flags.startUserBeforeScheduledAlarms());
             pw.println();
+            pw.print(Flags.FLAG_ACQUIRE_WAKELOCK_BEFORE_SEND, Flags.acquireWakelockBeforeSend());
+            pw.println();
             pw.decreaseIndent();
             pw.println();
 
@@ -5367,6 +5369,11 @@ public class AlarmManagerService extends SystemService {
                         // to do any wakelock or stats tracking, so we have nothing
                         // left to do here but go on to the next thing.
                         mSendFinishCount++;
+                        if (Flags.acquireWakelockBeforeSend() && mBroadcastRefCount == 0) {
+                            // No other alarms are in-flight and this dispatch failed. We will
+                            // acquire the wakelock again before the next dispatch.
+                            mWakeLock.release();
+                        }
                         return;
                     }
                 } else {
@@ -5404,6 +5411,11 @@ public class AlarmManagerService extends SystemService {
                         // stats management to do.  It threw before we posted the delayed
                         // timeout message, so we're done here.
                         mListenerFinishCount++;
+                        if (Flags.acquireWakelockBeforeSend() && mBroadcastRefCount == 0) {
+                            // No other alarms are in-flight and this dispatch failed. We will
+                            // acquire the wakelock again before the next dispatch.
+                            mWakeLock.release();
+                        }
                         return;
                     }
                 }

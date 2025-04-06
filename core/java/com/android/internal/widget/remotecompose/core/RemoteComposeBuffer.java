@@ -28,10 +28,12 @@ import com.android.internal.widget.remotecompose.core.operations.ClipRect;
 import com.android.internal.widget.remotecompose.core.operations.ColorConstant;
 import com.android.internal.widget.remotecompose.core.operations.ColorExpression;
 import com.android.internal.widget.remotecompose.core.operations.ComponentValue;
+import com.android.internal.widget.remotecompose.core.operations.ConditionalOperations;
 import com.android.internal.widget.remotecompose.core.operations.DataListFloat;
 import com.android.internal.widget.remotecompose.core.operations.DataListIds;
 import com.android.internal.widget.remotecompose.core.operations.DataMapIds;
 import com.android.internal.widget.remotecompose.core.operations.DataMapLookup;
+import com.android.internal.widget.remotecompose.core.operations.DebugMessage;
 import com.android.internal.widget.remotecompose.core.operations.DrawArc;
 import com.android.internal.widget.remotecompose.core.operations.DrawBitmap;
 import com.android.internal.widget.remotecompose.core.operations.DrawBitmapFontText;
@@ -53,6 +55,7 @@ import com.android.internal.widget.remotecompose.core.operations.FloatConstant;
 import com.android.internal.widget.remotecompose.core.operations.FloatExpression;
 import com.android.internal.widget.remotecompose.core.operations.FloatFunctionCall;
 import com.android.internal.widget.remotecompose.core.operations.FloatFunctionDefine;
+import com.android.internal.widget.remotecompose.core.operations.HapticFeedback;
 import com.android.internal.widget.remotecompose.core.operations.Header;
 import com.android.internal.widget.remotecompose.core.operations.ImageAttribute;
 import com.android.internal.widget.remotecompose.core.operations.IntegerExpression;
@@ -67,6 +70,7 @@ import com.android.internal.widget.remotecompose.core.operations.PaintData;
 import com.android.internal.widget.remotecompose.core.operations.ParticlesCreate;
 import com.android.internal.widget.remotecompose.core.operations.ParticlesLoop;
 import com.android.internal.widget.remotecompose.core.operations.PathAppend;
+import com.android.internal.widget.remotecompose.core.operations.PathCombine;
 import com.android.internal.widget.remotecompose.core.operations.PathCreate;
 import com.android.internal.widget.remotecompose.core.operations.PathData;
 import com.android.internal.widget.remotecompose.core.operations.PathTween;
@@ -98,6 +102,8 @@ import com.android.internal.widget.remotecompose.core.operations.layout.managers
 import com.android.internal.widget.remotecompose.core.operations.layout.managers.CollapsibleColumnLayout;
 import com.android.internal.widget.remotecompose.core.operations.layout.managers.CollapsibleRowLayout;
 import com.android.internal.widget.remotecompose.core.operations.layout.managers.ColumnLayout;
+import com.android.internal.widget.remotecompose.core.operations.layout.managers.FitBoxLayout;
+import com.android.internal.widget.remotecompose.core.operations.layout.managers.ImageLayout;
 import com.android.internal.widget.remotecompose.core.operations.layout.managers.RowLayout;
 import com.android.internal.widget.remotecompose.core.operations.layout.managers.StateLayout;
 import com.android.internal.widget.remotecompose.core.operations.layout.managers.TextLayout;
@@ -281,13 +287,7 @@ public class RemoteComposeBuffer {
             int dstRight,
             int dstBottom,
             @Nullable String contentDescription) {
-        int imageId = mRemoteComposeState.dataGetId(image);
-        if (imageId == -1) {
-            imageId = mRemoteComposeState.cacheData(image);
-            byte[] data = mPlatform.imageToByteArray(image); // todo: potential npe
-            BitmapData.apply(
-                    mBuffer, imageId, imageWidth, imageHeight, data); // todo: potential npe
-        }
+        int imageId = storeBitmap(image);
         int contentDescriptionId = 0;
         if (contentDescription != null) {
             contentDescriptionId = addText(contentDescription);
@@ -443,16 +443,7 @@ public class RemoteComposeBuffer {
             float right,
             float bottom,
             @Nullable String contentDescription) {
-        int imageId = mRemoteComposeState.dataGetId(image);
-        if (imageId == -1) {
-            imageId = mRemoteComposeState.cacheData(image);
-            byte[] data = mPlatform.imageToByteArray(image); // todo: potential npe
-            int imageWidth = mPlatform.getImageWidth(image);
-            int imageHeight = mPlatform.getImageHeight(image);
-
-            BitmapData.apply(
-                    mBuffer, imageId, imageWidth, imageHeight, data); // todo: potential npe
-        }
+        int imageId = storeBitmap(image);
         addDrawBitmap(imageId, left, top, right, bottom, contentDescription);
     }
 
@@ -523,15 +514,7 @@ public class RemoteComposeBuffer {
             int scaleType,
             float scaleFactor,
             @Nullable String contentDescription) {
-        int imageId = mRemoteComposeState.dataGetId(image);
-        if (imageId == -1) {
-            imageId = mRemoteComposeState.cacheData(image);
-            byte[] data = mPlatform.imageToByteArray(image); // todo: potential npe
-            int imageWidth = mPlatform.getImageWidth(image);
-            int imageHeight = mPlatform.getImageHeight(image);
-
-            BitmapData.apply(mBuffer, imageId, imageWidth, imageHeight, data); // todo: potential pe
-        }
+        int imageId = storeBitmap(image);
         int contentDescriptionId = 0;
         if (contentDescription != null) {
             contentDescriptionId = addText(contentDescription);
@@ -559,16 +542,7 @@ public class RemoteComposeBuffer {
      * @return id of the image useful with
      */
     public int addBitmap(@NonNull Object image) {
-        int imageId = mRemoteComposeState.dataGetId(image);
-        if (imageId == -1) {
-            imageId = mRemoteComposeState.cacheData(image);
-            byte[] data = mPlatform.imageToByteArray(image); // tODO: potential npe
-            int imageWidth = mPlatform.getImageWidth(image);
-            int imageHeight = mPlatform.getImageHeight(image);
-
-            BitmapData.apply(mBuffer, imageId, imageWidth, imageHeight, data);
-        }
-        return imageId;
+        return storeBitmap(image);
     }
 
     /**
@@ -578,18 +552,7 @@ public class RemoteComposeBuffer {
      * @return id of the image useful with
      */
     public int addBitmap(@NonNull Object image, @NonNull String name) {
-        int imageId = mRemoteComposeState.dataGetId(image);
-        if (imageId == -1) {
-            imageId = mRemoteComposeState.cacheData(image);
-            byte[] data = mPlatform.imageToByteArray(image); // todo: potential npe
-            int imageWidth = mPlatform.getImageWidth(image);
-            int imageHeight = mPlatform.getImageHeight(image);
-
-            BitmapData.apply(mBuffer, imageId, imageWidth, imageHeight, data);
-            setBitmapName(imageId, name);
-        }
-
-        return imageId;
+        return storeBitmap(image);
     }
 
     /**
@@ -932,7 +895,7 @@ public class RemoteComposeBuffer {
      * @return new id that merges the two text
      */
     public int textMerge(int id1, int id2) {
-        int textId = addText(id1 + "+" + id2);
+        int textId = nextId();
         TextMerge.apply(mBuffer, textId, id1, id2);
         return textId;
     }
@@ -1393,7 +1356,7 @@ public class RemoteComposeBuffer {
      * @return the id of the command representing long
      */
     public int addLong(long value) {
-        int id = mRemoteComposeState.cacheData(value);
+        int id = mRemoteComposeState.nextId();
         LongConstant.apply(mBuffer, id, value);
         return id;
     }
@@ -1405,7 +1368,7 @@ public class RemoteComposeBuffer {
      * @return the id
      */
     public int addBoolean(boolean value) {
-        int id = mRemoteComposeState.cacheData(value);
+        int id = mRemoteComposeState.nextId();
         BooleanConstant.apply(mBuffer, id, value);
         return id;
     }
@@ -1821,33 +1784,14 @@ public class RemoteComposeBuffer {
     }
 
     /**
-     * This defines the name of the color given the id.
-     *
-     * @param id of the color
-     * @param name Name of the color
-     */
-    public void setColorName(int id, @NonNull String name) {
-        NamedVariable.apply(mBuffer, id, NamedVariable.COLOR_TYPE, name);
-    }
-
-    /**
-     * This defines the name of the string given the id
-     *
-     * @param id of the string
-     * @param name name of the string
-     */
-    public void setStringName(int id, @NonNull String name) {
-        NamedVariable.apply(mBuffer, id, NamedVariable.STRING_TYPE, name);
-    }
-
-    /**
-     * This defines the name of the float given the id
+     * This defines the name of a type of given object
      *
      * @param id of the float
      * @param name name of the float
+     * @param type the type of variable NamedVariable.COLOR_TYPE, STRING_TYPE, etc
      */
-    public void setFloatName(int id, String name) {
-        NamedVariable.apply(mBuffer, id, NamedVariable.FLOAT_TYPE, name);
+    public void setNamedVariable(int id, @NonNull String name, int type) {
+        NamedVariable.apply(mBuffer, id, type, name);
     }
 
     /**
@@ -1923,6 +1867,46 @@ public class RemoteComposeBuffer {
                 new float[] {notches, notchMax},
                 null);
 
+        ContainerEnd.apply(mBuffer);
+    }
+
+    /**
+     * Add a scroll modifier
+     *
+     * @param direction HORIZONTAL(0) or VERTICAL(1)
+     * @param positionId the position id as a NaN
+     */
+    public void addModifierScroll(int direction, float positionId) {
+        float max = this.reserveFloatVariable();
+        float notchMax = this.reserveFloatVariable();
+        float touchExpressionDirection =
+                direction != 0 ? RemoteContext.FLOAT_TOUCH_POS_X : RemoteContext.FLOAT_TOUCH_POS_Y;
+
+        ScrollModifierOperation.apply(mBuffer, direction, positionId, max, notchMax);
+        this.addTouchExpression(
+                positionId,
+                0f,
+                0f,
+                max,
+                0f,
+                3,
+                new float[] {
+                    touchExpressionDirection, -1, MUL,
+                },
+                TouchExpression.STOP_GENTLY,
+                null,
+                null);
+        ContainerEnd.apply(mBuffer);
+    }
+
+    /**
+     * Add a scroll modifier
+     *
+     * @param direction HORIZONTAL(0) or VERTICAL(1)
+     */
+    public void addModifierScroll(int direction) {
+        float max = this.reserveFloatVariable();
+        ScrollModifierOperation.apply(mBuffer, direction, 0f, max, 0f);
         ContainerEnd.apply(mBuffer);
     }
 
@@ -2139,6 +2123,32 @@ public class RemoteComposeBuffer {
     }
 
     /**
+     * Add a fitbox start tag
+     *
+     * @param componentId component id
+     * @param animationId animation id
+     * @param horizontal horizontal alignment
+     * @param vertical vertical alignment
+     */
+    public void addFitBoxStart(int componentId, int animationId, int horizontal, int vertical) {
+        mLastComponentId = getComponentId(componentId);
+        FitBoxLayout.apply(mBuffer, mLastComponentId, animationId, horizontal, vertical);
+    }
+
+    /**
+     * Add an imagelayout command
+     *
+     * @param componentId component id
+     * @param animationId animation id
+     * @param bitmapId bitmap id
+     */
+    public void addImage(
+            int componentId, int animationId, int bitmapId, int scaleType, float alpha) {
+        mLastComponentId = getComponentId(componentId);
+        ImageLayout.apply(mBuffer, componentId, animationId, bitmapId, scaleType, alpha);
+    }
+
+    /**
      * Add a row start tag
      *
      * @param componentId component id
@@ -2321,8 +2331,6 @@ public class RemoteComposeBuffer {
         return mRemoteComposeState.nextId();
     }
 
-    private boolean mInImpulseProcess = false;
-
     /**
      * add an impulse. (must be followed by impulse end)
      *
@@ -2331,22 +2339,16 @@ public class RemoteComposeBuffer {
      */
     public void addImpulse(float duration, float start) {
         ImpulseOperation.apply(mBuffer, duration, start);
-        mInImpulseProcess = false;
     }
 
     /** add an impulse process */
     public void addImpulseProcess() {
         ImpulseProcess.apply(mBuffer);
-        mInImpulseProcess = true;
     }
 
     /** Add an impulse end */
     public void addImpulseEnd() {
         ContainerEnd.apply(mBuffer);
-        if (mInImpulseProcess) {
-            ContainerEnd.apply(mBuffer);
-        }
-        mInImpulseProcess = false;
     }
 
     /**
@@ -2438,5 +2440,80 @@ public class RemoteComposeBuffer {
     /** In the context of a component draw modifier, draw the content of the component */
     public void drawComponentContent() {
         DrawContent.apply(mBuffer);
+    }
+
+    /**
+     * Ensures the bitmap is stored.
+     *
+     * @param image the bitbap to store
+     * @return the id of the bitmap
+     */
+    private int storeBitmap(Object image) {
+        int imageId = mRemoteComposeState.dataGetId(image);
+        if (imageId == -1) {
+            imageId = mRemoteComposeState.cacheData(image);
+            byte[] data = mPlatform.imageToByteArray(image); // todo: potential npe
+            short imageWidth = (short) mPlatform.getImageWidth(image);
+            short imageHeight = (short) mPlatform.getImageHeight(image);
+            if (mPlatform.isAlpha8Image(image)) {
+                BitmapData.apply(
+                        mBuffer,
+                        imageId,
+                        BitmapData.TYPE_PNG_ALPHA_8,
+                        imageWidth,
+                        BitmapData.ENCODING_INLINE,
+                        imageHeight,
+                        data); // todo: potential npe
+            } else {
+                BitmapData.apply(
+                        mBuffer, imageId, imageWidth, imageHeight, data); // todo: potential npe
+            }
+        }
+
+        return imageId;
+    }
+
+    /**
+     * Combine two paths
+     *
+     * @param id output id
+     * @param path1 first path
+     * @param path2 second path
+     * @param op operation to perform OP_DIFFERENCE, OP_INTERSECT, OP_REVERSE_DIFFERENCE, OP_UNION,
+     *     OP_XOR
+     */
+    public void pathCombine(int id, int path1, int path2, byte op) {
+        PathCombine.apply(mBuffer, id, path1, path2, op);
+    }
+
+    /**
+     * Perform a haptic feedback
+     *
+     * @param feedbackConstant
+     */
+    public void performHaptic(int feedbackConstant) {
+        HapticFeedback.apply(mBuffer, feedbackConstant);
+    }
+
+    /**
+     * Add a conditional operation
+     *
+     * @param type type of comparison
+     * @param a first value
+     * @param b second value
+     */
+    public void addConditionalOperations(byte type, float a, float b) {
+        ConditionalOperations.apply(mBuffer, type, a, b);
+    }
+
+    /**
+     * Add a debug message
+     *
+     * @param textId text id
+     * @param value value
+     * @param flags flags
+     */
+    public void addDebugMessage(int textId, float value, int flags) {
+        DebugMessage.apply(mBuffer, textId, value, flags);
     }
 }

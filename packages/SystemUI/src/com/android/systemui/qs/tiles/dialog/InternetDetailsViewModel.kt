@@ -16,9 +16,11 @@
 
 package com.android.systemui.qs.tiles.dialog
 
+import android.content.Intent
+import android.provider.Settings
 import com.android.systemui.plugins.qs.TileDetailsViewModel
+import com.android.systemui.qs.tiles.base.domain.actions.QSTileIntentUserInputHandler
 import com.android.systemui.statusbar.connectivity.AccessPointController
-import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 
@@ -26,39 +28,31 @@ class InternetDetailsViewModel
 @AssistedInject
 constructor(
     private val accessPointController: AccessPointController,
-    val contentManagerFactory: InternetDetailsContentManager.Factory,
-    @Assisted private val onLongClick: () -> Unit,
-) : TileDetailsViewModel() {
+    private val contentManagerFactory: InternetDetailsContentManager.Factory,
+    private val qsTileIntentUserActionHandler: QSTileIntentUserInputHandler,
+) : TileDetailsViewModel {
+    val internetDetailsContentManager by lazy {
+        contentManagerFactory.create(
+            canConfigMobileData = accessPointController.canConfigMobileData(),
+            canConfigWifi = accessPointController.canConfigWifi(),
+        )
+    }
+
+    override val title: String
+        get() = internetDetailsContentManager.title
+
+    override val subTitle: String
+        get() = internetDetailsContentManager.subTitle
+
     override fun clickOnSettingsButton() {
-        onLongClick()
-    }
-
-    override fun getTitle(): String {
-        // TODO: b/377388104 make title and sub title mutable states of string
-        // by internetDetailsContentManager.getTitleText()
-        // TODO: test title change between airplane mode and not airplane mode
-        // TODO: b/377388104 Update the placeholder text
-        return "Internet"
-    }
-
-    override fun getSubTitle(): String {
-        // TODO: b/377388104 make title and sub title mutable states of string
-        // by internetDetailsContentManager.getSubtitleText()
-        // TODO: test subtitle change between airplane mode and not airplane mode
-        // TODO: b/377388104 Update the placeholder text
-        return "Tab a network to connect"
-    }
-
-    fun getCanConfigMobileData(): Boolean {
-        return accessPointController.canConfigMobileData()
-    }
-
-    fun getCanConfigWifi(): Boolean {
-        return accessPointController.canConfigWifi()
+        qsTileIntentUserActionHandler.handle(
+            /* expandable= */ null,
+            Intent(Settings.ACTION_WIFI_SETTINGS),
+        )
     }
 
     @AssistedFactory
-    interface Factory {
-        fun create(onLongClick: () -> Unit): InternetDetailsViewModel
+    fun interface Factory {
+        fun create(): InternetDetailsViewModel
     }
 }

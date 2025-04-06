@@ -191,7 +191,7 @@ public class WindowMagnificationControllerTest extends SysuiTestCase {
         mWindowManager = spy(new TestableWindowManager(wm));
 
         mContext.addMockSystemService(Context.WINDOW_SERVICE, mWindowManager);
-        mSysUiState = new SysUiState(mDisplayTracker, mKosmos.getSceneContainerPlugin());
+        mSysUiState = mKosmos.getSysuiState();
         mSysUiState.addCallback(Mockito.mock(SysUiState.SysUiStateCallback.class));
         when(mSecureSettings.getIntForUser(anyString(), anyInt(), anyInt())).then(
                 returnsSecondArg());
@@ -238,7 +238,8 @@ public class WindowMagnificationControllerTest extends SysuiTestCase {
                         mWindowMagnifierCallback,
                         mSysUiState,
                         mSecureSettings,
-                        scvhSupplier);
+                        scvhSupplier,
+                        mWindowManager);
 
         verify(mMirrorWindowControl).setWindowDelegate(
                 any(MirrorWindowControl.MirrorWindowDelegate.class));

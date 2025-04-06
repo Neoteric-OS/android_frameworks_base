@@ -21,6 +21,7 @@ import androidx.compose.foundation.LocalOverscrollFactory
 import androidx.compose.foundation.OverscrollEffect
 import androidx.compose.foundation.OverscrollFactory
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Stable
@@ -31,11 +32,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ApproachLayoutModifierNode
+import androidx.compose.ui.layout.ApproachMeasureScope
 import androidx.compose.ui.layout.LookaheadScope
-import androidx.compose.ui.layout.approachLayout
+import androidx.compose.ui.layout.Measurable
+import androidx.compose.ui.layout.MeasureResult
+import androidx.compose.ui.layout.MeasureScope
+import androidx.compose.ui.node.DelegatingNode
+import androidx.compose.ui.node.ModifierNodeElement
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.IntSize
-import androidx.compose.ui.zIndex
 import com.android.compose.animation.scene.Ancestor
 import com.android.compose.animation.scene.AnimatedState
 import com.android.compose.animation.scene.ContentKey
@@ -45,6 +52,7 @@ import com.android.compose.animation.scene.ElementContentScope
 import com.android.compose.animation.scene.ElementKey
 import com.android.compose.animation.scene.ElementScope
 import com.android.compose.animation.scene.ElementStateScope
+import com.android.compose.animation.scene.ElementWithValues
 import com.android.compose.animation.scene.InternalContentScope
 import com.android.compose.animation.scene.MovableElement
 import com.android.compose.animation.scene.MovableElementContentScope
@@ -65,8 +73,8 @@ import com.android.compose.gesture.NestedScrollControlState
 import com.android.compose.gesture.NestedScrollableBound
 import com.android.compose.gesture.nestedScrollController
 import com.android.compose.modifiers.thenIf
+import com.android.compose.ui.graphics.ContainerNode
 import com.android.compose.ui.graphics.ContainerState
-import com.android.compose.ui.graphics.container
 import kotlin.math.pow
 
 /** A content defined in a [SceneTransitionLayout], i.e. a scene or an overlay. */
@@ -85,9 +93,10 @@ internal sealed class Content(
     val containerState = ContainerState()
 
     // Important: All fields in this class should be backed by State given that contents are updated
-    // directly during composition, outside of a SideEffect.
+    // directly during composition, outside of a SideEffect, or are observed during composition,
+    // layout or drawing.
     var content by mutableStateOf(content)
-    var targetSize by mutableStateOf(IntSize.Zero)
+    var targetSize by mutableStateOf(Element.SizeUnspecified)
     var userActions by mutableStateOf(actions)
     var zIndex by mutableFloatStateOf(zIndex)
 
@@ -152,26 +161,17 @@ internal sealed class Content(
 
     @SuppressLint("NotConstructor")
     @Composable
-    fun Content(modifier: Modifier = Modifier) {
+    fun Content(modifier: Modifier = Modifier, isInvisible: Boolean = false) {
         // If this content has a custom factory, provide it to the content so that the factory is
         // automatically used when calling rememberOverscrollEffect().
+        val isElevationPossible =
+            layoutImpl.state.isElevationPossible(content = key, element = null)
         Box(
-            modifier
-                .zIndex(zIndex)
-                .approachLayout(
-                    isMeasurementApproachInProgress = { layoutImpl.state.isTransitioning() }
-                ) { measurable, constraints ->
-                    // TODO(b/353679003): Use the ModifierNode API to set this *before* the
-                    // approach
-                    // pass is started.
-                    targetSize = lookaheadSize
-                    val placeable = measurable.measure(constraints)
-                    layout(placeable.width, placeable.height) { placeable.place(0, 0) }
-                }
-                .thenIf(layoutImpl.state.isElevationPossible(content = key, element = null)) {
-                    Modifier.container(containerState)
-                }
-                .testTag(key.testTag)
+            modifier.then(ContentElement(this, isElevationPossible, isInvisible)).thenIf(
+                layoutImpl.implicitTestTags
+            ) {
+                Modifier.testTag(key.testTag)
+            }
         ) {
             CompositionLocalProvider(LocalOverscrollFactory provides lastFactory) {
                 scope.content()
@@ -186,6 +186,80 @@ internal sealed class Content(
             lastFactory = effectFactory
             verticalEffects = ContentEffects(effectFactory)
             horizontalEffects = ContentEffects(effectFactory)
+        }
+    }
+}
+
+private data class ContentElement(
+    private val content: Content,
+    private val isElevationPossible: Boolean,
+    private val isInvisible: Boolean,
+) : ModifierNodeElement<ContentNode>() {
+    override fun create(): ContentNode = ContentNode(content, isElevationPossible, isInvisible)
+
+    override fun update(node: ContentNode) {
+        node.update(content, isElevationPossible, isInvisible)
+    }
+}
+
+private class ContentNode(
+    private var content: Content,
+    private var isElevationPossible: Boolean,
+    private var isInvisible: Boolean,
+) : DelegatingNode(), ApproachLayoutModifierNode {
+    private var containerDelegate = containerDelegate(isElevationPossible)
+
+    private fun containerDelegate(isElevationPossible: Boolean): ContainerNode? {
+        return if (isElevationPossible) delegate(ContainerNode(content.containerState)) else null
+    }
+
+    override fun onDetach() {
+        this.content.targetSize = Element.SizeUnspecified
+    }
+
+    fun update(content: Content, isElevationPossible: Boolean, isInvisible: Boolean) {
+        if (content != this.content) {
+            this.content.targetSize = Element.SizeUnspecified
+            this.content = content
+        }
+
+        if (content != this.content || isElevationPossible != this.isElevationPossible) {
+            this.isElevationPossible = isElevationPossible
+
+            containerDelegate?.let { undelegate(it) }
+            containerDelegate = containerDelegate(isElevationPossible)
+        }
+
+        this.isInvisible = isInvisible
+    }
+
+    override fun isMeasurementApproachInProgress(lookaheadSize: IntSize): Boolean = false
+
+    override fun MeasureScope.measure(
+        measurable: Measurable,
+        constraints: Constraints,
+    ): MeasureResult {
+        check(isLookingAhead)
+        return measurable.measure(constraints).run {
+            content.targetSize = IntSize(width, height)
+            layout(width, height) {
+                if (!isInvisible) {
+                    place(0, 0, zIndex = content.zIndex)
+                }
+            }
+        }
+    }
+
+    override fun ApproachMeasureScope.approachMeasure(
+        measurable: Measurable,
+        constraints: Constraints,
+    ): MeasureResult {
+        return measurable.measure(constraints).run {
+            layout(width, height) {
+                if (!isInvisible) {
+                    place(0, 0, zIndex = content.zIndex)
+                }
+            }
         }
     }
 }
@@ -222,9 +296,18 @@ internal class ContentScopeImpl(
     override fun Element(
         key: ElementKey,
         modifier: Modifier,
-        content: @Composable (ElementScope<ElementContentScope>.() -> Unit),
+        content: @Composable BoxScope.() -> Unit,
     ) {
         Element(layoutImpl, this@ContentScopeImpl.content, key, modifier, content)
+    }
+
+    @Composable
+    override fun ElementWithValues(
+        key: ElementKey,
+        modifier: Modifier,
+        content: @Composable (ElementScope<ElementContentScope>.() -> Unit),
+    ) {
+        ElementWithValues(layoutImpl, this@ContentScopeImpl.content, key, modifier, content)
     }
 
     @Composable
@@ -290,6 +373,7 @@ internal class ContentScopeImpl(
             sharedElementMap = layoutImpl.elements,
             ancestors = ancestors,
             lookaheadScope = layoutImpl.lookaheadScope,
+            implicitTestTags = layoutImpl.implicitTestTags,
         )
     }
 }

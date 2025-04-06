@@ -45,7 +45,6 @@ import android.util.Xml;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.util.ArrayUtils;
-import com.android.internal.util.FrameworkStatsLog;
 import com.android.internal.util.XmlUtils;
 import com.android.modules.utils.TypedXmlPullParser;
 import com.android.modules.utils.TypedXmlSerializer;
@@ -82,7 +81,7 @@ import java.util.Set;
  * THREADING AND LOCKING:
  * For in-memory transactions this class relies on {@link DiscreteOpsXmlRegistry#mInMemoryLock}.
  * It is assumed that the same lock is used for in-memory transactions in {@link AppOpsService},
- * {@link HistoricalRegistry}, and {@link DiscreteOpsXmlRegistry }.
+ * {@link LegacyHistoricalRegistry}, and {@link DiscreteOpsXmlRegistry }.
  * {@link DiscreteOpsRegistry#recordDiscreteAccess} must only be called while holding this lock.
  * {@link DiscreteOpsXmlRegistry#mOnDiskLock} is used when disk transactions are performed.
  * It is very important to release {@link DiscreteOpsXmlRegistry#mInMemoryLock} as soon as
@@ -159,15 +158,7 @@ class DiscreteOpsXmlRegistry extends DiscreteOpsRegistry {
     void recordDiscreteAccess(int uid, String packageName, @NonNull String deviceId, int op,
             @Nullable String attributionTag, @AppOpsManager.OpFlags int flags,
             @AppOpsManager.UidState int uidState, long accessTime, long accessDuration,
-            @AppOpsManager.AttributionFlags int attributionFlags, int attributionChainId,
-            @AccessType int accessType) {
-        if (shouldLogAccess(op)) {
-            FrameworkStatsLog.write(FrameworkStatsLog.APP_OP_ACCESS_TRACKED, uid, op, accessType,
-                    uidState, flags, attributionFlags,
-                    getAttributionTag(attributionTag, packageName),
-                    attributionChainId);
-        }
-
+            @AppOpsManager.AttributionFlags int attributionFlags, int attributionChainId) {
         if (!isDiscreteOp(op, flags)) {
             return;
         }

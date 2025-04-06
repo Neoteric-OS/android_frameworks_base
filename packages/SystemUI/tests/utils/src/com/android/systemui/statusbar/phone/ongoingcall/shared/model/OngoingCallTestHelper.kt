@@ -17,6 +17,9 @@
 package com.android.systemui.statusbar.phone.ongoingcall.shared.model
 
 import android.app.PendingIntent
+import com.android.internal.logging.InstanceId
+import com.android.systemui.activity.data.repository.activityManagerRepository
+import com.android.systemui.activity.data.repository.fake
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.statusbar.StatusBarIconView
 import com.android.systemui.statusbar.core.StatusBarConnectedDisplays
@@ -24,7 +27,7 @@ import com.android.systemui.statusbar.notification.data.model.activeNotification
 import com.android.systemui.statusbar.notification.data.repository.activeNotificationListRepository
 import com.android.systemui.statusbar.notification.data.repository.addNotif
 import com.android.systemui.statusbar.notification.data.repository.removeNotif
-import com.android.systemui.statusbar.notification.promoted.shared.model.PromotedNotificationContentModel
+import com.android.systemui.statusbar.notification.promoted.shared.model.PromotedNotificationContentModels
 import com.android.systemui.statusbar.notification.shared.CallType
 import com.android.systemui.statusbar.phone.ongoingcall.StatusBarChipsModernization
 import com.android.systemui.statusbar.phone.ongoingcall.data.repository.ongoingCallRepository
@@ -37,7 +40,9 @@ fun inCallModel(
     intent: PendingIntent? = null,
     notificationKey: String = "test",
     appName: String = "",
-    promotedContent: PromotedNotificationContentModel? = null,
+    promotedContent: PromotedNotificationContentModels? = null,
+    isAppVisible: Boolean = false,
+    instanceId: InstanceId? = null,
 ) =
     OngoingCallModel.InCall(
         startTimeMs,
@@ -46,6 +51,8 @@ fun inCallModel(
         notificationKey,
         appName,
         promotedContent,
+        isAppVisible,
+        instanceId,
     )
 
 object OngoingCallTestHelper {
@@ -73,12 +80,15 @@ object OngoingCallTestHelper {
         key: String = "notif",
         startTimeMs: Long = 1000L,
         statusBarChipIconView: StatusBarIconView? = createStatusBarIconViewOrNull(),
-        promotedContent: PromotedNotificationContentModel? = null,
+        promotedContent: PromotedNotificationContentModels? = null,
         contentIntent: PendingIntent? = null,
         uid: Int = DEFAULT_UID,
         appName: String = "Fake name",
+        isAppVisible: Boolean = false,
+        instanceId: InstanceId? = null,
     ) {
         if (StatusBarChipsModernization.isEnabled) {
+            activityManagerRepository.fake.startingIsAppVisibleValue = isAppVisible
             activeNotificationListRepository.addNotif(
                 activeNotificationModel(
                     key = key,
@@ -89,6 +99,7 @@ object OngoingCallTestHelper {
                     promotedContent = promotedContent,
                     uid = uid,
                     appName = appName,
+                    instanceId = instanceId,
                 )
             )
         } else {
@@ -100,6 +111,8 @@ object OngoingCallTestHelper {
                     notificationKey = key,
                     appName = appName,
                     promotedContent = promotedContent,
+                    isAppVisible = isAppVisible,
+                    instanceId = instanceId,
                 )
             )
         }

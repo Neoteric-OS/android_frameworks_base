@@ -50,7 +50,6 @@ import android.content.pm.ActivityInfo.ScreenOrientation;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.UserHandle;
-import android.util.IntArray;
 import android.util.Slog;
 import android.view.SurfaceControl;
 import android.view.WindowManager;
@@ -62,7 +61,6 @@ import com.android.internal.util.function.pooled.PooledLambda;
 import com.android.internal.util.function.pooled.PooledPredicate;
 import com.android.server.pm.UserManagerInternal;
 import com.android.server.wm.LaunchParamsController.LaunchParams;
-import com.android.window.flags.Flags;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -105,9 +103,6 @@ final class TaskDisplayArea extends DisplayArea<WindowContainer> {
     private final ArrayList<WindowContainer> mTmpAlwaysOnTopChildren = new ArrayList<>();
     private final ArrayList<WindowContainer> mTmpNormalChildren = new ArrayList<>();
     private final ArrayList<WindowContainer> mTmpHomeChildren = new ArrayList<>();
-    private final IntArray mTmpNeedsZBoostIndexes = new IntArray();
-
-    private ArrayList<Task> mTmpTasks = new ArrayList<>();
 
     private ActivityTaskManagerService mAtmService;
 
@@ -743,38 +738,12 @@ final class TaskDisplayArea extends DisplayArea<WindowContainer> {
      */
     private int adjustRootTaskLayer(SurfaceControl.Transaction t,
             ArrayList<WindowContainer> children, int startLayer) {
-        mTmpNeedsZBoostIndexes.clear();
         final int childCount = children.size();
-        boolean hasAdjacentTask = false;
         for (int i = 0; i < childCount; i++) {
             final WindowContainer child = children.get(i);
-            final TaskDisplayArea childTda = child.asTaskDisplayArea();
-            final boolean childNeedsZBoost = childTda != null
-                    ? childTda.childrenNeedZBoost()
-                    : child.needsZBoost();
-
-            if (childNeedsZBoost) {
-                mTmpNeedsZBoostIndexes.add(i);
-                continue;
-            }
-
-            child.assignLayer(t, startLayer++);
-        }
-
-        final int zBoostSize = mTmpNeedsZBoostIndexes.size();
-        for (int i = 0; i < zBoostSize; i++) {
-            final WindowContainer child = children.get(mTmpNeedsZBoostIndexes.get(i));
             child.assignLayer(t, startLayer++);
         }
         return startLayer;
-    }
-
-    private boolean childrenNeedZBoost() {
-        final boolean[] needsZBoost = new boolean[1];
-        forAllRootTasks(task -> {
-            needsZBoost[0] |= task.needsZBoost();
-        });
-        return needsZBoost[0];
     }
 
     void setBackgroundColor(@ColorInt int colorInt) {
@@ -1091,19 +1060,14 @@ final class TaskDisplayArea extends DisplayArea<WindowContainer> {
         // Use launch-adjacent-flag-root if launching with launch-adjacent flag.
         if ((launchFlags & FLAG_ACTIVITY_LAUNCH_ADJACENT) != 0
                 && mLaunchAdjacentFlagRootTask != null) {
-            final Task launchAdjacentRootAdjacentTask;
-            if (Flags.allowMultipleAdjacentTaskFragments()) {
-                final Task[] tmpTask = new Task[1];
-                mLaunchAdjacentFlagRootTask.forOtherAdjacentTasks(task -> {
-                    // TODO(b/382208145): enable FLAG_ACTIVITY_LAUNCH_ADJACENT for 3+.
-                    // Find the first adjacent for now.
-                    tmpTask[0] = task;
-                    return true;
-                });
-                launchAdjacentRootAdjacentTask = tmpTask[0];
-            } else {
-                launchAdjacentRootAdjacentTask = mLaunchAdjacentFlagRootTask.getAdjacentTask();
-            }
+            final Task[] tmpTask = new Task[1];
+            mLaunchAdjacentFlagRootTask.forOtherAdjacentTasks(task -> {
+                // TODO(b/382208145): enable FLAG_ACTIVITY_LAUNCH_ADJACENT for 3+.
+                // Find the first adjacent for now.
+                tmpTask[0] = task;
+                return true;
+            });
+            final Task launchAdjacentRootAdjacentTask = tmpTask[0];
             if (sourceTask != null && (sourceTask == candidateTask
                     || sourceTask.topRunningActivity() == null)) {
                 // Do nothing when task that is getting opened is same as the source or when
@@ -1129,14 +1093,6 @@ final class TaskDisplayArea extends DisplayArea<WindowContainer> {
             if (mLaunchRootTasks.get(i).contains(windowingMode, activityType)) {
                 final Task launchRootTask = mLaunchRootTasks.get(i).task;
                 if (launchRootTask == null || sourceTask == null) {
-                    return launchRootTask;
-                }
-                if (!Flags.allowMultipleAdjacentTaskFragments()) {
-                    final Task adjacentRootTask = launchRootTask.getAdjacentTask();
-                    if (adjacentRootTask != null && (sourceTask == adjacentRootTask
-                            || sourceTask.isDescendantOf(adjacentRootTask))) {
-                        return adjacentRootTask;
-                    }
                     return launchRootTask;
                 }
                 final Task[] adjacentRootTask = new Task[1];
@@ -1165,24 +1121,16 @@ final class TaskDisplayArea extends DisplayArea<WindowContainer> {
                     return sourceTask.getCreatedByOrganizerTask();
                 }
                 // Check if the candidate is already positioned in the adjacent Task.
-                if (Flags.allowMultipleAdjacentTaskFragments()) {
-                    final Task[] adjacentRootTask = new Task[1];
-                    sourceTask.forOtherAdjacentTasks(task -> {
-                        if (candidateTask == task || candidateTask.isDescendantOf(task)) {
-                            adjacentRootTask[0] = task;
-                            return true;
-                        }
-                        return false;
-                    });
-                    if (adjacentRootTask[0] != null) {
-                        return adjacentRootTask[0];
+                final Task[] adjacentRootTask = new Task[1];
+                sourceTask.forOtherAdjacentTasks(task -> {
+                    if (candidateTask == task || candidateTask.isDescendantOf(task)) {
+                        adjacentRootTask[0] = task;
+                        return true;
                     }
-                } else {
-                    final Task adjacentTarget = taskWithAdjacent.getAdjacentTask();
-                    if (candidateTask == adjacentTarget
-                            || candidateTask.isDescendantOf(adjacentTarget)) {
-                        return adjacentTarget;
-                    }
+                    return false;
+                });
+                if (adjacentRootTask[0] != null) {
+                    return adjacentRootTask[0];
                 }
                 return sourceTask.getCreatedByOrganizerTask();
             }

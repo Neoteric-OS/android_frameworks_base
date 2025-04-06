@@ -114,7 +114,7 @@ flag {
     name: "enable_shell_top_task_tracking"
     namespace: "multitasking"
     description: "Enables tracking top tasks from the shell"
-    bug: "342627272"
+    bug: "346588978"
     metadata {
         purpose: PURPOSE_BUGFIX
     }
@@ -179,8 +179,52 @@ flag {
 }
 
 flag {
+    name: "fix_missing_user_change_callbacks"
+    namespace: "multitasking"
+    description: "Fix a race condition that could make Shell miss a user change callback."
+    bug: "404251029"
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
     name: "enable_bubble_bar_on_phones"
     namespace: "multitasking"
     description: "Try out bubble bar on phones"
     bug: "394869612"
+}
+
+flag {
+    name: "enable_bubble_task_view_listener"
+    namespace: "multitasking"
+    description: "Use the same taskview listener for bubble bar and floating"
+    bug: "272102927"
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "enable_gsf"
+    namespace: "multitasking"
+    description: "Applies GSF font styles to multitasking."
+    bug: "400534660"
+    metadata {
+        purpose: PURPOSE_BUGFIX
+    }
+}
+
+flag {
+    name: "enable_magnetic_split_divider"
+    namespace: "multitasking"
+    description: "Makes the split divider snap 'magnetically' to available snap points during drag"
+    bug: "383631946"
+}
+
+flag {
+    name: "enable_dynamic_insets_for_app_launch"
+    namespace: "multitasking"
+    description: "Enables dynamic insets for app launch so the window is properly cropped"
+    bug: "336511494"
 }

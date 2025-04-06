@@ -4184,7 +4184,6 @@ public final class Settings {
             MOVED_TO_SECURE.add(Secure.PARENTAL_CONTROL_REDIRECT_URL);
             MOVED_TO_SECURE.add(Secure.SETTINGS_CLASSNAME);
             MOVED_TO_SECURE.add(Secure.USE_GOOGLE_MAIL);
-            MOVED_TO_SECURE.add(Secure.WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON);
             MOVED_TO_SECURE.add(Secure.WIFI_NETWORKS_AVAILABLE_REPEAT_DELAY);
             MOVED_TO_SECURE.add(Secure.WIFI_NUM_OPEN_NETWORKS_KEPT);
             MOVED_TO_SECURE.add(Secure.WIFI_ON);
@@ -4223,6 +4222,7 @@ public final class Settings {
             MOVED_TO_SECURE_THEN_GLOBAL.add(Global.USB_MASS_STORAGE_ENABLED);
             MOVED_TO_SECURE_THEN_GLOBAL.add(Global.WIFI_MOBILE_DATA_TRANSITION_WAKELOCK_TIMEOUT_MS);
             MOVED_TO_SECURE_THEN_GLOBAL.add(Global.WIFI_MAX_DHCP_RETRY_COUNT);
+            MOVED_TO_SECURE_THEN_GLOBAL.add(Global.WIFI_NETWORKS_AVAILABLE_NOTIFICATION_ON);
 
             // these are moving directly from system to global
             MOVED_TO_GLOBAL.add(Settings.Global.AIRPLANE_MODE_ON);
@@ -6499,6 +6499,14 @@ public final class Settings {
         public static final String SCREEN_FLASH_NOTIFICATION = "screen_flash_notification";
 
         /**
+         * Setting to enable CV (proprietary)
+         *
+         * @hide
+         */
+        public static final String CV_ENABLED =
+                "cv_enabled";
+
+        /**
          * Integer property that specifes the color for screen flash notification as a
          * packed 32-bit color.
          *
@@ -8672,6 +8680,34 @@ public final class Settings {
         public static final String DOCKED_CLOCK_FACE = "docked_clock_face";
 
         /**
+         * Setting to indicate that content filters should be enabled on web browsers.
+         *
+         * <ul>
+         *   <li>0 = Allow all sites
+         *   <li>1 = Try to block explicit sites
+         * </ul>
+         *
+         * @hide
+         */
+        @Readable
+        public static final String BROWSER_CONTENT_FILTERS_ENABLED =
+                "browser_content_filters_enabled";
+
+        /**
+         * Setting to indicate that content filters should be enabled in web search engines.
+         *
+         * <ul>
+         *   <li>0 = Off
+         *   <li>1 = Filter
+         * </ul>
+         *
+         * @hide
+         */
+        @Readable
+        public static final String SEARCH_CONTENT_FILTERS_ENABLED =
+                "search_content_filters_enabled";
+
+        /**
          * Set by the system to track if the user needs to see the call to action for
          * the lockscreen notification policy.
          * @hide
@@ -9366,6 +9402,28 @@ public final class Settings {
                 "accessibility_autoclick_ignore_minor_cursor_movement";
 
         /**
+         * String setting that stores the position of the autoclick panel when
+         * {@link #ACCESSIBILITY_AUTOCLICK_ENABLED} is set. The position is stored as a
+         * comma-separated string containing gravity, x-coordinate, y-coordinate, and corner index.
+         * For example, "8388659,15,30,0", where 8388659 means gravity Gravity.START | Gravity.TOP.
+         *
+         * @see #ACCESSIBILITY_AUTOCLICK_ENABLED
+         * @hide
+         */
+        public static final String ACCESSIBILITY_AUTOCLICK_PANEL_POSITION =
+                "accessibility_autoclick_panel_position";
+
+        /**
+         * Setting that specifies whether autoclick type reverts to left click after performing
+         * an action when {@link #ACCESSIBILITY_AUTOCLICK_ENABLED} is set.
+         *
+         * @see #ACCESSIBILITY_AUTOCLICK_ENABLED
+         * @hide
+         */
+        public static final String ACCESSIBILITY_AUTOCLICK_REVERT_TO_LEFT_CLICK =
+                "accessibility_autoclick_revert_to_left_click";
+
+        /**
          * Whether or not larger size icons are used for the pointer of mouse/trackpad for
          * accessibility.
          * (0 = false, 1 = true)
@@ -9462,24 +9520,6 @@ public final class Settings {
          */
         public static final String REDUCE_BRIGHT_COLORS_PERSIST_ACROSS_REBOOTS =
                 "reduce_bright_colors_persist_across_reboots";
-
-        /**
-         * Setting that specifies whether Even Dimmer - a feature that allows the brightness
-         * slider to go below what the display can conventionally do, should be enabled.
-         *
-         * @hide
-         */
-        public static final String EVEN_DIMMER_ACTIVATED =
-                "even_dimmer_activated";
-
-        /**
-         * Setting that specifies which nits level Even Dimmer should allow the screen brightness
-         * to go down to.
-         *
-         * @hide
-         */
-        public static final String EVEN_DIMMER_MIN_NITS =
-                "even_dimmer_min_nits";
 
         /**
          * Setting that holds EM_VALUE (proprietary)
@@ -10600,7 +10640,61 @@ public final class Settings {
          *
          * @hide
          */
+        @TestApi
+        @Readable
+        @SuppressLint({"UnflaggedApi", "NoSettingsProvider"}) // @TestApi purely for CTS support.
         public static final String GLANCEABLE_HUB_ENABLED = "glanceable_hub_enabled";
+
+        /**
+         * Indicates that glanceable hub should never be started automatically.
+         *
+         * @hide
+         */
+        public static final int GLANCEABLE_HUB_START_NEVER = 0;
+
+        /**
+         * Indicates that glanceable hub should be started when charging.
+         *
+         * @hide
+         */
+        public static final int GLANCEABLE_HUB_START_CHARGING = 1;
+
+        /**
+         * Indicates that glanceable hub should be started when charging and upright.
+         *
+         * @hide
+         */
+        public static final int GLANCEABLE_HUB_START_CHARGING_UPRIGHT = 2;
+
+        /**
+         * Indicates that glanceable hub should be started when docked.
+         *
+         * @hide
+         */
+        public static final int GLANCEABLE_HUB_START_DOCKED = 3;
+
+        /** @hide */
+        @Retention(RetentionPolicy.SOURCE)
+        @IntDef({
+                GLANCEABLE_HUB_START_NEVER,
+                GLANCEABLE_HUB_START_CHARGING,
+                GLANCEABLE_HUB_START_CHARGING_UPRIGHT,
+                GLANCEABLE_HUB_START_DOCKED,
+        })
+        public @interface WhenToStartGlanceableHub {
+        }
+
+        /**
+         * Indicates when to start glanceable hub. Possible values are:
+         * 0: Never
+         * 1: While charging always
+         * 2: While upright and charging
+         * 3: While docked
+         *
+         * @hide
+         */
+        public static final String WHEN_TO_START_GLANCEABLE_HUB =
+                "when_to_start_glanceable_hub";
 
         /**
          * Whether home controls are enabled to be shown over the screensaver by the user.
@@ -11144,6 +11238,12 @@ public final class Settings {
          */
         @Readable
         public static final String DOUBLE_TAP_TO_WAKE = "double_tap_to_wake";
+
+        /**
+         * Controls whether double tap to sleep is enabled.
+         * @hide
+         */
+        public static final String DOUBLE_TAP_TO_SLEEP = "double_tap_to_sleep";
 
         /**
          * The current assistant component. It could be a voice interaction service,
@@ -12513,6 +12613,48 @@ public final class Settings {
                 "accessibility_magnification_always_on_enabled";
 
         /**
+         * Controls how the magnification follows the cursor.
+         *
+         * @hide
+         */
+        public static final String ACCESSIBILITY_MAGNIFICATION_CURSOR_FOLLOWING_MODE =
+                "accessibility_magnification_cursor_following_mode";
+
+        /**
+         * Magnification cursor following mode value for the continuous mode.
+         *
+         * @hide
+         */
+        public static final int ACCESSIBILITY_MAGNIFICATION_CURSOR_FOLLOWING_MODE_CONTINUOUS = 0;
+
+        /**
+         * Magnification cursor following mode value for the center mode.
+         *
+         * @hide
+         */
+        public static final int ACCESSIBILITY_MAGNIFICATION_CURSOR_FOLLOWING_MODE_CENTER = 1;
+
+        /**
+         * Magnification cursor following mode value for the edge mode.
+         *
+         * @hide
+         */
+        public static final int ACCESSIBILITY_MAGNIFICATION_CURSOR_FOLLOWING_MODE_EDGE = 2;
+
+        /**
+         * Different cursor following settings that can be used as values with
+         * {@link #ACCESSIBILITY_MAGNIFICATION_CURSOR_FOLLOWING_MODE}.
+         * @hide
+         */
+        @Retention(RetentionPolicy.SOURCE)
+        @IntDef(prefix = { "ACCESSIBILITY_MAGNIFICATION_CURSOR_FOLLOWING_MODE_" },
+                value = {
+                        ACCESSIBILITY_MAGNIFICATION_CURSOR_FOLLOWING_MODE_CONTINUOUS,
+                        ACCESSIBILITY_MAGNIFICATION_CURSOR_FOLLOWING_MODE_CENTER,
+                        ACCESSIBILITY_MAGNIFICATION_CURSOR_FOLLOWING_MODE_EDGE})
+        public @interface AccessibilityMagnificationCursorFollowingMode {}
+
+        /**
          * Whether the following typing focus feature for magnification is enabled.
          * @hide
          */
@@ -12707,6 +12849,22 @@ public final class Settings {
          * @hide
          */
         public static final String ADAPTIVE_CONNECTIVITY_ENABLED = "adaptive_connectivity_enabled";
+
+        /**
+         * Whether the Adaptive wifi scorer switch is enabled.
+         *
+         * @hide
+         */
+        public static final String ADAPTIVE_CONNECTIVITY_WIFI_ENABLED =
+                "adaptive_connectivity_wifi_enabled";
+
+        /**
+         * Whether the Adaptive 5G PM switch is enabled.
+         *
+         * @hide
+         */
+        public static final String ADAPTIVE_CONNECTIVITY_MOBILE_NETWORK_ENABLED =
+                "adaptive_connectivity_mobile_network_enabled";
 
         /**
          * Controls the 'Sunlight boost' toggle in wearable devices (high brightness mode).
@@ -13180,10 +13338,18 @@ public final class Settings {
         public static final String CONTEXTUAL_SEARCH_PACKAGE = "contextual_search_package";
 
         /**
-         * Inetger property which determines whether advanced protection is on or not.
+         * Integer property which determines whether advanced protection is on or not.
          * @hide
          */
         public static final String ADVANCED_PROTECTION_MODE = "advanced_protection_mode";
+
+        /**
+         * Integer property which determines whether advanced protection USB data protection
+         * feature is on or not.
+         *
+         * @hide
+         */
+        public static final String AAPM_USB_DATA_PROTECTION = "aapm_usb_data_protection";
     }
 
     /**
@@ -15399,7 +15565,8 @@ public final class Settings {
          * <ul>
          * <li><pre>secure</pre>: creates a secure display</li>
          * <li><pre>own_content_only</pre>: only shows this display's own content</li>
-         * <li><pre>should_show_system_decorations</pre>: supports system decorations</li>
+         * <li><pre>should_show_system_decorations</pre>: always shows system decorations</li>
+         * <li><pre>fixed_content_mode</pre>: does not allow the content mode switch</li>
          * </ul>
          * </p><p>
          * Example:
@@ -19701,6 +19868,14 @@ public final class Settings {
         public static final String REPAIR_MODE_ACTIVE = "repair_mode_active";
 
         /**
+         * Whether the notification manager service should redact notifications that contain otps
+         * from untrusted listeners. Defaults to 1/true.
+         * @hide
+         */
+        public static final String REDACT_OTP_NOTIFICATIONS_FROM_UNTRUSTED_LISTENERS =
+                "redact_otp_notifications_from_untrusted_listeners";
+
+        /**
          * Settings migrated from Wear OS settings provider.
          * @hide
          */
@@ -20709,6 +20884,24 @@ public final class Settings {
              */
             @Readable
             public static final String WEAR_LAUNCHER_UI_MODE = "wear_launcher_ui_mode";
+
+            /**
+             * Setting indicating whether the primary gesture input action has been enabled by the
+             * user.
+             *
+             * @hide
+             */
+            public static final String GESTURE_PRIMARY_ACTION_USER_PREFERENCE =
+                    "gesture_primary_action_user_preference";
+
+            /**
+             * Setting indicating whether the dismiss gesture input action has been enabled by the
+             * user.
+             *
+             * @hide
+             */
+            public static final String GESTURE_DISMISS_ACTION_USER_PREFERENCE =
+                    "gesture_dismiss_action_user_preference";
 
             /** Whether Wear Power Anomaly Service is enabled.
              *

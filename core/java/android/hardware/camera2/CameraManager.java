@@ -85,6 +85,7 @@ import android.util.Log;
 import android.util.Pair;
 import android.util.Size;
 import android.view.Display;
+import android.window.DesktopModeFlags;
 
 import com.android.internal.camera.flags.Flags;
 import com.android.internal.util.ArrayUtils;
@@ -1691,7 +1692,7 @@ public final class CameraManager {
      */
     public static int getRotationOverride(@Nullable Context context,
             @Nullable PackageManager packageManager, @Nullable String packageName) {
-        if (com.android.window.flags.Flags.enableCameraCompatForDesktopWindowing()) {
+        if (DesktopModeFlags.ENABLE_CAMERA_COMPAT_SIMULATE_REQUESTED_ORIENTATION.isTrue()) {
             return getRotationOverrideInternal(context, packageManager, packageName);
         } else {
             return shouldOverrideToPortrait(packageManager, packageName)
@@ -1720,7 +1721,7 @@ public final class CameraManager {
                     final TaskInfo taskInfo = appTask.getTaskInfo();
                     final int freeformCameraCompatMode = taskInfo.appCompatTaskInfo
                             .cameraCompatTaskInfo.freeformCameraCompatMode;
-                    if (freeformCameraCompatMode != 0
+                    if (isInCameraCompatMode(freeformCameraCompatMode)
                             && taskInfo.topActivity != null
                             && taskInfo.topActivity.getPackageName().equals(packageName)) {
                         // WindowManager has requested rotation override.
@@ -1745,6 +1746,12 @@ public final class CameraManager {
         return CompatChanges.isChangeEnabled(OVERRIDE_CAMERA_LANDSCAPE_TO_PORTRAIT)
                 ? ICameraService.ROTATION_OVERRIDE_OVERRIDE_TO_PORTRAIT
                 : ICameraService.ROTATION_OVERRIDE_NONE;
+    }
+
+    private static boolean isInCameraCompatMode(@CameraCompatTaskInfo.FreeformCameraCompatMode int
+            freeformCameraCompatMode) {
+        return (freeformCameraCompatMode != CameraCompatTaskInfo.CAMERA_COMPAT_FREEFORM_UNSPECIFIED)
+                && (freeformCameraCompatMode != CameraCompatTaskInfo.CAMERA_COMPAT_FREEFORM_NONE);
     }
 
     private static int getRotationOverrideForCompatFreeform(
@@ -2500,24 +2507,7 @@ public final class CameraManager {
                     Thread.currentThread().getId(), mDeviceStatus.size()));
             try {
                 List<String> cameraIds = new ArrayList<>();
-                boolean exposeAuxCamera = false;
-                String packageName = ActivityThread.currentOpPackageName();
-                String packageList = SystemProperties.get("vendor.camera.aux.packagelist");
-                if (packageList.length() > 0) {
-                    TextUtils.StringSplitter splitter = new TextUtils.SimpleStringSplitter(',');
-                    splitter.setString(packageList);
-                    for (String str : splitter) {
-                        if (packageName.equals(str)) {
-                            exposeAuxCamera = true;
-                            break;
-                        }
-// QTI_BEGIN: 2018-03-10: Camera: Expose Aux camera to apps present in the whitelist
-                    }
-                }
-// QTI_END: 2018-03-10: Camera: Expose Aux camera to apps present in the whitelist
-                int idCount = 0;
                 for (int i = 0; i < mDeviceStatus.size(); i++) {
-                    if(!exposeAuxCamera && (i == 2)) break;
                     int status = mDeviceStatus.valueAt(i);
                     DeviceCameraInfo info = mDeviceStatus.keyAt(i);
                     if (status == ICameraServiceListener.STATUS_NOT_PRESENT

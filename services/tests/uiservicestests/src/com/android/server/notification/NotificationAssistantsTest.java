@@ -36,8 +36,8 @@ import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertNull;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
@@ -678,6 +678,34 @@ public class NotificationAssistantsTest extends UiServiceTestCase {
         mAssistants.allowAdjustmentType(Adjustment.KEY_RANKING_SCORE);
         assertThat(mAssistants.getAllowedAssistantAdjustments())
                 .contains(Adjustment.KEY_RANKING_SCORE);
+    }
+
+    @Test
+    @EnableFlags(android.service.notification.Flags.FLAG_NOTIFICATION_CLASSIFICATION)
+    public void testAllowAdjustmentType_classifListEmpty_resetDefaultClassificationTypes() {
+        mAssistants.setAssistantAdjustmentKeyTypeState(TYPE_PROMOTION, false);
+        mAssistants.setAssistantAdjustmentKeyTypeState(TYPE_NEWS, false);
+        mAssistants.setAssistantAdjustmentKeyTypeState(TYPE_SOCIAL_MEDIA, false);
+        mAssistants.setAssistantAdjustmentKeyTypeState(TYPE_CONTENT_RECOMMENDATION, false);
+        assertThat(mAssistants.getAllowedClassificationTypes()).isEmpty();
+        mAssistants.disallowAdjustmentType(Adjustment.KEY_TYPE);
+        mAssistants.allowAdjustmentType(Adjustment.KEY_TYPE);
+        assertThat(mAssistants.getAllowedClassificationTypes()).asList()
+                .contains(TYPE_PROMOTION);
+    }
+
+    @Test
+    @EnableFlags(android.service.notification.Flags.FLAG_NOTIFICATION_CLASSIFICATION)
+    public void testAllowAdjustmentType_classifListNotEmpty_doNotResetDefaultClassificationTypes() {
+        mAssistants.setAssistantAdjustmentKeyTypeState(TYPE_PROMOTION, false);
+        mAssistants.setAssistantAdjustmentKeyTypeState(TYPE_SOCIAL_MEDIA, false);
+        mAssistants.setAssistantAdjustmentKeyTypeState(TYPE_CONTENT_RECOMMENDATION, false);
+        mAssistants.setAssistantAdjustmentKeyTypeState(TYPE_NEWS, true);
+        assertThat(mAssistants.getAllowedClassificationTypes()).isNotEmpty();
+        mAssistants.disallowAdjustmentType(Adjustment.KEY_TYPE);
+        mAssistants.allowAdjustmentType(Adjustment.KEY_TYPE);
+        assertThat(mAssistants.getAllowedClassificationTypes()).asList()
+            .containsExactly(TYPE_NEWS);
     }
 
     @Test

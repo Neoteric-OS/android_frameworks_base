@@ -22,10 +22,10 @@ import com.android.app.animation.Interpolators
 import com.android.systemui.log.core.Logger
 import com.android.systemui.plugins.clocks.AlarmData
 import com.android.systemui.plugins.clocks.ClockAnimations
+import com.android.systemui.plugins.clocks.ClockAxisStyle
 import com.android.systemui.plugins.clocks.ClockEvents
 import com.android.systemui.plugins.clocks.ClockFaceConfig
 import com.android.systemui.plugins.clocks.ClockFaceEvents
-import com.android.systemui.plugins.clocks.ClockFontAxisSetting
 import com.android.systemui.plugins.clocks.ThemeConfig
 import com.android.systemui.plugins.clocks.WeatherData
 import com.android.systemui.plugins.clocks.ZenData
@@ -44,6 +44,7 @@ class ComposedDigitalLayerController(private val clockCtx: ClockContext) :
     val dozeState = DefaultClockController.AnimationState(1F)
 
     override val view = FlexClockView(clockCtx)
+    override var onViewBoundsChanged by view::onViewBoundsChanged
 
     init {
         fun createController(cfg: LayerConfig) {
@@ -55,7 +56,6 @@ class ComposedDigitalLayerController(private val clockCtx: ClockContext) :
         val layerCfg =
             LayerConfig(
                 style = FontTextStyle(lineHeight = 147.25f),
-                timespec = DigitalTimespec.DIGIT_PAIR,
                 alignment = DigitalAlignment(HorizontalAlignment.CENTER, VerticalAlignment.CENTER),
                 aodStyle =
                     FontTextStyle(
@@ -63,12 +63,23 @@ class ComposedDigitalLayerController(private val clockCtx: ClockContext) :
                         transitionDuration = 750,
                     ),
 
-                // Placeholder
+                // Placeholders
+                timespec = DigitalTimespec.TIME_FULL_FORMAT,
                 dateTimeFormat = "hh:mm",
             )
 
-        createController(layerCfg.copy(dateTimeFormat = "hh"))
-        createController(layerCfg.copy(dateTimeFormat = "mm"))
+        createController(
+            layerCfg.copy(timespec = DigitalTimespec.FIRST_DIGIT, dateTimeFormat = "hh")
+        )
+        createController(
+            layerCfg.copy(timespec = DigitalTimespec.SECOND_DIGIT, dateTimeFormat = "hh")
+        )
+        createController(
+            layerCfg.copy(timespec = DigitalTimespec.FIRST_DIGIT, dateTimeFormat = "mm")
+        )
+        createController(
+            layerCfg.copy(timespec = DigitalTimespec.SECOND_DIGIT, dateTimeFormat = "mm")
+        )
     }
 
     private fun refreshTime() {
@@ -99,10 +110,6 @@ class ComposedDigitalLayerController(private val clockCtx: ClockContext) :
             override fun onAlarmDataChanged(data: AlarmData) {}
 
             override fun onZenDataChanged(data: ZenData) {}
-
-            override fun onFontAxesChanged(axes: List<ClockFontAxisSetting>) {
-                view.updateAxes(axes)
-            }
 
             override var isReactiveTouchInteractionEnabled
                 get() = view.isReactiveTouchInteractionEnabled
@@ -141,6 +148,13 @@ class ComposedDigitalLayerController(private val clockCtx: ClockContext) :
             override fun onFidgetTap(x: Float, y: Float) {
                 view.animateFidget(x, y)
             }
+
+            private var hasFontAxes = false
+
+            override fun onFontAxesChanged(style: ClockAxisStyle) {
+                view.updateAxes(style, isAnimated = hasFontAxes)
+                hasFontAxes = true
+            }
         }
 
     override val faceEvents =
@@ -150,15 +164,7 @@ class ComposedDigitalLayerController(private val clockCtx: ClockContext) :
             }
 
             override fun onThemeChanged(theme: ThemeConfig) {
-                val color =
-                    when {
-                        theme.seedColor != null -> theme.seedColor!!
-                        theme.isDarkTheme ->
-                            clockCtx.resources.getColor(android.R.color.system_accent1_100)
-                        else -> clockCtx.resources.getColor(android.R.color.system_accent2_600)
-                    }
-
-                view.updateColor(color)
+                view.updateColor(theme.getDefaultColor(clockCtx.context))
             }
 
             override fun onFontSettingChanged(fontSizePx: Float) {

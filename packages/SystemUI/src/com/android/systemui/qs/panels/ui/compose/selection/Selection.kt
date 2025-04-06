@@ -17,8 +17,10 @@
 package com.android.systemui.qs.panels.ui.compose.selection
 
 import androidx.compose.animation.animateColor
+import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.Transition
 import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.animateOffset
 import androidx.compose.animation.core.animateSize
 import androidx.compose.animation.core.updateTransition
@@ -36,9 +38,13 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalMinimumInteractiveComponentSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
@@ -58,11 +64,13 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
 import androidx.compose.ui.zIndex
-import com.android.compose.modifiers.size
+import com.android.compose.modifiers.thenIf
 import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults.InactiveCornerRadius
 import com.android.systemui.qs.panels.ui.compose.selection.SelectionDefaults.BADGE_ANGLE_RAD
+import com.android.systemui.qs.panels.ui.compose.selection.SelectionDefaults.BadgeIconSize
 import com.android.systemui.qs.panels.ui.compose.selection.SelectionDefaults.BadgeSize
 import com.android.systemui.qs.panels.ui.compose.selection.SelectionDefaults.BadgeXOffset
 import com.android.systemui.qs.panels.ui.compose.selection.SelectionDefaults.BadgeYOffset
@@ -70,7 +78,9 @@ import com.android.systemui.qs.panels.ui.compose.selection.SelectionDefaults.RES
 import com.android.systemui.qs.panels.ui.compose.selection.SelectionDefaults.ResizingPillHeight
 import com.android.systemui.qs.panels.ui.compose.selection.SelectionDefaults.ResizingPillWidth
 import com.android.systemui.qs.panels.ui.compose.selection.SelectionDefaults.SelectedBorderWidth
+import com.android.systemui.qs.panels.ui.compose.selection.TileState.GreyedOut
 import com.android.systemui.qs.panels.ui.compose.selection.TileState.None
+import com.android.systemui.qs.panels.ui.compose.selection.TileState.Placeable
 import com.android.systemui.qs.panels.ui.compose.selection.TileState.Removable
 import com.android.systemui.qs.panels.ui.compose.selection.TileState.Selected
 import kotlin.math.cos
@@ -101,10 +111,11 @@ fun InteractiveTileContainer(
 ) {
     val transition: Transition<TileState> = updateTransition(tileState)
     val decorationColor by transition.animateColor()
-    val decorationAngle by transition.animateAngle()
+    val decorationAngle by animateAngle(tileState)
     val decorationSize by transition.animateSize()
     val decorationOffset by transition.animateOffset()
-    val decorationAlpha by transition.animateFloat { state -> if (state == None) 0f else 1f }
+    val decorationAlpha by
+        transition.animateFloat { state -> if (state == Removable || state == Selected) 1f else 0f }
     val badgeIconAlpha by transition.animateFloat { state -> if (state == Removable) 1f else 0f }
     val selectionBorderAlpha by
         transition.animateFloat { state -> if (state == Selected) 1f else 0f }
@@ -147,16 +158,15 @@ fun InteractiveTileContainer(
                         onClick = onClick,
                     )
             ) {
+                val size = with(LocalDensity.current) { BadgeIconSize.toDp() }
                 Icon(
                     Icons.Default.Remove,
                     contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onPrimaryContainer,
                     modifier =
-                        Modifier.size(
-                                width = { decorationSize.width.roundToInt() },
-                                height = { decorationSize.height.roundToInt() },
-                            )
-                            .align(Alignment.Center)
-                            .graphicsLayer { this.alpha = badgeIconAlpha },
+                        Modifier.size(size).align(Alignment.Center).graphicsLayer {
+                            this.alpha = badgeIconAlpha
+                        },
                 )
             }
         }
@@ -184,26 +194,47 @@ private fun Modifier.selectionBorder(
     }
 }
 
+/**
+ * Draws a clickable badge in the top end corner of the parent composable.
+ *
+ * The badge will fade in and fade out based on whether or not it's enabled.
+ *
+ * @param icon the [ImageVector] to display in the badge
+ * @param contentDescription the content description for the icon
+ * @param enabled Whether the badge should be visible and clickable
+ * @param onClick the callback when the badge is clicked
+ */
 @Composable
-fun StaticTileBadge(icon: ImageVector, contentDescription: String?, onClick: () -> Unit) {
+fun StaticTileBadge(
+    icon: ImageVector,
+    contentDescription: String?,
+    enabled: Boolean,
+    onClick: () -> Unit,
+) {
     val offset = with(LocalDensity.current) { Offset(BadgeXOffset.toPx(), BadgeYOffset.toPx()) }
+    val alpha by animateFloatAsState(if (enabled) 1f else 0f)
     MinimumInteractiveSizeComponent(angle = { BADGE_ANGLE_RAD }, offset = { offset }) {
         Box(
             Modifier.fillMaxSize()
-                .clickable(
-                    interactionSource = null,
-                    indication = null,
-                    onClickLabel = contentDescription,
-                    onClick = onClick,
-                )
+                .graphicsLayer { this.alpha = alpha }
+                .thenIf(enabled) {
+                    Modifier.clickable(
+                        interactionSource = null,
+                        indication = null,
+                        onClickLabel = contentDescription,
+                        onClick = onClick,
+                    )
+                }
         ) {
-            val secondaryColor = MaterialTheme.colorScheme.secondary
+            val size = with(LocalDensity.current) { BadgeIconSize.toDp() }
+            val primaryColor = MaterialTheme.colorScheme.primary
             Icon(
                 icon,
                 contentDescription = contentDescription,
+                tint = MaterialTheme.colorScheme.onPrimary,
                 modifier =
-                    Modifier.size(BadgeSize).align(Alignment.Center).drawBehind {
-                        drawCircle(secondaryColor)
+                    Modifier.size(size).align(Alignment.Center).drawBehind {
+                        drawCircle(primaryColor, radius = BadgeSize.toPx() / 2)
                     },
             )
         }
@@ -214,7 +245,8 @@ fun StaticTileBadge(icon: ImageVector, contentDescription: String?, onClick: () 
 private fun MinimumInteractiveSizeComponent(
     angle: () -> Float,
     offset: () -> Offset,
-    content: @Composable BoxScope.() -> Unit,
+    modifier: Modifier = Modifier,
+    content: @Composable BoxScope.() -> Unit = {},
 ) {
     // Use a higher zIndex than the tile to draw over it, and manually create the touch target
     // as we're drawing over neighbor tiles as well.
@@ -222,7 +254,8 @@ private fun MinimumInteractiveSizeComponent(
     Box(
         contentAlignment = Alignment.Center,
         modifier =
-            Modifier.zIndex(2f)
+            modifier
+                .zIndex(2f)
                 .systemGestureExclusion { Rect(Offset.Zero, it.size.toSize()) }
                 .layout { measurable, constraints ->
                     val size = minTouchTargetSize.roundToPx()
@@ -257,27 +290,61 @@ private fun Modifier.resizable(selected: Boolean, state: ResizingState): Modifie
 }
 
 enum class TileState {
+    /** Tile is displayed as-is, no additional decoration needed. */
     None,
+    /** Tile can be removed by the user. This is displayed by a badge in the upper end corner. */
     Removable,
+    /**
+     * Tile is selected and resizable. One tile can be selected at a time in the grid. This is when
+     * we display the resizing handle and a highlighted border around the tile.
+     */
     Selected,
+    /**
+     * Tile placeable. This state means that the grid is in placement mode and this tile is
+     * selected. It should be highlighted to stand out in the grid.
+     */
+    Placeable,
+    /**
+     * Tile is faded out. This state means that the grid is in placement mode and this tile isn't
+     * selected. It serves as a target to place the selected tile.
+     */
+    GreyedOut,
 }
 
 @Composable
 private fun Transition<TileState>.animateColor(): State<Color> {
     return animateColor { state ->
         when (state) {
-            None -> Color.Transparent
-            Removable -> MaterialTheme.colorScheme.secondary
-            Selected -> MaterialTheme.colorScheme.primary
+            None,
+            GreyedOut -> Color.Transparent
+            Removable -> MaterialTheme.colorScheme.primaryContainer
+            Selected,
+            Placeable -> MaterialTheme.colorScheme.primary
         }
     }
 }
 
+/**
+ * Animate the angle of the tile decoration based on the previous state
+ *
+ * Some [TileState] don't have a visible decoration, and the angle should only animate when going
+ * between visible states.
+ */
 @Composable
-private fun Transition<TileState>.animateAngle(): State<Float> {
-    return animateFloat { state ->
-        if (state == Removable) BADGE_ANGLE_RAD else RESIZING_PILL_ANGLE_RAD
+private fun animateAngle(tileState: TileState): State<Float> {
+    val animatable = remember { Animatable(0f) }
+    var animate by remember { mutableStateOf(false) }
+    LaunchedEffect(tileState) {
+        val targetAngle = tileState.decorationAngle()
+
+        if (targetAngle == null) {
+            animate = false
+        } else {
+            if (animate) animatable.animateTo(targetAngle) else animatable.snapTo(targetAngle)
+            animate = true
+        }
     }
+    return animatable.asState()
 }
 
 @Composable
@@ -285,7 +352,9 @@ private fun Transition<TileState>.animateSize(): State<Size> {
     return animateSize { state ->
         with(LocalDensity.current) {
             when (state) {
-                None -> Size.Zero
+                None,
+                Placeable,
+                GreyedOut -> Size.Zero
                 Removable -> Size(BadgeSize.toPx())
                 Selected -> Size(ResizingPillWidth.toPx(), ResizingPillHeight.toPx())
             }
@@ -298,11 +367,23 @@ private fun Transition<TileState>.animateOffset(): State<Offset> {
     return animateOffset { state ->
         with(LocalDensity.current) {
             when (state) {
-                None -> Offset.Zero
+                None,
+                Placeable,
+                GreyedOut -> Offset.Zero
                 Removable -> Offset(BadgeXOffset.toPx(), BadgeYOffset.toPx())
                 Selected -> Offset(-SelectedBorderWidth.toPx(), 0f)
             }
         }
+    }
+}
+
+private fun TileState.decorationAngle(): Float? {
+    return when (this) {
+        Removable -> BADGE_ANGLE_RAD
+        Selected -> RESIZING_PILL_ANGLE_RAD
+        None,
+        Placeable,
+        GreyedOut -> null // No visible decoration
     }
 }
 
@@ -315,6 +396,7 @@ private fun offsetForAngle(angle: Float, radius: Float, center: Offset): Offset 
 private object SelectionDefaults {
     val SelectedBorderWidth = 2.dp
     val BadgeSize = 24.dp
+    val BadgeIconSize = 16.sp
     val BadgeXOffset = -4.dp
     val BadgeYOffset = 4.dp
     val ResizingPillWidth = 8.dp

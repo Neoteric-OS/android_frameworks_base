@@ -48,7 +48,6 @@ import com.android.systemui.statusbar.pipeline.shared.data.repository.fake
 import com.android.systemui.statusbar.policy.data.repository.FakeUserSetupRepository
 import com.android.systemui.testKosmos
 import com.android.systemui.util.CarrierConfigTracker
-import com.android.systemui.util.mockito.mock
 import com.google.common.truth.Truth.assertThat
 import java.util.UUID
 import kotlinx.coroutines.test.advanceTimeBy
@@ -59,31 +58,8 @@ import org.mockito.kotlin.whenever
 
 @SmallTest
 @RunWith(AndroidJUnit4::class)
-class MobileIconsInteractorTest : SysuiTestCase() {
-    private val kosmos by lazy {
-        testKosmos().apply {
-            mobileConnectionsRepositoryLogbufferName = "MobileIconsInteractorTest"
-            mobileConnectionsRepository.fake.run {
-                setMobileConnectionRepositoryMap(
-                    mapOf(
-                        SUB_1_ID to CONNECTION_1,
-                        SUB_2_ID to CONNECTION_2,
-                        SUB_3_ID to CONNECTION_3,
-                        SUB_4_ID to CONNECTION_4,
-                    )
-                )
-                setActiveMobileDataSubscriptionId(SUB_1_ID)
-            }
-            featureFlagsClassic.fake.set(Flags.FILTER_PROVISIONING_NETWORK_SUBSCRIPTIONS, true)
-        }
-    }
-
-    // shortcut rename
-    private val Kosmos.connectionsRepository by Fixture { mobileConnectionsRepository.fake }
-
-    private val Kosmos.carrierConfigTracker by Fixture { mock<CarrierConfigTracker>() }
-
-    private val Kosmos.underTest by Fixture {
+class MobileIconsInteractorTest : MobileIconsInteractorTestBase() {
+    override fun Kosmos.createInteractor() =
         MobileIconsInteractorImpl(
             mobileConnectionsRepository,
             carrierConfigTracker,
@@ -93,9 +69,49 @@ class MobileIconsInteractorTest : SysuiTestCase() {
             testScope.backgroundScope,
             context,
             featureFlagsClassic,
-            mock(),
         )
+
+    @Test
+    fun iconInteractor_cachedPerSubId() =
+        kosmos.runTest {
+            connectionsRepository.setSubscriptions(listOf(SUB_1))
+            runCurrent()
+
+            val interactor1 = underTest.getMobileConnectionInteractorForSubId(SUB_1_ID)
+            val interactor2 = underTest.getMobileConnectionInteractorForSubId(SUB_1_ID)
+
+            assertThat(interactor1).isNotNull()
+            assertThat(interactor1).isSameInstanceAs(interactor2)
+        }
+}
+
+abstract class MobileIconsInteractorTestBase : SysuiTestCase() {
+    protected val kosmos by lazy {
+        testKosmos().apply {
+            mobileConnectionsRepositoryLogbufferName = "MobileIconsInteractorTest"
+            mobileConnectionsRepository.fake.run {
+                setMobileConnectionRepositoryMap(
+                    mapOf(
+                        SUB_1_ID to FakeMobileConnectionRepository(SUB_1_ID, mock()),
+                        SUB_2_ID to FakeMobileConnectionRepository(SUB_2_ID, mock()),
+                        SUB_3_ID to FakeMobileConnectionRepository(SUB_3_ID, mock()),
+                        SUB_4_ID to FakeMobileConnectionRepository(SUB_4_ID, mock()),
+                    )
+                )
+                setActiveMobileDataSubscriptionId(SUB_1_ID)
+            }
+            featureFlagsClassic.fake.set(Flags.FILTER_PROVISIONING_NETWORK_SUBSCRIPTIONS, true)
+        }
     }
+
+    // shortcut rename
+    protected val Kosmos.connectionsRepository by Fixture { mobileConnectionsRepository.fake }
+
+    protected val Kosmos.carrierConfigTracker by Fixture { mock<CarrierConfigTracker>() }
+
+    protected val Kosmos.underTest by Fixture { createInteractor() }
+
+    abstract fun Kosmos.createInteractor(): MobileIconsInteractor
 
     @Test
     fun filteredSubscriptions_default() =
@@ -498,7 +514,10 @@ class MobileIconsInteractorTest : SysuiTestCase() {
     @Test
     fun activeDataConnection_turnedOn() =
         kosmos.runTest {
-            CONNECTION_1.setDataEnabled(true)
+            (fakeMobileConnectionsRepository.getRepoForSubId(SUB_1_ID)
+                    as FakeMobileConnectionRepository)
+                .dataEnabled
+                .value = true
 
             val latest by collectLastValue(underTest.activeDataConnectionHasDataEnabled)
 
@@ -508,10 +527,17 @@ class MobileIconsInteractorTest : SysuiTestCase() {
     @Test
     fun activeDataConnection_turnedOff() =
         kosmos.runTest {
-            CONNECTION_1.setDataEnabled(true)
+            (fakeMobileConnectionsRepository.getRepoForSubId(SUB_1_ID)
+                    as FakeMobileConnectionRepository)
+                .dataEnabled
+                .value = true
+
             val latest by collectLastValue(underTest.activeDataConnectionHasDataEnabled)
 
-            CONNECTION_1.setDataEnabled(false)
+            (fakeMobileConnectionsRepository.getRepoForSubId(SUB_1_ID)
+                    as FakeMobileConnectionRepository)
+                .dataEnabled
+                .value = false
 
             assertThat(latest).isFalse()
         }
@@ -736,12 +762,15 @@ class MobileIconsInteractorTest : SysuiTestCase() {
             val latest by collectLastValue(underTest.mobileIsDefault)
 
             connectionsRepository.mobileIsDefault.value = true
+            runCurrent()
             assertThat(latest).isTrue()
 
             connectionsRepository.mobileIsDefault.value = false
+            runCurrent()
             assertThat(latest).isFalse()
 
             connectionsRepository.hasCarrierMergedConnection.value = true
+            runCurrent()
             assertThat(latest).isTrue()
         }
 
@@ -866,16 +895,6 @@ class MobileIconsInteractorTest : SysuiTestCase() {
         }
 
     @Test
-    fun iconInteractor_cachedPerSubId() =
-        kosmos.runTest {
-            val interactor1 = underTest.getMobileConnectionInteractorForSubId(SUB_1_ID)
-            val interactor2 = underTest.getMobileConnectionInteractorForSubId(SUB_1_ID)
-
-            assertThat(interactor1).isNotNull()
-            assertThat(interactor1).isSameInstanceAs(interactor2)
-        }
-
-    @Test
     fun deviceBasedEmergencyMode_emergencyCallsOnly_followsDeviceServiceStateFromRepo() =
         kosmos.runTest {
             val latest by collectLastValue(underTest.isDeviceInEmergencyCallsOnlyMode)
@@ -923,20 +942,18 @@ class MobileIconsInteractorTest : SysuiTestCase() {
     @EnableFlags(NewStatusBarIcons.FLAG_NAME, StatusBarRootModernization.FLAG_NAME)
     fun isStackable_checksForTerrestrialConnections() =
         kosmos.runTest {
-            val exclusivelyNonTerrestrialSub =
-                SubscriptionModel(
-                    isExclusivelyNonTerrestrial = true,
-                    subscriptionId = 5,
-                    carrierName = "Carrier 5",
-                    profileClass = PROFILE_CLASS_UNSET,
-                )
-
             val latest by collectLastValue(underTest.isStackable)
 
             connectionsRepository.setSubscriptions(listOf(SUB_1, SUB_2))
+            setNumberOfLevelsForSubId(SUB_1_ID, 5)
+            setNumberOfLevelsForSubId(SUB_2_ID, 5)
             assertThat(latest).isTrue()
 
-            connectionsRepository.setSubscriptions(listOf(SUB_1, exclusivelyNonTerrestrialSub))
+            (fakeMobileConnectionsRepository.getRepoForSubId(SUB_1_ID)
+                    as FakeMobileConnectionRepository)
+                .isNonTerrestrial
+                .value = true
+
             assertThat(latest).isFalse()
         }
 
@@ -999,73 +1016,15 @@ class MobileIconsInteractorTest : SysuiTestCase() {
         return Pair(sub1, sub2)
     }
 
-/*
- * The following tests need to be updated.
- * connectionsRepository no longer implements defaultDataSubRatConfig.
- * Its type has changed
- *     from:
- *       - android.systemui.statusbar.pipeline.mobile.data.repository.FakeMobileConnectionsRepository
- *     to:
- *       + com.android.systemui.statusbar.pipeline.mobile.data.repository.mobileConnectionsRepository.fake
-    @Test
-    fun alwaysUseRsrpLevelForLte_configHasTrue() =
-        testScope.runTest {
-            val latest by collectLastValue(underTest.alwaysUseRsrpLevelForLte)
-
-            val config = MobileMappings.Config()
-            config.showRsrpSignalLevelforLTE = true
-            connectionsRepository.defaultDataSubRatConfig.value = config
-
-            assertThat(latest).isTrue()
-        }
-
-    @Test
-    fun alwaysUseRsrpLevelForLte_configHasFalse() =
-        testScope.runTest {
-            val latest by collectLastValue(underTest.alwaysUseRsrpLevelForLte)
-
-            val config = MobileMappings.Config()
-            config.showRsrpSignalLevelforLTE = false
-            connectionsRepository.defaultDataSubRatConfig.value = config
-
-            assertThat(latest).isFalse()
-        }
-
-    @Test
-    fun hideNoInternetState_configHasTrue() =
-        testScope.runTest {
-            val latest by collectLastValue(underTest.hideNoInternetState)
-
-            val config = MobileMappings.Config()
-            config.hideNoInternetState = true
-            connectionsRepository.defaultDataSubRatConfig.value = config
-
-            assertThat(latest).isTrue()
-        }
-
-    @Test
-    fun hideNoInternetState_configHasFalse() =
-        testScope.runTest {
-            val latest by collectLastValue(underTest.hideNoInternetState)
-
-            val config = MobileMappings.Config()
-            config.hideNoInternetState = false
-            connectionsRepository.defaultDataSubRatConfig.value = config
-
-            assertThat(latest).isTrue()
-        }
-*/
-
     companion object {
 
-        private const val SUB_1_ID = 1
-        private val SUB_1 =
+        const val SUB_1_ID = 1
+        val SUB_1 =
             SubscriptionModel(
                 subscriptionId = SUB_1_ID,
                 carrierName = "Carrier $SUB_1_ID",
                 profileClass = PROFILE_CLASS_UNSET,
             )
-        private val CONNECTION_1 = FakeMobileConnectionRepository(SUB_1_ID, mock())
 
         private const val SUB_2_ID = 2
         private val SUB_2 =
@@ -1074,7 +1033,6 @@ class MobileIconsInteractorTest : SysuiTestCase() {
                 carrierName = "Carrier $SUB_2_ID",
                 profileClass = PROFILE_CLASS_UNSET,
             )
-        private val CONNECTION_2 = FakeMobileConnectionRepository(SUB_2_ID, mock())
 
         private const val SUB_3_ID = 3
         private val SUB_3_OPP =
@@ -1085,7 +1043,6 @@ class MobileIconsInteractorTest : SysuiTestCase() {
                 carrierName = "Carrier $SUB_3_ID",
                 profileClass = PROFILE_CLASS_UNSET,
             )
-        private val CONNECTION_3 = FakeMobileConnectionRepository(SUB_3_ID, mock())
 
         private const val SUB_4_ID = 4
         private val SUB_4_OPP =
@@ -1096,6 +1053,5 @@ class MobileIconsInteractorTest : SysuiTestCase() {
                 carrierName = "Carrier $SUB_4_ID",
                 profileClass = PROFILE_CLASS_UNSET,
             )
-        private val CONNECTION_4 = FakeMobileConnectionRepository(SUB_4_ID, mock())
     }
 }

@@ -29,6 +29,7 @@ import com.android.systemui.communal.data.repository.CommunalSmartspaceRepositor
 import com.android.systemui.communal.data.repository.CommunalTutorialRepositoryModule
 import com.android.systemui.communal.data.repository.CommunalWidgetRepositoryModule
 import com.android.systemui.communal.domain.interactor.CommunalSceneTransitionInteractor
+import com.android.systemui.communal.domain.suppression.dagger.CommunalSuppressionModule
 import com.android.systemui.communal.shared.log.CommunalMetricsLogger
 import com.android.systemui.communal.shared.log.CommunalStatsLogProxyImpl
 import com.android.systemui.communal.shared.model.CommunalScenes
@@ -70,6 +71,7 @@ import kotlinx.coroutines.CoroutineScope
             CommunalSmartspaceRepositoryModule::class,
             CommunalStartableModule::class,
             GlanceableHubWidgetManagerModule::class,
+            CommunalSuppressionModule::class,
         ]
 )
 interface CommunalModule {
@@ -105,6 +107,10 @@ interface CommunalModule {
         const val LOGGABLE_PREFIXES = "loggable_prefixes"
         const val LAUNCHER_PACKAGE = "launcher_package"
         const val SWIPE_TO_HUB = "swipe_to_hub"
+        const val SHOW_UMO = "show_umo"
+        const val TOUCH_NOTIFICATION_RATE_LIMIT = "TOUCH_NOTIFICATION_RATE_LIMIT"
+
+        const val TOUCH_NOTIFIFCATION_RATE_LIMIT_MS = 100
 
         @Provides
         @Communal
@@ -149,6 +155,18 @@ interface CommunalModule {
         @Named(SWIPE_TO_HUB)
         fun provideSwipeToHub(@Main resources: Resources): Boolean {
             return resources.getBoolean(R.bool.config_swipeToOpenGlanceableHub)
+        }
+
+        @Provides
+        @Named(SHOW_UMO)
+        fun provideShowUmo(@Main resources: Resources): Boolean {
+            return resources.getBoolean(R.bool.config_showUmoOnHub)
+        }
+
+        @Provides
+        @Named(TOUCH_NOTIFICATION_RATE_LIMIT)
+        fun providesRateLimit(): Int {
+            return TOUCH_NOTIFIFCATION_RATE_LIMIT_MS
         }
     }
 }

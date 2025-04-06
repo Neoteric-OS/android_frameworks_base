@@ -41,6 +41,7 @@ import com.android.internal.widget.remotecompose.core.RemoteContext;
 import com.android.internal.widget.remotecompose.core.RemoteContextAware;
 import com.android.internal.widget.remotecompose.core.operations.NamedVariable;
 import com.android.internal.widget.remotecompose.core.operations.RootContentBehavior;
+import com.android.internal.widget.remotecompose.player.platform.AndroidRemoteContext;
 import com.android.internal.widget.remotecompose.player.platform.RemoteComposeCanvas;
 
 /** A view to to display and play RemoteCompose documents */
@@ -112,6 +113,23 @@ public class RemoteComposePlayer extends FrameLayout implements RemoteContextAwa
 
     public RemoteComposeDocument getDocument() {
         return mInner.getDocument();
+    }
+
+    /**
+     * This will update values in the already loaded document.
+     *
+     * @param value the document to update variables in the current document width
+     */
+    public void updateDocument(RemoteComposeDocument value) {
+        RemoteComposeDocument document = value;
+        AndroidRemoteContext tmpContext = new AndroidRemoteContext();
+        document.initializeContext(tmpContext);
+        float density = getContext().getResources().getDisplayMetrics().density;
+        tmpContext.setAnimationEnabled(true);
+        tmpContext.setDensity(density);
+        tmpContext.setUseChoreographer(false);
+        mInner.getDocument().mDocument.applyUpdate(document.mDocument);
+        mInner.invalidate();
     }
 
     public void setDocument(RemoteComposeDocument value) {
@@ -312,7 +330,8 @@ public class RemoteComposePlayer extends FrameLayout implements RemoteContextAwa
     }
 
     /**
-     * Add a callback for handling id actions events on the document
+     * Add a callback for handling id actions events on the document. Can only be added after the
+     * document has been loaded.
      *
      * @param callback the callback lambda that will be used when a action is executed
      *     <p>The parameter of the callback are:
@@ -386,6 +405,16 @@ public class RemoteComposePlayer extends FrameLayout implements RemoteContextAwa
      */
     public void setColor(String colorName, int colorValue) {
         mInner.setColor(colorName, colorValue);
+    }
+
+    /**
+     * This sets long based on its name.
+     *
+     * @param name Name of the color
+     * @param value The new long value
+     */
+    public void setLong(String name, long value) {
+        mInner.setLong(name, value);
     }
 
     private void mapColors() {

@@ -42,6 +42,15 @@ public class FloatConstant extends Operation implements Serializable {
         this.mValue = value;
     }
 
+    /**
+     * Copy the value from another operation
+     *
+     * @param from value to copy from
+     */
+    public void update(FloatConstant from) {
+        mValue = from.mValue;
+    }
+
     @Override
     public void write(@NonNull WireBuffer buffer) {
         apply(buffer, mId, mValue);
@@ -123,6 +132,6 @@ public class FloatConstant extends Operation implements Serializable {
 
     @Override
     public void serialize(MapSerializer serializer) {
-        serializer.add("type", CLASS_NAME).add("id", mId).add("value", mValue);
+        serializer.addType(CLASS_NAME).add("id", mId).add("value", mValue);
     }
 }

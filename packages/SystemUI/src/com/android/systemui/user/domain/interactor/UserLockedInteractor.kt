@@ -18,12 +18,28 @@ package com.android.systemui.user.domain.interactor
 
 import android.os.UserHandle
 import com.android.systemui.dagger.SysUISingleton
+import com.android.systemui.dagger.qualifiers.Background
 import com.android.systemui.user.data.repository.UserRepository
+import com.android.systemui.utils.coroutines.flow.flatMapLatestConflated
 import javax.inject.Inject
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 
 @SysUISingleton
-class UserLockedInteractor @Inject constructor(val userRepository: UserRepository) {
+class UserLockedInteractor
+@Inject
+constructor(
+    @Background val backgroundDispatcher: CoroutineDispatcher,
+    val userRepository: UserRepository,
+    val selectedUserInteractor: SelectedUserInteractor,
+) {
+    /** Whether the current user is unlocked */
+    val currentUserUnlocked: Flow<Boolean> =
+        selectedUserInteractor.selectedUserInfo.flatMapLatestConflated { user ->
+            isUserUnlocked(user.userHandle)
+        }
+
     fun isUserUnlocked(userHandle: UserHandle?): Flow<Boolean> =
-        userRepository.isUserUnlocked(userHandle)
+        userRepository.isUserUnlocked(userHandle).flowOn(backgroundDispatcher)
 }

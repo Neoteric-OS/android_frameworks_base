@@ -16,12 +16,16 @@
 
 package android.view;
 
+
+import static android.view.flags.Flags.FLAG_DEPRECATE_SURFACE_VIEW_Z_ORDER_APIS;
 import static android.view.flags.Flags.FLAG_SURFACE_VIEW_GET_SURFACE_PACKAGE;
 import static android.view.flags.Flags.FLAG_SURFACE_VIEW_SET_COMPOSITION_ORDER;
 import static android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
 import static android.view.WindowManagerPolicyConstants.APPLICATION_MEDIA_OVERLAY_SUBLAYER;
 import static android.view.WindowManagerPolicyConstants.APPLICATION_MEDIA_SUBLAYER;
 import static android.view.WindowManagerPolicyConstants.APPLICATION_PANEL_SUBLAYER;
+import static android.view.flags.Flags.FLAG_SURFACE_VIEW_GET_SURFACE_PACKAGE;
+import static android.view.flags.Flags.FLAG_SURFACE_VIEW_SET_COMPOSITION_ORDER;
 
 import android.annotation.FlaggedApi;
 import android.annotation.FloatRange;
@@ -58,6 +62,7 @@ import android.util.Log;
 import android.view.SurfaceControl.Transaction;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.accessibility.IAccessibilityEmbeddedConnection;
+import android.window.InputTransferToken;
 import android.window.SurfaceSyncGroup;
 
 import com.android.graphics.hwui.flags.Flags;
@@ -346,7 +351,7 @@ public class SurfaceView extends View implements ViewRootImpl.SurfaceChangedCall
                     sv.mSurfacePackage.getRemoteInterface().attachParentInterface(this);
                     mSurfaceView = sv;
                 } catch (RemoteException e) {
-                    Log.d(TAG, "Failed to attach parent interface to SCVH. Likely SCVH is alraedy "
+                    Log.d(TAG, "Failed to attach parent interface to SCVH. Likely SCVH is already "
                             + "dead.");
                 }
             }
@@ -491,10 +496,37 @@ public class SurfaceView extends View implements ViewRootImpl.SurfaceChangedCall
         mTag = "SV[" + System.identityHashCode(this) + windowName + "]";
     }
 
+    private void dispatchScvhAttachedToHost() {
+        final ViewRootImpl viewRoot = getViewRootImpl();
+        if (viewRoot == null) {
+            return;
+        }
+
+        IBinder inputToken = viewRoot.getInputToken();
+        if (inputToken == null) {
+            // We don't have an input channel so we can't transfer focus or active
+            // touch gestures to embedded.
+            return;
+        }
+
+        try {
+            mSurfacePackage
+                    .getRemoteInterface()
+                    .onDispatchAttachedToWindow(new InputTransferToken(inputToken));
+        } catch (RemoteException e) {
+            Log.d(TAG,
+                    "Failed to onDispatchAttachedToWindow to SCVH. Likely SCVH is already "
+                            + "dead.");
+        }
+    }
+
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         setTag();
+        if (mSurfacePackage != null) {
+            dispatchScvhAttachedToHost();
+        }
         getViewRootImpl().addSurfaceChangedCallback(this);
         mWindowStopped = false;
         mViewVisibility = getVisibility() == VISIBLE;
@@ -812,7 +844,12 @@ public class SurfaceView extends View implements ViewRootImpl.SurfaceChangedCall
      * window is attached to the window manager.
      *
      * <p>Calling this overrides any previous call to {@link #setZOrderOnTop}.
+     *
+     * @deprecated Use {@link #setCompositionOrder(int)} instead. It provides more
+     * control over the Z ordering behavior.
      */
+    @Deprecated
+    @FlaggedApi(FLAG_DEPRECATE_SURFACE_VIEW_Z_ORDER_APIS)
     public void setZOrderMediaOverlay(boolean isMediaOverlay) {
         mRequestedSubLayer = isMediaOverlay
             ? APPLICATION_MEDIA_OVERLAY_SUBLAYER : APPLICATION_MEDIA_SUBLAYER;
@@ -834,7 +871,12 @@ public class SurfaceView extends View implements ViewRootImpl.SurfaceChangedCall
      * <p>Calling this overrides any previous call to {@link #setZOrderMediaOverlay}.
      *
      * @param onTop Whether to show the surface on top of this view's window.
+     *
+     * @deprecated Use {@link #setCompositionOrder(int)} instead. It provides more
+     * control over the Z ordering behavior.
      */
+    @Deprecated
+    @FlaggedApi(FLAG_DEPRECATE_SURFACE_VIEW_Z_ORDER_APIS)
     public void setZOrderOnTop(boolean onTop) {
         // In R and above we allow dynamic layer changes.
         final boolean allowDynamicChange = getContext().getApplicationInfo().targetSdkVersion
@@ -866,7 +908,11 @@ public class SurfaceView extends View implements ViewRootImpl.SurfaceChangedCall
      * @return Whether the Z ordering changed.
      *
      * @hide
+     *
+     * @deprecated Use {@link #setCompositionOrder(int)} instead. It provides more control
+     * over the Z ordering behavior.
      */
+    @Deprecated
     public boolean setZOrderedOnTop(boolean onTop, boolean allowDynamicChange) {
         final int subLayer;
         if (onTop) {
@@ -1045,9 +1091,9 @@ public class SurfaceView extends View implements ViewRootImpl.SurfaceChangedCall
             }
 
             if (mSurfacePackage != null) {
-                mSurfaceControlViewHostParent.detach();
                 mEmbeddedWindowParams.clear();
                 if (releaseSurfacePackage) {
+                    mSurfaceControlViewHostParent.detach();
                     mSurfacePackage.release();
                     mSurfacePackage = null;
                 }
@@ -2195,6 +2241,7 @@ public class SurfaceView extends View implements ViewRootImpl.SurfaceChangedCall
             applyTransactionOnVriDraw(transaction);
         }
         mSurfacePackage = p;
+        dispatchScvhAttachedToHost();
         mSurfaceControlViewHostParent.attach(this);
 
         if (isFocused()) {
@@ -2251,6 +2298,27 @@ public class SurfaceView extends View implements ViewRootImpl.SurfaceChangedCall
         }
         initEmbeddedHierarchyForAccessibility(p);
         t.reparent(sc, mBlastSurfaceControl).show(sc);
+    }
+
+    /**
+     * Populates a {@link ViewStructure} for content capture.
+     *
+     * <p>If {@link #setSecure(boolean)} has been enabled, will add a property to the
+     * {@link android.app.assist.AssistStructure.ViewNode} to indicate that content will not
+     * be available for this part of the screen.
+     *
+     * @hide
+     */
+    @Override
+    protected void onProvideStructure(@NonNull ViewStructure structure,
+            @ViewStructureType int viewFor, int flags) {
+        super.onProvideStructure(structure, viewFor, flags);
+        if (android.app.contextualsearch.flags.Flags.reportSecureSurfacesInAssistStructure()) {
+            if ((mSurfaceFlags & SurfaceControl.SECURE) != 0) {
+                structure.getExtras().putBoolean(
+                        ViewStructure.EXTRA_CONTAINS_SECURE_LAYERS, true);
+            }
+        }
     }
 
     /** @hide */

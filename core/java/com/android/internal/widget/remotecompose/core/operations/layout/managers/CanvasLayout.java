@@ -154,24 +154,6 @@ public class CanvasLayout extends BoxLayout {
     @Override
     public void serialize(MapSerializer serializer) {
         super.serialize(serializer);
-        serializer.add("type", getSerializedName());
-        serializer.add("horizontalPositioning", mHorizontalPositioning);
-    }
-
-    private String getPositioningString(int pos) {
-        switch (pos) {
-            case START:
-                return "START";
-            case CENTER:
-                return "CENTER";
-            case END:
-                return "END";
-            case TOP:
-                return "TOP";
-            case BOTTOM:
-                return "BOTTOM";
-            default:
-                return "NONE";
-        }
+        serializer.addType(getSerializedName());
     }
 }

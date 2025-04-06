@@ -16,19 +16,24 @@
 
 package com.android.systemui.shared.clocks
 
+import android.content.res.Resources
 import com.android.systemui.animation.GSFAxes
 import com.android.systemui.customization.R
 import com.android.systemui.plugins.clocks.AlarmData
+import com.android.systemui.plugins.clocks.AxisPresetConfig
 import com.android.systemui.plugins.clocks.AxisType
+import com.android.systemui.plugins.clocks.ClockAxisStyle
 import com.android.systemui.plugins.clocks.ClockConfig
 import com.android.systemui.plugins.clocks.ClockController
+import com.android.systemui.plugins.clocks.ClockEventListener
 import com.android.systemui.plugins.clocks.ClockEvents
 import com.android.systemui.plugins.clocks.ClockFontAxis
 import com.android.systemui.plugins.clocks.ClockFontAxis.Companion.merge
-import com.android.systemui.plugins.clocks.ClockFontAxisSetting
 import com.android.systemui.plugins.clocks.ClockSettings
 import com.android.systemui.plugins.clocks.WeatherData
 import com.android.systemui.plugins.clocks.ZenData
+import com.android.systemui.shared.clocks.FontUtils.put
+import com.android.systemui.shared.clocks.FontUtils.toClockAxis
 import com.android.systemui.shared.clocks.view.FlexClockView
 import java.io.PrintWriter
 import java.util.Locale
@@ -94,25 +99,27 @@ class FlexClockController(private val clockCtx: ClockContext) : ClockController 
                 smallClock.events.onZenDataChanged(data)
                 largeClock.events.onZenDataChanged(data)
             }
-
-            override fun onFontAxesChanged(axes: List<ClockFontAxisSetting>) {
-                val fontAxes = getDefaultAxes(clockCtx.settings).merge(axes).map { it.toSetting() }
-                smallClock.events.onFontAxesChanged(fontAxes)
-                largeClock.events.onFontAxesChanged(fontAxes)
-            }
         }
 
-    override fun initialize(isDarkTheme: Boolean, dozeFraction: Float, foldFraction: Float) {
-        events.onFontAxesChanged(clockCtx.settings.axes)
+    override fun initialize(
+        isDarkTheme: Boolean,
+        dozeFraction: Float,
+        foldFraction: Float,
+        clockListener: ClockEventListener?,
+    ) {
         smallClock.run {
+            layerController.onViewBoundsChanged = { clockListener?.onBoundsChanged(it) }
             events.onThemeChanged(theme.copy(isDarkTheme = isDarkTheme))
+            animations.onFontAxesChanged(clockCtx.settings.axes)
             animations.doze(dozeFraction)
             animations.fold(foldFraction)
             events.onTimeTick()
         }
 
         largeClock.run {
+            layerController.onViewBoundsChanged = { clockListener?.onBoundsChanged(it) }
             events.onThemeChanged(theme.copy(isDarkTheme = isDarkTheme))
+            animations.onFontAxesChanged(clockCtx.settings.axes)
             animations.doze(dozeFraction)
             animations.fold(foldFraction)
             events.onTimeTick()
@@ -130,50 +137,72 @@ class FlexClockController(private val clockCtx: ClockContext) : ClockController 
 
         private val FONT_AXES =
             listOf(
-                ClockFontAxis(
-                    key = GSFAxes.WEIGHT,
+                GSFAxes.WEIGHT.toClockAxis(
                     type = AxisType.Float,
-                    minValue = 25f,
                     currentValue = 400f,
-                    maxValue = 1000f,
                     name = "Weight",
                     description = "Glyph Weight",
                 ),
-                ClockFontAxis(
-                    key = GSFAxes.WIDTH,
+                GSFAxes.WIDTH.toClockAxis(
                     type = AxisType.Float,
-                    minValue = 25f,
-                    currentValue = 85f,
-                    maxValue = 151f,
+                    currentValue = 80f,
                     name = "Width",
                     description = "Glyph Width",
                 ),
-                ClockFontAxis(
-                    key = GSFAxes.ROUND,
+                GSFAxes.ROUND.toClockAxis(
                     type = AxisType.Boolean,
-                    minValue = 0f,
-                    currentValue = 0f,
-                    maxValue = 100f,
+                    currentValue = 100f,
                     name = "Round",
                     description = "Glyph Roundness",
                 ),
-                ClockFontAxis(
-                    key = GSFAxes.SLANT,
+                GSFAxes.SLANT.toClockAxis(
                     type = AxisType.Boolean,
-                    minValue = 0f,
                     currentValue = 0f,
-                    maxValue = -10f,
                     name = "Slant",
                     description = "Glyph Slant",
                 ),
             )
 
-        private val LEGACY_FLEX_SETTINGS =
-            listOf(
-                ClockFontAxisSetting(GSFAxes.WEIGHT, 600f),
-                ClockFontAxisSetting(GSFAxes.WIDTH, 100f),
-                ClockFontAxisSetting(GSFAxes.ROUND, 100f),
-                ClockFontAxisSetting(GSFAxes.SLANT, 0f),
+        private val LEGACY_FLEX_SETTINGS = ClockAxisStyle {
+            put(GSFAxes.WEIGHT, 600f)
+            put(GSFAxes.WIDTH, 100f)
+            put(GSFAxes.ROUND, 100f)
+            put(GSFAxes.SLANT, 0f)
+        }
+
+        private val PRESET_COUNT = 8
+        private val PRESET_WIDTH_INIT = 30f
+        private val PRESET_WIDTH_STEP = 12.5f
+        private val PRESET_WEIGHT_INIT = 800f
+        private val PRESET_WEIGHT_STEP = -100f
+        private val BASE_PRESETS: List<ClockAxisStyle> = run {
+            val presets = mutableListOf<ClockAxisStyle>()
+            var weight = PRESET_WEIGHT_INIT
+            var width = PRESET_WIDTH_INIT
+            for (i in 1..PRESET_COUNT) {
+                presets.add(
+                    ClockAxisStyle {
+                        put(GSFAxes.WEIGHT, weight)
+                        put(GSFAxes.WIDTH, width)
+                        put(GSFAxes.ROUND, 0f)
+                        put(GSFAxes.SLANT, 0f)
+                    }
+                )
+
+                weight += PRESET_WEIGHT_STEP
+                width += PRESET_WIDTH_STEP
+            }
+
+            return@run presets
+        }
+
+        fun buildPresetGroup(resources: Resources, isRound: Boolean): AxisPresetConfig.Group {
+            val round = if (isRound) GSFAxes.ROUND.maxValue else GSFAxes.ROUND.minValue
+            return AxisPresetConfig.Group(
+                presets = BASE_PRESETS.map { it.copy { put(GSFAxes.ROUND, round) } },
+                // TODO(b/395647577): Placeholder Icon; Replace or remove
+                icon = resources.getDrawable(R.drawable.clock_default_thumbnail, null),
             )
+        }
     }
 }

@@ -49,6 +49,7 @@ import android.view.ViewConfiguration;
 import android.view.WindowInsets;
 import android.view.WindowManager;
 import android.view.WindowManagerGlobal;
+import android.window.DesktopExperienceFlags;
 import android.window.DesktopModeFlags;
 import android.window.WindowContainerTransaction;
 
@@ -61,6 +62,7 @@ import com.android.wm.shell.common.ShellExecutor;
 import com.android.wm.shell.common.SyncTransactionQueue;
 import com.android.wm.shell.shared.annotations.ShellBackgroundThread;
 import com.android.wm.shell.shared.annotations.ShellMainThread;
+import com.android.wm.shell.shared.desktopmode.DesktopModeStatus;
 import com.android.wm.shell.windowdecor.common.viewhost.WindowDecorViewHost;
 import com.android.wm.shell.windowdecor.common.viewhost.WindowDecorViewHostSupplier;
 import com.android.wm.shell.windowdecor.extension.TaskInfoKt;
@@ -217,11 +219,17 @@ public class CaptionWindowDecoration extends WindowDecoration<WindowDecorLinearL
         relayoutParams.mRunningTaskInfo = taskInfo;
         relayoutParams.mLayoutResId = R.layout.caption_window_decor;
         relayoutParams.mCaptionHeightId = getCaptionHeightIdStatic(taskInfo.getWindowingMode());
-        relayoutParams.mShadowRadius = hasGlobalFocus
-                ? context.getResources().getDimensionPixelSize(
-                        R.dimen.freeform_decor_shadow_focused_thickness)
-                : context.getResources().getDimensionPixelSize(
-                        R.dimen.freeform_decor_shadow_unfocused_thickness);
+        if (DesktopExperienceFlags.ENABLE_DYNAMIC_RADIUS_COMPUTATION_BUGFIX.isTrue()) {
+            relayoutParams.mShadowRadiusId = hasGlobalFocus
+                    ? R.dimen.freeform_decor_shadow_focused_thickness
+                    : R.dimen.freeform_decor_shadow_unfocused_thickness;
+        } else {
+            relayoutParams.mShadowRadius = hasGlobalFocus
+                    ? context.getResources().getDimensionPixelSize(
+                    R.dimen.freeform_decor_shadow_focused_thickness)
+                    : context.getResources().getDimensionPixelSize(
+                            R.dimen.freeform_decor_shadow_unfocused_thickness);
+        }
         relayoutParams.mApplyStartTransactionOnDraw = applyStartTransactionOnDraw;
         relayoutParams.mSetTaskVisibilityPositionAndCrop = shouldSetTaskVisibilityPositionAndCrop;
         relayoutParams.mIsCaptionVisible = taskInfo.isFreeform()
@@ -247,6 +255,10 @@ public class CaptionWindowDecoration extends WindowDecoration<WindowDecorLinearL
         relayoutParams.mOccludingCaptionElements.add(controlsElement);
         relayoutParams.mCaptionTopPadding = getTopPadding(relayoutParams,
                 taskInfo.getConfiguration().windowConfiguration.getBounds(), displayInsetsState);
+        // Set opaque background for all freeform tasks to prevent freeform tasks below
+        // from being visible if freeform task window above is translucent.
+        // Otherwise if fluid resize is enabled, add a background to freeform tasks.
+        relayoutParams.mShouldSetBackground = DesktopModeStatus.shouldSetBackground(taskInfo);
     }
 
     @SuppressLint("MissingPermission")

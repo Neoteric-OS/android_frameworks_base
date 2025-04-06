@@ -54,6 +54,8 @@ import static androidx.window.extensions.embedding.SplitPresenter.sanitizeBounds
 import static androidx.window.extensions.embedding.SplitPresenter.shouldShowSplit;
 import static androidx.window.extensions.embedding.TaskFragmentContainer.OverlayContainerRestoreParams;
 
+import static com.android.window.flags.Flags.activityEmbeddingDelayTaskFragmentFinishForActivityLaunch;
+
 import android.annotation.CallbackExecutor;
 import android.app.Activity;
 import android.app.ActivityClient;
@@ -107,7 +109,6 @@ import androidx.window.extensions.embedding.TransactionManager.TransactionRecord
 import androidx.window.extensions.layout.WindowLayoutComponentImpl;
 
 import com.android.internal.annotations.VisibleForTesting;
-import com.android.window.flags.Flags;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -421,9 +422,6 @@ public class SplitController implements JetpackTaskFragmentOrganizer.TaskFragmen
     public void setActivityStackAttributesCalculator(
             @NonNull Function<ActivityStackAttributesCalculatorParams, ActivityStackAttributes>
                     calculator) {
-        if (!Flags.activityEmbeddingOverlayPresentationFlag()) {
-            return;
-        }
         synchronized (mLock) {
             mActivityStackAttributesCalculator = calculator;
         }
@@ -431,9 +429,6 @@ public class SplitController implements JetpackTaskFragmentOrganizer.TaskFragmen
 
     @Override
     public void clearActivityStackAttributesCalculator() {
-        if (!Flags.activityEmbeddingOverlayPresentationFlag()) {
-            return;
-        }
         synchronized (mLock) {
             mActivityStackAttributesCalculator = null;
         }
@@ -623,9 +618,6 @@ public class SplitController implements JetpackTaskFragmentOrganizer.TaskFragmen
     @Override
     public void updateActivityStackAttributes(@NonNull ActivityStack.Token activityStackToken,
                                               @NonNull ActivityStackAttributes attributes) {
-        if (!Flags.activityEmbeddingOverlayPresentationFlag()) {
-            return;
-        }
         Objects.requireNonNull(activityStackToken);
         Objects.requireNonNull(attributes);
 
@@ -652,9 +644,6 @@ public class SplitController implements JetpackTaskFragmentOrganizer.TaskFragmen
     @Nullable
     public ParentContainerInfo getParentContainerInfo(
             @NonNull ActivityStack.Token activityStackToken) {
-        if (!Flags.activityEmbeddingOverlayPresentationFlag()) {
-            return null;
-        }
         Objects.requireNonNull(activityStackToken);
         synchronized (mLock) {
             final TaskFragmentContainer container = getContainer(activityStackToken.getRawToken());
@@ -670,9 +659,6 @@ public class SplitController implements JetpackTaskFragmentOrganizer.TaskFragmen
     @Override
     @Nullable
     public ActivityStack.Token getActivityStackToken(@NonNull String tag) {
-        if (!Flags.activityEmbeddingOverlayPresentationFlag()) {
-            return null;
-        }
         Objects.requireNonNull(tag);
         synchronized (mLock) {
             final TaskFragmentContainer taskFragmentContainer =
@@ -831,11 +817,17 @@ public class SplitController implements JetpackTaskFragmentOrganizer.TaskFragmen
                         .setOriginType(TASK_FRAGMENT_TRANSIT_CLOSE);
                 mPresenter.cleanupContainer(wct, container, false /* shouldFinishDependent */);
             } else if (!container.isWaitingActivityAppear()) {
-                // Do not finish the container before the expected activity appear until
-                // timeout.
-                mTransactionManager.getCurrentTransactionRecord()
-                        .setOriginType(TASK_FRAGMENT_TRANSIT_CLOSE);
-                mPresenter.cleanupContainer(wct, container, true /* shouldFinishDependent */);
+                if (activityEmbeddingDelayTaskFragmentFinishForActivityLaunch()
+                        && container.hasActivityLaunchHint()) {
+                    // If we have recently attempted to launch a new activity into this
+                    // TaskFragment, we schedule delayed cleanup. If the new activity appears in
+                    // this TaskFragment, we no longer need to finish the TaskFragment.
+                    container.scheduleDelayedTaskFragmentCleanup();
+                } else {
+                    mTransactionManager.getCurrentTransactionRecord()
+                            .setOriginType(TASK_FRAGMENT_TRANSIT_CLOSE);
+                    mPresenter.cleanupContainer(wct, container, true /* shouldFinishDependent */);
+                }
             }
         } else if (wasInPip && isInPip) {
             // No update until exit PIP.
@@ -3152,8 +3144,7 @@ public class SplitController implements JetpackTaskFragmentOrganizer.TaskFragmen
                 final TaskFragmentContainer launchedInTaskFragment;
                 if (launchingActivity != null) {
                     final String overlayTag = options.getString(KEY_OVERLAY_TAG);
-                    if (Flags.activityEmbeddingOverlayPresentationFlag()
-                            && overlayTag != null) {
+                    if (overlayTag != null) {
                         launchedInTaskFragment = createOrUpdateOverlayTaskFragmentIfNeeded(wct,
                                 options, intent, launchingActivity);
                     } else {
@@ -3181,6 +3172,9 @@ public class SplitController implements JetpackTaskFragmentOrganizer.TaskFragmen
                     // TODO(b/229680885): skip override launching TaskFragment token by split-rule
                     options.putBinder(KEY_LAUNCH_TASK_FRAGMENT_TOKEN,
                             launchedInTaskFragment.getTaskFragmentToken());
+                    if (activityEmbeddingDelayTaskFragmentFinishForActivityLaunch()) {
+                        launchedInTaskFragment.setActivityLaunchHint();
+                    }
                     mCurrentIntent = intent;
                 } else {
                     transactionRecord.abort();

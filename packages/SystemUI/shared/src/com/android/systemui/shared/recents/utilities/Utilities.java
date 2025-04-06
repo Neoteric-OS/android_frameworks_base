@@ -19,6 +19,7 @@ package com.android.systemui.shared.recents.utilities;
 import static android.app.StatusBarManager.NAVBAR_BACK_DISMISS_IME;
 import static android.app.StatusBarManager.NAVBAR_IME_SWITCHER_BUTTON_VISIBLE;
 import static android.app.StatusBarManager.NAVBAR_IME_VISIBLE;
+import static android.app.WindowConfiguration.WINDOWING_MODE_FREEFORM;
 
 import android.annotation.TargetApi;
 import android.app.StatusBarManager.NavbarFlags;
@@ -34,6 +35,9 @@ import android.os.Message;
 import android.util.DisplayMetrics;
 import android.view.Surface;
 import android.view.WindowManager;
+
+import com.android.systemui.shared.recents.model.Task;
+import com.android.systemui.utils.windowmanager.WindowManagerUtils;
 
 /* Common code */
 public class Utilities {
@@ -149,7 +153,7 @@ public class Utilities {
     /** @return whether or not {@param context} represents that of a large screen device or not */
     @TargetApi(Build.VERSION_CODES.R)
     public static boolean isLargeScreen(Context context) {
-        return isLargeScreen(context.getSystemService(WindowManager.class), context.getResources());
+        return isLargeScreen(WindowManagerUtils.getWindowManager(context), context.getResources());
     }
 
     /** @return whether or not {@param context} represents that of a large screen device or not */
@@ -164,5 +168,11 @@ public class Utilities {
     public static float dpiFromPx(float size, int densityDpi) {
         float densityRatio = (float) densityDpi / DisplayMetrics.DENSITY_DEFAULT;
         return (size / densityRatio);
+    }
+
+    /** Whether a task is in freeform mode. */
+    public static boolean isFreeformTask(Task task) {
+        return task != null && task.getKey() != null
+                && task.getKey().windowingMode == WINDOWING_MODE_FREEFORM;
     }
 }

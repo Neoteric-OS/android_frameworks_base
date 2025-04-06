@@ -24,6 +24,7 @@ import android.database.DatabaseErrorHandler;
 import android.database.DefaultDatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.database.sqlite.SQLiteFullException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteRawStatement;
 import android.os.Environment;
@@ -174,11 +175,16 @@ class DiscreteOpsDbHelper extends SQLiteOpenHelper {
         if (DEBUG) {
             Slog.i(LOG_TAG, "DB execSQL, sql: " + sql);
         }
-        SQLiteDatabase db = getWritableDatabase();
-        if (bindArgs == null) {
-            db.execSQL(sql);
-        } else {
-            db.execSQL(sql, bindArgs);
+        try {
+            SQLiteDatabase db = getWritableDatabase();
+            if (bindArgs == null) {
+                db.execSQL(sql);
+            } else {
+                db.execSQL(sql, bindArgs);
+            }
+        } catch (SQLiteFullException exception) {
+            Slog.e(LOG_TAG, "Couldn't exec sql command, disk is full. Discrete ops "
+                    + "db file size (bytes) : " + getDatabaseFile().length(), exception);
         }
     }
 
@@ -189,11 +195,11 @@ class DiscreteOpsDbHelper extends SQLiteOpenHelper {
             @AppOpsManager.HistoricalOpsRequestFilter int requestFilters,
             int uidFilter, @Nullable String packageNameFilter,
             @Nullable String attributionTagFilter, IntArray opCodesFilter, int opFlagsFilter,
-            long beginTime, long endTime, int limit, String orderByColumn) {
+            long beginTime, long endTime, int limit, String orderByColumn, boolean ascending) {
         List<SQLCondition> conditions = prepareConditions(beginTime, endTime, requestFilters,
                 uidFilter, packageNameFilter,
                 attributionTagFilter, opCodesFilter, opFlagsFilter);
-        String sql = buildSql(conditions, orderByColumn, limit);
+        String sql = buildSql(conditions, orderByColumn, ascending, limit);
         long startTime = 0;
         if (Flags.sqliteDiscreteOpEventLoggingEnabled()) {
             startTime = SystemClock.elapsedRealtime();
@@ -249,7 +255,8 @@ class DiscreteOpsDbHelper extends SQLiteOpenHelper {
         return results;
     }
 
-    private String buildSql(List<SQLCondition> conditions, String orderByColumn, int limit) {
+    private String buildSql(List<SQLCondition> conditions, String orderByColumn, boolean ascending,
+            int limit) {
         StringBuilder sql = new StringBuilder(DiscreteOpsTable.SELECT_TABLE_DATA);
         if (!conditions.isEmpty()) {
             sql.append(" WHERE ");
@@ -264,6 +271,7 @@ class DiscreteOpsDbHelper extends SQLiteOpenHelper {
 
         if (orderByColumn != null) {
             sql.append(" ORDER BY ").append(orderByColumn);
+            sql.append(ascending ? " ASC " : " DESC ");
         }
         if (limit > 0) {
             sql.append(" LIMIT ").append(limit);

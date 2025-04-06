@@ -30,10 +30,9 @@ import android.util.Property;
 import android.view.View;
 import android.view.animation.Interpolator;
 
-import androidx.dynamicanimation.animation.DynamicAnimation;
-import androidx.dynamicanimation.animation.SpringAnimation;
-
 import com.android.app.animation.Interpolators;
+import com.android.internal.dynamicanimation.animation.DynamicAnimation;
+import com.android.internal.dynamicanimation.animation.SpringAnimation;
 import com.android.systemui.Dumpable;
 import com.android.systemui.res.R;
 import com.android.systemui.statusbar.notification.AnimatableProperty;
@@ -399,6 +398,14 @@ public class ViewState implements Dumpable {
         return childTag != null;
     }
 
+    public static boolean isAnimating(View view, PhysicsProperty property) {
+        Object childTag = getChildTag(view, property.getTag());
+        if (childTag instanceof PropertyData propertyData) {
+            return propertyData.getAnimator() != null;
+        }
+        return childTag != null;
+    }
+
     /**
      * Start an animation to this viewstate
      *
@@ -681,13 +688,18 @@ public class ViewState implements Dumpable {
     private void startYTranslationAnimation(final View child, AnimationProperties properties) {
         if (mUsePhysicsForMovement) {
             // Y Translation does some extra calls when it ends, so lets add a listener
-            DynamicAnimation.OnAnimationEndListener endListener =
-                    (animation, canceled, value, velocity) -> {
-                        if (!canceled) {
-                            HeadsUpUtil.setNeedsHeadsUpDisappearAnimationAfterClick(child, false);
-                            onYTranslationAnimationFinished(child);
-                        }
-                    };
+            DynamicAnimation.OnAnimationEndListener endListener = null;
+            if (!isAnimatingY(child)) {
+                // Only add a listener if we're not animating yet
+                endListener =
+                        (animation, canceled, value, velocity) -> {
+                            if (!canceled) {
+                                HeadsUpUtil.setNeedsHeadsUpDisappearAnimationAfterClick(child,
+                                        false);
+                                onYTranslationAnimationFinished(child);
+                            }
+                        };
+            }
             PhysicsPropertyAnimator.setProperty(child, Y_TRANSLATION, this.mYTranslation,
                     properties, properties.getAnimationFilter().animateY, endListener);
         } else {

@@ -353,14 +353,10 @@
     <string name="permgroupdesc_sensors" msgid="2610631290633747752">"तपाईंको महत्त्वपूर्ण संकेत बारे सेन्सर डेटा पहुँच गर्नुहोस्"</string>
     <string name="permgrouplab_notifications" msgid="5472972361980668884">"नोटिफिकेसनहरू"</string>
     <string name="permgroupdesc_notifications" msgid="4608679556801506580">"सूचनाहरू देखाउनुहोस्"</string>
-    <!-- no translation found for permgrouplab_xr_tracking (7418994009794287471) -->
-    <skip />
-    <!-- no translation found for permgroupdesc_xr_tracking (6777198859446500821) -->
-    <skip />
-    <!-- no translation found for permgrouplab_xr_tracking_sensitive (1194833982988144536) -->
-    <skip />
-    <!-- no translation found for permgroupdesc_xr_tracking_sensitive (9178027369004805829) -->
-    <skip />
+    <string name="permgrouplab_xr_tracking" msgid="7418994009794287471">"XR सम्बन्धी ट्रयाकिङ डेटा"</string>
+    <string name="permgroupdesc_xr_tracking" msgid="6777198859446500821">"तपाईं र तपाईंको वरपरको वातावरणका बारेमा XR सम्बन्धी डेटा एक्सेस गर्ने"</string>
+    <string name="permgrouplab_xr_tracking_sensitive" msgid="1194833982988144536">"XR सम्बन्धी संवेदनशील ट्रयाकिङ डेटा"</string>
+    <string name="permgroupdesc_xr_tracking_sensitive" msgid="9178027369004805829">"संवेदनशील ट्रयाकिङ डेटा (जस्तै, आँखाको गतिविधि) एक्सेस गर्ने"</string>
     <string name="capability_title_canRetrieveWindowContent" msgid="7554282892101587296">"विन्डो सामग्रीको पुनःबहाली गर्नुहोस्।"</string>
     <string name="capability_desc_canRetrieveWindowContent" msgid="6195610527625237661">"तपाईँको अन्तरक्रिया भइरहेको विन्डोको सामग्रीको निरीक्षण गर्नुहोस्।"</string>
     <string name="capability_title_canRequestTouchExploration" msgid="327598364696316213">"छोएर गरिने खोजलाई सुचारु गर्नुहोस्"</string>
@@ -656,38 +652,22 @@
     <string name="permdesc_imagesWrite" msgid="5195054463269193317">"यसले एपलाई तपाईंको तस्बिरको सङ्ग्रह परिमार्जन गर्न दिन्छ।"</string>
     <string name="permlab_mediaLocation" msgid="7368098373378598066">"आफ्नो मिडियाको सङ्ग्रहका स्थानहरू पढ्नुहोस्‌"</string>
     <string name="permdesc_mediaLocation" msgid="597912899423578138">"यसले एपलाई तपाईंको मिडिया सङ्ग्रहका स्थानहरू पढ्न दिन्छ।"</string>
-    <!-- no translation found for permlab_eye_tracking_coarse (7989596289790269059) -->
-    <skip />
-    <!-- no translation found for permdesc_eye_tracking_coarse (870510233930553355) -->
-    <skip />
-    <!-- no translation found for permlab_eye_tracking_fine (6914457357027049512) -->
-    <skip />
-    <!-- no translation found for permdesc_eye_tracking_fine (5788889152304524730) -->
-    <skip />
-    <!-- no translation found for permlab_face_tracking (2272048395128283324) -->
-    <skip />
-    <!-- no translation found for permdesc_face_tracking (2622783922311211866) -->
-    <skip />
-    <!-- no translation found for permlab_hand_tracking (6478233866595566940) -->
-    <skip />
-    <!-- no translation found for permdesc_hand_tracking (8639715900104966456) -->
-    <skip />
-    <!-- no translation found for permlab_head_tracking (1309731456372087270) -->
-    <skip />
-    <!-- no translation found for permdesc_head_tracking (231597390513699188) -->
-    <skip />
-    <!-- no translation found for permlab_scene_understanding_coarse (6518646430502858641) -->
-    <skip />
-    <!-- no translation found for permdesc_scene_understanding_coarse (4508880777646198656) -->
-    <skip />
-    <!-- no translation found for permlab_scene_understanding_fine (409126403264393251) -->
-    <skip />
-    <!-- no translation found for permdesc_scene_understanding_fine (6223368011593524179) -->
-    <skip />
-    <!-- no translation found for permlab_xr_tracking_in_background (7117098718465619023) -->
-    <skip />
-    <!-- no translation found for permdesc_xr_tracking_in_background (939504041387836853) -->
-    <skip />
+    <string name="permlab_eye_tracking_coarse" msgid="7989596289790269059">"तपाईंको आँखाको गतिविधिसम्बन्धी अनुमानित डेटा ट्रयाक गर्ने"</string>
+    <string name="permdesc_eye_tracking_coarse" msgid="870510233930553355">"तपाईंले यो अनुमति दिनुभयो भने यो एपले तपाईंको आँखाको गतिविधिसम्बन्धी अनुमानित डेटा ट्रयाक गर्न सक्छ।"</string>
+    <string name="permlab_eye_tracking_fine" msgid="6914457357027049512">"तपाईं कहाँ हेरिरहनुभएको छ भन्ने कुरा ट्रयाक गर्ने"</string>
+    <string name="permdesc_eye_tracking_fine" msgid="5788889152304524730">"तपाईंले यो अनुमति दिनुभयो भने यो एपले आँखाको गतिविधिसम्बन्धी सटीक डेटा एक्सेस गर्न सक्छ।"</string>
+    <string name="permlab_face_tracking" msgid="2272048395128283324">"तपाईंको अनुहार ट्रयाक गर्ने"</string>
+    <string name="permdesc_face_tracking" msgid="2622783922311211866">"तपाईंले यो अनुमति दिनुभयो भने यो एपले फेस ट्रयाकिङ डेटा एक्सेस गर्न सक्छ।"</string>
+    <string name="permlab_hand_tracking" msgid="6478233866595566940">"तपाईंका हातहरू ट्र्याक गर्ने"</string>
+    <string name="permdesc_hand_tracking" msgid="8639715900104966456">"तपाईंले यो अनुमति दिनुभयो भने यो एपले ह्यान्ड ट्र्याकिङ डेटा एक्सेस गर्न सक्छ।"</string>
+    <string name="permlab_head_tracking" msgid="1309731456372087270">"तपाईंको टाउको ट्रयाक गर्ने"</string>
+    <string name="permdesc_head_tracking" msgid="231597390513699188">"तपाईंले यो अनुमति दिनुभयो भने यो एपले हेड ट्रयाकिङ डेटा एक्सेस गर्न सक्छ।"</string>
+    <string name="permlab_scene_understanding_coarse" msgid="6518646430502858641">"तपाईंको वरपरको वातावरणका बारेमा बुझ्ने"</string>
+    <string name="permdesc_scene_understanding_coarse" msgid="4508880777646198656">"तपाईंले यो अनुमति दिनुभयो भने यो एपले तपाईंको वरपरको वातावरणसम्बन्धी ट्रयाकिङ डेटा एक्सेस गर्न सक्छ।"</string>
+    <string name="permlab_scene_understanding_fine" msgid="409126403264393251">"तपाईंको वरपरको वातावरणका ससाना विवरणहरू पनि बुझ्ने"</string>
+    <string name="permdesc_scene_understanding_fine" msgid="6223368011593524179">"तपाईंले यो अनुमति दिनुभयो भने यो एपले तपाईंको वरपरको वातावरणका बारेमा ससाना विवरणहरू समावेश गरिएको ट्रयाकिङ डेटा एक्सेस गर्न सक्छ।"</string>
+    <string name="permlab_xr_tracking_in_background" msgid="7117098718465619023">"फोरग्राउन्डमा नचलिरहेका बेला XR सम्बन्धी डेटा एक्सेस गर्ने"</string>
+    <string name="permdesc_xr_tracking_in_background" msgid="939504041387836853">"तपाईंले यो अनुमति दिनुभयो भने यो एप फोरग्राउन्डमा नचलिरहेका बेला पनि यो एपले XR सम्बन्धी डेटा एक्सेस गर्न सक्छ।"</string>
     <string name="biometric_app_setting_name" msgid="3339209978734534457">"बायोमेट्रिक्स प्रयोग गर्नुहोस्"</string>
     <string name="biometric_or_screen_lock_app_setting_name" msgid="5348462421758257752">"बायोमेट्रिक्स वा स्क्रिन लक प्रयोग गर्नुहोस्"</string>
     <string name="biometric_dialog_default_title" msgid="55026799173208210">"यो व्यक्ति तपाईं नै हो भन्ने प्रमाणित गर्नुहोस्"</string>
@@ -1091,7 +1071,7 @@
     <string name="lockscreen_glogin_too_many_attempts" msgid="3775904917743034195">"निकै धेरै कोसिसहरू"</string>
     <string name="lockscreen_glogin_instructions" msgid="4695162942525531700">"अनलक गर्नको लागि, तपाईँको Google खातासँग साइन इन गर्नुहोस्।"</string>
     <string name="lockscreen_glogin_username_hint" msgid="6916101478673157045">"प्रयोगकर्तानाम (इमेल)"</string>
-    <string name="lockscreen_glogin_password_hint" msgid="3031027901286812848">"पासवर्ड:"</string>
+    <string name="lockscreen_glogin_password_hint" msgid="3031027901286812848">"पासवर्ड"</string>
     <string name="lockscreen_glogin_submit_button" msgid="3590556636347843733">"साइन इन गर्नुहोस्"</string>
     <string name="lockscreen_glogin_invalid_input" msgid="4369219936865697679">"अमान्य प्रयोगकर्तानाम वा पासवर्ड"</string>
     <string name="lockscreen_glogin_account_recovery_hint" msgid="1683405808525090649">"तपाईँको एक-पटके टेक्स्ट म्यासेज वा पासवर्ड बिर्सनुभयो?\n भ्रमण गर्नुहोस"<b>"google.com/accounts/recovery"</b></string>
@@ -1823,6 +1803,7 @@
     <string name="one_handed_mode_feature_name" msgid="2334330034828094891">"एक हाते मोड"</string>
     <string name="reduce_bright_colors_feature_name" msgid="3222994553174604132">"अझै मधुरो"</string>
     <string name="hearing_aids_feature_name" msgid="1125892105105852542">"हियरिङ डिभाइसहरू"</string>
+    <string name="autoclick_feature_name" msgid="8149248738736949630">"अटोक्लिक"</string>
     <string name="hearing_device_status_disconnected" msgid="497547752953543832">"डिस्कनेक्ट गरिएको"</string>
     <string name="hearing_device_status_connected" msgid="2149385149669918764">"कनेक्ट गरिएको"</string>
     <string name="hearing_device_status_active" msgid="4770378695482566032">"सक्रिय"</string>
@@ -1838,13 +1819,12 @@
     <string name="accessibility_gesture_3finger_instructional_text" msgid="1124458279366968154">"तपाईंले अर्को पटक यो सर्टकट प्रयोग गर्दा यो सुविधा खुल्ने छ। ३ वटा औँलाले स्क्रिनको पुछारबाट माथितिर स्वाइप गर्नुहोस् र तुरुन्तै औँला उठाउनुहोस्।"</string>
     <string name="accessibility_magnification_chooser_text" msgid="1502075582164931596">"म्याग्निफिकेसन"</string>
     <string name="hearing_device_switch_phone_mic_notification_title" msgid="6645178038359708836">"फोनको माइक प्रयोग गर्ने हो?"</string>
-    <string name="hearing_device_switch_hearing_mic_notification_title" msgid="4612074852145289569">"श्रवण यन्त्रको माइक प्रयोग गर्ने हो?"</string>
-    <string name="hearing_device_switch_phone_mic_notification_text" msgid="1332426273666077412">"अझ राम्रो आवाज सुनाउन वा तपाईंको श्रवण यन्त्रको ब्याट्री कम भएका खण्डमा। यसले कल भइरहेका बेला मात्र तपाईंको माइक बदल्छ।"</string>
-    <string name="hearing_device_switch_hearing_mic_notification_text" msgid="8288368365767284208">"तपाईं ह्यान्ड्सफ्री तरिकाले कल गर्न आफ्नो श्रवण यन्त्रको माइक्रोफोन प्रयोग गर्न सक्नुहुन्छ। यसले कल भइरहेका बेला मात्र तपाईंको माइक बदल्छ।"</string>
+    <string name="hearing_device_switch_hearing_mic_notification_title" msgid="4612074852145289569">"हियरिङ एडको माइक प्रयोग गर्ने हो?"</string>
+    <string name="hearing_device_switch_phone_mic_notification_text" msgid="1332426273666077412">"अझ राम्रो आवाज सुनाउन वा तपाईंको हियरिङ एडको ब्याट्री कम भएका खण्डमा। यसले कल भइरहेका बेला मात्र तपाईंको माइक बदल्छ।"</string>
+    <string name="hearing_device_switch_hearing_mic_notification_text" msgid="8288368365767284208">"तपाईं ह्यान्ड्सफ्री तरिकाले कल गर्न आफ्नो हियरिङ एडको माइक्रोफोन प्रयोग गर्न सक्नुहुन्छ। यसले कल भइरहेका बेला मात्र तपाईंको माइक बदल्छ।"</string>
     <string name="hearing_device_notification_switch_button" msgid="3619524619430941300">"बदल्नुहोस्"</string>
     <string name="hearing_device_notification_settings_button" msgid="6673651052880279178">"सेटिङ"</string>
-    <string name="user_switched" msgid="7249833311585228097">"अहिलेको प्रयोगकर्ता <xliff:g id="NAME">%1$s</xliff:g>।"</string>
-    <string name="user_switching_message" msgid="1912993630661332336">"स्विच गरेर <xliff:g id="NAME">%1$s</xliff:g> बनाइँदै..."</string>
+    <string name="user_switching_message" msgid="1912993630661332336">"<xliff:g id="NAME">%1$s</xliff:g> मा स्विच गरिँदै छ…"</string>
     <string name="user_logging_out_message" msgid="7216437629179710359">"लग आउट गर्दै <xliff:g id="NAME">%1$s</xliff:g>…"</string>
     <string name="owner_name" msgid="8713560351570795743">"मालिक"</string>
     <string name="guest_name" msgid="8502103277839834324">"अतिथि"</string>
@@ -1985,7 +1965,7 @@
     <string name="lock_to_app_unlock_pattern" msgid="2694204070499712503">"अनपिन गर्नअघि अनलक प्याटर्न माग्नुहोस्"</string>
     <string name="lock_to_app_unlock_password" msgid="9126722403506560473">"पिन निकाल्नुअघि पासवर्ड सोध्नुहोस्"</string>
     <string name="package_installed_device_owner" msgid="8684974629306529138">"यो प्याकेज तपाईंका एड्मिनले इन्स्टल गर्नुभएको हो।\nप्रदान गरिएका अनुमतिसम्बन्धी जानकारी हेर्न सेटिङमा जानुहोस्"</string>
-    <string name="package_updated_device_owner" msgid="7560272363805506941">"तपाईंका प्रशासकले अद्यावधिक गर्नुभएको"</string>
+    <string name="package_updated_device_owner" msgid="7770195449213776218">"यो प्याकेज तपाईंका एड्मिनले अपडेट गर्नुभएको हो।\nकुन कुन अनुमति दिइएका छन् भन्ने कुरा हेर्न सेटिङमा जानुहोस्"</string>
     <string name="package_deleted_device_owner" msgid="2292335928930293023">"तपाईंका प्रशासकले मेट्नुभएको"</string>
     <string name="confirm_battery_saver" msgid="5247976246208245754">"ठिक छ"</string>
     <string name="battery_saver_description_with_learn_more" msgid="5444908404021316250">"ब्याट्री सेभरले अँध्यारो थिम अन गर्छ र ब्याकग्राउन्डमा हुने क्रियाकलाप, केही भिजुअल इफेक्ट, निश्चित सुविधा र केही नेटवर्क कनेक्सनहरू अफ गर्छ वा सीमित रूपमा मात्र चल्न दिन्छ।"</string>
@@ -2293,6 +2273,12 @@
     <string name="accessibility_autoclick_scroll" msgid="3499385943728726933">"स्क्रोल गर्नुहोस्"</string>
     <string name="accessibility_autoclick_pause" msgid="3272200156172573568">"पज गर्नुहोस्"</string>
     <string name="accessibility_autoclick_position" msgid="2933660969907663545">"स्थिति"</string>
+    <string name="accessibility_autoclick_scroll_up" msgid="2044948780797117443">"माथितिर स्क्रोल गर्नुहोस्"</string>
+    <string name="accessibility_autoclick_scroll_down" msgid="3733401063292018116">"तलतिर स्क्रोल गर्नुहोस्"</string>
+    <string name="accessibility_autoclick_scroll_left" msgid="8564421367992824198">"बायाँतिर स्क्रोल गर्नुहोस्"</string>
+    <string name="accessibility_autoclick_scroll_right" msgid="8932417330753984265">"दायाँतिर स्क्रोल गर्नुहोस्"</string>
+    <string name="accessibility_autoclick_scroll_exit" msgid="3788610039146769696">"स्क्रोल मोडबाट बाहिरिनुहोस्"</string>
+    <string name="accessibility_autoclick_scroll_panel_title" msgid="7120598166296447036">"प्यानल स्क्रोल गर्नुहोस्"</string>
     <string name="as_app_forced_to_restricted_bucket" msgid="8233871289353898964">"<xliff:g id="PACKAGE_NAME">%1$s</xliff:g> लाई प्रतिबन्धित बाल्टीमा राखियो"</string>
     <string name="conversation_single_line_name_display" msgid="8958948312915255999">"<xliff:g id="SENDER_NAME">%1$s</xliff:g>:"</string>
     <string name="conversation_single_line_image_placeholder" msgid="6983271082911936900">"फोटो पठाइयो"</string>
@@ -2500,6 +2486,7 @@
     <string name="profile_label_work_3" msgid="4834572253956798917">"कार्य प्रोफाइल ३"</string>
     <string name="profile_label_test" msgid="9168641926186071947">"परीक्षण"</string>
     <string name="profile_label_communal" msgid="8743921499944800427">"सामुदायिक"</string>
+    <string name="profile_label_supervising" msgid="5649312778545745371">"सुपरिवेक्षण गरिँदै छ"</string>
     <string name="accessibility_label_managed_profile" msgid="3366526886209832641">"कार्य प्रोफाइल"</string>
     <string name="accessibility_label_private_profile" msgid="1436459319135548969">"निजी स्पेस"</string>
     <string name="accessibility_label_clone_profile" msgid="7579118375042398784">"क्लोन"</string>

@@ -2,6 +2,9 @@
 #include "Bitmap.h"
 
 #include <android-base/unique_fd.h>
+#ifdef __linux__
+#include <com_android_graphics_hwui_flags.h>
+#endif
 #include <hwui/Bitmap.h>
 #include <hwui/Paint.h>
 #include <inttypes.h>
@@ -28,6 +31,9 @@
 #include "SkRefCnt.h"
 #include "SkStream.h"
 #include "SkTypes.h"
+#ifdef __linux__  // Only Linux support parcel
+#include "android/binder_parcel.h"
+#endif
 #include "android_nio_utils.h"
 
 #define DEBUG_PARCEL 0
@@ -613,7 +619,7 @@ static void Bitmap_setHasMipMap(JNIEnv* env, jobject, jlong bitmapHandle,
 ///////////////////////////////////////////////////////////////////////////////
 
 // TODO: Move somewhere else
-#ifdef __ANDROID__  // Layoutlib does not support parcel
+#ifdef __linux__  // Only Linux support parcel
 #define ON_ERROR_RETURN(X) \
     if ((error = (X)) != STATUS_OK) return error
 
@@ -717,7 +723,7 @@ static binder_status_t writeBlob(AParcel* parcel, uint64_t bitmapId, const SkBit
 
 #undef ON_ERROR_RETURN
 
-#endif // __ANDROID__ // Layoutlib does not support parcel
+#endif // __linux__ // Only Linux support parcel
 
 // This is the maximum possible size because the SkColorSpace must be
 // representable (and therefore serializable) using a matrix and numerical
@@ -733,7 +739,7 @@ static bool validateImageInfo(const SkImageInfo& info, int32_t rowBytes) {
 }
 
 static jobject Bitmap_createFromParcel(JNIEnv* env, jobject, jobject parcel) {
-#ifdef __ANDROID__ // Layoutlib does not support parcel
+#ifdef __linux__ // Only Linux support parcel
     if (parcel == NULL) {
         jniThrowNullPointerException(env, "parcel cannot be null");
         return NULL;
@@ -836,14 +842,33 @@ static jobject Bitmap_createFromParcel(JNIEnv* env, jobject, jobject parcel) {
     return createBitmap(env, nativeBitmap.release(), getPremulBitmapCreateFlags(isMutable), nullptr,
                         nullptr, density, sourceId);
 #else
-    jniThrowRuntimeException(env, "Cannot use parcels outside of Android");
+    jniThrowRuntimeException(env, "Cannot use parcels outside of Linux");
     return NULL;
 #endif
 }
 
+#ifdef __linux__  // Only Linux support parcel
+// Returns whether this bitmap should be written to the parcel as mutable.
+static bool shouldParcelAsMutable(SkBitmap& bitmap, AParcel* parcel) {
+    // If the bitmap is immutable, then parcel as immutable.
+    if (bitmap.isImmutable()) {
+        return false;
+    }
+
+    if (!com::android::graphics::hwui::flags::bitmap_parcel_ashmem_as_immutable()) {
+        return true;
+    }
+
+    // If we're going to copy the bitmap to ashmem and write that to the parcel,
+    // then parcel as immutable, since we won't be mutating the bitmap after
+    // writing it to the parcel.
+    return !shouldUseAshmem(parcel, bitmap.computeByteSize());
+}
+#endif
+
 static jboolean Bitmap_writeToParcel(JNIEnv* env, jobject, jlong bitmapHandle, jint density,
                                      jobject parcel) {
-#ifdef __ANDROID__ // Layoutlib does not support parcel
+#ifdef __linux__ // Only Linux support parcel
     if (parcel == NULL) {
         ALOGD("------- writeToParcel null parcel\n");
         return JNI_FALSE;
@@ -855,7 +880,7 @@ static jboolean Bitmap_writeToParcel(JNIEnv* env, jobject, jlong bitmapHandle, j
     auto bitmapWrapper = reinterpret_cast<BitmapWrapper*>(bitmapHandle);
     bitmapWrapper->getSkBitmap(&bitmap);
 
-    p.writeInt32(!bitmap.isImmutable());
+    p.writeInt32(shouldParcelAsMutable(bitmap, p.get()));
     p.writeInt32(bitmap.colorType());
     p.writeInt32(bitmap.alphaType());
     SkColorSpace* colorSpace = bitmap.colorSpace();
@@ -901,7 +926,7 @@ static jboolean Bitmap_writeToParcel(JNIEnv* env, jobject, jlong bitmapHandle, j
     }
     return JNI_TRUE;
 #else
-    doThrowRE(env, "Cannot use parcels outside of Android");
+    doThrowRE(env, "Cannot use parcels outside of Linux");
     return JNI_FALSE;
 #endif
 }

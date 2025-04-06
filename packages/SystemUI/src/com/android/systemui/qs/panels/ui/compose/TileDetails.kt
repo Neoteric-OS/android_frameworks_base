@@ -16,6 +16,7 @@
 
 package com.android.systemui.qs.panels.ui.compose
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,11 +24,13 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -43,6 +46,8 @@ import com.android.systemui.bluetooth.qsdialog.BluetoothDetailsViewModel
 import com.android.systemui.plugins.qs.TileDetailsViewModel
 import com.android.systemui.qs.flags.QsDetailedView
 import com.android.systemui.qs.panels.ui.viewmodel.DetailsViewModel
+import com.android.systemui.qs.tiles.dialog.CastDetailsContent
+import com.android.systemui.qs.tiles.dialog.CastDetailsViewModel
 import com.android.systemui.qs.tiles.dialog.InternetDetailsContent
 import com.android.systemui.qs.tiles.dialog.InternetDetailsViewModel
 import com.android.systemui.qs.tiles.dialog.ModesDetailsContent
@@ -61,26 +66,43 @@ fun TileDetails(modifier: Modifier = Modifier, detailsViewModel: DetailsViewMode
 
     DisposableEffect(Unit) { onDispose { detailsViewModel.closeDetailedView() } }
 
+    val title = tileDetailedViewModel.title
+    val subTitle = tileDetailedViewModel.subTitle
+    val colors = MaterialTheme.colorScheme
+
     Column(
         modifier =
             modifier
                 .fillMaxWidth()
                 // The height of the details view is TBD.
                 .fillMaxHeight()
+                .background(color = colors.onPrimary)
     ) {
         CompositionLocalProvider(
             value = LocalContentColor provides MaterialTheme.colorScheme.onSurfaceVariant
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        start = TileDetailsDefaults.TitleRowStart,
+                        top = TileDetailsDefaults.TitleRowTop,
+                        end = TileDetailsDefaults.TitleRowEnd,
+                        bottom = TileDetailsDefaults.TitleRowBottom
+                    ),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 IconButton(
                     onClick = { detailsViewModel.closeDetailedView() },
+                    colors = IconButtonDefaults.iconButtonColors(
+                        contentColor = colors.onSurface
+                    ),
                     modifier =
-                        Modifier.align(Alignment.CenterVertically)
+                        Modifier
+                            .align(Alignment.CenterVertically)
                             .height(TileDetailsDefaults.IconHeight)
+                            .width(TileDetailsDefaults.IconWidth)
                             .padding(start = TileDetailsDefaults.IconPadding),
                 ) {
                     Icon(
@@ -90,16 +112,22 @@ fun TileDetails(modifier: Modifier = Modifier, detailsViewModel: DetailsViewMode
                     )
                 }
                 Text(
-                    text = tileDetailedViewModel.getTitle(),
+                    text = title,
                     modifier = Modifier.align(Alignment.CenterVertically),
                     textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = colors.onSurface,
                 )
                 IconButton(
                     onClick = { tileDetailedViewModel.clickOnSettingsButton() },
+                    colors = IconButtonDefaults.iconButtonColors(
+                        contentColor = colors.onSurface
+                    ),
                     modifier =
-                        Modifier.align(Alignment.CenterVertically)
+                        Modifier
+                            .align(Alignment.CenterVertically)
                             .height(TileDetailsDefaults.IconHeight)
+                            .width(TileDetailsDefaults.IconWidth)
                             .padding(end = TileDetailsDefaults.IconPadding),
                 ) {
                     Icon(
@@ -110,10 +138,11 @@ fun TileDetails(modifier: Modifier = Modifier, detailsViewModel: DetailsViewMode
                 }
             }
             Text(
-                text = tileDetailedViewModel.getSubTitle(),
+                text = subTitle,
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.titleSmall,
+                style = MaterialTheme.typography.bodySmall,
+                color = colors.onSurfaceVariant,
             )
         }
         MapTileDetailsContent(tileDetailedViewModel)
@@ -128,10 +157,16 @@ private fun MapTileDetailsContent(tileDetailsViewModel: TileDetailsViewModel) {
         is BluetoothDetailsViewModel ->
             BluetoothDetailsContent(tileDetailsViewModel.detailsContentViewModel)
         is ModesDetailsViewModel -> ModesDetailsContent(tileDetailsViewModel)
+        is CastDetailsViewModel -> CastDetailsContent(tileDetailsViewModel)
     }
 }
 
 private object TileDetailsDefaults {
-    val IconHeight = 48.dp
+    val IconHeight = 24.dp
+    val IconWidth = 24.dp
     val IconPadding = 4.dp
+    val TitleRowStart = 14.dp
+    val TitleRowTop = 22.dp
+    val TitleRowEnd = 20.dp
+    val TitleRowBottom = 8.dp
 }

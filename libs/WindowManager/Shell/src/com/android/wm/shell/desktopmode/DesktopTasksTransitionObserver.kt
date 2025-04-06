@@ -23,28 +23,25 @@ import android.os.IBinder
 import android.view.SurfaceControl
 import android.view.WindowManager.TRANSIT_CLOSE
 import android.view.WindowManager.TRANSIT_OPEN
-import android.view.WindowManager.TRANSIT_PIP
 import android.view.WindowManager.TRANSIT_TO_BACK
-import android.view.WindowManager.TRANSIT_TO_FRONT
+import android.window.DesktopExperienceFlags
 import android.window.DesktopModeFlags
 import android.window.DesktopModeFlags.ENABLE_DESKTOP_WALLPAPER_ACTIVITY_FOR_SYSTEM_USER
 import android.window.DesktopModeFlags.ENABLE_DESKTOP_WINDOWING_WALLPAPER_ACTIVITY
 import android.window.TransitionInfo
 import android.window.WindowContainerTransaction
 import com.android.internal.protolog.ProtoLog
-import com.android.window.flags.Flags
 import com.android.wm.shell.ShellTaskOrganizer
 import com.android.wm.shell.back.BackAnimationController
 import com.android.wm.shell.desktopmode.DesktopModeTransitionTypes.isExitDesktopModeTransition
 import com.android.wm.shell.desktopmode.desktopwallpaperactivity.DesktopWallpaperActivityTokenProvider
-import com.android.wm.shell.desktopmode.multidesks.DesksTransitionObserver
 import com.android.wm.shell.protolog.ShellProtoLogGroup.WM_SHELL_DESKTOP_MODE
 import com.android.wm.shell.shared.TransitionUtil
+import com.android.wm.shell.shared.TransitionUtil.isClosingMode
+import com.android.wm.shell.shared.TransitionUtil.isOpeningMode
 import com.android.wm.shell.shared.desktopmode.DesktopModeStatus
 import com.android.wm.shell.sysui.ShellInit
 import com.android.wm.shell.transition.Transitions
-import com.android.wm.shell.transition.Transitions.TRANSIT_EXIT_PIP
-import com.android.wm.shell.transition.Transitions.TRANSIT_REMOVE_PIP
 
 /**
  * A [Transitions.TransitionObserver] that observes shell transitions and updates the
@@ -59,15 +56,12 @@ class DesktopTasksTransitionObserver(
     private val desktopMixedTransitionHandler: DesktopMixedTransitionHandler,
     private val backAnimationController: BackAnimationController,
     private val desktopWallpaperActivityTokenProvider: DesktopWallpaperActivityTokenProvider,
-    private val desksTransitionObserver: DesksTransitionObserver,
     shellInit: ShellInit,
 ) : Transitions.TransitionObserver {
 
     data class CloseWallpaperTransition(val transition: IBinder, val displayId: Int)
 
     private var transitionToCloseWallpaper: CloseWallpaperTransition? = null
-    /* Pending PiP transition and its associated display id and task id. */
-    private var pendingPipTransitionAndPipTask: Triple<IBinder, Int, Int>? = null
     private var currentProfileId: Int
 
     init {
@@ -89,7 +83,6 @@ class DesktopTasksTransitionObserver(
         finishTransaction: SurfaceControl.Transaction,
     ) {
         // TODO: b/332682201 Update repository state
-        desksTransitionObserver.onTransitionReady(transition, info)
         if (
             DesktopModeFlags.INCLUDE_TOP_TRANSPARENT_FULLSCREEN_TASK_IN_DESKTOP_HEURISTIC
                 .isTrue() && DesktopModeFlags.ENABLE_DESKTOP_WINDOWING_MODALS_POLICY.isTrue()
@@ -102,33 +95,6 @@ class DesktopTasksTransitionObserver(
             removeTaskIfNeeded(info)
         }
         removeWallpaperOnLastTaskClosingIfNeeded(transition, info)
-
-        val desktopRepository = desktopUserRepositories.getProfile(currentProfileId)
-        info.changes.forEach { change ->
-            change.taskInfo?.let { taskInfo ->
-                if (
-                    Flags.enableDesktopWindowingPip() &&
-                        desktopRepository.isTaskMinimizedPipInDisplay(
-                            taskInfo.displayId,
-                            taskInfo.taskId,
-                        )
-                ) {
-                    when (info.type) {
-                        TRANSIT_PIP ->
-                            pendingPipTransitionAndPipTask =
-                                Triple(transition, taskInfo.displayId, taskInfo.taskId)
-
-                        TRANSIT_EXIT_PIP,
-                        TRANSIT_REMOVE_PIP ->
-                            desktopRepository.setTaskInPip(
-                                taskInfo.displayId,
-                                taskInfo.taskId,
-                                enterPip = false,
-                            )
-                    }
-                }
-            }
-        }
     }
 
     private fun removeTaskIfNeeded(info: TransitionInfo) {
@@ -162,18 +128,24 @@ class DesktopTasksTransitionObserver(
                     continue
                 }
                 val desktopRepository = desktopUserRepositories.getProfile(taskInfo.userId)
-                val visibleTaskCount = desktopRepository.getVisibleTaskCount(taskInfo.displayId)
+                val isInDesktop = desktopRepository.isAnyDeskActive(taskInfo.displayId)
                 if (
-                    visibleTaskCount > 0 &&
+                    isInDesktop &&
                         change.mode == TRANSIT_TO_BACK &&
                         taskInfo.windowingMode == WINDOWING_MODE_FREEFORM
                 ) {
+                    val isLastTask =
+                        if (!DesktopExperienceFlags.ENABLE_MULTIPLE_DESKTOPS_BACKEND.isTrue) {
+                            desktopRepository.hasOnlyOneVisibleTask(taskInfo.displayId)
+                        } else {
+                            desktopRepository.isOnlyVisibleTask(taskInfo.taskId, taskInfo.displayId)
+                        }
                     desktopRepository.minimizeTask(taskInfo.displayId, taskInfo.taskId)
                     desktopMixedTransitionHandler.addPendingMixedTransition(
                         DesktopMixedTransitionHandler.PendingMixedTransition.Minimize(
                             transition,
                             taskInfo.taskId,
-                            visibleTaskCount == 1,
+                            isLastTask,
                         )
                     )
                 }
@@ -227,9 +199,9 @@ class DesktopTasksTransitionObserver(
         taskInfo: ActivityManager.RunningTaskInfo
     ): Int? {
         val desktopRepository = desktopUserRepositories.getProfile(taskInfo.userId)
-        val visibleTaskCount = desktopRepository.getVisibleTaskCount(taskInfo.displayId)
+        val isInDesktop = desktopRepository.isAnyDeskActive(taskInfo.displayId)
         if (
-            visibleTaskCount > 0 &&
+            isInDesktop &&
                 taskInfo.windowingMode == WINDOWING_MODE_FREEFORM &&
                 backAnimationController.latestTriggerBackTask == taskInfo.taskId &&
                 !desktopRepository.isClosingTask(taskInfo.taskId)
@@ -253,7 +225,7 @@ class DesktopTasksTransitionObserver(
 
             val desktopRepository = desktopUserRepositories.getProfile(taskInfo.userId)
             if (
-                desktopRepository.getVisibleTaskCount(taskInfo.displayId) == 0 &&
+                !desktopRepository.isAnyDeskActive(taskInfo.displayId) &&
                     change.mode == TRANSIT_CLOSE &&
                     taskInfo.windowingMode == WINDOWING_MODE_FREEFORM &&
                     desktopWallpaperActivityTokenProvider.getToken(taskInfo.displayId) != null
@@ -297,18 +269,6 @@ class DesktopTasksTransitionObserver(
                     }
                 }
             transitionToCloseWallpaper = null
-        } else if (pendingPipTransitionAndPipTask?.first == transition) {
-            val desktopRepository = desktopUserRepositories.getProfile(currentProfileId)
-            if (aborted) {
-                pendingPipTransitionAndPipTask?.let {
-                    desktopRepository.onPipAborted(
-                        /*displayId=*/ it.second,
-                        /* taskId=*/ it.third,
-                    )
-                }
-            }
-            desktopRepository.setOnPipAbortedCallback(null)
-            pendingPipTransitionAndPipTask = null
         }
     }
 
@@ -325,10 +285,6 @@ class DesktopTasksTransitionObserver(
                                 taskInfo.token,
                                 taskInfo.displayId,
                             )
-                            desktopWallpaperActivityTokenProvider.setWallpaperActivityIsVisible(
-                                isVisible = true,
-                                taskInfo.displayId,
-                            )
                             // After the task for the wallpaper is created, set it non-trimmable.
                             // This is important to prevent recents from trimming and removing the
                             // task.
@@ -339,16 +295,6 @@ class DesktopTasksTransitionObserver(
                         }
                         TRANSIT_CLOSE ->
                             desktopWallpaperActivityTokenProvider.removeToken(taskInfo.displayId)
-                        TRANSIT_TO_FRONT ->
-                            desktopWallpaperActivityTokenProvider.setWallpaperActivityIsVisible(
-                                isVisible = true,
-                                taskInfo.displayId,
-                            )
-                        TRANSIT_TO_BACK ->
-                            desktopWallpaperActivityTokenProvider.setWallpaperActivityIsVisible(
-                                isVisible = false,
-                                taskInfo.displayId,
-                            )
                         else -> {}
                     }
                 }
@@ -357,18 +303,29 @@ class DesktopTasksTransitionObserver(
     }
 
     private fun updateTopTransparentFullscreenTaskId(info: TransitionInfo) {
-        info.changes.forEach { change ->
-            change.taskInfo?.let { task ->
-                val desktopRepository = desktopUserRepositories.getProfile(task.userId)
-                val displayId = task.displayId
-                // Clear `topTransparentFullscreenTask` information from repository if task
-                // is closed or sent to back.
-                if (
-                    TransitionUtil.isClosingMode(change.mode) &&
-                        task.taskId ==
-                            desktopRepository.getTopTransparentFullscreenTaskId(displayId)
-                ) {
-                    desktopRepository.clearTopTransparentFullscreenTaskId(displayId)
+        run forEachLoop@{
+            info.changes.forEach { change ->
+                change.taskInfo?.let { task ->
+                    val desktopRepository = desktopUserRepositories.getProfile(task.userId)
+                    val displayId = task.displayId
+                    val transparentTaskId =
+                        desktopRepository.getTopTransparentFullscreenTaskId(displayId)
+                    if (transparentTaskId == null) return@forEachLoop
+                    val changeMode = change.mode
+                    val taskId = task.taskId
+                    val isTopTransparentFullscreenTaskClosing =
+                        taskId == transparentTaskId && isClosingMode(changeMode)
+                    val isNonTopTransparentFullscreenTaskOpening =
+                        taskId != transparentTaskId && isOpeningMode(changeMode)
+                    // Clear `topTransparentFullscreenTask` information from repository if task
+                    // is closed, sent to back or if a different task is opened, brought to front.
+                    if (
+                        isTopTransparentFullscreenTaskClosing ||
+                            isNonTopTransparentFullscreenTaskOpening
+                    ) {
+                        desktopRepository.clearTopTransparentFullscreenTaskId(displayId)
+                        return@forEachLoop
+                    }
                 }
             }
         }

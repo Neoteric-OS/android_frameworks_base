@@ -115,7 +115,8 @@ class DesktopModeWindowDecorViewModelTests : DesktopModeWindowDecorViewModelTest
                 .spyStatic(DragPositioningCallbackUtility::class.java)
                 .startMocking()
 
-        doReturn(true).`when` { DesktopModeStatus.canInternalDisplayHostDesktops(Mockito.any()) }
+        doReturn(true).`when` { DesktopModeStatus.isDesktopModeSupportedOnDisplay(Mockito.any(),
+            Mockito.any()) }
         doReturn(true).`when` { DesktopModeStatus.canEnterDesktopMode(Mockito.any()) }
         doReturn(false).`when` { DesktopModeStatus.overridesShowAppHandle(Mockito.any()) }
 
@@ -278,6 +279,7 @@ class DesktopModeWindowDecorViewModelTests : DesktopModeWindowDecorViewModelTest
 
     @Test
     @EnableFlags(Flags.FLAG_ENABLE_DESKTOP_WINDOWING_MODALS_POLICY)
+    @DisableFlags(Flags.FLAG_ENABLE_MODALS_FULLSCREEN_WITH_PERMISSION)
     fun testDecorationIsNotCreatedForTopTranslucentActivities() {
         val task = createTask(windowingMode = WINDOWING_MODE_FULLSCREEN).apply {
             isActivityStackTransparent = true
@@ -317,6 +319,19 @@ class DesktopModeWindowDecorViewModelTests : DesktopModeWindowDecorViewModelTest
         onTaskOpening(task)
 
         assertFalse(windowDecorByTaskIdSpy.contains(task.taskId))
+    }
+
+    @Test
+    fun testOnTaskInfoChanged_tilingNotified() {
+        val task = createTask(
+            windowingMode = WINDOWING_MODE_FREEFORM
+        )
+        setUpMockDecorationsForTasks(task)
+
+        onTaskOpening(task)
+        desktopModeWindowDecorViewModel.onTaskInfoChanged(task)
+
+        verify(mockTilingWindowDecoration).onTaskInfoChange(task)
     }
 
     @Test
@@ -380,7 +395,7 @@ class DesktopModeWindowDecorViewModelTests : DesktopModeWindowDecorViewModelTest
         whenever(DesktopModeStatus.enforceDeviceRestrictions()).thenReturn(true)
 
         val task = createTask(windowingMode = WINDOWING_MODE_FULLSCREEN)
-        doReturn(true).`when` { DesktopModeStatus.canInternalDisplayHostDesktops(any()) }
+        doReturn(true).`when` { DesktopModeStatus.isDesktopModeSupportedOnDisplay(any(), any()) }
         setUpMockDecorationsForTasks(task)
 
         onTaskOpening(task)
@@ -740,20 +755,6 @@ class DesktopModeWindowDecorViewModelTests : DesktopModeWindowDecorViewModelTest
         toSplitScreenListenerCaptor.value.invoke()
 
         verify(mockDesktopTasksController).requestSplit(decor.mTaskInfo, leftOrTop = false)
-    }
-
-    @Test
-    fun testDecor_onClickToSplitScreen_disposesStatusBarInputLayer() {
-        val toSplitScreenListenerCaptor = forClass(Function0::class.java)
-                as ArgumentCaptor<Function0<Unit>>
-        val decor = createOpenTaskDecoration(
-            windowingMode = WINDOWING_MODE_MULTI_WINDOW,
-            onToSplitScreenClickListenerCaptor = toSplitScreenListenerCaptor
-        )
-
-        toSplitScreenListenerCaptor.value.invoke()
-
-        verify(decor).disposeStatusBarInputLayer()
     }
 
     @Test

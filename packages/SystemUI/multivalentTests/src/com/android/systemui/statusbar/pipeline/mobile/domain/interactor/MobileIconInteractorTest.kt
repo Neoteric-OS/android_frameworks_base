@@ -14,12 +14,6 @@
  * limitations under the License.
  */
 
-/*
- * Changes from Qualcomm Innovation Center are provided under the following license:
- * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
- * SPDX-License-Identifier: BSD-3-Clause-Clear
- */
-
 package com.android.systemui.statusbar.pipeline.mobile.domain.interactor
 
 import android.platform.test.annotations.DisableFlags
@@ -28,6 +22,7 @@ import android.telephony.CellSignalStrength
 import android.telephony.TelephonyManager.NETWORK_TYPE_UNKNOWN
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
+import com.android.internal.telephony.flags.Flags
 import com.android.settingslib.mobile.MobileIconCarrierIdOverrides
 import com.android.settingslib.mobile.MobileIconCarrierIdOverridesImpl
 import com.android.settingslib.mobile.TelephonyIcons
@@ -51,11 +46,8 @@ import com.android.systemui.util.mockito.any
 import com.android.systemui.util.mockito.mock
 import com.android.systemui.util.mockito.whenever
 import com.google.common.truth.Truth.assertThat
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
@@ -67,21 +59,40 @@ import org.mockito.ArgumentMatchers.anyString
 
 @SmallTest
 @RunWith(AndroidJUnit4::class)
-class MobileIconInteractorTest : SysuiTestCase() {
-    private val kosmos = testKosmos()
+class MobileIconInteractorTest : MobileIconInteractorTestBase() {
+    override fun createInteractor(overrides: MobileIconCarrierIdOverrides) =
+        MobileIconInteractorImpl(
+            testScope.backgroundScope,
+            mobileIconsInteractor.activeDataConnectionHasDataEnabled,
+            mobileIconsInteractor.alwaysShowDataRatIcon,
+            mobileIconsInteractor.alwaysUseCdmaLevel,
+            mobileIconsInteractor.isSingleCarrier,
+            mobileIconsInteractor.mobileIsDefault,
+            mobileIconsInteractor.defaultMobileIconMapping,
+            mobileIconsInteractor.defaultMobileIconGroup,
+            mobileIconsInteractor.isDefaultConnectionFailed,
+            mobileIconsInteractor.isForceHidden,
+            connectionRepository,
+            context,
+            overrides,
+        )
+}
 
-    private lateinit var underTest: MobileIconInteractor
-    private val mobileMappingsProxy = FakeMobileMappingsProxy()
-    private val mobileIconsInteractor = FakeMobileIconsInteractor(mobileMappingsProxy, mock())
+abstract class MobileIconInteractorTestBase : SysuiTestCase() {
+    protected val kosmos = testKosmos()
 
-    private val connectionRepository =
+    protected lateinit var underTest: MobileIconInteractor
+    protected val mobileMappingsProxy = FakeMobileMappingsProxy()
+    protected val mobileIconsInteractor = FakeMobileIconsInteractor(mobileMappingsProxy, mock())
+
+    protected val connectionRepository =
         FakeMobileConnectionRepository(
             SUB_1_ID,
             logcatTableLogBuffer(kosmos, "MobileIconInteractorTest"),
         )
 
-    private val testDispatcher = UnconfinedTestDispatcher()
-    private val testScope = TestScope(testDispatcher)
+    protected val testDispatcher = UnconfinedTestDispatcher()
+    protected val testScope = TestScope(testDispatcher)
 
     @Before
     fun setUp() {
@@ -550,36 +561,6 @@ class MobileIconInteractorTest : SysuiTestCase() {
         }
 
     @Test
-    fun alwaysUseRsrpLevelForLte_matchesParent() =
-        runBlocking(IMMEDIATE) {
-            var latest: Boolean? = null
-            val job = underTest.alwaysUseRsrpLevelForLte.onEach { latest = it }.launchIn(this)
-
-            mobileIconsInteractor.alwaysUseRsrpLevelForLte.value = true
-            assertThat(latest).isTrue()
-
-            mobileIconsInteractor.alwaysUseRsrpLevelForLte.value = false
-            assertThat(latest).isFalse()
-
-            job.cancel()
-        }
-
-    @Test
-    fun hideNoInternetState_matchesParent() =
-        runBlocking(IMMEDIATE) {
-            var latest: Boolean? = null
-            val job = underTest.hideNoInternetState.onEach { latest = it }.launchIn(this)
-
-            mobileIconsInteractor.hideNoInternetState.value = true
-            assertThat(latest).isTrue()
-
-            mobileIconsInteractor.hideNoInternetState.value = false
-            assertThat(latest).isFalse()
-
-            job.cancel()
-        }
-
-    @Test
     fun isAllowedDuringAirplaneMode_matchesRepo() =
         testScope.runTest {
             val latest by collectLastValue(underTest.isAllowedDuringAirplaneMode)
@@ -874,33 +855,9 @@ class MobileIconInteractorTest : SysuiTestCase() {
             assertThat(latest!!.level).isEqualTo(0)
         }
 
-    private fun createInteractor(
+    abstract fun createInteractor(
         overrides: MobileIconCarrierIdOverrides = MobileIconCarrierIdOverridesImpl()
-    ) =
-        MobileIconInteractorImpl(
-            testScope.backgroundScope,
-            mobileIconsInteractor.activeDataConnectionHasDataEnabled,
-            mobileIconsInteractor.alwaysShowDataRatIcon,
-            mobileIconsInteractor.alwaysUseCdmaLevel,
-            mobileIconsInteractor.isSingleCarrier,
-            mobileIconsInteractor.mobileIsDefault,
-            mobileIconsInteractor.defaultMobileIconMapping,
-            mobileIconsInteractor.defaultMobileIconGroup,
-            mobileIconsInteractor.isDefaultConnectionFailed,
-            mobileIconsInteractor.isForceHidden,
-            connectionRepository,
-            mobileIconsInteractor.alwaysUseRsrpLevelForLte,
-            mobileIconsInteractor.hideNoInternetState,
-            mobileIconsInteractor.networkTypeIconCustomization,
-            mobileIconsInteractor.showVolteIcon,
-            mobileIconsInteractor.showVowifiIcon,
-            context,
-            MutableStateFlow(0),
-            MutableStateFlow(null),
-            MutableStateFlow(false),
-            mock(),
-            overrides,
-        )
+    ): MobileIconInteractor
 
     companion object {
         private const val GSM_LEVEL = 1
@@ -912,6 +869,5 @@ class MobileIconInteractorTest : SysuiTestCase() {
         private val DEFAULT_NAME_MODEL = NetworkNameModel.Default(DEFAULT_NAME)
         private const val DERIVED_NAME = "test derived name"
         private val DERIVED_NAME_MODEL = NetworkNameModel.IntentDerived(DERIVED_NAME)
-        private val IMMEDIATE = Dispatchers.Main.immediate
     }
 }

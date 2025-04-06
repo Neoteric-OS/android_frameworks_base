@@ -37,6 +37,7 @@ import com.android.systemui.flags.andSceneContainer
 import com.android.systemui.kosmos.runTest
 import com.android.systemui.kosmos.testScope
 import com.android.systemui.kosmos.useUnconfinedTestDispatcher
+import com.android.systemui.log.assertLogsWtfs
 import com.android.systemui.res.R
 import com.android.systemui.shade.domain.interactor.shadeInteractor
 import com.android.systemui.shade.shadeTestUtil
@@ -205,8 +206,7 @@ class HeadsUpManagerImplTest(flags: FlagsParameterization) : SysuiTestCase() {
     fun pinnedHeadsUpStatuses_pinnedByUser_butFlagOff_returnsNotPinned() {
         val entry = HeadsUpManagerTestUtil.createEntry(/* id= */ 0, mContext)
         entry.row = testHelper.createRow()
-        underTest.showNotification(entry, isPinnedByUser = true)
-
+        assertLogsWtfs { underTest.showNotification(entry, isPinnedByUser = true) }
         assertThat(underTest.hasPinnedHeadsUp()).isFalse()
         assertThat(underTest.pinnedHeadsUpStatus()).isEqualTo(PinnedStatus.NotPinned)
     }
@@ -749,20 +749,6 @@ class HeadsUpManagerImplTest(flags: FlagsParameterization) : SysuiTestCase() {
         assertThat(getIsSticky_promotedAndExpanded()).isFalse()
     }
 
-    @Test
-    @EnableFlags(PromotedNotificationUi.FLAG_NAME)
-    @DisableFlags(StatusBarNotifChips.FLAG_NAME)
-    fun testIsSticky_promotedAndExpanded_promotedUiFlagOn_false() {
-        assertThat(getIsSticky_promotedAndExpanded()).isFalse()
-    }
-
-    @Test
-    @EnableFlags(StatusBarNotifChips.FLAG_NAME)
-    @DisableFlags(PromotedNotificationUi.FLAG_NAME)
-    fun testIsSticky_promotedAndExpanded_notifChipsFlagOn_false() {
-        assertThat(getIsSticky_promotedAndExpanded()).isFalse()
-    }
-
     private fun getIsSticky_promotedAndExpanded(): Boolean {
         val notif = Notification.Builder(mContext, "").setSmallIcon(R.drawable.ic_person).build()
         notif.flags = FLAG_PROMOTED_ONGOING
@@ -1071,7 +1057,7 @@ class HeadsUpManagerImplTest(flags: FlagsParameterization) : SysuiTestCase() {
 
         assertThat(underTest.canRemoveImmediately(notifEntry.key)).isFalse()
 
-        underTest.setUserActionMayIndirectlyRemove(notifEntry)
+        underTest.setUserActionMayIndirectlyRemove(notifEntry.key)
 
         assertThat(underTest.canRemoveImmediately(notifEntry.key)).isTrue()
     }

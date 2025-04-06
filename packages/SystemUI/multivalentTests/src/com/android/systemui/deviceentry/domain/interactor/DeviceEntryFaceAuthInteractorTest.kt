@@ -20,6 +20,8 @@ import android.content.pm.UserInfo
 import android.hardware.biometrics.BiometricFaceConstants
 import android.hardware.biometrics.BiometricSourceType
 import android.os.PowerManager
+import android.platform.test.annotations.EnableFlags
+import android.service.dreams.Flags.FLAG_DREAMS_V2
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.android.compose.animation.scene.ObservableTransitionState
@@ -55,6 +57,7 @@ import com.android.systemui.power.domain.interactor.PowerInteractor.Companion.se
 import com.android.systemui.power.domain.interactor.powerInteractor
 import com.android.systemui.power.shared.model.WakeSleepReason
 import com.android.systemui.scene.domain.interactor.sceneInteractor
+import com.android.systemui.scene.shared.model.Overlays
 import com.android.systemui.scene.shared.model.Scenes
 import com.android.systemui.testKosmos
 import com.android.systemui.user.data.model.SelectionStatus
@@ -143,6 +146,33 @@ class DeviceEntryFaceAuthInteractorTest : SysuiTestCase() {
             keyguardTransitionRepository.sendTransitionStep(
                 TransitionStep(
                     KeyguardState.OFF,
+                    KeyguardState.LOCKSCREEN,
+                    transitionState = TransitionState.STARTED,
+                )
+            )
+
+            runCurrent()
+            assertThat(faceAuthRepository.runningAuthRequest.value)
+                .isEqualTo(
+                    Pair(FaceAuthUiEvent.FACE_AUTH_UPDATED_KEYGUARD_VISIBILITY_CHANGED, true)
+                )
+        }
+
+    @Test
+    @EnableFlags(FLAG_DREAMS_V2)
+    fun faceAuthIsRequestedWhenTransitioningFromDreamToLockscreen() =
+        testScope.runTest {
+            underTest.start()
+            runCurrent()
+
+            powerInteractor.setAwakeForTest(reason = PowerManager.WAKE_REASON_LID)
+            faceWakeUpTriggersConfig.setTriggerFaceAuthOnWakeUpFrom(
+                setOf(WakeSleepReason.LID.powerManagerWakeReason)
+            )
+
+            keyguardTransitionRepository.sendTransitionStep(
+                TransitionStep(
+                    KeyguardState.DREAMING,
                     KeyguardState.LOCKSCREEN,
                     transitionState = TransitionState.STARTED,
                 )
@@ -298,9 +328,12 @@ class DeviceEntryFaceAuthInteractorTest : SysuiTestCase() {
         testScope.runTest {
             underTest.start()
 
-            kosmos.sceneInteractor.changeScene(Scenes.Bouncer, "for-test")
+            kosmos.sceneInteractor.snapToScene(Scenes.Lockscreen, "for-test")
+            kosmos.sceneInteractor.showOverlay(Overlays.Bouncer, "for-test")
             kosmos.sceneInteractor.setTransitionState(
-                MutableStateFlow(ObservableTransitionState.Idle(Scenes.Bouncer))
+                MutableStateFlow(
+                    ObservableTransitionState.Idle(Scenes.Lockscreen, setOf(Overlays.Bouncer))
+                )
             )
 
             runCurrent()

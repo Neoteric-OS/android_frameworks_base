@@ -17,6 +17,7 @@
 package com.android.systemui.dreams;
 
 import static android.service.dreams.Flags.dreamWakeRedirect;
+import static android.service.dreams.Flags.dreamsV2;
 
 import static com.android.systemui.Flags.glanceableHubAllowKeyguardWhenDreaming;
 import static com.android.systemui.dreams.dagger.DreamModule.DREAM_OVERLAY_WINDOW_TITLE;
@@ -29,6 +30,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.os.PowerManager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,8 +48,7 @@ import androidx.lifecycle.LifecycleService;
 import androidx.lifecycle.ServiceLifecycleDispatcher;
 import androidx.lifecycle.ViewModelStore;
 
-import com.android.app.viewcapture.ViewCaptureAwareWindowManager;
-import com.android.compose.animation.scene.SceneKey;
+import com.android.compose.animation.scene.OverlayKey;
 import com.android.internal.logging.UiEvent;
 import com.android.internal.logging.UiEventLogger;
 import com.android.internal.policy.PhoneWindow;
@@ -70,18 +71,23 @@ import com.android.systemui.dreams.dagger.DreamOverlayComponent;
 import com.android.systemui.keyguard.domain.interactor.KeyguardInteractor;
 import com.android.systemui.navigationbar.gestural.domain.GestureInteractor;
 import com.android.systemui.navigationbar.gestural.domain.TaskMatcher;
+import com.android.systemui.power.domain.interactor.PowerInteractor;
 import com.android.systemui.scene.domain.interactor.SceneInteractor;
 import com.android.systemui.scene.shared.flag.SceneContainerFlag;
+import com.android.systemui.scene.shared.model.Overlays;
 import com.android.systemui.scene.shared.model.Scenes;
 import com.android.systemui.shade.ShadeExpansionChangeEvent;
 import com.android.systemui.touch.TouchInsetManager;
 import com.android.systemui.util.concurrency.DelayableExecutor;
+
+import kotlin.Unit;
 
 import kotlinx.coroutines.Job;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CancellationException;
 import java.util.function.Consumer;
 
@@ -104,6 +110,7 @@ public class DreamOverlayService extends android.service.dreams.DreamOverlayServ
     private final Context mContext;
     // The Executor ensures actions and ui updates happen on the same thread.
     private final DelayableExecutor mExecutor;
+    private final PowerInteractor mPowerInteractor;
     // A controller for the dream overlay container view (which contains both the status bar and the
     // content area).
     private DreamOverlayContainerViewController mDreamOverlayContainerViewController;
@@ -115,7 +122,7 @@ public class DreamOverlayService extends android.service.dreams.DreamOverlayServ
     @Nullable
     private final ComponentName mHomeControlPanelDreamComponent;
     private final UiEventLogger mUiEventLogger;
-    private final ViewCaptureAwareWindowManager mWindowManager;
+    private final WindowManager mWindowManager;
     private final String mWindowTitle;
 
     // A reference to the {@link Window} used to hold the dream overlay.
@@ -221,10 +228,20 @@ public class DreamOverlayService extends android.service.dreams.DreamOverlayServ
         }
     };
 
-    private final Consumer<SceneKey> mCurrentSceneConsumer = new Consumer<>() {
+    private final Consumer<Set<OverlayKey>> mCurrentOverlaysConsumer = new Consumer<>() {
         @Override
-        public void accept(SceneKey currentScene) {
-            mExecutor.execute(() -> updateBouncerShowingLocked(currentScene == Scenes.Bouncer));
+        public void accept(Set<OverlayKey> currentOverlays) {
+            mExecutor.execute(() ->
+                    updateBouncerShowingLocked(currentOverlays.contains(Overlays.Bouncer)));
+        }
+    };
+
+    private final Consumer<Unit> mPickupConsumer = new Consumer<>() {
+        @Override
+        public void accept(Unit unit) {
+            mExecutor.execute(() ->
+                    mPowerInteractor.wakeUpIfDreaming("pickupGesture",
+                            PowerManager.WAKE_REASON_LIFT));
         }
     };
 
@@ -375,7 +392,7 @@ public class DreamOverlayService extends android.service.dreams.DreamOverlayServ
             Context context,
             DreamOverlayLifecycleOwner lifecycleOwner,
             @Main DelayableExecutor executor,
-            ViewCaptureAwareWindowManager viewCaptureAwareWindowManager,
+            WindowManager windowManager,
             ComplicationComponent.Factory complicationComponentFactory,
             DreamComplicationComponent.Factory dreamComplicationComponentFactory,
             DreamOverlayComponent.Factory dreamOverlayComponentFactory,
@@ -396,11 +413,13 @@ public class DreamOverlayService extends android.service.dreams.DreamOverlayServ
             DreamOverlayCallbackController dreamOverlayCallbackController,
             KeyguardInteractor keyguardInteractor,
             GestureInteractor gestureInteractor,
+            WakeGestureMonitor wakeGestureMonitor,
+            PowerInteractor powerInteractor,
             @Named(DREAM_OVERLAY_WINDOW_TITLE) String windowTitle) {
         super(executor);
         mContext = context;
         mExecutor = executor;
-        mWindowManager = viewCaptureAwareWindowManager;
+        mWindowManager = windowManager;
         mKeyguardUpdateMonitor = keyguardUpdateMonitor;
         mScrimManager = scrimManager;
         mLowLightDreamComponent = lowLightDreamComponent;
@@ -422,6 +441,7 @@ public class DreamOverlayService extends android.service.dreams.DreamOverlayServ
         mTouchInsetManager = touchInsetManager;
         mLifecycleOwner = lifecycleOwner;
         mLifecycleRegistry = lifecycleOwner.getRegistry();
+        mPowerInteractor = powerInteractor;
 
         mExecutor.execute(() -> setLifecycleStateLocked(Lifecycle.State.CREATED));
 
@@ -430,11 +450,16 @@ public class DreamOverlayService extends android.service.dreams.DreamOverlayServ
         mFlows.add(collectFlow(getLifecycle(), communalInteractor.isCommunalVisible(),
                 mCommunalVisibleConsumer));
         if (SceneContainerFlag.isEnabled()) {
-            mFlows.add(collectFlow(getLifecycle(), sceneInteractor.getCurrentScene(),
-                    mCurrentSceneConsumer));
+            mFlows.add(collectFlow(getLifecycle(), sceneInteractor.getCurrentOverlays(),
+                    mCurrentOverlaysConsumer));
         } else {
             mFlows.add(collectFlow(getLifecycle(), keyguardInteractor.primaryBouncerShowing,
                     mBouncerShowingConsumer));
+        }
+
+        if (dreamsV2()) {
+            mFlows.add(collectFlow(getLifecycle(), wakeGestureMonitor.getWakeUpDetected(),
+                    mPickupConsumer));
         }
     }
 

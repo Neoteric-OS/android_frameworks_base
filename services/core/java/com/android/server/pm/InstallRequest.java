@@ -644,20 +644,6 @@ final class InstallRequest {
         return mScanResult.mPkgSetting;
     }
 
-    @Nullable
-    public PackageSetting getRealPackageSetting() {
-        // TODO: Fix this to have 1 mutable PackageSetting for scan/install. If the previous
-        //  setting needs to be passed to have a comparison, hide it behind an immutable
-        //  interface. There's no good reason to have 3 different ways to access the real
-        //  PackageSetting object, only one of which is actually correct.
-        PackageSetting realPkgSetting = isExistingSettingCopied()
-                ? getScanRequestPackageSetting() : getScannedPackageSetting();
-        if (realPkgSetting == null) {
-            realPkgSetting = getScannedPackageSetting();
-        }
-        return realPkgSetting;
-    }
-
     public boolean isExistingSettingCopied() {
         assertScanResultExists();
         return mScanResult.mExistingSettingCopied;
@@ -883,6 +869,9 @@ final class InstallRequest {
     public void setScannedPackageSettingFirstInstallTimeFromReplaced(
             @Nullable PackageStateInternal replacedPkgSetting, int[] userId) {
         assertScanResultExists();
+        if (replacedPkgSetting == null) {
+            return;
+        }
         mScanResult.mPkgSetting.setFirstInstallTimeFromReplaced(replacedPkgSetting, userId);
     }
 
@@ -1025,6 +1014,18 @@ final class InstallRequest {
     public void onRestoreFinished() {
         if (mPackageMetrics != null) {
             mPackageMetrics.onStepFinished(PackageMetrics.STEP_RESTORE);
+        }
+    }
+
+    public void onWaitDexoptStarted() {
+        if (mPackageMetrics != null) {
+            mPackageMetrics.onStepStarted(PackageMetrics.STEP_WAIT_DEXOPT);
+        }
+    }
+
+    public void onWaitDexoptFinished() {
+        if (mPackageMetrics != null) {
+            mPackageMetrics.onStepFinished(PackageMetrics.STEP_WAIT_DEXOPT);
         }
     }
 

@@ -36,6 +36,7 @@ import com.android.systemui.shade.domain.interactor.ShadeLockscreenInteractor
 import com.android.systemui.statusbar.notification.collection.NotificationEntry
 import com.android.systemui.statusbar.notification.row.ExpandableNotificationRow
 import com.android.systemui.statusbar.notification.row.ExpandableView
+import com.android.systemui.statusbar.notification.shared.NotificationBundleUi
 import com.android.systemui.statusbar.notification.stack.AmbientState
 import com.android.systemui.statusbar.notification.stack.NotificationStackScrollLayoutController
 import com.android.systemui.statusbar.phone.CentralSurfaces
@@ -73,7 +74,7 @@ constructor(
     private val singleShadeOverScrollerFactory: SingleShadeLockScreenOverScroller.Factory,
     private val activityStarter: ActivityStarter,
     wakefulnessLifecycle: WakefulnessLifecycle,
-    configurationController: ConfigurationController,
+    @ShadeDisplayAware configurationController: ConfigurationController,
     falsingManager: FalsingManager,
     dumpManager: DumpManager,
     qsTransitionControllerFactory: LockscreenShadeQsTransitionController.Factory,
@@ -391,7 +392,9 @@ constructor(
             }
             if (view is ExpandableNotificationRow) {
                 // Only drag down on sensitive views, otherwise the ExpandHelper will take this
-                return view.entry.isSensitive.value
+                return if (NotificationBundleUi.isEnabled)
+                    view.entryAdapter?.isSensitive?.value == true
+                else view.entryLegacy.isSensitive.value
             }
         }
         return false
@@ -559,12 +562,15 @@ constructor(
         var userId: Int = lockScreenUserManager.getCurrentUserId()
         var entry: NotificationEntry? = null
         if (expandView is ExpandableNotificationRow) {
-            entry = expandView.entry
-            entry.setUserExpanded(/* userExpanded= */ true, /* allowChildExpansion= */ true)
+            expandView.setUserExpanded(/* userExpanded= */ true, /* allowChildExpansion= */ true)
             // Indicate that the group expansion is changing at this time -- this way the group
             // and children backgrounds / divider animations will look correct.
-            entry.setGroupExpansionChanging(true)
-            userId = entry.sbn.userId
+            expandView.isGroupExpansionChanging = true
+            if (NotificationBundleUi.isEnabled) {
+                userId = expandView.entryAdapter?.sbn?.userId!!
+            } else {
+                userId = expandView.entryLegacy.sbn.userId
+            }
         }
         var fullShadeNeedsBouncer =
             (!lockScreenUserManager.shouldShowLockscreenNotifications() ||

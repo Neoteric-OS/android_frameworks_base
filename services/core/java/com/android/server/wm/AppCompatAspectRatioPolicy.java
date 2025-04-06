@@ -36,8 +36,7 @@ import android.app.WindowConfiguration;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Rect;
-
-import com.android.window.flags.Flags;
+import android.window.DesktopModeFlags;
 
 /**
  * Encapsulate app compat policy logic related to aspect ratio.
@@ -241,7 +240,7 @@ class AppCompatAspectRatioPolicy {
         final Configuration resolvedConfig = mActivityRecord.getResolvedOverrideConfiguration();
         final Rect parentAppBounds =
                 mActivityRecord.mResolveConfigHint.mParentAppBoundsOverride;
-        final Rect parentBounds = newParentConfiguration.windowConfiguration.getBounds();
+        final Rect parentBounds = mActivityRecord.mResolveConfigHint.mParentBoundsOverride;
         final Rect resolvedBounds = resolvedConfig.windowConfiguration.getBounds();
         // Use tmp bounds to calculate aspect ratio so we can know whether the activity should
         // use restricted size (resolved bounds may be the requested override bounds).
@@ -298,7 +297,8 @@ class AppCompatAspectRatioPolicy {
                 // Camera compat mode is an exception to this, where the activity is letterboxed
                 // to an aspect ratio commonly found on phones, e.g. 16:9, to avoid issues like
                 // stretching of the camera preview.
-                || (Flags.ignoreAspectRatioRestrictionsForResizeableFreeformActivities()
+                || (DesktopModeFlags
+                    .IGNORE_ASPECT_RATIO_RESTRICTIONS_FOR_RESIZEABLE_FREEFORM_ACTIVITIES.isTrue()
                     && task.getWindowingMode() == WINDOWING_MODE_FREEFORM
                     && !mActivityRecord.shouldCreateAppCompatDisplayInsets()
                     && !AppCompatCameraPolicy.shouldCameraCompatControlAspectRatio(

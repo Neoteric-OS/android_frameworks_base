@@ -1104,6 +1104,9 @@ final class InstallPackageHelper {
     void doPostDexopt(List<ReconciledPackage> reconciledPackages,
             List<InstallRequest> requests, Map<String, Boolean> createdAppId,
             MoveInfo moveInfo, long acquireTime) {
+        for (InstallRequest request : requests) {
+            request.onWaitDexoptFinished();
+        }
         boolean success = false;
         try {
             if (commitInstallPackages(reconciledPackages)) {
@@ -1255,6 +1258,7 @@ final class InstallPackageHelper {
             CompletableFuture<Void> future =
                     DexOptHelper.performDexoptIfNeededAsync(request, mDexManager);
             completableFutures.add(future);
+            request.onWaitDexoptStarted();
         }
 
         if (!completableFutures.isEmpty()) {
@@ -1435,6 +1439,8 @@ final class InstallPackageHelper {
             Map<String, Boolean> createdAppId, boolean success) {
         if (success) {
             for (InstallRequest request : requests) {
+                mInjector.getAppOpsManagerInternal().onPackageAdded(
+                        request.getName(), request.getAppId());
                 if (request.getDataLoaderType() != DataLoaderType.INCREMENTAL) {
                     continue;
                 }
@@ -3129,7 +3135,8 @@ final class InstallPackageHelper {
         }
 
         if (succeeded) {
-            Slog.i(TAG, "installation completed:" + packageName);
+            Slog.i(TAG, "installation completed for package:" + packageName
+                    + ". Final code path: " + pkgSetting.getPath().getPath());
 
             if (Flags.aslInApkAppMetadataSource()
                     && pkgSetting.getAppMetadataSource() == APP_METADATA_SOURCE_APK) {
@@ -4783,9 +4790,6 @@ final class InstallPackageHelper {
      * at boot.
      */
     private boolean needSignatureMatchToSystem(String packageName) {
-        if (!android.security.Flags.extendVbChainToUpdatedApk()) {
-            return false;
-        }
         return mPm.mInjector.getSystemConfig().getPreinstallPackagesWithStrictSignatureCheck()
             .contains(packageName);
     }

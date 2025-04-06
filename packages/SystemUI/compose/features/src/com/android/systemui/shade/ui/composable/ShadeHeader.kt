@@ -43,6 +43,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -67,12 +68,15 @@ import com.android.compose.animation.scene.content.state.TransitionState
 import com.android.compose.modifiers.thenIf
 import com.android.compose.theme.colorAttr
 import com.android.settingslib.Utils
+import com.android.systemui.Flags
 import com.android.systemui.battery.BatteryMeterView
 import com.android.systemui.battery.BatteryMeterViewController
 import com.android.systemui.common.ui.compose.windowinsets.CutoutLocation
 import com.android.systemui.common.ui.compose.windowinsets.LocalDisplayCutout
 import com.android.systemui.common.ui.compose.windowinsets.LocalScreenCornerRadius
 import com.android.systemui.compose.modifiers.sysuiResTag
+import com.android.systemui.kairos.ExperimentalKairosApi
+import com.android.systemui.kairos.buildSpec
 import com.android.systemui.privacy.OngoingPrivacyChip
 import com.android.systemui.res.R
 import com.android.systemui.scene.shared.model.Scenes
@@ -86,8 +90,12 @@ import com.android.systemui.shade.ui.viewmodel.ShadeHeaderViewModel.HeaderChipHi
 import com.android.systemui.statusbar.phone.StatusBarLocation
 import com.android.systemui.statusbar.phone.StatusIconContainer
 import com.android.systemui.statusbar.pipeline.mobile.ui.view.ModernShadeCarrierGroupMobileView
+import com.android.systemui.statusbar.pipeline.mobile.ui.viewmodel.MobileIconsViewModelKairosComposeWrapper
 import com.android.systemui.statusbar.pipeline.mobile.ui.viewmodel.ShadeCarrierGroupMobileIconViewModel
+import com.android.systemui.statusbar.pipeline.mobile.ui.viewmodel.ShadeCarrierGroupMobileIconViewModelKairos
+import com.android.systemui.statusbar.pipeline.mobile.ui.viewmodel.composeWrapper
 import com.android.systemui.statusbar.policy.Clock
+import com.android.systemui.util.composable.kairos.ActivatedKairosSpec
 
 object ShadeHeader {
     object Elements {
@@ -127,6 +135,7 @@ object ShadeHeader {
 @Composable
 fun ContentScope.CollapsedShadeHeader(
     viewModel: ShadeHeaderViewModel,
+    isSplitShade: Boolean,
     modifier: Modifier = Modifier,
 ) {
     val cutoutLocation = LocalDisplayCutout.current.location
@@ -141,8 +150,6 @@ fun ContentScope.CollapsedShadeHeader(
             }
         }
 
-    val isShadeLayoutWide = viewModel.isShadeLayoutWide
-
     val isPrivacyChipVisible by viewModel.isPrivacyChipVisible.collectAsStateWithLifecycle()
 
     // This layout assumes it is globally positioned at (0, 0) and is the same size as the screen.
@@ -154,7 +161,7 @@ fun ContentScope.CollapsedShadeHeader(
                 horizontalArrangement = Arrangement.spacedBy(5.dp),
                 modifier = Modifier.padding(horizontal = horizontalPadding),
             ) {
-                Clock(scale = 1f, onClick = viewModel::onClockClicked)
+                Clock(onClick = viewModel::onClockClicked)
                 VariableDayDate(
                     longerDateText = viewModel.longerDateText,
                     shorterDateText = viewModel.shorterDateText,
@@ -184,11 +191,11 @@ fun ContentScope.CollapsedShadeHeader(
                         Modifier.element(ShadeHeader.Elements.CollapsedContentEnd)
                             .padding(horizontal = horizontalPadding),
                 ) {
-                    if (isShadeLayoutWide) {
+                    if (isSplitShade) {
                         ShadeCarrierGroup(viewModel = viewModel)
                     }
                     SystemIconChip(
-                        onClick = viewModel::onSystemIconChipClicked.takeIf { isShadeLayoutWide }
+                        onClick = viewModel::onSystemIconChipClicked.takeIf { isSplitShade }
                     ) {
                         StatusIcons(
                             viewModel = viewModel,
@@ -233,13 +240,11 @@ fun ContentScope.ExpandedShadeHeader(
                     .defaultMinSize(minHeight = ShadeHeader.Dimensions.ExpandedHeight),
         ) {
             Box(modifier = Modifier.fillMaxWidth()) {
-                Box {
-                    Clock(
-                        scale = 2.57f,
-                        onClick = viewModel::onClockClicked,
-                        modifier = Modifier.align(Alignment.CenterStart),
-                    )
-                }
+                Clock(
+                    onClick = viewModel::onClockClicked,
+                    modifier = Modifier.align(Alignment.CenterStart),
+                    scale = 2.57f,
+                )
                 Box(
                     modifier =
                         Modifier.element(ShadeHeader.Elements.ShadeCarrierGroup).fillMaxWidth()
@@ -288,10 +293,27 @@ fun ContentScope.OverlayShadeHeader(
     viewModel: ShadeHeaderViewModel,
     modifier: Modifier = Modifier,
 ) {
+    OverlayShadeHeaderPartialStateless(
+        viewModel,
+        viewModel.showClock,
+        modifier,
+    )
+}
+
+/**
+ * Ideally, we should have a stateless function for overlay shade header, which facilitates testing.
+ * However, it is cumbersome to implement such a stateless function, especially when some of the
+ * overlay shade header's children accept a view model as the param. Therefore, this function only
+ * break up the clock visibility. It is where "PartialStateless" comes from.
+ */
+@Composable
+fun ContentScope.OverlayShadeHeaderPartialStateless(
+    viewModel: ShadeHeaderViewModel,
+    showClock: Boolean,
+    modifier: Modifier = Modifier,
+) {
     val horizontalPadding =
         max(LocalScreenCornerRadius.current / 2f, Shade.Dimensions.HorizontalPadding)
-
-    val isShadeLayoutWide = viewModel.isShadeLayoutWide
 
     val isPrivacyChipVisible by viewModel.isPrivacyChipVisible.collectAsStateWithLifecycle()
 
@@ -301,16 +323,15 @@ fun ContentScope.OverlayShadeHeader(
         startContent = {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(5.dp),
                 modifier = Modifier.padding(horizontal = horizontalPadding),
             ) {
                 val chipHighlight = viewModel.notificationsChipHighlight
-                if (isShadeLayoutWide) {
+                if (showClock) {
                     Clock(
-                        scale = 1f,
                         onClick = viewModel::onClockClicked,
                         modifier = Modifier.padding(horizontal = 4.dp),
                     )
-                    Spacer(modifier = Modifier.width(5.dp))
                 }
                 NotificationsChip(
                     onClick = viewModel::onNotificationIconChipClicked,
@@ -437,36 +458,43 @@ private fun CutoutAwareShadeHeader(
 }
 
 @Composable
-private fun ContentScope.Clock(scale: Float, onClick: () -> Unit, modifier: Modifier = Modifier) {
+private fun ContentScope.Clock(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    scale: Float = 1f,
+) {
     val layoutDirection = LocalLayoutDirection.current
 
-    Element(key = ShadeHeader.Elements.Clock, modifier = modifier) {
+    ElementWithValues(key = ShadeHeader.Elements.Clock, modifier = modifier) {
         val animatedScale by animateElementFloatAsState(scale, ClockScale, canOverflow = false)
-        AndroidView(
-            factory = { context ->
-                Clock(
-                    ContextThemeWrapper(context, R.style.Theme_SystemUI_QuickSettings_Header),
-                    null,
-                )
-            },
-            modifier =
-                modifier
-                    // use graphicsLayer instead of Modifier.scale to anchor transform
-                    // to the (start, top) corner
-                    .graphicsLayer {
-                        scaleX = animatedScale
-                        scaleY = animatedScale
-                        transformOrigin =
-                            TransformOrigin(
-                                when (layoutDirection) {
-                                    LayoutDirection.Ltr -> 0f
-                                    LayoutDirection.Rtl -> 1f
-                                },
-                                0.5f,
-                            )
-                    }
-                    .clickable { onClick() },
-        )
+
+        content {
+            AndroidView(
+                factory = { context ->
+                    Clock(
+                        ContextThemeWrapper(context, R.style.Theme_SystemUI_QuickSettings_Header),
+                        null,
+                    )
+                },
+                modifier =
+                    modifier
+                        // use graphicsLayer instead of Modifier.scale to anchor transform to the
+                        // (start, top) corner
+                        .graphicsLayer {
+                            scaleX = animatedScale
+                            scaleY = animatedScale
+                            transformOrigin =
+                                TransformOrigin(
+                                    when (layoutDirection) {
+                                        LayoutDirection.Ltr -> 0f
+                                        LayoutDirection.Rtl -> 1f
+                                    },
+                                    0.5f,
+                                )
+                        }
+                        .clickable { onClick() },
+            )
+        }
     }
 }
 
@@ -519,8 +547,14 @@ private fun BatteryIcon(
     )
 }
 
+@OptIn(ExperimentalKairosApi::class)
 @Composable
 private fun ShadeCarrierGroup(viewModel: ShadeHeaderViewModel, modifier: Modifier = Modifier) {
+    if (Flags.statusBarMobileIconKairos()) {
+        ShadeCarrierGroupKairos(viewModel, modifier)
+        return
+    }
+
     Row(modifier = modifier, horizontalArrangement = Arrangement.spacedBy(5.dp)) {
         for (subId in viewModel.mobileSubIds) {
             AndroidView(
@@ -538,6 +572,49 @@ private fun ShadeCarrierGroup(viewModel: ShadeHeaderViewModel, modifier: Modifie
                         .also { it.setOnClickListener { viewModel.onShadeCarrierGroupClicked() } }
                 }
             )
+        }
+    }
+}
+
+@ExperimentalKairosApi
+@Composable
+private fun ShadeCarrierGroupKairos(
+    viewModel: ShadeHeaderViewModel,
+    modifier: Modifier = Modifier,
+) {
+    Row(modifier = modifier) {
+        ActivatedKairosSpec(
+            buildSpec = viewModel.mobileIconsViewModelKairos.get().composeWrapper(),
+            kairosNetwork = viewModel.kairosNetwork,
+        ) { iconsViewModel: MobileIconsViewModelKairosComposeWrapper ->
+            for ((subId, icon) in iconsViewModel.icons) {
+                Spacer(modifier = Modifier.width(5.dp))
+                val scope = rememberCoroutineScope()
+                AndroidView(
+                    factory = { context ->
+                        ModernShadeCarrierGroupMobileView.constructAndBind(
+                                context = context,
+                                logger = iconsViewModel.logger,
+                                slot = "mobile_carrier_shade_group",
+                                viewModel =
+                                    buildSpec {
+                                        ShadeCarrierGroupMobileIconViewModelKairos(
+                                            icon,
+                                            icon.iconInteractor,
+                                        )
+                                    },
+                                scope = scope,
+                                subscriptionId = subId,
+                                location = StatusBarLocation.SHADE_CARRIER_GROUP,
+                                kairosNetwork = viewModel.kairosNetwork,
+                            )
+                            .first
+                            .also {
+                                it.setOnClickListener { viewModel.onShadeCarrierGroupClicked() }
+                            }
+                    }
+                )
+            }
         }
     }
 }

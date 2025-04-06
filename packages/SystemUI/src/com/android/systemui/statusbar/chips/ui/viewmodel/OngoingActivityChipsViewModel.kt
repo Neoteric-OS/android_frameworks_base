@@ -264,12 +264,15 @@ constructor(
         // [OngoingActivityChipModel.Active.Countdown] is the only chip without an icon and
         // [shouldSquish] returns false for that model, but protect against it just in case.)
         val currentIcon = icon ?: return this
+        // TODO(b/364653005): Make sure every field is copied over.
         return OngoingActivityChipModel.Active.IconOnly(
-            key,
-            currentIcon,
-            colors,
-            onClickListenerLegacy,
-            clickBehavior,
+            key = key,
+            isImportantForPrivacy = isImportantForPrivacy,
+            icon = currentIcon,
+            colors = colors,
+            onClickListenerLegacy = onClickListenerLegacy,
+            clickBehavior = clickBehavior,
+            instanceId = instanceId,
         )
     }
 
@@ -350,10 +353,33 @@ constructor(
                 .stateIn(scope, SharingStarted.Lazily, MultipleOngoingActivityChipsModelLegacy())
         }
 
+    private val activeChips =
+        if (StatusBarChipsModernization.isEnabled) {
+            chips.map { it.active }
+        } else {
+            chipsLegacy.map {
+                val list = mutableListOf<OngoingActivityChipModel.Active>()
+                if (it.primary is OngoingActivityChipModel.Active) {
+                    list.add(it.primary)
+                }
+                if (it.secondary is OngoingActivityChipModel.Active) {
+                    list.add(it.secondary)
+                }
+                list
+            }
+        }
+
+    /** A flow modeling just the keys for the currently visible chips. */
+    val visibleChipKeys: Flow<List<String>> =
+        activeChips.map { chips -> chips.filter { !it.isHidden }.map { it.key } }
+
     /**
      * Sort the given chip [bundle] in order of priority, and divide the chips between active,
      * overflow, and inactive (see [MultipleOngoingActivityChipsModel] for a description of each).
      */
+    // IMPORTANT: PromotedNotificationsInteractor re-implements this same ordering scheme. Any
+    // changes here should also be made in PromotedNotificationsInteractor.
+    // TODO(b/402471288): Create a single source of truth for the ordering.
     private fun rankChips(bundle: ChipBundle): MultipleOngoingActivityChipsModel {
         val activeChips = mutableListOf<OngoingActivityChipModel.Active>()
         val overflowChips = mutableListOf<OngoingActivityChipModel.Active>()
@@ -535,7 +561,6 @@ constructor(
                 secondary = DEFAULT_INTERNAL_INACTIVE_MODEL,
             )
 
-        // TODO(b/392886257): Support 3 chips if there's space available.
-        private const val MAX_VISIBLE_CHIPS = 2
+        private const val MAX_VISIBLE_CHIPS = 3
     }
 }

@@ -32,23 +32,23 @@ import com.android.systemui.dump.DumpManager
 import com.android.systemui.keyguard.domain.interactor.KeyguardInteractor
 import com.android.systemui.kosmos.testScope
 import com.android.systemui.plugins.statusbar.StatusBarStateController
-import com.android.systemui.res.R
 import com.android.systemui.shade.ShadeExpansionChangeEvent
-import com.android.systemui.shared.Flags as SharedFlags
+import com.android.systemui.shade.data.repository.fakeShadeDisplaysRepository
+import com.android.systemui.shade.domain.interactor.ShadeModeInteractor
 import com.android.systemui.statusbar.phone.BiometricUnlockController
 import com.android.systemui.statusbar.phone.DozeParameters
 import com.android.systemui.statusbar.phone.ScrimController
-import com.android.systemui.statusbar.policy.FakeConfigurationController
 import com.android.systemui.statusbar.policy.KeyguardStateController
-import com.android.systemui.statusbar.policy.ResourcesSplitShadeStateController
 import com.android.systemui.testKosmos
 import com.android.systemui.util.WallpaperController
 import com.android.systemui.util.mockito.eq
+import com.android.systemui.wallpapers.domain.interactor.WallpaperInteractor
 import com.android.systemui.window.domain.interactor.WindowRootViewBlurInteractor
 import com.android.wm.shell.appzoomout.AppZoomOut
 import com.google.common.truth.Truth.assertThat
 import java.util.Optional
 import java.util.function.Consumer
+import kotlinx.coroutines.flow.MutableStateFlow
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -76,7 +76,8 @@ import org.mockito.junit.MockitoJUnit
 class NotificationShadeDepthControllerTest : SysuiTestCase() {
     private val kosmos = testKosmos()
 
-    @Mock private lateinit var windowRootViewBlurInteractor: WindowRootViewBlurInteractor
+    private val applicationScope = kosmos.testScope.backgroundScope
+    private val shadeDisplayRepository = kosmos.fakeShadeDisplaysRepository
     @Mock private lateinit var statusBarStateController: StatusBarStateController
     @Mock private lateinit var blurUtils: BlurUtils
     @Mock private lateinit var biometricUnlockController: BiometricUnlockController
@@ -84,7 +85,10 @@ class NotificationShadeDepthControllerTest : SysuiTestCase() {
     @Mock private lateinit var keyguardInteractor: KeyguardInteractor
     @Mock private lateinit var choreographer: Choreographer
     @Mock private lateinit var wallpaperController: WallpaperController
+    @Mock private lateinit var wallpaperInteractor: WallpaperInteractor
     @Mock private lateinit var notificationShadeWindowController: NotificationShadeWindowController
+    @Mock private lateinit var windowRootViewBlurInteractor: WindowRootViewBlurInteractor
+    @Mock private lateinit var shadeModeInteractor: ShadeModeInteractor
     @Mock private lateinit var dumpManager: DumpManager
     @Mock private lateinit var appZoomOutOptional: Optional<AppZoomOut>
     @Mock private lateinit var root: View
@@ -101,7 +105,6 @@ class NotificationShadeDepthControllerTest : SysuiTestCase() {
     private var statusBarState = StatusBarState.SHADE
     private val maxBlur = 150
     private lateinit var notificationShadeDepthController: NotificationShadeDepthController
-    private val configurationController = FakeConfigurationController()
 
     @Before
     fun setup() {
@@ -118,6 +121,8 @@ class NotificationShadeDepthControllerTest : SysuiTestCase() {
         `when`(blurUtils.supportsBlursOnWindows()).thenReturn(true)
         `when`(blurUtils.maxBlurRadius).thenReturn(maxBlur.toFloat())
         `when`(blurUtils.maxBlurRadius).thenReturn(maxBlur.toFloat())
+        `when`(windowRootViewBlurInteractor.isBlurCurrentlySupported)
+            .thenReturn(MutableStateFlow(true))
 
         notificationShadeDepthController =
             NotificationShadeDepthController(
@@ -128,14 +133,15 @@ class NotificationShadeDepthControllerTest : SysuiTestCase() {
                 keyguardInteractor,
                 choreographer,
                 wallpaperController,
+                wallpaperInteractor,
                 notificationShadeWindowController,
                 dozeParameters,
-                context,
-                ResourcesSplitShadeStateController(),
+                shadeModeInteractor,
                 windowRootViewBlurInteractor,
                 appZoomOutOptional,
+                applicationScope,
                 dumpManager,
-                configurationController,
+                { shadeDisplayRepository },
             )
         notificationShadeDepthController.shadeAnimation = shadeAnimation
         notificationShadeDepthController.brightnessMirrorSpring = brightnessSpring
@@ -310,19 +316,21 @@ class NotificationShadeDepthControllerTest : SysuiTestCase() {
     }
 
     @Test
-    @DisableFlags(SharedFlags.FLAG_AMBIENT_AOD)
-    fun onDozeAmountChanged_appliesBlur() {
-        statusBarStateListener.onDozeAmountChanged(1f, 1f)
-        notificationShadeDepthController.updateBlurCallback.doFrame(0)
-        verify(blurUtils).applyBlur(any(), eq(maxBlur), eq(false))
-    }
-
-    @Test
-    @EnableFlags(SharedFlags.FLAG_AMBIENT_AOD)
     fun onDozeAmountChanged_doesNotApplyBlurWithAmbientAod() {
+        notificationShadeDepthController.wallpaperSupportsAmbientMode = false
+
         statusBarStateListener.onDozeAmountChanged(1f, 1f)
         notificationShadeDepthController.updateBlurCallback.doFrame(0)
         verify(blurUtils).applyBlur(any(), eq(0), eq(false))
+    }
+
+    @Test
+    fun onDozeAmountChanged_appliesBlurWithAmbientAod() {
+        notificationShadeDepthController.wallpaperSupportsAmbientMode = true
+
+        statusBarStateListener.onDozeAmountChanged(1f, 1f)
+        notificationShadeDepthController.updateBlurCallback.doFrame(0)
+        verify(blurUtils).applyBlur(any(), eq(maxBlur), eq(false))
     }
 
     @Test
@@ -348,11 +356,39 @@ class NotificationShadeDepthControllerTest : SysuiTestCase() {
         notificationShadeDepthController.addListener(listener)
         notificationShadeDepthController.updateBlurCallback.doFrame(0)
         verify(wallpaperController).setNotificationShadeZoom(anyFloat())
-        verify(listener).onWallpaperZoomOutChanged(anyFloat())
         verify(blurUtils).applyBlur(any(), anyInt(), eq(false))
     }
 
     @Test
+    @EnableFlags(Flags.FLAG_SHADE_WINDOW_GOES_AROUND)
+    fun updateBlurCallback_shadeInExternalDisplay_doesSetZeroZoom() {
+        notificationShadeDepthController.onPanelExpansionChanged(
+            ShadeExpansionChangeEvent(fraction = 1f, expanded = true, tracking = false)
+        )
+        notificationShadeDepthController.addListener(listener)
+        shadeDisplayRepository.setDisplayId(1) // not default display.
+
+        notificationShadeDepthController.updateBlurCallback.doFrame(0)
+
+        verify(wallpaperController).setNotificationShadeZoom(eq(0f))
+    }
+
+    @Test
+    @EnableFlags(Flags.FLAG_SHADE_WINDOW_GOES_AROUND)
+    fun updateBlurCallback_shadeInDefaultDisplay_doesNotSetZeroZoom() {
+        notificationShadeDepthController.onPanelExpansionChanged(
+            ShadeExpansionChangeEvent(fraction = 1f, expanded = true, tracking = false)
+        )
+        notificationShadeDepthController.addListener(listener)
+        shadeDisplayRepository.setDisplayId(0) // shade is in default display
+
+        notificationShadeDepthController.updateBlurCallback.doFrame(0)
+
+        verify(wallpaperController).setNotificationShadeZoom(floatThat { it != 0f })
+    }
+
+    @Test
+    @DisableFlags(Flags.FLAG_NOTIFICATION_SHADE_BLUR)
     fun updateBlurCallback_setsOpaque_whenScrim() {
         scrimVisibilityCaptor.value.accept(ScrimController.OPAQUE)
         notificationShadeDepthController.updateBlurCallback.doFrame(0)
@@ -485,15 +521,10 @@ class NotificationShadeDepthControllerTest : SysuiTestCase() {
     }
 
     private fun enableSplitShade() {
-        setSplitShadeEnabled(true)
+        `when`(shadeModeInteractor.isSplitShade).thenReturn(true)
     }
 
     private fun disableSplitShade() {
-        setSplitShadeEnabled(false)
-    }
-
-    private fun setSplitShadeEnabled(enabled: Boolean) {
-        overrideResource(R.bool.config_use_split_notification_shade, enabled)
-        configurationController.notifyConfigurationChanged()
+        `when`(shadeModeInteractor.isSplitShade).thenReturn(false)
     }
 }

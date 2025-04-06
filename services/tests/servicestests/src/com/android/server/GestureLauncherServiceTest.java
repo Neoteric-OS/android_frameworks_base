@@ -32,8 +32,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -1784,46 +1784,6 @@ public class GestureLauncherServiceTest {
         List<Integer> tapCounts = tapCountCaptor.getAllValues();
         assertEquals(1, tapCounts.get(0).intValue());
         assertEquals(1, tapCounts.get(1).intValue());
-    }
-
-    /**
-     * If processPowerKeyDown is called instead of interceptPowerKeyDown (meaning the double tap
-     * gesture isn't performed), the emergency gesture is still launched.
-     */
-    @Test
-    public void testProcessPowerKeyDown_fiveInboundPresses_emergencyGestureLaunches() {
-        enableCameraGesture();
-        enableEmergencyGesture();
-
-        // First event
-        long eventTime = INITIAL_EVENT_TIME_MILLIS;
-        sendPowerKeyDownToGestureLauncherServiceAndAssertValues(eventTime, false, false);
-
-        //Second event; call processPowerKeyDown without calling interceptPowerKeyDown
-        final long interval = POWER_DOUBLE_TAP_MAX_TIME_MS - 1;
-        eventTime += interval;
-        KeyEvent keyEvent =
-                new KeyEvent(
-                        IGNORED_DOWN_TIME, eventTime, IGNORED_ACTION, IGNORED_CODE, IGNORED_REPEAT);
-        mGestureLauncherService.processPowerKeyDown(keyEvent);
-
-        verify(mMetricsLogger, never())
-                .action(eq(MetricsEvent.ACTION_DOUBLE_TAP_POWER_CAMERA_GESTURE), anyInt());
-        verify(mUiEventLogger, never()).log(any());
-
-        // Presses 3 and 4 should not trigger any gesture
-        for (int i = 0; i < 2; i++) {
-            eventTime += interval;
-            sendPowerKeyDownToGestureLauncherServiceAndAssertValues(eventTime, true, false);
-        }
-
-        // Fifth button press should still trigger the emergency flow
-        eventTime += interval;
-        sendPowerKeyDownToGestureLauncherServiceAndAssertValues(eventTime, true, true);
-
-        verify(mUiEventLogger, times(1))
-                .log(GestureLauncherService.GestureLauncherEvent.GESTURE_EMERGENCY_TAP_POWER);
-        verify(mStatusBarManagerInternal).onEmergencyActionLaunchGestureDetected();
     }
 
     /**

@@ -18,9 +18,13 @@ package com.android.systemui.qs.composefragment
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.Configuration
+import android.graphics.Canvas
+import android.graphics.Path
 import android.graphics.PointF
 import android.graphics.Rect
 import android.os.Bundle
+import android.os.Trace
 import android.util.IndentingPrintWriter
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -34,6 +38,7 @@ import androidx.activity.setViewTreeOnBackPressedDispatcherOwner
 import androidx.annotation.VisibleForTesting
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -41,13 +46,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeightIn
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -58,16 +63,20 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.approachLayout
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.layout.positionOnScreen
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.CustomAccessibilityAction
@@ -100,7 +109,9 @@ import com.android.compose.theme.PlatformTheme
 import com.android.mechanics.GestureContext
 import com.android.systemui.Dumpable
 import com.android.systemui.Flags
+import com.android.systemui.Flags.notificationShadeBlur
 import com.android.systemui.brightness.ui.compose.BrightnessSliderContainer
+import com.android.systemui.brightness.ui.compose.ContainerColors
 import com.android.systemui.compose.modifiers.sysuiResTag
 import com.android.systemui.dump.DumpManager
 import com.android.systemui.keyboard.shortcut.ui.composable.InteractionsConfig
@@ -112,10 +123,10 @@ import com.android.systemui.plugins.qs.QS
 import com.android.systemui.plugins.qs.QSContainerController
 import com.android.systemui.qs.composefragment.SceneKeys.QuickQuickSettings
 import com.android.systemui.qs.composefragment.SceneKeys.QuickSettings
+import com.android.systemui.qs.composefragment.SceneKeys.debugName
 import com.android.systemui.qs.composefragment.SceneKeys.toIdleSceneKey
 import com.android.systemui.qs.composefragment.ui.GridAnchor
 import com.android.systemui.qs.composefragment.ui.NotificationScrimClipParams
-import com.android.systemui.qs.composefragment.ui.notificationScrimClip
 import com.android.systemui.qs.composefragment.ui.quickQuickSettingsToQuickSettings
 import com.android.systemui.qs.composefragment.ui.toEditMode
 import com.android.systemui.qs.composefragment.viewmodel.QSFragmentComposeViewModel
@@ -126,6 +137,7 @@ import com.android.systemui.qs.panels.ui.compose.QuickQuickSettings
 import com.android.systemui.qs.panels.ui.compose.TileGrid
 import com.android.systemui.qs.shared.ui.ElementKeys
 import com.android.systemui.qs.ui.composable.QuickSettingsShade
+import com.android.systemui.qs.ui.composable.QuickSettingsShade.systemGestureExclusionInShade
 import com.android.systemui.qs.ui.composable.QuickSettingsTheme
 import com.android.systemui.res.R
 import com.android.systemui.util.LifecycleFragment
@@ -230,7 +242,7 @@ constructor(
             FrameLayoutTouchPassthrough(
                 context,
                 { notificationScrimClippingParams.isEnabled },
-                { notificationScrimClippingParams.params.top },
+                snapshotFlow { notificationScrimClippingParams.params },
                 // Only allow scrolling when we are fully expanded. That way, we don't intercept
                 // swipes in lockscreen (when somehow QS is receiving touches).
                 { (scrollState.canScrollForward && viewModel.isQsFullyExpanded) || isCustomizing },
@@ -246,24 +258,31 @@ constructor(
 
     @Composable
     private fun Content() {
-        PlatformTheme(isDarkTheme = true) {
+        PlatformTheme(isDarkTheme = if (notificationShadeBlur()) isSystemInDarkTheme() else true) {
             ProvideShortcutHelperIndication(interactionsConfig = interactionsConfig()) {
-                if (viewModel.isQsVisibleAndAnyShadeExpanded) {
+                // TODO(b/389985793): Make sure that there is no coroutine work or recompositions
+                // happening when alwaysCompose is true but isQsVisibleAndAnyShadeExpanded is false.
+                if (alwaysCompose || viewModel.isQsVisibleAndAnyShadeExpanded) {
                     Box(
                         modifier =
-                            Modifier.graphicsLayer { alpha = viewModel.viewAlpha }
+                            Modifier.thenIf(alwaysCompose) {
+                                    Modifier.layout { measurable, constraints ->
+                                        measurable.measure(constraints).run {
+                                            layout(width, height) {
+                                                if (viewModel.isQsVisibleAndAnyShadeExpanded) {
+                                                    place(0, 0)
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                .graphicsLayer { alpha = viewModel.viewAlpha }
                                 .thenIf(!Flags.notificationShadeBlur()) {
-                                    // Clipping before translation to match QSContainerImpl.onDraw
                                     Modifier.offset {
                                         IntOffset(
                                             x = 0,
                                             y = viewModel.viewTranslationY.fastRoundToInt(),
                                         )
-                                    }
-                                }
-                                .thenIf(notificationScrimClippingParams.isEnabled) {
-                                    Modifier.notificationScrimClip {
-                                        notificationScrimClippingParams.params
                                     }
                                 }
                                 // Disable touches in the whole composable while the mirror is
@@ -286,6 +305,12 @@ constructor(
      */
     @Composable
     private fun CollapsableQuickSettingsSTL() {
+        val nextCookie = remember {
+            object {
+                var value = 0
+            }
+        }
+        val transitionToCookie = remember { mutableMapOf<TransitionState.Transition, Int>() }
         val sceneState =
             rememberMutableSceneTransitionLayoutState(
                 initialScene = remember { viewModel.expansionState.toIdleSceneKey() },
@@ -299,6 +324,20 @@ constructor(
                             toEditMode()
                         }
                     },
+                onTransitionStart = { transition ->
+                    val cookie = nextCookie.value++
+                    transitionToCookie[transition] = cookie
+                    Trace.beginAsyncSection(
+                        "CollapsableQuickSettingsSTL ${transition.debugName}",
+                        cookie,
+                    )
+                },
+                onTransitionEnd = { transition ->
+                    Trace.endAsyncSection(
+                        "CollapsableQuickSettingsSTL ${transition.debugName}",
+                        transitionToCookie.remove(transition) ?: -1,
+                    )
+                },
             )
 
         LaunchedEffect(Unit) {
@@ -306,27 +345,24 @@ constructor(
                 sceneState,
                 viewModel.containerViewModel.editModeViewModel.isEditing,
                 snapshotFlow { viewModel.expansionState }.map { it.progress },
-                snapshotFlow { viewModel.isQSExpandingOrCollapsing },
             )
         }
 
         SceneTransitionLayout(state = sceneState, modifier = Modifier.fillMaxSize()) {
-            scene(QuickSettings) {
+            scene(QuickSettings, alwaysCompose = alwaysCompose) {
                 LaunchedEffect(Unit) { viewModel.onQSOpen() }
-                QuickSettingsElement(Modifier.element(QuickSettings.rootElementKey))
+                Element(QuickSettings.rootElementKey, Modifier) { QuickSettingsElement() }
             }
 
-            scene(QuickQuickSettings) {
+            scene(QuickQuickSettings, alwaysCompose = alwaysCompose) {
                 LaunchedEffect(Unit) { viewModel.onQQSOpen() }
                 // Cannot pass the element modifier in because the top element has a `testTag`
                 // and this would overwrite it.
-                Box(Modifier.element(QuickQuickSettings.rootElementKey)) {
-                    QuickQuickSettingsElement()
-                }
+                Element(QuickQuickSettings.rootElementKey, Modifier) { QuickQuickSettingsElement() }
             }
 
             scene(SceneKeys.EditMode) {
-                EditModeElement(Modifier.element(SceneKeys.EditMode.rootElementKey))
+                Element(SceneKeys.EditMode.rootElementKey, Modifier) { EditModeElement() }
             }
         }
     }
@@ -383,7 +419,7 @@ constructor(
     }
 
     override fun isCustomizing(): Boolean {
-        return viewModel.containerViewModel.editModeViewModel.isEditing.value
+        return viewModel.isEditing
     }
 
     override fun closeCustomizer() {
@@ -538,10 +574,6 @@ constructor(
         return qqsVisible.value
     }
 
-    override fun setQSExpandingOrCollapsing(isQSExpandingOrCollapsing: Boolean) {
-        viewModel.isQSExpandingOrCollapsing = isQSExpandingOrCollapsing
-    }
-
     private fun setListenerCollections() {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -612,7 +644,21 @@ constructor(
             ) {
                 val Tiles =
                     @Composable {
-                        QuickQuickSettings(viewModel = viewModel.quickQuickSettingsViewModel)
+                        QuickQuickSettings(
+                            viewModel = viewModel.quickQuickSettingsViewModel,
+                            listening = {
+                                /*
+                                 *  When always compose is false, this will always be true, and we'll be
+                                 *  listening whenever this is composed.
+                                 *  When always compose is true, we listen if we are visible and not
+                                 *  fully expanded
+                                 */
+                                !alwaysCompose ||
+                                    (viewModel.isQsVisibleAndAnyShadeExpanded &&
+                                        viewModel.expansionState.progress < 1f &&
+                                        !viewModel.isEditing)
+                            },
+                        )
                     }
                 val Media =
                     @Composable {
@@ -661,10 +707,7 @@ constructor(
                 )
         ) {
             if (viewModel.isQsEnabled) {
-                Box(
-                    modifier =
-                        Modifier.element(ElementKeys.QuickSettingsContent).fillMaxSize().weight(1f)
-                ) {
+                Element(ElementKeys.QuickSettingsContent, modifier = Modifier.weight(1f)) {
                     DisposableEffect(Unit) {
                         lifecycleScope.launch { scrollState.scrollTo(0) }
                         onDispose { lifecycleScope.launch { scrollState.scrollTo(0) } }
@@ -672,7 +715,8 @@ constructor(
 
                     Column(
                         modifier =
-                            Modifier.onPlaced { coordinates ->
+                            Modifier.fillMaxSize()
+                                .onPlaced { coordinates ->
                                     val positionOnScreen = coordinates.positionOnScreen()
                                     val left = positionOnScreen.x
                                     val right = left + coordinates.size.width
@@ -701,14 +745,35 @@ constructor(
                         )
                         val BrightnessSlider =
                             @Composable {
-                                BrightnessSliderContainer(
-                                    viewModel = containerViewModel.brightnessSliderViewModel,
-                                    modifier =
-                                        Modifier.fillMaxWidth()
-                                            .height(
-                                                QuickSettingsShade.Dimensions.BrightnessSliderHeight
-                                            ),
-                                )
+                                Box(
+                                    Modifier.systemGestureExclusionInShade(
+                                        enabled = {
+                                            /*
+                                             * While we are transitioning into QS (either from QQS
+                                             * or from gone), the global position of the brightness
+                                             * slider will change in every frame. This causes
+                                             * the modifier to send a new gesture exclusion
+                                             * rectangle on every frame. Instead, only apply the
+                                             * modifier when this is settled.
+                                             */
+                                            layoutState.transitionState is TransitionState.Idle &&
+                                                viewModel.isNotTransitioning
+                                        }
+                                    )
+                                ) {
+                                    AlwaysDarkMode {
+                                        BrightnessSliderContainer(
+                                            viewModel =
+                                                containerViewModel.brightnessSliderViewModel,
+                                            containerColors =
+                                                ContainerColors(
+                                                    Color.Transparent,
+                                                    ContainerColors.defaultContainerColor,
+                                                ),
+                                            modifier = Modifier.fillMaxWidth(),
+                                        )
+                                    }
+                                }
                             }
                         val TileGrid =
                             @Composable {
@@ -717,6 +782,19 @@ constructor(
                                     TileGrid(
                                         viewModel = containerViewModel.tileGridViewModel,
                                         modifier = Modifier.fillMaxWidth(),
+                                        listening = {
+                                            /*
+                                             *  When always compose is false, this will always be true,
+                                             *  and we'll be listening whenever this is composed.
+                                             *  When always compose is true, we look a the second
+                                             *  condition and we'll listen if QS is visible AND we are
+                                             *  not fully collapsed.
+                                             */
+                                            !alwaysCompose ||
+                                                (viewModel.isQsVisibleAndAnyShadeExpanded &&
+                                                    viewModel.expansionState.progress > 0f &&
+                                                    !viewModel.isEditing)
+                                        },
                                     )
                                 }
                             }
@@ -749,13 +827,15 @@ constructor(
                     }
                 }
                 QuickSettingsTheme {
-                    FooterActions(
-                        viewModel = viewModel.footerActionsViewModel,
-                        qsVisibilityLifecycleOwner = this@QSFragmentCompose,
-                        modifier =
-                            Modifier.sysuiResTag(ResIdTags.qsFooterActions)
-                                .element(ElementKeys.FooterActions),
-                    )
+                    Element(
+                        ElementKeys.FooterActions,
+                        Modifier.sysuiResTag(ResIdTags.qsFooterActions),
+                    ) {
+                        FooterActions(
+                            viewModel = viewModel.footerActionsViewModel,
+                            qsVisibilityLifecycleOwner = this@QSFragmentCompose,
+                        )
+                    }
                 }
             }
         }
@@ -819,6 +899,7 @@ constructor(
                 println("qqsPositionOnScreen", rect)
             }
             println("QQS visible", qqsVisible.value)
+            println("Always composed", alwaysCompose)
             if (::viewModel.isInitialized) {
                 printSection("View Model") { viewModel.dump(this@run, args) }
             }
@@ -862,6 +943,9 @@ object SceneKeys {
     val QuickSettings = SceneKey("QuickSettingsScene")
     val EditMode = SceneKey("EditModeScene")
 
+    val TransitionState.Transition.debugName: String
+        get() = "[from=${fromContent.debugName}, to=${toContent.debugName}]"
+
     fun QSFragmentComposeViewModel.QSExpansionState.toIdleSceneKey(): SceneKey {
         return when {
             progress < 0.5f -> QuickQuickSettings
@@ -882,7 +966,6 @@ private suspend fun synchronizeQsState(
     state: MutableSceneTransitionLayoutState,
     editMode: Flow<Boolean>,
     expansion: Flow<Float>,
-    isQSExpandingOrCollapsing: Flow<Boolean>,
 ) {
     coroutineScope {
         val animationScope = this
@@ -894,46 +977,31 @@ private suspend fun synchronizeQsState(
             currentTransition = null
         }
 
-        var lastValidProgress = 0f
-        combine(editMode, expansion, isQSExpandingOrCollapsing, ::Triple).collectLatest {
-            (editMode, progress, isQSExpandingOrCollapsing) ->
+        editMode.combine(expansion, ::Pair).collectLatest { (editMode, progress) ->
             if (editMode && state.currentScene != SceneKeys.EditMode) {
                 state.setTargetScene(SceneKeys.EditMode, animationScope)?.second?.join()
             } else if (!editMode && state.currentScene == SceneKeys.EditMode) {
                 state.setTargetScene(SceneKeys.QuickSettings, animationScope)?.second?.join()
             }
-
             if (!editMode) {
-                if (!isQSExpandingOrCollapsing) {
-                    if (progress == 0f) {
-                        snapTo(QuickQuickSettings)
-                        return@collectLatest
+                when (progress) {
+                    0f -> snapTo(QuickQuickSettings)
+                    1f -> snapTo(QuickSettings)
+                    else -> {
+                        val transition = currentTransition
+                        if (transition != null) {
+                            transition.progress = progress
+                            return@collectLatest
+                        }
+
+                        val newTransition =
+                            ExpansionTransition(progress).also { currentTransition = it }
+                        state.startTransitionImmediately(
+                            animationScope = animationScope,
+                            transition = newTransition,
+                        )
                     }
-
-                    if (progress == 1f) {
-                        snapTo(QuickSettings)
-                        return@collectLatest
-                    }
                 }
-
-                var progress = progress
-                if (progress >= 0f || progress <= 1f) {
-                    lastValidProgress = progress
-                } else {
-                    progress = lastValidProgress
-                }
-
-                val transition = currentTransition
-                if (transition != null) {
-                    transition.progress = progress
-                    return@collectLatest
-                }
-
-                val newTransition = ExpansionTransition(progress).also { currentTransition = it }
-                state.startTransitionImmediately(
-                    animationScope = animationScope,
-                    transition = newTransition,
-                )
             }
         }
     }
@@ -989,17 +1057,75 @@ private const val EDIT_MODE_TIME_MILLIS = 500
 private class FrameLayoutTouchPassthrough(
     context: Context,
     private val clippingEnabledProvider: () -> Boolean,
-    private val clippingTopProvider: () -> Int,
+    private val clippingParams: Flow<NotificationScrimClipParams>,
     private val canScrollForwardQs: () -> Boolean,
     private val emitMotionEventForFalsing: () -> Unit,
 ) : FrameLayout(context) {
+
+    init {
+        repeatWhenAttached {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                clippingParams.collect { currentClipParams = it }
+            }
+        }
+    }
+
+    private val currentClippingPath = Path()
+    private var lastWidth = -1
+        set(value) {
+            if (field != value) {
+                field = value
+                updateClippingPath()
+            }
+        }
+
+    private var currentClipParams = NotificationScrimClipParams()
+        set(value) {
+            if (field != value) {
+                field = value
+                updateClippingPath()
+            }
+        }
+
+    private fun updateClippingPath() {
+        currentClippingPath.rewind()
+        if (clippingEnabledProvider()) {
+            val right = width + currentClipParams.rightInset
+            val left = -currentClipParams.leftInset
+            val top = currentClipParams.top
+            val bottom = currentClipParams.bottom
+            currentClippingPath.addRoundRect(
+                left.toFloat(),
+                top.toFloat(),
+                right.toFloat(),
+                bottom.toFloat(),
+                currentClipParams.radius.toFloat(),
+                currentClipParams.radius.toFloat(),
+                Path.Direction.CW,
+            )
+        }
+        invalidate()
+    }
+
+    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+        super.onLayout(changed, left, top, right, bottom)
+        lastWidth = right - left
+    }
+
+    override fun dispatchDraw(canvas: Canvas) {
+        if (!currentClippingPath.isEmpty) {
+            canvas.clipOutPath(currentClippingPath)
+        }
+        super.dispatchDraw(canvas)
+    }
+
     override fun isTransformedTouchPointInView(
         x: Float,
         y: Float,
         child: View?,
         outLocalPoint: PointF?,
     ): Boolean {
-        return if (clippingEnabledProvider() && y + translationY > clippingTopProvider()) {
+        return if (clippingEnabledProvider() && y + translationY > currentClipParams.top) {
             false
         } else {
             super.isTransformedTouchPointInView(x, y, child, outLocalPoint)
@@ -1179,3 +1305,34 @@ private fun interactionsConfig() =
         // we are OK using this as our content is clipped and all corner radius are larger than this
         surfaceCornerRadius = 28.dp,
     )
+
+private inline val alwaysCompose
+    get() = Flags.alwaysComposeQsUiFragment()
+
+/**
+ * Forces the configuration and themes to be dark theme. This is needed in order to have
+ * [colorResource] retrieve the dark mode colors.
+ *
+ * This should be removed when [notificationShadeBlur] is removed
+ */
+@Composable
+private fun AlwaysDarkMode(content: @Composable () -> Unit) {
+    if (notificationShadeBlur()) {
+        content()
+    } else {
+        val currentConfig = LocalConfiguration.current
+        val darkConfig =
+            Configuration(currentConfig).apply {
+                uiMode =
+                    (uiMode and (Configuration.UI_MODE_NIGHT_MASK.inv())) or
+                        Configuration.UI_MODE_NIGHT_YES
+            }
+        val newContext = LocalContext.current.createConfigurationContext(darkConfig)
+        CompositionLocalProvider(
+            LocalConfiguration provides darkConfig,
+            LocalContext provides newContext,
+        ) {
+            content()
+        }
+    }
+}

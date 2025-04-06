@@ -514,6 +514,7 @@ final class UiModeManagerService extends SystemService {
                 mCarModeEnabled = mDockState == Intent.EXTRA_DOCK_STATE_CAR;
                 registerVrStateListener();
                 // register listeners
+                // LINT.IfChange(fi_cb)
                 context.getContentResolver()
                         .registerContentObserver(Secure.getUriFor(Secure.UI_NIGHT_MODE),
                                 false, mDarkThemeObserver, 0);
@@ -523,6 +524,7 @@ final class UiModeManagerService extends SystemService {
                                     Secure.getUriFor(ACCESSIBILITY_FORCE_INVERT_COLOR_ENABLED),
                                     false, mForceInvertStateObserver, UserHandle.USER_ALL);
                 }
+                // LINT.ThenChange(/core/java/android/view/ViewRootImpl.java:fi_cb)
                 context.getContentResolver().registerContentObserver(
                         Secure.getUriFor(Secure.CONTRAST_LEVEL), false,
                         mContrastObserver, UserHandle.USER_ALL);
@@ -907,7 +909,7 @@ final class UiModeManagerService extends SystemService {
                     throw new IllegalArgumentException("Unknown mode: " + mode);
             }
 
-            enforceCurrentUserIfVisibleBackgroundEnabled(mCurrentUser);
+            enforceCurrentUserIfVisibleBackgroundEnabled();
 
             final int user = UserHandle.getCallingUserId();
             final long ident = Binder.clearCallingIdentity();
@@ -970,7 +972,7 @@ final class UiModeManagerService extends SystemService {
                 @AttentionModeThemeOverlayType int attentionModeThemeOverlayType) {
             setAttentionModeThemeOverlay_enforcePermission();
 
-            enforceCurrentUserIfVisibleBackgroundEnabled(mCurrentUser);
+            enforceCurrentUserIfVisibleBackgroundEnabled();
 
             synchronized (mLock) {
                 if (mAttentionModeThemeOverlay != attentionModeThemeOverlayType) {
@@ -1070,7 +1072,7 @@ final class UiModeManagerService extends SystemService {
                 return false;
             }
 
-            enforceCurrentUserIfVisibleBackgroundEnabled(mCurrentUser);
+            enforceCurrentUserIfVisibleBackgroundEnabled();
 
             // Store the last requested bedtime night mode state so that we don't need to notify
             // anyone if the user decides to switch to the night mode to bedtime.
@@ -1124,7 +1126,7 @@ final class UiModeManagerService extends SystemService {
                 return;
             }
 
-            enforceCurrentUserIfVisibleBackgroundEnabled(mCurrentUser);
+            enforceCurrentUserIfVisibleBackgroundEnabled();
 
             final int user = UserHandle.getCallingUserId();
             final long ident = Binder.clearCallingIdentity();
@@ -1155,7 +1157,7 @@ final class UiModeManagerService extends SystemService {
                 return;
             }
 
-            enforceCurrentUserIfVisibleBackgroundEnabled(mCurrentUser);
+            enforceCurrentUserIfVisibleBackgroundEnabled();
 
             final int user = UserHandle.getCallingUserId();
             final long ident = Binder.clearCallingIdentity();
@@ -1178,7 +1180,7 @@ final class UiModeManagerService extends SystemService {
             assertLegit(callingPackage);
             assertSingleProjectionType(projectionType);
             enforceProjectionTypePermissions(projectionType);
-            enforceCurrentUserIfVisibleBackgroundEnabled(mCurrentUser);
+            enforceCurrentUserIfVisibleBackgroundEnabled();
 
             synchronized (mLock) {
                 if (mProjectionHolders == null) {
@@ -1224,7 +1226,7 @@ final class UiModeManagerService extends SystemService {
             assertLegit(callingPackage);
             assertSingleProjectionType(projectionType);
             enforceProjectionTypePermissions(projectionType);
-            enforceCurrentUserIfVisibleBackgroundEnabled(mCurrentUser);
+            enforceCurrentUserIfVisibleBackgroundEnabled();
 
             return releaseProjectionUnchecked(projectionType, callingPackage);
         }
@@ -1266,7 +1268,7 @@ final class UiModeManagerService extends SystemService {
                 return;
             }
 
-            enforceCurrentUserIfVisibleBackgroundEnabled(mCurrentUser);
+            enforceCurrentUserIfVisibleBackgroundEnabled();
 
             synchronized (mLock) {
                 if (mProjectionListeners == null) {

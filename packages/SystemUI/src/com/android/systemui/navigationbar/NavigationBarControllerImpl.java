@@ -18,7 +18,6 @@ package com.android.systemui.navigationbar;
 
 import static com.android.systemui.navigationbar.gestural.EdgeBackGestureHandler.DEBUG_MISSING_GESTURE_TAG;
 import static com.android.systemui.shared.recents.utilities.Utilities.isLargeScreen;
-import static com.android.server.display.feature.flags.Flags.enableDisplayContentModeManagement;
 import static com.android.wm.shell.Flags.enableTaskbarNavbarUnification;
 import static com.android.wm.shell.Flags.enableTaskbarOnPhones;
 
@@ -37,6 +36,7 @@ import android.view.Display;
 import android.view.IWindowManager;
 import android.view.View;
 import android.view.WindowManagerGlobal;
+import android.window.DesktopExperienceFlags;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -285,7 +285,7 @@ public class NavigationBarControllerImpl implements
 
         @Override
         public void onDisplayAddSystemDecorations(int displayId) {
-            if (enableDisplayContentModeManagement()) {
+            if (DesktopExperienceFlags.ENABLE_DISPLAY_CONTENT_MODE_MANAGEMENT.isTrue()) {
                 mHasNavBar.put(displayId, true);
             }
             Display display = mDisplayManager.getDisplay(displayId);
@@ -469,7 +469,8 @@ public class NavigationBarControllerImpl implements
         return (navBar == null) ? null : navBar.getView();
     }
 
-    private @Nullable NavigationBar getNavigationBar(int displayId) {
+    @Override
+    public @Nullable NavigationBar getNavigationBar(int displayId) {
         return mNavigationBars.get(displayId);
     }
 

@@ -17,11 +17,14 @@
 package com.android.wm.shell.shared.desktopmode;
 
 import static android.hardware.display.DisplayManager.DISPLAY_CATEGORY_ALL_INCLUDING_DISABLED;
+import static android.window.DesktopExperienceFlags.ENABLE_PROJECTED_DISPLAY_DESKTOP_MODE;
 
+import static com.android.server.display.feature.flags.Flags.enableDisplayContentModeManagement;
 import static com.android.wm.shell.shared.bubbles.BubbleAnythingFlagHelper.enableBubbleToFullscreen;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
+import android.app.TaskInfo;
 import android.content.Context;
 import android.hardware.display.DisplayManager;
 import android.os.SystemProperties;
@@ -223,7 +226,7 @@ public class DesktopModeStatus {
     /**
      * Return {@code true} if the current device can host desktop sessions on its internal display.
      */
-    public static boolean canInternalDisplayHostDesktops(@NonNull Context context) {
+    private static boolean canInternalDisplayHostDesktops(@NonNull Context context) {
         return context.getResources().getBoolean(R.bool.config_canInternalDisplayHostDesktops);
     }
 
@@ -268,6 +271,32 @@ public class DesktopModeStatus {
     }
 
     /**
+     * Check to see if a display should have desktop mode enabled or not. Internal
+     * and external displays have separate logic.
+     */
+    public static boolean isDesktopModeSupportedOnDisplay(Context context, Display display) {
+        if (!canEnterDesktopMode(context)) {
+            return false;
+        }
+        if (!enforceDeviceRestrictions()) {
+            return true;
+        }
+        if (display.getType() == Display.TYPE_INTERNAL) {
+            return canInternalDisplayHostDesktops(context);
+        }
+
+        // TODO (b/395014779): Change this to use WM API
+        if ((display.getType() == Display.TYPE_EXTERNAL
+                || display.getType() == Display.TYPE_OVERLAY)
+                && enableDisplayContentModeManagement()) {
+            final WindowManager wm = context.getSystemService(WindowManager.class);
+            return wm != null && wm.shouldShowSystemDecors(display.getDisplayId());
+        }
+
+        return false;
+    }
+
+    /**
      * Returns whether the multiple desktops feature is enabled for this device (both backend and
      * frontend implementations).
      */
@@ -284,6 +313,16 @@ public class DesktopModeStatus {
     public static boolean overridesShowAppHandle(@NonNull Context context) {
         return (Flags.showAppHandleLargeScreens() || enableBubbleToFullscreen())
                 && deviceHasLargeScreen(context);
+    }
+
+    /**
+     * @return If {@code true} we set opaque background for all freeform tasks to prevent freeform
+     * tasks below from being visible if freeform task window above is translucent.
+     * Otherwise if fluid resize is enabled, add a background to freeform tasks.
+     */
+    public static boolean shouldSetBackground(@NonNull TaskInfo taskInfo) {
+        return taskInfo.isFreeform() && (!DesktopModeStatus.isVeiledResizeEnabled()
+                || DesktopModeFlags.ENABLE_OPAQUE_BACKGROUND_FOR_TRANSPARENT_WINDOWS.isTrue());
     }
 
     /**
@@ -330,8 +369,11 @@ public class DesktopModeStatus {
         if (!enforceDeviceRestrictions()) {
             return true;
         }
-        final boolean desktopModeSupported = isDesktopModeSupported(context)
-                && canInternalDisplayHostDesktops(context);
+        // If projected display is enabled, #canInternalDisplayHostDesktops is no longer a
+        // requirement.
+        final boolean desktopModeSupported = ENABLE_PROJECTED_DISPLAY_DESKTOP_MODE.isTrue()
+                ? isDesktopModeSupported(context) : (isDesktopModeSupported(context)
+                && canInternalDisplayHostDesktops(context));
         final boolean desktopModeSupportedByDevOptions =
                 Flags.enableDesktopModeThroughDevOption()
                     && isDesktopModeDevOptionSupported(context);
@@ -374,7 +416,7 @@ public class DesktopModeStatus {
      * of the display's root [TaskDisplayArea] is set to WINDOWING_MODE_FREEFORM.
      */
     public static boolean enterDesktopByDefaultOnFreeformDisplay(@NonNull Context context) {
-        if (!Flags.enterDesktopByDefaultOnFreeformDisplays()) {
+        if (!DesktopExperienceFlags.ENTER_DESKTOP_BY_DEFAULT_ON_FREEFORM_DISPLAYS.isTrue()) {
             return false;
         }
         return SystemProperties.getBoolean(ENTER_DESKTOP_BY_DEFAULT_ON_FREEFORM_DISPLAY_SYS_PROP,
@@ -387,7 +429,7 @@ public class DesktopModeStatus {
      * screen.
      */
     public static boolean shouldMaximizeWhenDragToTopEdge(@NonNull Context context) {
-        if (!Flags.enableDragToMaximize()) {
+        if (!DesktopExperienceFlags.ENABLE_DRAG_TO_MAXIMIZE.isTrue()) {
             return false;
         }
         return SystemProperties.getBoolean(ENABLE_DRAG_TO_MAXIMIZE_SYS_PROP,
@@ -409,6 +451,6 @@ public class DesktopModeStatus {
         pw.println(maxTaskLimitHandle == null ? "null" : maxTaskLimitHandle.getInt(/* def= */ -1));
 
         pw.print(innerPrefix); pw.print("showAppHandle config override=");
-        pw.print(overridesShowAppHandle(context));
+        pw.println(overridesShowAppHandle(context));
     }
 }

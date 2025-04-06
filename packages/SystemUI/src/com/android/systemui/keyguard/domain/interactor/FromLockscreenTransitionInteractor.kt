@@ -20,11 +20,11 @@ import android.animation.ValueAnimator
 import android.util.MathUtils
 import com.android.app.animation.Interpolators
 import com.android.app.tracing.coroutines.launchTraced as launch
-import com.android.systemui.communal.domain.interactor.CommunalInteractor
 import com.android.systemui.communal.domain.interactor.CommunalSceneInteractor
 import com.android.systemui.communal.domain.interactor.CommunalSettingsInteractor
 import com.android.systemui.communal.shared.model.CommunalScenes
 import com.android.systemui.dagger.SysUISingleton
+import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.dagger.qualifiers.Background
 import com.android.systemui.dagger.qualifiers.Main
 import com.android.systemui.keyguard.KeyguardWmStateRefactor
@@ -63,13 +63,13 @@ constructor(
     override val internalTransitionInteractor: InternalKeyguardTransitionInteractor,
     transitionInteractor: KeyguardTransitionInteractor,
     @Background private val scope: CoroutineScope,
+    @Application private val applicationScope: CoroutineScope,
     @Background bgDispatcher: CoroutineDispatcher,
     @Main mainDispatcher: CoroutineDispatcher,
     keyguardInteractor: KeyguardInteractor,
     private val shadeRepository: ShadeRepository,
     powerInteractor: PowerInteractor,
     private val communalSettingsInteractor: CommunalSettingsInteractor,
-    private val communalInteractor: CommunalInteractor,
     private val communalSceneInteractor: CommunalSceneInteractor,
     private val swipeToDismissInteractor: SwipeToDismissInteractor,
     keyguardOcclusionInteractor: KeyguardOcclusionInteractor,
@@ -177,7 +177,7 @@ constructor(
     private fun listenForLockscreenToPrimaryBouncerDragging() {
         if (SceneContainerFlag.isEnabled) return
         var transitionId: UUID? = null
-        scope.launch("$TAG#listenForLockscreenToPrimaryBouncerDragging") {
+        applicationScope.launch("$TAG#listenForLockscreenToPrimaryBouncerDragging") {
             shadeRepository.legacyShadeExpansion.collect { shadeExpansion ->
                 val statusBarState = keyguardInteractor.statusBarState.value
                 val isKeyguardUnlocked = keyguardInteractor.isKeyguardDismissible.value
@@ -206,7 +206,7 @@ constructor(
                                 id,
                                 // This maps the shadeExpansion to a much faster curve, to match
                                 // the existing logic
-                                1f - MathUtils.constrainedMap(0f, 1f, 0.95f, 1f, shadeExpansion),
+                                1f - MathUtils.constrainedMap(0f, 1f, 0.88f, 1f, shadeExpansion),
                                 nextState,
                             )
                         }
@@ -355,7 +355,7 @@ constructor(
 
     private fun listenForLockscreenToGlanceableHubV2() {
         scope.launch {
-            communalInteractor.shouldShowCommunal
+            communalSettingsInteractor.autoOpenEnabled
                 .filterRelevantKeyguardStateAnd { shouldShow -> shouldShow }
                 .collect {
                     communalSceneInteractor.changeScene(

@@ -96,14 +96,14 @@
         <FrameLayout
             android:id="@+id/reply_action_container"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/notification_action_list_height"
+            android:layout_height="@dimen/notification_2025_action_list_height"
             android:gravity="center_vertical"
             android:orientation="horizontal" />
         <FrameLayout
             android:id="@+id/expand_button_touch_container"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:minWidth="@dimen/notification_content_margin_end"
+            android:minWidth="@dimen/notification_2025_margin"
             >
             <include layout="@layout/notification_2025_expand_button"
                 android:layout_width="wrap_content"

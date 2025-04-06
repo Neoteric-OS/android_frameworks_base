@@ -23,6 +23,7 @@
 #include <map>
 #include <set>
 #include <span>
+#include <sstream>
 #include <utility>
 
 #include "android-base/logging.h"
@@ -64,7 +65,7 @@ base::expected<EntryValue, IOError> GetEntryValue(
   return table_entry->value();
 }
 
-}  // namespace
+} // namespace
 
 struct FindEntryResult {
   // The cookie representing the ApkAssets in which the value resides.
@@ -80,6 +81,9 @@ struct FindEntryResult {
 
   // The bitmask of configuration axis with which the resource value varies.
   uint32_t type_flags;
+
+  // The bitmask of ResTable_entry flags
+  uint16_t entry_flags;
 
   // The dynamic package ID map for the package from which this resource came from.
   const DynamicRefTable* dynamic_ref_table;
@@ -441,6 +445,24 @@ bool AssetManager2::ContainsAllocatedTable() const {
   return false;
 }
 
+static std::string ConfigVecToString(std::span<const ResTable_config> configurations) {
+  std::stringstream ss;
+  ss << "[";
+  bool first = true;
+  for (const auto& config : configurations) {
+    if (!first) {
+      ss << ",";
+    }
+    char out[RESTABLE_MAX_LOCALE_LEN] = {};
+    config.getBcp47Locale(out);
+    ss << out;
+    first = false;
+  }
+  ss << "]";
+  return ss.str();
+}
+
+
 void AssetManager2::SetConfigurations(std::span<const ResTable_config> configurations,
                                       bool force_refresh) {
   int diff = 0;
@@ -455,6 +477,17 @@ void AssetManager2::SetConfigurations(std::span<const ResTable_config> configura
       }
     }
   }
+
+  // Log the locale list change to investigate b/392255526
+  if (diff & ConfigDescription::CONFIG_LOCALE) {
+    auto oldstr = ConfigVecToString(configurations_);
+    auto newstr = ConfigVecToString(configurations);
+    if (oldstr != newstr) {
+      LOG(INFO) << "AssetManager2(" << this << ") locale list changing from "
+                << oldstr << " to " << newstr;
+    }
+  }
+
   configurations_.clear();
   for (auto&& config : configurations) {
     configurations_.emplace_back(config);
@@ -463,6 +496,28 @@ void AssetManager2::SetConfigurations(std::span<const ResTable_config> configura
     RebuildFilterList();
     InvalidateCaches(static_cast<uint32_t>(diff));
   }
+}
+
+void AssetManager2::SetDefaultLocale(std::optional<ResTable_config> default_locale) {
+  int diff = 0;
+  if (default_locale_ && default_locale) {
+    diff = default_locale_->diff(default_locale.value());
+  } else if (default_locale_ || default_locale) {
+    diff = -1;
+  }
+  if (diff & ConfigDescription::CONFIG_LOCALE) {
+    char old_loc[RESTABLE_MAX_LOCALE_LEN] = {};
+    char new_loc[RESTABLE_MAX_LOCALE_LEN] = {};
+    if (default_locale_) {
+      default_locale_->getBcp47Locale(old_loc);
+    }
+    if (default_locale) {
+      default_locale->getBcp47Locale(new_loc);
+    }
+    LOG(INFO) << "AssetManager2(" << this << ") default locale changing from '"
+              << old_loc << "' to '" << new_loc << "'";
+  }
+  default_locale_ = default_locale;
 }
 
 void AssetManager2::SetOverlayConstraints(int32_t display_id, int32_t device_id) {
@@ -548,12 +603,12 @@ base::expected<std::set<ResTable_config>, IOError> AssetManager2::GetResourceCon
   return configurations;
 }
 
-std::set<std::string> AssetManager2::GetResourceLocales(bool exclude_system,
-                                                        bool merge_equivalent_languages) const {
+LoadedPackage::Locales AssetManager2::GetResourceLocales(
+    bool exclude_system, bool merge_equivalent_languages) const {
   ATRACE_NAME("AssetManager::GetResourceLocales");
   auto op = StartOperation();
 
-  std::set<std::string> locales;
+  LoadedPackage::Locales locales;
   const auto non_system_overlays =
       exclude_system ? GetNonSystemOverlays() : std::set<ApkAssetsPtr>();
 
@@ -567,8 +622,7 @@ std::set<std::string> AssetManager2::GetResourceLocales(bool exclude_system,
         if (!non_system_overlays.empty()) {
           // Exclude overlays that target only system resources.
           const auto& apk_assets = GetApkAssets(package_group.cookies_[i]);
-          if (apk_assets && apk_assets->IsOverlay() &&
-              non_system_overlays.find(apk_assets) == non_system_overlays.end()) {
+          if (apk_assets && apk_assets->IsOverlay() && !non_system_overlays.contains(apk_assets)) {
             continue;
           }
         }
@@ -735,7 +789,7 @@ base::expected<FindEntryResult, NullOrIOError> AssetManager2::FindEntry(
             ConfigDescription best_frro_config;
             Res_value best_frro_value;
             bool frro_found = false;
-            for (const auto& [config, value] : overlay_entry.GetInlineValue()) {
+            for(const auto& [config, value] : overlay_entry.GetInlineValue()) {
               if ((!frro_found || config.isBetterThan(best_frro_config, desired_config))
                   && config.match(*desired_config)) {
                 frro_found = true;
@@ -814,11 +868,11 @@ base::expected<FindEntryResult, NullOrIOError> AssetManager2::FindEntry(
 
     bool has_locale = false;
     if (result->config.locale == 0) {
-      if (default_locale_ != 0) {
-        ResTable_config conf = {.locale = default_locale_};
-        // Since we know conf has a locale and only a locale, match will tell us if that locale
-        // matches
-        has_locale = conf.match(config);
+      // The default_locale_ is the locale used for any resources with no locale in the config
+      if (default_locale_) {
+        // Since we know default_locale_ has a locale and only a locale, match will tell us if that
+        // locale matches
+        has_locale = default_locale_->match(config);
       }
     } else {
       has_locale = true;
@@ -827,10 +881,10 @@ base::expected<FindEntryResult, NullOrIOError> AssetManager2::FindEntry(
       // if we don't have a result yet
     if (!final_result ||
         // or this config is better before the locale than the existing result
-        result->config.isBetterThanBeforeLocale(final_result->config, desired_config) ||
+        result->config.isBetterThanBeforeLocale(final_result->config, *desired_config) ||
         // or the existing config isn't better before locale and this one specifies a locale
         // whereas the existing one doesn't
-        (!final_result->config.isBetterThanBeforeLocale(result->config, desired_config)
+        (!final_result->config.isBetterThanBeforeLocale(result->config, *desired_config)
             && has_locale && !final_has_locale)) {
       final_result = result.value();
       final_overlaid = overlaid;
@@ -979,6 +1033,7 @@ base::expected<FindEntryResult, NullOrIOError> AssetManager2::FindEntryInternal(
     .entry = *entry,
     .config = *best_config,
     .type_flags = type_flags,
+    .entry_flags = (*best_entry_verified)->flags(),
     .dynamic_ref_table = package_group.dynamic_ref_table.get(),
     .package_name = &best_package->GetPackageName(),
     .type_string_ref = StringPoolRef(best_package->GetTypeStringPool(), best_type->id - 1),
@@ -1133,16 +1188,16 @@ base::expected<AssetManager2::SelectedValue, NullOrIOError> AssetManager2::GetRe
     }
 
     // Create a reference since we can't represent this complex type as a Res_value.
-    return SelectedValue(Res_value::TYPE_REFERENCE, resid, result->cookie, result->type_flags,
-                         resid, result->config);
+    return SelectedValue(Res_value::TYPE_REFERENCE, resid, result->cookie, result->entry_flags,
+                         result->type_flags, resid, result->config);
   }
 
   // Convert the package ID to the runtime assigned package ID.
   Res_value value = std::get<Res_value>(result->entry);
   result->dynamic_ref_table->lookupResourceValue(&value);
 
-  return SelectedValue(value.dataType, value.data, result->cookie, result->type_flags,
-                       resid, result->config);
+  return SelectedValue(value.dataType, value.data, result->cookie, result->entry_flags,
+                       result->type_flags, resid, result->config);
 }
 
 base::expected<std::monostate, NullOrIOError> AssetManager2::ResolveReference(
@@ -1509,7 +1564,7 @@ base::expected<uint32_t, NullOrIOError> AssetManager2::GetResourceId(
       base::expected<uint32_t, NullOrIOError> resid = package->FindEntryByName(type16, entry16);
       if (UNLIKELY(IsIOError(resid))) {
          return base::unexpected(resid.error());
-      }
+       }
 
       if (!resid.has_value() && kAttr16 == type16) {
         // Private attributes in libraries (such as the framework) are sometimes encoded
@@ -1799,8 +1854,8 @@ std::optional<AssetManager2::SelectedValue> Theme::GetAttribute(uint32_t resid) 
     }
 
     return AssetManager2::SelectedValue(entry_it->value.dataType, entry_it->value.data,
-                                        entry_it->cookie, type_spec_flags, 0U /* resid */,
-                                        {} /* config */);
+                                        entry_it->cookie, 0U /* entry flags*/, type_spec_flags,
+                                        0U /* resid */, {} /* config */);
   }
   return std::nullopt;
 }

@@ -66,6 +66,7 @@ import com.android.internal.protolog.IProtoLogConfigurationService.RegisterClien
 import com.android.internal.protolog.common.ILogger;
 import com.android.internal.protolog.common.IProtoLog;
 import com.android.internal.protolog.common.IProtoLogGroup;
+import com.android.internal.protolog.common.InvalidFormatStringException;
 import com.android.internal.protolog.common.LogDataType;
 import com.android.internal.protolog.common.LogLevel;
 
@@ -79,6 +80,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -206,7 +208,12 @@ public abstract class PerfettoProtoLogImpl extends IProtoLogClient.Stub implemen
 
     @Override
     public void log(LogLevel logLevel, IProtoLogGroup group, String messageString, Object... args) {
-        log(logLevel, group, new Message(messageString), args);
+        try {
+            log(logLevel, group, new Message(messageString), args);
+        } catch (InvalidFormatStringException e) {
+            Slog.e(LOG_TAG, "Invalid protolog string format", e);
+            log(logLevel, group, new Message("INVALID MESSAGE"), new Object[0]);
+        }
     }
 
     /**
@@ -830,7 +837,7 @@ public abstract class PerfettoProtoLogImpl extends IProtoLogClient.Stub implemen
             this.mMessageString = null;
         }
 
-        private Message(@NonNull String messageString) {
+        private Message(@NonNull String messageString) throws InvalidFormatStringException {
             this.mMessageHash = null;
             final List<Integer> argTypes = LogDataType.parseFormatString(messageString);
             this.mMessageMask = LogDataType.logDataTypesToBitMask(argTypes);
@@ -862,6 +869,25 @@ public abstract class PerfettoProtoLogImpl extends IProtoLogClient.Stub implemen
             }
 
             throw new RuntimeException("Both mMessageString and mMessageHash should never be null");
+        }
+    }
+
+    /**
+     * This is only used by unit tests to wait until {@link #connectToConfigurationService} is
+     * done. Because unit tests are sensitive to concurrent accesses.
+     */
+    @VisibleForTesting
+    public static void waitForInitialization() {
+        final IProtoLog currentInstance = ProtoLog.getSingleInstance();
+        if (!(currentInstance instanceof PerfettoProtoLogImpl protoLog)) {
+            return;
+        }
+        try {
+            protoLog.mBackgroundLoggingService.submit(() -> {
+                Log.i(LOG_TAG, "Complete initialization");
+            }).get();
+        } catch (InterruptedException | ExecutionException e) {
+            Log.e(LOG_TAG, "Failed to wait for tracing service", e);
         }
     }
 }

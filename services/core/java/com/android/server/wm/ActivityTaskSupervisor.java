@@ -36,6 +36,7 @@ import static android.app.WindowConfiguration.ACTIVITY_TYPE_RECENTS;
 import static android.app.WindowConfiguration.ACTIVITY_TYPE_UNDEFINED;
 import static android.app.WindowConfiguration.WINDOWING_MODE_FREEFORM;
 import static android.app.WindowConfiguration.WINDOWING_MODE_FULLSCREEN;
+import static android.app.WindowConfiguration.WINDOWING_MODE_MULTI_WINDOW;
 import static android.app.WindowConfiguration.WINDOWING_MODE_PINNED;
 import static android.app.WindowConfiguration.WINDOWING_MODE_UNDEFINED;
 import static android.content.Intent.ACTION_VIEW;
@@ -78,6 +79,7 @@ import static com.android.server.wm.ActivityTaskManagerDebugConfig.TAG_WITH_CLAS
 import static com.android.server.wm.ActivityTaskManagerService.ANIMATE;
 import static com.android.server.wm.ActivityTaskManagerService.H.FIRST_SUPERVISOR_TASK_MSG;
 import static com.android.server.wm.ActivityTaskManagerService.RELAUNCH_REASON_NONE;
+import static com.android.server.wm.ActivityTaskManagerService.isPip2ExperimentEnabled;
 import static com.android.server.wm.ClientLifecycleManager.shouldDispatchLaunchActivityItemIndependently;
 import static com.android.server.wm.LockTaskController.LOCK_TASK_AUTH_ALLOWLISTED;
 import static com.android.server.wm.LockTaskController.LOCK_TASK_AUTH_LAUNCHABLE;
@@ -126,6 +128,7 @@ import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.DeadObjectException;
 import android.os.Debug;
 import android.os.Handler;
 import android.os.IBinder;
@@ -170,7 +173,6 @@ import com.android.server.companion.virtual.VirtualDeviceManagerInternal;
 import com.android.server.pm.SaferIntentUtils;
 import com.android.server.utils.Slogf;
 import com.android.server.wm.ActivityMetricsLogger.LaunchingState;
-import com.android.window.flags.Flags;
 // QTI_BEGIN: 2024-05-22: Performance: framework_base: Add process freezer to improve app launch latency
 import com.android.server.am.ProcessFreezerManager;
 // QTI_END: 2024-05-22: Performance: framework_base: Add process freezer to improve app launch latency
@@ -901,8 +903,6 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
         proc.pauseConfigurationDispatch();
 
         try {
-            // schedule launch ticks to collect information about slow apps.
-            r.startLaunchTickingLocked();
             r.lastLaunchTime = SystemClock.uptimeMillis();
             r.setProcess(proc);
 
@@ -1108,15 +1108,22 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
             // transaction.
             mService.getLifecycleManager().dispatchPendingTransaction(proc.getThread());
         }
+        final boolean isSuccessful;
         try {
-            mService.getLifecycleManager().scheduleTransactionItems(
+            isSuccessful = mService.getLifecycleManager().scheduleTransactionItems(
                     proc.getThread(),
                     // Immediately dispatch the transaction, so that if it fails, the server can
                     // restart the process and retry now.
                     true /* shouldDispatchImmediately */,
                     launchActivityItem, lifecycleItem);
         } catch (RemoteException e) {
+            // TODO(b/323801078): remove Exception when cleanup
             return e;
+        }
+        if (com.android.window.flags.Flags.cleanupDispatchPendingTransactionsRemoteException()
+                && !isSuccessful) {
+            return new DeadObjectException("Failed to dispatch the ClientTransaction to dead"
+                    + " process. See earlier log for more details.");
         }
 
         if (procConfig.seq > mRootWindowContainer.getConfiguration().seq) {
@@ -1564,7 +1571,6 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
             if (DEBUG_IDLE) Slog.d(TAG_IDLE, "activityIdleInternal: Callers="
                     + Debug.getCallers(4));
             mHandler.removeMessages(IDLE_TIMEOUT_MSG, r);
-            r.finishLaunchTickingLocked();
             if (fromTimeout) {
                 reportActivityLaunched(fromTimeout, r, INVALID_DELAY, -1 /* launchState */);
             }
@@ -1721,16 +1727,19 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
         }
     }
 
-    private void moveHomeRootTaskToFrontIfNeeded(int flags, TaskDisplayArea taskDisplayArea,
+    @VisibleForTesting
+    void moveHomeRootTaskToFrontIfNeeded(int flags, TaskDisplayArea taskDisplayArea,
             String reason) {
         final Task focusedRootTask = taskDisplayArea.getFocusedRootTask();
 
         if ((taskDisplayArea.getWindowingMode() == WINDOWING_MODE_FULLSCREEN
                 && (flags & ActivityManager.MOVE_TASK_WITH_HOME) != 0)
-                || (focusedRootTask != null && focusedRootTask.isActivityTypeRecents())) {
+                || (focusedRootTask != null && focusedRootTask.isActivityTypeRecents()
+                && focusedRootTask.getWindowingMode() != WINDOWING_MODE_MULTI_WINDOW)) {
             // We move root home task to front when we are on a fullscreen display area and
             // caller has requested the home activity to move with it. Or the previous root task
-            // is recents.
+            // is recents and we are not on multi-window mode.
+
             taskDisplayArea.moveHomeRootTaskToFront(reason);
         }
     }
@@ -1770,9 +1779,13 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
          */
         rootTask.cancelAnimation();
         rootTask.setForceHidden(FLAG_FORCE_HIDDEN_FOR_PINNED_TASK, true /* set */);
-        rootTask.ensureActivitiesVisible(null /* starting */);
-        activityIdleInternal(null /* idleActivity */, false /* fromTimeout */,
-                true /* processPausingActivities */, null /* configuration */);
+        if (!isPip2ExperimentEnabled()) {
+            // In PiP2, as the transition finishes the lifecycle updates will be sent to the app
+            // along with the configuration changes as a part of the transition lifecycle.
+            rootTask.ensureActivitiesVisible(null /* starting */);
+            activityIdleInternal(null /* idleActivity */, false /* fromTimeout */,
+                    true /* processPausingActivities */, null /* configuration */);
+        }
 
         if (rootTask.getParent() == null) {
             // The activities in the task may already be finishing. Then the task could be removed
@@ -2845,9 +2858,13 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
      */
     void endDeferResume() {
         mDeferResumeCount--;
-        if (readyToResume() && mLastReportedTopResumedActivity != null
-                && mTopResumedActivity != mLastReportedTopResumedActivity) {
-            scheduleTopResumedActivityStateLossIfNeeded();
+        if (readyToResume()) {
+            if (mLastReportedTopResumedActivity != null
+                    && mTopResumedActivity != mLastReportedTopResumedActivity) {
+                scheduleTopResumedActivityStateLossIfNeeded();
+            } else if (mLastReportedTopResumedActivity == null) {
+                scheduleTopResumedActivityStateIfNeeded();
+            }
         }
     }
 
@@ -2969,10 +2986,6 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
                 case TOP_RESUMED_STATE_LOSS_TIMEOUT_MSG: {
                     final ActivityRecord r = (ActivityRecord) msg.obj;
                     Slog.w(TAG, "Activity top resumed state loss timeout for " + r);
-                    if (r.hasProcess()) {
-                        mService.logAppTooSlow(r.app, r.topResumedStateLossTime,
-                                "top state loss for " + r);
-                    }
                     handleTopResumedStateReleased(true /* timeout */);
                 } break;
                 default:
@@ -3031,6 +3044,13 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
                     mWindowManager.executeAppTransition();
                     throw new IllegalArgumentException(
                             "startActivityFromRecents: Task " + taskId + " not found.");
+                }
+
+
+                if (task.getRootTask() != null
+                        && task.getRootTask().getWindowingMode() == WINDOWING_MODE_MULTI_WINDOW) {
+                    // Don't move home forward if task is in multi window mode
+                    moveHomeTaskForward = false;
                 }
 
                 if (moveHomeTaskForward) {
@@ -3193,17 +3213,9 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
 
                 if (child.asTaskFragment() != null
                         && child.asTaskFragment().hasAdjacentTaskFragment()) {
-                    final boolean isAnyTranslucent;
-                    if (Flags.allowMultipleAdjacentTaskFragments()) {
-                        final TaskFragment.AdjacentSet set =
-                                child.asTaskFragment().getAdjacentTaskFragments();
-                        isAnyTranslucent = set.forAllTaskFragments(
-                                tf -> !isOpaque(tf), null);
-                    } else {
-                        final TaskFragment adjacent = child.asTaskFragment()
-                                .getAdjacentTaskFragment();
-                        isAnyTranslucent = !isOpaque(child) || !isOpaque(adjacent);
-                    }
+                    final boolean isAnyTranslucent = !isOpaque(child)
+                            || child.asTaskFragment().forOtherAdjacentTaskFragments(
+                                    tf -> !isOpaque(tf));
                     if (!isAnyTranslucent) {
                         // This task fragment and all its adjacent task fragments are opaque,
                         // consider it opaque even if it doesn't fill its parent.

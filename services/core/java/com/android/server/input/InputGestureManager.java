@@ -87,29 +87,16 @@ final class InputGestureManager {
             createKeyTrigger(KeyEvent.KEYCODE_V, KeyEvent.META_CTRL_ON),
             createKeyTrigger(KeyEvent.KEYCODE_X, KeyEvent.META_CTRL_ON),
             createKeyTrigger(KeyEvent.KEYCODE_Z, KeyEvent.META_CTRL_ON),
-            createKeyTrigger(KeyEvent.KEYCODE_Y, KeyEvent.META_CTRL_ON),
-            // Used for magnification viewport control.
-            createKeyTrigger(KeyEvent.KEYCODE_MINUS,
-                    KeyEvent.META_META_ON | KeyEvent.META_ALT_ON),
-            createKeyTrigger(KeyEvent.KEYCODE_EQUALS,
-                    KeyEvent.META_META_ON | KeyEvent.META_ALT_ON),
-            createKeyTrigger(KeyEvent.KEYCODE_DPAD_LEFT,
-                    KeyEvent.META_META_ON | KeyEvent.META_ALT_ON),
-            createKeyTrigger(KeyEvent.KEYCODE_DPAD_RIGHT,
-                    KeyEvent.META_META_ON | KeyEvent.META_ALT_ON),
-            createKeyTrigger(KeyEvent.KEYCODE_DPAD_UP,
-                    KeyEvent.META_META_ON | KeyEvent.META_ALT_ON),
-            createKeyTrigger(KeyEvent.KEYCODE_DPAD_DOWN,
-                    KeyEvent.META_META_ON | KeyEvent.META_ALT_ON)
+            createKeyTrigger(KeyEvent.KEYCODE_Y, KeyEvent.META_CTRL_ON)
     ));
 
     public InputGestureManager(Context context) {
         mContext = context;
     }
 
-    public void systemRunning() {
+    public void init(List<InputGestureData> bookmarks) {
         initSystemShortcuts();
-        blockListBookmarkedTriggers();
+        blockListBookmarkedTriggers(bookmarks);
     }
 
     private void initSystemShortcuts() {
@@ -149,11 +136,6 @@ final class InputGestureManager {
                         KeyEvent.KEYCODE_S,
                         KeyEvent.META_META_ON,
                         KeyGestureEvent.KEY_GESTURE_TYPE_TAKE_SCREENSHOT
-                ),
-                createKeyGesture(
-                        KeyEvent.KEYCODE_DEL,
-                        KeyEvent.META_META_ON,
-                        KeyGestureEvent.KEY_GESTURE_TYPE_BACK
                 ),
                 createKeyGesture(
                         KeyEvent.KEYCODE_ESCAPE,
@@ -281,10 +263,9 @@ final class InputGestureManager {
         }
     }
 
-    private void blockListBookmarkedTriggers() {
+    private void blockListBookmarkedTriggers(List<InputGestureData> bookmarks) {
         synchronized (mGestureLock) {
-            InputManager im = Objects.requireNonNull(mContext.getSystemService(InputManager.class));
-            for (InputGestureData bookmark : im.getAppLaunchBookmarks()) {
+            for (InputGestureData bookmark : bookmarks) {
                 mBlockListedTriggers.add(bookmark.getTrigger());
             }
         }

@@ -22,23 +22,31 @@ import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.os.PowerManager
 import android.os.UserManager
+import android.platform.test.annotations.EnableFlags
 import android.testing.TestableContext
 import android.testing.TestableLooper
+import android.view.Display
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.android.internal.app.AssistUtils
 import com.android.internal.logging.UiEventLogger
+import com.android.systemui.Flags
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.broadcast.BroadcastDispatcher
 import com.android.systemui.dagger.qualifiers.Main
+import com.android.systemui.display.data.repository.displayRepository
 import com.android.systemui.dump.DumpManager
 import com.android.systemui.keyguard.KeyguardUnlockAnimationController
 import com.android.systemui.keyguard.WakefulnessLifecycle
 import com.android.systemui.keyguard.ui.view.InWindowLauncherUnlockAnimationManager
-import com.android.systemui.model.SysUiState
-import com.android.systemui.model.sceneContainerPlugin
+import com.android.systemui.kosmos.testScope
+import com.android.systemui.log.assertLogsWtf
+import com.android.systemui.model.fakeSysUIStatePerDisplayRepository
+import com.android.systemui.model.sysUiState
+import com.android.systemui.model.sysUiStateFactory
 import com.android.systemui.navigationbar.NavigationBarController
 import com.android.systemui.navigationbar.NavigationModeController
+import com.android.systemui.navigationbar.views.NavigationBar
 import com.android.systemui.process.ProcessWrapper
 import com.android.systemui.recents.LauncherProxyService.ACTION_QUICKSTEP
 import com.android.systemui.settings.FakeDisplayTracker
@@ -55,18 +63,21 @@ import com.android.systemui.statusbar.NotificationShadeWindowController
 import com.android.systemui.testKosmos
 import com.android.systemui.unfold.progress.UnfoldTransitionProgressForwarder
 import com.android.systemui.util.mockito.mock
-import com.android.systemui.util.mockito.whenever
 import com.android.systemui.util.time.FakeSystemClock
 import com.android.wm.shell.back.BackAnimation
 import com.android.wm.shell.sysui.ShellInterface
 import com.google.common.util.concurrent.MoreExecutors
 import java.util.Optional
 import java.util.concurrent.Executor
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers
+import org.mockito.ArgumentMatchers.anyLong
+import org.mockito.ArgumentMatchers.eq
 import org.mockito.Mock
 import org.mockito.Mockito.any
 import org.mockito.Mockito.anyInt
@@ -79,6 +90,7 @@ import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.whenever
 
 @SmallTest
 @RunWith(AndroidJUnit4::class)
@@ -93,9 +105,11 @@ class LauncherProxyServiceTest : SysuiTestCase() {
     @Mock private lateinit var processWrapper: ProcessWrapper
     private val displayTracker = FakeDisplayTracker(mContext)
     private val fakeSystemClock = FakeSystemClock()
-    private val sysUiState = SysUiState(displayTracker, kosmos.sceneContainerPlugin)
+    private val sysUiState = kosmos.sysUiState
+    private val sysUiStateFactory = kosmos.sysUiStateFactory
     private val wakefulnessLifecycle =
         WakefulnessLifecycle(mContext, null, fakeSystemClock, dumpManager)
+    private val sysuiStatePerDisplayRepository = kosmos.fakeSysUIStatePerDisplayRepository
 
     @Mock private lateinit var launcherProxy: ILauncherProxy.Stub
     @Mock private lateinit var packageManager: PackageManager
@@ -147,6 +161,8 @@ class LauncherProxyServiceTest : SysuiTestCase() {
 
         // return isSystemUser as true by default.
         `when`(processWrapper.isSystemUser).thenReturn(true)
+        sysuiStatePerDisplayRepository.add(Display.DEFAULT_DISPLAY, sysUiState)
+        runBlocking { kosmos.displayRepository.apply { addDisplay(0) } }
         subject = createLauncherProxyService(context)
     }
 
@@ -165,7 +181,8 @@ class LauncherProxyServiceTest : SysuiTestCase() {
 
         verify(launcherProxy)
             .onSystemUiStateChanged(
-                longThat { it and SYSUI_STATE_WAKEFULNESS_MASK == WAKEFULNESS_AWAKE }
+                longThat { it and SYSUI_STATE_WAKEFULNESS_MASK == WAKEFULNESS_AWAKE },
+                eq(Display.DEFAULT_DISPLAY),
             )
     }
 
@@ -175,7 +192,8 @@ class LauncherProxyServiceTest : SysuiTestCase() {
 
         verify(launcherProxy)
             .onSystemUiStateChanged(
-                longThat { it and SYSUI_STATE_WAKEFULNESS_MASK == WAKEFULNESS_WAKING }
+                longThat { it and SYSUI_STATE_WAKEFULNESS_MASK == WAKEFULNESS_WAKING },
+                eq(Display.DEFAULT_DISPLAY),
             )
     }
 
@@ -185,7 +203,8 @@ class LauncherProxyServiceTest : SysuiTestCase() {
 
         verify(launcherProxy)
             .onSystemUiStateChanged(
-                longThat { it and SYSUI_STATE_WAKEFULNESS_MASK == WAKEFULNESS_ASLEEP }
+                longThat { it and SYSUI_STATE_WAKEFULNESS_MASK == WAKEFULNESS_ASLEEP },
+                eq(Display.DEFAULT_DISPLAY),
             )
     }
 
@@ -197,7 +216,8 @@ class LauncherProxyServiceTest : SysuiTestCase() {
 
         verify(launcherProxy)
             .onSystemUiStateChanged(
-                longThat { it and SYSUI_STATE_WAKEFULNESS_MASK == WAKEFULNESS_GOING_TO_SLEEP }
+                longThat { it and SYSUI_STATE_WAKEFULNESS_MASK == WAKEFULNESS_GOING_TO_SLEEP },
+                eq(Display.DEFAULT_DISPLAY),
             )
     }
 
@@ -216,7 +236,7 @@ class LauncherProxyServiceTest : SysuiTestCase() {
         `when`(processWrapper.isSystemUser).thenReturn(false)
         `when`(userManager.isVisibleBackgroundUsersSupported()).thenReturn(false)
         val spyContext = spy(context)
-        val ops = createLauncherProxyService(spyContext)
+        val ops = assertLogsWtf { createLauncherProxyService(spyContext) }.result
         ops.startConnectionToCurrentUser()
         verify(spyContext, times(0)).bindServiceAsUser(any(), any(), anyInt(), any())
     }
@@ -238,10 +258,52 @@ class LauncherProxyServiceTest : SysuiTestCase() {
         `when`(userManager.isVisibleBackgroundUsersSupported()).thenReturn(true)
         `when`(userManager.isUserForeground()).thenReturn(true)
         val spyContext = spy(context)
-        val ops = createLauncherProxyService(spyContext)
+        val ops = assertLogsWtf { createLauncherProxyService(spyContext) }.result
         ops.startConnectionToCurrentUser()
         verify(spyContext, times(0)).bindServiceAsUser(any(), any(), anyInt(), any())
     }
+
+    @Test
+    fun notifySysUiStateFlagsForAllDisplays_triggersUpdateInAllDisplays() =
+        kosmos.testScope.runTest {
+            kosmos.displayRepository.apply {
+                addDisplay(0)
+                addDisplay(1)
+                addDisplay(2)
+            }
+            kosmos.fakeSysUIStatePerDisplayRepository.apply {
+                add(1, sysUiStateFactory.create(1))
+                add(2, sysUiStateFactory.create(2))
+            }
+            clearInvocations(launcherProxy)
+            subject.notifySysUiStateFlagsForAllDisplays()
+
+            verify(launcherProxy).onSystemUiStateChanged(anyLong(), eq(0))
+            verify(launcherProxy).onSystemUiStateChanged(anyLong(), eq(1))
+            verify(launcherProxy).onSystemUiStateChanged(anyLong(), eq(2))
+        }
+
+    @Test
+    @EnableFlags(Flags.FLAG_SHADE_WINDOW_GOES_AROUND)
+    fun updateSystemUiStateFlags_updatesAllNavBars() =
+        kosmos.testScope.runTest {
+            kosmos.displayRepository.apply {
+                addDisplay(0)
+                addDisplay(1)
+            }
+            kosmos.fakeSysUIStatePerDisplayRepository.apply {
+                add(1, sysUiStateFactory.create(1))
+            }
+            val navBar0 = mock<NavigationBar>()
+            val navBar1 = mock<NavigationBar>()
+            whenever(navBarController.getNavigationBar(eq(0))).thenReturn(navBar0)
+            whenever(navBarController.getNavigationBar(eq(1))).thenReturn(navBar1)
+
+            subject.updateSystemUiStateFlags()
+
+            verify(navBar0).updateSystemUiStateFlags()
+            verify(navBar1).updateSystemUiStateFlags()
+        }
 
     private fun createLauncherProxyService(ctx: Context): LauncherProxyService {
         return LauncherProxyService(
@@ -254,7 +316,7 @@ class LauncherProxyServiceTest : SysuiTestCase() {
             screenPinningRequest,
             navModeController,
             statusBarWinController,
-            sysUiState,
+            kosmos.fakeSysUIStatePerDisplayRepository,
             mock(),
             mock(),
             userTracker,
@@ -270,6 +332,7 @@ class LauncherProxyServiceTest : SysuiTestCase() {
             broadcastDispatcher,
             backAnimation,
             processWrapper,
+            kosmos.displayRepository,
         )
     }
 }
