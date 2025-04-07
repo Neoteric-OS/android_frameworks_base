@@ -96,31 +96,7 @@ public class Recents implements
         // recents
         if (!isUserSetup()) {
             return;
-        }
-
-        mImpl.toggleRecentApps();
-    }
-
-    @Override
-    public void preloadRecentApps() {
-        // Ensure the device has been provisioned before allowing the user to interact with
-        // recents
-        if (!isUserSetup()) {
-            return;
-        }
-
-        mImpl.preloadRecentApps();
-    }
-
-    @Override
-    public void cancelPreloadRecentApps() {
-        // Ensure the device has been provisioned before allowing the user to interact with
-        // recents
-        if (!isUserSetup()) {
-            return;
-        }
-
-        mImpl.cancelPreloadRecentApps();
+ 
     }
 
     /**
