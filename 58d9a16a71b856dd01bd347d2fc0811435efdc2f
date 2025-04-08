@@ -64,6 +64,30 @@
       },
       "revId": "58d9a16a71b856dd01bd347d2fc0811435efdc2f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e96db22d_2cde5321",
+        "filename": "media/java/android/media/Image.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2025-04-08T20:23:18Z",
+      "side": 1,
+      "message": "correct. SurfaceControl already exposes the buffer transform over here: https://developer.android.com/reference/android/view/SurfaceControl#BUFFER_TRANSFORM_IDENTITY\n\nalthough the layering would be a bit odd",
+      "parentUuid": "2c2d1c7e_18735231",
+      "range": {
+        "startLine": 223,
+        "startChar": 24,
+        "endLine": 223,
+        "endChar": 36
+      },
+      "revId": "58d9a16a71b856dd01bd347d2fc0811435efdc2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
