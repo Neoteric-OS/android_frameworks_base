@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ba752e3_132af1a6",
+        "filename": "media/java/android/media/Image.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2025-04-08T20:02:41Z",
+      "side": 1,
+      "message": "this is what should be exposed. Don\u0027t add getTransformMatrix that returns a float[]. I know it\u0027s matching SurfaceTexture, but SurfaceTextures\u0027 is problematic because of the 1-texel crop. Image already has the crop information, so it just needs to expose the transform which is *not* a matrix. If someone wants to take those 2 pieces of information and create the equivalent of the SurfaceTexture matrix, they easily can, could even be a utility we plop into jetpack if there\u0027s enough demand, but it doesn\u0027t need to be an API on Image, and it\u0027s inferior to the existing getTransform so that\u0027s what should be exposed instead.\n\nAlso ImageWriter needs to be able to *set* the transform",
+      "range": {
+        "startLine": 223,
+        "startChar": 24,
+        "endLine": 223,
+        "endChar": 36
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "f1b2c7d9_867494ab",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "media/java/android/media/Image.java",
+              "range": {
+                "startLine": 225,
+                "startChar": 0,
+                "endLine": 246,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "58d9a16a71b856dd01bd347d2fc0811435efdc2f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
