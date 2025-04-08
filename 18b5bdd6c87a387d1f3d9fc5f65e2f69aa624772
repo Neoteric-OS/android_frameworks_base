@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3ef32de_d0c5fa3c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1170688
+      },
+      "writtenOn": "2025-04-08T23:49:12Z",
+      "side": 1,
+      "message": "Unfortunately we cannot backport APIs including test APIs to older releases. CTS should continue to pass with the platform release it was shipped with.",
+      "revId": "18b5bdd6c87a387d1f3d9fc5f65e2f69aa624772",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
