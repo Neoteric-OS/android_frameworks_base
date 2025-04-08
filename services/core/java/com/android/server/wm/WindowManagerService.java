@@ -16,6 +16,7 @@
 
 package com.android.server.wm;
 
+import static android.Manifest.permission.ACCESS_SURFACE_FLINGER;
 import static android.Manifest.permission.CONTROL_REMOTE_APP_TRANSITION_ANIMATIONS;
 import static android.Manifest.permission.INPUT_CONSUMER;
 import static android.Manifest.permission.INTERNAL_SYSTEM_WINDOW;
@@ -9564,6 +9565,25 @@ public class WindowManagerService extends IWindowManager.Stub
                     },
                     true /* traverseTopToBottom */);
             return List.copyOf(notifiedApps);
+        }
+    }
+
+    @RequiresPermission(ACCESS_SURFACE_FLINGER)
+    @Override
+    public boolean replaceContentOnDisplay(int displayId, SurfaceControl sc) {
+        if (!checkCallingPermission(ACCESS_SURFACE_FLINGER,
+                "replaceDisplayContent()")) {
+            throw new SecurityException("Requires ACCESS_SURFACE_FLINGER permission");
+        }
+
+        DisplayContent dc;
+        synchronized (mGlobalLock) {
+            dc = mRoot.getDisplayContentOrCreate(displayId);
+            if (dc == null) {
+                return false;
+            }
+            dc.replaceContent(sc);
+            return true;
         }
     }
 }
