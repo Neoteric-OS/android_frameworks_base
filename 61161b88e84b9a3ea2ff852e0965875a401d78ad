@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb80915d_93ecf596",
+        "filename": "services/core/java/com/android/server/wm/TransitionController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1240085
+      },
+      "writtenOn": "2025-04-10T16:28:00Z",
+      "side": 1,
+      "message": "It should already be null at this point (since `abort()` calls syncEngine.abort which eventually makes it back to onTransactionReady() -\u003e onAbort()).\n\nIt is definitely round-about, but this here is a no-op (or there is a bug elsewhere that we should fix)",
+      "range": {
+        "startLine": 279,
+        "startChar": 12,
+        "endLine": 279,
+        "endChar": 41
+      },
+      "revId": "61161b88e84b9a3ea2ff852e0965875a401d78ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
