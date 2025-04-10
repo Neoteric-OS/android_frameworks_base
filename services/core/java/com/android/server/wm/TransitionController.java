@@ -276,6 +276,7 @@ class TransitionController {
         mWaitingTransitions.clear();
         if (mCollectingTransition != null) {
             mCollectingTransition.abort();
+            mCollectingTransition = null;
         }
         mRemotePlayer.clear();
         mRunningLock.doNotifyLocked();
