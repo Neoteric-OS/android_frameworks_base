@@ -5621,6 +5621,8 @@ public final class ActiveServices {
             // ends up just being cached, so quickly killed, then restarted again and again.
             // Let's not let that happen.
             Slog.wtf(TAG, "Restarting service that is not needed: " + r);
+            mRestartingServices.remove(r);
+            clearRestartingIfNeededLocked(r);
             return;
         }
         try {
