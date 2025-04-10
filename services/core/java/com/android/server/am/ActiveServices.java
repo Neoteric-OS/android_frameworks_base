@@ -5621,6 +5621,9 @@ public final class ActiveServices {
             // ends up just being cached, so quickly killed, then restarted again and again.
             // Let's not let that happen.
             Slog.wtf(TAG, "Restarting service that is not needed: " + r);
+            if (mRestartingServices.remove(r)) {
+                clearRestartingIfNeededLocked(r);
+            }
             return;
         }
         try {
@@ -5762,7 +5765,7 @@ public final class ActiveServices {
         }
 
         // We are now bringing the service up, so no longer in the
-        // restarting state.
+        // restarting state. Remove it from mRestartingServices if it's there.
         if (mRestartingServices.remove(r)) {
             clearRestartingIfNeededLocked(r);
         }
