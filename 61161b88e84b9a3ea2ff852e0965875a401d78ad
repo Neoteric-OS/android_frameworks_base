@@ -22,6 +22,30 @@
       },
       "revId": "61161b88e84b9a3ea2ff852e0965875a401d78ad",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b5bd0d99_84fa42db",
+        "filename": "services/core/java/com/android/server/wm/TransitionController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2025-04-11T01:47:58Z",
+      "side": 1,
+      "message": "If the state of mCollectingTransition is STATE_PENDING or STATE_ABORT at this time, we will not be able to call onTransactionReady() -\u003e onAbort(). Will this cause some exceptions later?",
+      "parentUuid": "fb80915d_93ecf596",
+      "range": {
+        "startLine": 279,
+        "startChar": 12,
+        "endLine": 279,
+        "endChar": 41
+      },
+      "revId": "61161b88e84b9a3ea2ff852e0965875a401d78ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
