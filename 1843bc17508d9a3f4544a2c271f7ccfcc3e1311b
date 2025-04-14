@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd590ecf_b97bc49c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-04-14T13:28:04Z",
+      "side": 1,
+      "message": "Lease refer a buganizer issue in the commit message or create one if none exist with a precise description of the problem and a bug report captured just after the issue is observed.",
+      "revId": "1843bc17508d9a3f4544a2c271f7ccfcc3e1311b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
