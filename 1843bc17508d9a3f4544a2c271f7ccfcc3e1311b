@@ -16,6 +16,24 @@
       "message": "Lease refer a buganizer issue in the commit message or create one if none exist with a precise description of the problem and a bug report captured just after the issue is observed.",
       "revId": "1843bc17508d9a3f4544a2c271f7ccfcc3e1311b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "644e29c0_5d2afe6f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3232842
+      },
+      "writtenOn": "2025-04-15T02:40:39Z",
+      "side": 1,
+      "message": "https://partnerissuetracker.corp.google.com/issues/410486040",
+      "parentUuid": "dd590ecf_b97bc49c",
+      "revId": "1843bc17508d9a3f4544a2c271f7ccfcc3e1311b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
