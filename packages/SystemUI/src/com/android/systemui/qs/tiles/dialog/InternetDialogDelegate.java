@@ -66,10 +66,10 @@ import android.view.ViewStub;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.MainThread;
@@ -169,15 +169,15 @@ public class InternetDialogDelegate implements
     private TextView mMobileTitleText;
     private TextView mMobileSummaryText;
     private TextView mAirplaneModeSummaryText;
-    private Switch mMobileDataToggle;
-    private Switch mSecondaryMobileDataToggle;
+    private CompoundButton mMobileDataToggle;
+    private CompoundButton mSecondaryMobileDataToggle;
     private View mMobileToggleDivider;
     private View mMobileConnectedSpace;
     private ImageView mHotspotIcon;
     private TextView mHotspotTitleText;
     private TextView mHotspotSummaryText;
-    private Switch mHotspotToggle;
-    private Switch mWiFiToggle;
+    private CompoundButton mHotspotToggle;
+    private CompoundButton mWiFiToggle;
     private View mWifiConnectedSpace;
     private Button mDoneButton;
 
@@ -1142,7 +1142,7 @@ public class InternetDialogDelegate implements
                     context.getString(R.string.data_disable_ciwlan_call_might_drop_message);
         }
 
-        final Switch mobileDataToggle = (subId == mDefaultDataSubId)
+        final CompoundButton mobileDataToggle = (subId == mDefaultDataSubId)
                 ? mMobileDataToggle : mSecondaryMobileDataToggle;
         mAlertDialog = new AlertDialog.Builder(context)
                 .setTitle(R.string.mobile_data_disable_title)

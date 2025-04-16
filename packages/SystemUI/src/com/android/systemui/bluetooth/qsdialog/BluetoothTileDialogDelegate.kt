@@ -28,9 +28,9 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.view.accessibility.AccessibilityNodeInfo
 import android.view.accessibility.AccessibilityNodeInfo.AccessibilityAction
 import android.widget.Button
+import android.widget.CompoundButton
 import android.widget.ImageView
 import android.widget.ProgressBar
-import android.widget.Switch
 import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -239,7 +239,7 @@ internal constructor(
         }
     }
 
-    private fun getToggleView(dialog: SystemUIDialog): Switch {
+    private fun getToggleView(dialog: SystemUIDialog): CompoundButton {
         return dialog.requireViewById(R.id.bluetooth_toggle)
     }
 
@@ -259,7 +259,7 @@ internal constructor(
         return dialog.requireViewById(R.id.device_list)
     }
 
-    private fun getAutoOnToggle(dialog: SystemUIDialog): Switch {
+    private fun getAutoOnToggle(dialog: SystemUIDialog): CompoundButton {
         return dialog.requireViewById(R.id.bluetooth_auto_on_toggle)
     }
 
