@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ca7d331_5fd8aa77",
+        "filename": "services/people/java/com/android/server/people/data/DataManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1269233
+      },
+      "writtenOn": "2025-04-16T19:30:34Z",
+      "side": 1,
+      "message": "Can you add a unit test please",
+      "range": {
+        "startLine": 508,
+        "startChar": 23,
+        "endLine": 508,
+        "endChar": 37
+      },
+      "revId": "f640327cfe11fc0072d6fc0a5e3a04a905f796ba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
