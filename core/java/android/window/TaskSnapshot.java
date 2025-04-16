@@ -292,7 +292,10 @@ public class TaskSnapshot implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(mId);
         ComponentName.writeToParcel(mTopActivityComponent, dest);
-        dest.writeTypedObject(mSnapshot != null && !mSnapshot.isClosed() ? mSnapshot : null, 0);
+        synchronized (this) {
+            dest.writeTypedObject(mSnapshot != null &&
+                    !mSnapshot.isClosed() ? mSnapshot : null, 0);
+        }
         dest.writeInt(mColorSpace.getId());
         dest.writeInt(mOrientation);
         dest.writeInt(mRotation);
