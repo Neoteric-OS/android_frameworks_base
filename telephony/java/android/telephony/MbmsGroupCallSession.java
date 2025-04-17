@@ -144,7 +144,7 @@ public class MbmsGroupCallSession implements AutoCloseable {
      */
     public static @Nullable MbmsGroupCallSession create(@NonNull Context context,
             @NonNull Executor executor, @NonNull MbmsGroupCallSessionCallback callback) {
-        return create(context, SubscriptionManager.getDefaultSubscriptionId(), executor, callback);
+        return create(context, SubscriptionManager.getDefaultDataSubscriptionId(), executor, callback);
     }
 
     /**

@@ -149,7 +149,7 @@ public class MbmsStreamingSession implements AutoCloseable {
      */
     public static MbmsStreamingSession create(@NonNull Context context,
             @NonNull Executor executor, @NonNull MbmsStreamingSessionCallback callback) {
-        return create(context, executor, SubscriptionManager.getDefaultSubscriptionId(), callback);
+        return create(context, executor, SubscriptionManager.getDefaultDataSubscriptionId(), callback);
     }
 
     /**

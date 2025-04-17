@@ -265,7 +265,7 @@ public class MbmsDownloadSession implements AutoCloseable {
      */
     public static MbmsDownloadSession create(@NonNull Context context,
             @NonNull Executor executor, @NonNull MbmsDownloadSessionCallback callback) {
-        return create(context, executor, SubscriptionManager.getDefaultSubscriptionId(), callback);
+        return create(context, executor, SubscriptionManager.getDefaultDataSubscriptionId(), callback);
     }
 
     /**
