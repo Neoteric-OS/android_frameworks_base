@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "67e748b7_d5cf1454",
+        "filename": "services/core/java/com/android/server/wm/ActivityRecord.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7416,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2025-04-18T07:03:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f56288ff_6d2793a6",
+      "range": {
+        "startLine": 7416,
+        "startChar": 55,
+        "endLine": 7416,
+        "endChar": 77
+      },
+      "revId": "dfe401da6a532299225690ccf5303c1a5d5472f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "41aae6bc_75028d18",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-04-18T06:58:51Z",
       "side": 1,
       "message": "Can be package private",
+      "range": {
+        "startLine": 7400,
+        "startChar": 4,
+        "endLine": 7421,
+        "endChar": 10
+      },
+      "revId": "dfe401da6a532299225690ccf5303c1a5d5472f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3135241c_b5264674",
+        "filename": "services/core/java/com/android/server/wm/ActivityRecord.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7421,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2025-04-18T07:03:55Z",
+      "side": 1,
+      "message": "we can remove the public var,what you think?",
+      "parentUuid": "41aae6bc_75028d18",
       "range": {
         "startLine": 7400,
         "startChar": 4,
