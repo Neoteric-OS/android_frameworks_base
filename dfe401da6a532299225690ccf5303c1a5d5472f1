@@ -93,6 +93,30 @@
       },
       "revId": "dfe401da6a532299225690ccf5303c1a5d5472f1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "638d5581_c3902094",
+        "filename": "services/core/java/com/android/server/wm/ActivityRecord.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 7421,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2025-04-18T07:23:40Z",
+      "side": 1,
+      "message": "Yes, I mean that we don\u0027t need the \"public\" for those",
+      "parentUuid": "3135241c_b5264674",
+      "range": {
+        "startLine": 7400,
+        "startChar": 4,
+        "endLine": 7421,
+        "endChar": 10
+      },
+      "revId": "dfe401da6a532299225690ccf5303c1a5d5472f1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
