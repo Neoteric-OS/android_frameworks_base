@@ -3023,6 +3023,7 @@ public class DisplayPolicy {
 
     void release() {
         mDisplayContent.mTransitionController.unregisterLegacyListener(mAppTransitionListener);
+        mDisplayContent.unregisterPointerEventListener(mSystemGestures);
         mHandler.post(mGestureNavigationSettingsObserver::unregister);
         mHandler.post(mForceShowNavBarSettingsObserver::unregister);
         if (!CLIENT_TRANSIENT && !CLIENT_IMMERSIVE_CONFIRMATION) {
