@@ -305,6 +305,11 @@ public class VolumeInfo implements Parcelable {
     }
 
     @UnsupportedAppUsage
+    public boolean isInitialState() {
+        return state == STATE_UNMOUNTED && mountUserId == UserHandle.USER_NULL;
+    }
+
+    @UnsupportedAppUsage
     public boolean isPrimary() {
         return (mountFlags & MOUNT_FLAG_PRIMARY) != 0;
     }
