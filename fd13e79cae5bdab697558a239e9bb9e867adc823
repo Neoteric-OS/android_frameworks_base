@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "358696b5_af13c5da",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2025-04-21T19:12:11Z",
+      "side": 1,
+      "message": "Thanks for the patch! As discussed on the bug, let\u0027s proceed with the other change as noted in https://android-review.git.corp.google.com/c/platform/frameworks/base/+/3593811/comments/d4867240_f29888c1",
+      "revId": "fd13e79cae5bdab697558a239e9bb9e867adc823",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
