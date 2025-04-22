@@ -16,6 +16,24 @@
       "message": "Thanks for the patch. Due to some recent process changes for landing code, can you upload this to the partner review site? https://partner-android-review.git.corp.google.com/",
       "revId": "e0720c951292cfb688a935fb324090331cf4571f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0903ff4_b226a754",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1953885
+      },
+      "writtenOn": "2025-04-22T01:40:23Z",
+      "side": 1,
+      "message": "Dear jdduke,\n\nwe can not open the website of https://partner-android-review.git.corp.google.com/",
+      "parentUuid": "d4867240_f29888c1",
+      "revId": "e0720c951292cfb688a935fb324090331cf4571f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
