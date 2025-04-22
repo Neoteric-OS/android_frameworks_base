@@ -409,4 +409,14 @@ interface ITelecomService {
      */
     void addCall(in CallAttributes callAttributes, in ICallEventCallback callback, String callId,
         String callingPackage);
+
+    /**
+     * @see TelecomServiceImpl#getCallConnectedIndicatorPreference
+     */
+    int getCallConnectedIndicatorPreference(in String callingPackage);
+
+    /**
+     * @see TelecomServiceImpl#setCallConnectedIndicatorPreference
+     */
+    void setCallConnectedIndicatorPreference(in String callingPackage, in int preference);
 }

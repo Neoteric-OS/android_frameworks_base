@@ -1121,6 +1121,31 @@ public class TelecomManager {
     /** @hide **/
     public static final String TRANSACTION_CALL_ID_KEY = "TelecomCallId";
 
+    /*
+     * Values for call connected indicator.
+     */
+    /** @hide */
+    @SystemApi
+    @FlaggedApi(Flags.FLAG_CALL_CONNECTED_INDICATOR_PREFERENCE)
+    public static final int CALL_CONNECTED_INDICATOR_NONE = 0;
+    /** @hide */
+    @SystemApi
+    @FlaggedApi(Flags.FLAG_CALL_CONNECTED_INDICATOR_PREFERENCE)
+    public static final int CALL_CONNECTED_INDICATOR_TONE = (1 << 0);
+    /** @hide */
+    @SystemApi
+    @FlaggedApi(Flags.FLAG_CALL_CONNECTED_INDICATOR_PREFERENCE)
+    public static final int CALL_CONNECTED_INDICATOR_VIBRATION  = (1 << 1);
+
+    /** @hide */
+    @Retention(RetentionPolicy.SOURCE)
+    @FlaggedApi(Flags.FLAG_CALL_CONNECTED_INDICATOR_PREFERENCE)
+    @IntDef(
+            prefix = { "CALL_CONNECTED_INDICATOR_" },
+            value = {CALL_CONNECTED_INDICATOR_NONE, CALL_CONNECTED_INDICATOR_TONE,
+            CALL_CONNECTED_INDICATOR_VIBRATION})
+    public @interface CallConnectedIndicator {}
+
     /**
      * @hide
      */
@@ -2965,6 +2990,58 @@ public class TelecomManager {
             }
         }
     }
+
+    /**
+     * Get call connected indicator preference.
+     * @return Returns the current preference for the call connected indicator.
+     * @hide
+     */
+    @SystemApi
+    @FlaggedApi(Flags.FLAG_CALL_CONNECTED_INDICATOR_PREFERENCE)
+    @RequiresPermission(allOf = {android.Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.READ_PRIVILEGED_PHONE_STATE},
+            conditional = true)
+    public @CallConnectedIndicator int getCallConnectedIndicatorPreference() {
+        ITelecomService service = getTelecomService();
+        if (service != null) {
+            try {
+                return service.getCallConnectedIndicatorPreference(mContext.getOpPackageName());
+            } catch (RemoteException e) {
+                Log.e(TAG, "RemoteException getCallConnectedIndicatorPreference: " + e);
+                throw e.rethrowFromSystemServer();
+            }
+        }
+        throw new IllegalStateException("Telecom is not available");
+    }
+
+    /**
+     * Specify call connected indicator preference.
+     * <p>
+     * A {@link IllegalArgumentException} will be thrown if an illega argument is passed,
+     * which is not supported by {@link CallConnectedIndicator}.
+     * <p>
+     * @param preference The preference of the call connected indicator.
+     * @hide
+     */
+    @SystemApi
+    @FlaggedApi(Flags.FLAG_CALL_CONNECTED_INDICATOR_PREFERENCE)
+    @RequiresPermission(allOf = {Manifest.permission.MODIFY_PHONE_STATE},
+            conditional = true)
+    public void setCallConnectedIndicatorPreference(@CallConnectedIndicator int preference) {
+        ITelecomService service = getTelecomService();
+        if (service != null) {
+            try {
+                service.setCallConnectedIndicatorPreference(
+                        mContext.getOpPackageName(), preference);
+            } catch (RemoteException e) {
+                Log.e(TAG, "RemoteException setCallConnectedIndicatorPreference: " + e);
+                throw e.rethrowFromSystemServer();
+            }
+        } else {
+            throw new IllegalStateException("Telecom is not available");
+        }
+    }
+
 
     private boolean isSystemProcess() {
         return Process.myUid() == Process.SYSTEM_UID;
