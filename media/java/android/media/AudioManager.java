@@ -7539,7 +7539,7 @@ public class AudioManager {
      */
     public int setHdmiSystemAudioSupported(boolean on) {
         try {
-            return getService().setHdmiSystemAudioSupported(on);
+            return getService().setHdmiSystemAudioSupported(on, false);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
         }

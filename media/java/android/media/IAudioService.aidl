@@ -378,7 +378,7 @@ interface IAudioService {
     @EnforcePermission("MODIFY_AUDIO_SETTINGS_PRIVILEGED")
     boolean isBluetoothAudioDeviceCategoryFixed(in String address);
 
-    int setHdmiSystemAudioSupported(boolean on);
+    int setHdmiSystemAudioSupported(boolean on, boolean force);
 
     boolean isHdmiSystemAudioSupported();
 
