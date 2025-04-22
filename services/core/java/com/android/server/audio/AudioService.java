@@ -2009,7 +2009,9 @@ public class AudioService extends IAudioService.Stub
         }
         synchronized (mHdmiClientLock) {
             if (mHdmiManager != null && mHdmiTvClient != null) {
-                setHdmiSystemAudioSupported(mHdmiSystemAudioSupported);
+                boolean on = mHdmiSystemAudioSupported;
+                mHdmiSystemAudioSupported = false;
+                setHdmiSystemAudioSupported(on);
             }
         }
 
