@@ -62,7 +62,6 @@ class DomainVerifier private constructor(
 
     private val retriever = StatementRetriever()
 
-    private val targetAssetCache = AssetLruCache()
 
     fun collectHosts(packageNames: Iterable<String>, statusFilter: (Int) -> Boolean):
             Iterable<Triple<UUID, String, Iterable<String>>> {
@@ -89,8 +88,7 @@ class DomainVerifier private constructor(
         packageName: String,
         network: Network? = null
     ): Triple<WorkResult, VerifyStatus, Statement?> {
-        val assetMatcher = synchronized(targetAssetCache) { targetAssetCache[packageName] }
-            .takeIf { it!!.isPresent }
+        val assetMatcher = getMatcherForPackage(packageName)
             ?: return Triple(WorkResult.failure(), VerifyStatus.FAILURE_PACKAGE_MANAGER, null)
         return verifyHost(host, assetMatcher.get(), network)
     }
@@ -136,12 +134,10 @@ class DomainVerifier private constructor(
         return resultAndStatus
     }
 
-    private inner class AssetLruCache : LruCache<String, Optional<AbstractAssetMatcher>>(50) {
-        override fun create(packageName: String) =
-            StatementUtils.getCertFingerprintsFromPackageManager(appContext, packageName)
-                .let { (it as? Result.Success)?.value }
-                ?.let { StatementUtils.createAndroidAsset(packageName, it) }
-                ?.let(AbstractAssetMatcher::createMatcher)
-                .let { Optional.ofNullable(it) }
-    }
+    private fun getMatcherForPackage(packageName: String) =
+        StatementUtils.getCertFingerprintsFromPackageManager(appContext, packageName)
+            .let { (it as? Result.Success)?.value }
+            ?.let { StatementUtils.createAndroidAsset(packageName, it) }
+            ?.let(AbstractAssetMatcher::createMatcher)
+            .let { Optional.ofNullable(it) }
 }
