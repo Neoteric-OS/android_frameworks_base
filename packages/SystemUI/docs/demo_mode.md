@@ -183,3 +183,4 @@ elif [ $CMD == "off" ]; then
 fi
 ```
 
+proguard-rules.pro
