@@ -1076,6 +1076,10 @@ public class GnssNative {
     @NativeEntryPoint
     void reportLocation(boolean hasLatLong, Location location) {
         Binder.withCleanCallingIdentity(() -> {
+            if (!location.isComplete()) {
+                Log.e(TAG, "location is not complete");
+                return;
+            }
             if (hasLatLong && !mHasFirstFix) {
                 mHasFirstFix = true;
 
