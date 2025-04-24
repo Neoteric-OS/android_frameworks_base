@@ -1321,10 +1321,13 @@ public class MediaSessionService extends SystemService implements Monitor {
         public void removeOnMediaKeyEventSessionChangedListener(
                 IOnMediaKeyEventSessionChangedListener listener) {
             IBinder cbBinder = listener.asBinder();
-            OnMediaKeyEventSessionChangedListenerRecord cr =
-                    mOnMediaKeyEventSessionChangedListeners.remove(cbBinder);
-            cbBinder.unlinkToDeath(cr, 0);
+            if (mOnMediaKeyEventSessionChangedListeners.containsKey(cbBinder)) {
+                OnMediaKeyEventSessionChangedListenerRecord cr =
+                        mOnMediaKeyEventSessionChangedListeners.remove(cbBinder);
+                cbBinder.unlinkToDeath(cr, 0);
+            }
         }
+        
 
         public void dumpLocked(PrintWriter pw, String prefix) {
             pw.print(prefix + "Record for full_user=" + mFullUserId);
