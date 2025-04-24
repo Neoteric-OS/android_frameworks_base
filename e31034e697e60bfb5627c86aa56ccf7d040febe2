@@ -16,6 +16,23 @@
       "message": "Hi google team\n\nWe found this problem from our customer,log like below:\n java.lang.IllegalArgumentException: incomplete location at index 0: [Location[gps 0.000000,0.000000 et\u003d+3m39s120ms {Bundle[{satellites\u003d0, maxCn0\u003d0, meanCn0\u003d0}]}]]\n \t\t\t\t\t\t\t\t\t##^at android.location.LocationResult.validate(LocationResult.java:110)\n \t\t\t\t\t\t\t\t\t##at com.android.server.location.gnss.GnssLocationProvider.handleReportLocation(GnssLocationProvider.java:1302)\n \t\t\t\t\t\t\t\t\t##at com.android.server.location.gnss.GnssLocationProvider.access$1000(GnssLocationProvider.java:120)\n \t\t\t\t\t\t\t\t\t##at com.android.server.location.gnss.GnssLocationProvider$ProviderHandler.handleMessage(GnssLocationProvider.java:1646)\n \t\t\t\t\t\t\t\t\t##at android.os.Handler.dispatchMessage(Handler.java:106)##at android.os.Looper.loopOnce(Looper.java:210)\n \t\t\t\t\t\t\t\t\t##at android.os.Looper.loop(Looper.java:299)##at android.os.HandlerThread.run(HandlerThread.java:67)\n \t\t\t\t\t\t\t\t\t##^at com.android.server.ServiceThread.run(ServiceThread.java:46)",
       "revId": "e31034e697e60bfb5627c86aa56ccf7d040febe2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "356b6260_15888370",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1358281
+      },
+      "writtenOn": "2025-04-24T16:26:08Z",
+      "side": 1,
+      "message": "Can you check if https://android.googlesource.com/platform/frameworks/base/+/cbadbf45622e37452e186be90b213bc11ef425c1 fixed this issue?",
+      "revId": "e31034e697e60bfb5627c86aa56ccf7d040febe2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
