@@ -2499,6 +2499,19 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
 
         for (int displayNdx = getChildCount() - 1; displayNdx >= 0; --displayNdx) {
             final DisplayContent display = getChildAt(displayNdx);
+            if (display != null && targetRootTask != null) {
+                final Display displayDevice = display.getDisplay();
+                if (displayDevice != null) {
+                    final int state = displayDevice.getState();
+                    if (state == Display.STATE_OFF) {
+                        final int displayId = displayDevice.getDisplayId();
+                        final int targetRootTaskDisplayId = targetRootTask.getDisplayId();
+                        if (displayId != targetRootTaskDisplayId) {
+                            continue;
+                        }
+                    }
+                }
+            }
             final boolean curResult = result;
             boolean[] resumedOnDisplay = new boolean[1];
             final ActivityRecord topOfDisplay = display.topRunningActivity();
