@@ -65,7 +65,7 @@ public class NotificationShellCmd extends ShellCommand {
             + "  allow_listener COMPONENT [user_id (current user if not specified)]\n"
             + "  disallow_listener COMPONENT [user_id (current user if not specified)]\n"
             + "  allow_assistant COMPONENT [user_id (current user if not specified)]\n"
-            + "  remove_assistant COMPONENT [user_id (current user if not specified)]\n"
+            + "  disallow_assistant COMPONENT [user_id (current user if not specified)]\n"
             + "  set_dnd [on|none (same as on)|priority|alarms|all|off (same as all)]\n"
             + "  allow_dnd PACKAGE [user_id (current user if not specified)]\n"
             + "  disallow_dnd PACKAGE [user_id (current user if not specified)]\n"
