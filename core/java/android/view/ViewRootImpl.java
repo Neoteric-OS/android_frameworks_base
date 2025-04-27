@@ -10517,6 +10517,7 @@ public final class ViewRootImpl implements ViewParent,
     final TraversalRunnable mTraversalRunnable = new TraversalRunnable();
 
     final class WindowInputEventReceiver extends InputEventReceiver {
+        private List<Integer> mModifiedIds = new ArrayList<>();
         public WindowInputEventReceiver(InputChannel inputChannel, Looper looper) {
             super(inputChannel, looper);
         }
@@ -10524,6 +10525,40 @@ public final class ViewRootImpl implements ViewParent,
         @Override
         public void onInputEvent(InputEvent event) {
             Trace.traceBegin(Trace.TRACE_TAG_VIEW, "processInputEventForCompatibility");
+            /**
+             * Modify the coordinate values of x and y according to different application configurations
+             * This is just an example to illustrate the use of MotionEvent.setXY and should not be commited
+             * If the touch position of a finger is within the range of A, modify it to area M
+             * If the touch position of a finger is within the range of B, modify it to area N
+             * Then we can provide convenience for some operations and achieve key swapping, especially in the game scene
+             */
+            if (event instanceof MotionEvent) {
+                MotionEvent motionEvent = (MotionEvent)event;
+                if (motionEvent.getActionMasked() == MotionEvent.ACTION_DOWN || motionEvent.getActionMasked() == MotionEvent.ACTION_POINTER_DOWN) {
+                    int pointerIndex = motionEvent.getActionIndex();
+                    float originX = motionEvent.getX(pointerIndex);
+                    float originY = motionEvent.getX(pointerIndex);
+                    if (originX < 10 && originY < 10) {
+                        motionEvent.setXY(200, 200, pointerIndex);
+                    }
+                } else if (motionEvent.getActionMasked() == MotionEvent.ACTION_UP || motionEvent.getActionMasked() == MotionEvent.ACTION_POINTER_UP) {
+                    int pointerIndex = motionEvent.getActionIndex();
+                    int id = motionEvent.getPointerId(pointerIndex);
+                    if (mModifiedIds.contains(id)) {
+                        motionEvent.setXY(200, 200, pointerIndex);
+                        mModifiedIds.remove(Integer.valueOf(id));
+                    }
+                } else if (motionEvent.getActionMasked() == MotionEvent.ACTION_CANCEL) {
+                    mModifiedIds.clear();
+                } else {
+                    for (int pointerIndex = 0; pointerIndex < motionEvent.getPointerCount(); pointerIndex++) {
+                        int id = motionEvent.getPointerId(pointerIndex);
+                        if (mModifiedIds.contains(id)) {
+                            motionEvent.setXY(200, 200, pointerIndex);
+                        }
+                    }
+                }
+            }
             List<InputEvent> processedEvents;
             try {
                 processedEvents =

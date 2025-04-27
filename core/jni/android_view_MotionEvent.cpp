@@ -836,6 +836,11 @@ static jint android_view_MotionEvent_nativeGetSurfaceRotation(jlong nativePtr) {
     }
 }
 
+static void android_view_MotionEvent_nativeSetXY(jlong nativePtr, jfloat x, jfloat y, jint pointerIndex) {
+    MotionEvent* event = reinterpret_cast<MotionEvent*>(nativePtr);
+    event->setXY(x, y, pointerIndex);
+}
+
 // ----------------------------------------------------------------------------
 
 static const JNINativeMethod gMotionEventMethods[] = {
@@ -915,6 +920,7 @@ static const JNINativeMethod gMotionEventMethods[] = {
         {"nativeScale", "(JF)V", (void*)android_view_MotionEvent_nativeScale},
         {"nativeGetSurfaceRotation", "(J)I",
          (void*)android_view_MotionEvent_nativeGetSurfaceRotation},
+        {"nativeSetXY", "(JFFI)V", (void*)android_view_MotionEvent_nativeSetXY},
 };
 
 int register_android_view_MotionEvent(JNIEnv* env) {

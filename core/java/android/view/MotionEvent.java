@@ -1927,6 +1927,9 @@ public final class MotionEvent extends InputEvent implements Parcelable {
     @CriticalNative
     private static native int nativeGetSurfaceRotation(long nativePtr);
 
+    @CriticalNative
+    private static native void nativeSetXY(long nativePtr, float x, float y, int pointerIndex);
+
     private MotionEvent() {
     }
 
@@ -4147,6 +4150,28 @@ public final class MotionEvent extends InputEvent implements Parcelable {
      */
     public @Surface.Rotation int getSurfaceRotation() {
         return nativeGetSurfaceRotation(mNativePtr);
+    }
+
+    /**
+     * Modify this MotionEvent's position for single pointer index
+     * Provide convenience for some operations and achieve key swapping, especially in the game scene
+     * Used in ViewRootImpl.java, according to different config, change the x and y before distributing to the application
+     *
+     * @param x The modified X coordinate of the pointer referenced by
+     * {@code pointerIndex} for this motion event. The unit is pixels. The
+     * value may contain a fractional portion for devices that are subpixel
+     * precise.
+     * @param y The modified Y coordinate of the pointer referenced by
+     * {@code pointerIndex} for this motion event. The unit is pixels. The
+     * value may contain a fractional portion for devices that are subpixel
+     * precise.
+     * @param pointerIndex Index of the pointer for which the X coordinate is
+     * returned. May be a value in the range of 0 (the first pointer that
+     * is down) to {@link #getPointerCount()} - 1.
+     * {@hide}
+     */
+    public void setXY(float x, float y, int pointerIndex) {
+        nativeSetXY(mNativePtr, x, y, pointerIndex);
     }
 
     /**
