@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "05ce2842_cc49d0cd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1470474
+      },
+      "writtenOn": "2025-04-28T14:00:25Z",
+      "side": 1,
+      "message": "please attach an issue tracker ID containing the appropriate motivation",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 1
+      },
+      "revId": "be0dbd33afbda4c228a605b290cd01d3f0e28f6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "082e0cb3_74a9e66f",
