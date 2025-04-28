@@ -2424,11 +2424,13 @@ public class LockSettingsService extends ILockSettings.Stub {
         if (credential == null || credential.isNone()) {
             throw new IllegalArgumentException("Credential can't be null or empty");
         }
+
         if (userId == USER_FRP && Settings.Global.getInt(mContext.getContentResolver(),
                 Settings.Global.DEVICE_PROVISIONED, 0) != 0) {
             Slog.e(TAG, "FRP credential can only be verified prior to provisioning.");
             return VerifyCredentialResponse.ERROR;
         }
+
         if (userId == USER_REPAIR_MODE && !LockPatternUtils.isRepairModeActive(mContext)) {
             Slog.e(TAG, "Repair mode is not active on the device.");
             return VerifyCredentialResponse.ERROR;
@@ -2440,11 +2442,22 @@ public class LockSettingsService extends ILockSettings.Stub {
 
         synchronized (mSpManager) {
             if (isSpecialUserId(userId)) {
-                response = mSpManager.verifySpecialUserCredential(userId, getGateKeeperService(),
+                Slog.e(TAG, "******* 1");
+                Pair<VerifyCredentialResponse, byte[]> resp =
+                        mSpManager.verifySpecialUserCredential(userId, getGateKeeperService(),
                         credential, progressCallback);
+                Slog.e(TAG, "******* 2");
+                response = resp.first;
                 if (android.security.Flags.frpEnforcement() && response.isMatched()
                         && userId == USER_FRP) {
-                    mStorage.deactivateFactoryResetProtectionWithoutSecret();
+                    Slog.e(TAG, "******* 3");
+                    byte[] frpSecret = resp.second;
+                    if (frpSecret == null
+                            || !mStorage.deactivateFactoryResetProtection(frpSecret)) {
+                        Slog.e(TAG, "Failed to deactivate FRP with a secret");
+                        mStorage.deactivateFactoryResetProtectionWithoutSecret();
+                    }
+                    Slog.e(TAG, "******* 4");
                 }
                 return response;
             }

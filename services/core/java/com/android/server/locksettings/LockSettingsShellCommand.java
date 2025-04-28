@@ -24,6 +24,7 @@ import android.content.Context;
 import android.os.ShellCommand;
 import android.os.SystemProperties;
 import android.os.UserHandle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Slog;
 
@@ -37,6 +38,7 @@ import java.util.List;
 
 class LockSettingsShellCommand extends ShellCommand {
 
+    private static final String COMMAND_DEACTIVATE_FRP = "deactivate-frp";
     private static final String COMMAND_SET_PATTERN = "set-pattern";
     private static final String COMMAND_SET_PIN = "set-pin";
     private static final String COMMAND_SET_PASSWORD = "set-password";
@@ -47,8 +49,7 @@ class LockSettingsShellCommand extends ShellCommand {
     private static final String COMMAND_REMOVE_CACHE = "remove-cache";
     private static final String COMMAND_SET_ROR_PROVIDER_PACKAGE =
             "set-resume-on-reboot-provider-package";
-    private static final String COMMAND_REQUIRE_STRONG_AUTH =
-            "require-strong-auth";
+    private static final String COMMAND_REQUIRE_STRONG_AUTH = "require-strong-auth";
     private static final String COMMAND_HELP = "help";
 
     private int mCurrentUserId;
@@ -60,8 +61,8 @@ class LockSettingsShellCommand extends ShellCommand {
     private String mOld = "";
     private String mNew = "";
 
-    LockSettingsShellCommand(LockPatternUtils lockPatternUtils, Context context, int callingPid,
-            int callingUid) {
+    LockSettingsShellCommand(
+            LockPatternUtils lockPatternUtils, Context context, int callingPid, int callingUid) {
         mLockPatternUtils = lockPatternUtils;
         mCallingPid = callingPid;
         mCallingUid = callingUid;
@@ -85,8 +86,10 @@ class LockSettingsShellCommand extends ShellCommand {
                     case COMMAND_SET_ROR_PROVIDER_PACKAGE:
                         break;
                     default:
-                        getErrPrintWriter().println(
-                                "The device does not support lock screen - ignoring the command.");
+                        getErrPrintWriter()
+                                .println(
+                                        "The device does not support lock screen - ignoring the"
+                                            + " command.");
                         return -1;
                 }
             }
@@ -113,7 +116,7 @@ class LockSettingsShellCommand extends ShellCommand {
                     runSetDisabled();
                     return 0;
             }
-            if (!checkCredential()) {
+            if (!checkCredential(cmd)) {
                 return -1;
             }
             boolean success = true;
@@ -130,6 +133,7 @@ class LockSettingsShellCommand extends ShellCommand {
                 case COMMAND_CLEAR:
                     success = runClear();
                     break;
+                case COMMAND_DEACTIVATE_FRP:
                 case COMMAND_VERIFY:
                     runVerify();
                     break;
@@ -152,7 +156,7 @@ class LockSettingsShellCommand extends ShellCommand {
 
     @Override
     public void onHelp() {
-        try (final PrintWriter pw = getOutPrintWriter();) {
+        try (PrintWriter pw = getOutPrintWriter(); ) {
             pw.println("lockSettings service commands:");
             pw.println("");
             pw.println("NOTE: when a secure lock screen is set, most commands require the");
@@ -162,15 +166,22 @@ class LockSettingsShellCommand extends ShellCommand {
             pw.println("    Prints this help text.");
             pw.println("");
             pw.println("  get-disabled [--user USER_ID]");
-            pw.println("    Prints true if the lock screen is completely disabled, i.e. set to None.");
+            pw.println(
+                    "    Prints true if the lock screen is completely disabled, i.e. set to None.");
             pw.println("    Otherwise prints false.");
             pw.println("");
             pw.println("  set-disabled [--user USER_ID] <true|false>");
-            pw.println("    Sets whether the lock screen is disabled. If the lock screen is secure, this");
-            pw.println("    has no immediate effect. I.e. this can only change between Swipe and None.");
+            pw.println(
+                    "    Sets whether the lock screen is disabled. If the lock screen is secure,"
+                        + " this");
+            pw.println(
+                    "    has no immediate effect. I.e. this can only change between Swipe and"
+                        + " None.");
             pw.println("");
             pw.println("  set-pattern [--old <CREDENTIAL>] [--user USER_ID] <PATTERN>");
-            pw.println("    Sets a secure lock screen that uses the given PATTERN. PATTERN is a series");
+            pw.println(
+                    "    Sets a secure lock screen that uses the given PATTERN. PATTERN is a"
+                        + " series");
             pw.println("    of digits 1-9 that identify the cells of the pattern.");
             pw.println("");
             pw.println("  set-pin [--old <CREDENTIAL>] [--user USER_ID] <PIN>");
@@ -189,11 +200,16 @@ class LockSettingsShellCommand extends ShellCommand {
             pw.println("    Removes cached unified challenge for the managed profile.");
             pw.println("");
             pw.println("  set-resume-on-reboot-provider-package <package_name>");
-            pw.println("    Sets the package name for server based resume on reboot service provider.");
+            pw.println(
+                    "    Sets the package name for server based resume on reboot service"
+                        + " provider.");
             pw.println("");
             pw.println("  require-strong-auth [--user USER_ID] <reason>");
             pw.println("    Requires strong authentication. The current supported reasons:");
             pw.println("    STRONG_AUTH_REQUIRED_AFTER_USER_LOCKDOWN.");
+            pw.println("");
+            pw.println("  deactivate-frp [--old <CREDENTIAL>] [--user USER_ID]");
+            pw.println("    Verifies the lock credential and deactivates the frp.");
             pw.println("");
         }
     }
@@ -229,18 +245,18 @@ class LockSettingsShellCommand extends ShellCommand {
             }
         }
         if (mLockPatternUtils.isLockPatternEnabled(mCurrentUserId)) {
-            return LockscreenCredential.createPattern(LockPatternUtils.byteArrayToPattern(
-                    mOld.getBytes()));
+            return LockscreenCredential.createPattern(
+                    LockPatternUtils.byteArrayToPattern(mOld.getBytes()));
         }
         // User supplied some old credential but the device has neither password nor pattern,
         // so just return a password credential (and let it be rejected during LSS verification)
         return LockscreenCredential.createPassword(mOld);
-
     }
 
     private boolean runSetPattern() {
-        final LockscreenCredential pattern = LockscreenCredential.createPattern(
-                LockPatternUtils.byteArrayToPattern(mNew.getBytes()));
+        final LockscreenCredential pattern =
+                LockscreenCredential.createPattern(
+                        LockPatternUtils.byteArrayToPattern(mNew.getBytes()));
         if (!isNewCredentialSufficient(pattern)) {
             return false;
         }
@@ -272,10 +288,13 @@ class LockSettingsShellCommand extends ShellCommand {
     private boolean runSetResumeOnRebootProviderPackage() {
         final String packageName = mNew;
         String name = ResumeOnRebootServiceProvider.PROP_ROR_PROVIDER_PACKAGE;
-        Slog.i(TAG, "Setting " +  name + " to " + packageName);
+        Slog.i(TAG, "Setting " + name + " to " + packageName);
 
-        mContext.enforcePermission(android.Manifest.permission.BIND_RESUME_ON_REBOOT_SERVICE,
-                mCallingPid, mCallingUid, TAG);
+        mContext.enforcePermission(
+                android.Manifest.permission.BIND_RESUME_ON_REBOOT_SERVICE,
+                mCallingPid,
+                mCallingUid,
+                TAG);
         SystemProperties.set(name, packageName);
         return true;
     }
@@ -293,8 +312,12 @@ class LockSettingsShellCommand extends ShellCommand {
                 return false;
         }
         mLockPatternUtils.requireStrongAuth(strongAuthReason, mCurrentUserId);
-        getOutPrintWriter().println("Require strong auth for USER_ID "
-                + mCurrentUserId + " because of " + mNew);
+        getOutPrintWriter()
+                .println(
+                        "Require strong auth for USER_ID "
+                                + mCurrentUserId
+                                + " because of "
+                                + mNew);
         return true;
     }
 
@@ -316,8 +339,8 @@ class LockSettingsShellCommand extends ShellCommand {
         final List<PasswordValidationError> errors =
                 PasswordMetrics.validateCredential(requiredMetrics, requiredComplexity, credential);
         if (!errors.isEmpty()) {
-            getOutPrintWriter().println(
-                    "New credential doesn't satisfy admin policies: " + errors.get(0));
+            getOutPrintWriter()
+                    .println("New credential doesn't satisfy admin policies: " + errors.get(0));
             return false;
         }
         return true;
@@ -334,6 +357,30 @@ class LockSettingsShellCommand extends ShellCommand {
         getOutPrintWriter().println(isLockScreenDisabled);
     }
 
+    private boolean checkCredential(String cmd) {
+        int device_provisioned =
+                Settings.Global.getInt(
+                        mContext.getContentResolver(), Settings.Global.DEVICE_PROVISIONED, -1);
+        if (cmd.equals(COMMAND_DEACTIVATE_FRP)) {
+            if (mCallingUid != UserHandle.AID_ROOT) {
+                throw new SecurityException("Uid " + mCallingUid + " not allowed to access PDB");
+            }
+            if (device_provisioned != 0) {
+                getOutPrintWriter().println("Temporarily setting device_provisioned property to 0");
+                Settings.Global.putInt(
+                        mContext.getContentResolver(), Settings.Global.DEVICE_PROVISIONED, 0);
+            }
+        }
+        boolean ret = checkCredential();
+        if (cmd.equals(COMMAND_DEACTIVATE_FRP) && device_provisioned != 0) {
+            Settings.Global.putInt(
+                    mContext.getContentResolver(),
+                    Settings.Global.DEVICE_PROVISIONED,
+                    device_provisioned);
+        }
+        return ret;
+    }
+
     private boolean checkCredential() {
         if (mLockPatternUtils.isSecure(mCurrentUserId)) {
             if (mLockPatternUtils.isManagedProfileWithUnifiedChallenge(mCurrentUserId)) {
@@ -341,14 +388,14 @@ class LockSettingsShellCommand extends ShellCommand {
                 return false;
             }
             if (mOld.isEmpty()) {
-                getOutPrintWriter().println(
-                        "User has a lock credential, but old credential was not provided");
+                getOutPrintWriter()
+                        .println("User has a lock credential, but old credential was not provided");
                 return false;
             }
 
             try {
-                final boolean result = mLockPatternUtils.checkCredential(getOldCredential(),
-                        mCurrentUserId, null);
+                final boolean result =
+                        mLockPatternUtils.checkCredential(getOldCredential(), mCurrentUserId, null);
                 if (!result) {
                     if (!mLockPatternUtils.isManagedProfileWithUnifiedChallenge(mCurrentUserId)) {
                         mLockPatternUtils.reportFailedPasswordAttempt(mCurrentUserId);

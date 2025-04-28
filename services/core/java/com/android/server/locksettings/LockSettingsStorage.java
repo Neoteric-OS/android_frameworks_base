@@ -623,6 +623,36 @@ class LockSettingsStorage {
             Slog.wtf(TAG, "Failed to get PersistentDataBlockManagerInternal");
         }
     }
+    public boolean deactivateFactoryResetProtection(byte[] frpSecret) {
+        PersistentDataBlockManager persistentDataBlockManager =
+                mContext.getSystemService(PersistentDataBlockManager.class);
+        if (persistentDataBlockManager != null) {
+            return persistentDataBlockManager.deactivateFactoryResetProtection(frpSecret);
+        } else {
+            Slog.wtf(TAG, "Failed to get PersistentDataBlockManager");
+            return false;
+        }
+    }
+
+    public byte[] deactivateFrpSecretProtection(byte[] key) {
+        PersistentDataBlockManagerInternal persistentDataBlock = getPersistentDataBlockManager();
+        if (persistentDataBlock != null) {
+            return persistentDataBlock.deactivateFrpSecretProtection(key);
+        } else {
+            Slog.wtf(TAG, "Failed to get PersistentDataBlockManagerInternal");
+        }
+        return null;
+    }
+
+    public boolean activateFrpSecretProtection(byte[] key) {
+        PersistentDataBlockManagerInternal persistentDataBlock = getPersistentDataBlockManager();
+        if (persistentDataBlock != null) {
+            return persistentDataBlock.activateFrpSecretProtection(key);
+        } else {
+            Slog.wtf(TAG, "Failed to get PersistentDataBlockManagerInternal");
+        }
+        return false;
+    }
 
     public boolean isFactoryResetProtectionActive() {
         PersistentDataBlockManager persistentDataBlockManager =

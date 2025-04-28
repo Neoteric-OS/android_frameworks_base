@@ -55,4 +55,14 @@ public interface PersistentDataBlockManagerInternal {
      * successful, false if not.
      */
     boolean deactivateFactoryResetProtectionWithoutSecret();
+
+    /**
+     * Activate the FRP Secret protection using the key.
+     */
+    boolean activateFrpSecretProtection(byte[] key);
+
+    /**
+     * Deactivate the FRP Secret protection using the key and return the deciphered Frp Secert.
+     */
+    byte[] deactivateFrpSecretProtection(byte[] key);
 }
