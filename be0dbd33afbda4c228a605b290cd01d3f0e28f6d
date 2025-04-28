@@ -16,6 +16,23 @@
       "message": "Nice",
       "revId": "be0dbd33afbda4c228a605b290cd01d3f0e28f6d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c07fa3c4_eb78f243",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1060206
+      },
+      "writtenOn": "2025-04-28T02:34:23Z",
+      "side": 1,
+      "message": "The change doesn\u0027t seem to have a clear justification or use case, and the code appears buggy (for example, mModifiedIds doesn\u0027t have anything added to it, there are magic values and thresholds in ViewRootImpl, etc.).",
+      "revId": "be0dbd33afbda4c228a605b290cd01d3f0e28f6d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
