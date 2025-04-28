@@ -2440,11 +2440,18 @@ public class LockSettingsService extends ILockSettings.Stub {
 
         synchronized (mSpManager) {
             if (isSpecialUserId(userId)) {
-                response = mSpManager.verifySpecialUserCredential(userId, getGateKeeperService(),
+                Pair<VerifyCredentialResponse, byte[]> resp =
+                        mSpManager.verifySpecialUserCredential(userId, getGateKeeperService(),
                         credential, progressCallback);
+                response = resp.first;
                 if (android.security.Flags.frpEnforcement() && response.isMatched()
                         && userId == USER_FRP) {
-                    mStorage.deactivateFactoryResetProtectionWithoutSecret();
+                    byte[] frpSecret = resp.second;
+                    if (frpSecret == null
+                            || !mStorage.deactivateFactoryResetProtection(frpSecret)) {
+                        Slog.e(TAG, "Failed to deactivate FRP with a secret");
+                        mStorage.deactivateFactoryResetProtectionWithoutSecret();
+                    }
                 }
                 return response;
             }
