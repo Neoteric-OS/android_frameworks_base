@@ -16,6 +16,23 @@
       "message": "I don\u0027t think we should be changing the layout of the device, since this mapping was done according to the Android specifications. That said, there is a valid point that the mappings are confusing. We should probably introduce the concept of \"north/south/easy/west\" to deal with this (as suggested by Patrick earlier). It\u0027s not clear how the backwards compatibility would work in this case, though. Looking forward to ppls feedback / thoughts here.",
       "revId": "a59df1e86e6b8b0f78e10608f2b8a4c5b9a04794",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9aeaf810_9eb4a457",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4048040
+      },
+      "writtenOn": "2025-04-30T20:04:16Z",
+      "side": 1,
+      "message": "If you\u0027re referring to https://developer.android.com/training/game-controllers/controller-input.html, the language states \"Figure 1 shows how Android maps key codes and axis values to the physical controls on most game controllers.\". I can agree that it is true for most controllers, but that leaves room for exceptions.\nThe Nintendo SNES was released in 1990, and has the same layout as the Switch Pro controller. In 1998, the Sega Dreamcast was released with the button labels swapped. The button labeled \"A\" has been the accept button for all consoles since it\u0027s release.\n\nMore than that, I believe that users should be enabled to remap the gamepad keys, which is an accessibility standard in all modern game consoles.",
+      "revId": "a59df1e86e6b8b0f78e10608f2b8a4c5b9a04794",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
