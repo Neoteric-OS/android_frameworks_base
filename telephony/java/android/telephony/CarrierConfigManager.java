@@ -6068,6 +6068,13 @@ public class CarrierConfigManager {
         public static final String KEY_ALLOW_NON_GLOBAL_PHONE_NUMBER_FORMAT_BOOL =
                 KEY_PREFIX + "allow_non_global_phone_number_format_bool";
 
+        /**
+         * TODO - nruano remove this
+         * @hide
+         */
+        public static final String PARSE_PHONE_NUMBER_MAINLINE_MOD_BOOL =
+            KEY_PREFIX + "parse_phone_number_mainline_mod_bool";
+
         private Ims() {}
 
         private static PersistableBundle getDefaults() {
@@ -6182,6 +6189,7 @@ public class CarrierConfigManager {
                                "#MANUFACTURER#_#MODEL#_Android#AV#_#BUILD#");
 
             defaults.putBoolean(KEY_ALLOW_NON_GLOBAL_PHONE_NUMBER_FORMAT_BOOL, false);
+            defaults.putBoolean(PARSE_PHONE_NUMBER_MAINLINE_MOD_BOOL, false);
 
             return defaults;
         }
