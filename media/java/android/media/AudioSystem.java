@@ -823,7 +823,13 @@ public class AudioSystem
 
         if (cb != null) {
             ArrayList<AudioPatch> audioPatches = new ArrayList<>();
-            if (AudioManager.listAudioPatches(audioPatches) == AudioManager.SUCCESS) {
+            if (event == AudioManager.RECORD_CONFIG_EVENT_UPDATE) {
+                // The cached audio patches in AudioManager may not up-to-date.
+                // Reset audio port generation to ensure callback side can
+                // get up-to-date audio port information.
+                Log.d(TAG, "Reset audio port generation");
+                AudioManager.resetAudioPortGeneration();
+            } else if (AudioManager.listAudioPatches(audioPatches) == AudioManager.SUCCESS) {
                 boolean patchFound = false;
                 int patchHandle = recordingFormat[6];
                 for (AudioPatch patch : audioPatches) {
