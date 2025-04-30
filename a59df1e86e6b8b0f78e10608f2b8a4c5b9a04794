@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27ff3b02_b1c27d39",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1149384
+      },
+      "writtenOn": "2025-04-30T19:48:14Z",
+      "side": 1,
+      "message": "I don\u0027t think we should be changing the layout of the device, since this mapping was done according to the Android specifications. That said, there is a valid point that the mappings are confusing. We should probably introduce the concept of \"north/south/easy/west\" to deal with this (as suggested by Patrick earlier). It\u0027s not clear how the backwards compatibility would work in this case, though. Looking forward to ppls feedback / thoughts here.",
+      "revId": "a59df1e86e6b8b0f78e10608f2b8a4c5b9a04794",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
