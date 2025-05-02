@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a272ac5_3165e187",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4052942
+      },
+      "writtenOn": "2025-05-02T20:01:31Z",
+      "side": 1,
+      "message": "Accidentally submitted this on a release tracking branch before. Pardon.",
+      "revId": "1b7c43341128b29ff43ee5de82a5635700b92b54",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
