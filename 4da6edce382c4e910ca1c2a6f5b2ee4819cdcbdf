@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "502940a4_64e1b6fa",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1237,
+      "author": {
+        "id": 1889142
+      },
+      "writtenOn": "2025-05-03T19:46:00Z",
+      "side": 1,
+      "message": "```suggestion\n            Log.e(TAG, \"RemoteException in setBondingInitiatedLocally for \" + this, e);\n```",
+      "revId": "4da6edce382c4e910ca1c2a6f5b2ee4819cdcbdf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec083537_2b226a9a",
+        "filename": "core/java/android/bluetooth/BluetoothDevice.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1239,
+      "author": {
+        "id": 1889142
+      },
+      "writtenOn": "2025-05-03T19:46:00Z",
+      "side": 1,
+      "message": "Java methods that return void don’t need an explicit return; at the end — not harmful, but redundant.\n\n\n```suggestion\n       \n```",
+      "revId": "4da6edce382c4e910ca1c2a6f5b2ee4819cdcbdf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
