@@ -19204,6 +19204,7 @@ public class TelephonyManager {
         public static final class Builder {
             private boolean mCollectTelecomDumpsys;
             private boolean mCollectTelephonyDumpsys;
+            private boolean mCollectLogcatOemLogSources;
 
             // If this is set to a value other than -1L, then the logcat collection is enabled.
             // Logcat lines with this time or greater are collected how much is collected is
@@ -19233,6 +19234,17 @@ public class TelephonyManager {
             }
 
             /**
+             * Allows enabling of logcat OEM log sources collection.
+             * @param collectLogcatOemLogSources Determines if logcat OEM log sources should be collected.
+             * @return Builder instance corresponding to the configured call diagnostic params.
+             */
+            public @NonNull Builder setLogcatOemLogSourcesCollectionEnabled(
+                    boolean collectLogcatOemLogSources) {
+                mCollectLogcatOemLogSources = collectLogcatOemLogSources;
+                return this;
+            }
+
+            /**
              * Allows enabling of logcat (system,radio) collection.
              * @param startTimeMillis Enables logcat collection as of the indicated timestamp.
              * @return Builder instance corresponding to the configured call diagnostic params.
@@ -19249,23 +19261,25 @@ public class TelephonyManager {
              */
             public @NonNull EmergencyCallDiagnosticData build() {
                 return new EmergencyCallDiagnosticData(mCollectTelecomDumpsys,
-                        mCollectTelephonyDumpsys, mLogcatStartTimeMillis);
+                        mCollectTelephonyDumpsys, mCollectLogcatOemLogSources, mLogcatStartTimeMillis);
             }
         }
 
         private boolean mCollectTelecomDumpsys;
         private boolean mCollectTelephonyDumpsys;
+        private boolean mCollectLogcatOemLogSources;
         private boolean mCollectLogcat;
         private long mLogcatStartTimeMillis;
 
         private static long sUnsetLogcatStartTime = -1L;
 
         private EmergencyCallDiagnosticData(boolean collectTelecomDumpsys,
-                boolean collectTelephonyDumpsys, long logcatStartTimeMillis) {
+                boolean collectTelephonyDumpsys, boolean collectLogcatOemLogSources, long logcatStartTimeMillis) {
             mCollectTelecomDumpsys = collectTelecomDumpsys;
             mCollectTelephonyDumpsys = collectTelephonyDumpsys;
             mLogcatStartTimeMillis = logcatStartTimeMillis;
             mCollectLogcat = logcatStartTimeMillis != sUnsetLogcatStartTime;
+            mCollectLogcatOemLogSources = collectLogcatOemLogSources;
         }
 
         public boolean isTelecomDumpsysCollectionEnabled() {
@@ -19274,6 +19288,10 @@ public class TelephonyManager {
 
         public boolean isTelephonyDumpsysCollectionEnabled() {
             return mCollectTelephonyDumpsys;
+        }
+
+        public boolean isLogcatOemLogSourcesCollectionEnabled() {
+            return mCollectLogcatOemLogSources;
         }
 
         public boolean isLogcatCollectionEnabled() {
@@ -19290,6 +19308,7 @@ public class TelephonyManager {
             return "EmergencyCallDiagnosticData{"
                     + "mCollectTelecomDumpsys=" + mCollectTelecomDumpsys
                     + ", mCollectTelephonyDumpsys=" + mCollectTelephonyDumpsys
+                    + ", mCollectLogcatOemLogSources=" + mCollectLogcatOemLogSources
                     + ", mCollectLogcat=" + mCollectLogcat
                     + ", mLogcatStartTimeMillis=" + mLogcatStartTimeMillis
                     + '}';
@@ -19320,7 +19339,8 @@ public class TelephonyManager {
                         data.isLogcatCollectionEnabled(),
                         data.getLogcatCollectionStartTimeMillis(),
                         data.isTelecomDumpsysCollectionEnabled(),
-                        data.isTelephonyDumpsysCollectionEnabled());
+                        data.isTelephonyDumpsysCollectionEnabled(),
+                        data.isLogcatOemLogSourcesCollectionEnabled());
             }
         } catch (RemoteException e) {
             Log.e(TAG, "Error while persistEmergencyCallDiagnosticData: " + e);

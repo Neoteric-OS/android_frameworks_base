@@ -2729,7 +2729,7 @@ interface ITelephony {
     @JavaPassthrough(annotation="@android.annotation.RequiresPermission("
             + "android.Manifest.permission.DUMP)")
     void persistEmergencyCallDiagnosticData(String dropboxTag, boolean enableLogcat,
-        long logcatStartTimestampMillis, boolean enableTelecomDump, boolean enableTelephonyDump);
+        long logcatStartTimestampMillis, boolean enableTelecomDump, boolean enableTelephonyDump, boolean enableLogcatOemSources);
     /**
      * Set whether the radio is able to connect with null ciphering or integrity
      * algorithms. This is a global setting and will apply to all active subscriptions
