@@ -16347,6 +16347,7 @@ package android.telephony {
   @FlaggedApi("com.android.server.telecom.flags.telecom_resolve_hidden_dependencies") public static final class TelephonyManager.EmergencyCallDiagnosticData {
     method public long getLogcatCollectionStartTimeMillis();
     method public boolean isLogcatCollectionEnabled();
+    method public boolean isLogcatOemLogSourcesCollectionEnabled();
     method public boolean isTelecomDumpsysCollectionEnabled();
     method public boolean isTelephonyDumpsysCollectionEnabled();
   }
@@ -16355,6 +16356,7 @@ package android.telephony {
     ctor public TelephonyManager.EmergencyCallDiagnosticData.Builder();
     method @NonNull public android.telephony.TelephonyManager.EmergencyCallDiagnosticData build();
     method @NonNull public android.telephony.TelephonyManager.EmergencyCallDiagnosticData.Builder setLogcatCollectionStartTimeMillis(long);
+    method @NonNull public android.telephony.TelephonyManager.EmergencyCallDiagnosticData.Builder setLogcatOemLogSourcesCollectionEnabled(boolean);
     method @NonNull public android.telephony.TelephonyManager.EmergencyCallDiagnosticData.Builder setTelecomDumpsysCollectionEnabled(boolean);
     method @NonNull public android.telephony.TelephonyManager.EmergencyCallDiagnosticData.Builder setTelephonyDumpsysCollectionEnabled(boolean);
   }
