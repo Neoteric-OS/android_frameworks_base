@@ -132,6 +132,10 @@ custom_platform_bootclasspath {
             module: "com.android.sdkext-bootclasspath-fragment",
         },
         {
+            apex: "com.android.telephonymodules",
+            module: "com.android.telephonymodules-bootclasspath-fragment",
+        },
+        {
             apex: "com.android.tethering",
             module: "com.android.tethering-bootclasspath-fragment",
         },

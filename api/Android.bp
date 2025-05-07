@@ -93,6 +93,7 @@ combined_apis {
         "framework-sdkextensions",
         "framework-statsd",
         "framework-sdksandbox",
+        "framework-telephonymodules",
         "framework-tethering",
         "framework-uwb",
         "framework-virtualization",
