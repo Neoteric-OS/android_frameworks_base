@@ -267,8 +267,15 @@ public final class SystemFonts {
                 b.addFont(font);
             }
         }
-        return b == null ? null : b.build(languageTags, variant, false /* isCustomFallback */,
-                isDefaultFallback, varFamilyType);
+        if (b != null) {
+            try {
+                return b.build(languageTags, variant, false /* isCustomFallback */,
+                        isDefaultFallback, varFamilyType);
+            } catch (IllegalArgumentException e) {
+                Log.e(TAG, "createFontFamily", e);
+            }
+        }
+        return null;
     }
 
     private static void appendNamedFamilyList(@NonNull FontConfig.NamedFamilyList namedFamilyList,
