@@ -536,7 +536,8 @@ class DisplayWindowSettingsProvider implements SettingsProvider {
                     "ignoreDisplayCutout", null /* defaultValue */);
             settingsEntry.mDontMoveToTop = getBooleanAttribute(parser,
                     "dontMoveToTop", null /* defaultValue */);
-
+            settingsEntry.mIsHomeSupported = getBooleanAttribute(parser,
+                    "isHomeSupported", null /* defaultValue */);
             fileData.mSettings.put(name, settingsEntry);
         }
         XmlUtils.skipCurrentTag(parser);
