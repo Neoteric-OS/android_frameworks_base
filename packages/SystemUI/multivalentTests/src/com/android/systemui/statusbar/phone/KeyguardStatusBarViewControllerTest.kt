@@ -784,6 +784,7 @@ class KeyguardStatusBarViewControllerTest : SysuiTestCase() {
     }
 
     @Test
+    @DisableSceneContainer
     fun animateToGlanceableHub_affectsAlpha() =
         testScope.runTest {
             controller.init()
