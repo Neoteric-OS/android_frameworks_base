@@ -2716,14 +2716,16 @@ class PermissionService(private val service: AccessCheckingService) :
                     _,
                     uid,
                     areOnlyNotificationsPermissionsRevoked ->
-                    handler.post {
-                        if (
-                            areOnlyNotificationsPermissionsRevoked &&
-                                isAppBackupAndRestoreRunning(uid)
-                        ) {
-                            return@post
-                        }
-                        killUid(uid, reason)
+                    if (!handler.hasMessages(uid)) {
+                        handler.obtainMessage(uid).setCallback {
+                            if (
+                                areOnlyNotificationsPermissionsRevoked &&
+                                     isAppBackupAndRestoreRunning(uid)
+                            ) {
+                                return@setCallback
+                            }
+                            killUid(uid, reason)
+                        }.sendToTarget()
                     }
                 }
             }
