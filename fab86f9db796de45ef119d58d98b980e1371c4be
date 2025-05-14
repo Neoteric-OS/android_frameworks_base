@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d1bbb06c_07b5b062",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1396139
+      },
+      "writtenOn": "2025-05-14T07:54:17Z",
+      "side": 1,
+      "message": "Hello,\n\nWe are developers from Xiaomi team. Please help review the code, thanks!",
+      "revId": "fab86f9db796de45ef119d58d98b980e1371c4be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
