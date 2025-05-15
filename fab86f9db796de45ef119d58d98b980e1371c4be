@@ -51,6 +51,29 @@
       "parentUuid": "7f953a22_562e60c7",
       "revId": "fab86f9db796de45ef119d58d98b980e1371c4be",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5cfff85c_985a897b",
+        "filename": "services/permission/java/com/android/server/permission/access/permission/PermissionService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 2728,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2025-05-15T04:23:33Z",
+      "side": 1,
+      "message": "```suggestion\n                    if (!handler.hasMessages(uid, areOnlyNotificationsPermissionsRevoked)) {\n                        handler\n                            .obtainMessage(uid, areOnlyNotificationsPermissionsRevoked)\n                            .setCallback {\n                                if (\n                                    areOnlyNotificationsPermissionsRevoked \u0026\u0026\n                                        isAppBackupAndRestoreRunning(uid)\n                                ) {\n                                    return@setCallback\n                                }\n                                killUid(uid, reason)\n                            }\n                            .sendToTarget()\n                    }\n```",
+      "range": {
+        "startLine": 2719,
+        "startChar": 0,
+        "endLine": 2728,
+        "endChar": 40
+      },
+      "revId": "fab86f9db796de45ef119d58d98b980e1371c4be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
