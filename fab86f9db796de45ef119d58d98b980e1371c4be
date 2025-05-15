@@ -33,6 +33,24 @@
       "message": "This is actually incorrect because you would capture the value of areOnlyNotificationsPermissionsRevoked in the callback but only dedup based on UID, so that if there\u0027s a pending message with `areOnlyNotificationsPermissionsRevoked \u003d\u003d true` which will be a no-op, it will prevent a subsequent callback with `areOnlyNotificationsPermissionsRevoked \u003d\u003d false` from being fired.",
       "revId": "fab86f9db796de45ef119d58d98b980e1371c4be",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da361e8b_3feac81d",
+        "filename": "services/permission/java/com/android/server/permission/access/permission/PermissionService.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 2722,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2025-05-15T03:52:25Z",
+      "side": 1,
+      "message": "(and if the two messages are for the same UID)",
+      "parentUuid": "7f953a22_562e60c7",
+      "revId": "fab86f9db796de45ef119d58d98b980e1371c4be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
