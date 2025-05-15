@@ -335,7 +335,13 @@ public class FileRotator {
         long oldestActiveStart = Long.MAX_VALUE;
 
         final FileInfo info = new FileInfo(mPrefix);
-        for (String name : mBasePath.list()) {
+        String[] baseFiles = mBasePath.list();
+        if (baseFiles == null) {
+            if (LOGD) Log.d(TAG, "Base path list is null: " + mBasePath);
+            return null;
+        }
+
+        for (String name : baseFiles) {
             if (!info.parse(name)) continue;
 
             // pick the oldest active file which covers current time
