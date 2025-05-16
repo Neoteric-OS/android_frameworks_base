@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "414725a7_c85886dc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2025-05-16T01:21:03Z",
+      "side": 1,
+      "message": "Have you filed any bug for this? Asking because we prefer having a bug ID in changes.",
+      "revId": "d1414eeb897fb9de393028cd083e006e5a0a1457",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
