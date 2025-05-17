@@ -2295,7 +2295,7 @@ class Task extends TaskFragment {
             horizontalDiff = -(overlapLR - (rootTaskBounds.right - bounds.left));
         }
         int verticalDiff = 0;
-        int overlapTB = Math.min(overlapPxY, bounds.width());
+        int overlapTB = Math.min(overlapPxY, bounds.height());
         if (bounds.bottom < (rootTaskBounds.top + overlapTB)) {
             verticalDiff = overlapTB - (bounds.bottom - rootTaskBounds.top);
         } else if (bounds.top > (rootTaskBounds.bottom - overlapTB)) {
