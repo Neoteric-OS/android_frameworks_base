@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51e808bb_255f2816",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2025-05-20T03:07:13Z",
+      "side": 1,
+      "message": "Can you please provide more context for why this optimization is for?\n\n@rgl@google.com in case you know sleep transition better",
+      "revId": "96a56770625e1d93ba39e539fd0c82ac5779fe08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
