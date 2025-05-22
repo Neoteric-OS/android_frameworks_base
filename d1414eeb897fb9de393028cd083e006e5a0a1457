@@ -34,6 +34,24 @@
       "parentUuid": "414725a7_c85886dc",
       "revId": "d1414eeb897fb9de393028cd083e006e5a0a1457",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d88afe66_ee5e00a7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1396139
+      },
+      "writtenOn": "2025-05-22T03:17:26Z",
+      "side": 1,
+      "message": "https://partnerissuetracker.corp.google.com/u/1/issues/419383294\nwe have submitted an issue, please help review.",
+      "parentUuid": "d1d51fee_b9220923",
+      "revId": "d1414eeb897fb9de393028cd083e006e5a0a1457",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
