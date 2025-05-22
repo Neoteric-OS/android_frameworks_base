@@ -512,6 +512,27 @@ public final class Call {
 
         public static final int CAPABILITY_REMOTE_PARTY_SUPPORTS_RTT = 0x10000000;
 
+        /**
+         * 1. Indicate a MT call received a ringtone send by carrier netwrok,
+         * and the ringtone has video capability.
+         *
+         * 2. Indicate a MO call received a ringback tone send by carrier netwrok,
+         * and the ringback tone has video capability.
+         *
+         * @hide
+         */
+        public static final int CAPABILITY_NETWORK_RINGTONE_SUPPORT_VIDEO = 0x20000000;
+
+        /**
+         * 1. Indicate a MT call received a ringtone send by carrier netwrok,
+         * and the ringtone has audio capability.
+         *
+         * 2. Indicate a MO call received a ringback tone send by carrier netwrok,
+         * and the ringback tone has audio capability.
+         *
+         * @hide
+         */
+        public static final int CAPABILITY_NETWORK_RINGTONE_SUPPORT_AUDIO = 0x40000000;
         //******************************************************************************************
         // Next CAPABILITY value: 0x20000000
         //******************************************************************************************
