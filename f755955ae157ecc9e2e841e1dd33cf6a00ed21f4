@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e20a6a7_86722879",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2025-05-22T18:43:32Z",
+      "side": 1,
+      "message": "Change has been merged internally, please feel free to abandon this change on AOSP.",
+      "revId": "f755955ae157ecc9e2e841e1dd33cf6a00ed21f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
