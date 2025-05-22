@@ -52,6 +52,41 @@
       "parentUuid": "d1d51fee_b9220923",
       "revId": "d1414eeb897fb9de393028cd083e006e5a0a1457",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea1f1dad_b18856a6",
+        "filename": "services/permission/java/com/android/server/permission/access/permission/PermissionService.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 2732,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2025-05-22T03:37:13Z",
+      "side": 1,
+      "message": "extra curly braces. I\u0027ve remove this in my cherry-pick though, and it\u0027s now undergoing presubmit.",
+      "fixSuggestions": [
+        {
+          "fixId": "7d47bb5a_6c67c1e1",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/permission/java/com/android/server/permission/access/permission/PermissionService.kt",
+              "range": {
+                "startLine": 2733,
+                "startChar": 0,
+                "endLine": 2734,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "d1414eeb897fb9de393028cd083e006e5a0a1457",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
