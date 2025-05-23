@@ -70,6 +70,23 @@
       "parentUuid": "c236bd2d_fbcb306d",
       "revId": "28b7f0bd515e46d39c1be2d2d6c07f33b6a1eeb3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f32f87a_b98be0b3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1967850
+      },
+      "writtenOn": "2025-05-23T16:55:03Z",
+      "side": 1,
+      "message": "Dmitri and Michael, long time now see :) Wanted to check if there is something we can do on our side to move forward and merge this diff?",
+      "revId": "28b7f0bd515e46d39c1be2d2d6c07f33b6a1eeb3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
