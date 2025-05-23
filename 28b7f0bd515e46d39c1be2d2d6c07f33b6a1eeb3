@@ -87,6 +87,24 @@
       "message": "Dmitri and Michael, long time now see :) Wanted to check if there is something we can do on our side to move forward and merge this diff?",
       "revId": "28b7f0bd515e46d39c1be2d2d6c07f33b6a1eeb3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c960dea9_a4c7f7aa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003473
+      },
+      "writtenOn": "2025-05-23T17:34:26Z",
+      "side": 1,
+      "message": "Hey Svet, long time indeed! 😊\n\nI started a presubmit. I love this message from gerrit: \"Presubmit: running longer than usual, scheduled 3m ago\".\n\n@mwachens@google.com, could you take a look?  I think Gerrit is expecting at least to +1\u0027s before the CL becomes submittable.",
+      "parentUuid": "9f32f87a_b98be0b3",
+      "revId": "28b7f0bd515e46d39c1be2d2d6c07f33b6a1eeb3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
