@@ -52,6 +52,24 @@
       "parentUuid": "52ffd113_37a31a02",
       "revId": "96a56770625e1d93ba39e539fd0c82ac5779fe08",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b639988_40f82ca9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2025-05-23T11:05:00Z",
+      "side": 1,
+      "message": "do not need do  two  checks on wasSleeping.",
+      "parentUuid": "48681a3b_0f2b72da",
+      "revId": "96a56770625e1d93ba39e539fd0c82ac5779fe08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
