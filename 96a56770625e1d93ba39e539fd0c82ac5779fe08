@@ -16,6 +16,24 @@
       "message": "Can you please provide more context for why this optimization is for?\n\n@rgl@google.com in case you know sleep transition better",
       "revId": "96a56770625e1d93ba39e539fd0c82ac5779fe08",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52ffd113_37a31a02",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2025-05-23T10:45:28Z",
+      "side": 1,
+      "message": "No, I don\u0027t see what the patch improves either.",
+      "parentUuid": "51e808bb_255f2816",
+      "revId": "96a56770625e1d93ba39e539fd0c82ac5779fe08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
