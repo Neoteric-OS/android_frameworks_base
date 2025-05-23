@@ -34,6 +34,24 @@
       "parentUuid": "51e808bb_255f2816",
       "revId": "96a56770625e1d93ba39e539fd0c82ac5779fe08",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48681a3b_0f2b72da",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2025-05-23T11:00:57Z",
+      "side": 1,
+      "message": "We need to do two non-empty checks on wasSleeping, which is just a small optimization.",
+      "parentUuid": "52ffd113_37a31a02",
+      "revId": "96a56770625e1d93ba39e539fd0c82ac5779fe08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
