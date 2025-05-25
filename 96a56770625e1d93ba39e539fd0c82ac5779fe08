@@ -70,6 +70,41 @@
       "parentUuid": "48681a3b_0f2b72da",
       "revId": "96a56770625e1d93ba39e539fd0c82ac5779fe08",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "58f8bc9c_43ac69a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2025-05-25T08:02:02Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "8b639988_40f82ca9",
+      "revId": "96a56770625e1d93ba39e539fd0c82ac5779fe08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f44a395_e9d35a64",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2025-05-25T08:02:02Z",
+      "side": 1,
+      "message": "Merged internally",
+      "revId": "96a56770625e1d93ba39e539fd0c82ac5779fe08",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
