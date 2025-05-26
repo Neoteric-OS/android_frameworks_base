@@ -249,6 +249,7 @@ import com.android.internal.util.Preconditions;
 import com.android.internal.util.function.pooled.PooledLambda;
 import com.android.org.conscrypt.TrustedCertificateStore;
 import com.android.server.am.MemInfoDumpProto;
+import com.android.server.am.BitmapDumpProto;
 
 import dalvik.annotation.optimization.NeverCompile;
 import dalvik.system.AppSpecializationHooks;
@@ -2007,12 +2008,36 @@ public final class ActivityThread extends ClientTransactionHandler
         }
 
         @Override
+<<<<<<< HEAD
         public void dumpDbInfo(final ParcelFileDescriptor pfd, final String[] args) {
             if (mSystemThread) {
                 // Ensure this invocation is asynchronous to prevent writer waiting if buffer cannot
                 // be consumed. But it must duplicate the file descriptor first, since caller might
                 // be closing it.
                 final ParcelFileDescriptor dup;
+=======
+        }
+
+        @Override
+        @NeverCompile
+        public void dumpBitmapsProto(ParcelFileDescriptor pfd, String dumpFormat) {
+            try {
+                int pid = Process.myPid();
+                String processName = (mBoundApplication != null)
+                    ? mBoundApplication.processName
+                    : Process.myProcessName();
+                ActivityThread.dumpBitmapsProto(new ProtoOutputStream(pfd.getFileDescriptor()),
+                    pid, processName, dumpFormat);
+            } finally {
+                IoUtils.closeQuietly(pfd);
+            }
+        }
+
+        @Override
+        public void dumpCacheInfo(ParcelFileDescriptor pfd, String[] args) {
+            try {
+                PropertyInvalidatedCache.dumpCacheInfo(pfd, args);
+>>>>>>> PATCH
                 try {
                     dup = pfd.dup();
                 } catch (IOException e) {
@@ -3840,6 +3865,18 @@ public final class ActivityThread extends ClientTransactionHandler
                 memInfo.getSummaryUnknownRss());
 
         proto.end(asToken);
+    }
+
+    @NeverCompile
+    public static void dumpBitmapsProto(ProtoOutputStream proto, int pid,
+                String processName, String dumpFormat) {
+        try {
+            proto.write(BitmapDumpProto.AppBitmapInfo.PID, pid);
+            proto.write(BitmapDumpProto.AppBitmapInfo.PROCESS_NAME, processName);
+            Bitmap.dumpAll(proto, dumpFormat);
+        } finally {
+            proto.flush();
+        }
     }
 
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
