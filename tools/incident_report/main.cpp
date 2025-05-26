@@ -287,14 +287,13 @@ usage(FILE* out)
     fprintf(out, "  -o OUTPUT   the output file. OUTPUT may be '-' or omitted to use stdout\n");
     fprintf(out, "\n");
     fprintf(out, "\n");
-    fprintf(out, "usage: incident_report [-o OUTPUT] [-t|b] [-s SERIAL] [SECTION...]\n");
+    fprintf(out, "usage: incident_report [-o OUTPUT] [-s SERIAL] [SECTION...]\n");
     fprintf(out, "\n");
     fprintf(out, "Take an incident report over adb (which must be in the PATH).\n");
-    fprintf(out, "  -b          output the incident report raw protobuf format\n");
     fprintf(out, "  -o OUTPUT   the output file. OUTPUT may be '-' or omitted to use stdout\n");
     fprintf(out, "  -r REASON   human readable description of why the report is taken.\n");
     fprintf(out, "  -s SERIAL   sent to adb to choose which device, instead of $ANDROID_SERIAL\n");
-    fprintf(out, "  -t          output the incident report in pretty-printed text format\n");
+    fprintf(out, "  -t|-b       no effect\n");
     fprintf(out, "\n");
     fprintf(out, "  SECTION     which bugreport sections to print, either the int code of the\n");
     fprintf(out, "              section in the Incident proto or the field name.  If ommited,\n");
@@ -305,7 +304,6 @@ usage(FILE* out)
 int
 main(int argc, char** argv)
 {
-    enum { OUTPUT_TEXT, OUTPUT_PROTO } outputFormat = OUTPUT_TEXT;
     const char* inFilename = NULL;
     const char* outFilename = NULL;
     const char* reason = NULL;
@@ -318,7 +316,6 @@ main(int argc, char** argv)
     while ((opt = getopt(argc, argv, "bhi:o:r:s:twp:")) != -1) {
         switch (opt) {
             case 'b':
-                outputFormat = OUTPUT_PROTO;
                 break;
             case 'i':
                 inFilename = optarg;
@@ -333,7 +330,6 @@ main(int argc, char** argv)
                 adbSerial = optarg;
                 break;
             case 't':
-                outputFormat = OUTPUT_TEXT;
                 break;
             case 'h':
                 usage(stdout);
