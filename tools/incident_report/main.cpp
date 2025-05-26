@@ -402,7 +402,7 @@ main(int argc, char** argv)
             args.push_back(NULL);
             execvp(args[0], const_cast<char* const*>(args.data()));
             fprintf(stderr, "execvp failed: %s\n", strerror(errno));
-            return 0;
+            _exit(errno == ENOENT ? 127 : 126);
         } else {
             // parent
             inFd = pfd[0];
