@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
+#include <algorithm>
 
 #define INITIAL_BUF_SIZE (16*1024)
 
@@ -74,6 +75,8 @@ Out::printf(const char* format, ...)
     va_start(args, format);
     len = vsnprintf(mBuf, mBufSize, format, args);
     va_end(args);
+
+    len = std::min(len, mBufSize - 1);
 
     if (len > 0) {
         if (mIndent == 0) {
