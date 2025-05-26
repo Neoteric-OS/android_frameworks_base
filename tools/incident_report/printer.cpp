@@ -23,8 +23,8 @@
 
 #define INITIAL_BUF_SIZE (16*1024)
 
-char const* SPACES = "                                                            ";
-const int SPACE_COUNT = strlen(SPACES);
+static char const SPACES[] = "                                                            ";
+static const int SPACE_COUNT = strlen(SPACES);
 
 Out::Out(int fd)
     :mOut(fd == STDOUT_FILENO ? stdout : fdopen(fd, "w")),
