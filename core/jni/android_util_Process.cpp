@@ -756,8 +756,7 @@ void android_os_Process_readProcLines(JNIEnv* env, jobject clazz, jstring fileSt
                         *p = 0;
                         p++;
                     }
-                    char* end;
-                    sizesArray[i] = strtoll(num, &end, 10);
+                    sizesArray[i] = strtoll(num, nullptr, 10);
                     // ALOGI("Field %s = %" PRId64, field.c_str(), sizesArray[i]);
                     foundCount++;
                     break;
