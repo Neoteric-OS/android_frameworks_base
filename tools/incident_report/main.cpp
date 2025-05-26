@@ -381,30 +381,27 @@ main(int argc, char** argv)
             dup2(pfd[1], STDOUT_FILENO);
             close(pfd[0]);
             close(pfd[1]);
-            char const** args = (char const**)malloc(sizeof(char*) * (10 + sections.size()));
-            int argpos = 0;
-            args[argpos++] = "adb";
+            std::vector<const char*> args;
+            args.push_back("adb");
             if (adbSerial != NULL) {
-                args[argpos++] = "-s";
-                args[argpos++] = adbSerial;
+                args.push_back("-s");
+                args.push_back(adbSerial);
             }
-            args[argpos++] = "shell";
-            args[argpos++] = "incident";
+            args.push_back("shell");
+            args.push_back("incident");
             if (privacy != NULL) {
-                args[argpos++] = "-p";
-                args[argpos++] = privacy;
+                args.push_back("-p");
+                args.push_back(privacy);
             }
             if (reason != NULL) {
-                args[argpos++] = "-r";
-                args[argpos++] = reason;
+                args.push_back("-r");
+                args.push_back(reason);
             }
-            for (vector<string>::const_iterator it=sections.begin(); it!=sections.end(); it++) {
-                args[argpos++] = it->c_str();
-            }
-            args[argpos++] = NULL;
-            execvp(args[0], (char*const*)args);
+            std::transform(sections.begin(), sections.end(), std::back_inserter(args),
+                           [](auto&& s) { return s.c_str(); });
+            args.push_back(NULL);
+            execvp(args[0], const_cast<char* const*>(args.data()));
             fprintf(stderr, "execvp failed: %s\n", strerror(errno));
-            free(args);
             return 0;
         } else {
             // parent
