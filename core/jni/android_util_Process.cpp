@@ -727,8 +727,8 @@ void android_os_Process_readProcLines(JNIEnv* env, jobject clazz, jstring fileSt
             sizesArray[i] = 0;
         }
 
-        const size_t BUFFER_SIZE = 4096;
-        char* buffer = (char*)malloc(BUFFER_SIZE);
+        constexpr size_t BUFFER_SIZE = 4096;
+        char buffer[BUFFER_SIZE];
         int len = read(fd, buffer, BUFFER_SIZE-1);
         close(fd);
 
@@ -772,8 +772,6 @@ void android_os_Process_readProcLines(JNIEnv* env, jobject clazz, jstring fileSt
                 }
             }
         }
-
-        free(buffer);
     } else {
         ALOGW("Unable to open %s", file.c_str());
     }
