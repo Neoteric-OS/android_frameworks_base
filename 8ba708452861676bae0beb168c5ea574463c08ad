@@ -1,5 +1,41 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c5e3de6_444be403",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1948395
+      },
+      "writtenOn": "2025-05-26T18:59:43Z",
+      "side": 1,
+      "message": "It needs to be Android.X.Test Manager Overview",
+      "revId": "8ba708452861676bae0beb168c5ea574463c08ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8388fb6_301ea594",
+        "filename": "tests/PackageUpdate/Android.mk",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1948395
+      },
+      "writtenOn": "2025-05-26T18:59:43Z",
+      "side": 1,
+      "message": "\u003e Android.​mk files are being deprecated, please use blueprint files (go/soong) to define the modules and Foobar should be together like that then you will see the difference with Android.X.Testing\n\nPlease fix.",
+      "parentUuid": "1a1e6d77_acb47a5f",
+      "revId": "8ba708452861676bae0beb168c5ea574463c08ad",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
