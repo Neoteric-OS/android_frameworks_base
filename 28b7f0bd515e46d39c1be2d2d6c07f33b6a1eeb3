@@ -105,6 +105,24 @@
       "parentUuid": "9f32f87a_b98be0b3",
       "revId": "28b7f0bd515e46d39c1be2d2d6c07f33b6a1eeb3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "934cc28a_72e9fa41",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1245797
+      },
+      "writtenOn": "2025-05-27T16:52:41Z",
+      "side": 1,
+      "message": "Looks good to me. But I believe the new process for AOSP contributions is for the AOSP repo to be reasonable and accepted CLs get cherrypicked and merged into the internal main repo by an Android engineer",
+      "parentUuid": "c960dea9_a4c7f7aa",
+      "revId": "28b7f0bd515e46d39c1be2d2d6c07f33b6a1eeb3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
