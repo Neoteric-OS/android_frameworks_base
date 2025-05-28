@@ -49,15 +49,23 @@ public class KeyboxImitationHooks {
     private static final ASN1ObjectIdentifier KEY_ATTESTATION_OID = new ASN1ObjectIdentifier(
             "1.3.6.1.4.1.11129.2.1.17");
 
+    private static byte[] decodePemOrBase64(String input) {
+        String base64 = input
+                .replaceAll("-----BEGIN [^-]+-----", "")
+                .replaceAll("-----END [^-]+-----", "")
+                .replaceAll("\\s+", "");
+        return Base64.getDecoder().decode(base64);
+    }
+
     private static PrivateKey parsePrivateKey(String encodedKey, String algorithm)
             throws Exception {
-        byte[] keyBytes = Base64.getDecoder().decode(encodedKey);
+        byte[] keyBytes = decodePemOrBase64(encodedKey);
         PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keyBytes);
         return KeyFactory.getInstance(algorithm).generatePrivate(keySpec);
     }
 
     private static byte[] parseCertificate(String encodedCert) {
-        return Base64.getDecoder().decode(encodedCert);
+        return decodePemOrBase64(encodedCert);
     }
 
     private static byte[] getCertificateChain(String algorithm) throws Exception {
