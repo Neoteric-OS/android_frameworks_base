@@ -2785,7 +2785,8 @@ int doPackage(Bundle* bundle)
         if (bundle->getExtraPackages() != NULL) {
             // Split on colon
             String8 libs(bundle->getExtraPackages());
-            char* packageString = strtok(libs.lockBuffer(libs.length()), ":");
+            char* save;
+            char* packageString = strtok_r(libs.lockBuffer(libs.length()), ":", &save);
             while (packageString != NULL) {
                 // Write the R.java file out with the correct package name
                 err = writeResourceSymbols(bundle, assets, String8(packageString), true,
@@ -2793,7 +2794,7 @@ int doPackage(Bundle* bundle)
                 if (err < 0) {
                     goto bail;
                 }
-                packageString = strtok(NULL, ":");
+                packageString = strtok_r(NULL, ":", &save);
             }
             libs.unlockBuffer();
         }

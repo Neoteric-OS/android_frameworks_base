@@ -103,10 +103,10 @@ static bool isHidden(const char *root, const char *path)
 
     int plen = strlen(path);
 
-    // Note: we don't have strtok_r under mingw.
-    for(char *token = strtok(patterns, delim);
+    char *save;
+    for(char *token = strtok_r(patterns, delim, &save);
             !ignore && token != NULL;
-            token = strtok(NULL, delim)) {
+            token = strtok_r(NULL, delim, &save)) {
         chatty = token[0] != '!';
         if (!chatty) token++; // skip !
         if (strncasecmp(token, "<dir>" , 5) == 0) {
@@ -1058,7 +1058,7 @@ ssize_t AaptAssets::slurpFromArgs(Bundle* bundle)
                 return UNKNOWN_ERROR;
             }
         }
-        
+
     }
     /*
      * Now do any additional raw files.
