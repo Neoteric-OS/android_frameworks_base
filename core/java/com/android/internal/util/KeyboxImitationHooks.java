@@ -21,6 +21,10 @@ import com.android.internal.org.bouncycastle.asn1.ASN1TaggedObject;
 import com.android.internal.org.bouncycastle.asn1.DEROctetString;
 import com.android.internal.org.bouncycastle.asn1.DERSequence;
 import com.android.internal.org.bouncycastle.asn1.DERTaggedObject;
+import com.android.internal.org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
+import com.android.internal.org.bouncycastle.asn1.sec.ECPrivateKey;
+import com.android.internal.org.bouncycastle.asn1.x9.X9ObjectIdentifiers;
+import com.android.internal.org.bouncycastle.asn1.x509.AlgorithmIdentifier;
 import com.android.internal.org.bouncycastle.asn1.x509.Extension;
 import com.android.internal.org.bouncycastle.cert.X509CertificateHolder;
 import com.android.internal.org.bouncycastle.cert.X509v3CertificateBuilder;
@@ -30,6 +34,7 @@ import com.android.internal.org.bouncycastle.operator.jcajce.JcaContentSignerBui
 import java.io.ByteArrayOutputStream;
 import java.security.KeyFactory;
 import java.security.PrivateKey;
+import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Base64;
@@ -57,28 +62,51 @@ public class KeyboxImitationHooks {
         return Base64.getDecoder().decode(base64);
     }
 
-    private static PrivateKey parsePrivateKey(String encodedKey, String algorithm)
-            throws Exception {
-        byte[] keyBytes = decodePemOrBase64(encodedKey);
-        PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keyBytes);
-        return KeyFactory.getInstance(algorithm).generatePrivate(keySpec);
+    private static PrivateKey parseEcPrivateKey(byte[] keyBytes) throws Exception {
+        ASN1Sequence seq = ASN1Sequence.getInstance(keyBytes);
+        ECPrivateKey ecPrivateKey = ECPrivateKey.getInstance(seq);
+        AlgorithmIdentifier algId = new AlgorithmIdentifier(X9ObjectIdentifiers.id_ecPublicKey, ecPrivateKey.getParameters());
+        PrivateKeyInfo privInfo = new PrivateKeyInfo(algId, ecPrivateKey);
+        PKCS8EncodedKeySpec pkcs8Spec = new PKCS8EncodedKeySpec(privInfo.getEncoded());
+        return KeyFactory.getInstance("EC").generatePrivate(pkcs8Spec);
     }
 
-    private static byte[] parseCertificate(String encodedCert) {
-        return decodePemOrBase64(encodedCert);
+    private static PrivateKey parsePrivateKey(String encodedKey, String algorithm) throws Exception {
+        byte[] keyBytes = decodePemOrBase64(encodedKey);
+        if ("EC".equalsIgnoreCase(algorithm)) {
+            return parseEcPrivateKey(keyBytes);
+        } else if ("RSA".equalsIgnoreCase(algorithm)) {
+            PKCS8EncodedKeySpec pkcs8Spec = new PKCS8EncodedKeySpec(keyBytes);
+            return KeyFactory.getInstance("RSA").generatePrivate(pkcs8Spec);
+        } else {
+            throw new IllegalArgumentException("Unsupported algorithm: " + algorithm);
+        }
+    }
+
+    private static X509Certificate parseCertificate(String encodedCert) throws Exception {
+        byte[] certBytes = decodePemOrBase64(encodedCert);
+        return (X509Certificate) CertificateFactory
+                .getInstance("X.509")
+                .generateCertificate(new java.io.ByteArrayInputStream(certBytes));
     }
 
     private static byte[] getCertificateChain(String algorithm) throws Exception {
         IKeyboxProvider provider = KeyProviderManager.getProvider();
-        String[] certChain = KeyProperties.KEY_ALGORITHM_EC.equals(algorithm)
+        String[] certChainPem = KeyProperties.KEY_ALGORITHM_EC.equals(algorithm)
                 ? provider.getEcCertificateChain()
                 : provider.getRsaCertificateChain();
 
-        ByteArrayOutputStream certificateStream = new ByteArrayOutputStream();
-        for (String cert : certChain) {
-            certificateStream.write(parseCertificate(cert));
+        X509Certificate[] certChain = new X509Certificate[certChainPem.length];
+        for (int i = 0; i < certChainPem.length; i++) {
+            certChain[i] = parseCertificate(certChainPem[i]);
         }
-        return certificateStream.toByteArray();
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        for (X509Certificate cert : certChain) {
+            out.write(cert.getEncoded());
+        }
+
+        return out.toByteArray();
     }
 
     private static PrivateKey getPrivateKey(String algorithm) throws Exception {
@@ -92,11 +120,12 @@ public class KeyboxImitationHooks {
 
     private static X509CertificateHolder getCertificateHolder(String algorithm) throws Exception {
         IKeyboxProvider provider = KeyProviderManager.getProvider();
-        String certChain = KeyProperties.KEY_ALGORITHM_EC.equals(algorithm)
+        String certPem = KeyProperties.KEY_ALGORITHM_EC.equals(algorithm)
                 ? provider.getEcCertificateChain()[0]
                 : provider.getRsaCertificateChain()[0];
 
-        return new X509CertificateHolder(parseCertificate(certChain));
+        X509Certificate parsedCert = parseCertificate(certPem);
+        return new X509CertificateHolder(parsedCert.getEncoded());
     }
 
     private static byte[] modifyLeafCertificate(X509Certificate leafCertificate,
