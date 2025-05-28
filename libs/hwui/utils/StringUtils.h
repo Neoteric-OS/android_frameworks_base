@@ -41,7 +41,7 @@ public:
 struct SizePrinter {
     int bytes;
     friend std::ostream& operator<<(std::ostream& stream, const SizePrinter& d) {
-        static const char* SUFFIXES[] = {"B", "KiB", "MiB"};
+        static const char* const SUFFIXES[] = {"B", "KiB", "MiB"};
         size_t suffix = 0;
         double temp = d.bytes;
         while (temp > 1024 && suffix < 2) {
