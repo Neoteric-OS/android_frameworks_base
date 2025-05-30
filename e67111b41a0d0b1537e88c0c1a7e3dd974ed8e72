@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5cb35864_0f9ce2ae",
+        "filename": "services/core/java/com/android/server/wm/WindowState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5728,
+      "author": {
+        "id": 1240085
+      },
+      "writtenOn": "2025-05-30T19:40:47Z",
+      "side": 1,
+      "message": "we should be figuring out where it is turning invalid rather than checking all the time. This will just hide the root cause.",
+      "range": {
+        "startLine": 5726,
+        "startChar": 12,
+        "endLine": 5728,
+        "endChar": 13
+      },
+      "revId": "e67111b41a0d0b1537e88c0c1a7e3dd974ed8e72",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
