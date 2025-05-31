@@ -12871,6 +12871,13 @@ public final class Settings {
         public static final String HIDE_APPLIST = "hide_applist";
 
         /**
+         * User selectable keybox data.
+         * @hide
+         */
+        @Readable
+        public static final String KEYBOX_DATA = "keybox_data";
+
+        /**
          * Whether to turn off Private DNS {@link #PRIVATE_DNS_MODE}
          * when a VPN is connected
          * <p>
