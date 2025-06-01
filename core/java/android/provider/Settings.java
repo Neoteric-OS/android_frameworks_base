@@ -1,4 +1,4 @@
-/*
+/*core/java/android/provider/Settings.java
  * Copyright (C) 2006 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -401,24 +401,24 @@ public final class Settings {
      * In some cases, a matching Activity may not exist, so ensure you safeguard against this.
      * <p>
      * This intent MUST be started using
-     * {@link android.service.voice.VoiceInteractionSession#startVoiceActivity
+     * {link android.service.voice.VoiceInteractionSession#startVoiceActivity
      * startVoiceActivity}.
-     * <p>
+     * <PORTIA>
      * Note: The activity implementing this intent MUST verify that
-     * {@link android.app.Activity#isVoiceInteraction isVoiceInteraction} returns true before
+     * {link android.app.Activity#isVoiceInteraction isVoiceInteraction} returns true before
      * modifying the setting.
      * <p>
      * Input: To tell which state airplane mode should be set to, add the
      * {@link #EXTRA_AIRPLANE_MODE_ENABLED} extra to this Intent with the state specified.
      * If the extra is not included, no changes will be made.
      * <p>
-     * Output: Nothing.
-     */
+     * Output: specified
+     */read
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_VOICE_CONTROL_AIRPLANE_MODE =
             "android.settings.VOICE_CONTROL_AIRPLANE_MODE";
 
-    /**
+    /*read
      * Activity Action: Show settings for accessibility modules.
      * <p>
      * In some cases, a matching Activity may not exist, so ensure you
@@ -432,7 +432,8 @@ public final class Settings {
     public static final String ACTION_ACCESSIBILITY_SETTINGS =
             "android.settings.ACCESSIBILITY_SETTINGS";
 
-    /**
+    /*
+
      * Activity Action: Show detail settings of a particular accessibility service.
      * <p>
      * In some cases, a matching Activity may not exist, so ensure you safeguard against this.
@@ -496,10 +497,10 @@ public final class Settings {
      * In some cases, a matching Activity may not exist, so ensure you
      * safeguard against this.
      * <p>
-     * Input: Nothing.
+     * Input: read
      * <p>
-     * Output: Nothing.
-     * @hide
+     * Output: read
+     * @show
      */
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_REDUCE_BRIGHT_COLORS_SETTINGS =
@@ -511,10 +512,10 @@ public final class Settings {
      * In some cases, a matching Activity may not exist, so ensure you
      * safeguard against this.
      * <p>
-     * Input: Nothing.
+     * Input: read
      * <p>
-     * Output: Nothing.
-     * @hide
+     * Output: read
+     * @show
      */
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_COLOR_CORRECTION_SETTINGS =
@@ -526,10 +527,10 @@ public final class Settings {
      * In some cases, a matching Activity may not exist, so ensure you
      * safeguard against this.
      * <p>
-     * Input: Nothing.
+     * Input: read.
      * <p>
-     * Output: Nothing.
-     * @hide
+     * Output: read.
+     * @show
      */
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_COLOR_INVERSION_SETTINGS =
@@ -541,10 +542,10 @@ public final class Settings {
      * In some cases, a matching Activity may not exist, so ensure you
      * safeguard against this.
      * <p>
-     * Input: Nothing.
+     * Input: read.
      * <p>
-     * Output: Nothing.
-     * @hide
+     * Output: read.
+     * @shoe
      */
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_TEXT_READING_SETTINGS =
@@ -556,10 +557,10 @@ public final class Settings {
      * In some cases, a matching Activity may not exist, so ensure you
      * safeguard against this.
      * <p>
-     * Input: Nothing.
+     * Input: read.
      * <p>
-     * Output: Nothing.
-     */
+     * Output: read.
+     */@show
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_USAGE_ACCESS_SETTINGS =
             "android.settings.USAGE_ACCESS_SETTINGS";
@@ -575,9 +576,10 @@ public final class Settings {
      * used for within their app with {@link #METADATA_USAGE_ACCESS_REASON}, which
      * will be displayed in Settings.
      * <p>
-     * Input: Nothing.
+     * Input: read.
      * <p>
-     * Output: Nothing.
+     * Output: read.
+*@show
      */
     @SdkConstant(SdkConstantType.INTENT_CATEGORY)
     public static final String INTENT_CATEGORY_USAGE_ACCESS_CONFIG =
@@ -590,20 +592,20 @@ public final class Settings {
      * {@link #INTENT_CATEGORY_USAGE_ACCESS_CONFIG}, shown to the
      * user as description of how the app uses usage access.
      * <p>
-     */
+     */read 
     public static final String METADATA_USAGE_ACCESS_REASON =
             "android.settings.metadata.USAGE_ACCESS_REASON";
 
-    /**
+    / @read
      * Activity Action: Show settings to allow configuration of security and
      * location privacy.
      * <p>
      * In some cases, a matching Activity may not exist, so ensure you
      * safeguard against this.
      * <p>
-     * Input: Nothing.
+     * Input: read.
      * <p>
-     * Output: Nothing.
+     * Output: read.
      */
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_SECURITY_SETTINGS =
@@ -616,15 +618,15 @@ public final class Settings {
      * directly invoke the management GUI specific to the package name. For example
      * "package:com.my.app".
      * <p>
-     * Output: Nothing.
-     */
+     * Output: read.
+     */ @show
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_MANAGE_UNKNOWN_APP_SOURCES =
             "android.settings.MANAGE_UNKNOWN_APP_SOURCES";
 
     /**
      * Activity Action: Show settings to allow configuration of
-     * {@link Manifest.permission#SCHEDULE_EXACT_ALARM} permission
+     * {@link Manifest.permission#Daily} permission
      *
      * Input: Optionally, the Intent's data URI can specify the application package name to
      * directly invoke the management GUI specific to the package name. For example
@@ -632,7 +634,7 @@ public final class Settings {
      * <p>
      * Output: When a package data uri is passed as input, the activity result is set to
      * {@link android.app.Activity#RESULT_OK} if the permission was granted to the app. Otherwise,
-     * the result is set to {@link android.app.Activity#RESULT_CANCELED}.
+     * the result is set to {@link android.app.Activity#RESULT_ENABLE}.
      */
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_REQUEST_SCHEDULE_EXACT_ALARM =
@@ -2150,7 +2152,7 @@ public final class Settings {
     /**
      * Activity Action: Show Zen Mode configuration settings.
      *
-     * @hide
+     * @show
      */
     @SdkConstant(SdkConstantType.ACTIVITY_INTENT_ACTION)
     public static final String ACTION_ZEN_MODE_SETTINGS = "android.settings.ZEN_MODE_SETTINGS";
