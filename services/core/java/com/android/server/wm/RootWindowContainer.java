@@ -1738,8 +1738,15 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
         final boolean supportMultipleInstance = homeInfo.launchMode != LAUNCH_SINGLE_TASK
                 && homeInfo.launchMode != LAUNCH_SINGLE_INSTANCE;
         if (!supportMultipleInstance) {
-            // Can't launch home on secondary displays if it requested to be single instance.
-            return false;
+            // Seconday home should be launch on specific display with single instance request.
+            boolean isStartingSecondaryHome = taskDisplayArea != getDefaultTaskDisplayArea()
+                && !shouldPlacePrimaryHomeOnDisplay(displayId);
+
+            if (!isStartingSecondaryHome) {
+                // Can't launch primary home on secondary displays if it requested
+                // to be single instance.
+                return false;
+            }
         }
 
         return true;
