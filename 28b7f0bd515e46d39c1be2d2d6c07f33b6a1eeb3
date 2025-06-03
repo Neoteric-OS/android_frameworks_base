@@ -141,6 +141,41 @@
       "parentUuid": "934cc28a_72e9fa41",
       "revId": "28b7f0bd515e46d39c1be2d2d6c07f33b6a1eeb3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "555b5d59_326d57d1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003473
+      },
+      "writtenOn": "2025-06-03T20:37:15Z",
+      "side": 1,
+      "message": "I have CP\u0027ed and submitted this CL unchanged as http://ag/33878436. Thank you for contributing, Chris!",
+      "revId": "28b7f0bd515e46d39c1be2d2d6c07f33b6a1eeb3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e85a3646_1d2b445f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003473
+      },
+      "writtenOn": "2025-06-03T20:37:15Z",
+      "side": 1,
+      "message": "I\u0027ll take care of the CP.",
+      "parentUuid": "43352bc2_87edaeed",
+      "revId": "28b7f0bd515e46d39c1be2d2d6c07f33b6a1eeb3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
