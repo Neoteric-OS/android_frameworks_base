@@ -22,6 +22,30 @@
       },
       "revId": "ac1ac0531a29aaccf9a48adf255e7d3b74a2615f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "722e5ab3_e3c47fd2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1060688
+      },
+      "writtenOn": "2025-06-04T04:45:58Z",
+      "side": 1,
+      "message": "PiP2 won\u0027t be enabled in the 25Q3 release. We\u0027re still accepting PiP1 changes for critical, safe bug fixes.\n\nThis one-line change looks promising – what are your thoughts?",
+      "parentUuid": "f465c3dd_86562452",
+      "range": {
+        "startLine": 10,
+        "startChar": 42,
+        "endLine": 11,
+        "endChar": 17
+      },
+      "revId": "ac1ac0531a29aaccf9a48adf255e7d3b74a2615f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
