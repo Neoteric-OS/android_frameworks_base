@@ -72,10 +72,13 @@ public class TwoTargetPreference extends Preference {
     }
 
     private void init(Context context) {
+        /* 
+        TODO(b/422009443): Fix the preference layout resource showing error in TvSettings.
         int resID = SettingsThemeHelper.isExpressiveTheme(context)
                 ? R.layout.settingslib_expressive_preference_two_target
                 : R.layout.preference_two_target;
-        setLayoutResource(resID);
+        */
+        setLayoutResource(R.layout.preference_two_target);
         mSmallIconSize = context.getResources().getDimensionPixelSize(
                 R.dimen.two_target_pref_small_icon_size);
         mMediumIconSize = context.getResources().getDimensionPixelSize(
