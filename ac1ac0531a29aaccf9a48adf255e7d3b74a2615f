@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f465c3dd_86562452",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2025-06-04T03:58:57Z",
+      "side": 1,
+      "message": "@hwwang@google.com since pip2 is enabled, this won\u0027t happen any more? (isPip2ExperimentEnabled os true in moveActivityToPinnedRootTaskInner)",
+      "range": {
+        "startLine": 10,
+        "startChar": 42,
+        "endLine": 11,
+        "endChar": 17
+      },
+      "revId": "ac1ac0531a29aaccf9a48adf255e7d3b74a2615f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
