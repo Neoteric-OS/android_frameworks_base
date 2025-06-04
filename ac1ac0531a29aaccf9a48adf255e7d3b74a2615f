@@ -46,6 +46,23 @@
       },
       "revId": "ac1ac0531a29aaccf9a48adf255e7d3b74a2615f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc91b475_76c55149",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2025-06-04T11:09:29Z",
+      "side": 1,
+      "message": "Merged commit bce892c",
+      "revId": "ac1ac0531a29aaccf9a48adf255e7d3b74a2615f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
