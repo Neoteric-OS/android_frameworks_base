@@ -16,6 +16,24 @@
       "message": "Could you please provide more context for this CL? - e.g. why is this needed? why does the current code not work? Why is having a battery important? Can `/data` files be corrupted and lastModified value been set to anything?\n\nPlease also add tests.",
       "revId": "5803ae850f97b1430bd50f4b81688575eaf723e2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f3eb46d_a6d6f13d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3265961
+      },
+      "writtenOn": "2025-06-04T10:33:57Z",
+      "side": 1,
+      "message": "I have updated the commit description and added the test results. Please review patch 2. Thank you.",
+      "parentUuid": "bdd93702_20daa450",
+      "revId": "5803ae850f97b1430bd50f4b81688575eaf723e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
