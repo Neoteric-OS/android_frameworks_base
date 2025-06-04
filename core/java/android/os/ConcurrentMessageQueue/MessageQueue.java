@@ -277,6 +277,7 @@ public final class MessageQueue {
         private static long combineCounts(int queued, int cancelled) {
             return ((long) queued << Integer.SIZE) | (long) cancelled;
         }
+<<<<<<< HEAD
 
         public void incrementQueued() {
             while (true) {
@@ -286,6 +287,24 @@ public final class MessageQueue {
                 /* Use Math.max() to avoid overflow of queued count */
                 long newVal = combineCounts(Math.max(queued + 1, queued), cancelled);
 
+=======
+        if (!getQuitting()) {
+            return false;
+        }
+        boolean wasInterrupted = false;
+        try {
+            while ((mQuittingRefCountValue & ~QUITTING_MASK) != 0) {
+                LockSupport.park();
+                wasInterrupted |= Thread.interrupted();
+            }
+        } finally {
+            if (wasInterrupted) {
+                mLooperThread.interrupt();
+            }
+        }
+        return true;
+    }
+>>>>>>> PATCH
                 /* Don't overwrite 'AWAKE' state */
                 if (oldVal == AWAKE || sCounts.compareAndSet(this, oldVal, newVal)) {
                     break;

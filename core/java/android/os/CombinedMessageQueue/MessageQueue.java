@@ -2698,6 +2698,7 @@ public final class MessageQueue {
                 if (removeMatches) {
                     if (p.removeFromStack()) {
                         p.mMessage.recycleUnchecked();
+<<<<<<< HEAD
                         if (mMessageCounts.incrementCancelled()) {
                             nativeWake(mPtr);
                         }
@@ -2706,6 +2707,24 @@ public final class MessageQueue {
                     return true;
                 }
             }
+=======
+            return false;
+        }
+        mLooperThread = Thread.currentThread();
+        boolean wasInterrupted = false;
+        try {
+            while ((mQuittingRefCountValue & ~QUITTING_MASK) != 0) {
+                LockSupport.park();
+                wasInterrupted |= Thread.interrupted();
+            }
+        } finally {
+            if (wasInterrupted) {
+                mLooperThread.interrupt();
+            }
+        }
+        return true;
+    }
+>>>>>>> PATCH
 
             StackNode n = p.mNext;
             if (n == null) {
