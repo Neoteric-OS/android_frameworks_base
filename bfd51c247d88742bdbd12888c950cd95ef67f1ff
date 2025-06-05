@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35270e35_62df35d3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2001555
+      },
+      "writtenOn": "2025-06-05T04:54:27Z",
+      "side": 1,
+      "message": "This is related on the \"https://partnerissuetracker.corp.google.com/issues/386837581\"",
+      "revId": "bfd51c247d88742bdbd12888c950cd95ef67f1ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
