@@ -162,12 +162,22 @@ public final class MessageQueue {
         } else {
             // Also explicitly allow SystemUI processes.
             // SystemUI doesn't run in a core UID, but we want to give it the performance boost,
+<<<<<<< HEAD
             // and we know that it's safe to use the concurrent implementation in SystemUI.
             sIsProcessAllowedToUseConcurrent =
                     processName.equals("com.android.systemui")
                             || processName.startsWith("com.android.systemui:");
             // On Android distributions where SystemUI has a different process name,
             // the above condition may need to be adjusted accordingly.
+=======
+    }
+
+    private static boolean computeUseConcurrent() {
+        Trace.registerWithPerfetto();
+        if (Flags.useConcurrentMessageQueueInApps()) {
+            // b/379472827: Robolectric tests use reflection to access MessageQueue.mMessages.
+            // This is a hack to allow Robolectric tests to use the legacy implementation.
+>>>>>>> PATCH
         }
 
         // We can lift these restrictions in the future after we've made it possible for test
