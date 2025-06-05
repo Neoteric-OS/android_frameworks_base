@@ -1007,12 +1007,14 @@ public class BatteryStatsHistory {
             writeToParcel(out);
         }
 
-        out.writeInt(mHistoryTagPool.size());
-        for (Map.Entry<HistoryTag, Integer> ent : mHistoryTagPool.entrySet()) {
-            HistoryTag tag = ent.getKey();
-            out.writeInt(ent.getValue());
-            out.writeString(tag.string);
-            out.writeInt(tag.uid);
+        synchronized (this) {
+            out.writeInt(mHistoryTagPool.size());
+            for (Map.Entry<HistoryTag, Integer> ent : mHistoryTagPool.entrySet()) {
+                HistoryTag tag = ent.getKey();
+                out.writeInt(ent.getValue());
+                out.writeString(tag.string);
+                out.writeInt(tag.uid);
+            }
         }
     }
 
@@ -1025,24 +1027,26 @@ public class BatteryStatsHistory {
             readFromParcel(in);
         }
 
-        mHistoryTagPool.clear();
-        mNextHistoryTagIdx = 0;
-        mNumHistoryTagChars = 0;
+        synchronized (this) {
+            mHistoryTagPool.clear();
+            mNextHistoryTagIdx = 0;
+            mNumHistoryTagChars = 0;
 
-        int numTags = in.readInt();
-        for (int i = 0; i < numTags; i++) {
-            int idx = in.readInt();
-            String str = in.readString();
-            int uid = in.readInt();
-            HistoryTag tag = new HistoryTag();
-            tag.string = str;
-            tag.uid = uid;
-            tag.poolIdx = idx;
-            mHistoryTagPool.put(tag, idx);
-            if (idx >= mNextHistoryTagIdx) {
-                mNextHistoryTagIdx = idx + 1;
+            int numTags = in.readInt();
+            for (int i = 0; i < numTags; i++) {
+                int idx = in.readInt();
+                String str = in.readString();
+                int uid = in.readInt();
+                HistoryTag tag = new HistoryTag();
+                tag.string = str;
+                tag.uid = uid;
+                tag.poolIdx = idx;
+                mHistoryTagPool.put(tag, idx);
+                if (idx >= mNextHistoryTagIdx) {
+                    mNextHistoryTagIdx = idx + 1;
+                }
+                mNumHistoryTagChars += tag.string.length() + 1;
             }
-            mNumHistoryTagChars += tag.string.length() + 1;
         }
     }
 
