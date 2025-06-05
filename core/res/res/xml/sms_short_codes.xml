@@ -201,7 +201,7 @@
     <shortcode country="jp" pattern="\\d{1,9}" free="8083|00050320" />
 
     <!-- Kenya: 5 digits, known premium codes listed -->
-    <shortcode country="ke" pattern="\\d{5}" free="21725|21562|40520|23342|40023|24088|23054" />
+    <shortcode country="ke" pattern="\\d{5}" free="22111|21725|21562|40520|23342|40023|24088|23054" />
 
     <!-- Kyrgyzstan: 4 digits, known premium codes listed -->
     <shortcode country="kg" pattern="\\d{4}" premium="415[2367]|444[69]" />
