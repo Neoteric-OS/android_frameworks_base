@@ -53621,8 +53621,10 @@ package android.view {
     method @Nullable public android.view.SurfaceControlViewHost.SurfacePackage getSurfacePackage();
     method @Nullable public android.view.View getView();
     method public void relayout(int, int);
+    method public void relayout(android.view.WindowManager.LayoutParams);
     method public void release();
     method public void setView(@NonNull android.view.View, int, int);
+    method public void setView(@NonNull android.view.View, @NonNull android.view.WindowManager.LayoutParams);
     method @Deprecated public boolean transferTouchGestureToHost();
   }
 
