@@ -53621,8 +53621,10 @@ package android.view {
     method @Nullable public android.view.SurfaceControlViewHost.SurfacePackage getSurfacePackage();
     method @Nullable public android.view.View getView();
     method public void relayout(int, int);
+    method @FlaggedApi("com.android.window.flags.surface_control_input_receiver") public void relayout(@NonNull android.view.WindowManager.LayoutParams);
     method public void release();
     method public void setView(@NonNull android.view.View, int, int);
+    method @FlaggedApi("com.android.window.flags.surface_control_input_receiver") public void setView(@NonNull android.view.View, @NonNull android.view.WindowManager.LayoutParams);
     method @Deprecated public boolean transferTouchGestureToHost();
   }
 

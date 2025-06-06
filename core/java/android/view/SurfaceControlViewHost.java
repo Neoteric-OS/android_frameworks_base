@@ -471,10 +471,7 @@ public class SurfaceControlViewHost {
         setView(view, lp);
     }
 
-    /**
-     * @hide
-     */
-    @TestApi
+    @FlaggedApi(Flags.FLAG_SURFACE_CONTROL_INPUT_RECEIVER)
     public void setView(@NonNull View view, @NonNull WindowManager.LayoutParams attrs) {
         Objects.requireNonNull(view);
         attrs.flags |= WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED;
@@ -518,11 +515,8 @@ public class SurfaceControlViewHost {
         mWm.setCompletionCallback(mViewRoot.mWindow.asBinder(), callback);
     }
 
-    /**
-     * @hide
-     */
-    @TestApi
-    public void relayout(WindowManager.LayoutParams attrs) {
+    @FlaggedApi(Flags.FLAG_SURFACE_CONTROL_INPUT_RECEIVER)
+    public void relayout(@NonNull WindowManager.LayoutParams attrs) {
         mViewRoot.setLayoutParams(attrs, false);
     }
 
