@@ -768,7 +768,7 @@
     <!-- Title of warning dialog about the implications of enabling developer settings -->
     <string name="dev_settings_warning_title">Allow development settings?</string>
     <!-- Warning text to user about the implications of enabling USB debugging -->
-    <string name="dev_settings_warning_message">These settings are intended for development use only.  They can cause your device and the applications on it to break or misbehave. Unstable behavior may occur.</string>
+    <string name="dev_settings_warning_message">These settings are intended for development use only.  They can cause your device and the applications on it to break or misbehave. Data loss is possible.</string>
     <!-- Title of checkbox setting to perform package verification on apps installed over USB/ADT/ADB [CHAR LIMIT=32] -->
     <string name="verify_apps_over_usb_title">Verify apps over USB</string>
     <!-- Summary of checkbox setting to perform package verification on apps installed over USB/ADT/ADB [CHAR LIMIT=NONE] -->
