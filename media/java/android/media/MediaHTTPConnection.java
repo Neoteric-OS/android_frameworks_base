@@ -253,6 +253,7 @@ public class MediaHTTPConnection extends IMediaHTTPConnection.Stub {
                 } else {
                     mConnection = (HttpURLConnection)url.openConnection();
                 }
+                mConnection.setRequestProperty("Accept-Encoding", "identity");
                 // If another thread is concurrently disconnecting, throwing IOException will
                 // cause us to release the lock, giving the other thread a chance to acquire
                 // it. It also ensures that the catch block will run, which will tear down
