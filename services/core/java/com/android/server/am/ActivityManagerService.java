@@ -719,6 +719,10 @@ public class ActivityManagerService extends IActivityManager.Stub
     /** Whether some specified important processes are allowed to use FIFO priority. */
     boolean mAllowSpecifiedFifoScheduling = true;
 
+    /** Boolean to track the app response or not. */
+    private static boolean isAppResponsive = false;
+
+
     @GuardedBy("mStrictModeCallbacks")
     private final SparseArray<IUnsafeIntentStrictModeCallback>
             mStrictModeCallbacks = new SparseArray<>();
@@ -17380,6 +17384,7 @@ public class ActivityManagerService extends IActivityManager.Stub
         public boolean inputDispatchingTimedOut(Object proc, String activityShortComponentName,
                 ApplicationInfo aInfo, String parentShortComponentName, Object parentProc,
                 boolean aboveSystem, TimeoutRecord timeoutRecord) {
+		isAppResponsive = false;
             return ActivityManagerService.this.inputDispatchingTimedOut((ProcessRecord) proc,
                     activityShortComponentName, aInfo, parentShortComponentName,
                     (WindowProcessController) parentProc, aboveSystem, timeoutRecord);
@@ -17387,6 +17392,7 @@ public class ActivityManagerService extends IActivityManager.Stub
 
         @Override
         public void inputDispatchingResumed(int pid) {
+		isAppResponsive = true;
             final ProcessRecord proc;
             synchronized (mPidsSelfLocked) {
                 proc = mPidsSelfLocked.get(pid);
@@ -17401,8 +17407,12 @@ public class ActivityManagerService extends IActivityManager.Stub
             Message msg = Message.obtain();
             msg.what = SHOW_NOT_RESPONDING_UI_MSG;
             msg.obj = (AppNotRespondingDialog.Data) data;
-
-            mUiHandler.sendMessageDelayed(msg, InputConstants.DEFAULT_DISPATCHING_TIMEOUT_MILLIS);
+	     if(isAppResponsive) {
+		     Slog.v(TAG_SERVICE,"App resumed");
+               }
+               else {
+		       mUiHandler.sendMessageDelayed(msg, InputConstants.DEFAULT_DISPATCHING_TIMEOUT_MILLIS);
+	       }
         }
 
         @Override
