@@ -800,12 +800,14 @@ public class AudioDeviceInventory {
             List<DeviceInfo> failedReconnectionDeviceList = new ArrayList<>(/*initialCapacity*/ 0);
             //TODO iterate on mApmConnectedDevices instead once it handles all device types
             for (DeviceInfo di : mConnectedDevices.values()) {
-                res = mAudioSystem.setDeviceConnectionState(new AudioDeviceAttributes(
-                        di.mDeviceType,
-                        di.mDeviceAddress,
-                        di.mDeviceName),
-                        AudioSystem.DEVICE_STATE_AVAILABLE,
-                        di.mDeviceCodecFormat);
+                AudioDeviceAttributes ada = new AudioDeviceAttributes(
+                        AudioManager.isInputDevice(di.mDeviceType) ?
+                        AudioDeviceAttributes.ROLE_INPUT : AudioDeviceAttributes.ROLE_OUTPUT,
+                        AudioDeviceInfo.convertInternalDeviceToDeviceType(di.mDeviceType),
+                        di.mDeviceAddress, di.mDeviceName, di.mAudioProfiles,
+                        di.mAudioDescriptors);
+                res = mAudioSystem.setDeviceConnectionState(ada, AudioSystem.DEVICE_STATE_AVAILABLE,
+                    di.mDeviceCodecFormat);
                 if (asDeviceConnectionFailure() && res != AudioSystem.AUDIO_STATUS_OK) {
                     failedReconnectionDeviceList.add(di);
                 }
@@ -1849,14 +1851,8 @@ public class AudioDeviceInventory {
                     return false;
                 }
 
-                if (device == AudioSystem.DEVICE_OUT_HDMI ||
-                    device == AudioSystem.DEVICE_OUT_HDMI_ARC ||
-                    device == AudioSystem.DEVICE_OUT_HDMI_EARC) {
-                    mConnectedDevices.put(deviceKey, new DeviceInfo(device, deviceName,
-                        address, attributes.getAudioProfiles(), attributes.getAudioDescriptors()));
-                } else {
-                    mConnectedDevices.put(deviceKey, new DeviceInfo(device, deviceName, address));
-                }
+                mConnectedDevices.put(deviceKey, new DeviceInfo(device, deviceName,
+                    address, attributes.getAudioProfiles(), attributes.getAudioDescriptors()));
                 mDeviceBroker.postAccessoryPlugMediaUnmute(device);
                 status = true;
             } else if (!connect && isConnected) {
