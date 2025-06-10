@@ -297,19 +297,19 @@ public abstract class ListenerMultiplexer<TKey, TListener,
                 } else {
                     mRegistrations.put(key, registration);
                 }
-
-                if (wasEmpty) {
-                    onRegister();
-                }
-                registration.onRegister(key);
-                if (oldRegistration == null) {
-                    onRegistrationAdded(key, registration);
-                } else {
-                    onRegistrationReplaced(oldKey, oldRegistration, key, registration);
-                }
-                onRegistrationActiveChanged(registration);
             }
         }
+
+        if (wasEmpty) {
+            onRegister();
+        }
+        registration.onRegister(key);
+        if (oldRegistration == null) {
+            onRegistrationAdded(key, registration);
+        } else {
+            onRegistrationReplaced(oldKey, oldRegistration, key, registration);
+        }
+        onRegistrationActiveChanged(registration);
     }
 
     /**

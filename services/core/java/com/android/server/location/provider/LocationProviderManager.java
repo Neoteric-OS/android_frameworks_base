@@ -419,7 +419,6 @@ public class LocationProviderManager extends
             }
         }
 
-        @GuardedBy("mMultiplexerLock")
         @Override
         protected void onRegister() {
             super.onRegister();
@@ -814,9 +813,6 @@ public class LocationProviderManager extends
             mProviderTransport = null;
         }
 
-        // TODO: remove suppression when GuardedBy analysis can recognize lock from super class
-        @SuppressWarnings("GuardedBy")
-        @GuardedBy("mMultiplexerLock")
         @Override
         protected void onRegister() {
             super.onRegister();
@@ -1082,9 +1078,6 @@ public class LocationProviderManager extends
                     permissionLevel);
         }
 
-        // TODO: remove suppression when GuardedBy analysis can recognize lock from super class
-        @SuppressWarnings("GuardedBy")
-        @GuardedBy("mMultiplexerLock")
         @Override
         protected void onRegister() {
             super.onRegister();
