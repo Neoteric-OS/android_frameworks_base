@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "691bffb7_561941b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1903913
+      },
+      "writtenOn": "2025-06-10T11:25:55Z",
+      "side": 1,
+      "message": "Run ABTD and passed from https://android-build.corp.google.com/test_investigate/invocation/I41200010408583468/test/TR19929766751905155/?redirect\u003dhttp%3A%2F%2Ffusion2%2Fa65673c5-9c7e-49e6-a87f-e556c0367724\u0026status\u003dpassing",
+      "revId": "89bbe40e8d38a9b90a7fb02d82518492090f63fc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
