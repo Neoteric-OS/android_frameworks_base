@@ -800,12 +800,21 @@ public class AudioDeviceInventory {
             List<DeviceInfo> failedReconnectionDeviceList = new ArrayList<>(/*initialCapacity*/ 0);
             //TODO iterate on mApmConnectedDevices instead once it handles all device types
             for (DeviceInfo di : mConnectedDevices.values()) {
-                res = mAudioSystem.setDeviceConnectionState(new AudioDeviceAttributes(
-                        di.mDeviceType,
-                        di.mDeviceAddress,
-                        di.mDeviceName),
-                        AudioSystem.DEVICE_STATE_AVAILABLE,
-                        di.mDeviceCodecFormat);
+                AudioDeviceAttributes ada;
+                if (di.mDeviceType == AudioSystem.DEVICE_OUT_HDMI ||
+                    di.mDeviceType == AudioSystem.DEVICE_OUT_HDMI_ARC ||
+                    di.mDeviceType == AudioSystem.DEVICE_OUT_HDMI_EARC) {
+                    ada = new AudioDeviceAttributes(
+                        AudioDeviceAttributes.ROLE_OUTPUT,
+                        AudioDeviceInfo.convertInternalDeviceToDeviceType(di.mDeviceType),
+                        di.mDeviceAddress, di.mDeviceName, di.mAudioProfiles,
+                        di.mAudioDescriptors);
+                } else {
+                    ada = new AudioDeviceAttributes(di.mDeviceType, di.mDeviceAddress,
+                        di.mDeviceName);
+                }
+                res = mAudioSystem.setDeviceConnectionState(ada, AudioSystem.DEVICE_STATE_AVAILABLE,
+                    di.mDeviceCodecFormat);
                 if (asDeviceConnectionFailure() && res != AudioSystem.AUDIO_STATUS_OK) {
                     failedReconnectionDeviceList.add(di);
                 }
