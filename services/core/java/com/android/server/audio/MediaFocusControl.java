@@ -483,7 +483,8 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
             }
             if (signal) {
                 // notify the new top of the stack it gained focus
-                notifyTopOfAudioFocusStack();
+                //notifyTopOfAudioFocusStack();
+                delayNotifyTopOfAudioFocusStack();
             }
         } else {
             // focus is abandoned by a client that's not at the top of the stack,
@@ -523,7 +524,8 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
 
             if (signal) {
                 // notify the new top of the stack it gained focus
-                notifyTopOfAudioFocusStack();
+                //notifyTopOfAudioFocusStack();
+                delayNotifyTopOfAudioFocusStack();
             }
         }
     }
@@ -1128,6 +1130,8 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
                 //.set(MediaMetrics.Property.SDK, sdk)
                 .record();
 
+        mFocusHandler.removeMessages(MSG_L_FOCUS_GAIN_DELAYED);
+
         // when using the test API, a fake UID can be injected (testUid is ignored otherwise)
         // note that the test on flags is not a mask test on purpose, AUDIOFOCUS_FLAG_TEST is
         // supposed to be alone in bitfield
@@ -1552,6 +1556,11 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
                 getFadeInDelayForOffendersMillis(focusRequester.getAudioAttributes()));
     }
 
+    private void delayNotifyTopOfAudioFocusStack() {
+        mFocusHandler.sendMessageDelayed(
+                mFocusHandler.obtainMessage(MSG_L_FOCUS_GAIN_DELAYED), AUDIOFOCUS_GAIN_DELAY_MS);
+    }
+
     //=================================================================
     // Message handling
     private Handler mFocusHandler;
@@ -1567,6 +1576,10 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
     private static final int MSG_L_FOCUS_LOSS_AFTER_FADE = 1;
 
     private static final int MSL_L_FORGET_UID = 2;
+
+    private static final int MSG_L_FOCUS_GAIN_DELAYED = 4;
+
+    private static final int AUDIOFOCUS_GAIN_DELAY_MS = 20;
 
     private void initFocusThreading() {
         mFocusThread = new HandlerThread(TAG);
@@ -1596,6 +1609,12 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
                             Log.d(TAG, "MSL_L_FORGET_UID uid=" + uid);
                         }
                         mFocusEnforcer.forgetUid(uid);
+                        break;
+                    case MSG_L_FOCUS_GAIN_DELAYED:
+                        synchronized (mAudioFocusLock) {
+                            Log.d(TAG, "Handle AUDIOFOCUS_GAIN");
+                            notifyTopOfAudioFocusStack();
+                        }
                         break;
                     default:
                         break;
