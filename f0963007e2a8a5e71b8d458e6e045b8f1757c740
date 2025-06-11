@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dee78bba_ed3558db",
+        "filename": "telephony/java/android/telephony/ims/ImsCallProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2025-06-11T23:34:33Z",
+      "side": 1,
+      "message": "a video",
+      "range": {
+        "startLine": 313,
+        "startChar": 58,
+        "endLine": 313,
+        "endChar": 66
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "830b8165_20962c9b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "telephony/java/android/telephony/ims/ImsCallProfile.java",
+              "range": {
+                "startLine": 313,
+                "startChar": 0,
+                "endLine": 314,
+                "endChar": 0
+              },
+              "replacement": "     * Boolean extra property indicates that this call is a video Color Ring Back Tone\n"
+            },
+            {
+              "path": "telephony/java/android/telephony/ims/ImsCallProfile.java",
+              "range": {
+                "startLine": 319,
+                "startChar": 0,
+                "endLine": 320,
+                "endChar": 0
+              },
+              "replacement": "            \"android.telephony.ims.extra.IS_USING_VIDEO_RINGBACK\";\n"
+            }
+          ]
+        }
+      ],
+      "revId": "f0963007e2a8a5e71b8d458e6e045b8f1757c740",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a51854f8_6e3d520c",
+        "filename": "telephony/java/android/telephony/ims/ImsCallProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1141163
+      },
+      "writtenOn": "2025-06-11T23:34:33Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 315,
+        "startChar": 69,
+        "endLine": 315,
+        "endChar": 77
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "d529e87b_70f37e75",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "telephony/java/android/telephony/ims/ImsCallProfile.java",
+              "range": {
+                "startLine": 315,
+                "startChar": 0,
+                "endLine": 316,
+                "endChar": 0
+              },
+              "replacement": "     * to indicate that the modem/network has identified the call as a video CRBT call.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "f0963007e2a8a5e71b8d458e6e045b8f1757c740",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
