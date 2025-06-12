@@ -118,6 +118,30 @@
       },
       "revId": "6453109f304717da17e86122f2791f371d50f2c7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b93f8cb5_92b692ce",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1874917
+      },
+      "writtenOn": "2025-06-12T08:33:16Z",
+      "side": 1,
+      "message": "Okay, That make sense, I\u0027ll make another modification.",
+      "parentUuid": "fac3e2ca_b097452b",
+      "range": {
+        "startLine": 804,
+        "startChar": 16,
+        "endLine": 815,
+        "endChar": 17
+      },
+      "revId": "6453109f304717da17e86122f2791f371d50f2c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
