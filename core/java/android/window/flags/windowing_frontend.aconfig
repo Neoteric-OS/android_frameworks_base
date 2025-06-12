@@ -160,6 +160,17 @@ flag {
 }
 
 flag {
+  name: "update_root_task_layer_only_with_transition"
+  namespace: "windowing_frontend"
+  description: "Avoid changing root task layer outside transition"
+  bug: "385142011"
+  is_fixed_read_only: true
+  metadata {
+    purpose: PURPOSE_BUGFIX
+  }
+}
+
+flag {
   name: "fifo_priority_for_major_ui_processes"
   namespace: "windowing_frontend"
   description: "Use realtime priority for SystemUI and launcher"
