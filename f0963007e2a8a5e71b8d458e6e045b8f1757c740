@@ -52,6 +52,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "40a1b6ce_6144be53",
+        "filename": "telephony/java/android/telephony/ims/ImsCallProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1933020
+      },
+      "writtenOn": "2025-06-12T01:43:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dee78bba_ed3558db",
+      "range": {
+        "startLine": 313,
+        "startChar": 58,
+        "endLine": 313,
+        "endChar": 66
+      },
+      "revId": "f0963007e2a8a5e71b8d458e6e045b8f1757c740",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a51854f8_6e3d520c",
@@ -89,6 +113,30 @@
           ]
         }
       ],
+      "revId": "f0963007e2a8a5e71b8d458e6e045b8f1757c740",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "34fb669d_10fdc15d",
+        "filename": "telephony/java/android/telephony/ims/ImsCallProfile.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1933020
+      },
+      "writtenOn": "2025-06-12T01:43:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a51854f8_6e3d520c",
+      "range": {
+        "startLine": 315,
+        "startChar": 69,
+        "endLine": 315,
+        "endChar": 77
+      },
       "revId": "f0963007e2a8a5e71b8d458e6e045b8f1757c740",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
