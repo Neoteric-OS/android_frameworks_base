@@ -1,0 +1,75 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa4990eb_31b9d0d3",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-06-12T07:49:22Z",
+      "side": 1,
+      "message": "given the audio descriptors are en empty array by default in DeviceInfo, no need for a special case for HDMI: always use the AudioDeviceAttributes constructor with profiles.\n\nSame thing in  handleDeviceConnection() use the DeviceInfo constructor with audio profiles always",
+      "range": {
+        "startLine": 804,
+        "startChar": 16,
+        "endLine": 815,
+        "endChar": 17
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "5f42382c_46d33631",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+              "range": {
+                "startLine": 803,
+                "startChar": 0,
+                "endLine": 808,
+                "endChar": 0
+              },
+              "replacement": "                AudioDeviceAttributes ada \u003d new AudioDeviceAttributes(\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+              "range": {
+                "startLine": 812,
+                "startChar": 0,
+                "endLine": 816,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+              "range": {
+                "startLine": 1861,
+                "startChar": 0,
+                "endLine": 1865,
+                "endChar": 0
+              },
+              "replacement": "                mConnectedDevices.put(deviceKey, new DeviceInfo(device, deviceName,\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+              "range": {
+                "startLine": 1866,
+                "startChar": 0,
+                "endLine": 1869,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "6453109f304717da17e86122f2791f371d50f2c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
