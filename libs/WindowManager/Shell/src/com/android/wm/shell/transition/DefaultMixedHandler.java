@@ -575,7 +575,10 @@ public class DefaultMixedHandler implements MixedTransitionHandler,
         // Note: at this point, startT has probably already been applied, so we are basically
         // giving splitHandler an empty startT. This is currently OK because display-change will
         // grab a screenshot and paste it on top anyways.
-        mSplitHandler.startPendingAnimation(transition, everythingElse, startT, finishT, finishCB);
+        if(!mSplitHandler.startPendingAnimation(transition, everythingElse, startT, finishT, finishCB)) {
+            ProtoLog.w(ShellProtoLogGroup.WM_SHELL_TRANSITIONS, "mSplitHandler startPendingAnimation failed!");
+            finishCB.onTransitionFinished(null);
+        }
         return true;
     }
 
