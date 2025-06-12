@@ -94,6 +94,30 @@
       },
       "revId": "6453109f304717da17e86122f2791f371d50f2c7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fac3e2ca_b097452b",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-06-12T08:28:50Z",
+      "side": 1,
+      "message": "I propose:\n                    ada \u003d new AudioDeviceAttributes(di.mDeviceType, di.mDeviceAddress,\n                        di.mDeviceName, di.mAudioProfiles, di.mAudioDescriptors);\n                        \nregardless of di.mDeviceType",
+      "parentUuid": "7110532e_54c2f785",
+      "range": {
+        "startLine": 804,
+        "startChar": 16,
+        "endLine": 815,
+        "endChar": 17
+      },
+      "revId": "6453109f304717da17e86122f2791f371d50f2c7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
