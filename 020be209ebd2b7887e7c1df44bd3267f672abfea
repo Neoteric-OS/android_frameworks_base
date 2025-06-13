@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57519004_d1a4ab7c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1019174
+      },
+      "writtenOn": "2025-06-13T16:15:31Z",
+      "side": 1,
+      "message": "Thanks for the fix! If you look at the comments of registration.onRegister, it says they must be called with the lock held. So I think moving all this code outside of the lock won\u0027t be thread safe, even if it solves the deadlock. We will need to look at the code more carefully to fix the issue you identified.",
+      "revId": "020be209ebd2b7887e7c1df44bd3267f672abfea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
