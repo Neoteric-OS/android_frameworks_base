@@ -66,6 +66,7 @@ bool LayerProperties::setFromPaint(const SkPaint* paint) {
     changed |= setAlpha(static_cast<uint8_t>(PaintUtils::getAlphaDirect(paint)));
     changed |= setXferMode(PaintUtils::getBlendModeDirect(paint));
     changed |= setColorFilter(paint ? paint->getColorFilter() : nullptr);
+    changed |= setAntiAlias(paint ? paint->isAntiAlias() : false);
     return changed;
 }
 
@@ -77,6 +78,7 @@ LayerProperties& LayerProperties::operator=(const LayerProperties& other) {
     setColorFilter(other.getColorFilter());
     setImageFilter(other.getImageFilter());
     setBackdropImageFilter(other.getBackdropImageFilter());
+    setAntiAlias(other.antiAlias());
     mStretchEffect = other.mStretchEffect;
     return *this;
 }

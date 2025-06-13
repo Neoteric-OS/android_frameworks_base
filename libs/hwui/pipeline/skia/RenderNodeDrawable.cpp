@@ -192,6 +192,7 @@ static bool layerNeedsPaint(const LayerProperties& properties, float alphaMultip
         paint->setAlpha(properties.alpha() * alphaMultiplier);
         paint->setBlendMode(properties.xferMode());
         paint->setColorFilter(sk_ref_sp(properties.getColorFilter()));
+        paint->setAntiAlias(properties.antiAlias());
         return true;
     }
     return false;

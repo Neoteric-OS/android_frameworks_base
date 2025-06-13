@@ -90,6 +90,10 @@ public:
 
     SkBlendMode xferMode() const { return mMode; }
 
+    bool setAntiAlias(bool antialias) { return RP_SET(mAntiAlias, antialias); }
+
+    bool antiAlias() const { return mAntiAlias; }
+
     SkColorFilter* getColorFilter() const { return mColorFilter.get(); }
 
     bool setImageFilter(SkImageFilter* imageFilter);
@@ -128,6 +132,7 @@ private:
     bool mOpaque;
     uint8_t mAlpha;
     SkBlendMode mMode;
+    bool mAntiAlias;
     sk_sp<SkColorFilter> mColorFilter;
     sk_sp<SkImageFilter> mImageFilter;
     sk_sp<SkImageFilter> mBackdropImageFilter;
