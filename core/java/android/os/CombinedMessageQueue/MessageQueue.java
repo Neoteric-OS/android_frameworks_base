@@ -2737,10 +2737,10 @@ public final class MessageQueue {
 
             if (compare.compareMessage(msg, h, what, object, r, when)) {
                 if (removeMatches) {
-                    found = true;
                     if (queue.remove(msg)) {
                         msg.mMessage.recycleUnchecked();
                     }
+                    found = true;
                 } else {
                     return true;
                 }
