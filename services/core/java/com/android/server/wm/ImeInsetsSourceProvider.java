@@ -216,6 +216,9 @@ final class ImeInsetsSourceProvider extends InsetsSourceProvider {
                 }
             }
         }
+        if (serverVisible && isClientVisible()) {
+            mDisplayContent.setLayoutNeeded();
+        }
         if (!mFrozen) {
             super.setServerVisible(serverVisible);
         }

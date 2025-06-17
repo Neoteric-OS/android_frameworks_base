@@ -1451,7 +1451,9 @@ class WindowState extends WindowContainer<WindowState> implements WindowManagerP
      * dimensions or insets have changed.
      */
     void updateResizingWindowIfNeeded() {
-        final boolean insetsChanged = mWindowFrames.hasInsetsChanged();
+        final boolean insetsChanged = mWindowFrames.hasInsetsChanged()
+                || (WindowInsets.Type.ime() & getRequestedVisibleTypes()) != 0
+                && getFrame() != mLastReportedFrames.frame;
         if ((!mHasSurface || getDisplayContent().mLayoutSeq != mLayoutSeq || isGoneForLayout())
                 && !insetsChanged) {
             return;
