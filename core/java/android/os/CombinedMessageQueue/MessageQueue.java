@@ -2367,9 +2367,17 @@ public final class MessageQueue {
 
         @Override
         public int compareTo(@NonNull MessageNode messageNode) {
-            Message other = messageNode.mMessage;
+            if (this == messageNode) {
+                return 0;
+            }
 
-            int compared = Long.compare(mMessage.when, other.when);
+            Message ours = mMessage;
+            Message other = messageNode.mMessage;
+            if (ours == other) {
+                return 0;
+            }
+
+            int compared = Long.compare(ours.when, other.when);
             if (compared == 0) {
                 compared = Long.compare(mInsertSeq, messageNode.mInsertSeq);
             }
