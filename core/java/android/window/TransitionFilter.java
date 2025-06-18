@@ -102,10 +102,13 @@ public final class TransitionFilter implements Parcelable {
         }
         // Make sure info meets all of the requirements.
         if (mRequirements != null) {
-            for (int i = 0; i < mRequirements.length; ++i) {
-                final boolean matches = mRequirements[i].matches(info);
-                if (matches == mRequirements[i].mNot) {
-                    return false;
+            final int length = mRequirements.length;
+            for (int i = 0; i < length; ++i) {
+                if (mRequirements[i] != null) {
+                    final boolean matches = mRequirements[i].matches(info);
+                    if (matches == mRequirements[i].mNot) {
+                        return false;
+                    }
                 }
             }
         }
@@ -154,7 +157,8 @@ public final class TransitionFilter implements Parcelable {
         sb.append("] notFlags=0x" + Integer.toHexString(mNotFlags));
         sb.append(" checks=[");
         if (mRequirements != null) {
-            for (int i = 0; i < mRequirements.length; ++i) {
+            final int length = mRequirements.length;
+            for (int i = 0; i < length; ++i) {
                 sb.append((i == 0 ? "" : ",") + mRequirements[i]);
             }
         }
