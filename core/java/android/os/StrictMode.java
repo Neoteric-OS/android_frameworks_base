@@ -2136,7 +2136,7 @@ public final class StrictMode {
             if (looper != null) {
                 MessageQueue mq = looper.mQueue;
                 if (policy.classInstanceLimit.size() == 0
-                        || (sVmPolicy.mask & PENALTY_ALL) == 0) {
+                        || ((sVmPolicy.mask & PENALTY_ALL) == 0 && sVmPolicy.mListener == null)) {
                     mq.removeIdleHandler(sProcessIdleHandler);
                     sIsIdlerRegistered = false;
                 } else if (!sIsIdlerRegistered) {
