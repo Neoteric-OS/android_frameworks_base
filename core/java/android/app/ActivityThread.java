@@ -4244,6 +4244,15 @@ public final class ActivityThread extends ClientTransactionHandler
             return;
         }
 
+        // Synchronize the display ID with framework
+        final int displayId = ActivityClient.getInstance().getDisplayId(r.token);
+        View decorView = activity.getWindow().getDecorView();
+        int viewDisplayId = decorView.getDisplay() != null ? decorView.getDisplay().getDisplayId() : displayId;
+        int activityDisplayId = activity.getDisplayId();
+        if (displayId != viewDisplayId || displayId != activityDisplayId) {
+            activity.dispatchMovedToDisplay(displayId, r.overrideConfig);
+        }
+
         unscheduleGcIdler();
         if (sceneTransitionInfo != null) {
             activity.mSceneTransitionInfo = sceneTransitionInfo;
