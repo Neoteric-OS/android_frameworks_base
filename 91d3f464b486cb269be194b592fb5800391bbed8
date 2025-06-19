@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e3e694a_fa114247",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10375,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-06-19T20:48:51Z",
+      "side": 1,
+      "message": "use getVolumePersistenceUserId() instead",
+      "range": {
+        "startLine": 10375,
+        "startChar": 24,
+        "endLine": 10375,
+        "endChar": 128
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "04c1b980_1ac3c02c",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 9520,
+                "startChar": 0,
+                "endLine": 9520,
+                "endChar": 0
+              },
+              "replacement": "\n        private @UserIdInt int getVolumePersistenceUserId() {\n            return isMusic() \u0026\u0026 !isPlatformAutomotive()\n                    ? UserHandle.USER_SYSTEM : UserHandle.USER_CURRENT;\n        }\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 10375,
+                "startChar": 0,
+                "endLine": 10376,
+                "endChar": 0
+              },
+              "replacement": "                        streamState.getVolumePersistenceUserId());\n"
+            }
+          ]
+        }
+      ],
+      "revId": "91d3f464b486cb269be194b592fb5800391bbed8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
