@@ -308,6 +308,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -414,6 +415,8 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
     final MirrorActiveUids mActiveUids = new MirrorActiveUids();
     /** All processes currently running that might have a window organized by name. */
     final ProcessMap<WindowProcessController> mProcessNames = new ProcessMap<>();
+    /** Create mapping relationships for quick searches.*/
+    final HashMap<IBinder, WindowProcessController> mThreadControllerMap = new HashMap<>();
     /** All processes we currently have running mapped by pid and uid */
     final WindowProcessControllerMap mProcessMap = new WindowProcessControllerMap();
     /** This is the process holding what we currently consider to be the "home" activity. */
@@ -5629,20 +5632,8 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
         if (thread == null) {
             return null;
         }
-
-        final IBinder threadBinder = thread.asBinder();
-        final ArrayMap<String, SparseArray<WindowProcessController>> pmap = mProcessNames.getMap();
-        for (int i = pmap.size() - 1; i >= 0; i--) {
-            final SparseArray<WindowProcessController> procs = pmap.valueAt(i);
-            for (int j = procs.size() - 1; j >= 0; j--) {
-                final WindowProcessController proc = procs.valueAt(j);
-                if (proc.hasThread() && proc.getThread().asBinder() == threadBinder) {
-                    return proc;
-                }
-            }
-        }
-
-        return null;
+        
+        return mThreadControllerMap.get(thread.asBinder());
     }
 
     /**
@@ -6307,6 +6298,9 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
                 mPackageConfigPersister.updateConfigIfNeeded(
                         proc, proc.mUserId, proc.mInfo.packageName);
                 mProcessNames.put(proc.mName, proc.mUid, proc);
+                if (proc.hasThread()) {
+                    mThreadControllerMap.put(proc.getThread().asBinder(), proc);
+                }
             }
         }
 
@@ -6315,6 +6309,9 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
         public void onProcessRemoved(String name, int uid) {
             synchronized (mGlobalLockWithoutBoost) {
                 final WindowProcessController proc = mProcessNames.remove(name, uid);
+                if (proc.hasThread()) {
+                    mThreadControllerMap.remove(proc.getThread().asBinder());
+                }
                 if (proc != null && !proc.mHasEverAttached
                         && !mStartingProcessActivities.isEmpty()) {
                     // Use a copy in case finishIfPossible changes the list indirectly.
