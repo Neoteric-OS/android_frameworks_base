@@ -357,7 +357,7 @@ public class SlicePermissionManager implements DirtyTracker {
         mDirty.add(obj);
     }
 
-    private void handleRemove(PkgUser pkgUser) {
+    private synchronized void handleRemove(PkgUser pkgUser) {
         getFile(SliceClientPermissions.getFileName(pkgUser)).delete();
         getFile(SliceProviderPermissions.getFileName(pkgUser)).delete();
         mDirty.remove(mCachedClients.remove(pkgUser));

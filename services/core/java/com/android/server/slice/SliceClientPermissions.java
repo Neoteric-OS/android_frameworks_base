@@ -119,7 +119,7 @@ public class SliceClientPermissions implements DirtyTracker, Persistable {
         authority.removePath(uri.getPathSegments());
     }
 
-    public void clear() {
+    public synchronized void clear() {
         if (!mHasFullAccess && mAuths.isEmpty()) return;
         mHasFullAccess = false;
         mAuths.clear();
