@@ -50,6 +50,30 @@
       ],
       "revId": "91d3f464b486cb269be194b592fb5800391bbed8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d2e9b073_ae9c9671",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 10375,
+      "author": {
+        "id": 4174778
+      },
+      "writtenOn": "2025-06-20T12:56:01Z",
+      "side": 1,
+      "message": "I’ve made the changes. Kindly help review the patch.\nThanks!",
+      "parentUuid": "8e3e694a_fa114247",
+      "range": {
+        "startLine": 10375,
+        "startChar": 24,
+        "endLine": 10375,
+        "endChar": 128
+      },
+      "revId": "91d3f464b486cb269be194b592fb5800391bbed8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
