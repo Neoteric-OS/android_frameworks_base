@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e27e163_782d950e",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 9625,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-06-20T14:23:57Z",
+      "side": 1,
+      "message": "getVolumePersistenceUserId()",
+      "range": {
+        "startLine": 9625,
+        "startChar": 70,
+        "endLine": 9625,
+        "endChar": 80
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "b87064a8_ea2a0e9a",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 9625,
+                "startChar": 0,
+                "endLine": 9626,
+                "endChar": 0
+              },
+              "replacement": "                                mContentResolver, name, defaultIndex, getVolumePersistenceUserId());\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 9934,
+                "startChar": 0,
+                "endLine": 9935,
+                "endChar": 0
+              },
+              "replacement": "        private int getVolumePersistenceUserId() {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "9f23f8beeefdd4c465f2bd81b78b97fd661fe5ea",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
