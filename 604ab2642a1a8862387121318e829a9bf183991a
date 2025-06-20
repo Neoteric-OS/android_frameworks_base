@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "42f8e4ca_51fe82d6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1102563
+      },
+      "writtenOn": "2025-06-20T21:10:37Z",
+      "side": 1,
+      "message": "This CL looks okay to me. Could you also add why card name will work in the commit message? Thanks,",
+      "range": {
+        "startLine": 9,
+        "startChar": 442,
+        "endLine": 9,
+        "endChar": 443
+      },
+      "revId": "604ab2642a1a8862387121318e829a9bf183991a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "37a4355b_0b65f603",
