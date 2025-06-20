@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "37a4355b_0b65f603",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4167163
+      },
+      "writtenOn": "2025-06-20T08:34:13Z",
+      "side": 1,
+      "message": "Device confirmed, clear sky\u0027s/ relax",
+      "revId": "604ab2642a1a8862387121318e829a9bf183991a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
