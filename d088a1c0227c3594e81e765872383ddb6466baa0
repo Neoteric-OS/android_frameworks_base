@@ -16,6 +16,47 @@
       "message": "Can we merge into the main branch?",
       "revId": "d088a1c0227c3594e81e765872383ddb6466baa0",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7dcd42a3_d3fb7390",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1861,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-06-20T15:43:21Z",
+      "side": 1,
+      "message": "I also meant to change this and to always construct the DeviceInfo with ada audio profiles and audio descriptors (they are empty for other devices than HDMI and it does not hurt.",
+      "range": {
+        "startLine": 1854,
+        "startChar": 0,
+        "endLine": 1861,
+        "endChar": 17
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "c9334979_623e9379",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+              "range": {
+                "startLine": 1854,
+                "startChar": 0,
+                "endLine": 1862,
+                "endChar": 0
+              },
+              "replacement": "                mConnectedDevices.put(deviceKey, new DeviceInfo(device, deviceName,\n                    address, attributes.getAudioProfiles(), attributes.getAudioDescriptors()));\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d088a1c0227c3594e81e765872383ddb6466baa0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
