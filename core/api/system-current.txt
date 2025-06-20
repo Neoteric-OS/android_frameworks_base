@@ -17181,13 +17181,16 @@ package android.telephony.ims {
     field public static final String EXTRA_IS_BUSINESS_CALL = "android.telephony.ims.extra.IS_BUSINESS_CALL";
     field public static final String EXTRA_IS_CALL_PULL = "CallPull";
     field public static final String EXTRA_IS_CROSS_SIM_CALL = "android.telephony.ims.extra.IS_CROSS_SIM_CALL";
+    field @FlaggedApi("com.android.server.telecom.flags.is_video_customized_ringing_signal_call") public static final String EXTRA_IS_PREPARATORY = "android.telephony.ims.extra.IS_PREPARATORY";
     field public static final String EXTRA_LOCATION = "android.telephony.ims.extra.LOCATION";
     field public static final String EXTRA_OI = "oi";
     field public static final String EXTRA_OIR = "oir";
+    field @FlaggedApi("com.android.server.telecom.flags.is_video_customized_ringing_signal_call") public static final String EXTRA_ORIGINAL_CALL_TYPE = "android.telephony.ims.extra.ORIGINAL_CALL_TYPE";
     field public static final String EXTRA_PICTURE_URL = "android.telephony.ims.extra.PICTURE_URL";
     field public static final String EXTRA_PRIORITY = "android.telephony.ims.extra.PRIORITY";
     field public static final String EXTRA_REMOTE_URI = "remote_uri";
     field public static final String EXTRA_USSD = "ussd";
+    field @FlaggedApi("com.android.server.telecom.flags.is_video_customized_ringing_signal_call") public static final String EXTRA_VIDEO_CUSTOMIZED_RINGING_SIGNAL_CALL_TYPE = "android.telephony.ims.extra.VIDEO_CUSTOMIZED_RINGING_SIGNAL_CALL_TYPE";
     field public static final int OIR_DEFAULT = 0; // 0x0
     field public static final int OIR_PRESENTATION_NOT_RESTRICTED = 2; // 0x2
     field public static final int OIR_PRESENTATION_PAYPHONE = 4; // 0x4

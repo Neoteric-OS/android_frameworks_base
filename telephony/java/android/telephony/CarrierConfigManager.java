@@ -10434,6 +10434,13 @@ public class CarrierConfigManager {
             "unthrottle_data_retry_when_tac_changes_bool";
 
     /**
+     * Indicates if the carrier supports video customized ringing signal call (CRS).
+     */
+    @FlaggedApi(com.android.server.telecom.flags.Flags.FLAG_IS_VIDEO_CUSTOMIZED_RINGING_SIGNAL_CALL)
+    public static final String KEY_SUPPORTS_VIDEO_CUSTOMIZED_RINGING_SIGNAL_BOOL =
+            "supports_video_customized_ringing_signal_bool";
+
+    /**
      * A list of premium capabilities the carrier supports. Applications can prompt users to
      * purchase these premium capabilities from their carrier for a performance boost.
      * Valid values are any of {@link TelephonyManager}'s {@code PREMIUM_CAPABILITY_*} constants.
@@ -11433,6 +11440,7 @@ public class CarrierConfigManager {
         sDefaults.putString(KEY_CARRIER_PROVISIONING_APP_STRING, "");
         sDefaults.putBoolean(KEY_DISPLAY_NO_DATA_NOTIFICATION_ON_PERMANENT_FAILURE_BOOL, false);
         sDefaults.putBoolean(KEY_UNTHROTTLE_DATA_RETRY_WHEN_TAC_CHANGES_BOOL, false);
+        sDefaults.putBoolean(KEY_SUPPORTS_VIDEO_CUSTOMIZED_RINGING_SIGNAL_BOOL, false);
         sDefaults.putBoolean(KEY_VONR_SETTING_VISIBILITY_BOOL, true);
         sDefaults.putBoolean(KEY_VONR_ENABLED_BOOL, false);
         sDefaults.putBoolean(KEY_VONR_ON_BY_DEFAULT_BOOL, true);

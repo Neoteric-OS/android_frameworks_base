@@ -290,6 +290,43 @@ public final class Call {
             "android.telecom.extra.ASSERTED_DISPLAY_NAME";
 
     /**
+     * Boolean indicating that the call type of a video customized ringing signal call
+     * {@link Connection#setExtras(Bundle)} or {@link Connection#putExtras(Bundle)}
+     * should be used to notify Telecom this extra has been set.
+     */
+    @FlaggedApi(Flags.FLAG_IS_VIDEO_CUSTOMIZED_RINGING_SIGNAL_CALL)
+    public static final String EXTRA_VIDEO_CUSTOMIZED_RINGING_SIGNAL_CALL_TYPE =
+            "android.telecom.extra.VIDEO_CUSTOMIZED_RINGING_SIGNAL_CALL_TYPE";
+
+    /**
+     * Boolean indicating that the original call type of a video CRS call
+     * {@link Connection#setExtras(Bundle)} or {@link Connection#putExtras(Bundle)}
+     * should be used to notify Telecom this extra has been set.
+     */
+    @FlaggedApi(Flags.FLAG_IS_VIDEO_CUSTOMIZED_RINGING_SIGNAL_CALL)
+    public static final String EXTRA_ORIGINAL_CALL_TYPE =
+            "android.telecom.extra.ORIGINAL_CALL_TYPE";
+
+    /**
+     * Boolean indicating that preliminary resource allocation for video CRS call and
+     * don't show UI to user.
+     * {@link Connection#setExtras(Bundle)} or {@link Connection#putExtras(Bundle)}
+     * should be used to notify Telecom this extra has been set.
+     */
+    @FlaggedApi(Flags.FLAG_IS_VIDEO_CUSTOMIZED_RINGING_SIGNAL_CALL)
+    public static final String EXTRA_IS_PREPARATORY = "android.telecom.extra.IS_PREPARATORY";
+
+    //INVALID if CrsData is invalid, play local ring.
+    @FlaggedApi(Flags.FLAG_IS_VIDEO_CUSTOMIZED_RINGING_SIGNAL_CALL)
+    public static final int CRS_TYPE_INVALID = 0;
+    //AUDIO if only audio will be played.
+    @FlaggedApi(Flags.FLAG_IS_VIDEO_CUSTOMIZED_RINGING_SIGNAL_CALL)
+    public static final int CRS_TYPE_AUDIO = 1 << 0;
+    //VIDEO if only video will be played.
+    @FlaggedApi(Flags.FLAG_IS_VIDEO_CUSTOMIZED_RINGING_SIGNAL_CALL)
+    public static final int CRS_TYPE_VIDEO = 1 << 1;
+
+    /**
      * Reject reason used with {@link #reject(int)} to indicate that the user is rejecting this
      * call because they have declined to answer it.  This typically means that they are unable
      * to answer the call at this time and would prefer it be sent to voicemail.

@@ -310,6 +310,34 @@ public final class ImsCallProfile implements Parcelable {
             "android.telephony.ims.extra.ASSERTED_DISPLAY_NAME";
 
     /**
+     * Boolean extra property indicates that the type of a Video Customized Ringing Signal
+     * Call( CRS call).  Vendor IMS stack {@link ImsService} sets this on a call
+     * to indicate that the modem/network has identified the call as a video CRS call.
+     */
+    @FlaggedApi(com.android.server.telecom.flags.Flags.FLAG_IS_VIDEO_CUSTOMIZED_RINGING_SIGNAL_CALL)
+    public static final String EXTRA_VIDEO_CUSTOMIZED_RINGING_SIGNAL_CALL_TYPE  =
+             "android.telephony.ims.extra.VIDEO_CUSTOMIZED_RINGING_SIGNAL_CALL_TYPE";
+
+    /**
+     * Extra forthe original call type of a Video Customized Ringing Signal
+     * Call(Video CRS call).  Vendor IMS stack {@link ImsService} sets this on a call
+     * to indicate that the modem/network has identified the real call type(As Volte call will be
+     * upgraded to VT-RX call during playing video CRS).
+     */
+    @FlaggedApi(com.android.server.telecom.flags.Flags.FLAG_IS_VIDEO_CUSTOMIZED_RINGING_SIGNAL_CALL)
+    public static final String EXTRA_ORIGINAL_CALL_TYPE  =
+             "android.telephony.ims.extra.ORIGINAL_CALL_TYPE";
+
+
+    /**
+    * Indicates whether the message is intended solely for preparatory resource allocation for CRS.
+    * If true, the message is used internally and UI must not be shown to the end user.
+    * Vendor IMS stack {@link ImsService} sets this on a call.
+     */
+    @FlaggedApi(com.android.server.telecom.flags.Flags.FLAG_IS_VIDEO_CUSTOMIZED_RINGING_SIGNAL_CALL)
+    public static final String EXTRA_IS_PREPARATORY = "android.telephony.ims.extra.IS_PREPARATORY";
+
+    /**
      * Values for EXTRA_OIR / EXTRA_CNAP
      */
     /**

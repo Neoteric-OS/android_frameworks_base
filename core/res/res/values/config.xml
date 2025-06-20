@@ -7280,4 +7280,8 @@
          features. Examples include the search functionality or the app
          predictor. -->
     <string name="config_systemVendorIntelligence" translatable="false"></string>
+
+    <string name="config_audio_parameter_key_crs_supported" translatable="false">none</string>
+    <string name="config_audio_parameter_key_crs_volume" translatable="false">none</string>
+
 </resources>
