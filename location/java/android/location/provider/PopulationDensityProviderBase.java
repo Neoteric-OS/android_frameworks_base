@@ -45,7 +45,6 @@ import java.util.concurrent.atomic.AtomicReference;
  * @hide
  */
 @SystemApi
-@FlaggedApi(Flags.FLAG_POPULATION_DENSITY_PROVIDER)
 public abstract class PopulationDensityProviderBase {
 
     final String mTag;
