@@ -227,6 +227,9 @@ public class FingerprintProvider implements IBinder.DeathRecipient, ServiceProvi
 
     private void initSensors(boolean resetLockoutRequiresHardwareAuthToken, SensorProps[] props,
             GestureAvailabilityDispatcher gestureAvailabilityDispatcher) {
+        if (props == null) {
+            return;
+        }
         if (!resetLockoutRequiresHardwareAuthToken) {
             Slog.d(getTag(), "Adding HIDL configs");
             for (SensorProps sensorConfig: props) {
