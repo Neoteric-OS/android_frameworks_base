@@ -2676,6 +2676,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, CoreSt
                 if (runDetect) {
                     mLogger.v("Allowing startListeningForFingerprint(detect) despite"
                             + " BIOMETRIC_ACTION_STOP since auth was running before.");
+                    stopListeningForFingerprint();
                 } else {
                     mLogger.v("Ignoring startListeningForFingerprint() switch detect -> auth");
                     return;
