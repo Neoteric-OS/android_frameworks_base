@@ -1797,6 +1797,7 @@ public class AudioDeviceInventory {
         int device = attributes.getInternalType();
         String address = attributes.getAddress();
         String deviceName = attributes.getName();
+        boolean handleConnectConnect = false;
         if (AudioService.DEBUG_DEVICES) {
             Slog.i(TAG, "handleDeviceConnection(" + connect + " dev:"
                     + Integer.toHexString(device) + " address:" + address
@@ -1816,6 +1817,13 @@ public class AudioDeviceInventory {
             }
             DeviceInfo di = mConnectedDevices.get(deviceKey);
             boolean isConnected = di != null;
+            if (isConnected &&
+                connect &&
+                (di.mDeviceType == AudioSystem.DEVICE_OUT_HDMI_ARC ||
+                 di.mDeviceType == AudioSystem.DEVICE_OUT_HDMI_EARC)) {
+                handleConnectConnect = true;
+            }
+
             if (AudioService.DEBUG_DEVICES) {
                 Slog.i(TAG, "deviceInfo:" + di + " is(already)Connected:" + isConnected);
             }
@@ -1828,7 +1836,7 @@ public class AudioDeviceInventory {
                         ? MediaMetrics.Value.CONNECT : MediaMetrics.Value.DISCONNECT).record();
                 return true;
             }
-            if (connect && !isConnected) {
+            if (connect && !isConnected || handleConnectConnect) {
                 final int res;
                 if (isForTesting) {
                     res = AudioSystem.AUDIO_STATUS_OK;
