@@ -3189,6 +3189,9 @@
   <java-symbol type="array" name="config_cell_retries_per_error_code" />
   <java-symbol type="drawable" name="ic_more_items" />
 
+  <!-- For StrictMode Package Excludes -->
+  <java-symbol type="array" name="config_strictModeSystemPackageExcludes" />
+
   <!-- Gesture -->
   <java-symbol type="integer" name="config_cameraLaunchGestureSensorType" />
   <java-symbol type="string" name="config_cameraLaunchGestureSensorStringType" />

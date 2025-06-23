@@ -6979,6 +6979,7 @@
          Low Power Standby can activate. -->
     <integer name="config_lowPowerStandbyNonInteractiveTimeout">5000</integer>
 
+    <string-array name="config_strictModeSystemPackageExcludes"></string-array>
 
     <!-- Mapping to select an Intent.EXTRA_DOCK_STATE value from extcon state
          key-value pairs. Each entry is evaluated in order and is of the form:

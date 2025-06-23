@@ -1502,9 +1502,34 @@ public final class StrictMode {
                 return false;
             }
 
+            if (isSystemAppExcluded(ai.packageName)) {
+                return false;
+            }
+
             if (ai.packageName.equals("android")
                     || ai.packageName.startsWith("android.")
                     || ai.packageName.startsWith("com.android.")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Whether package name matches the exclude list of system apps configured in
+     * config_strictModeSystemPackageExcludes
+     *
+     * @hide
+     */
+    private static boolean isSystemAppExcluded(String pkg) {
+        final String[] excludedPackages =
+                Resources.getSystem()
+                        .getStringArray(
+                                com.android.internal.R.array
+                                        .config_strictModeSystemPackageExcludes);
+
+        for (String excludedPackage : excludedPackages) {
+            if (pkg.equals(excludedPackage)) {
                 return true;
             }
         }
