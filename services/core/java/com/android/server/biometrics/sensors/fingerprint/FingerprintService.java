@@ -26,7 +26,6 @@ import static android.hardware.biometrics.BiometricFingerprintConstants.FINGERPR
 import static android.hardware.biometrics.BiometricFingerprintConstants.FINGERPRINT_ERROR_USER_CANCELED;
 import static android.hardware.biometrics.BiometricFingerprintConstants.FINGERPRINT_ERROR_VENDOR;
 import static android.hardware.biometrics.SensorProperties.STRENGTH_STRONG;
-import static android.hardware.fingerprint.FingerprintSensorConfigurations.getIFingerprint;
 
 import android.annotation.NonNull;
 import android.annotation.Nullable;
@@ -123,8 +122,6 @@ public class FingerprintService extends SystemService {
     private final BiometricContext mBiometricContext;
     @NonNull
     private final Supplier<String[]> mAidlInstanceNameSupplier;
-    @NonNull
-    private final Function<String, FingerprintProvider> mFingerprintProvider;
     @NonNull
     private final FingerprintProviderFunction mFingerprintProviderFunction;
     @NonNull
@@ -1038,26 +1035,6 @@ public class FingerprintService extends SystemService {
         mLockPatternUtils = new LockPatternUtils(context);
         mBiometricStateCallback = new BiometricStateCallback<>(UserManager.get(context));
         mAuthenticationStateListeners = new AuthenticationStateListeners();
-        mFingerprintProvider = fingerprintProvider != null ? fingerprintProvider :
-                (name) -> {
-                    final String fqName = IFingerprint.DESCRIPTOR + "/" + name;
-                    final IFingerprint fp = getIFingerprint(fqName);
-                    if (fp != null) {
-                        try {
-                            return new FingerprintProvider(getContext(),
-                                    mBiometricStateCallback, mAuthenticationStateListeners,
-                                    fp.getSensorProps(), name, mLockoutResetDispatcher,
-                                    mGestureAvailabilityDispatcher, mBiometricContext,
-                                    true /* resetLockoutRequiresHardwareAuthToken */);
-                        } catch (RemoteException e) {
-                            Slog.e(TAG, "Remote exception in getSensorProps: " + fqName);
-                        }
-                    } else {
-                        Slog.e(TAG, "Unable to get declared service: " + fqName);
-                    }
-
-                    return null;
-                };
         mFingerprintProviderFunction = fingerprintProviderFunction != null
                 ? fingerprintProviderFunction :
                         (filteredSensorProps, resetLockoutRequiresHardwareAuthToken) ->
