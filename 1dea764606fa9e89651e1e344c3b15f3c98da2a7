@@ -16,6 +16,24 @@
       "message": "@pvlad@google.com Could you please help in review , We need 2 google approval for merge.\nThanks.",
       "revId": "1dea764606fa9e89651e1e344c3b15f3c98da2a7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b943bae1_4578d45b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-06-23T16:48:15Z",
+      "side": 1,
+      "message": "This will be approved on the internal gerrit when cherry picking",
+      "parentUuid": "2330ed65_5d19bc58",
+      "revId": "1dea764606fa9e89651e1e344c3b15f3c98da2a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
