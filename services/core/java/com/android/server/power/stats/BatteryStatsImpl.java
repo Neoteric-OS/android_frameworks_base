@@ -16591,6 +16591,7 @@ public class BatteryStatsImpl extends BatteryStats {
         try {
             final long startTimeMs = SystemClock.uptimeMillis();
             fos = file.startWrite();
+            p.setDataPosition(0);
             fos.write(p.marshall());
             fos.flush();
             file.finishWrite(fos);
