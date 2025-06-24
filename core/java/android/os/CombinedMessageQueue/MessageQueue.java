@@ -1097,22 +1097,11 @@ public final class MessageQueue {
             MessageNode first;
             final MatchBarrierToken matchBarrierToken = new MatchBarrierToken(token);
 
-            try {
-                /* Retain the first element to see if we are currently stuck on a barrier. */
-                first = mPriorityQueue.first();
-            } catch (NoSuchElementException e) {
-                /* The queue is empty */
-                first = null;
-            }
-
             removed = findOrRemoveMessages(null, 0, null, null, 0, matchBarrierToken, true);
-            if (removed && first != null) {
-                Message m = first.mMessage;
-                if (m.target == null && m.arg1 == token) {
-                    /* Wake up next() in case it was sleeping on this barrier. */
-                    nativeWake(mPtr);
-                }
-            } else if (!removed) {
+            if (removed) {
+                /* Wake up next() in case it was sleeping on this barrier. */
+                nativeWake(mPtr);
+            } else {
                 throw new IllegalStateException("The specified message queue synchronization "
                         + " barrier token has not been posted or has already been removed.");
             }
