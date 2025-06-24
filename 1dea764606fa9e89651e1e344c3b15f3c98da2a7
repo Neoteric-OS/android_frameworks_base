@@ -70,6 +70,23 @@
       "parentUuid": "8ec412ba_58b87f39",
       "revId": "1dea764606fa9e89651e1e344c3b15f3c98da2a7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b274e28_11aff047",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-06-24T14:26:42Z",
+      "side": 1,
+      "message": "You can abandon now",
+      "revId": "1dea764606fa9e89651e1e344c3b15f3c98da2a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
