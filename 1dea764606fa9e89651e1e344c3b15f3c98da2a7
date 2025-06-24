@@ -34,6 +34,24 @@
       "parentUuid": "2330ed65_5d19bc58",
       "revId": "1dea764606fa9e89651e1e344c3b15f3c98da2a7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8ec412ba_58b87f39",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4174778
+      },
+      "writtenOn": "2025-06-24T09:39:41Z",
+      "side": 1,
+      "message": "Thanks for the clarification. Just to confirm — this CL will remain in an active state on AOSP and will not be merged, correct?",
+      "parentUuid": "b943bae1_4578d45b",
+      "revId": "1dea764606fa9e89651e1e344c3b15f3c98da2a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
