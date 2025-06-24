@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa276cbf_fc392097",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1793992
+      },
+      "writtenOn": "2025-06-24T07:26:39Z",
+      "side": 1,
+      "message": "This should be cherry-picked into goog/main.\n\n\u003e re-revert to see whether this works now\n\nHas anything changed?",
+      "revId": "fa4d268e91867dc413eecf1ff71482fc1469808f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
