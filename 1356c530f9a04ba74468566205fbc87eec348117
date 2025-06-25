@@ -86,6 +86,23 @@
       "tag": "mailMessageId\u003d\u003cCAOfAsB29zMHMSMWbheLrkOcNAMPzAWJp1yii1dcizb0H+gifHg@mail.gmail.com\u003e",
       "revId": "1356c530f9a04ba74468566205fbc87eec348117",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a4061fe_8ff334f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1102563
+      },
+      "writtenOn": "2025-06-25T21:45:47Z",
+      "side": 1,
+      "message": "The change has been merged into internal main now.",
+      "revId": "1356c530f9a04ba74468566205fbc87eec348117",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
