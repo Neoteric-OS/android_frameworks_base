@@ -50,6 +50,24 @@
       "message": "please help review this change. Thanks!",
       "revId": "1356c530f9a04ba74468566205fbc87eec348117",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c0f2261_29645072",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1102563
+      },
+      "writtenOn": "2025-06-25T04:34:01Z",
+      "side": 1,
+      "message": "The change looks good to me. I cherry-picked it to internal main and will merge from there.",
+      "parentUuid": "a5da7f59_1c18fd81",
+      "revId": "1356c530f9a04ba74468566205fbc87eec348117",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
