@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e1d625f_24642a62",
+        "filename": "core/java/android/os/StrictMode.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1525,
+      "author": {
+        "id": 1064003
+      },
+      "writtenOn": "2025-06-26T21:25:00Z",
+      "side": 1,
+      "message": "I\u0027m not opposed to making this customizable. It does look like every system app will end up hitting this resource query 2x at startup, at least on `userdebug`, @zyy@google.com any thoughts on whether it\u0027s worth optimizing the list load (e.g. load/cache in the zygote)? Probably not a big deal either way.",
+      "revId": "d490db3dee975f793f421c8fe373fdee2474e5ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
