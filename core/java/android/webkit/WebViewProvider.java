@@ -16,6 +16,7 @@
 
 package android.webkit;
 
+import android.annotation.FlaggedApi;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SuppressLint;
@@ -264,6 +265,11 @@ public interface WebViewProvider {
     public void setWebChromeClient(WebChromeClient client);
 
     public WebChromeClient getWebChromeClient();
+
+    /*@hide Not part of the public API; only required by system implementors.*/
+    @FlaggedApi(android.webkit.Flags.FLAG_SET_PLATFORM_SELECTION_MENU_CLIENT)
+    public void setPlatformSelectionActionMenuClient(
+        @NonNull PlatformSelectionActionMenuClient client);
 
     public void setPictureListener(PictureListener listener);
 

@@ -19233,6 +19233,26 @@ package android.webkit {
     method public boolean setProxyScript(@NonNull String);
   }
 
+  @FlaggedApi("android.webkit.set_platform_selection_menu_client") public abstract class PlatformSelectionActionMenuClient {
+    ctor public PlatformSelectionActionMenuClient();
+    method @NonNull public java.util.List<android.content.pm.ResolveInfo> filterTextProcessingActivities(@NonNull android.content.Context, @NonNull java.util.List<android.content.pm.ResolveInfo>);
+    method @NonNull public java.util.List<android.webkit.PlatformSelectionActionMenuClient.PlatformMenuData> getAdditionalMenuItems(@NonNull android.content.Context, boolean, boolean, @NonNull String);
+    method @Nullable public android.webkit.PlatformSelectionActionMenuClient.PlatformMenuData getAdditionalTextProcessingItems();
+    method public int getPlatformDefaultMenuItemOrder(int);
+    method public boolean handleMenuItemClick(@NonNull android.content.Context, @NonNull android.view.MenuItem, @NonNull android.view.ViewGroup, boolean);
+  }
+
+  public class PlatformSelectionActionMenuClient.PlatformMenuData {
+    method @Nullable public android.content.Intent createMenuIntent();
+    method @Nullable public android.view.View.OnClickListener getClickListener();
+    method public int getIconAttr();
+    method public int getId();
+    method public int getOrderInCategory();
+    method @Nullable public CharSequence getTitle();
+    method public int getTitleRes();
+    method public boolean needsOnlyOrderingChange();
+  }
+
   public class SslErrorHandler extends android.os.Handler {
     ctor public SslErrorHandler();
   }
@@ -19296,6 +19316,7 @@ package android.webkit {
 
   public class WebView extends android.widget.AbsoluteLayout implements android.view.ViewGroup.OnHierarchyChangeListener android.view.ViewTreeObserver.OnGlobalFocusChangeListener {
     method public android.webkit.WebViewProvider getWebViewProvider();
+    method @FlaggedApi("android.webkit.set_platform_selection_menu_client") public void setPlatformSelectionActionMenuClient(@NonNull android.webkit.PlatformSelectionActionMenuClient);
   }
 
   public static class WebView.HitTestResult {
@@ -19508,6 +19529,7 @@ package android.webkit {
     method public void setMapTrackballToArrowKeys(boolean);
     method public void setNetworkAvailable(boolean);
     method public void setPictureListener(android.webkit.WebView.PictureListener);
+    method @FlaggedApi("android.webkit.set_platform_selection_menu_client") public void setPlatformSelectionActionMenuClient(@NonNull android.webkit.PlatformSelectionActionMenuClient);
     method public void setRendererPriorityPolicy(int, boolean);
     method public default void setTextClassifier(@Nullable android.view.textclassifier.TextClassifier);
     method public void setVerticalScrollbarOverlay(boolean);
