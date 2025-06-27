@@ -55,6 +55,7 @@ import android.view.translation.TranslationCapability;
 import android.view.translation.TranslationSpec.DataFormat;
 import android.view.translation.ViewTranslationRequest;
 import android.view.translation.ViewTranslationResponse;
+import android.webkit.PlatformSelectionActionMenuClient;
 import android.webkit.WebView.HitTestResult;
 import android.webkit.WebView.PictureListener;
 import android.webkit.WebView.VisualStateCallback;
@@ -264,6 +265,9 @@ public interface WebViewProvider {
     public void setWebChromeClient(WebChromeClient client);
 
     public WebChromeClient getWebChromeClient();
+
+    public default void setPlatformSelectionActionMenuClient(
+        PlatformSelectionActionMenuClient client) {}
 
     public void setPictureListener(PictureListener listener);
 
