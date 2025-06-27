@@ -265,6 +265,8 @@ public interface WebViewProvider {
 
     public WebChromeClient getWebChromeClient();
 
+    public default void setPlatformSelectionactionMenuClient(PlatformSelectionActionMenuClient client){}
+
     public void setPictureListener(PictureListener listener);
 
     public void addJavascriptInterface(Object obj, String interfaceName);

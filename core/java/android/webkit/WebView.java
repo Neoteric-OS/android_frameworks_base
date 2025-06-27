@@ -448,6 +448,15 @@ public class WebView extends AbsoluteLayout
     }
 
     /**
+     * Specifies whether platform specific selection menu modification client.
+     *
+     * @param PlatformSelectionActionMenuClient {@code true} client which provides selection menu modification implementation
+     */
+    public void setPlatformSelectionactionMenuClient(PlatformSelectionActionMenuClient platformSelectionActionMenuClient) {
+        mProvider.setPlatformSelectionactionMenuClient(platformSelectionActionMenuClient);   
+    }
+
+    /**
      * Specifies whether the horizontal scrollbar has overlay style.
      *
      * @deprecated This method has no effect.
