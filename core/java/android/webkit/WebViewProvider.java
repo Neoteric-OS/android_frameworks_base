@@ -16,6 +16,7 @@
 
 package android.webkit;
 
+import android.annotation.FlaggedApi;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SuppressLint;
@@ -58,8 +59,6 @@ import android.view.translation.ViewTranslationResponse;
 import android.webkit.WebView.HitTestResult;
 import android.webkit.WebView.PictureListener;
 import android.webkit.WebView.VisualStateCallback;
-
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.util.List;
@@ -264,6 +263,10 @@ public interface WebViewProvider {
     public void setWebChromeClient(WebChromeClient client);
 
     public WebChromeClient getWebChromeClient();
+
+  @FlaggedApi(android.webkit.Flags.FLAG_SET_PLATFORM_SELECTION_MENU_CLIENT)
+  public void setPlatformSelectionActionMenuClient(
+      @NonNull PlatformSelectionActionMenuClient client);
 
     public void setPictureListener(PictureListener listener);
 
