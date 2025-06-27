@@ -59101,6 +59101,29 @@ package android.webkit {
     field public static final String RESOURCE_VIDEO_CAPTURE = "android.webkit.resource.VIDEO_CAPTURE";
   }
 
+  @FlaggedApi("android.webkit.set_platform_selection_menu_client") public abstract class PlatformSelectionActionMenuClient {
+    ctor public PlatformSelectionActionMenuClient();
+    method public boolean canHandleCustomMenuItem(@NonNull android.view.MenuItem);
+    method public boolean canReuseCachedSelectionMenu(@NonNull android.content.Context);
+    method @NonNull public java.util.List<android.content.pm.ResolveInfo> filterTextProcessingActivities(@NonNull android.content.Context, @NonNull java.util.List<android.content.pm.ResolveInfo>);
+    method @NonNull public java.util.List<android.webkit.PlatformSelectionActionMenuClient.PlatformMenuData> getAdditionalMenuItems(@NonNull android.content.Context, boolean, boolean, @NonNull String);
+    method @Nullable public android.webkit.PlatformSelectionActionMenuClient.PlatformMenuData getAdditionalTextProcessingItems();
+    method public int getPlatformDefaultMenuItemOrder(int);
+    method public boolean handleMenuItemClick(@NonNull android.content.Context, @NonNull android.view.MenuItem, @NonNull android.view.ViewGroup);
+    method public void prepareForMenuHandling(@NonNull android.content.Context, @NonNull android.view.View);
+  }
+
+  public class PlatformSelectionActionMenuClient.PlatformMenuData {
+    method @Nullable public android.content.Intent createMenuIntent();
+    method @Nullable public android.view.View.OnClickListener getClickListener();
+    method public int getIconAttr();
+    method public int getId();
+    method public int getOrderInCategory();
+    method @Nullable public CharSequence getTitle();
+    method public int getTitleRes();
+    method public boolean needsOnlyOrderingChange();
+  }
+
   public interface PluginStub {
     method public android.view.View getEmbeddedView(int, android.content.Context);
     method public android.view.View getFullScreenView(int, android.content.Context);
@@ -59609,6 +59632,7 @@ package android.webkit {
     method @Deprecated public void setMapTrackballToArrowKeys(boolean);
     method public void setNetworkAvailable(boolean);
     method @Deprecated public void setPictureListener(android.webkit.WebView.PictureListener);
+    method @FlaggedApi("android.webkit.set_platform_selection_menu_client") public void setPlatformSelectionActionMenuClient(@NonNull android.webkit.PlatformSelectionActionMenuClient);
     method public void setRendererPriorityPolicy(int, boolean);
     method public static void setSafeBrowsingWhitelist(@NonNull java.util.List<java.lang.String>, @Nullable android.webkit.ValueCallback<java.lang.Boolean>);
     method public void setTextClassifier(@Nullable android.view.textclassifier.TextClassifier);

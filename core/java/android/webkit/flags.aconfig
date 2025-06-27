@@ -50,3 +50,11 @@ flag {
     bug: "373617389"
     is_fixed_read_only: true
 }
+
+flag {
+    name: "set_platform_selection_menu_client"
+    is_exported: true
+    namespace: "webview"
+    description: "Allow platform selection menu client for menu customization"
+    bug: "413195996"
+}

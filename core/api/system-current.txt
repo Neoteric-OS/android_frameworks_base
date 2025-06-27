@@ -19540,6 +19540,7 @@ package android.webkit {
     method public void setMapTrackballToArrowKeys(boolean);
     method public void setNetworkAvailable(boolean);
     method public void setPictureListener(android.webkit.WebView.PictureListener);
+    method @FlaggedApi("android.webkit.set_platform_selection_menu_client") public void setPlatformSelectionActionMenuClient(@NonNull android.webkit.PlatformSelectionActionMenuClient);
     method public void setRendererPriorityPolicy(int, boolean);
     method public default void setTextClassifier(@Nullable android.view.textclassifier.TextClassifier);
     method public void setVerticalScrollbarOverlay(boolean);
