@@ -73,7 +73,6 @@ import android.view.translation.TranslationSpec.DataFormat;
 import android.view.translation.ViewTranslationRequest;
 import android.view.translation.ViewTranslationResponse;
 import android.widget.AbsoluteLayout;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.lang.annotation.Retention;
@@ -446,6 +445,17 @@ public class WebView extends AbsoluteLayout
         // Post condition of creating a webview is the CookieSyncManager.getInstance() is allowed.
         CookieSyncManager.setGetInstanceIsAllowed();
     }
+
+  /**
+   * Specifies platform specific selection menu modification client.
+   *
+   * @param PlatformSelectionActionMenuClient {@code true} client which provides selection menu
+   *     modification implementation
+   */
+  public void setPlatformSelectionActionMenuClient(
+      PlatformSelectionActionMenuClient platformSelectionActionMenuClient) {
+    mProvider.setPlatformSelectionActionMenuClient(platformSelectionActionMenuClient);
+  }
 
     /**
      * Specifies whether the horizontal scrollbar has overlay style.
