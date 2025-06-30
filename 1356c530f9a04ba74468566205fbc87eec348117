@@ -137,6 +137,23 @@
       "message": "No,\n\nAOSP gerrit does not merge anymore to AOSP main. Al changes are cherry picked to internal gerrit and made available to AOSP in the next AOSP push",
       "revId": "1356c530f9a04ba74468566205fbc87eec348117",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57be6f12_d2b3ebe6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-06-30T08:49:56Z",
+      "side": 1,
+      "message": "This CL can be abandoned",
+      "revId": "1356c530f9a04ba74468566205fbc87eec348117",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
