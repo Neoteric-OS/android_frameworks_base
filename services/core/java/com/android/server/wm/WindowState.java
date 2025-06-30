@@ -3756,6 +3756,8 @@ class WindowState extends WindowContainer<WindowState> implements WindowManagerP
             case TYPE_NOTIFICATION_SHADE:
             case TYPE_STATUS_BAR:
             case TYPE_NAVIGATION_BAR:
+            case TYPE_STATUS_BAR_ADDITIONAL:
+            case TYPE_NAVIGATION_BAR_PANEL:
             case TYPE_WALLPAPER:
                 return false;
             default:
