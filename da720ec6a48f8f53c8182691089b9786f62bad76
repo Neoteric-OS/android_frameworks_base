@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f80518b_33f1a831",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 3015,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-07-01T09:47:42Z",
+      "side": 1,
+      "message": "Please add a suffix to indicaet that UID is taken into consideration.\nIs it UID or UserId?",
+      "range": {
+        "startLine": 3015,
+        "startChar": 22,
+        "endLine": 3015,
+        "endChar": 46
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "9602206a_e72355c2",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "media/java/android/media/AudioManager.java",
+              "range": {
+                "startLine": 3015,
+                "startChar": 0,
+                "endLine": 3016,
+                "endChar": 0
+              },
+              "replacement": "    public static int getDirectPlaybackSupportWithUid(@NonNull AudioFormat format,\n"
+            }
+          ]
+        }
+      ],
+      "revId": "da720ec6a48f8f53c8182691089b9786f62bad76",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
