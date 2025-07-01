@@ -254,6 +254,10 @@ abstract class RequestSession<T, U, V> implements CredentialManagerUi.Credential
     }
 
     protected void finishSession(boolean propagateCancellation, int apiStatus) {
+       if (mRequestSessionStatus == RequestSessionStatus.COMPLETE) {
+         Slog.w(TAG, "Request has already been completed. This is strange.");
+         return;
+       }
         Slog.i(TAG, "finishing session with propagateCancellation " + propagateCancellation);
         if (propagateCancellation) {
             mProviders.values().forEach(ProviderSession::cancelProviderRemoteSession);
@@ -417,8 +421,13 @@ abstract class RequestSession<T, U, V> implements CredentialManagerUi.Credential
     private class RequestSessionDeathRecipient implements IBinder.DeathRecipient {
         @Override
         public void binderDied() {
-            Slog.d(TAG, "Client binder died - clearing session");
-            finishSession(isUiWaitingForData(), ApiStatus.CLIENT_CANCELED.getMetricCode());
+            if (mRequestSessionStatus == RequestSessionStatus.COMPLETE) {
+                Slog.d(TAG, "Client binder died, but session is already complete - ignoring binder death");
+                return;
+            } else {
+                Slog.d(TAG, "Client binder died, finishing session with cancelled status");
+                finishSession(isUiWaitingForData(), ApiStatus.CLIENT_CANCELED.getMetricCode());
+            }
         }
     }
 }
