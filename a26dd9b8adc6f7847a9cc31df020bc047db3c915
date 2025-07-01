@@ -1,0 +1,438 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "184f4421_8fa01ccd",
+        "filename": "core/jni/android_media_AudioSystem.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 3528,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-07-01T09:44:29Z",
+      "side": 1,
+      "message": "nativeToJavaStatus() also works for NO_ERROR",
+      "range": {
+        "startLine": 3528,
+        "startChar": 15,
+        "endLine": 3528,
+        "endChar": 33
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "654e8e03_719c5dbc",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/jni/android_media_AudioSystem.cpp",
+              "range": {
+                "startLine": 3524,
+                "startChar": 0,
+                "endLine": 3525,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "core/jni/android_media_AudioSystem.cpp",
+              "range": {
+                "startLine": 3528,
+                "startChar": 0,
+                "endLine": 3529,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "core/jni/android_media_AudioSystem.cpp",
+              "range": {
+                "startLine": 3530,
+                "startChar": 0,
+                "endLine": 3531,
+                "endChar": 0
+              },
+              "replacement": "    return nativeToJavaStatus(status);\n"
+            },
+            {
+              "path": "core/jni/android_media_AudioSystem.cpp",
+              "range": {
+                "startLine": 3539,
+                "startChar": 0,
+                "endLine": 3540,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "core/jni/android_media_AudioSystem.cpp",
+              "range": {
+                "startLine": 3543,
+                "startChar": 0,
+                "endLine": 3544,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "core/jni/android_media_AudioSystem.cpp",
+              "range": {
+                "startLine": 3545,
+                "startChar": 0,
+                "endLine": 3546,
+                "endChar": 0
+              },
+              "replacement": "    return nativeToJavaStatus(status);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c5d244f_ad83d072",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1733,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-07-01T09:44:29Z",
+      "side": 1,
+      "message": "which userID are zones assigned to before this is called? Are all zoned on USER_CURRENT?",
+      "range": {
+        "startLine": 1733,
+        "startChar": 0,
+        "endLine": 1733,
+        "endChar": 52
+      },
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "55bc38f3_4aa722ef",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1746,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-07-01T09:44:29Z",
+      "side": 1,
+      "message": "maybe place the userID argument first",
+      "range": {
+        "startLine": 1746,
+        "startChar": 55,
+        "endLine": 1746,
+        "endChar": 77
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "60a900c9_d1d73839",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "media/java/android/media/AudioManager.java",
+              "range": {
+                "startLine": 1735,
+                "startChar": 0,
+                "endLine": 1735,
+                "endChar": 0
+              },
+              "replacement": "     * @param userId to consider\n"
+            },
+            {
+              "path": "media/java/android/media/AudioManager.java",
+              "range": {
+                "startLine": 1736,
+                "startChar": 0,
+                "endLine": 1737,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "media/java/android/media/AudioManager.java",
+              "range": {
+                "startLine": 1746,
+                "startChar": 0,
+                "endLine": 1747,
+                "endChar": 0
+              },
+              "replacement": "    public boolean setProductStrategiesZoneIdForUserId(int userId, int zoneId) {\n"
+            },
+            {
+              "path": "media/java/android/media/AudioManager.java",
+              "range": {
+                "startLine": 1749,
+                "startChar": 0,
+                "endLine": 1750,
+                "endChar": 0
+              },
+              "replacement": "            final int status \u003d service.setProductStrategiesZoneIdForUserId(userId, zoneId);\n"
+            },
+            {
+              "path": "media/java/android/media/AudioManager.java",
+              "range": {
+                "startLine": 1780,
+                "startChar": 0,
+                "endLine": 1781,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "media/java/android/media/AudioManager.java",
+              "range": {
+                "startLine": 1784,
+                "startChar": 0,
+                "endLine": 1784,
+                "endChar": 0
+              },
+              "replacement": "     * @hide\n"
+            }
+          ]
+        }
+      ],
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c72724b0_20f698c6",
+        "filename": "media/java/android/media/AudioSystem.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 2786,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-07-01T09:44:29Z",
+      "side": 1,
+      "message": "I don\u0027t think we should flag APIs in AudioSystem which is a hidden class only visible for test. To be confirmed",
+      "range": {
+        "startLine": 2786,
+        "startChar": 0,
+        "endLine": 2786,
+        "endChar": 38
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "d704d6d4_69fcc86b",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "media/java/android/media/AudioSystem.java",
+              "range": {
+                "startLine": 2786,
+                "startChar": 0,
+                "endLine": 2787,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "media/java/android/media/AudioSystem.java",
+              "range": {
+                "startLine": 2795,
+                "startChar": 0,
+                "endLine": 2796,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "af009e28_4b00e1b3",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9232,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-07-01T09:44:29Z",
+      "side": 1,
+      "message": "should we only add to the map if the audio system call is successful?",
+      "range": {
+        "startLine": 9232,
+        "startChar": 0,
+        "endLine": 9232,
+        "endChar": 28
+      },
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8132815a_b0327c26",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9233,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-07-01T09:44:29Z",
+      "side": 1,
+      "message": "maybe expose this in the AudioSystemAdapter for test (call on mAudioSystem instead)",
+      "range": {
+        "startLine": 9233,
+        "startChar": 19,
+        "endLine": 9233,
+        "endChar": 30
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "074ba7bd_7b6eac24",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 9233,
+                "startChar": 0,
+                "endLine": 9234,
+                "endChar": 0
+              },
+              "replacement": "            return mAudioSystem.setProductStrategiesZoneIdForUserId(zoneId, userId);\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 9247,
+                "startChar": 0,
+                "endLine": 9248,
+                "endChar": 0
+              },
+              "replacement": "            return mAudioSystem.resetProductStrategiesZoneIdForUserId(userId);\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 10346,
+                "startChar": 0,
+                "endLine": 10347,
+                "endChar": 0
+              },
+              "replacement": "                @AudioManager.VolumeAdjustment int direction, int userId) {\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 10348,
+                "startChar": 0,
+                "endLine": 10349,
+                "endChar": 0
+              },
+              "replacement": "                apc.notifyVolumeAdjust(direction, userId);\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 10497,
+                "startChar": 0,
+                "endLine": 10498,
+                "endChar": 0
+              },
+              "replacement": "                    onNotifyVolumeEvent((IAudioPolicyCallback) msg.obj, msg.arg1, msg.arg2);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15b22e3a_f7b82ab5",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9266,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-07-01T09:44:29Z",
+      "side": 1,
+      "message": "|| ?",
+      "range": {
+        "startLine": 9266,
+        "startChar": 40,
+        "endLine": 9266,
+        "endChar": 41
+      },
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13e9a471_fceeeb52",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9274,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-07-01T09:44:29Z",
+      "side": 1,
+      "message": "why not USER_CURRENT in this case?\nIsn\u0027t volume and routing suposed to follow the defaults for current user when no user is specified for a zone?",
+      "range": {
+        "startLine": 9274,
+        "startChar": 26,
+        "endLine": 9274,
+        "endChar": 35
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "ef737e3c_8177ff0a",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 9274,
+                "startChar": 0,
+                "endLine": 9275,
+                "endChar": 0
+              },
+              "replacement": "        return UserHandle.USER_CURRENT;\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 10397,
+                "startChar": 0,
+                "endLine": 10397,
+                "endChar": 0
+              },
+              "replacement": "                case MSG_DISPATCH_AUDIO_POLICY_READY:\n                    onDispatchAudioPolicyReady();\n                    break;\n\n"
+            }
+          ]
+        }
+      ],
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
