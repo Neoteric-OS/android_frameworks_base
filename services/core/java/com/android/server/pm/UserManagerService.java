@@ -7917,6 +7917,19 @@ public class UserManagerService extends IUserManager.Stub {
         }
 
         @Override
+        public boolean isUserNotAvailable(@UserIdInt int userId) {
+            int state;
+            synchronized (mUserStates) {
+                state = mUserStates.get(userId, UserState.STATE_NONE);
+            }
+
+            if (state == UserState.STATE_NONE) {
+                return true;
+            }
+            return false;
+        }
+
+        @Override
         public void setUserState(@UserIdInt int userId, int userState) {
             synchronized (mUserStates) {
                 mUserStates.put(userId, userState);

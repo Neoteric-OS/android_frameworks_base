@@ -308,6 +308,11 @@ public abstract class UserManagerInternal {
     public abstract boolean isUserRunning(int userId);
 
     /**
+     * Returns whether the given user is not available
+     */
+    public abstract boolean isUserNotAvailable(@UserIdInt int userId);
+
+    /**
      * Returns whether the given user is initialized
      */
     public abstract boolean isUserInitialized(int userId);

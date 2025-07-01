@@ -89,6 +89,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.IStoraged;
+import android.os.IUserManager;
 import android.os.IVold;
 import android.os.IVoldListener;
 import android.os.IVoldMountCallback;
@@ -3035,6 +3036,23 @@ class StorageManagerService extends IStorageManager.Stub
 
             // We need all the users unlocked to move their primary storage
             users = mContext.getSystemService(UserManager.class).getUsers();
+            final UserManagerInternal umInternal = LocalServices.getService(UserManagerInternal.class);
+            Iterator<UserInfo> userIterator = users.iterator();
+            while (userIterator.hasNext()) {
+                UserInfo user = userIterator.next();
+                if (umInternal.isUserNotAvailable(user.id)) {
+                    IUserManager um = IUserManager.Stub.asInterface(
+                          ServiceManager.getService(Context.USER_SERVICE));
+                    try {
+                        if (um.removeUser(user.id)) {
+                            Slog.d(TAG, "removed not-available users:" + user.id);
+                            userIterator.remove();
+                        }
+                    } catch (RemoteException ex) {
+                        Slog.e(TAG, "Failed to remove not-available users:" + user.id);
+                    }
+                }
+            }
             for (UserInfo user : users) {
                 if (StorageManager.isFileEncrypted() && !isCeStorageUnlocked(user.id)) {
                     Slog.w(TAG, "Failing move due to locked user " + user.id);
