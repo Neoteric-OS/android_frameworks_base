@@ -16,6 +16,24 @@
       "message": "thanks for the contribution.\n\nis there a way we can verify this?",
       "revId": "cfc834850dfcc1f64a50fa8e23c52428cf9feece",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "44eb0dba_b9d7f9ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2001555
+      },
+      "writtenOn": "2025-07-02T05:28:29Z",
+      "side": 1,
+      "message": "We tested it our internal apps. So we can\u0027t share it.\nI think you can simply verify it.\n - Set the alpha on your view and draw simple line with rotation matrix\n - then you can see the aliasing on the line.",
+      "parentUuid": "ea30bd5e_b85fe4ec",
+      "revId": "cfc834850dfcc1f64a50fa8e23c52428cf9feece",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
