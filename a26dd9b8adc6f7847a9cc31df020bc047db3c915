@@ -163,6 +163,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "74728372_792a4753",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1733,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2025-07-02T23:05:36Z",
+      "side": 1,
+      "message": "I added a description about the this.\n\nEric I took core of this in the internal CL: https://googleplex-android-review.git.corp.google.com/q/topic:%22mz_step_5%22\n\nI also added more testing for this here: https://googleplex-android-review.git.corp.google.com/c/platform/frameworks/base/+/34037547/8/services/tests/servicestests/src/com/android/server/audio/AudioServiceTest.java",
+      "parentUuid": "e503c0ac_dddeeb77",
+      "range": {
+        "startLine": 1733,
+        "startChar": 0,
+        "endLine": 1733,
+        "endChar": 52
+      },
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "55bc38f3_4aa722ef",
@@ -254,6 +278,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "064e7183_c1632674",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1746,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2025-07-02T23:05:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55bc38f3_4aa722ef",
+      "range": {
+        "startLine": 1746,
+        "startChar": 55,
+        "endLine": 1746,
+        "endChar": 77
+      },
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c72724b0_20f698c6",
@@ -305,6 +353,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfd03471_659413e0",
+        "filename": "media/java/android/media/AudioSystem.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 2786,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2025-07-02T23:05:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c72724b0_20f698c6",
+      "range": {
+        "startLine": 2786,
+        "startChar": 0,
+        "endLine": 2786,
+        "endChar": 38
+      },
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "af009e28_4b00e1b3",
@@ -318,6 +390,30 @@
       "writtenOn": "2025-07-01T09:44:29Z",
       "side": 1,
       "message": "should we only add to the map if the audio system call is successful?",
+      "range": {
+        "startLine": 9232,
+        "startChar": 0,
+        "endLine": 9232,
+        "endChar": 28
+      },
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3019243_aac6b798",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9232,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2025-07-02T23:05:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af009e28_4b00e1b3",
       "range": {
         "startLine": 9232,
         "startChar": 0,
@@ -409,6 +505,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "74a3cfd7_153f7a19",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9233,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2025-07-02T23:05:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8132815a_b0327c26",
+      "range": {
+        "startLine": 9233,
+        "startChar": 19,
+        "endLine": 9233,
+        "endChar": 30
+      },
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "15b22e3a_f7b82ab5",
@@ -422,6 +542,30 @@
       "writtenOn": "2025-07-01T09:44:29Z",
       "side": 1,
       "message": "|| ?",
+      "range": {
+        "startLine": 9266,
+        "startChar": 40,
+        "endLine": 9266,
+        "endChar": 41
+      },
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9479af5a_c739f571",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9266,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2025-07-02T23:05:36Z",
+      "side": 1,
+      "message": "I\u0027ve removed it all together give the comment below to return USER_CURRENT. Otherwise if the mapping is set we can use the info in `mUseridToZoneMap`.",
+      "parentUuid": "15b22e3a_f7b82ab5",
       "range": {
         "startLine": 9266,
         "startChar": 40,
@@ -479,6 +623,30 @@
           ]
         }
       ],
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a414cccd_1acd3b41",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9274,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2025-07-02T23:05:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13e9a471_fceeeb52",
+      "range": {
+        "startLine": 9274,
+        "startChar": 26,
+        "endLine": 9274,
+        "endChar": 35
+      },
       "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
