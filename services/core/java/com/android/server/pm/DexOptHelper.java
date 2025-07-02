@@ -652,8 +652,9 @@ public final class DexOptHelper {
                 }
             }
             if (!updatedPackages.isEmpty()) {
-                LocalServices.getService(PinnerService.class)
-                        .update(updatedPackages, false /* force */);
+                PinnerService pinnderService = LocalServices.getService(PinnerService.class);
+                if (pinnderService != null)
+                    pinnderService.update(updatedPackages, false /* force */);
             }
         }
     }

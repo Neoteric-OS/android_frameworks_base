@@ -264,6 +264,7 @@ public class SystemImpl implements SystemInterface {
     @Override
     public void pinWebviewIfRequired(ApplicationInfo appInfo) {
         PinnerService pinnerService = LocalServices.getService(PinnerService.class);
+        if (pinnerService == null) return;
         int webviewPinQuota = pinnerService.getWebviewPinQuota();
         if (webviewPinQuota <= 0) {
             return;
