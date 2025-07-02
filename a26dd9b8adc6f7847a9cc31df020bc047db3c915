@@ -92,6 +92,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "15b02571_3db2d16b",
+        "filename": "core/jni/android_media_AudioSystem.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 3528,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2025-07-02T04:13:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "184f4421_8fa01ccd",
+      "range": {
+        "startLine": 3528,
+        "startChar": 15,
+        "endLine": 3528,
+        "endChar": 33
+      },
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6c5d244f_ad83d072",
@@ -105,6 +129,30 @@
       "writtenOn": "2025-07-01T09:44:29Z",
       "side": 1,
       "message": "which userID are zones assigned to before this is called? Are all zoned on USER_CURRENT?",
+      "range": {
+        "startLine": 1733,
+        "startChar": 0,
+        "endLine": 1733,
+        "endChar": 52
+      },
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e503c0ac_dddeeb77",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1733,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2025-07-02T04:13:24Z",
+      "side": 1,
+      "message": "Looks like all users are assigned to primary zone: https://android-review.git.corp.google.com/c/platform/frameworks/av/+/3067006/33/services/audiopolicy/engine/common/src/EngineBase.cpp#385\n\nMaybe we also want to match this behavior here: https://android-review.git.corp.google.com/c/platform/frameworks/base/+/3066828/comment/13e9a471_fceeeb52/",
+      "parentUuid": "6c5d244f_ad83d072",
       "range": {
         "startLine": 1733,
         "startChar": 0,
