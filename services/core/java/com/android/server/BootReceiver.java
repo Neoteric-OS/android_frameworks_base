@@ -573,6 +573,8 @@ public class BootReceiver extends BroadcastReceiver {
             throw ex;
         } catch (IOException ex) {
             Slog.e(TAG, "IO exception during write: " + tombstoneProtoWithHeaders, ex);
+        } catch (RuntimeException ex) {
+            Slog.e(TAG, "failed to flush proto tombstone: " + tombstoneProtoWithHeaders, ex);
         } finally {
             // Remove the temporary file and unlock the lock.
             if (tombstoneProtoWithHeaders != null) {
