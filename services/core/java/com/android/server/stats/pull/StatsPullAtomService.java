@@ -5233,6 +5233,7 @@ public class StatsPullAtomService extends SystemService {
 
     int pullSystemServerPinnerStats(int atomTag, List<StatsEvent> pulledData) {
         PinnerService pinnerService = LocalServices.getService(PinnerService.class);
+        if (pinnerService == null) return StatsManager.PULL_SKIP;
         List<PinnedFileStats> pinnedFileStats = pinnerService.dumpDataForStatsd();
         for (PinnedFileStats pfstats : pinnedFileStats) {
             pulledData.add(FrameworkStatsLog.buildStatsEvent(atomTag,
