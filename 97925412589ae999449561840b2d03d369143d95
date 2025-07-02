@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "786d8908_a01c65f2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021004
+      },
+      "writtenOn": "2025-07-02T16:33:48Z",
+      "side": 1,
+      "message": "The pinner service is started unconditionally so should always be there: https://cs.android.com/android/platform/superproject/+/android16-release:frameworks/base/services/java/com/android/server/SystemServer.java;l\u003d1784;drc\u003db9c5e6797e868791d3e67b75f1586527c9059e5c\n\nIs there a particular reason this is needed?",
+      "revId": "97925412589ae999449561840b2d03d369143d95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
