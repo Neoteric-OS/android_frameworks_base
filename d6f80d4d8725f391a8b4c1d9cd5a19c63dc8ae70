@@ -16,6 +16,24 @@
       "message": "This change appears to be in the main branch already.  It should propagate to AOSP at the next push.  Is this a request for an early update to AOSP?",
       "revId": "d6f80d4d8725f391a8b4c1d9cd5a19c63dc8ae70",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc450ef6_5e6486a6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1075873
+      },
+      "writtenOn": "2025-07-02T06:29:39Z",
+      "side": 1,
+      "message": "OK,got it, wait for the next AOSP push.",
+      "parentUuid": "4d4ff3bc_c6bf35d6",
+      "revId": "d6f80d4d8725f391a8b4c1d9cd5a19c63dc8ae70",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
