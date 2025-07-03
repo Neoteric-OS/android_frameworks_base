@@ -34,6 +34,24 @@
       "parentUuid": "786d8908_a01c65f2",
       "revId": "97925412589ae999449561840b2d03d369143d95",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "100bb4d4_0dabb057",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1075873
+      },
+      "writtenOn": "2025-07-03T01:04:40Z",
+      "side": 1,
+      "message": "Recently, we are doing some work on specially kind of product, and we try to disable the pinner service, that means we will add condition on pinnder service starting flow, if our product setting disable pinner service, Android system will crash.So, I think that if the service is not critical for os running, check it before use can make the disable it safely.",
+      "parentUuid": "ad24fe60_52daaf46",
+      "revId": "97925412589ae999449561840b2d03d369143d95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
