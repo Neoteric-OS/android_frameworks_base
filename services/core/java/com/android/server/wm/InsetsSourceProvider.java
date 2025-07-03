@@ -151,7 +151,7 @@ class InsetsSourceProvider {
 
     private boolean updateInsetsHint() {
         final Insets insetsHint = getInsetsHint();
-        if (!mControl.getInsetsHint().equals(insetsHint)) {
+        if (mControl != null && !mControl.getInsetsHint().equals(insetsHint)) {
             mControl.setInsetsHint(insetsHint);
             return true;
         }
