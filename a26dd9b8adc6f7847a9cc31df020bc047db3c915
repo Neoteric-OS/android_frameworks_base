@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "46af2cde_5880897b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-07-03T10:18:12Z",
+      "side": 1,
+      "message": "Oscar,\n\ndid you address the comments on the internal CL? If yes, can you upload the PS here because other wise the review is difficult.\nI have reviewed the AOSP CL so that Francois is in the loop. Maybe we should only CP it to internal gerrit once major comments are resolved here.",
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "184f4421_8fa01ccd",
