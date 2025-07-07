@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "945f4f0a_674e4bef",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1943016
+      },
+      "writtenOn": "2025-07-07T09:28:26Z",
+      "side": 1,
+      "message": "As discussed on the bug, the current behavior is WAI.",
+      "revId": "b0a92004352e91b3479cb671d8eba03be7b4d950",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
