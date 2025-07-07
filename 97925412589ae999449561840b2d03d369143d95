@@ -87,6 +87,24 @@
       "parentUuid": "100bb4d4_0dabb057",
       "revId": "97925412589ae999449561840b2d03d369143d95",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76a1da61_1ace1d10",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1562839
+      },
+      "writtenOn": "2025-07-07T23:44:20Z",
+      "side": 1,
+      "message": "It has not been our plan to make it optional.\n\n@xiaomei.li have you tried instead of doing this to set config_pinnerMaxPinnedMemoryPercentage value to 0 https://cs.android.com/android/platform/superproject/+/android-latest-release:frameworks/base/core/res/res/values/config.xml;l\u003d4672?q\u003dconfig_pinnerMaxPinnedMemoryPercentage for that device configuration so that nothing is pinned for it ?, this would likely save you the need for custom code and save the need for any conditional logic. You can always verify this by doing `adb shell dumpsys pinner` to check that nothing is pinned once you do it.",
+      "parentUuid": "c9bdc328_77b54f02",
+      "revId": "97925412589ae999449561840b2d03d369143d95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
