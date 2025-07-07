@@ -69,6 +69,24 @@
       "message": "Edgar, do we want the pinner service to be optional?",
       "revId": "97925412589ae999449561840b2d03d369143d95",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d39293e_6126a745",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1141809
+      },
+      "writtenOn": "2025-07-07T19:23:07Z",
+      "side": 1,
+      "message": "It sounds like this is a feature request then: \"Allow the pinner service to be optional.\" I think you should file a ticket, CC the people you have listed on this CL, and then let\u0027s discuss this first on the feature request ticket. If the code owners agree this service may be optional, then we can take another look to review your code change.\n\nCode reviews are not the best place to discuss plans like this. Feature request tickets are better for this.",
+      "parentUuid": "100bb4d4_0dabb057",
+      "revId": "97925412589ae999449561840b2d03d369143d95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
