@@ -757,6 +757,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "15020aa8_c0e0a70f",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9266,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2025-07-08T14:34:13Z",
+      "side": 1,
+      "message": "Intentional change, same comment as for the return code",
+      "parentUuid": "c611233b_11c45b34",
+      "range": {
+        "startLine": 9266,
+        "startChar": 40,
+        "endLine": 9266,
+        "endChar": 41
+      },
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "13e9a471_fceeeb52",
         "filename": "services/core/java/com/android/server/audio/AudioService.java",
         "patchSetId": 18
@@ -844,6 +868,30 @@
       "side": 1,
       "message": "Marked as unresolved.",
       "parentUuid": "a414cccd_1acd3b41",
+      "range": {
+        "startLine": 9274,
+        "startChar": 26,
+        "endLine": 9274,
+        "endChar": 35
+      },
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d152d6a3_08538dd6",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9274,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2025-07-08T14:34:13Z",
+      "side": 1,
+      "message": "It was intentional to return USER_NULL for secondary zones. If no user set, we wont be able to do any routing on these zones, so they are \"unreachable\". Returning user current would let the caller interpretting as current user can be routed in these zones, which is false.",
+      "parentUuid": "6817850c_7c0703e2",
       "range": {
         "startLine": 9274,
         "startChar": 26,
