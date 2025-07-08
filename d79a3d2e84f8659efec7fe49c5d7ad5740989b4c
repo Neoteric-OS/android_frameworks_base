@@ -16,6 +16,141 @@
       "message": "Similar comment here, we can continue from the last patch Francois had.",
       "revId": "d79a3d2e84f8659efec7fe49c5d7ad5740989b4c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69bf41f4_17c06c8a",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 3577,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-07-08T15:00:01Z",
+      "side": 1,
+      "message": "anonymizeAudioDeviceAttributesList",
+      "range": {
+        "startLine": 3577,
+        "startChar": 35,
+        "endLine": 3577,
+        "endChar": 64
+      },
+      "revId": "d79a3d2e84f8659efec7fe49c5d7ad5740989b4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15834923_2d19a687",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 5385,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-07-08T15:00:01Z",
+      "side": 1,
+      "message": "this is not possible anymore",
+      "range": {
+        "startLine": 5385,
+        "startChar": 37,
+        "endLine": 5385,
+        "endChar": 46
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "bd3c2592_7ae610c7",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 5385,
+                "startChar": 0,
+                "endLine": 5386,
+                "endChar": 0
+              },
+              "replacement": "            if (userId \u003d\u003d UserHandle.USER_NULL || userId \u003d\u003d UserHandle.USER_UNKNOWN) {\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 5591,
+                "startChar": 0,
+                "endLine": 5592,
+                "endChar": 0
+              },
+              "replacement": "                        !\u003d PackageManager.PERMISSION_GRANTED) {\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 5986,
+                "startChar": 0,
+                "endLine": 5987,
+                "endChar": 0
+              },
+              "replacement": "                        !\u003d PackageManager.PERMISSION_GRANTED) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d79a3d2e84f8659efec7fe49c5d7ad5740989b4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c15ba535_9761ca51",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 9389,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-07-08T15:00:01Z",
+      "side": 1,
+      "message": "we should drop the binder context before calling into audio system after permission checks:\n\n        try (SafeCloseable ignored \u003d ClearCallingIdentityContext.create()) {\n            status \u003d AudioSystem.getDevicesForRoleAndStrategy(\n                    strategy, AudioSystem.DEVICE_ROLE_DISABLED, devices);\n        }",
+      "range": {
+        "startLine": 9389,
+        "startChar": 0,
+        "endLine": 9389,
+        "endChar": 58
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "b1bab486_f9c497c4",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 9389,
+                "startChar": 0,
+                "endLine": 9390,
+                "endChar": 0
+              },
+              "replacement": "        try (SafeCloseable ignored \u003d ClearCallingIdentityContext.create()) {\n            return mAudioSystem.getZoneIdForAudioVolumeGroupId(groupId);\n        }\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 10287,
+                "startChar": 0,
+                "endLine": 10288,
+                "endChar": 0
+              },
+              "replacement": "    /** Thread that handles native AudioSystem control.\n     *\n     * \u003cp\u003e All calls to AudioSystem must be done from this thread to avoid race conditions.\n     */\n"
+            }
+          ]
+        }
+      ],
+      "revId": "d79a3d2e84f8659efec7fe49c5d7ad5740989b4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
