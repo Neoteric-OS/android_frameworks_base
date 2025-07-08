@@ -612,6 +612,7 @@ public final class PageAdapter extends Adapter<ViewHolder> {
 
     private void setConfirmedPages(PageRange[] pagesInDocument, int documentPageCount) {
         mConfirmedPagesInDocument.clear();
+        if (pagesInDocument == null) return;
         final int rangeCount = pagesInDocument.length;
         for (int i = 0; i < rangeCount; i++) {
             PageRange pageRange = PageRangeUtils.asAbsoluteRange(pagesInDocument[i],
