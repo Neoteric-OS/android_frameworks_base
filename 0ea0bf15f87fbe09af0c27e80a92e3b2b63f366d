@@ -20,6 +20,77 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2ddfb28f_cb5577a9",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 9167,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-07-08T15:01:22Z",
+      "side": 1,
+      "message": "clear binder identity after permission check and before calling into audio system.\nsame for all API methods below\n        try (SafeCloseable ignored \u003d ClearCallingIdentityContext.create()) {\n            status \u003d AudioSystem.setProductStrategiesZoneIdForUserId(userId, zoneId);\n        }",
+      "range": {
+        "startLine": 9167,
+        "startChar": 0,
+        "endLine": 9167,
+        "endChar": 37
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "2ca396f3_71e50615",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 9167,
+                "startChar": 0,
+                "endLine": 9168,
+                "endChar": 0
+              },
+              "replacement": "            int status;\n            try (SafeCloseable ignored \u003d ClearCallingIdentityContext.create()) {\n                status \u003d mAudioSystem.setProductStrategiesZoneIdForUserId(userId, zoneId);\n            }\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 9188,
+                "startChar": 0,
+                "endLine": 9189,
+                "endChar": 0
+              },
+              "replacement": "            int status;\n            try (SafeCloseable ignored \u003d ClearCallingIdentityContext.create()) {\n                status \u003d mAudioSystem.resetProductStrategiesZoneIdForUserId(userId);\n            }\n            return status;\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 9206,
+                "startChar": 0,
+                "endLine": 9206,
+                "endChar": 0
+              },
+              "replacement": "    @GuardedBy(\"mSettingsLock\")\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 9217,
+                "startChar": 0,
+                "endLine": 9217,
+                "endChar": 0
+              },
+              "replacement": "\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0ea0bf15f87fbe09af0c27e80a92e3b2b63f366d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "71591870_c7983a14",
         "filename": "services/core/java/com/android/server/audio/AudioService.java",
         "patchSetId": 19
