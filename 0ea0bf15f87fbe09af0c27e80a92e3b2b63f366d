@@ -16,6 +16,120 @@
       "message": "Eric sorry I misread your comment previously. I opened the comments back up.\n\n@Francois can you take a look at comments,and try to resolved on your last patch. Sorry for merging a new patch on top but feel free to ignore that for now.",
       "revId": "0ea0bf15f87fbe09af0c27e80a92e3b2b63f366d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71591870_c7983a14",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 9209,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-07-08T14:39:06Z",
+      "side": 1,
+      "message": "maybe remove altogether: not worth the optimization",
+      "range": {
+        "startLine": 9207,
+        "startChar": 0,
+        "endLine": 9209,
+        "endChar": 9
+      },
+      "revId": "0ea0bf15f87fbe09af0c27e80a92e3b2b63f366d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a69ca77e_8b81a04f",
+        "filename": "services/tests/servicestests/src/com/android/server/audio/AudioServiceTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-07-08T14:39:06Z",
+      "side": 1,
+      "message": "Maybe use prefix test here and below for test names",
+      "range": {
+        "startLine": 268,
+        "startChar": 16,
+        "endLine": 268,
+        "endChar": 51
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "7f6280ee_0cdc1c8f",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/tests/servicestests/src/com/android/server/audio/AudioServiceTest.java",
+              "range": {
+                "startLine": 268,
+                "startChar": 0,
+                "endLine": 269,
+                "endChar": 0
+              },
+              "replacement": "    public void testSetProductStrategiesZoneIdForUserId() {\n"
+            },
+            {
+              "path": "services/tests/servicestests/src/com/android/server/audio/AudioServiceTest.java",
+              "range": {
+                "startLine": 283,
+                "startChar": 0,
+                "endLine": 284,
+                "endChar": 0
+              },
+              "replacement": "    public void testSetProductStrategiesZoneIdForUserId_withAudioSystemFailure() {\n"
+            },
+            {
+              "path": "services/tests/servicestests/src/com/android/server/audio/AudioServiceTest.java",
+              "range": {
+                "startLine": 300,
+                "startChar": 0,
+                "endLine": 301,
+                "endChar": 0
+              },
+              "replacement": "    public void testGetUserIdForZoneId_withoutMapping() {\n"
+            },
+            {
+              "path": "services/tests/servicestests/src/com/android/server/audio/AudioServiceTest.java",
+              "range": {
+                "startLine": 309,
+                "startChar": 0,
+                "endLine": 310,
+                "endChar": 0
+              },
+              "replacement": "    public void testGetUserIdForZoneId_afterUserToZoneReset() {\n"
+            },
+            {
+              "path": "services/tests/servicestests/src/com/android/server/audio/AudioServiceTest.java",
+              "range": {
+                "startLine": 321,
+                "startChar": 0,
+                "endLine": 322,
+                "endChar": 0
+              },
+              "replacement": "    public void testResetProductStrategiesZoneIdForUserId() {\n"
+            },
+            {
+              "path": "services/tests/servicestests/src/com/android/server/audio/AudioServiceTest.java",
+              "range": {
+                "startLine": 335,
+                "startChar": 0,
+                "endLine": 336,
+                "endChar": 0
+              },
+              "replacement": "    public void testResetProductStrategiesZoneIdForUserId_forUnsetUser() {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0ea0bf15f87fbe09af0c27e80a92e3b2b63f366d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
