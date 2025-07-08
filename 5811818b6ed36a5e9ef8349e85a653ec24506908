@@ -133,6 +133,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a842ee0_42e31376",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 9051,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2025-07-08T03:42:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe9621cf_1fd8e217",
+      "range": {
+        "startLine": 9051,
+        "startChar": 83,
+        "endLine": 9051,
+        "endChar": 96
+      },
+      "revId": "5811818b6ed36a5e9ef8349e85a653ec24506908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "085f78c9_be444909",
@@ -180,6 +204,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "03474ab2_ac97c6ac",
+        "filename": "media/java/android/media/AudioSystem.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1830,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2025-07-08T03:42:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2752497b_8bea4e10",
+      "range": {
+        "startLine": 1830,
+        "startChar": 46,
+        "endLine": 1830,
+        "endChar": 58
+      },
+      "revId": "5811818b6ed36a5e9ef8349e85a653ec24506908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a0ff65ca_04f70082",
@@ -217,6 +265,30 @@
       "side": 1,
       "message": "for routing, I remember that UID is preferred. It will also work if a rule is set for User ID in AudioPolicyManager",
       "parentUuid": "a0ff65ca_04f70082",
+      "range": {
+        "startLine": 2051,
+        "startChar": 82,
+        "endLine": 2051,
+        "endChar": 88
+      },
+      "revId": "5811818b6ed36a5e9ef8349e85a653ec24506908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6fde2be_90239e2e",
+        "filename": "media/java/android/media/AudioSystem.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2051,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2025-07-08T03:42:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e5eedb5_88d38d80",
       "range": {
         "startLine": 2051,
         "startChar": 82,
@@ -311,6 +383,30 @@
       "side": 1,
       "message": "yes",
       "parentUuid": "bee5fa60_ebf3d34e",
+      "range": {
+        "startLine": 1429,
+        "startChar": 42,
+        "endLine": 1429,
+        "endChar": 48
+      },
+      "revId": "5811818b6ed36a5e9ef8349e85a653ec24506908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1cecf57_0b85346d",
+        "filename": "media/java/android/media/AudioTrack.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1429,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2025-07-08T03:42:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85a25506_923196dd",
       "range": {
         "startLine": 1429,
         "startChar": 42,
@@ -428,6 +524,30 @@
       "writtenOn": "2024-05-13T21:39:20Z",
       "side": 1,
       "message": "Nit space between method above and start of javadoc.",
+      "range": {
+        "startLine": 8331,
+        "startChar": 8,
+        "endLine": 8331,
+        "endChar": 11
+      },
+      "revId": "5811818b6ed36a5e9ef8349e85a653ec24506908",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "12728f5b_3e8bacce",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 8331,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2025-07-08T03:42:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bd052ad_f3c37468",
       "range": {
         "startLine": 8331,
         "startChar": 8,

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54afcb11_f99a40db",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 24
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2025-07-08T03:42:42Z",
+      "side": 1,
+      "message": "Similar comment here, we can continue from the last patch Francois had.",
+      "revId": "d79a3d2e84f8659efec7fe49c5d7ad5740989b4c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
