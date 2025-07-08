@@ -127,6 +127,12 @@ import java.util.function.Consumer;
  * The Settings provider contains global system-level device preferences.
  */
 public final class Settings {
+    /**
+     * Whether ADB over network is enabled.
+     * @hide
+     */
+    public static final String ADB_TCP_ENABLED = "adb_tcp_enabled";
+
     /** @hide */
     public static final boolean DEFAULT_OVERRIDEABLE_BY_RESTORE = false;
 
