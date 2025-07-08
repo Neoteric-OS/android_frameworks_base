@@ -1570,6 +1570,12 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
                 || mWmService.shouldPlacePrimaryHomeOnDisplay(displayId)));
     }
 
+    private boolean isDeviceNotProvisioned() {
+        return Settings.Global.getInt(
+                mService.mContext.getContentResolver(),
+                Settings.Global.DEVICE_PROVISIONED, 0) == 0;
+    }
+
     /**
      * Check if the display area is valid for secondary home activity.
      *
@@ -1594,16 +1600,19 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
             return false;
         }
 
-        final boolean deviceProvisioned = Settings.Global.getInt(
-                mService.mContext.getContentResolver(),
-                Settings.Global.DEVICE_PROVISIONED, 0) != 0;
-        if (!deviceProvisioned) {
-            // Can't launch home on secondary display areas before device is provisioned.
+        final boolean launchBeforeProvisionedForSecondary = mService.mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_launchBeforeProvisionedForSecondary);
+        if (!launchBeforeProvisionedForSecondary && isDeviceNotProvisioned()) {
+            // Can't launch home on secondary display areas before device is provisioned
+            // unless config_launchBeforeProvisionedForSecondary is true.
             return false;
         }
 
-        if (!StorageManager.isCeStorageUnlocked(mCurrentUser)) {
-            // Can't launch home on secondary display areas if CE storage is still locked.
+        final boolean launchBeforeUnlockedForSecondary = mService.mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_launchBeforeUnlockedForSecondary);
+        if (!launchBeforeUnlockedForSecondary && !StorageManager.isCeStorageUnlocked(mCurrentUser)) {
+            // Can't launch home on secondary display areas if CE storage is still locked
+            // unless config_launchBeforeUnlockedForSecondary is true.
             return false;
         }
 

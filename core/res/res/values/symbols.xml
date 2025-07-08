@@ -4437,6 +4437,8 @@
   <!-- For Secondary Launcher -->
   <java-symbol type="string" name="config_secondaryHomePackage" />
   <java-symbol type="bool" name="config_useSystemProvidedLauncherForSecondary" />
+  <java-symbol type="bool" name="config_launchBeforeProvisionedForSecondary" />
+  <java-symbol type="bool" name="config_launchBeforeUnlockedForSecondary" />
 
   <java-symbol type="string" name="battery_saver_notification_channel_name" />
   <java-symbol type="string" name="battery_saver_off_notification_title" />

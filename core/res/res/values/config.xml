@@ -5400,6 +5400,14 @@
          not set, secondary home launcher can be replaced by user. -->
     <bool name ="config_useSystemProvidedLauncherForSecondary">false</bool>
 
+    <!-- Allow the secondary home launcher specified in config_secondaryHomePackage to be launched
+     before the device is provisioned. -->
+    <bool name ="config_launchBeforeProvisionedForSecondary">false</bool>
+
+    <!-- Allow the secondary home launcher specified in config_secondaryHomePackage to be launched
+         before the CE Storage is unlocked. -->
+    <bool name ="config_launchBeforeUnlockedForSecondary">false</bool>
+
     <!-- If device supports corner radius on windows.
          This should be turned off on low-end devices to improve animation performance. -->
     <bool name="config_supportsRoundedCornersOnWindows">true</bool>
