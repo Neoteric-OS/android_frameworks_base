@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c93b19fb_8aa5e15c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2025-07-08T03:35:07Z",
+      "side": 1,
+      "message": "Eric sorry I misread your comment previously. I opened the comments back up.\n\n@Francois can you take a look at comments,and try to resolved on your last patch. Sorry for merging a new patch on top but feel free to ignore that for now.",
+      "revId": "0ea0bf15f87fbe09af0c27e80a92e3b2b63f366d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

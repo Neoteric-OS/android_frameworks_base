@@ -224,6 +224,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "15e35ca7_fb905591",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1733,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2025-07-08T03:35:07Z",
+      "side": 1,
+      "message": "Marked as unresolved.",
+      "parentUuid": "74728372_792a4753",
+      "range": {
+        "startLine": 1733,
+        "startChar": 0,
+        "endLine": 1733,
+        "endChar": 52
+      },
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "55bc38f3_4aa722ef",
         "filename": "media/java/android/media/AudioManager.java",
         "patchSetId": 18
@@ -339,6 +363,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "709ef721_be8b2baa",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1746,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2025-07-08T03:35:07Z",
+      "side": 1,
+      "message": "Marked as unresolved.",
+      "parentUuid": "064e7183_c1632674",
+      "range": {
+        "startLine": 1746,
+        "startChar": 55,
+        "endLine": 1746,
+        "endChar": 77
+      },
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c72724b0_20f698c6",
         "filename": "media/java/android/media/AudioSystem.java",
         "patchSetId": 18
@@ -414,6 +462,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "691ed87b_5dcf8d84",
+        "filename": "media/java/android/media/AudioSystem.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 2786,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2025-07-08T03:35:07Z",
+      "side": 1,
+      "message": "Marked as unresolved.",
+      "parentUuid": "dfd03471_659413e0",
+      "range": {
+        "startLine": 2786,
+        "startChar": 0,
+        "endLine": 2786,
+        "endChar": 38
+      },
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "af009e28_4b00e1b3",
         "filename": "services/core/java/com/android/server/audio/AudioService.java",
         "patchSetId": 18
@@ -449,6 +521,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "af009e28_4b00e1b3",
+      "range": {
+        "startLine": 9232,
+        "startChar": 0,
+        "endLine": 9232,
+        "endChar": 28
+      },
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d26fb77_22d0633d",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9232,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2025-07-08T03:35:07Z",
+      "side": 1,
+      "message": "Marked as unresolved.",
+      "parentUuid": "f3019243_aac6b798",
       "range": {
         "startLine": 9232,
         "startChar": 0,
@@ -566,6 +662,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "41dbbacf_f8881ce0",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9233,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2025-07-08T03:35:07Z",
+      "side": 1,
+      "message": "Marked as unresolved.",
+      "parentUuid": "74a3cfd7_153f7a19",
+      "range": {
+        "startLine": 9233,
+        "startChar": 19,
+        "endLine": 9233,
+        "endChar": 30
+      },
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "15b22e3a_f7b82ab5",
         "filename": "services/core/java/com/android/server/audio/AudioService.java",
         "patchSetId": 18
@@ -601,6 +721,30 @@
       "side": 1,
       "message": "I\u0027ve removed it all together give the comment below to return USER_CURRENT. Otherwise if the mapping is set we can use the info in `mUseridToZoneMap`.",
       "parentUuid": "15b22e3a_f7b82ab5",
+      "range": {
+        "startLine": 9266,
+        "startChar": 40,
+        "endLine": 9266,
+        "endChar": 41
+      },
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c611233b_11c45b34",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9266,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2025-07-08T03:35:07Z",
+      "side": 1,
+      "message": "Marked as unresolved.",
+      "parentUuid": "9479af5a_c739f571",
       "range": {
         "startLine": 9266,
         "startChar": 40,
@@ -676,6 +820,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "13e9a471_fceeeb52",
+      "range": {
+        "startLine": 9274,
+        "startChar": 26,
+        "endLine": 9274,
+        "endChar": 35
+      },
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6817850c_7c0703e2",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9274,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2025-07-08T03:35:07Z",
+      "side": 1,
+      "message": "Marked as unresolved.",
+      "parentUuid": "a414cccd_1acd3b41",
       "range": {
         "startLine": 9274,
         "startChar": 26,
