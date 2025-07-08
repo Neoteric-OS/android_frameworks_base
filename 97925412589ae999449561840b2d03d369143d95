@@ -105,6 +105,42 @@
       "parentUuid": "c9bdc328_77b54f02",
       "revId": "97925412589ae999449561840b2d03d369143d95",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39d15bc7_032e9266",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1075873
+      },
+      "writtenOn": "2025-07-08T01:50:45Z",
+      "side": 1,
+      "message": "Thank you very much, I think this config is very usefully for us. I will try it and verify the pinned file by doing `adb shell dumpsys pinner`.",
+      "parentUuid": "76a1da61_1ace1d10",
+      "revId": "97925412589ae999449561840b2d03d369143d95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dcc8de3a_782aa785",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1075873
+      },
+      "writtenOn": "2025-07-08T01:50:45Z",
+      "side": 1,
+      "message": "OK,Thank you, I will file a ticket if there must to.",
+      "parentUuid": "8d39293e_6126a745",
+      "revId": "97925412589ae999449561840b2d03d369143d95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
