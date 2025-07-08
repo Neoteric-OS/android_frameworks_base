@@ -248,6 +248,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e23dd14a_9f4b3f1c",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1733,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2025-07-08T14:37:40Z",
+      "side": 1,
+      "message": "All users are assigned to primary zone if no mapping registered.\nAll secondary zones are \"unreachable\" in term of volume / routing",
+      "parentUuid": "15e35ca7_fb905591",
+      "range": {
+        "startLine": 1733,
+        "startChar": 0,
+        "endLine": 1733,
+        "endChar": 52
+      },
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "55bc38f3_4aa722ef",
         "filename": "media/java/android/media/AudioManager.java",
         "patchSetId": 18
@@ -387,6 +411,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "759e3e9b_61bfffd7",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1746,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2025-07-08T14:37:40Z",
+      "side": 1,
+      "message": "ACK",
+      "parentUuid": "709ef721_be8b2baa",
+      "range": {
+        "startLine": 1746,
+        "startChar": 55,
+        "endLine": 1746,
+        "endChar": 77
+      },
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c72724b0_20f698c6",
         "filename": "media/java/android/media/AudioSystem.java",
         "patchSetId": 18
@@ -486,6 +534,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "06d4b12f_1d5c1143",
+        "filename": "media/java/android/media/AudioSystem.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 2786,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2025-07-08T14:37:40Z",
+      "side": 1,
+      "message": "I was not usre of this, makes sense. ACL",
+      "parentUuid": "691ed87b_5dcf8d84",
+      "range": {
+        "startLine": 2786,
+        "startChar": 0,
+        "endLine": 2786,
+        "endChar": 38
+      },
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "af009e28_4b00e1b3",
         "filename": "services/core/java/com/android/server/audio/AudioService.java",
         "patchSetId": 18
@@ -545,6 +617,30 @@
       "side": 1,
       "message": "Marked as unresolved.",
       "parentUuid": "f3019243_aac6b798",
+      "range": {
+        "startLine": 9232,
+        "startChar": 0,
+        "endLine": 9232,
+        "endChar": 28
+      },
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07f501d2_a2601ea7",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 9232,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2025-07-08T14:37:40Z",
+      "side": 1,
+      "message": "Excellent catch",
+      "parentUuid": "3d26fb77_22d0633d",
       "range": {
         "startLine": 9232,
         "startChar": 0,
