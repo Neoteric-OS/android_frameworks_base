@@ -909,13 +909,24 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
         }
         synchronized (mAudioFocusLock) {
             FocusRequester fr = getFocusRequesterLocked(afi.getClientId(),
-                    /* shouldRemove= */ requestResult == AudioManager.AUDIOFOCUS_REQUEST_FAILED);
+                    /* shouldRemove= */ false);
+            // Do not remove FocusRequest for a client id that has already received a LOSS_TRANSIENT
+            // and has made another focus request inbetween. This request would fail but the
+            // initial request is still pending. When regaining focus, client wont be notified
+            // if requester is removed.
+            // External focus implementation may replace duplicated requests from client,
+            // whatever focus holder or focus loser (aka received a loss transient).
+            boolean shouldRemove = (requestResult == AudioManager.AUDIOFOCUS_REQUEST_FAILED)
+                    && (fr != null) && !fr.hasReceivedTransientLoss();
             if (fr != null) {
                 fr.dispatchFocusResultFromExtPolicy(requestResult);
                 // if fade is enabled for external focus policies, apply it when setting
                 // focus result as well
                 if (enableFadeManagerConfiguration()) {
                     fr.handleFocusGainFromRequest(requestResult);
+                }
+                if (shouldRemove) {
+                    mFocusOwnersForFocusPolicy.remove(afi.getClientId());
                 }
             }
         }

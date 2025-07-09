@@ -166,7 +166,7 @@ public class FocusRequester {
     }
 
     boolean hasSameDispatcher(IAudioFocusDispatcher fd) {
-        return (mFocusDispatcher != null) && mFocusDispatcher.equals(fd);
+        return (mFocusDispatcher != null) && mFocusDispatcher.asBinder().equals(fd.asBinder());
     }
 
     @NonNull String getPackageName() {
@@ -601,6 +601,11 @@ public class FocusRequester {
             Log.e(TAG, "dispatchFocusResultFromExtPolicy: error talking to focus listener"
                     + mClientId, e);
         }
+    }
+
+    boolean hasReceivedTransientLoss() {
+        return mFocusLossReceived == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT
+                || mFocusLossReceived == AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK;
     }
 
     AudioFocusInfo toAudioFocusInfo() {
