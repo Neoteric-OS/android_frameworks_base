@@ -603,6 +603,10 @@ public class FocusRequester {
         }
     }
 
+    boolean hasReceivedTransientLoss() {
+        return mFocusLossReceived == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT;
+    }
+
     AudioFocusInfo toAudioFocusInfo() {
         return new AudioFocusInfo(mAttributes, mCallingUid, mClientId, mPackageName,
                 mFocusGainRequest, mFocusLossReceived, mGrantFlags, mSdkTarget);

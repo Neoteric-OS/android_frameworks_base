@@ -909,13 +909,18 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
         }
         synchronized (mAudioFocusLock) {
             FocusRequester fr = getFocusRequesterLocked(afi.getClientId(),
-                    /* shouldRemove= */ requestResult == AudioManager.AUDIOFOCUS_REQUEST_FAILED);
+                    /* shouldRemove= */ false);
+            boolean shouldRemove = (requestResult == AudioManager.AUDIOFOCUS_REQUEST_FAILED)
+                    && (fr != null) && !fr.hasReceivedTransientLoss();
             if (fr != null) {
                 fr.dispatchFocusResultFromExtPolicy(requestResult);
                 // if fade is enabled for external focus policies, apply it when setting
                 // focus result as well
                 if (enableFadeManagerConfiguration()) {
                     fr.handleFocusGainFromRequest(requestResult);
+                }
+                if (shouldRemove) {
+                    mFocusOwnersForFocusPolicy.remove(afi.getClientId());
                 }
             }
         }
