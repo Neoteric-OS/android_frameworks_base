@@ -107,6 +107,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ee7f6f4_98a10a77",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 9167,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2025-07-10T15:39:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ddfb28f_cb5577a9",
+      "range": {
+        "startLine": 9167,
+        "startChar": 0,
+        "endLine": 9167,
+        "endChar": 37
+      },
+      "revId": "0ea0bf15f87fbe09af0c27e80a92e3b2b63f366d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "71591870_c7983a14",
@@ -144,6 +168,30 @@
       "side": 1,
       "message": "handled according to zone id",
       "parentUuid": "71591870_c7983a14",
+      "range": {
+        "startLine": 9207,
+        "startChar": 0,
+        "endLine": 9209,
+        "endChar": 9
+      },
+      "revId": "0ea0bf15f87fbe09af0c27e80a92e3b2b63f366d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c408659_6ca9fb61",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 9209,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2025-07-10T15:39:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1fe2112_c751cd94",
       "range": {
         "startLine": 9207,
         "startChar": 0,
@@ -241,6 +289,30 @@
           ]
         }
       ],
+      "revId": "0ea0bf15f87fbe09af0c27e80a92e3b2b63f366d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "71f5d45b_f99d5467",
+        "filename": "services/tests/servicestests/src/com/android/server/audio/AudioServiceTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2025-07-10T15:39:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a69ca77e_8b81a04f",
+      "range": {
+        "startLine": 268,
+        "startChar": 16,
+        "endLine": 268,
+        "endChar": 51
+      },
       "revId": "0ea0bf15f87fbe09af0c27e80a92e3b2b63f366d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
