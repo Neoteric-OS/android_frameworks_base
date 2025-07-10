@@ -3988,6 +3988,12 @@ public class AudioService extends IAudioService.Stub
                 && (keyEventMode != AudioDeviceVolumeManager.ADJUST_MODE_END)) {
             mAudioHandler.removeMessages(MSG_UNMUTE_STREAM_ON_SINGLE_VOL_DEVICE);
 
+            VolumeStreamState systemState = mStreamStates[AudioSystem.STREAM_SYSTEM];
+            if (mIsSingleVolume && systemState.mIsMuted
+                        && direction == AudioManager.ADJUST_RAISE) {
+                    systemState.mute(false, /* apply= */ false, "adjustStreamVolume");
+            }
+
             if (isMuteAdjust && !mFullVolumeDevices.contains(device)) {
                 boolean state;
                 if (direction == AudioManager.ADJUST_TOGGLE_MUTE) {
