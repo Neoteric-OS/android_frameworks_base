@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "02f138cf_ceb62ed2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 19
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2025-07-10T14:01:25Z",
+      "side": 1,
+      "message": "Sure!",
+      "parentUuid": "c93b19fb_8aa5e15c",
+      "revId": "0ea0bf15f87fbe09af0c27e80a92e3b2b63f366d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2ddfb28f_cb5577a9",
         "filename": "services/core/java/com/android/server/audio/AudioService.java",
         "patchSetId": 19
@@ -102,6 +120,30 @@
       "writtenOn": "2025-07-08T14:39:06Z",
       "side": 1,
       "message": "maybe remove altogether: not worth the optimization",
+      "range": {
+        "startLine": 9207,
+        "startChar": 0,
+        "endLine": 9209,
+        "endChar": 9
+      },
+      "revId": "0ea0bf15f87fbe09af0c27e80a92e3b2b63f366d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1fe2112_c751cd94",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 9209,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2025-07-10T14:01:25Z",
+      "side": 1,
+      "message": "handled according to zone id",
+      "parentUuid": "71591870_c7983a14",
       "range": {
         "startLine": 9207,
         "startChar": 0,
