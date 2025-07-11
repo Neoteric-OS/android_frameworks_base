@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1dcd51eb_b2f5ac59",
+        "filename": "core/jni/android_media_AudioSystem.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1570284
+      },
+      "writtenOn": "2025-07-11T23:47:34Z",
+      "side": 1,
+      "message": "Please remove tabs",
+      "range": {
+        "startLine": 852,
+        "startChar": 0,
+        "endLine": 852,
+        "endChar": 6
+      },
+      "revId": "18c624276659f87bad6fbe2e3fa2fdd1de1c0ac6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "27e5d74d_c06aec24",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 9374,
+      "author": {
+        "id": 1570284
+      },
+      "writtenOn": "2025-07-11T23:47:34Z",
+      "side": 1,
+      "message": "Might make sense to also log the status value",
+      "range": {
+        "startLine": 9374,
+        "startChar": 12,
+        "endLine": 9374,
+        "endChar": 64
+      },
+      "revId": "18c624276659f87bad6fbe2e3fa2fdd1de1c0ac6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74ede967_98854a83",
+        "filename": "media/java/android/media/AudioSystem.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 2032,
+      "author": {
+        "id": 1570284
+      },
+      "writtenOn": "2025-07-11T23:47:34Z",
+      "side": 1,
+      "message": "Somehow I still prefer if the out values are at the end. But feel free to disregard if there is a strong opinion not to have it this way",
+      "range": {
+        "startLine": 2032,
+        "startChar": 12,
+        "endLine": 2032,
+        "endChar": 53
+      },
+      "revId": "18c624276659f87bad6fbe2e3fa2fdd1de1c0ac6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dea2a68b_311ac519",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 8920,
+      "author": {
+        "id": 1570284
+      },
+      "writtenOn": "2025-07-11T23:47:34Z",
+      "side": 1,
+      "message": "This check might make sense before line 8914?",
+      "range": {
+        "startLine": 8918,
+        "startChar": 12,
+        "endLine": 8920,
+        "endChar": 13
+      },
+      "revId": "18c624276659f87bad6fbe2e3fa2fdd1de1c0ac6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
