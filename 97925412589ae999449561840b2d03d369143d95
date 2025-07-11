@@ -141,6 +141,24 @@
       "parentUuid": "8d39293e_6126a745",
       "revId": "97925412589ae999449561840b2d03d369143d95",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1360579_4aaca2d4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1075873
+      },
+      "writtenOn": "2025-07-11T03:24:01Z",
+      "side": 1,
+      "message": "I still have some consideration for this, if we want to disable PinnerService，only by set config_pinnerMaxPinnedMemoryPercentage value to 0, the pin file work will not be done, but the pinner service starting and the pin file request calling still executing, there are some useless work flow will running to consume system resources(such as cpu).",
+      "parentUuid": "39d15bc7_032e9266",
+      "revId": "97925412589ae999449561840b2d03d369143d95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
