@@ -159,6 +159,24 @@
       "parentUuid": "39d15bc7_032e9266",
       "revId": "97925412589ae999449561840b2d03d369143d95",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "421be780_26b29e68",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1562839
+      },
+      "writtenOn": "2025-07-11T18:30:31Z",
+      "side": 1,
+      "message": "That is unfortunately expected in current architecture. We would not want to start sprinkling null-checks everywhere and create the expectation that any service may be optional by sprinkling these null checks. I think anything that involves optional services would need to be addressed as an independent FR as was suggested in earlier comments because it proposes changing fundamental assumptions for system_server.",
+      "parentUuid": "a1360579_4aaca2d4",
+      "revId": "97925412589ae999449561840b2d03d369143d95",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
