@@ -1093,26 +1093,23 @@ public final class MessageQueue {
         // Remove a sync barrier token from the queue.
         // If the queue is no longer stalled by a barrier then wake it.
         if (mUseConcurrent) {
-            boolean removed;
-            MessageNode first;
-            final MatchBarrierToken matchBarrierToken = new MatchBarrierToken(token);
-
+            boolean removed = false;
+            boolean needWake = false;
             try {
-                /* Retain the first element to see if we are currently stuck on a barrier. */
-                first = mPriorityQueue.first();
-            } catch (NoSuchElementException e) {
-                /* The queue is empty */
-                first = null;
+                MessageNode first = mPriorityQueue.first();
+                needWake = first.isBarrier() && first.mMessage.arg1 == token;
+            } catch (NoSuchElementException ignored) {
+                // The sync queue was empty so we can't be blocked on a sync barrier.
             }
 
+            final MatchBarrierToken matchBarrierToken = new MatchBarrierToken(token);
             removed = findOrRemoveMessages(null, 0, null, null, 0, matchBarrierToken, true);
-            if (removed && first != null) {
-                Message m = first.mMessage;
-                if (m.target == null && m.arg1 == token) {
-                    /* Wake up next() in case it was sleeping on this barrier. */
+
+            if (removed) {
+                if (needWake) {
                     nativeWake(mPtr);
                 }
-            } else if (!removed) {
+            } else {
                 throw new IllegalStateException("The specified message queue synchronization "
                         + " barrier token has not been posted or has already been removed.");
             }
