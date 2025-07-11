@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "979b6171_31d06467",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 1794,
+      "author": {
+        "id": 1570284
+      },
+      "writtenOn": "2025-07-11T23:32:57Z",
+      "side": 1,
+      "message": "Please fix this ERROR reported by Common Typos: Common typo found: \"explicitely\" -- should it be \"explicitly\"?\n\nAnalyzer Description: Linter for catching common typos motivated by go/todo-fail and go/lol-codesearch. Shared with google3 common typos library go/common-typos.\nOwner: ayeaye-team@google.com\n\nCommon typo found: \"explicitely\" -- should it be \"explicitly\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 1794,
+        "startChar": 42,
+        "endLine": 1794,
+        "endChar": 53
+      },
+      "revId": "87a4cea7d1cbeb89c672aeab82781e10b415839c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88183705_692d5a0a",
+        "filename": "media/java/android/media/AudioSystem.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 2778,
+      "author": {
+        "id": 1570284
+      },
+      "writtenOn": "2025-07-11T23:32:57Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Check Contents: Please remove the trailing whitespace.\n\nAnalyzer Description: Validates that changes do not have discouraged expressions in them.\nOwner: ayeaye-team@google.com\n\nPlease remove the trailing whitespace.\n\nTo rerun the analyzer locally, run: `alint -- -c CheckContents`\n\nFor more information, see go/alint.",
+      "range": {
+        "startLine": 2778,
+        "startChar": 7,
+        "endLine": 2778,
+        "endChar": 8
+      },
+      "revId": "87a4cea7d1cbeb89c672aeab82781e10b415839c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14b370d0_afbbb533",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 9220,
+      "author": {
+        "id": 1570284
+      },
+      "writtenOn": "2025-07-11T23:32:57Z",
+      "side": 1,
+      "message": "Is there a reason why we use mSettingsLock here? Should we maybe have a dedicated lock here instead?",
+      "range": {
+        "startLine": 9220,
+        "startChar": 16,
+        "endLine": 9220,
+        "endChar": 29
+      },
+      "revId": "87a4cea7d1cbeb89c672aeab82781e10b415839c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7547b83c_e134599f",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 9221,
+      "author": {
+        "id": 1570284
+      },
+      "writtenOn": "2025-07-11T23:32:57Z",
+      "side": 1,
+      "message": "nit: should be mUserIdToZoneMap",
+      "range": {
+        "startLine": 9221,
+        "startChar": 34,
+        "endLine": 9221,
+        "endChar": 50
+      },
+      "revId": "87a4cea7d1cbeb89c672aeab82781e10b415839c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
