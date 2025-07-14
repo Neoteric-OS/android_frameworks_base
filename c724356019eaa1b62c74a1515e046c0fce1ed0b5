@@ -16,6 +16,47 @@
       "message": "Marked as unresolved.",
       "revId": "c724356019eaa1b62c74a1515e046c0fce1ed0b5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1ff55c74_b8289cb5",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1948615
+      },
+      "writtenOn": "2025-07-14T10:14:37Z",
+      "side": 1,
+      "message": "nit: Please leave a space between the `\\\\` and the comment.",
+      "range": {
+        "startLine": 267,
+        "startChar": 0,
+        "endLine": 267,
+        "endChar": 5
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "d5065dc0_7246cd3d",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/jni/AndroidRuntime.cpp",
+              "range": {
+                "startLine": 267,
+                "startChar": 0,
+                "endLine": 268,
+                "endChar": 0
+              },
+              "replacement": "// The kernel\u0027s TASK_COMM_LEN minus one for the terminating NUL \u003d\u003d 15.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "c724356019eaa1b62c74a1515e046c0fce1ed0b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
