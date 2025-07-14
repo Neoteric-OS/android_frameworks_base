@@ -98,6 +98,54 @@
       ],
       "revId": "c724356019eaa1b62c74a1515e046c0fce1ed0b5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "02c30e22_7300b3f2",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 2010302
+      },
+      "writtenOn": "2025-07-14T13:43:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3919a0f7_129e3ef9",
+      "range": {
+        "startLine": 267,
+        "startChar": 62,
+        "endLine": 267,
+        "endChar": 68
+      },
+      "revId": "c724356019eaa1b62c74a1515e046c0fce1ed0b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d64379a2_7623697f",
+        "filename": "core/jni/AndroidRuntime.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 2010302
+      },
+      "writtenOn": "2025-07-14T13:43:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ff55c74_b8289cb5",
+      "range": {
+        "startLine": 267,
+        "startChar": 0,
+        "endLine": 267,
+        "endChar": 5
+      },
+      "revId": "c724356019eaa1b62c74a1515e046c0fce1ed0b5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
