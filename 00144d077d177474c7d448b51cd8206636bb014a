@@ -16,6 +16,24 @@
       "message": "Thank you for your suggestions. The revision has been completed. Please review it again. Thanks.",
       "revId": "00144d077d177474c7d448b51cd8206636bb014a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa7c9eff_c0e077e8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1373864
+      },
+      "writtenOn": "2025-07-15T11:27:34Z",
+      "side": 1,
+      "message": "It\u0027s no longer possible to submit contributions here in AOSP, and this has already been cherry-picked to the internal branch by Sorin in http://ag/34385849, so reviewing this CL is moot. It\u0027ll be published as commit 43dfda5 in the next AOSP push. Thank you.",
+      "parentUuid": "9b489c07_df20a4b4",
+      "revId": "00144d077d177474c7d448b51cd8206636bb014a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
