@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "04c2d484_baf2c624",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1403978
+      },
+      "writtenOn": "2025-07-15T17:04:56Z",
+      "side": 1,
+      "message": "Will update accordingly",
+      "revId": "3ff01e74adc93bf6e22f8322d079311fa9c77cc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fbdf2b11_5697a187",
@@ -31,6 +48,24 @@
       "writtenOn": "2025-07-15T02:50:30Z",
       "side": 1,
       "message": "An internal patch has been merged here:\n```\n-        if (!killProcess) {\n+        if (!killProcess || task.mKillProcessesOnDestroyed) {\n             return;\n         }\n```\n\nThe \"Moving mKillProcessesOnDestroyed \u003d false\" may cause side effect for the early return cases such as shouldKillProcessForRemovedTask/hasForegroundServices. That should also clear the flag as do not kill. So it is simpler to skip calling killTaskProcessesIfPossible again if there is a pending kill request.",
+      "revId": "3ff01e74adc93bf6e22f8322d079311fa9c77cc9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18badc40_64e31bcb",
+        "filename": "services/core/java/com/android/server/wm/ActivityTaskSupervisor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1823,
+      "author": {
+        "id": 1403978
+      },
+      "writtenOn": "2025-07-15T17:04:56Z",
+      "side": 1,
+      "message": "Got your point\nWill try your solution \nAnd update here",
+      "parentUuid": "fbdf2b11_5697a187",
       "revId": "3ff01e74adc93bf6e22f8322d079311fa9c77cc9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
