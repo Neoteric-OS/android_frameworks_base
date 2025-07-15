@@ -221,7 +221,7 @@ public final class URLUtil {
      */
     public static boolean isFileUrl(String url) {
         return (null != url)
-                && (url.startsWith(FILE_BASE)
+                && (url.toLowerCase().startsWith(FILE_BASE)
                         && !url.startsWith(ASSET_BASE)
                         && !url.startsWith(PROXY_BASE));
     }
@@ -244,7 +244,7 @@ public final class URLUtil {
      * @return {@code true} if the url is a javascript: url.
      */
     public static boolean isJavaScriptUrl(String url) {
-        return (null != url) && url.startsWith("javascript:");
+        return (null != url) && url.toLowerCase().startsWith("javascript:");
     }
 
     /**
