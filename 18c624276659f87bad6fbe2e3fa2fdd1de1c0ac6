@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a5969b6_3b1f71a8",
+        "filename": "core/jni/android_media_AudioSystem.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2025-07-15T13:25:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1dcd51eb_b2f5ac59",
+      "range": {
+        "startLine": 852,
+        "startChar": 0,
+        "endLine": 852,
+        "endChar": 6
+      },
+      "revId": "18c624276659f87bad6fbe2e3fa2fdd1de1c0ac6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "27e5d74d_c06aec24",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "751fecae_5312f47d",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 9374,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2025-07-15T13:25:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27e5d74d_c06aec24",
+      "range": {
+        "startLine": 9374,
+        "startChar": 12,
+        "endLine": 9374,
+        "endChar": 64
+      },
+      "revId": "18c624276659f87bad6fbe2e3fa2fdd1de1c0ac6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "74ede967_98854a83",
@@ -60,6 +108,30 @@
       "writtenOn": "2025-07-11T23:47:34Z",
       "side": 1,
       "message": "Somehow I still prefer if the out values are at the end. But feel free to disregard if there is a strong opinion not to have it this way",
+      "range": {
+        "startLine": 2032,
+        "startChar": 12,
+        "endLine": 2032,
+        "endChar": 53
+      },
+      "revId": "18c624276659f87bad6fbe2e3fa2fdd1de1c0ac6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89ebb34b_ba2c204f",
+        "filename": "media/java/android/media/AudioSystem.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 2032,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2025-07-15T13:25:58Z",
+      "side": 1,
+      "message": "Pretty sure it was the case long time ago, but then the need for \"for_volume\" appears, breaking this rule.\nAt least, I can do it for the getDevicesForAttributesAndUid API newly introduced",
+      "parentUuid": "74ede967_98854a83",
       "range": {
         "startLine": 2032,
         "startChar": 12,
