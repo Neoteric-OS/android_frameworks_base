@@ -22,6 +22,30 @@
       },
       "revId": "47ca0708f75703a607ee7ff48efa2e08ba7aefed",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e956ed64_110c44ac",
+        "filename": "core/java/android/os/UserManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2025-07-16T14:17:23Z",
+      "side": 1,
+      "message": "Good point..and I think it\u0027s even more nuanced that it\u0027s only true for new work profile created on or after the 2025-04 security patch level.. We should call this out.\n\nAOSP is no longer for active development, this should go into the internal branch.",
+      "parentUuid": "74c867e7_7c027ff9",
+      "range": {
+        "startLine": 828,
+        "startChar": 0,
+        "endLine": 828,
+        "endChar": 93
+      },
+      "revId": "47ca0708f75703a607ee7ff48efa2e08ba7aefed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
