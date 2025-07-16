@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74c867e7_7c027ff9",
+        "filename": "core/java/android/os/UserManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1646643
+      },
+      "writtenOn": "2025-07-16T08:25:34Z",
+      "side": 1,
+      "message": "@rubinxu@google.com this is only the case if b/382064697 is applied.\nDo we need to clarify on the default value on older OS versions?",
+      "range": {
+        "startLine": 828,
+        "startChar": 0,
+        "endLine": 828,
+        "endChar": 93
+      },
+      "revId": "47ca0708f75703a607ee7ff48efa2e08ba7aefed",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
