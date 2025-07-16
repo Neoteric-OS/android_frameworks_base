@@ -30,13 +30,17 @@ import android.app.ActivityThread;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.AttributionSource;
 import android.content.AttributionSource.ScopedParcelState;
+import android.content.BroadcastReceiver;
 import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.SurfaceTexture;
 import android.media.SubtitleController.Anchor;
 import android.media.SubtitleTrack.RenderingWidget;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -654,6 +658,8 @@ public class MediaPlayer extends PlayerBase
     private boolean mPrepareDrmInProgress;
     private ProvisioningThread mDrmProvisioningThread;
 
+    private boolean hasDispatchNetworkError = false;
+
     /**
      * Default constructor.
      *
@@ -715,6 +721,11 @@ public class MediaPlayer extends PlayerBase
                     resolvePlaybackSessionId(context, sessionId));
         }
         baseRegisterPlayer(getAudioSessionId());
+
+        Context contexttemp = ActivityThread.currentApplication();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        contexttemp.registerReceiver(networkChangeReceiver, intentFilter);
     }
 
     private Parcel createPlayerIIdParcel() {
@@ -1214,6 +1225,33 @@ public class MediaPlayer extends PlayerBase
         }
         setDataSource(path, keys, values, cookies);
     }
+
+    private final Runnable mpDisConnectRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (!hasDispatchNetworkError) {
+                Message m = mEventHandler.obtainMessage(MEDIA_ERROR, MEDIA_ERROR_UNKNOWN, -1, null);
+                Log.d(TAG, "network disconnected:send error info to Application");
+                mEventHandler.sendMessage(m);
+            }
+        }
+    };
+
+    private BroadcastReceiver networkChangeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())) {
+                boolean noConnectivity = intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
+                if (!noConnectivity) {
+                    Log.d(TAG, "listener:network connected for P720M01");
+                } else {
+                    Log.d(TAG, "listener:network disconnected for P720M01");
+                    hasDispatchNetworkError = false;
+                    mEventHandler.postDelayed(mpDisConnectRunnable, 500);
+                }
+            }
+        }
+    };
 
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     private void setDataSource(String path, String[] keys, String[] values,
@@ -2243,6 +2281,9 @@ public class MediaPlayer extends PlayerBase
      * <p>You must call this method once the instance is no longer required.
      */
     public void release() {
+        Context context = ActivityThread.currentApplication();
+        context.unregisterReceiver(networkChangeReceiver);
+
         baseRelease();
         stayAwake(false);
         updateSurfaceScreenOn();
@@ -3645,6 +3686,7 @@ public class MediaPlayer extends PlayerBase
                 boolean error_was_handled = false;
                 OnErrorListener onErrorListener = mOnErrorListener;
                 if (onErrorListener != null) {
+                    hasDispatchNetworkError = true;
                     error_was_handled = onErrorListener.onError(mMediaPlayer, msg.arg1, msg.arg2);
                 }
                 {
