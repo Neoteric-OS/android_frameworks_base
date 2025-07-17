@@ -208,15 +208,19 @@ final class UriPermission {
                 persistedModeFlags &= ~Intent.FLAG_GRANT_READ_URI_PERMISSION;
             }
             globalModeFlags &= ~Intent.FLAG_GRANT_READ_URI_PERMISSION;
+            ArraySet<UriPermissionOwner> lastReadOwners = null;
             synchronized (this) {
                 if (mReadOwners != null && includingOwners) {
                     ownedModeFlags &= ~Intent.FLAG_GRANT_READ_URI_PERMISSION;
-                    for (UriPermissionOwner r : mReadOwners) {
-                        if (r != null) {
-                            r.removeReadPermission(this);
-                        }
-                    }
+                    lastReadOwners = mReadOwners;
                     mReadOwners = null;
+                }
+            }
+            if (lastReadOwners != null) {
+                for (UriPermissionOwner r : lastReadOwners) {
+                    if (r != null) {
+                        r.removeReadPermission(this);
+                    }
                 }
             }
         }
@@ -226,15 +230,19 @@ final class UriPermission {
                 persistedModeFlags &= ~Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
             }
             globalModeFlags &= ~Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
+            ArraySet<UriPermissionOwner> lastWriteOwners = null;
             synchronized (this) {
                 if (mWriteOwners != null && includingOwners) {
                     ownedModeFlags &= ~Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
-                    for (UriPermissionOwner r : mWriteOwners) {
-                        if (r != null) {
-                            r.removeWritePermission(this);
-                        }
-                    }
+                    lastWriteOwners = mWriteOwners;
                     mWriteOwners = null;
+                }
+            }
+            if (lastWriteOwners != null) {
+                for (UriPermissionOwner r : lastWriteOwners) {
+                    if (r != null) {
+                        r.removeWritePermission(this);
+                    }
                 }
             }
         }
