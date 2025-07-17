@@ -1262,10 +1262,15 @@ fun QuickSettingsLayout(
 ) {
     if (mediaInRow) {
         Column(
-            verticalArrangement = spacedBy(QuickSettingsShade.Dimensions.Padding),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            brightness()
+            Box(
+                Modifier
+                    .padding(bottom = qsBrightnessMarginBottom())
+                    .fillMaxWidth()
+            ) {
+                brightness()
+            }
             Row(
                 horizontalArrangement = spacedBy(QuickSettingsShade.Dimensions.Padding),
                 verticalAlignment = Alignment.CenterVertically,
@@ -1276,11 +1281,17 @@ fun QuickSettingsLayout(
         }
     } else {
         Column(
-            verticalArrangement = spacedBy(QuickSettingsShade.Dimensions.Padding),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            brightness()
+            Box(
+                Modifier
+                    .padding(bottom = qsBrightnessMarginBottom())
+                    .fillMaxWidth()
+            ) {
+                brightness()
+            }
             tiles()
+            Spacer(Modifier.height { QuickSettingsShade.Dimensions.Padding.roundToPx() })
             media()
         }
     }
@@ -1294,6 +1305,7 @@ private object ResIdTags {
 }
 
 @Composable private fun qsHorizontalMargin() = dimensionResource(id = R.dimen.qs_horizontal_margin)
+@Composable private fun qsBrightnessMarginBottom() = dimensionResource(id = R.dimen.qs_brightness_margin_bottom)
 
 @Composable
 private fun interactionsConfig() =
