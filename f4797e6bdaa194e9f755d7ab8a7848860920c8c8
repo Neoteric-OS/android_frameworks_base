@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "55e381f7_f2eea28f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-07-17T13:56:16Z",
+      "side": 1,
+      "message": "You can abandon this change, we are preparing a change on internal gerrit.\n\nthanks",
+      "revId": "f4797e6bdaa194e9f755d7ab8a7848860920c8c8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
