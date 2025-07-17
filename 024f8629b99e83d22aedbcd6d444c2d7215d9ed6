@@ -16,6 +16,23 @@
       "message": "aquilescanta@google.com",
       "revId": "024f8629b99e83d22aedbcd6d444c2d7215d9ed6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94a07ac7_fac1647d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1576211
+      },
+      "writtenOn": "2025-07-17T13:31:33Z",
+      "side": 1,
+      "message": "Can you expand on why this change is not a no-op?\n\nOr how I can reproduce the issue that this change is fixing?\n\n@elaurent@google.com I\u0027m interpreting this change to be something like:\n\n```\nif (!list.isEmpty()) {\n  list.clear();\n}\n```\n\ninstead of just \n\n```\nlist.clear()\n```\n\nIs my interpretation wrong?",
+      "revId": "024f8629b99e83d22aedbcd6d444c2d7215d9ed6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
