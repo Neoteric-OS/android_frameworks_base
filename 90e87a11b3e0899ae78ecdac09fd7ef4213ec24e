@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c65d1dcf_27107f33",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1376883
+      },
+      "writtenOn": "2025-07-18T03:45:52Z",
+      "side": 1,
+      "message": "this doesn\u0027t really solve the deadlock issue - further discussions on the bug.",
+      "revId": "90e87a11b3e0899ae78ecdac09fd7ef4213ec24e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
