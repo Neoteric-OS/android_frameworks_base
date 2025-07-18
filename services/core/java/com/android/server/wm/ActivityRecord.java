@@ -5235,7 +5235,7 @@ final class ActivityRecord extends WindowToken {
 
     void removeUriPermissionsLocked() {
         if (uriPermissions != null) {
-            uriPermissions.removeUriPermissions();
+            mAtmService.mUgmInternal.removeUriPermissionsForOwner(uriPermissions);
             uriPermissions = null;
         }
     }

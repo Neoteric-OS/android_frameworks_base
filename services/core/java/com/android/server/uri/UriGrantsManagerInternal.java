@@ -165,6 +165,7 @@ public interface UriGrantsManagerInternal {
 
     boolean checkAuthorityGrants(
             int callingUid, ProviderInfo cpi, int userId, boolean checkUser);
+    void removeUriPermissionsForOwner(UriPermissionOwner owner);
 
     void dump(PrintWriter pw, boolean dumpAll, String dumpPackage);
 }

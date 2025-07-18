@@ -1826,6 +1826,13 @@ public class UriGrantsManagerService extends IUriGrantsManager.Stub implements
         }
 
         @Override
+        public void removeUriPermissionsForOwner(UriPermissionOwner owner) {
+            synchronized (mLock) {
+                owner.removeUriPermissions();
+            }
+        }
+
+        @Override
         public void dump(PrintWriter pw, boolean dumpAll, String dumpPackage) {
             synchronized (mLock) {
                 boolean needSep = false;
