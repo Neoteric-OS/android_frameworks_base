@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "746333bf_a2eba545",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-07-18T08:15:48Z",
+      "side": 1,
+      "message": "please refer to a buganizer issue describing the problem.\nI don\u0027t remember of a UX requirement related to not persisting the system sound mute state.\nLet\u0027s discuss in the bug before proposing a fix",
+      "revId": "f334a6cce6c54ff07c8cffce660427157e8b1de8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
