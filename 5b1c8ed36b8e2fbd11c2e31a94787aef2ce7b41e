@@ -16,6 +16,23 @@
       "message": "This looks like an oversight on our part, thanks for fixing!",
       "revId": "5b1c8ed36b8e2fbd11c2e31a94787aef2ce7b41e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e944313f_bd03e8b9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010211
+      },
+      "writtenOn": "2025-07-18T18:17:43Z",
+      "side": 1,
+      "message": "Actually, I\u0027ll cherrypick the change locally later today",
+      "revId": "5b1c8ed36b8e2fbd11c2e31a94787aef2ce7b41e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
