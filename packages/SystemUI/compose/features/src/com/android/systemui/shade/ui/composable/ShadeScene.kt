@@ -92,6 +92,9 @@ import com.android.systemui.lifecycle.ExclusiveActivatable
 import com.android.systemui.lifecycle.rememberViewModel
 import com.android.systemui.media.remedia.ui.compose.Media
 import com.android.systemui.media.remedia.ui.compose.MediaPresentationStyle
+import androidx.compose.ui.graphics.Color
+import com.android.systemui.brightness.ui.compose.BrightnessSliderContainer
+import com.android.systemui.brightness.ui.compose.ContainerColors
 import com.android.systemui.notifications.intelligence.rules.shared.NmContextualDisplayLaunch
 import com.android.systemui.notifications.intelligence.rules.ui.viewmodel.NotificationRulesParentViewModel
 import com.android.systemui.notifications.ui.composable.NestedScrollingNotificationPanel
@@ -104,7 +107,9 @@ import com.android.systemui.qs.shared.ui.QuickSettings
 import com.android.systemui.qs.shared.ui.QuickSettings.Elements.SplitShadeQuickSettings
 import com.android.systemui.qs.ui.composable.QuickSettingsContent
 import com.android.systemui.qs.ui.composable.QuickSettingsShade
+import com.android.systemui.qs.ui.composable.rememberBrightnessSliderSettings
 import com.android.systemui.res.R
+import kotlinx.coroutines.flow.filterNotNull
 import com.android.systemui.scene.session.ui.composable.SaveableSession
 import com.android.systemui.scene.shared.model.Scenes
 import com.android.systemui.scene.ui.composable.Scene
@@ -345,6 +350,14 @@ private fun ContentScope.SingleShade(
             OffsetOverscrollEffect.computeOffset(density = this, totalOverscroll)
         }
 
+        val qsContainerViewModel =
+            rememberViewModel(traceName = "SingleShade.QSContainerViewModel") {
+                viewModel.qsContainerViewModelFactory.create(supportsBrightnessMirroring = false)
+            }
+        val brightnessSettings = rememberBrightnessSliderSettings()
+        val showSlider = brightnessSettings.showSlider
+        val sliderAtTop = brightnessSettings.sliderAtTop
+
         ShadePanelScrim(viewModel.isTransparencyEnabled)
         SingleShadeNestedScrollLayout(
             modifier =
@@ -380,6 +393,45 @@ private fun ContentScope.SingleShade(
                             }
                             .padding(bottom = qqsLayoutPaddingBottom)
                             .padding(horizontal = qsHorizontalMargin),
+                    brightness =
+                        @Composable {
+                            if (qsContainerViewModel.isBrightnessSliderVisible && showSlider == 2) {
+                                var isBrightnessSliderInteractable by remember {
+                                    mutableStateOf(false)
+                                }
+                                LaunchedEffect(Unit) {
+                                    snapshotFlow {
+                                            QuickSettings.Elements.QuickQuickSettingsAndMedia
+                                                .currentAlpha()
+                                        }
+                                        .filterNotNull()
+                                        .collect { isBrightnessSliderInteractable = it >= .5f }
+                                }
+                                Element(
+                                    modifier = Modifier,
+                                    key = QuickSettings.Elements.BrightnessSlider,
+                                ) {
+                                    BrightnessSliderContainer(
+                                        viewModel = qsContainerViewModel.brightnessSliderViewModel,
+                                        containerColors =
+                                            ContainerColors(
+                                                Color.Transparent,
+                                                ContainerColors.defaultContainerColor,
+                                            ),
+                                        modifier =
+                                            Modifier.padding(
+                                                    vertical =
+                                                        dimensionResource(
+                                                            id = R.dimen.qs_brightness_margin_top
+                                                        )
+                                                )
+                                                .thenIf(!isBrightnessSliderInteractable) {
+                                                    Modifier.gesturesDisabled()
+                                                },
+                                    )
+                                }
+                            }
+                        },
                     tiles =
                         @Composable {
                             // Because the ShadeScene is always composed, we need to manually tell
@@ -430,6 +482,8 @@ private fun ContentScope.SingleShade(
                         }
                     },
                     mediaInRow = mediaInRow,
+                    showSlider = showSlider,
+                    sliderAtTop = sliderAtTop,
                 )
             },
             scrollableScrim = { onContentHeightChanged, isScrimAtRest ->
@@ -476,26 +530,41 @@ private fun ContentScope.SingleShade(
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun MediaAndQqsLayout(
+    brightness: @Composable () -> Unit,
     tiles: @Composable () -> Unit,
     media: @Composable () -> Unit,
     mediaInRow: Boolean,
+    showSlider: Int,
+    sliderAtTop: Boolean,
     modifier: Modifier = Modifier,
 ) {
     val modifierAnimated =
         modifier.animateContentSizeNoClip(MaterialTheme.motionScheme.defaultSpatialSpec())
-    if (mediaInRow) {
-        Row(
-            modifier = modifierAnimated,
-            horizontalArrangement = spacedBy(dimensionResource(R.dimen.qs_tile_margin_vertical)),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Box(modifier = Modifier.weight(1f)) { tiles() }
-            Box(modifier = Modifier.weight(1f)) { media() }
+    Column(
+        modifier = modifierAnimated,
+        verticalArrangement = spacedBy(dimensionResource(R.dimen.qs_tile_margin_vertical)),
+    ) {
+        if (showSlider == 2 && sliderAtTop) {
+            brightness()
         }
-    } else {
-        Column(modifier = modifierAnimated, verticalArrangement = spacedBy(16.dp)) {
-            tiles()
-            media()
+
+        if (mediaInRow) {
+            Row(
+                horizontalArrangement = spacedBy(dimensionResource(R.dimen.qs_tile_margin_vertical)),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Box(modifier = Modifier.weight(1f)) { tiles() }
+                Box(modifier = Modifier.weight(1f)) { media() }
+            }
+        } else {
+            Column(verticalArrangement = spacedBy(16.dp)) {
+                tiles()
+                media()
+            }
+        }
+
+        if (showSlider == 2 && !sliderAtTop) {
+            brightness()
         }
     }
 }

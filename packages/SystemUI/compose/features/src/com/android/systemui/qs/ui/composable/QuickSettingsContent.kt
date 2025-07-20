@@ -16,14 +16,22 @@
 
 package com.android.systemui.qs.ui.composable
 
+import android.database.ContentObserver
+import android.net.Uri
+import android.os.Handler
+import android.os.Looper
+import android.os.UserHandle
+import android.provider.Settings
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -31,6 +39,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.lifecycle.compose.LifecycleStartEffect
 import com.android.compose.animation.scene.ContentScope
@@ -48,6 +57,80 @@ import com.android.systemui.qs.ui.viewmodel.QuickSettingsContainerViewModel
 import com.android.systemui.res.R
 import kotlinx.coroutines.flow.filterNotNull
 
+data class BrightnessSliderSettings(
+    val showSlider: Int,
+    val sliderAtTop: Boolean,
+)
+
+@Composable
+fun rememberBrightnessSliderSettings(): BrightnessSliderSettings {
+    val context = LocalContext.current
+    var sliderAtTop by remember {
+        mutableStateOf(
+            Settings.System.getIntForUser(
+                context.contentResolver,
+                Settings.System.QS_BRIGHTNESS_POSITION_BOTTOM,
+                0,
+                UserHandle.USER_CURRENT,
+            ) == 0
+        )
+    }
+    var showSlider by remember {
+        mutableIntStateOf(
+            Settings.System.getIntForUser(
+                context.contentResolver,
+                Settings.System.QS_SHOW_BRIGHTNESS,
+                1,
+                UserHandle.USER_CURRENT,
+            )
+        )
+    }
+
+    DisposableEffect(context) {
+        val observer = object : ContentObserver(Handler(Looper.getMainLooper())) {
+            override fun onChange(selfChange: Boolean, uri: Uri?) {
+                uri?.lastPathSegment?.let { key ->
+                    when (key) {
+                        Settings.System.QS_SHOW_BRIGHTNESS -> {
+                            showSlider = Settings.System.getIntForUser(
+                                context.contentResolver,
+                                Settings.System.QS_SHOW_BRIGHTNESS,
+                                1,
+                                UserHandle.USER_CURRENT,
+                            )
+                        }
+                        Settings.System.QS_BRIGHTNESS_POSITION_BOTTOM -> {
+                            sliderAtTop = Settings.System.getIntForUser(
+                                context.contentResolver,
+                                Settings.System.QS_BRIGHTNESS_POSITION_BOTTOM,
+                                0,
+                                UserHandle.USER_CURRENT,
+                            ) == 0
+                        }
+                    }
+                }
+            }
+        }
+
+        context.contentResolver.registerContentObserver(
+            Settings.System.getUriFor(Settings.System.QS_SHOW_BRIGHTNESS),
+            false,
+            observer,
+        )
+        context.contentResolver.registerContentObserver(
+            Settings.System.getUriFor(Settings.System.QS_BRIGHTNESS_POSITION_BOTTOM),
+            false,
+            observer,
+        )
+
+        onDispose {
+            context.contentResolver.unregisterContentObserver(observer)
+        }
+    }
+
+    return BrightnessSliderSettings(showSlider = showSlider, sliderAtTop = sliderAtTop)
+}
+
 @Composable
 fun ContentScope.QuickSettingsContent(
     viewModel: QuickSettingsContainerViewModel,
@@ -55,10 +138,13 @@ fun ContentScope.QuickSettingsContent(
     modifier: Modifier = Modifier,
     mediaSquishiness: () -> Float = { 1f },
 ) {
+    val brightnessSettings = rememberBrightnessSliderSettings()
+    val showSlider = brightnessSettings.showSlider
+    val sliderAtTop = brightnessSettings.sliderAtTop
     QuickSettingsPanelLayout(
         brightness =
             @Composable {
-                if (viewModel.isBrightnessSliderVisible) {
+                if (viewModel.isBrightnessSliderVisible && showSlider != 0) {
                     var isBrightnessSliderInteractable by remember { mutableStateOf(false) }
                     LaunchedEffect(Unit) {
                         snapshotFlow { Elements.QuickSettingsContent.currentAlpha() }
@@ -123,6 +209,8 @@ fun ContentScope.QuickSettingsContent(
                 }
             },
         mediaInRow = mediaInRow,
+        showSlider = showSlider,
+        sliderAtTop = sliderAtTop,
         modifier =
             modifier
                 .element(Elements.QuickSettingsContent)
@@ -137,15 +225,20 @@ private fun QuickSettingsPanelLayout(
     tiles: @Composable () -> Unit,
     media: @Composable () -> Unit,
     mediaInRow: Boolean,
+    showSlider: Int,
+    sliderAtTop: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    if (mediaInRow) {
-        Column(
-            verticalArrangement = spacedBy(QuickSettingsShade.Dimensions.VerticalPadding),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = modifier,
-        ) {
+    Column(
+        verticalArrangement = spacedBy(QuickSettingsShade.Dimensions.VerticalPadding),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier,
+    ) {
+        if (showSlider != 0 && sliderAtTop) {
             brightness()
+        }
+
+        if (mediaInRow) {
             Row(
                 horizontalArrangement = spacedBy(QuickSettingsShade.Dimensions.HorizontalPadding),
                 verticalAlignment = Alignment.CenterVertically,
@@ -153,15 +246,14 @@ private fun QuickSettingsPanelLayout(
                 Box(modifier = Modifier.weight(1f)) { tiles() }
                 Box(modifier = Modifier.weight(1f)) { media() }
             }
-        }
-    } else {
-        Column(
-            verticalArrangement = spacedBy(QuickSettingsShade.Dimensions.VerticalPadding),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = modifier,
-        ) {
-            brightness()
+            if (showSlider != 0 && !sliderAtTop) {
+                brightness()
+            }
+        } else {
             tiles()
+            if (showSlider != 0 && !sliderAtTop) {
+                brightness()
+            }
             media()
         }
     }

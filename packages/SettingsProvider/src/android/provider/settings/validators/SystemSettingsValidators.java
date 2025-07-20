@@ -286,5 +286,7 @@ public class SystemSettingsValidators {
         VALIDATORS.put(
                 System.ACCESSIBILITY_FORCE_INVERT_COLOR_OVERRIDE_PACKAGES_TO_DISABLE,
                 new PackageNameListValidator(","));
+        VALIDATORS.put(System.QS_SHOW_BRIGHTNESS, new InclusiveIntegerRangeValidator(0, 2));
+        VALIDATORS.put(System.QS_BRIGHTNESS_POSITION_BOTTOM, BOOLEAN_VALIDATOR);
     }
 }
