@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 The Android Open Source Project
+ * Copyright (C) 2025 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,10 @@
  * limitations under the License.
  */
 
-#include <sys/stat.h>   // umask
-#include <sys/types.h>  // umask
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 #include <fstream>
 #include <memory>
@@ -23,6 +25,7 @@
 #include <string>
 #include <vector>
 
+#include "android-base/unique_fd.h"
 #include "androidfw/ResourceTypes.h"
 #include "idmap2/BinaryStreamVisitor.h"
 #include "idmap2/CommandLineOptions.h"
@@ -39,7 +42,6 @@ using android::idmap2::OverlayResourceContainer;
 using android::idmap2::Result;
 using android::idmap2::TargetResourceContainer;
 using android::idmap2::Unit;
-using android::idmap2::utils::kIdmapFilePermissionMask;
 using android::idmap2::utils::PoliciesToBitmaskResult;
 using android::idmap2::utils::UidHasWriteAccessToPath;
 
@@ -110,17 +112,38 @@ Result<Unit> Create(const std::vector<std::string>& args) {
     return Error(idmap.GetError(), "failed to create idmap");
   }
 
-  umask(kIdmapFilePermissionMask);
-  std::ofstream fout(idmap_path);
-  if (fout.fail()) {
-    return Error("failed to open idmap path '%s'", idmap_path.c_str());
+  std::string temp_path = idmap_path + ".TEMP";
+  android::base::unique_fd fd;
+  fd.reset(
+      open(temp_path.c_str(), O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH));
+  if (fd == -1) {
+    return Error("failed to open idmap path %s: %s", temp_path.c_str(), strerror(errno));
+  }
+
+  std::fstream fout;
+  fout.open(temp_path, std::ios::out | std::ios::binary);
+  if (!fout.is_open()) {
+    unlink(temp_path.c_str());
+    return Error("failed to open stream for %s", temp_path.c_str());
   }
 
   BinaryStreamVisitor visitor(fout);
   (*idmap)->accept(&visitor);
   fout.close();
   if (fout.fail()) {
-    return Error("failed to write to idmap path '%s'", idmap_path.c_str());
+    unlink(temp_path.c_str());
+    return Error("failed to write to idmap path '%s'", temp_path.c_str());
+  }
+
+  if (fsync(fd.get()) != 0) {
+    unlink(temp_path.c_str());
+    return Error("failed to fsync %s: %s", temp_path.c_str(), strerror(errno));
+  }
+
+  if (rename(temp_path.c_str(), idmap_path.c_str()) != 0) {
+    unlink(temp_path.c_str());
+    return Error("failed to rename %s to %s: %s", temp_path.c_str(), idmap_path.c_str(),
+                 strerror(errno));
   }
 
   return Unit{};

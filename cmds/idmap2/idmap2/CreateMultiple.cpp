@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 The Android Open Source Project
+ * Copyright (C) 2025 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 
-#include <sys/stat.h>   // umask
-#include <sys/types.h>  // umask
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <fcntl.h>
+#include <unistd.h>
 
+#include "android-base/unique_fd.h"
 #include <fstream>
 #include <iostream>
 #include <memory>
@@ -115,6 +118,7 @@ Result<Unit> CreateMultiple(const std::vector<std::string>& args) {
         continue;
       }
 
+<<<<<<< HEAD
       const auto idmap =
           Idmap::FromContainers(**target, **overlay, "", fulfilled_policies, !ignore_overlayable);
       if (!idmap) {
@@ -133,6 +137,59 @@ Result<Unit> CreateMultiple(const std::vector<std::string>& args) {
       (*idmap)->accept(&visitor);
       fout.close();
       if (fout.fail()) {
+=======
+
+      // TODO(b/371801644): Add command-line support for RRO constraints.
+      auto constraints = std::make_unique<const IdmapConstraints>();
+      const auto idmap = Idmap::FromContainers(**target, **overlay, "", fulfilled_policies,
+                                               !ignore_overlayable, std::move(constraints));
+      if (!idmap) {
+        LOG(WARNING) << "failed to create idmap";
+        continue;
+<<<<<<< HEAD
+      }
+
+      std::string temp_path = idmap_path + ".TEMP";
+      android::base::unique_fd fd(open(temp_path.c_str(), O_WRONLY | O_CREAT | O_TRUNC,
+                                       S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH));
+      if (fd == -1) {
+        LOG(WARNING) << "failed to open idmap path " << temp_path.c_str() << ": "
+=======
+      (*idmap)->accept(&visitor);
+      fout.close();
+      if (fout.fail()) {
+        unlink(temp_path.c_str());
+        LOG(WARNING) << "failed to write to idmap path " << temp_path.c_str();
+        continue;
+      }
+
+      if (fsync(fd.get()) != 0) {
+        unlink(temp_path.c_str());
+        LOG(WARNING) << "failed to fsync " << temp_path.c_str() << ": " << strerror(errno);
+        continue;
+      }
+
+      if (rename(temp_path.c_str(), idmap_path.c_str()) != 0) {
+        unlink(temp_path.c_str());
+        LOG(WARNING) << "failed to rename " << temp_path.c_str() << " to " << idmap_path.c_str()
+                     << ": " << strerror(errno);
+        continue;
+      }
+    }
+>>>>>>> PATCH
+                     << strerror(errno);
+        continue;
+      }
+
+      std::fstream fout;
+      fout.open(temp_path, std::ios::out | std::ios::binary);
+      if (!fout.is_open()) {
+        unlink(temp_path.c_str());
+        LOG(WARNING) << "failed to open stream for " << temp_path.c_str();
+        continue;
+      }
+
+>>>>>>> PATCH
         LOG(WARNING) << "failed to write to idmap path %s" << idmap_path.c_str();
         continue;
       }
