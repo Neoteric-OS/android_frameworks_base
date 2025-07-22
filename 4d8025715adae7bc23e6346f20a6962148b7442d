@@ -16,6 +16,23 @@
       "message": "Hi Google,\nplease help to review the CL.",
       "revId": "4d8025715adae7bc23e6346f20a6962148b7442d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f62a680c_8df6dc1f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1385606
+      },
+      "writtenOn": "2025-07-22T14:16:00Z",
+      "side": 1,
+      "message": "Thanks for the patch! Please see [this page](https://source.android.com/docs/setup/about/faqs#android-latest-release) about changes to AOSP. Since `main` is now read-only we can\u0027t merge this directly, but we can cherry pick it internally for the next release.",
+      "revId": "4d8025715adae7bc23e6346f20a6962148b7442d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
