@@ -64,6 +64,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7fee4457_712edc3f",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 3035,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2025-07-23T15:11:36Z",
+      "side": 1,
+      "message": "agree, there are even no client for this API, AudioTrack is using AudioSystem#getDirectPlaybackSupport, and is exposing isDirectPlaybackSupported API with deprecated comment to encourage using AudioManager#getDirectPlaybackSupport",
+      "parentUuid": "e20f409c_258b1f8c",
+      "range": {
+        "startLine": 3035,
+        "startChar": 0,
+        "endLine": 3035,
+        "endChar": 82
+      },
+      "revId": "0b6131f69b4794d93aa0b5e0f82e82d1f32456c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bdad7fbc_7cc79b4c",
         "filename": "services/core/java/com/android/server/audio/AudioDeviceBroker.java",
         "patchSetId": 36
@@ -180,6 +204,30 @@
           ]
         }
       ],
+      "revId": "0b6131f69b4794d93aa0b5e0f82e82d1f32456c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ab4a674_022be7c4",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 3627,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2025-07-23T15:11:36Z",
+      "side": 1,
+      "message": "I understood from previous call we needed to duplicate to limit risk of regression.\nBut definitly I prefer avoiding code duplication.\n\nQuestion; keep single API in native also, just updating with UID everywhere?",
+      "parentUuid": "f51e5ba0_e6db5ddd",
+      "range": {
+        "startLine": 3624,
+        "startChar": 0,
+        "endLine": 3627,
+        "endChar": 80
+      },
       "revId": "0b6131f69b4794d93aa0b5e0f82e82d1f32456c1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -312,6 +360,30 @@
           ]
         }
       ],
+      "revId": "0b6131f69b4794d93aa0b5e0f82e82d1f32456c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9a4ad90_6b5272c4",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 8759,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2025-07-23T15:11:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60e9a099_b74cfad5",
+      "range": {
+        "startLine": 8759,
+        "startChar": 20,
+        "endLine": 8759,
+        "endChar": 27
+      },
       "revId": "0b6131f69b4794d93aa0b5e0f82e82d1f32456c1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
