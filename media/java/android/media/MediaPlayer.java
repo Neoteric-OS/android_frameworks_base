@@ -30,13 +30,18 @@ import android.app.ActivityThread;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.AttributionSource;
 import android.content.AttributionSource.ScopedParcelState;
+import android.content.BroadcastReceiver;
 import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.SurfaceTexture;
 import android.media.SubtitleController.Anchor;
 import android.media.SubtitleTrack.RenderingWidget;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -653,6 +658,7 @@ public class MediaPlayer extends PlayerBase
     private boolean mDrmProvisioningInProgress;
     private boolean mPrepareDrmInProgress;
     private ProvisioningThread mDrmProvisioningThread;
+    private String mPath;
 
     /**
      * Default constructor.
@@ -715,6 +721,11 @@ public class MediaPlayer extends PlayerBase
                     resolvePlaybackSessionId(context, sessionId));
         }
         baseRegisterPlayer(getAudioSessionId());
+
+        Context contexttemp = ActivityThread.currentApplication();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        contexttemp.registerReceiver(networkChangeReceiver, intentFilter);
     }
 
     private Parcel createPlayerIIdParcel() {
@@ -1213,6 +1224,91 @@ public class MediaPlayer extends PlayerBase
             }
         }
         setDataSource(path, keys, values, cookies);
+    }
+
+    private BroadcastReceiver networkChangeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())) {
+                boolean noConnectivity = intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
+                ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo info = connectivityManager.getActiveNetworkInfo();
+            }
+        }
+    };
+
+    private long lastMediaErrorTime = -1;
+    private long lastPositionTime = -1;
+
+    private Runnable checkMediaErrorRunnable = new Runnable() {
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    Thread.sleep(10000);
+                    Context context = ActivityThread.currentApplication();
+                    if ("tv.icntv.ott".equals(context.getPackageName())) {
+                        if (mPath != null && mPath.contains(".m3u8") && mPath.contains("PLTV")) {
+                            if (isPlaying()) {
+                                long currentPositionTime = getCurrentPosition();
+                                if (currentPositionTime == lastPositionTime) {
+                                    Log.d(TAG, "checkMediaErrorRunnable pausing ...");
+                                    if ((SystemClock.elapsedRealtime() - lastMediaErrorTime) > 30000) {
+                                        Log.d(TAG, "checkMediaErrorRunnable retryplay");
+                                        retryPlay(false);
+                                    }
+                                } else {
+                                    lastMediaErrorTime = SystemClock.elapsedRealtime();
+                                    lastPositionTime = currentPositionTime;
+                                    Log.d(TAG, "checkMediaErrorRunnable playing");
+                                }
+                            } else {
+                                Log.d(TAG, "checkMediaErrorRunnable !playing");
+                            }
+                        }
+                    } else {
+                        Log.d(TAG, "checkMediaErrorRunnable is not HLS");
+                    }
+                } catch (InterruptedException e) {
+                    Log.d(TAG, "checkMediaErrorRunnable InterruptedException");
+                    e.printStackTrace();
+                }
+            }
+        }
+    };
+
+    Thread checkMediaErrorThread = new Thread(checkMediaErrorRunnable);
+
+    private void retryPlay(boolean isError) {
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                do {
+                    try {
+                        URL url = new URL(mPath);
+                        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                        connection.setRequestMethod("GET");
+                        connection.setConnectTimeout(5000);
+                        if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                            reset();
+                            try {
+                                setDataSource(mPath);
+                                prepare();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            start();
+                            break;
+                        } else {
+                            Log.d(TAG, "network is ERROR!");
+                        }
+                    } catch (IOException e) {
+                        Log.d(TAG, "network IOException");
+                    }
+                } while (isError);
+            }
+        });
+        t.start();
     }
 
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
