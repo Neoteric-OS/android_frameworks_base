@@ -1,0 +1,319 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e20f409c_258b1f8c",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 3035,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-07-23T09:44:55Z",
+      "side": 1,
+      "message": "should we instead get the calling UID on server side to avoid other apps from getting this information?\nIs there a need for other apps to know? \nIf this is needed for system apps, then we need a system API",
+      "range": {
+        "startLine": 3035,
+        "startChar": 0,
+        "endLine": 3035,
+        "endChar": 82
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "944300a5_66bf6d10",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "media/java/android/media/AudioManager.java",
+              "range": {
+                "startLine": 3034,
+                "startChar": 0,
+                "endLine": 3034,
+                "endChar": 0
+              },
+              "replacement": "    @RequiresPermission(Manifest.permission.MODIFY_AUDIO_ROUTING)\n"
+            },
+            {
+              "path": "media/java/android/media/AudioManager.java",
+              "range": {
+                "startLine": 4111,
+                "startChar": 0,
+                "endLine": 4112,
+                "endChar": 0
+              },
+              "replacement": "     * @return The id of a navigation repeat sound effect or {@link #FX_KEYPRESS_INVALID} if out of\n     * bounds\n"
+            },
+            {
+              "path": "media/java/android/media/AudioManager.java",
+              "range": {
+                "startLine": 4125,
+                "startChar": 0,
+                "endLine": 4126,
+                "endChar": 0
+              },
+              "replacement": "                return FX_KEYPRESS_INVALID;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0b6131f69b4794d93aa0b5e0f82e82d1f32456c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bdad7fbc_7cc79b4c",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceBroker.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-07-23T09:44:55Z",
+      "side": 1,
+      "message": "If we want communication device APIs to work in multi zone we have some work to do.\nThey are currently based on device roles per strategy APIs which are not UID aware",
+      "range": {
+        "startLine": 746,
+        "startChar": 0,
+        "endLine": 746,
+        "endChar": 91
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "41b34396_2b02150f",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/audio/AudioDeviceBroker.java",
+              "range": {
+                "startLine": 2704,
+                "startChar": 0,
+                "endLine": 2705,
+                "endChar": 0
+              },
+              "replacement": "    // Audio device explicitly.\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioDeviceBroker.java",
+              "range": {
+                "startLine": 2707,
+                "startChar": 0,
+                "endLine": 2707,
+                "endChar": 0
+              },
+              "replacement": "\n    /**\n     * Returns the default communication device to be used when no device is forced.\n     * @return AudioDeviceAttributes the default device for communication.\n     */\n    @GuardedBy(\"mDeviceStateLock\")\n    @Nullable private AudioDeviceAttributes getDefaultCommunicationDevice() {\n        if (CompatChanges.isChangeEnabled(USE_SET_COMMUNICATION_DEVICE)\n                \u0026\u0026 communnicationDeviceLeAudioCompatOn()) {\n            return null;\n        }\n        AudioDeviceInfo leAudioDevice \u003d getCommunicationDeviceOfType(\n                AudioDeviceInfo.TYPE_BLE_HEADSET);\n        if (leAudioDevice !\u003d null) {\n            return new AudioDeviceAttributes(leAudioDevice);\n        }\n        leAudioDevice \u003d getCommunicationDeviceOfType(AudioDeviceInfo.TYPE_BLE_SPEAKER);\n        if (leAudioDevice !\u003d null) {\n            return new AudioDeviceAttributes(leAudioDevice);\n        }\n        return null;\n    }\n}\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0b6131f69b4794d93aa0b5e0f82e82d1f32456c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f51e5ba0_e6db5ddd",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 3627,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-07-23T09:44:55Z",
+      "side": 1,
+      "message": "we should really try to use only the new methods with UIDs internally to avoid code duplication",
+      "range": {
+        "startLine": 3624,
+        "startChar": 0,
+        "endLine": 3627,
+        "endChar": 80
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "09ee7358_bb5006b3",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 2471,
+                "startChar": 0,
+                "endLine": 2472,
+                "endChar": 0
+              },
+              "replacement": "                Binder.getCallingUid(), true /* forVolume */);\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 3580,
+                "startChar": 0,
+                "endLine": 3581,
+                "endChar": 0
+              },
+              "replacement": "                getDevicesForAttributesInt(attributes, Binder.getCallingUid(),\n                        false /* forVolume */)));\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 3603,
+                "startChar": 0,
+                "endLine": 3604,
+                "endChar": 0
+              },
+              "replacement": "                getDevicesForAttributesInt(attributes, Binder.getCallingUid(),\n                        false /* forVolume */)));\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 3629,
+                "startChar": 0,
+                "endLine": 3635,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "0b6131f69b4794d93aa0b5e0f82e82d1f32456c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e520271b_b5b102b7",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 5352,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-07-23T09:44:55Z",
+      "side": 1,
+      "message": "should we cache this? It seems there will be multiple calls to ActivityManager now.\nThere must be a callback from AM when current user change",
+      "range": {
+        "startLine": 5352,
+        "startChar": 0,
+        "endLine": 5352,
+        "endChar": 57
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "30847075_bea43351",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 5350,
+                "startChar": 0,
+                "endLine": 5350,
+                "endChar": 0
+              },
+              "replacement": "\n    private static int sCurrentUserId \u003d UserHandle.USER_NULL;\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 5352,
+                "startChar": 0,
+                "endLine": 5360,
+                "endChar": 0
+              },
+              "replacement": "        if (sCurrentUserId \u003d\u003d UserHandle.USER_NULL) {\n            final long ident \u003d Binder.clearCallingIdentity();\n            try {\n                UserInfo currentUser \u003d ActivityManager.getService().getCurrentUser();\n                sCurrentUserId \u003d currentUser.id;\n            } catch (RemoteException e) {\n                // Activity manager not running, nothing we can do assume user 0.\n                sCurrentUserId \u003d UserHandle.USER_SYSTEM;\n            } finally {\n                Binder.restoreCallingIdentity(ident);\n            }\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 5361,
+                "startChar": 0,
+                "endLine": 5362,
+                "endChar": 0
+              },
+              "replacement": "        return sCurrentUserId;\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 5616,
+                "startChar": 0,
+                "endLine": 5617,
+                "endChar": 0
+              },
+              "replacement": "                || (getCurrentUserId() \u003d\u003d userId)\n                || (userId \u003d\u003d UserHandle.USER_ALL)) {\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 6041,
+                "startChar": 0,
+                "endLine": 6042,
+                "endChar": 0
+              },
+              "replacement": "        if (getCurrentUserId() \u003d\u003d userId || userId \u003d\u003d UserHandle.USER_SYSTEM\n                || userId \u003d\u003d UserHandle.USER_ALL) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0b6131f69b4794d93aa0b5e0f82e82d1f32456c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60e9a099_b74cfad5",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 36
+      },
+      "lineNbr": 8759,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-07-23T09:44:55Z",
+      "side": 1,
+      "message": "final ?",
+      "range": {
+        "startLine": 8759,
+        "startChar": 20,
+        "endLine": 8759,
+        "endChar": 27
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "c1ba11f6_c8d39937",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 8759,
+                "startChar": 0,
+                "endLine": 8760,
+                "endChar": 0
+              },
+              "replacement": "        private int mZoneId \u003d DEFAULT_ZONE_ID;\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 9412,
+                "startChar": 0,
+                "endLine": 9412,
+                "endChar": 0
+              },
+              "replacement": "    /**\n     * @return the current user id associated to the given zone id.\n     * If no user id is associated to the given zone id, returns {@link UserHandle#USER_NULL}\n     * except for the default zone id which returns {@link UserHandle#USER_CURRENT}.\n     */\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0b6131f69b4794d93aa0b5e0f82e82d1f32456c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
