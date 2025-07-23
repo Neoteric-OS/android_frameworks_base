@@ -1,0 +1,202 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "efaf236a_684004ab",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 1737,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-07-23T09:17:22Z",
+      "side": 1,
+      "message": "Please fix this ERROR reported by Common Typos: Common typo found: \"implicitely\" -- should it be \"implicitly\"?\n\nAnalyzer Description: Linter for catching common typos motivated by go/todo-fail and go/lol-codesearch. Shared with google3 common typos library go/common-typos.\nOwner: ayeaye-team@google.com\n\nCommon typo found: \"implicitely\" -- should it be \"implicitly\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 1737,
+        "startChar": 42,
+        "endLine": 1737,
+        "endChar": 53
+      },
+      "revId": "0cf49b0b331ad3c831f6671bfcb6f563a145d1b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05a42f31_ff8cd07d",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 9160,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-07-23T09:17:22Z",
+      "side": 1,
+      "message": "remove here and below",
+      "range": {
+        "startLine": 9160,
+        "startChar": 0,
+        "endLine": 9160,
+        "endChar": 45
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "28e324a6_b4898118",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 9160,
+                "startChar": 0,
+                "endLine": 9161,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 9180,
+                "startChar": 0,
+                "endLine": 9181,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 9199,
+                "startChar": 0,
+                "endLine": 9200,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 10497,
+                "startChar": 0,
+                "endLine": 10497,
+                "endChar": 0
+              },
+              "replacement": "                            mAudioSystem.setModeForUid(h.getMode(), h.getUid());\n                        }\n                    }\n                    break;\n\n                case MSG_BT_DEV_CHANGED:\n                    mDeviceBroker.handleBluetoothActiveDeviceChanged(\n                            (AudioDeviceBroker.BtDeviceChangedData) msg.obj);\n                    break;\n\n                case MSG_REINIT_VOLUMES:\n                    onReinitVolumes((String) msg.obj);\n                    break;\n\n                case MSG_DISPATCH_DEVICE_VOLUME_BEHAVIOR:\n                    dispatchDeviceVolumeBehavior((AudioDeviceAttributes) msg.obj, msg.arg1);\n                    break;\n\n                case MSG_ROUTING_UPDATED:\n                    onRoutingUpdated();\n                    break;\n\n                case MSG_BT_COMM_DEVICE_ACTIVE_UPDATE:\n                    onUpdateBtCommDeviceActive(msg.arg1);\n                    break;\n\n                case MSG_UPDATE_HDMI_AUDIO_SYSTEM_CLIENT:\n                    updateHdmiAudioSystemClient();\n                    break;\n\n                case MSG_UPDATE_AUDIO_PRODUCT_STRATEGIES:\n                    onUpdateAudioProductStrategies();\n                    break;\n\n                default:\n                    Log.e(TAG, \"AudioHandler: unknown message \" + msg.what);\n                    break;\n            }\n        }\n    }\n\n    private void onReinitVolumes(String caller) {\n        if (DEBUG_VOL) {\n            Log.i(TAG, \"onReinitVolumes from \" + caller);\n        }\n        initStreamVolumeSettings();\n        initMinStreamVolumeWithoutModifyAudioSettings();\n        restoreVolumeGroups();\n        postObserveDevicesForAllStreams();\n    }\n\n    private void onRoutingUpdated() {\n        // update all volume states\n        postObserveDevicesForAllStreams();\n        // update ringer mode\n        updateRingerModeInternal();\n        // update spatializer\n        mSpatializerHelper.onRoutingUpdated();\n    }\n\n    private void onUpdateAudioProductStrategies() {\n        initVolumeGroupStates();\n        readVolumeGroupsSettings(false /*userSwitch*/);\n        postObserveDevicesForAllStreams();\n    }\n\n    private void onDispatchAudioServerStateChange(boolean isAudioServerAlive) {\n        if (isAudioServerAlive) {\n            mAudioServerState \u003d AUDIO_SERVER_STATE_ALIVE;\n        } else {\n            mAudioServerState \u003d AUDIO_SERVER_STATE_DEAD;\n        }\n        mSystemServer.dispatchAudioServerStateChange(isAudioServerAlive);\n    }\n\n    private void onAudioServerDied() {\n        if (mAudioServerState \u003d\u003d AUDIO_SERVER_STATE_DEAD) {\n            return;\n        }\n        mAudioServerState \u003d AUDIO_SERVER_STATE_RESTARTING;\n        mSystemServer.dispatchAudioServerStateChange(false);\n        // re-init all volumes\n        sendMsg(mAudioHandler, MSG_REINIT_VOLUMES, SENDMSG_REPLACE, 0, 0,\n                \"onAudioServerDied()\" /*obj*/, 0 /*delay*/);\n        // re-init input gains\n        sendMsg(mAudioHandler, MSG_INIT_INPUT_GAINS, SENDMSG_REPLACE, 0, 0,\n                null /*obj*/, 0 /*delay*/);\n        // re-init ADI device states\n        sendMsg(mAudioHandler, MSG_INIT_ADI_DEVICE_STATES, SENDMSG_REPLACE, 0, 0,\n                null /*obj*/, 0 /*delay*/);\n        // re-init spatializer\n        sendMsg(mAudioHandler, MSG_INIT_SPATIALIZER, SENDMSG_REPLACE, 0, 0,\n                null /*obj*/, 0 /*delay*/);\n        // re-init headtracking sensors\n        sendMsg(mAudioHandler, MSG_INIT_HEADTRACKING_SENSORS, SENDMSG_REPLACE, 0, 0,\n                null /*obj*/, 0 /*delay*/);\n        // re-init sound effects\n        sendMsg(mAudioHandler, MSG_LOAD_SOUND_EFFECTS, SENDMSG_REPLACE, 0, 0,\n                null /*obj*/, 0 /*delay*/);\n        // re-init routing\n        sendMsg(mAudioHandler, MSG_ROUTING_UPDATED, SENDMSG_REPLACE, 0, 0,\n                null /*obj*/, 0 /*delay*/);\n        // re-init HDMI Audio System Client\n        sendMsg(mAudioHandler, MSG_UPDATE_HDMI_AUDIO_SYSTEM_CLIENT, SENDMSG_REPLACE, 0, 0,\n                null /*obj*/, 0 /*delay*/);\n        // re-init Audio Product Strategies\n        sendMsg(mAudioHandler, MSG_UPDATE_AUDIO_PRODUCT_STRATEGIES, SENDMSG_REPLACE, 0, 0,\n                null /*obj*/, 0 /*delay*/);\n    }\n\n    private void onInitStreamsAndVolumes() {\n        initStreamVolumeSettings();\n        initMinStreamVolumeWithoutModifyAudioSettings();\n        restoreVolumeGroups();\n        postObserveDevicesForAllStreams();\n    }\n\n    private void onInitInputGains() {\n        initInputGains();\n    }\n\n    private void onInitAdiDeviceStates() {\n        initAdiDeviceStates();\n    }\n\n    private void onInitSpatializer() {\n        mSpatializerHelper.init(/* featureEnabled */ mHasSpatializerEffect);\n    }\n\n    private void onSystemReady() {\n        mSystemReady \u003d true;\n        mSfxHelper.onSystemReady();\n        mSpatializerHelper.onSystemReady();\n        mDeviceBroker.onSystemReady();\n        mPlaybackMonitor.onSystemReady();\n        mSoundDoseHelper.onSystemReady();\n        // init all volumes\n        sendMsg(mAudioHandler, MSG_INIT_STREAMS_VOLUMES, SENDMSG_REPLACE, 0, 0,\n                null /*obj*/, 0 /*delay*/);\n        // init input gains\n        sendMsg(mAudioHandler, MSG_INIT_INPUT_GAINS, SENDMSG_REPLACE, 0, 0,\n                null /*obj*/, 0 /*delay*/);\n        // init ADI device states\n        sendMsg(mAudioHandler, MSG_INIT_ADI_DEVICE_STATES, SENDMSG_REPLACE, 0, 0,\n                null /*obj*/, 0 /*delay*/);\n        // init spatializer\n        sendMsg(mAudioHandler, MSG_INIT_SPATIALIZER, SENDMSG_REPLACE, 0, 0,\n                null /*obj*/, 0 /*delay*/);\n        // init headtracking sensors\n        sendMsg(mAudioHandler, MSG_INIT_HEADTRACKING_SENSORS, SENDMSG_REPLACE, 0, 0,\n                null /*obj*/, 0 /*delay*/);\n        // load sound effects\n        sendMsg(mAudioHandler, MSG_LOAD_SOUND_EFFECTS, SENDMSG_REPLACE, 0, 0,\n                null /*obj*/, 0 /*delay*/);\n        // update ringer mode\n        sendMsg(mAudioHandler, MSG_UPDATE_RINGER_MODE, SENDMSG_REPLACE, 0, 0,\n                null /*obj*/, 0 /*delay*/);\n        // update routing\n        sendMsg(mAudioHandler, MSG_ROUTING_UPDATED, SENDMSG_REPLACE, 0, 0,\n                null /*obj*/, 0 /*delay*/);\n        // update HDMI Audio System Client\n        sendMsg(mAudioHandler, MSG_UPDATE_HDMI_AUDIO_SYSTEM_CLIENT, SENDMSG_REPLACE, 0, 0,\n                null /*obj*/, 0 /*delay*/);\n        // update Audio Product Strategies\n        sendMsg(mAudioHandler, MSG_UPDATE_AUDIO_PRODUCT_STRATEGIES, SENDMSG_REPLACE, 0, 0,\n                null /*obj*/, 0 /*delay*/);\n    }\n\n    private void onIndicateSystemReady() {\n        if (!mSystemReady) {\n            sendMsg(mAudioHandler, MSG_INDICATE_SYSTEM_READY, SENDMSG_REPLACE, 0, 0,\n                    null /*obj*/, INDICATE_SYSTEM_READY_RETRY_DELAY_MS);\n            return;\n        }\n        mSystemServer.indicateSystemReady();\n    }\n\n    private void onDynPolicyMixStateUpdate(String mixName, int state) {\n        mPlaybackMonitor.onDynPolicyMixStateUpdate(mixName, state);\n    }\n\n    private void onEnableSurroundFormats(ArrayList\u003cInteger\u003e formats) {\n        mAudioSystem.enableSurroundFormats(formats);\n    }\n\n    private void onUpdateRingerModeServiceInt() {\n        updateRingerModeInternal();\n    }\n\n    private void onCheckVolumeCecOnHdmiConnection(int device, String caller) {\n        if (mHdmiManager \u003d\u003d null) {\n            return;\n        }\n        if (device \u003d\u003d AudioSystem.DEVICE_OUT_HDMI_ARC\n                || device \u003d\u003d AudioSystem.DEVICE_OUT_HDMI_EARC) {\n            mHdmiManager.checkVolumeCec(caller);\n        }\n    }\n\n    private void onPlaybackConfigChange(List\u003cAudioPlaybackConfiguration\u003e configs) {\n        mPlaybackMonitor.onPlaybackConfigChanged(configs);\n    }\n\n    private void onRecordingConfigChange(List\u003cAudioRecordingConfiguration\u003e configs) {\n        mRecordingMonitor.onRecordingConfigChanged(configs);\n    }\n\n    private static class VolChangedBroadcastEvent extends EventLogger.StringEvent {\n        VolChangedBroadcastEvent(int streamType, String aliasStreamIndexes, int index,\n                int oldIndex) {\n            super(\"VolChangedBroadcast stream:\" + AudioSystem.streamToString(streamType)\n                    + \" index:\" + index + \" oldIndex:\" + oldIndex + aliasStreamIndexes);\n        }\n    }\n\n    private static class VolumeEvent extends EventLogger.StringEvent {\n        static final int VOL_MUTE_STREAM \u003d 0;\n        static final int VOL_MUTE_STREAM_INT \u003d 1;\n        static final int VOL_ADJUST_STREAM \u003d 2;\n        static final int VOL_SET_STREAM \u003d 3;\n\n        VolumeEvent(int type, int streamType, boolean state) {\n            super(getEventString(type) + \" stream:\" + AudioSystem.streamToString(streamType)\n                    + \" state:\" + state);\n        }\n\n        private static String getEventString(int type) {\n            switch (type) {\n                case VOL_MUTE_STREAM:\n                    return \"VOL_MUTE_STREAM\";\n                case VOL_MUTE_STREAM_INT:\n                    return \"VOL_MUTE_STREAM_INT\";\n                case VOL_ADJUST_STREAM:\n                    return \"VOL_ADJUST_STREAM\";\n                case VOL_SET_STREAM:\n                    return \"VOL_SET_STREAM\";\n                default:\n                    return \"UNKNOWN\";\n            }\n        }\n    }\n\n    private static class LoadSoundEffectReply implements Runnable {\n        private final IAudioService.LoadSoundEffectsCallback mCallback;\n\n        LoadSoundEffectReply(IAudioService.LoadSoundEffectsCallback callback) {\n            mCallback \u003d callback;\n        }\n\n        @Override\n        public void run(boolean success) {\n            if (mCallback !\u003d null) {\n                try {\n                    mCallback.onLoadSoundEffects(success);\n                } catch (RemoteException e) {\n                    Log.e(TAG, \"Error calling onLoadSoundEffects callback\", e);\n                }\n            }\n        }\n    }\n\n    private static class SetModeDeathHandler implements IBinder.DeathRecipient {\n        private final int mUid;\n        private final int mMode;\n        private boolean mPlaybackActive;\n        private boolean mRecordingActive;\n        private final IAudioService.SetModeCallback mCallback;\n\n        SetModeDeathHandler(int uid, int mode, IAudioService.SetModeCallback callback) {\n            mUid \u003d uid;\n            mMode \u003d mode;\n            mCallback \u003d callback;\n            mPlaybackActive \u003d false;\n            mRecordingActive \u003d false;\n        }\n\n        public int getUid() {\n            return mUid;\n        }\n\n        public int getMode() {\n            return mMode;\n        }\n\n        public void setPlaybackActive(boolean active) {\n            mPlaybackActive \u003d active;\n        }\n\n        public void setRecordingActive(boolean active) {\n            mRecordingActive \u003d active;\n        }\n\n        public boolean isActive() {\n            return mPlaybackActive || mRecordingActive;\n        }\n\n        @Override\n        public void binderDied() {\n            if (mCallback !\u003d null) {\n                try {\n                    mCallback.onSetModeDeath();\n                } catch (RemoteException e) {\n                    Log.e(TAG, \"Error calling onSetModeDeath callback\", e);\n                }\n            }\n        }\n    }\n\n    private static class AudioDeviceBrokerDeathHandler implements IBinder.DeathRecipient {\n        private final IAudioDeviceBroker mAudioDeviceBroker;\n\n        AudioDeviceBrokerDeathHandler(IAudioDeviceBroker audioDeviceBroker) {\n            mAudioDeviceBroker \u003d audioDeviceBroker;\n        }\n\n        @Override\n        public void binderDied() {\n            if (mAudioDeviceBroker !\u003d null) {\n                try {\n                    mAudioDeviceBroker.onAudioDeviceBrokerDeath();\n                } catch (RemoteException e) {\n                    Log.e(TAG, \"Error calling onAudioDeviceBrokerDeath callback\", e);\n                }\n            }\n        }\n    }\n\n    private static class AudioPolicyCallbackDeathHandler implements IBinder.DeathRecipient {\n        private final IAudioPolicyCallback mAudioPolicyCallback;\n\n        AudioPolicyCallbackDeathHandler(IAudioPolicyCallback audioPolicyCallback) {\n            mAudioPolicyCallback \u003d audioPolicyCallback;\n        }\n\n        @Override\n        public void binderDied() {\n            if (mAudioPolicyCallback !\u003d null) {\n                try {\n                    mAudioPolicyCallback.onAudioPolicyCallbackDeath();\n                } catch (RemoteException e) {\n                    Log.e(TAG, \"Error calling onAudioPolicyCallbackDeath callback\", e);\n                }\n            }\n        }\n    }\n\n    private static class AudioRecordingCallbackDeathHandler implements IBinder.DeathRecipient {\n        private final IAudioRecordingCallback mAudioRecordingCallback;\n\n        AudioRecordingCallbackDeathHandler(IAudioRecordingCallback audioRecordingCallback) {\n            mAudioRecordingCallback \u003d audioRecordingCallback;\n        }\n\n        @Override\n        public void binderDied() {\n            if (mAudioRecordingCallback !\u003d null) {\n                try {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0cf49b0b331ad3c831f6671bfcb6f563a145d1b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "49ecb316_4e281a1c",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 9168,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-07-23T09:17:22Z",
+      "side": 1,
+      "message": "maybe not call AudioSystem if already in the map",
+      "range": {
+        "startLine": 9168,
+        "startChar": 0,
+        "endLine": 9168,
+        "endChar": 43
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "7668a863_76c02d10",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 9168,
+                "startChar": 0,
+                "endLine": 9169,
+                "endChar": 0
+              },
+              "replacement": "            int status \u003d AudioManager.ERROR;\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 9172,
+                "startChar": 0,
+                "endLine": 9173,
+                "endChar": 0
+              },
+              "replacement": "            if (status \u003d\u003d AudioManager.SUCCESS) {\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 9189,
+                "startChar": 0,
+                "endLine": 9190,
+                "endChar": 0
+              },
+              "replacement": "                return AudioManager.ERROR;\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 9368,
+                "startChar": 0,
+                "endLine": 9370,
+                "endChar": 0
+              },
+              "replacement": "                            + mIndexStepFactor).printLog(TAG));\n            if (status !\u003d AudioManager.SUCCESS) {\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioService.java",
+              "range": {
+                "startLine": 9371,
+                "startChar": 0,
+                "endLine": 9372,
+                "endChar": 0
+              },
+              "replacement": "                        \"Failed initStreamVolume with status\u003d\" + status).printLog(TAG));\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0cf49b0b331ad3c831f6671bfcb6f563a145d1b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5eaaec0_7c92b218",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 9212,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-07-23T09:17:22Z",
+      "side": 1,
+      "message": "@GuardedBy(\"mMultiZoneAudioSettingsLock\")",
+      "range": {
+        "startLine": 9212,
+        "startChar": 0,
+        "endLine": 9212,
+        "endChar": 40
+      },
+      "revId": "0cf49b0b331ad3c831f6671bfcb6f563a145d1b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
