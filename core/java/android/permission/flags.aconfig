@@ -502,3 +502,12 @@ flag {
     bug: "341941666"
 }
 
+flag {
+    name: "deprecate_default_permission_pregrant_policy"
+    is_fixed_read_only: true
+    is_exported: true
+    namespace: "permissions"
+    description: "Add support for deprecating unused Default Permission Pregrant Policy"
+    bug: "420985100"
+}
+
