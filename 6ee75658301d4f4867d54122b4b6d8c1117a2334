@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f0cfa808_fc38a9be",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1377660
+      },
+      "writtenOn": "2025-07-24T08:04:33Z",
+      "side": 1,
+      "message": "please help to review the patch, thank you very much!",
+      "revId": "6ee75658301d4f4867d54122b4b6d8c1117a2334",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
