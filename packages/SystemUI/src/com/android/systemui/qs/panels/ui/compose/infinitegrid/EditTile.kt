@@ -1080,6 +1080,7 @@ private object EditModeTileDefaults {
     fun editTileColors(): TileColors =
         TileColors(
             background = LocalAndroidColorScheme.current.surfaceEffect2,
+            iconBackground = Color.Transparent,
             label = MaterialTheme.colorScheme.onSurface,
             secondaryLabel = MaterialTheme.colorScheme.onSurface,
             icon = MaterialTheme.colorScheme.onSurface,
