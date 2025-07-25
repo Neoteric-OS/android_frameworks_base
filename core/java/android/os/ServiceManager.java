@@ -55,6 +55,11 @@ public final class ServiceManager {
     @UnsupportedAppUsage
     private static Map<String, IBinder> sCache = new ArrayMap<String, IBinder>();
 
+    /**
+     * Whether the cache is initialized completely.
+     */
+    private static volatile boolean sCacheInitialized = false;
+
     @GuardedBy("ServiceManager.class")
     // NOTE: this cache is designed to support mutation by tests, so we require
     // a lock to be held for all accesses
@@ -168,7 +173,10 @@ public final class ServiceManager {
     @android.ravenwood.annotation.RavenwoodReplace
     public static IBinder getService(String name) {
         try {
-            IBinder service = sCache.get(name);
+            IBinder service = null;
+            if (sCacheInitialized) {
+                service = sCache.get(name);
+            }
             if (service != null) {
                 return service;
             } else {
@@ -273,7 +281,10 @@ public final class ServiceManager {
     @UnsupportedAppUsage
     public static IBinder checkService(String name) {
         try {
-            IBinder service = sCache.get(name);
+            IBinder service = null;
+            if (sCacheInitialized) {
+                service = sCache.get(name);
+            }
             if (service != null) {
                 return service;
             } else {
@@ -407,6 +418,7 @@ public final class ServiceManager {
             throw new IllegalStateException("setServiceCache may only be called once");
         }
         sCache.putAll(cache);
+        sCacheInitialized = true;
     }
 
     /**
