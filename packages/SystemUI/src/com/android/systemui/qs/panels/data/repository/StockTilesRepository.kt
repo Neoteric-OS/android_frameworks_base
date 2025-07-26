@@ -22,6 +22,7 @@ import com.android.systemui.qs.pipeline.shared.TileSpec
 import com.android.systemui.res.R
 import com.android.systemui.shade.ShadeDisplayAware
 import javax.inject.Inject
+import kotlin.collections.buildList
 
 @SysUISingleton
 class StockTilesRepository
@@ -33,11 +34,11 @@ constructor(@ShadeDisplayAware private val resources: Resources) {
     val shouldRemoveRbcTile: Boolean =
         resources.getBoolean(com.android.internal.R.bool.config_evenDimmerEnabled)
 
-    val stockTiles =
-        resources
-            .getString(R.string.quick_settings_tiles_stock)
-            .split(",")
-            .filterNot { shouldRemoveRbcTile && it.equals("reduce_brightness") }
-            .map(TileSpec::create)
-            .filterNot { it is TileSpec.Invalid }
+    val stockTiles = buildList {
+        addAll(resources.getString(R.string.quick_settings_tiles_stock).split(","))
+        addAll(resources.getString(R.string.quick_settings_tiles_extra).split(","))
+    }
+        .filterNot { shouldRemoveRbcTile && it == "reduce_brightness" }
+        .map(TileSpec::create)
+        .filterNot { it is TileSpec.Invalid }
 }
