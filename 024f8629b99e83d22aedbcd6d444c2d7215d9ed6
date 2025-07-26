@@ -33,6 +33,24 @@
       "message": "Can you expand on why this change is not a no-op?\n\nOr how I can reproduce the issue that this change is fixing?\n\n@elaurent@google.com I\u0027m interpreting this change to be something like:\n\n```\nif (!list.isEmpty()) {\n  list.clear();\n}\n```\n\ninstead of just \n\n```\nlist.clear()\n```\n\nIs my interpretation wrong?",
       "revId": "024f8629b99e83d22aedbcd6d444c2d7215d9ed6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8790928b_c91e224f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4169685
+      },
+      "writtenOn": "2025-07-26T03:36:18Z",
+      "side": 1,
+      "message": "The problem is that select a specific device output by setPreferredDeviceForStrategy，but will become invalid after onAudioDevicesAdded call removePreferredDeviceForStrategy.",
+      "parentUuid": "94a07ac7_fac1647d",
+      "revId": "024f8629b99e83d22aedbcd6d444c2d7215d9ed6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
