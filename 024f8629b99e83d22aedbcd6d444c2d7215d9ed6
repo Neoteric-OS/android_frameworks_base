@@ -51,6 +51,24 @@
       "parentUuid": "94a07ac7_fac1647d",
       "revId": "024f8629b99e83d22aedbcd6d444c2d7215d9ed6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b67afec_493c8bad",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1576211
+      },
+      "writtenOn": "2025-07-28T11:02:35Z",
+      "side": 1,
+      "message": "Correct me if my understanding is incorrect: You are saying here that the problem is AudioManagerRouteController is clearing the preferred device when a new media output device is added. And a different component (you mention \"mtk UI\" in the ticket) is being affected by this (thank you for filing b/432169876, it helps me understand the issue).\n\nWhat you want to do, basically, is get rid of the removePreferredDeviceForStrategy, so as to let your UI alter AudioFWK\u0027s routing.\n\nThe problem with this is that it\u0027d break the AOSP output switcher which, by design, defers the default routing strategy to the audio framework. So that, if you connect a new BT device while the active route is the built-in speaker, then audio goes to the newly connected BT device.\n\nI\u0027d like to point out that your issue seems to be in a TV branch, so you probably want to discuss this with the Android TV team. I\u0027m assuming that you don\u0027t also want the change in phones. If you are also impacted on phones, then we need to get in touch with your point of contact within Google and we need to run by your request through the product team so that we can distill a formal feature request out of this.\n\nAs it is, I cannot merge this change, as it breaks the AOSP output switcher: Making an output switcher selection becomes sticky. Meaning if the user connects a new speaker, audio won\u0027t go to it by default. This is an important behavior change that I cannot unilaterly make.",
+      "parentUuid": "8790928b_c91e224f",
+      "revId": "024f8629b99e83d22aedbcd6d444c2d7215d9ed6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
