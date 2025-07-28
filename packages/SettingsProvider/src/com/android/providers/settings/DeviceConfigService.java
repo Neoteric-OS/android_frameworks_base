@@ -153,9 +153,12 @@ public final class DeviceConfigService extends Binder {
 
     private static HashSet<String> getAconfigFlagNamesInDeviceConfig() {
         HashSet<String> nameSet = new HashSet<String>();
-        try {
-            for (String fileName : sAconfigTextProtoFilesOnDevice) {
-                byte[] contents = (new FileInputStream(fileName)).readAllBytes();
+
+        for (String fileName : sAconfigTextProtoFilesOnDevice) {
+            FileInputStream input = null;
+            try {
+                input = new FileInputStream(fileName);
+                byte[] contents = input.readAllBytes();
                 parsed_flags parsedFlags = parsed_flags.parseFrom(contents);
                 if (parsedFlags == null) {
                     Slog.e(TAG, "failed to parse aconfig protobuf from " + fileName);
@@ -165,10 +168,18 @@ public final class DeviceConfigService extends Binder {
                 for (parsed_flag flag : parsedFlags.parsedFlag) {
                     nameSet.add(flag.namespace + "/" + flag.package_ + "." + flag.name);
                 }
+            } catch (IOException e) {
+                Slog.e(TAG, "failed to read aconfig protobuf", e);
+            } finally {
+                if (input != null) {
+                    try {
+                        input.close();
+                    } catch (IOException e) {
+                    }
+                }
             }
-        } catch (IOException e) {
-            Slog.e(TAG, "failed to read aconfig protobuf", e);
         }
+
         return nameSet;
     }
 
