@@ -161,8 +161,71 @@ public class BatteryManager {
     public static final String EXTRA_CYCLE_COUNT = "android.os.extra.CYCLE_COUNT";
 
     /**
+     * The battery charging state is invalid or could not be determined.
+     * @hide
+     */
+    @SystemApi
+    public static final int BATTERY_CHARGING_STATE_INVALID = 0;
+
+    /**
+     * The battery is charging under normal conditions.
+     * @hide
+     */
+    @SystemApi
+    public static final int BATTERY_CHARGING_STATE_NORMAL = 1;
+
+    /**
+     * The battery is not charging because it is too cold.
+     * @hide
+     */
+    @SystemApi
+    public static final int BATTERY_CHARGING_STATE_TOO_COLD = 2;
+
+    /**
+     * The battery is not charging because it is too hot.
+     * @hide
+     */
+    @SystemApi
+    public static final int BATTERY_CHARGING_STATE_TOO_HOT = 3;
+
+    /**
+     * Charging is managed by the long life charging policy. It typically
+     * limits the maximum charge level (e.g., to 80%) to extend the
+     * battery's lifespan.
+     * @hide
+     */
+    @SystemApi
+    public static final int BATTERY_CHARGING_STATE_LONG_LIFE = 4;
+
+    /**
+     * Charging is managed by the adaptive charging policy. It may
+     * dynamically adjust charging speed based on user patterns (e.g.,
+     * slow charging overnight) to optimize battery health.
+     * @hide
+     */
+    @SystemApi
+    public static final int BATTERY_CHARGING_STATE_ADAPTIVE = 5;
+
+    /**
+     * Charging is ignoring the preset charge level by long life policy.
+     * Battery will be charged to full to recalibrate the capacity and
+     * maintain the accuracy.
+     * @hide
+     */
+    @SystemApi
+    public static final int BATTERY_CHARGING_STATE_BYPASS_LIMIT = 6;
+
+    /**
      * Extra for {@link android.content.Intent#ACTION_BATTERY_CHANGED}:
      * Int value representing the battery charging status.
+     *
+     * @see #BATTERY_CHARGING_STATE_INVALID
+     * @see #BATTERY_CHARGING_STATE_NORMAL
+     * @see #BATTERY_CHARGING_STATE_TOO_COLD
+     * @see #BATTERY_CHARGING_STATE_TOO_HOT
+     * @see #BATTERY_CHARGING_STATE_LONG_LIFE
+     * @see #BATTERY_CHARGING_STATE_ADAPTIVE
+     * @see #BATTERY_CHARGING_STATE_BYPASS_LIMIT
      */
     public static final String EXTRA_CHARGING_STATUS = "android.os.extra.CHARGING_STATUS";
 
