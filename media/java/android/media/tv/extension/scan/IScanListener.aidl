@@ -19,6 +19,7 @@ package android.media.tv.extension.scan;
 import android.os.Bundle;
 
 /**
+<<<<<<< HEAD
  * @hide
  */
 oneway interface IScanListener {
@@ -31,3 +32,35 @@ oneway interface IScanListener {
     // notify that the temporaily held channel list is stored.
     void onStoreCompleted(int storeResult);
 }
+=======
+ * @hide
+ */
+oneway interface IScanListener {
+    /**
+     * Notify events during scan.
+     *
+     * @param event information that occurred in the scan, must include event_id and event_type.
+     */
+    void onEvent(in Bundle eventArgs);
+    /**
+     * Notify the scan progress.
+     *
+     * @param scanProgress scan progress
+     *        scanProgressInfo bundle of progress information, must include channel_number_found
+     */
+    void onScanProgress(String scanProgress, in Bundle scanProgressInfo);
+    /**
+     * Notify the scan completion.
+     *
+     * @param ScanResult.SUCCESS/FAILED/CANCEL/BUSY depending on the scan
+     *        optionScanInfo optional bundle for addition information
+     */
+    void onScanCompleted(int scanResult, in Bundle optionScanInfo);
+    /**
+     * Notify that the temporaily held channel list is stored.
+     *
+     * @param StoreResult.SUCCESS/FAILED/BUSY depending on the store
+     */
+    void onStoreCompleted(int storeResult);
+}
+>>>>>>> PATCH

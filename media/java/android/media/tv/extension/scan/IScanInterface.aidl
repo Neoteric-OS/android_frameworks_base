@@ -20,6 +20,7 @@ import android.media.tv.extension.scan.IScanListener;
 import android.os.Bundle;
 
 /**
+<<<<<<< HEAD
  * @hide
  */
 interface IScanInterface {
@@ -28,3 +29,34 @@ interface IScanInterface {
     Bundle getParameters(int broadcastType, String countryCode, String operator,
         in Bundle params);
 }
+=======
+ * @hide
+ */
+interface IScanInterface {
+    /**
+     * Create scan session.
+     *
+     * @param broadcastType @ScanConstants.BroadcastType broadcast type, such as ATSC
+     *        countryCode  countryCode based on ISO 3166-1 alpha-3
+     *        operator  @ScanConstants.OperatorType satellite and IP-based TV platform operator type
+     *        listener  ScanListener listens for updates
+     *        optionalParams  other optional scan parameters
+     * @return IBinder of IScanSession
+     */
+    IBinder createSession(int broadcastType, String countryCode, String operator,
+        in IScanListener listener, in Bundle optionalParams);
+    /**
+     * Get parameters, such as quick scan default parameters
+     *
+     * @param broadcastType   @ScanConstants.BroadcastType broadcast type, such as ATSC
+     *        countryCode  countryCode based on ISO 3166-1 alpha-3
+     *        operator  @ScanConstants.OperatorType satellite and IP-based TV platform operator type
+     *        listener  ScanListener listens for updates
+     *        params  specify the type of parameters to be acquired, including frequency_list,
+     *        quickScan_parameter, singleCable_bandFrequency, DCSS_bandFrequency, transponder,
+     *        LNB_settings, LCN_type
+     * @return Bundle with acquied information with the params
+     */
+    Bundle getParameters(int broadcastType, String countryCode, String operator, in Bundle params);
+}
+>>>>>>> PATCH

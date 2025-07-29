@@ -22,5 +22,10 @@ import android.os.Bundle;
  * @hide
  */
 oneway interface ITargetRegionListener {
+    /**
+     * Notify listeners when two or more regions are detected during a service scan.
+     *
+     * @param a bundle containing target regions information.
+     */
     void onDetectTargetRegion(in Bundle detectTargetRegions);
 }
