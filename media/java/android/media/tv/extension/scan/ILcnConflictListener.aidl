@@ -22,5 +22,10 @@ import android.os.Bundle;
  * @hide
  */
 oneway interface ILcnConflictListener {
+    /**
+     * Notify listeners when LCN Conflicts are detected during a service scan.
+     *
+     * @param bundle of Lcn conflict groups information, must contain Lcn_type
+     */
     void onDetectLcnConflict(in Bundle detectLcnConflicts);
 }

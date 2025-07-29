@@ -26,10 +26,25 @@ import android.os.Bundle;
  * @hide
  */
 interface ILcnConflict {
-    // Get the LCN conflict groups information, If there are no conflicts, the array of Bundle is empty.
+    /**
+     * Get the LCN conflict groups information.
+     * If there are no conflicts, the array of Bundle is empty.
+     *
+     * @return bundle of Lcn conflict groups information, must contain Lcn_type
+     */
     Bundle[] getLcnConflictGroups();
-    // Resolve LCN conflicts caused by service scans.
+    /**
+     * Resolve LCN conflicts caused by service scans.
+     *
+     * @param an array of bundle of Lcn conflict groups information, bundle must contain Lcn_type
+     * @return OpResult.RESULT_SUCCESS if resolve successfully else OpResult.RESULT_FAILED
+     */
     int resolveLcnConflict(in Bundle[] lcnConflictSettings);
-    // Set the listener to be invoked the LCN conflict event.
+    /**
+     * Set the listener to be invoked the LCN conflict event.
+     *
+     * @param listener ILcnConflictListener
+     * @return OpResult.RESULT_SUCCESS if set successfully else OpResult.RESULT_FAILED
+     */
     int setListener(in ILcnConflictListener listener);
 }
