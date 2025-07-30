@@ -91,6 +91,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.ArrayList;
 
 /**
  * Class responsible for setting, resolving, and enforcing policies set by multiple management
@@ -1339,8 +1340,9 @@ final class DevicePolicyEngine {
             return;
         }
         String roleAuthority = EnforcingAdmin.getRoleAuthorityOf(roleName);
-        Set<EnforcingAdmin> admins = getEnforcingAdminsOnUser(userId);
-        for (EnforcingAdmin admin : admins) {
+        //Set<EnforcingAdmin> admins = getEnforcingAdminsOnUser(userId);
+        List<EnforcingAdmin> adminslist = new ArrayList<>(getEnforcingAdminsOnUser(userId));
+        for (EnforcingAdmin admin : adminslist) {
             if (admin.hasAuthority(roleAuthority)) {
                 admin.reloadRoleAuthorities();
                 // remove admin policies if role was lost
