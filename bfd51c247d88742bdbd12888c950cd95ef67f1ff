@@ -16,6 +16,23 @@
       "message": "This is related on the \"https://partnerissuetracker.corp.google.com/issues/386837581\"",
       "revId": "bfd51c247d88742bdbd12888c950cd95ef67f1ff",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6be2feac_1d4010b3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2025-07-31T16:14:07Z",
+      "side": 1,
+      "message": "LGTM, I will cherry-pick to main. Thanks for the CL!",
+      "revId": "bfd51c247d88742bdbd12888c950cd95ef67f1ff",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
