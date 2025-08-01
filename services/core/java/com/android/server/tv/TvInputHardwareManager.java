@@ -816,6 +816,14 @@ class TvInputHardwareManager implements TvInputHal.Callback {
 
         @GuardedBy("mLock")
         public void updateConfigsLocked(TvStreamConfig[] configs) {
+            /* This method is called when a new connection is created or when there is a change in
+            the stream configuration. When a new connection is created, mConfigs is null. If the
+            stream is updated and a new config is generated, it is added to the end of the configs
+            array by TvInputHal. This new added configuration has to be marked as the current active
+            config for this connection. */
+            if (mConfigs != null && configs.length > 0) {
+                mActiveConfig = configs[configs.length - 1];
+            }
             mConfigs = configs;
         }
 
