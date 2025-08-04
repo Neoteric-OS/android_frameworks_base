@@ -43,8 +43,6 @@ import android.os.Process
 import android.os.RemoteException
 import android.os.SystemClock
 import android.os.UserHandle
-import android.util.ArrayMap
-import android.util.ArraySet
 import android.util.Log
 import android.util.Slog
 
@@ -67,6 +65,9 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
+
+import java.util.HashMap
+import java.util.HashSet
 
 internal val TAG = AppLockManagerService::class.simpleName
 
@@ -99,13 +100,13 @@ class AppLockManagerService(
     private val mutex = Mutex()
 
     @GuardedBy("mutex")
-    private val userConfigMap = ArrayMap<Int, AppLockConfig>()
+    private val userConfigMap = HashMap<Int, AppLockConfig>()
 
     @GuardedBy("mutex")
-    private val topPackages = ArraySet<String>()
+    private val topPackages = HashSet<String>()
 
     @GuardedBy("mutex")
-    private val unlockedPackages = ArraySet<String>()
+    private val unlockedPackages = HashSet<String>()
 
     private val biometricUnlocker: BiometricUnlocker by lazy {
         BiometricUnlocker(context)
@@ -148,17 +149,17 @@ class AppLockManagerService(
     private val alarmsMutex = Mutex()
 
     @GuardedBy("alarmsMutex")
-    private val scheduledAlarms = ArrayMap<String, PendingIntent>()
+    private val scheduledAlarms = HashMap<String, PendingIntent>()
 
-    private val whiteListedSystemApps: List<String> by lazy {
+    private val whiteListedSystemApps: Set<String> by lazy {
         val systemPackages = pmInternal.getInstalledApplications(
             PackageManager.MATCH_SYSTEM_ONLY.toLong(),
             currentUserId,
             Process.myUid()
-        ).map { it.packageName }
+        ).map { it.packageName }.toSet()
         context.resources.getStringArray(R.array.config_appLockAllowedSystemApps).filter {
-            systemPackages.contains(it)
-        }
+            it in systemPackages
+        }.toSet()
     }
 
     private val packageChangeReceiver = object : BroadcastReceiver() {
@@ -191,6 +192,9 @@ class AppLockManagerService(
                     }
                 }
                 if (intent?.action == Intent.ACTION_PACKAGE_REMOVED) {
+                    logD {
+                        "Package $packageName uninstalled, cleaning up"
+                    }
                     mutex.withLock {
                         if (config.shouldProtectApp(packageName)) {
                             logD {
@@ -203,11 +207,6 @@ class AppLockManagerService(
                             }
                             unlockedPackages.remove(packageName)
                         }
-                    }
-                    logD {
-                        "Package $packageName uninstalled, cleaning up"
-                    }
-                    mutex.withLock {
                         if (config.removePackageFromMap(packageName)) {
                             withContext(Dispatchers.IO) {
                                 config.write()
@@ -868,37 +867,34 @@ class AppLockManagerService(
     }
 
     private fun verifyPackagesLocked(config: AppLockConfig) {
-        var currentPackages = config.getAppLockAppList()
+        val currentPackages = config.getAppLockAppList().toSet()
         val validPackages = pmInternal.getInstalledApplications(
             PackageManager.MATCH_ALL.toLong(),
             currentUserId,
             Process.myUid()
-        ).map { it.packageName }
-        var changed = false
+        ).map { it.packageName }.toSet()
         logD {
             "Current packages = $currentPackages"
             "Valid packages = $validPackages"
         }
-        for (i in 0 until currentPackages.size) {
-            val pkg = currentPackages[i]
-            if (!validPackages.contains(pkg)) {
-                config.removePackageFromMap(pkg)
+        var changed = false
+        // Remove packages that are no longer installed
+        (currentPackages - validPackages).forEach {
+            if (config.removePackageFromMap(it)) {
                 changed = true
             }
         }
-        currentPackages = config.getAppLockAppList()
-        for (i in 0 until validPackages.size) {
-            val pkg = validPackages[i]
-            if (!currentPackages.contains(pkg)) {
-                config.addPackageToMap(pkg)
+        // Add packages that are newly installed
+        (validPackages - currentPackages).forEach {
+            if (config.addPackageToMap(it)) {
                 changed = true
             }
-        }
-        logD {
-            val filteredPackages = config.getAppLockAppList()
-            "Updated current packages = $filteredPackages"
         }
         if (changed) {
+            logD {
+                val filteredPackages = config.getAppLockAppList()
+                "Updated current packages = $filteredPackages"
+            }
             config.write()
         }
     }
