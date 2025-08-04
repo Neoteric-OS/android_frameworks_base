@@ -25,11 +25,11 @@ import android.app.AppLockManager.DEFAULT_TIMEOUT
 import android.os.FileUtils
 import android.os.FileUtils.S_IRWXU
 import android.os.FileUtils.S_IRWXG
-import android.util.ArrayMap
 import android.util.Slog
 
 import java.io.File
 import java.io.IOException
+import java.util.HashMap
 
 import org.json.JSONArray
 import org.json.JSONException
@@ -69,7 +69,7 @@ internal class AppLockConfig(dataDir: File) {
     private val appLockDir = File(dataDir, APP_LOCK_DIR_NAME)
     private val appLockConfigFile = File(appLockDir, APP_LOCK_CONFIG_FILE)
 
-    private val appLockDataMap = ArrayMap<String, AppLockData>()
+    private val appLockDataMap = HashMap<String, AppLockData>()
 
     var appLockTimeout: Long = DEFAULT_TIMEOUT
     var biometricsAllowed = DEFAULT_BIOMETRICS_ALLOWED
@@ -107,40 +107,37 @@ internal class AppLockConfig(dataDir: File) {
      * @return true if package was removed, false otherwise.
      */
     fun removePackageFromMap(packageName: String): Boolean {
-        return if (appLockDataMap.containsKey(packageName)) {
-            appLockDataMap.remove(packageName) != null
-            true
-        } else {
-            false
-        }
+        return appLockDataMap.remove(packageName) != null
     }
 
     /**
-     * Set notifications as protected or not for an application
-     * in [appLockDataMap].
+     * Set shouldProtectApp for an application in [appLockDataMap].
      *
      * @param packageName the package name of the application.
      * @param shouldProtectApp whether to protect app or not.
      * @return true if config was changed, false otherwise.
      */
     fun setShouldProtectApp(packageName: String, shouldProtectApp: Boolean): Boolean {
-        addPackageToMap(packageName)
-        return appLockDataMap[packageName]?.let {
-            if (it.shouldProtectApp != shouldProtectApp) {
-                appLockDataMap[packageName] = AppLockData(
-                    it.packageName,
-                    shouldProtectApp,
-                    it.shouldRedactNotification,
-                    it.hideFromLauncher
-                )
-                true
-            } else {
-                false
+        val currentData = appLockDataMap[packageName]
+        if (currentData != null) {
+            if (currentData.shouldProtectApp == shouldProtectApp) {
+                return false
             }
-        } ?: run {
-            Slog.e(TAG, "Attempt to protect app for package $packageName that is not in list")
-            false
+            appLockDataMap[packageName] = AppLockData(
+                packageName,
+                shouldProtectApp,
+                currentData.shouldRedactNotification,
+                currentData.hideFromLauncher
+            )
+            return true
         }
+        appLockDataMap[packageName] = AppLockData(
+            packageName,
+            shouldProtectApp,
+            DEFAULT_REDACT_NOTIFICATION,
+            DEFAULT_HIDE_IN_LAUNCHER
+        )
+        return true
     }
 
     /**
@@ -183,31 +180,33 @@ internal class AppLockConfig(dataDir: File) {
     }
 
     /**
-     * Set notifications as protected or not for an application
-     * in [appLockDataMap].
+     * Set shouldRedactNotification for an application in [appLockDataMap].
      *
      * @param packageName the package name of the application.
      * @param shouldRedactNotification whether to redact notification or not.
      * @return true if config was changed, false otherwise.
      */
     fun setShouldRedactNotification(packageName: String, shouldRedactNotification: Boolean): Boolean {
-        addPackageToMap(packageName)
-        return appLockDataMap[packageName]?.let {
-            if (it.shouldRedactNotification != shouldRedactNotification) {
-                appLockDataMap[packageName] = AppLockData(
-                    it.packageName,
-                    it.shouldProtectApp,
-                    shouldRedactNotification,
-                    it.hideFromLauncher
-                )
-                true
-            } else {
-                false
+        val currentData = appLockDataMap[packageName]
+        if (currentData != null) {
+            if (currentData.shouldRedactNotification == shouldRedactNotification) {
+                return false
             }
-        } ?: run {
-            Slog.e(TAG, "Attempt to redact notifications for package $packageName that is not in list")
-            false
+            appLockDataMap[packageName] = AppLockData(
+                packageName,
+                currentData.shouldProtectApp,
+                shouldRedactNotification,
+                currentData.hideFromLauncher
+            )
+            return true
         }
+        appLockDataMap[packageName] = AppLockData(
+            packageName,
+            DEFAULT_PROTECT_APP,
+            shouldRedactNotification,
+            DEFAULT_HIDE_IN_LAUNCHER
+        )
+        return true
     }
 
     /**
@@ -230,23 +229,26 @@ internal class AppLockConfig(dataDir: File) {
      * @return true if hidden state was changed, false otherwise.
      */
     fun hidePackage(packageName: String, hide: Boolean): Boolean {
-        addPackageToMap(packageName)
-        return appLockDataMap[packageName]?.let {
-            if (it.hideFromLauncher != hide) {
-                appLockDataMap[packageName] = AppLockData(
-                    it.packageName,
-                    it.shouldProtectApp,
-                    it.shouldRedactNotification,
-                    hide
-                )
-                true
-            } else {
-                false
+        val currentData = appLockDataMap[packageName]
+        if (currentData != null) {
+            if (currentData.hideFromLauncher == hide) {
+                return false
             }
-        } ?: run {
-            Slog.e(TAG, "Attempt to hide app for package $packageName that is not in list")
-            false
+            appLockDataMap[packageName] = AppLockData(
+                packageName,
+                currentData.shouldProtectApp,
+                currentData.shouldRedactNotification,
+                hide
+            )
+            return true
         }
+        appLockDataMap[packageName] = AppLockData(
+            packageName,
+            DEFAULT_PROTECT_APP,
+            DEFAULT_REDACT_NOTIFICATION,
+            hide
+        )
+        return true
     }
 
     /**
