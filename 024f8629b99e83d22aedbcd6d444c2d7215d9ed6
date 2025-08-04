@@ -69,6 +69,24 @@
       "parentUuid": "8790928b_c91e224f",
       "revId": "024f8629b99e83d22aedbcd6d444c2d7215d9ed6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63930433_742be561",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4169685
+      },
+      "writtenOn": "2025-08-04T07:49:28Z",
+      "side": 1,
+      "message": "Thank you very much for your answer.\n\nSince setPreferredDeviceForStrategy has been set, is it reasonable to use the default device for output by removePreferredDeviceForStrategy when new device connect? \nSpecific scenarios,if user selects speaker output in the UI \"output device menu\",it should keep speaker output even if other new devices are connected.\n\n\nThere was a problem with the previous change and modify this change.\npublic void onAudioDevicesAdded(AudioDeviceInfo[] addedDevices) {\n            for (AudioDeviceInfo deviceInfo : addedDevices) {\n                if (AUDIO_DEVICE_INFO_TYPE_TO_ROUTE_INFO.contains(deviceInfo.getType())) {\n                    // When a new valid media output is connected, we clear any routing policies so\n                    // that the default routing logic from the audio framework kicks in. As a result\n                    // of this, when the user connects a bluetooth device or a wired headset, the\n                    // new device becomes the active route, which is the traditional behavior.\n                    List\u003cAudioDeviceAttributes\u003e preferredDevices \u003d\n                    mAudioManager.getPreferredDevicesForStrategy(mStrategyForMedia);\n                    if (!preferredDevices.isEmpty()) {\n                        break;\n                     }\n                    mAudioManager.removePreferredDeviceForStrategy(mStrategyForMedia);\n                    rebuildAvailableRoutesAndNotify();\n                    break;\n                }\n            }\n        }",
+      "parentUuid": "9b67afec_493c8bad",
+      "revId": "024f8629b99e83d22aedbcd6d444c2d7215d9ed6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
