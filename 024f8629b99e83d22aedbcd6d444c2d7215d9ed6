@@ -87,6 +87,24 @@
       "parentUuid": "9b67afec_493c8bad",
       "revId": "024f8629b99e83d22aedbcd6d444c2d7215d9ed6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78fa2a6c_c5c7cc64",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1576211
+      },
+      "writtenOn": "2025-08-04T15:57:56Z",
+      "side": 1,
+      "message": "\u003e Specific scenarios,if user selects speaker output in the UI \"output device menu\",it should keep speaker output even if other new devices are connected.\n\nI understand the proposal and it sounds reasonable to me, but it\u0027s a UX change that I cannot just sign off on without a proper product review. We need this proposal to go through a feature request that the product team can review.\n\nPlease work with your point of contact within Google to get this reviewed. We\u0027ll need a detailed feature request.",
+      "parentUuid": "63930433_742be561",
+      "revId": "024f8629b99e83d22aedbcd6d444c2d7215d9ed6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
