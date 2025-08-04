@@ -185,10 +185,11 @@ fun LargeTileLabels(
     val animatedLabelColor by animateColorAsState(colors.label, label = "QSTileLabelColor")
     val animatedSecondaryLabelColor by
         animateColorAsState(colors.secondaryLabel, label = "QSTileSecondaryLabelColor")
+    val typography = MaterialTheme.typography
     Column(verticalArrangement = Arrangement.Center, modifier = modifier.fillMaxHeight()) {
         TileLabel(
             text = label,
-            style = MaterialTheme.typography.titleSmallEmphasized,
+            style = typography.titleSmallEmphasized,
             color = { animatedLabelColor },
             isVisible = isVisible,
         )

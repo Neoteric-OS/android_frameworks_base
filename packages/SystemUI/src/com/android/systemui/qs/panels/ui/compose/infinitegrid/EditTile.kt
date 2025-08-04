@@ -187,9 +187,10 @@ private fun EditModeTopBar(onStopEditing: () -> Unit, onReset: (() -> Unit)?) {
                 titleContentColor = MaterialTheme.colorScheme.onSurface,
             ),
         title = {
+            val typography = MaterialTheme.typography
             Text(
                 text = stringResource(id = R.string.qs_edit_tiles),
-                style = MaterialTheme.typography.titleLargeEmphasized,
+                style = typography.titleLargeEmphasized,
                 modifier = Modifier.padding(start = 24.dp),
             )
         },
@@ -215,9 +216,10 @@ private fun EditModeTopBar(onStopEditing: () -> Unit, onReset: (() -> Unit)?) {
                             contentColor = MaterialTheme.colorScheme.onPrimary,
                         ),
                 ) {
+                    val typography = MaterialTheme.typography
                     Text(
                         text = stringResource(id = com.android.internal.R.string.reset),
-                        style = MaterialTheme.typography.labelLarge,
+                        style = typography.labelLarge,
                     )
                 }
             }
@@ -491,7 +493,8 @@ private fun EditGridHeader(
 
 @Composable
 private fun EditGridCenteredText(text: String, modifier: Modifier = Modifier) {
-    Text(text = text, style = MaterialTheme.typography.titleSmall, modifier = modifier)
+    val typography = MaterialTheme.typography
+    Text(text = text, style = typography.titleSmall, modifier = modifier)
 }
 
 @Composable
@@ -895,9 +898,10 @@ private fun CategoryHeader(category: TileCategory, modifier: Modifier = Modifier
             contentDescription = null,
             tint = MaterialTheme.colorScheme.onSurface,
         )
+        val typography = MaterialTheme.typography
         Text(
             text = category.label.load() ?: "",
-            style = MaterialTheme.typography.titleMediumEmphasized,
+            style = typography.titleMediumEmphasized,
             color = MaterialTheme.colorScheme.onSurface,
         )
     }
@@ -963,13 +967,14 @@ private fun AvailableTileGridCell(
             }
         }
         Box(Modifier.fillMaxSize()) {
+            val typography = MaterialTheme.typography
             Text(
                 cell.tile.label.text,
                 maxLines = 2,
                 color = colors.label,
                 overflow = TextOverflow.Ellipsis,
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.labelMedium.copy(hyphens = Hyphens.Auto),
+                style = typography.labelMedium.copy(hyphens = Hyphens.Auto),
                 modifier = Modifier.align(Alignment.TopCenter),
             )
         }

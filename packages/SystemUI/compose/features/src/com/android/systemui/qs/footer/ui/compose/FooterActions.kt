@@ -356,13 +356,14 @@ private fun NumberButton(
                     .clip(CircleShape)
                     .indication(interactionSource, LocalIndication.current)
             ) {
+                val typography = MaterialTheme.typography
                 Text(
                     number.toString(),
                     modifier =
                         Modifier.align(Alignment.Center).semantics {
                             this.contentDescription = contentDescription
                         },
-                    style = MaterialTheme.typography.bodyLarge,
+                    style = typography.bodyLarge,
                     color = colorAttr(R.attr.onShadeInactiveVariant),
                     // TODO(b/242040009): This should only use a standard text style instead and
                     // should not override the text size.
@@ -421,14 +422,16 @@ private fun TextButton(
                 MaterialTheme.colorScheme.onSurfaceVariant,
             )
 
+            val typography MaterialTheme.typography
+
             Text(
                 text,
                 Modifier.weight(1f),
                 style =
                     if (QsInCompose.isEnabled) {
-                        MaterialTheme.typography.labelLarge
+                        typography.labelLarge
                     } else {
-                        MaterialTheme.typography.bodyMedium
+                        typography.bodyMedium
                     },
                 letterSpacing = if (QsInCompose.isEnabled) 0.em else 0.01.em,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
