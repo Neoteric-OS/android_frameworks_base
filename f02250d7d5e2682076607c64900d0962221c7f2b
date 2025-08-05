@@ -16,6 +16,47 @@
       "message": "Hello, @lihongyu@google.com\nPlease review it again, thanks.",
       "revId": "f02250d7d5e2682076607c64900d0962221c7f2b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68d8cac7_7cf9ec68",
+        "filename": "libs/WindowManager/Shell/src/com/android/wm/shell/transition/DefaultSurfaceAnimator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2025-08-05T14:12:59Z",
+      "side": 1,
+      "message": "This can be removed as mLeash is not nullable?",
+      "range": {
+        "startLine": 160,
+        "startChar": 12,
+        "endLine": 163,
+        "endChar": 13
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "6b0be082_d370e1a2",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "libs/WindowManager/Shell/src/com/android/wm/shell/transition/DefaultSurfaceAnimator.java",
+              "range": {
+                "startLine": 160,
+                "startChar": 0,
+                "endLine": 164,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "f02250d7d5e2682076607c64900d0962221c7f2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
