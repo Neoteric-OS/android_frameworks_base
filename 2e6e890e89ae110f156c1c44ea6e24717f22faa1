@@ -22,6 +22,30 @@
       },
       "revId": "2e6e890e89ae110f156c1c44ea6e24717f22faa1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85cf9b72_d84d016b",
+        "filename": "libs/WindowManager/Shell/src/com/android/wm/shell/transition/DefaultSurfaceAnimator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 2010302
+      },
+      "writtenOn": "2025-08-05T09:21:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62d827f7_ab94a522",
+      "range": {
+        "startLine": 108,
+        "startChar": 21,
+        "endLine": 108,
+        "endChar": 27
+      },
+      "revId": "2e6e890e89ae110f156c1c44ea6e24717f22faa1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
