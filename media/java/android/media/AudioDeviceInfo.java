@@ -206,6 +206,11 @@ public final class AudioDeviceInfo {
     @FlaggedApi(FLAG_ENABLE_MULTICHANNEL_GROUP_DEVICE)
     public static final int TYPE_MULTICHANNEL_GROUP = 32;
 
+    /**
+     * A device type describing a Bluetooth Low Energy (BLE) device.
+     */
+    public static final int TYPE_BLE = 33;
+
     /** @hide */
     @IntDef(flag = false, prefix = "TYPE", value = {
             TYPE_BUILTIN_EARPIECE,
@@ -239,7 +244,8 @@ public final class AudioDeviceInfo {
             TYPE_ECHO_REFERENCE,
             TYPE_BLE_BROADCAST,
             TYPE_DOCK_ANALOG,
-            TYPE_MULTICHANNEL_GROUP}
+            TYPE_MULTICHANNEL_GROUP,
+            TYPE_BLE}
     )
     @Retention(RetentionPolicy.SOURCE)
     public @interface AudioDeviceType {}
@@ -267,7 +273,8 @@ public final class AudioDeviceInfo {
             TYPE_HDMI_ARC,
             TYPE_HDMI_EARC,
             TYPE_ECHO_REFERENCE,
-            TYPE_DOCK_ANALOG}
+            TYPE_DOCK_ANALOG,
+            TYPE_BLE}
     )
     @Retention(RetentionPolicy.SOURCE)
     public @interface AudioDeviceTypeIn {}
@@ -373,6 +380,7 @@ public final class AudioDeviceInfo {
             case TYPE_HDMI_EARC:
             case TYPE_ECHO_REFERENCE:
             case TYPE_DOCK_ANALOG:
+            case TYPE_BLE:
                 return true;
             default:
                 return false;
@@ -766,6 +774,7 @@ public final class AudioDeviceInfo {
         INT_TO_EXT_DEVICE_MAPPING.put(AudioSystem.DEVICE_IN_HDMI_ARC, TYPE_HDMI_ARC);
         INT_TO_EXT_DEVICE_MAPPING.put(AudioSystem.DEVICE_IN_HDMI_EARC, TYPE_HDMI_EARC);
         INT_TO_EXT_DEVICE_MAPPING.put(AudioSystem.DEVICE_IN_ECHO_REFERENCE, TYPE_ECHO_REFERENCE);
+        INT_TO_EXT_DEVICE_MAPPING.put(AudioSystem.DEVICE_IN_BLUETOOTH_BLE, TYPE_BLE);
 
 
         // privileges mapping to output device
@@ -834,6 +843,7 @@ public final class AudioDeviceInfo {
         EXT_TO_INT_INPUT_DEVICE_MAPPING.put(TYPE_HDMI_EARC, AudioSystem.DEVICE_IN_HDMI_EARC);
         EXT_TO_INT_INPUT_DEVICE_MAPPING.put(
                 TYPE_ECHO_REFERENCE, AudioSystem.DEVICE_IN_ECHO_REFERENCE);
+        EXT_TO_INT_INPUT_DEVICE_MAPPING.put(TYPE_BLE, AudioSystem.DEVICE_IN_BLUETOOTH_BLE);
 
     }
 }
