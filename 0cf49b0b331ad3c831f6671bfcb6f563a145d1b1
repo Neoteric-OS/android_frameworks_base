@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca5d64e7_fc914934",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 1737,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2025-08-05T13:43:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efaf236a_684004ab",
+      "range": {
+        "startLine": 1737,
+        "startChar": 42,
+        "endLine": 1737,
+        "endChar": 53
+      },
+      "revId": "0cf49b0b331ad3c831f6671bfcb6f563a145d1b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "05a42f31_ff8cd07d",
@@ -91,6 +115,30 @@
           ]
         }
       ],
+      "revId": "0cf49b0b331ad3c831f6671bfcb6f563a145d1b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b398114a_93ad58f1",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 9160,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2025-08-05T13:43:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05a42f31_ff8cd07d",
+      "range": {
+        "startLine": 9160,
+        "startChar": 0,
+        "endLine": 9160,
+        "endChar": 45
+      },
       "revId": "0cf49b0b331ad3c831f6671bfcb6f563a145d1b1",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -178,6 +226,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "319d8b19_469a82f4",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 9168,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2025-08-05T13:43:37Z",
+      "side": 1,
+      "message": "Native APM needs to keep track also of this mapping",
+      "parentUuid": "49ecb316_4e281a1c",
+      "range": {
+        "startLine": 9168,
+        "startChar": 0,
+        "endLine": 9168,
+        "endChar": 43
+      },
+      "revId": "0cf49b0b331ad3c831f6671bfcb6f563a145d1b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "c5eaaec0_7c92b218",
         "filename": "services/core/java/com/android/server/audio/AudioService.java",
         "patchSetId": 27
@@ -189,6 +261,30 @@
       "writtenOn": "2025-07-23T09:17:22Z",
       "side": 1,
       "message": "@GuardedBy(\"mMultiZoneAudioSettingsLock\")",
+      "range": {
+        "startLine": 9212,
+        "startChar": 0,
+        "endLine": 9212,
+        "endChar": 40
+      },
+      "revId": "0cf49b0b331ad3c831f6671bfcb6f563a145d1b1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "632d463e_46738dd7",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 9212,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2025-08-05T13:43:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5eaaec0_7c92b218",
       "range": {
         "startLine": 9212,
         "startChar": 0,
