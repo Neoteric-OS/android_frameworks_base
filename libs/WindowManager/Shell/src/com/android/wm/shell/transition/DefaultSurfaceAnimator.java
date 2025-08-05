@@ -179,7 +179,9 @@ public class DefaultSurfaceAnimator {
                 }
                 if (mCornerRadius > 0 && mAnim.hasRoundedCorners()) {
                     // Rounded corner can only be applied if a crop is set.
-                    t.setCornerRadius(leash, mCornerRadius);
+                    if (leash != null && leash.isValid()) {
+                        t.setCornerRadius(leash, mCornerRadius);
+                    }
                     needCrop = true;
                 }
                 if (needCrop) {
