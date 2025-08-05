@@ -34,6 +34,8 @@ import com.android.wm.shell.shared.TransactionPool;
 
 import java.util.ArrayList;
 
+import java.util.Objects
+
 public class DefaultSurfaceAnimator {
 
     /** Builds an animator for the surface and adds it to the `animations` list. */
@@ -105,7 +107,7 @@ public class DefaultSurfaceAnimator {
         private Choreographer mChoreographer;
 
         AnimationAdapter(@NonNull SurfaceControl leash) {
-            mLeash = leash;
+            mLeash = Objects.requireNonNull(leash, "leash is null in AnimationAdapter constructor");
         }
 
         void setTransaction(@NonNull SurfaceControl.Transaction transaction) {
