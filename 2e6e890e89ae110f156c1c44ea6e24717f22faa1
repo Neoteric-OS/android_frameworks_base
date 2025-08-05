@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62d827f7_ab94a522",
+        "filename": "libs/WindowManager/Shell/src/com/android/wm/shell/transition/DefaultSurfaceAnimator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2025-08-05T08:50:56Z",
+      "side": 1,
+      "message": "In order to identify the root cause, I suggest to update here to `requireNonNull(leash)`, so that we can find which caller passes null.",
+      "range": {
+        "startLine": 108,
+        "startChar": 21,
+        "endLine": 108,
+        "endChar": 27
+      },
+      "revId": "2e6e890e89ae110f156c1c44ea6e24717f22faa1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
