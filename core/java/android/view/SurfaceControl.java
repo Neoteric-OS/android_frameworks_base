@@ -3032,6 +3032,10 @@ public final class SurfaceControl implements Parcelable {
          * @hide
          */
         protected void checkPreconditions(SurfaceControl sc) {
+             if (sc == null) {
+                 Log.w(TAG, "Attempted operation on null SurfaceControl");
+                 return;
+             }
             sc.checkNotReleased();
         }
 
