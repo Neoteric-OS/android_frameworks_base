@@ -22,6 +22,30 @@
       },
       "revId": "32bf731264445385a3a08499a70137946ba5a6a7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38acada7_5f0a188f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 2010302
+      },
+      "writtenOn": "2025-08-05T08:04:40Z",
+      "side": 1,
+      "message": "Thank you for your suggestion. The patch has been modified. Please review it again. Thank you.",
+      "parentUuid": "e9ea9319_b67e96f3",
+      "range": {
+        "startLine": 17,
+        "startChar": 1,
+        "endLine": 17,
+        "endChar": 163
+      },
+      "revId": "32bf731264445385a3a08499a70137946ba5a6a7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
