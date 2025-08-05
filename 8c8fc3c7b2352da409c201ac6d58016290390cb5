@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a0f013e_7a65bb01",
+        "filename": "libs/WindowManager/Shell/src/com/android/wm/shell/transition/DefaultSurfaceAnimator.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2025-08-05T08:07:15Z",
+      "side": 1,
+      "message": "How can this final variable become null when it is non-null here? Can you please check if your local checkout is the same as AOSP?",
+      "range": {
+        "startLine": 163,
+        "startChar": 24,
+        "endLine": 163,
+        "endChar": 29
+      },
+      "revId": "8c8fc3c7b2352da409c201ac6d58016290390cb5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
