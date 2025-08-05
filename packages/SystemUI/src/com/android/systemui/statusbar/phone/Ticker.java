@@ -69,7 +69,7 @@ public abstract class Ticker implements DarkReceiver {
     public void setViews(TextSwitcher ts, ImageSwitcher is) {
         final int outerBounds = mContext.getResources().getDimensionPixelSize(R.dimen.status_bar_icon_size);
         final int imageBounds = mContext.getResources().getDimensionPixelSize(R.dimen.status_bar_icon_drawing_size);
-        
+
         mIconScale = (float) imageBounds / (float) outerBounds;
         mIconSwitcher = is;
         mTextSwitcher = ts;
@@ -77,7 +77,7 @@ public abstract class Ticker implements DarkReceiver {
         mIconSwitcher.setScaleX(mIconScale);
         mIconSwitcher.setScaleY(mIconScale);
 
-        // Select text for marquee scroll animation       
+        // Select text for marquee scroll animation
         for (int i = 0; i < mTextSwitcher.getChildCount(); i++) {
             View child = mTextSwitcher.getChildAt(i);
             if (child instanceof TextView) {
@@ -104,21 +104,16 @@ public abstract class Ticker implements DarkReceiver {
         if (mCurrentEntry != null) {
             StatusBarNotification current = mCurrentEntry.notification;
             if (n.getPackageName().equals(current.getPackageName())
-                     && n.getNotification().icon == current.getNotification().icon
-                     && TextUtils.equals(current.getNotification().tickerText, 
-                         n.getNotification().tickerText)) {
-                 return;
-             }
+                    && n.getNotification().icon == current.getNotification().icon
+                    && TextUtils.equals(current.getNotification().tickerText,
+                    n.getNotification().tickerText)) {
+                return;
+            }
         }
 
         // Remove duplicates with same package and ID
-        for (int i = 0; i < mEntries.size(); i++) {
-            TickerEntry entry = mEntries.get(i);
-            if (n.getId() == entry.notification.getId()
-                    && n.getPackageName().equals(entry.notification.getPackageName())) {
-                mEntries.remove(i--);
-            }
-        }
+        mEntries.removeIf(entry -> n.getId() == entry.notification.getId()
+                && n.getPackageName().equals(entry.notification.getPackageName()));
 
         final TickerEntry newEntry = new TickerEntry(n, text, icon);
         mEntries.add(newEntry);
@@ -165,13 +160,8 @@ public abstract class Ticker implements DarkReceiver {
     }
 
     public void removeEntry(StatusBarNotification n) {
-        for (int i = mEntries.size() - 1; i >= 0; i--) {
-            TickerEntry entry = mEntries.get(i);
-            StatusBarNotification e = entry.notification;
-            if (n.getId() == e.getId() && n.getPackageName().equals(e.getPackageName())) {
-                mEntries.remove(i);
-            }
-        }
+        mEntries.removeIf(entry -> n.getId() == entry.notification.getId()
+                && n.getPackageName().equals(entry.notification.getPackageName()));
     }
 
     public void halt() {

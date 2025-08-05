@@ -1940,10 +1940,44 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
         }
 
         if (mTicker == null) {
-            mTicker = new MyTicker(ctx, statusBarView);
+            mTicker = new Ticker(ctx, statusBarView, mTickerAnimationMode, mTickerTickDuration) {
+                @Override
+                public void tickerStarting() {
+                    mTicking = true;
+                    mStatusBarStartSideContent.setVisibility(View.GONE);
+                    tickerView.setVisibility(View.VISIBLE);
+                    tickerView.startAnimation(AnimationUtils.loadAnimation(mContext,
+                            com.android.internal.R.anim.push_up_in));
+                    mStatusBarStartSideContent.startAnimation(AnimationUtils.loadAnimation(mContext,
+                            com.android.internal.R.anim.push_up_out));
+                }
+
+                @Override
+                public void tickerDone() {
+                    mStatusBarStartSideContent.setVisibility(View.VISIBLE);
+                    tickerView.setVisibility(View.GONE);
+                    mStatusBarStartSideContent.startAnimation(AnimationUtils.loadAnimation(mContext,
+                            com.android.internal.R.anim.push_down_in));
+                    tickerView.startAnimation(AnimationUtils.loadAnimation(mContext,
+                            com.android.internal.R.anim.push_down_out));
+                    mTicking = false;
+                }
+
+                @Override
+                public void tickerHalting() {
+                    if (tickerView.getVisibility() == View.VISIBLE) {
+                        mStatusBarStartSideContent.setVisibility(View.VISIBLE);
+                        tickerView.setVisibility(View.GONE);
+                        mStatusBarStartSideContent.startAnimation(AnimationUtils.loadAnimation(mContext,
+                                com.android.internal.R.anim.push_down_in));
+                        tickerView.startAnimation(AnimationUtils.loadAnimation(mContext,
+                                com.android.internal.R.anim.push_down_out));
+                    }
+                    mTicking = false;
+                }
+            };
         }
 
-        ((MyTicker) mTicker).setView(tickerView);
         mTicker.setViews(textSwitcher, tickerIcon);
 
         if (isTickerEnabled()) {
@@ -2044,135 +2078,8 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
         mTicker.addEntry(n);
     }
 
-    private class MyTicker extends Ticker {
-        // the inflated ViewStub
-        public View mTickerView;
-
-        MyTicker(Context context, View sb) {
-            super(context, sb, mTickerAnimationMode, mTickerTickDuration);
-
-            if (!mTickerEnabled) {
-                Log.w(TAG, "MyTicker instantiated with !mTickerEnabled", new Throwable());
-            }
-        }
-
-        public void setView(View tv) {
-            mTickerView = tv;
-        }
-
-        @Override
-        public void tickerStarting() {
-            if (mTicker == null || !mTickerEnabled) return;
-
-            mTicking = true;
-            Animation outAnim, inAnim;
-
-            if (mTickerAnimationMode == 1) {
-                outAnim = loadAnim(com.android.internal.R.anim.push_up_out, null);
-                inAnim = loadAnim(com.android.internal.R.anim.push_up_in, null);
-            } else {
-                outAnim = loadAnim(true, null);
-                inAnim = loadAnim(false, null);
-            }
-
-            mStatusBarStartSideContent.setVisibility(View.GONE);
-            mStatusBarStartSideContent.startAnimation(outAnim);
-
-            if (mTickerView != null) {
-                mTickerView.setVisibility(View.VISIBLE);
-                mTickerView.startAnimation(inAnim);
-            }
-        }
-
-        @Override
-        public void tickerDone() {
-            Animation outAnim, inAnim;
-
-            if (mTickerAnimationMode == 1) {
-                outAnim = loadAnim(com.android.internal.R.anim.push_up_out, mTickingDoneListener);
-                inAnim = loadAnim(com.android.internal.R.anim.push_up_in, null);
-            } else {
-                outAnim = loadAnim(true, mTickingDoneListener);
-                inAnim = loadAnim(false, null);
-            }
-
-            mStatusBarStartSideContent.setVisibility(View.VISIBLE);
-            mStatusBarStartSideContent.startAnimation(inAnim);
-
-            if (mTickerView != null) {
-                mTickerView.setVisibility(View.GONE);
-                mTickerView.startAnimation(outAnim);
-            }
-        }
-
-        @Override
-        public void tickerHalting() {
-            if (mStatusBarStartSideContent.getVisibility() != View.VISIBLE) {
-                mStatusBarStartSideContent.setVisibility(View.VISIBLE);
-                mStatusBarStartSideContent.startAnimation(loadAnim(false, null));
-            }
-
-            if (mTickerView != null) {
-                mTickerView.setVisibility(View.GONE);
-                // we do not animate the ticker away at this point, just get rid of it (b/6992707)
-            }
-        }
-
-        @Override
-        public void onDarkChanged(ArrayList<Rect> area, float darkIntensity, int tint) {
-            applyDarkIntensity(area, mTickerView, tint);
-        }
-
-        Animation.AnimationListener mTickingDoneListener = new Animation.AnimationListener() {
-            public void onAnimationEnd(Animation animation) {
-                mTicking = false;
-            }
-
-            public void onAnimationRepeat(Animation animation) {}
-
-            public void onAnimationStart(Animation animation) {}
-        };
-    }
-
-    private Animation loadAnim(boolean outAnim, Animation.AnimationListener listener) {
-        AlphaAnimation animation = new AlphaAnimation((outAnim ? 1.0f : 0.0f), (outAnim ? 0.0f : 1.0f));
-        Interpolator interpolator = AnimationUtils.loadInterpolator(mContext,
-                (outAnim ? android.R.interpolator.accelerate_quad : android.R.interpolator.decelerate_quad));
-
-        animation.setInterpolator(interpolator);
-        animation.setDuration(350);
-
-        if (listener != null) {
-            animation.setAnimationListener(listener);
-        }
-
-        return animation;
-    }
-
-    private Animation loadAnim(int id, Animation.AnimationListener listener) {
-        Animation anim = AnimationUtils.loadAnimation(mContext, id);
-
-        if (listener != null) {
-            anim.setAnimationListener(listener);
-        }
-
-        return anim;
-    }
-
-    public Ticker getTicker() {
-        return mTicker;
-    }
-
-    public boolean isTickerTicking() {
-        return mTicking;
-    }
-
-    public boolean isTickerEnabled() {
-        return mTicker != null && mTickerEnabled;
-    }
-
     public void haltTicker() {
-        if (isTickerEnabled()) {
+        if (mTicker != null) {
             mTicker.halt();
         }
     }
@@ -3362,7 +3269,7 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
                         0, UserHandle.USER_CURRENT) == 1;
                 if (!mTickerEnabled && mNotifCollectionListener != null) {
 		    mNotifPipeline.removeCollectionListener(mNotifCollectionListener);
-                } else if (isTickerEnabled()) {
+                } else if (mTickerEnabled) {
                     initEntryListener();
                 }
             } else if (uri.equals(Settings.System.getUriFor(
