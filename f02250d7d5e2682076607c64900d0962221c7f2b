@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "41929771_91c231b6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2025-08-06T04:07:38Z",
+      "side": 1,
+      "message": "Please ensure SurfaceControl#setDebugUsageAfterRelease is enabled when testing. And find who releases the surface before the animation is finished.\n\nThis workaround is just hiding the real problem. And if it may happen on any animators of other transition handlers, it is impossible to add such workaround to all of them.",
+      "revId": "f02250d7d5e2682076607c64900d0962221c7f2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d2ac8f61_b2d7c6e7",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 6
