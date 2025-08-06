@@ -2046,11 +2046,8 @@ class WindowOrganizerController extends IWindowOrganizerController.Stub
                                 + " taskDisplayArea, but not " + newParent);
                     }
                 } else {
-                    final Task rootTask = (Task) (
-                            (newParent != null && !(newParent instanceof TaskDisplayArea))
-                                    ? newParent : task.getRootTask());
                     as.getDisplayArea().positionChildAt(
-                            hop.getToTop() ? POSITION_TOP : POSITION_BOTTOM, rootTask,
+                            hop.getToTop() ? POSITION_TOP : POSITION_BOTTOM, task.getRootTask(),
                             false /* includingParents */);
                 }
             } else {
