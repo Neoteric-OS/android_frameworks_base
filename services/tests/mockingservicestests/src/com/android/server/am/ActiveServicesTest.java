@@ -35,10 +35,17 @@ import android.app.compat.CompatChanges;
 import android.content.ComponentName;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.ServiceInfo;
+import android.os.RemoteCallback;
+import android.os.RemoteCallbackList;
 import android.os.SystemClock;
+import android.os.UserHandle;
+import android.util.ArrayMap;
 import android.util.ArraySet;
+import android.util.SparseArray;
 
 import androidx.test.runner.AndroidJUnit4;
+
+import com.android.server.appop.AppOpsService;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -298,6 +305,108 @@ public class ActiveServicesTest {
         Assert.assertNotEquals(sharedIsolatedProcessName2, sharedIsolatedProcessName3);
     }
 
+    static class UpdateForegroundAppsHelper {
+        public static final int UID_MOCK = 192;
+
+        private static void appendServicesByInstanceName( ArrayMap<ComponentName, ServiceRecord> servicesByInstanceName, String packageName, String className ) {
+            final ComponentName cn = new ComponentName( packageName, className );
+
+            final ApplicationInfo ai = new ApplicationInfo();
+            ai.uid = UID_MOCK;
+
+            final ServiceInfo si = new ServiceInfo();
+            si.applicationInfo = ai;
+            si.packageName     = packageName;
+
+            final ServiceRecord sr = mock( ServiceRecord.class );
+            setFieldValue(ServiceRecord.class, sr, "serviceInfo", si);
+            setFieldValue(ServiceRecord.class, sr, "packageName", packageName);
+            sr.isForeground = true;
+            sr.appInfo = ai;
+
+            servicesByInstanceName.put( cn, sr );
+        }
+
+        public static ActiveServices.ServiceMap createServiceMap() {
+            ActiveServices.ServiceMap serviceMap;
+
+            serviceMap = mock(ActiveServices.ServiceMap.class);
+
+            setFieldValue(ActiveServices.ServiceMap.class, serviceMap, "mPendingRemoveForegroundApps",
+                    new ArrayList<String>());
+
+            // packageName
+            final String pn1 = "com.mock.unit.test.one";
+            final String pn2 = "com.mock.unit.test.two";
+            final int uid    = UID_MOCK;
+
+            final ActiveServices.ActiveForegroundApp afa1 = new ActiveServices.ActiveForegroundApp();
+            afa1.mPackageName = pn1;
+            afa1.mUid = uid;
+
+            final ActiveServices.ActiveForegroundApp afa2 = new ActiveServices.ActiveForegroundApp();
+            afa2.mPackageName = pn2;
+            afa2.mUid = uid;
+
+            ArrayMap<String, ActiveServices.ActiveForegroundApp> activeForegroundApps = new ArrayMap<>();
+            activeForegroundApps.put( pn1, afa1 );
+            activeForegroundApps.put( pn2, afa2 );
+
+            setFieldValue(ActiveServices.ServiceMap.class, serviceMap, "mActiveForegroundApps",
+                    activeForegroundApps);
+
+            final ArrayMap<ComponentName, ServiceRecord> servicesByInstanceName = new ArrayMap<>();
+            final String cls1 = "mock_cls_1";
+            final String cls2 = "mock_cls_2";
+
+            appendServicesByInstanceName( servicesByInstanceName, pn1, cls1 );
+            appendServicesByInstanceName( servicesByInstanceName, pn2, cls2 );
+
+            setFieldValue(ActiveServices.ServiceMap.class, serviceMap, "mServicesByInstanceName", servicesByInstanceName);
+
+            return serviceMap;
+        }
+    }
+
+    @SuppressWarnings("GuardedBy")
+    @Test
+    public void testUpdateForegroundApps() throws Exception {
+        doCallRealMethod().when(mActiveServices)
+                .updateForegroundApps(any(ActiveServices.ServiceMap.class));
+
+        doCallRealMethod().when(mActiveServices)
+                .stopAllForegroundServicesLocked(anyInt(), any(String.class));
+
+        final ProcessList pl = mock(ProcessList.class);
+        when( pl.getUidRecordLOSP( anyInt() ) ).thenReturn(null);
+        setFieldValue(ActivityManagerService.class, mService, "mProcessList", pl);
+
+        ActiveServices.ServiceMap serviceMap = UpdateForegroundAppsHelper.createServiceMap();
+        final SparseArray<ActiveServices.ServiceMap> arrServiceMap = new SparseArray<>();
+        arrServiceMap.set( UserHandle.getUserId(UpdateForegroundAppsHelper.UID_MOCK), serviceMap );
+        setFieldValue(ActiveServices.class, mActiveServices, "mServiceMap", arrServiceMap );
+
+        mActiveServices.mCachedDeviceProvisioningPackage = "provision_mocked";
+
+        mService.mProcessStateController = mock( ProcessStateController.class );
+
+        final ProcessStatsService ps = mock( ProcessStatsService.class );
+        setFieldValue(ProcessStatsService.class, ps, "mLock", new Object());
+        setFieldValue(ActivityManagerService.class, mService, "mProcessStats", ps);
+
+        setFieldValue(ActivityManagerService.class, mService, "mAppOpsService", mock( AppOpsService.class ));
+
+        setFieldValue(ActiveServices.class, mActiveServices, "mFgsAppOpCallbacks", new SparseArray<>());
+
+        setFieldValue(ActiveServices.class, mActiveServices, "mFGSLogger", mock( ForegroundServiceTypeLoggerModule.class ) );
+
+        setFieldValue(ActiveServices.class, mActiveServices, "mFgsObservers", mock( RemoteCallbackList.class ) );
+
+        when( mActiveServices.foregroundAppShownEnoughLocked( any(ActiveServices.ActiveForegroundApp.class), anyLong() ) ).thenReturn(true);
+
+        mActiveServices.updateForegroundApps( serviceMap );
+    }
+
     private void prepareTestRescheduleServiceRestarts() {
         mService = mock(ActivityManagerService.class);
         mService.mConstants = mock(ActivityManagerConstants.class);
@@ -343,6 +452,7 @@ public class ActiveServicesTest {
             mfield.setInt(field, mfield.getInt(field) & ~(Modifier.FINAL | Modifier.PRIVATE));
             field.set(obj, val);
         } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException( e );
         }
     }
 
