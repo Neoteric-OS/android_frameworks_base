@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "346e5f08_0ccb7a6f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2025-08-06T04:10:26Z",
+      "side": 1,
+      "message": "Oh sorry, it is not the release case. But still please fix the caller who passes the null leash instead.",
+      "parentUuid": "41929771_91c231b6",
+      "revId": "f02250d7d5e2682076607c64900d0962221c7f2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d2ac8f61_b2d7c6e7",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 6
