@@ -92,6 +92,30 @@
       ],
       "revId": "f02250d7d5e2682076607c64900d0962221c7f2b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e830055_3b6b4c0f",
+        "filename": "libs/WindowManager/Shell/src/com/android/wm/shell/transition/DefaultSurfaceAnimator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 2010302
+      },
+      "writtenOn": "2025-08-06T06:02:58Z",
+      "side": 1,
+      "message": "In Xiaomi\u0027s daily UAT testing, the problem of null pointer being reported here is quite high. It is recommended to add null judgment first, and then remove the null judgment here after locating the source of mLeash being null and solving it. Is this okay?",
+      "parentUuid": "68d8cac7_7cf9ec68",
+      "range": {
+        "startLine": 160,
+        "startChar": 12,
+        "endLine": 163,
+        "endChar": 13
+      },
+      "revId": "f02250d7d5e2682076607c64900d0962221c7f2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
