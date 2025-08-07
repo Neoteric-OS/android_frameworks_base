@@ -1705,7 +1705,7 @@ public class TelephonyCallback {
     @SystemApi
     public interface LinkCapacityEstimateChangedListener {
         /**
-         * Callback invoked when the link capacity estimate (LCE) changes
+         * Callback is invoked when the link capacity estimate (LCE) changes
          *
          * @param linkCapacityEstimateList a list of {@link LinkCapacityEstimate}
          * The list size is at least 1.
