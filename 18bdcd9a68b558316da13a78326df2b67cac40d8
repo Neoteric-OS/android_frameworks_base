@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3975fda_26923684",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2010302
+      },
+      "writtenOn": "2025-08-07T07:06:10Z",
+      "side": 1,
+      "message": "Please let me know after you modify the CP to your internal branch, thank you.",
+      "revId": "18bdcd9a68b558316da13a78326df2b67cac40d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
