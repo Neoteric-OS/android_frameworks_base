@@ -1907,7 +1907,7 @@ public class TelephonyCallback {
      * <p>
      * Using a static class and weak reference here to avoid memory leak caused by the
      * IPhoneState.Stub callback retaining references to the outside TelephonyCallback:
-     * even caller has been destroyed and "un-registered" the TelephonyCallback, it is still not
+     * even caller has been destroyed and "unregistered" the TelephonyCallback, it is still not
      * eligible for GC given the references coming from:
      * Native Stack --> TelephonyCallback --> Context (Activity).
      * memory of caller's context will be collected after GC from service side get triggered
