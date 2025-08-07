@@ -169,6 +169,7 @@ import com.android.systemui.qs.pipeline.shared.TileSpec
 import com.android.systemui.qs.shared.model.TileCategory
 import com.android.systemui.qs.shared.model.groupAndSort
 import com.android.systemui.res.R
+import com.android.systemui.text.CompatText
 import kotlin.math.abs
 import kotlin.math.roundToInt
 import kotlinx.coroutines.CoroutineScope
@@ -187,7 +188,7 @@ private fun EditModeTopBar(onStopEditing: () -> Unit, onReset: (() -> Unit)?) {
                 titleContentColor = MaterialTheme.colorScheme.onSurface,
             ),
         title = {
-            Text(
+            CompatText(
                 text = stringResource(id = R.string.qs_edit_tiles),
                 style = MaterialTheme.typography.titleLargeEmphasized,
                 modifier = Modifier.padding(start = 24.dp),
@@ -215,7 +216,7 @@ private fun EditModeTopBar(onStopEditing: () -> Unit, onReset: (() -> Unit)?) {
                             contentColor = MaterialTheme.colorScheme.onPrimary,
                         ),
                 ) {
-                    Text(
+                    CompatText(
                         text = stringResource(id = com.android.internal.R.string.reset),
                         style = MaterialTheme.typography.labelLarge,
                     )
@@ -467,10 +468,10 @@ private fun CurrentTilesGridHeader(
                     }
                 }
                 EditModeHeaderState.Place -> {
-                    EditGridCenteredText(text = stringResource(id = R.string.tap_to_position_tile))
+                    EditGridCenteredCompatText(text = stringResource(id = R.string.tap_to_position_tile))
                 }
                 EditModeHeaderState.Idle -> {
-                    EditGridCenteredText(
+                    EditGridCenteredCompatText(
                         text = stringResource(id = R.string.drag_to_rearrange_tiles)
                     )
                 }
@@ -490,8 +491,8 @@ private fun EditGridHeader(
 }
 
 @Composable
-private fun EditGridCenteredText(text: String, modifier: Modifier = Modifier) {
-    Text(text = text, style = MaterialTheme.typography.titleSmall, modifier = modifier)
+private fun EditGridCenteredCompatText(text: String, modifier: Modifier = Modifier) {
+    CompatText(text = text, style = MaterialTheme.typography.titleSmall, modifier = modifier)
 }
 
 @Composable
@@ -506,7 +507,7 @@ private fun RemoveTileTarget(onClick: () -> Unit) {
                 .padding(10.dp),
     ) {
         Icon(imageVector = Icons.Default.Clear, contentDescription = null)
-        Text(text = stringResource(id = R.string.qs_customize_remove))
+        CompatText(text = stringResource(id = R.string.qs_customize_remove))
     }
 }
 
@@ -895,7 +896,7 @@ private fun CategoryHeader(category: TileCategory, modifier: Modifier = Modifier
             contentDescription = null,
             tint = MaterialTheme.colorScheme.onSurface,
         )
-        Text(
+        CompatText(
             text = category.label.load() ?: "",
             style = MaterialTheme.typography.titleMediumEmphasized,
             color = MaterialTheme.colorScheme.onSurface,
@@ -963,7 +964,7 @@ private fun AvailableTileGridCell(
             }
         }
         Box(Modifier.fillMaxSize()) {
-            Text(
+            CompatText(
                 cell.tile.label.text,
                 maxLines = 2,
                 color = colors.label,
