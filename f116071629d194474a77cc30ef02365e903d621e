@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8acc1df_b2236cc9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2010302
+      },
+      "writtenOn": "2025-08-07T13:22:45Z",
+      "side": 1,
+      "message": "Hello, @lihongyu@google.com\nThe following import statement was missing a \";\" character. I\u0027ve added it. Please review it again.\n\nimport java.util.Objects;",
+      "revId": "f116071629d194474a77cc30ef02365e903d621e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
