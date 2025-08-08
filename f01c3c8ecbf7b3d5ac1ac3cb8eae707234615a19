@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c12992e4_bb71f568",
+        "filename": "services/core/java/com/android/server/wm/ActivityTaskManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3671,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2025-08-08T07:25:11Z",
+      "side": 1,
+      "message": "Check at here instead: `\u0026\u0026 !ActivityManager.isLowRamDeviceStatic()`",
+      "range": {
+        "startLine": 3671,
+        "startChar": 41,
+        "endLine": 3671,
+        "endChar": 42
+      },
+      "revId": "f01c3c8ecbf7b3d5ac1ac3cb8eae707234615a19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "48345f4a_18ae23cd",
         "filename": "services/core/java/com/android/server/wm/ActivityTaskManagerService.java",
         "patchSetId": 2
