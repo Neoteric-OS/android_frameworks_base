@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "48345f4a_18ae23cd",
+        "filename": "services/core/java/com/android/server/wm/ActivityTaskManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6366,
+      "author": {
+        "id": 1969763
+      },
+      "writtenOn": "2025-08-08T07:22:40Z",
+      "side": 1,
+      "message": "Please move to check where sets the reason (i.e. keyguardGoingAway) rather than hardcoded ignore.",
+      "revId": "f01c3c8ecbf7b3d5ac1ac3cb8eae707234615a19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
