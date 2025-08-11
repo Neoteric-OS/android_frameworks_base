@@ -608,7 +608,7 @@ public class SoundDoseHelper {
     /*package*/ int safeMediaVolumeIndex(int device) {
         final int vol = mSafeMediaVolumeDevices.get(device);
         if (vol == SAFE_MEDIA_VOLUME_UNINITIALIZED) {
-            return MAX_STREAM_VOLUME[AudioSystem.STREAM_MUSIC];
+            return MAX_STREAM_VOLUME[AudioSystem.STREAM_MUSIC] * 10;
         }
 
         return vol;
