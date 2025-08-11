@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "53cf1733_08f13ba1",
+        "filename": "services/core/java/com/android/server/wm/ActivityTaskManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3671,
+      "author": {
+        "id": 4270511
+      },
+      "writtenOn": "2025-08-11T14:26:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c12992e4_bb71f568",
+      "range": {
+        "startLine": 3671,
+        "startChar": 41,
+        "endLine": 3671,
+        "endChar": 42
+      },
+      "revId": "f01c3c8ecbf7b3d5ac1ac3cb8eae707234615a19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "48345f4a_18ae23cd",
@@ -37,6 +61,24 @@
       "writtenOn": "2025-08-08T07:22:40Z",
       "side": 1,
       "message": "Please move to check where sets the reason (i.e. keyguardGoingAway) rather than hardcoded ignore.",
+      "revId": "f01c3c8ecbf7b3d5ac1ac3cb8eae707234615a19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ad7d3fb3_7c3d2b41",
+        "filename": "services/core/java/com/android/server/wm/ActivityTaskManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6366,
+      "author": {
+        "id": 4270511
+      },
+      "writtenOn": "2025-08-11T14:26:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48345f4a_18ae23cd",
       "revId": "f01c3c8ecbf7b3d5ac1ac3cb8eae707234615a19",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
