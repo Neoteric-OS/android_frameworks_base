@@ -73,6 +73,41 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b1974593_a9fddca7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3226358
+      },
+      "writtenOn": "2025-08-12T15:12:23Z",
+      "side": 1,
+      "message": "This issue was addressed in [CL](https://googleplex-android-review.git.corp.google.com/c/platform/frameworks/base/+/32731275/3), but the rendering issue is still present after the changes were merged. The table hasn’t been updated with the changes we uploaded. I raised this question and was told it will be updated in the next release.",
+      "parentUuid": "71810a62_d4e8cf23",
+      "revId": "509261c99449fd35a3daebd68a118ef8df87d9e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a301464d_d9682ceb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3226358
+      },
+      "writtenOn": "2025-08-12T15:12:23Z",
+      "side": 1,
+      "message": "PTAL.",
+      "revId": "509261c99449fd35a3daebd68a118ef8df87d9e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "efabb869_be96b542",
         "filename": "media/java/android/media/MediaMuxer.java",
         "patchSetId": 8
@@ -108,6 +143,30 @@
       "side": 1,
       "message": "Sure.",
       "parentUuid": "efabb869_be96b542",
+      "range": {
+        "startLine": 681,
+        "startChar": 10,
+        "endLine": 686,
+        "endChar": 24
+      },
+      "revId": "509261c99449fd35a3daebd68a118ef8df87d9e9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0fe428b_7be6cfd5",
+        "filename": "media/java/android/media/MediaMuxer.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 3226358
+      },
+      "writtenOn": "2025-08-12T15:12:23Z",
+      "side": 1,
+      "message": "[CL](https://googleplex-android-review.git.corp.google.com/c/platform/frameworks/base/+/32885685/3) is merged.",
+      "parentUuid": "8209d781_af42a001",
       "range": {
         "startLine": 681,
         "startChar": 10,
