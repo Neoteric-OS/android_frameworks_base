@@ -16,6 +16,41 @@
       "message": "Hello, @lihongyu@google.com\nThe following import statement was missing a \";\" character. I\u0027ve added it. Please review it again.\n\nimport java.util.Objects;",
       "revId": "f116071629d194474a77cc30ef02365e903d621e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be394445_f5a59c6a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2025-08-12T08:17:19Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f8acc1df_b2236cc9",
+      "revId": "f116071629d194474a77cc30ef02365e903d621e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa7cf6d9_f701bf02",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1650177
+      },
+      "writtenOn": "2025-08-12T08:17:19Z",
+      "side": 1,
+      "message": "I have merged this internally with changeId as `I4b85942e8717fa05b9afec6fc42a684669cf9c2a`.",
+      "revId": "f116071629d194474a77cc30ef02365e903d621e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
