@@ -36,6 +36,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "35991d87_545737c9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2025-08-13T18:42:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7024545_93d6b9e4",
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "184f4421_8fa01ccd",
@@ -308,6 +326,30 @@
       "side": 1,
       "message": "all user will be on default zone",
       "parentUuid": "15e35ca7_fb905591",
+      "range": {
+        "startLine": 1733,
+        "startChar": 0,
+        "endLine": 1733,
+        "endChar": 52
+      },
+      "revId": "a26dd9b8adc6f7847a9cc31df020bc047db3c915",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d79238f_caa279c2",
+        "filename": "media/java/android/media/AudioManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 1733,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2025-08-13T18:42:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1ac2fa6_bfe4f099",
       "range": {
         "startLine": 1733,
         "startChar": 0,
