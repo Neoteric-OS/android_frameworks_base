@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b1e86be_ee98ce9d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4282957
+      },
+      "writtenOn": "2025-08-13T16:24:13Z",
+      "side": 1,
+      "message": "Parent:     6645fdad (Merge \"Make dun APNs as read-only by default.\")\nAuthor:     Aurimas Liutikas \u003caurimas@google.com\u003e\nAuthorDate: 2017-04-28 14:30:26 -0700\nCommit:     Jack He \u003csiyuanh@google.com\u003e\nCommitDate: 2017-08-22 14:03:46 -0700\n\nEnable Checkstyle for \"repo upload\" for more projects.\n\nThis CL enables Checkstyle for the following directories:\n- core/java/android/\n- core/tests/coretests/src/android/\n\nBug: 34746646\nTest: None\nChange-Id: Ib8b3f198000be19e9a7a61aa5abd61d827454eba\n(cherry picked from commit e5abb866a56582ffc705c261a2cab20c2331e6a3)",
+      "revId": "a422149ef1b7a8de4ccc9376cb91627d1a59254d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
