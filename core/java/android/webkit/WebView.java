@@ -72,6 +72,7 @@ import android.view.translation.TranslationCapability;
 import android.view.translation.TranslationSpec.DataFormat;
 import android.view.translation.ViewTranslationRequest;
 import android.view.translation.ViewTranslationResponse;
+import android.webkit.PlatformSelectionActionMenuClient;
 import android.widget.AbsoluteLayout;
 
 import java.io.BufferedWriter;
@@ -445,6 +446,18 @@ public class WebView extends AbsoluteLayout
         mProvider.init(javaScriptInterfaces, privateBrowsing);
         // Post condition of creating a webview is the CookieSyncManager.getInstance() is allowed.
         CookieSyncManager.setGetInstanceIsAllowed();
+    }
+
+    /**
+     * Specifies platform specific selection menu modification client.
+     *
+     * @param PlatformSelectionActionMenuClient {@code true} client which provides selection menu
+     *     modification implementation
+     */
+    @FlaggedApi(Flags.FLAG_PLATFORM_SELECTION_ACTION_MENU_CLIENT)
+    public void setPlatformSelectionActionMenuClient(
+            PlatformSelectionActionMenuClient platformSelectionActionMenuClient) {
+        mProvider.setPlatformSelectionActionMenuClient(platformSelectionActionMenuClient);
     }
 
     /**
