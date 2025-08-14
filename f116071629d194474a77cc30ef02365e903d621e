@@ -51,6 +51,23 @@
       "message": "I have merged this internally with changeId as `I4b85942e8717fa05b9afec6fc42a684669cf9c2a`.",
       "revId": "f116071629d194474a77cc30ef02365e903d621e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1d169d0_2e6058cc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2010302
+      },
+      "writtenOn": "2025-08-14T00:18:55Z",
+      "side": 1,
+      "message": "Got it, Thanks",
+      "revId": "f116071629d194474a77cc30ef02365e903d621e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
