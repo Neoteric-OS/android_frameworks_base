@@ -235,7 +235,7 @@ public class DisplayManagerFlags {
 
     private final FlagState mHasArrSupport = new FlagState(
             Flags.FLAG_ENABLE_HAS_ARR_SUPPORT,
-            Flags::enableHasArrSupport
+            () -> false
     );
 
     private final FlagState mAutoBrightnessModeBedtimeWearFlagState = new FlagState(
