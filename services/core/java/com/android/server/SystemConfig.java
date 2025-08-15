@@ -26,6 +26,7 @@ import android.content.pm.FeatureInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.content.pm.SignedPackage;
+import android.content.pm.parsing.FrameworkParsingPackageUtils;
 import android.os.Build;
 import android.os.CarrierAssociatedAppEntry;
 import android.os.Environment;
@@ -1041,6 +1042,10 @@ public class SystemConfig {
                                 String notLowRam = parser.getAttributeValue(null, "notLowRam");
                                 allowed = !"true".equals(notLowRam);
                             }
+                            // Only available if the sysprop values match or are empty
+                            String requiredSystemPropertyName = parser.getAttributeValue(null, "requiredSystemPropertyName");
+                            String requiredSystemPropertyValue = parser.getAttributeValue(null, "requiredSystemPropertyValue");
+                            allowed &= FrameworkParsingPackageUtils.checkRequiredSystemProperties(requiredSystemPropertyName, requiredSystemPropertyValue);
                             if (fname == null) {
                                 Slog.w(TAG, "<" + name + "> without name in " + permFile + " at "
                                         + parser.getPositionDescription());
@@ -1059,7 +1064,12 @@ public class SystemConfig {
                                 Slog.w(TAG, "<" + name + "> without name in " + permFile
                                         + " at " + parser.getPositionDescription());
                             } else {
-                                mUnavailableFeatures.add(fname);
+                                // Only unavailable if the sysprop values match or are empty
+                                String requiredSystemPropertyName = parser.getAttributeValue(null, "requiredSystemPropertyName");
+                                String requiredSystemPropertyValue = parser.getAttributeValue(null, "requiredSystemPropertyValue");
+                                if (FrameworkParsingPackageUtils.checkRequiredSystemProperties(requiredSystemPropertyName, requiredSystemPropertyValue)) {
+                                    mUnavailableFeatures.add(fname);
+                                }
                             }
                         } else {
                             logNotAllowedInPartition(name, permFile, parser);
