@@ -130,6 +130,7 @@ import androidx.compose.ui.util.fastMap
 import com.android.compose.gesture.effect.rememberOffsetOverscrollEffectFactory
 import com.android.compose.modifiers.height
 import com.android.compose.theme.LocalAndroidColorScheme
+import com.android.systemui.Flags
 import com.android.systemui.common.ui.compose.load
 import com.android.systemui.qs.panels.shared.model.SizedTile
 import com.android.systemui.qs.panels.shared.model.SizedTileImpl
@@ -1079,7 +1080,9 @@ private object EditModeTileDefaults {
     @Composable
     fun editTileColors(): TileColors =
         TileColors(
-            background = LocalAndroidColorScheme.current.surfaceEffect1,
+            background =
+                if (Flags.notificationShadeBlur()) LocalAndroidColorScheme.current.surfaceEffect1
+                else LocalAndroidColorScheme.current.surfaceEffect2,
             iconBackground = Color.Transparent,
             label = MaterialTheme.colorScheme.onSurface,
             secondaryLabel = MaterialTheme.colorScheme.onSurface,
