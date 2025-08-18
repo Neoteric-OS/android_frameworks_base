@@ -171,6 +171,7 @@ import android.util.MathUtils;
 import android.util.Slog;
 import android.util.SparseArray;
 import android.util.apk.ApkSignatureVerifier;
+import android.widget.Toast;
 
 import com.android.internal.R;
 import com.android.internal.annotations.GuardedBy;
@@ -2454,6 +2455,7 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
 
             if (isSecureFrpEnabled
                     && !isSecureFrpInstallAllowed(mContext, Binder.getCallingUid())) {
+                Toast.makeText(mContext,"Can't install packages while in secure FRP, please log in your google account.", Toast.LENGTH_SHORT).show();
                 throw new SecurityException("Can't install packages while in secure FRP");
             }
 
