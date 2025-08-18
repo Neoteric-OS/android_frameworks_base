@@ -312,7 +312,13 @@ fun IconButton(
     modifier: Modifier = Modifier,
 ) {
     Expandable(
-        color = colorAttr(model.backgroundColor),
+        color =
+           if ((colorAttr(model.backgroundColor) == colorAttr(R.attr.shadeInactive))
+                   && notificationShadeBlur()) { 
+               LocalAndroidColorScheme.current.surfaceEffect1
+           } else {
+             colorAttr(model.backgroundColor)
+           },
         shape = CircleShape,
         onClick = model.onClick,
         modifier =
@@ -407,7 +413,9 @@ private fun TextButton(
 ) {
     Expandable(
         shape = CircleShape,
-        color = LocalAndroidColorScheme.current.surfaceEffect1,
+        color = 
+            if (notificationShadeBlur()) LocalAndroidColorScheme.current.surfaceEffect1
+            else LocalAndroidColorScheme.current.surfaceEffect2,
         contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
         modifier =
             modifier

@@ -376,6 +376,16 @@ data class TileColors(
 )
 
 private object TileDefaults {
+    @Composable
+    @ReadOnlyComposable
+    fun getTileBgColor(): Color {
+        return if (Flags.notificationShadeBlur()) {
+            LocalAndroidColorScheme.current.surfaceEffect1
+        } else {
+            LocalAndroidColorScheme.current.surfaceEffect2
+        }
+    }
+
     /** An active icon tile uses the active color as background */
     @Composable
     @ReadOnlyComposable
@@ -393,7 +403,7 @@ private object TileDefaults {
     @ReadOnlyComposable
     fun activeDualTargetTileColors(): TileColors =
         TileColors(
-            background = LocalAndroidColorScheme.current.surfaceEffect1,
+            background = getTileBgColor(),
             iconBackground = MaterialTheme.colorScheme.primary,
             label = MaterialTheme.colorScheme.onSurface,
             secondaryLabel = MaterialTheme.colorScheme.onSurface,
@@ -404,7 +414,7 @@ private object TileDefaults {
     @ReadOnlyComposable
     fun inactiveDualTargetTileColors(): TileColors =
         TileColors(
-            background = LocalAndroidColorScheme.current.surfaceEffect1,
+            background = getTileBgColor(),
             iconBackground = LocalAndroidColorScheme.current.surfaceEffect3,
             label = MaterialTheme.colorScheme.onSurface,
             secondaryLabel = MaterialTheme.colorScheme.onSurface,
@@ -415,7 +425,7 @@ private object TileDefaults {
     @ReadOnlyComposable
     fun inactiveTileColors(): TileColors =
         TileColors(
-            background = LocalAndroidColorScheme.current.surfaceEffect1,
+            background = getTileBgColor(),
             iconBackground = Color.Transparent,
             label = MaterialTheme.colorScheme.onSurface,
             secondaryLabel = MaterialTheme.colorScheme.onSurface,
@@ -426,8 +436,8 @@ private object TileDefaults {
     @ReadOnlyComposable
     fun unavailableTileColors(): TileColors {
         return TileColors(
-            background = LocalAndroidColorScheme.current.surfaceEffect1,
-            iconBackground = LocalAndroidColorScheme.current.surfaceEffect1,
+            background = getTileBgColor(),
+            iconBackground = getTileBgColor(),
             label = MaterialTheme.colorScheme.onSurface,
             secondaryLabel = MaterialTheme.colorScheme.onSurface,
             icon = MaterialTheme.colorScheme.onSurface,
