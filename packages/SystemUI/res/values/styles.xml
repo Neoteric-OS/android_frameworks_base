@@ -530,7 +530,7 @@
         <item name="shadeActive">@androidprv:color/materialColorPrimary</item>
         <item name="onShadeActive">@androidprv:color/materialColorOnPrimary</item>
         <item name="onShadeActiveVariant">@androidprv:color/materialColorPrimaryFixedDim</item>
-        <item name="shadeInactive">@androidprv:color/surface_effect_2</item>
+        <item name="shadeInactive">@androidprv:color/surface_effect_1</item>
         <item name="onShadeInactive">@androidprv:color/materialColorOnSurface</item>
         <item name="onShadeInactiveVariant">@androidprv:color/materialColorOnSurfaceVariant</item>
         <item name="shadeDisabled">@androidprv:color/customColorShadeDisabled</item>
