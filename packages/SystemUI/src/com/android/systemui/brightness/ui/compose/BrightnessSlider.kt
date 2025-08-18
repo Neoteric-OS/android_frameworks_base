@@ -224,7 +224,7 @@ fun BrightnessSlider(
             },
             track = { sliderState ->
                 val activeTrackColor = MaterialTheme.colorScheme.primary
-                val inactiveTrackColor = LocalAndroidColorScheme.current.surfaceEffect2
+                val inactiveTrackColor = LocalAndroidColorScheme.current.surfaceEffect1
                 val density = LocalDensity.current
 
                 Layout(
@@ -287,7 +287,7 @@ fun BrightnessSlider(
 
             val coroutineScope = rememberCoroutineScope()
             val autoBrightnessBackgroundColor by animateColorAsState(
-                targetValue = if (autoMode) MaterialTheme.colorScheme.primary else LocalAndroidColorScheme.current.surfaceEffect2
+                targetValue = if (autoMode) MaterialTheme.colorScheme.primary else LocalAndroidColorScheme.current.surfaceEffect1
             )
             val autoBrightnessIconTint by animateColorAsState(
                 targetValue = if (autoMode) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface
@@ -451,7 +451,7 @@ private object Dimensions {
 private fun colors(): SliderColors {
     return SliderDefaults.colors()
         .copy(
-            inactiveTrackColor = LocalAndroidColorScheme.current.surfaceEffect2,
+            inactiveTrackColor = LocalAndroidColorScheme.current.surfaceEffect1,
             activeTickColor = MaterialTheme.colorScheme.onPrimary,
             inactiveTickColor = MaterialTheme.colorScheme.onSurface,
         )

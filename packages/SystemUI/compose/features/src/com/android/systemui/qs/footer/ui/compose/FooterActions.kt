@@ -407,7 +407,7 @@ private fun TextButton(
 ) {
     Expandable(
         shape = CircleShape,
-        color = LocalAndroidColorScheme.current.surfaceEffect2,
+        color = LocalAndroidColorScheme.current.surfaceEffect1,
         contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
         modifier =
             modifier
