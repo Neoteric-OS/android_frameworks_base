@@ -43,10 +43,13 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.database.ContentObserver;
 import android.debug.AdbManagerInternal;
 import android.debug.AdbNotifications;
 import android.debug.AdbTransportType;
 import android.debug.IAdbTransport;
+import android.debug.AdbManager;
+import android.debug.IAdbManager;
 import android.hardware.usb.ParcelableUsbPort;
 import android.hardware.usb.UsbAccessory;
 import android.hardware.usb.UsbConfiguration;
@@ -77,6 +80,7 @@ import android.os.UserHandle;
 import android.os.UserManager;
 import android.os.storage.StorageManager;
 import android.os.storage.StorageVolume;
+import android.os.ServiceManager;
 import android.provider.Settings;
 import android.service.usb.UsbDeviceManagerProto;
 import android.service.usb.UsbHandlerProto;
@@ -227,6 +231,7 @@ public class UsbDeviceManager implements ActivityTaskManagerInternal.ScreenObser
 
     private static Set<Integer> sDenyInterfaces;
     private HashMap<Long, FileDescriptor> mControlFds;
+    private IAdbManager mAdbManager;
 
     private static EventLogger sEventLogger;
 
@@ -462,6 +467,11 @@ public class UsbDeviceManager implements ActivityTaskManagerInternal.ScreenObser
         } else {
             mUEventObserver.startObserving(USB_STATE_MATCH);
         }
+        mAdbManager = IAdbManager.Stub.asInterface(ServiceManager.getService(
+                      Context.ADB_SERVICE));
+        mContentResolver.registerContentObserver(
+                Settings.Global.getUriFor(Settings.Global.ADB_TCP_ENABLED),
+                false, new AdbTcpSettingsObserver());
 
         sEventLogger = new EventLogger(DUMPSYS_LOG_BUFFER, "UsbDeviceManager activity");
     }
@@ -2735,4 +2745,39 @@ public class UsbDeviceManager implements ActivityTaskManagerInternal.ScreenObser
     private native boolean nativeStartGadgetMonitor(String udcName);
 
     private native void nativeStopGadgetMonitor();
+    private native int nativeGetAudioMode();
+
+    private static final String SYS_PROP_ADB_TCP_DISABLE = "0";
+    private static final String SYS_PROP_ADB_TCP_ENABLE = "1";
+    private static final String SYSTEM_PROPERTY_PERSIST_ADB_TCP_ENABLE =
+            "persist.adb.tcp.enable";
+
+    private class AdbTcpSettingsObserver extends ContentObserver {
+        public AdbTcpSettingsObserver() {
+            super(null);
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            boolean enable = (Settings.Global.getInt(mContentResolver,
+                    Settings.Global.ADB_TCP_ENABLED, 0) == 1);
+            setAdbTcpEnabled(enable);
+        }
+    }
+
+    private void setAdbTcpEnabled(boolean enable) {
+        setNetworkDebugging(enable);
+        if (mAdbManager != null) {
+            try {
+                mAdbManager.setAdbTcpEnabled(enable);
+            } catch (RemoteException e) {
+                Slog.e(TAG, "setAdbTcpEnabled failed:" + e);
+            }
+        }
+    }
+
+    private void setNetworkDebugging(boolean enable) {
+        SystemProperties.set(SYSTEM_PROPERTY_PERSIST_ADB_TCP_ENABLE,
+                enable ? SYS_PROP_ADB_TCP_ENABLE : SYS_PROP_ADB_TCP_DISABLE);
+    }
 }
