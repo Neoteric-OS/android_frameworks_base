@@ -193,7 +193,7 @@ public final class CpuMonitorService extends SystemService {
         // Initialize CPU info reader and perform the first read to make sure the CPU stats are
         // readable without any issues.
         if (!mCpuInfoReader.init() || mCpuInfoReader.readCpuInfos() == null) {
-            Slogf.wtf(TAG, "Failed to initialize CPU info reader. This happens when the CPU "
+            Slogf.w(TAG, "Failed to initialize CPU info reader. This happens when the CPU "
                     + "frequency stats are not available or the sysfs interface has changed in "
                     + "the Kernel. Cannot monitor CPU without these stats. Terminating CPU monitor "
                     + "service");
