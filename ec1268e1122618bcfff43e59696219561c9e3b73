@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3b3432a_aaf7422c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1970380
+      },
+      "writtenOn": "2025-08-19T15:58:39Z",
+      "side": 1,
+      "message": "CPuMonitorService is started in StartCoreServices\nDropboxService is started in startOtherServices\n\n01-01 00:00:12.662  1450  1480 I am_wtf  : [0,1450,system_server,-1,CpuMonitorService,Failed to initialize CPU info reader. This happens when the CPU frequency stats are not available or the sysfs interface has changed in the Kernel. Cannot monitor CPU without these stats. Terminating CPU monitor service]\n\nevery 1 ms we see below logs from 662 to 782 \n\nslogf.wtf from yout code to https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/core/java/android/app/SystemServiceRegistry.java;l\u003d1955 and again it will re-trigger and continuously in loop till dropbox up.\n\n\n01-01 00:00:12.782  1450  1480 E SystemServiceRegistry: No service published for: dropbox\n01-01 00:00:12.782  1450  1480 E SystemServiceRegistry: android.os.ServiceManager$ServiceNotFoundException: No service published for: dropbox\n01-01 00:00:12.782  1450  1480 E SystemServiceRegistry: \tat android.os.ServiceManager.getServiceOrThrow(ServiceManager.java:203)\n01-01 00:00:12.782  1450  1480 E SystemServiceRegistry: \tat android.app.SystemServiceRegistry$23.createService(SystemServiceRegistry.java:522)\n01-01 00:00:12.782  1450  1480 E SystemServiceRegistry: \tat android.app.SystemServiceRegistry$23.createService(SystemServiceRegistry.java:519)\n01-01 00:00:12.782  1450  1480 E SystemServiceRegistry: \tat android.app.SystemServiceRegistry$CachedServiceFetcher.getService(SystemServiceRegistry.java:2343)\n01-01 00:00:12.782  1450  1480 E SystemServiceRegistry: \tat android.app.SystemServiceRegistry.getSystemService(SystemServiceRegistry.java:1918)\n01-01 00:00:12.782  1450  1480 E SystemServiceRegistry: \tat android.app.ContextImpl.getSystemService(ContextImpl.java:2315)\n01-01 00:00:12.782  1450  1480 E SystemServiceRegistry: \tat android.content.Context.getSystemService(Context.java:4630)\n01-01 00:00:12.782  1450  1480 E SystemServiceRegistry: \tat com.android.server.am.ActivityManagerService.addErrorToDropBox(ActivityManagerService.java:9831)\n01-01 00:00:12.782  1450  1480 E SystemServiceRegistry: \tat com.android.server.am.ActivityManagerService.handleApplicationWtfInner(ActivityManagerService.java:9631)\n01-01 00:00:12.782  1450  1480 E SystemServiceRegistry: \tat com.android.server.am.ActivityManagerService$12.run(ActivityManagerService.java:9597)\n01-01 00:00:12.782  1450  1480 E SystemServiceRegistry: \tat android.os.Handler.handleCallback(Handler.java:995)\n01-01 00:00:12.782  1450  1480 E SystemServiceRegistry: \tat android.os.Handler.dispatchMessage(Handler.java:103)\n01-01 00:00:12.782  1450  1480 E SystemServiceRegistry: \tat android.os.Looper.loopOnce(Looper.java:248)\n01-01 00:00:12.782  1450  1480 E SystemServiceRegistry: \tat android.os.Looper.loop(Looper.java:338)\n01-01 00:00:12.782  1450  1480 E SystemServiceRegistry: \tat android.os.HandlerThread.run(HandlerThread.java:85)\n01-01 00:00:12.782  1450  1480 E SystemServiceRegistry: \tat com.android.server.ServiceThread.run(ServiceThread.java:49)\n01-01 00:00:12.782  1450  1480 E SystemServiceRegistry: Manager wrapper not available: dropbox\n01-01 00:00:12.782  1450  1480 I am_wtf  : [0,1450,system_server,-1,SystemServiceRegistry,No service published for: dropbox]\n01-01 00:00:12.782  1450  1450 V SystemServerTiming: StartDropBoxManager took to complete: 0ms",
+      "revId": "ec1268e1122618bcfff43e59696219561c9e3b73",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
