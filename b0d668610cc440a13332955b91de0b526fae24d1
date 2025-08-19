@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "75c14730_448b8d52",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1594173
+      },
+      "writtenOn": "2025-08-19T17:00:26Z",
+      "side": 1,
+      "message": "Ashok, there is a separate thread with QCOM on this topic. Please follow that for updates. @sivasaj@google.com FYI.",
+      "revId": "b0d668610cc440a13332955b91de0b526fae24d1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
