@@ -29,6 +29,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
 import android.metrics.LogMaker;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.RemoteException;
@@ -90,6 +91,39 @@ class ResolverRankerServiceResolverComparator extends AbstractResolverComparator
     private Context mContext;
     private CountDownLatch mConnectSignal;
     private ResolverRankerServiceComparatorModel mComparatorModel;
+
+    private static class ResolverRankerResultCb extends IResolverRankerResult.Stub {
+        private Object mLock;
+        private Handler mHandler;
+
+        ResolverRankerResultCb(Object lock, Handler handler) {
+            mLock = lock;
+            mHandler = handler;
+        }
+
+        @Override
+        public void sendResult(List<ResolverTarget> targets) throws RemoteException {
+            if (mLock == null || mHandler == null) {
+                return;
+            }
+            if (DEBUG) {
+                Log.d(TAG, "Sending Result back to Resolver: " + targets);
+            }
+            synchronized (mLock) {
+                final Message msg = Message.obtain();
+                msg.what = RANKER_SERVICE_RESULT;
+                msg.obj = targets;
+                mHandler.sendMessage(msg);
+            }
+        }
+
+        public void destroy() {
+            mLock = null;
+            mHandler = null;
+        }
+    }
+
+    private ResolverRankerResultCb resolverRankerResult = new ResolverRankerResultCb(mLock, mHandler);
 
     // context here refers to the activity calling this comparator.
     // targetUserSpace refers to the userSpace in which the targets to be ranked lie.
@@ -286,6 +320,8 @@ class ResolverRankerServiceResolverComparator extends AbstractResolverComparator
             mContext.unbindService(mConnection);
             mConnection.destroy();
         }
+        resolverRankerResult.destroy();
+        resolverRankerResult = null;
         afterCompute();
         if (DEBUG) {
             Log.d(TAG, "Unbinded Resolver Ranker.");
@@ -371,22 +407,6 @@ class ResolverRankerServiceResolverComparator extends AbstractResolverComparator
             mConnectSignal = connectSignal;
         }
 
-        public final IResolverRankerResult resolverRankerResult =
-                new IResolverRankerResult.Stub() {
-            @Override
-            public void sendResult(List<ResolverTarget> targets) throws RemoteException {
-                if (DEBUG) {
-                    Log.d(TAG, "Sending Result back to Resolver: " + targets);
-                }
-                synchronized (mLock) {
-                    final Message msg = Message.obtain();
-                    msg.what = RANKER_SERVICE_RESULT;
-                    msg.obj = targets;
-                    mHandler.sendMessage(msg);
-                }
-            }
-        };
-
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             if (DEBUG) {
@@ -441,7 +461,7 @@ class ResolverRankerServiceResolverComparator extends AbstractResolverComparator
                 mConnectSignal.await(CONNECTION_COST_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
                 synchronized (mLock) {
                     if (mRanker != null) {
-                        mRanker.predict(targets, mConnection.resolverRankerResult);
+                        mRanker.predict(targets, resolverRankerResult);
                         return;
                     } else {
                         if (DEBUG) {
