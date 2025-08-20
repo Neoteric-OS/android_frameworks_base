@@ -763,7 +763,9 @@ class Transition implements BLASTSyncEngine.TransactionReadyListener {
         snapshotStartState(getAnimatableParent(wc));
         if (mParticipants.contains(wc)) return;
         // Transient-hide may be hidden later, so no need to request redraw.
-        if (!isInTransientHide(wc)) {
+        // And since the wallpaper is collected, we consider it unnecessary to
+        // wait for the container Launcher to draw when it is launching Recents.
+        if (!isInTransientHide(wc) && !isLaunchingRecents(wc)) {
             mSyncEngine.addToSyncSet(mSyncId, wc);
         }
         if (wc.asWindowToken() != null && wc.asWindowToken().mRoundedCornerOverlay) {
@@ -784,6 +786,14 @@ class Transition implements BLASTSyncEngine.TransactionReadyListener {
             // Collect the wallpaper token (for isWallpaper(wc)) so it is part of the sync set.
             wc.mDisplayContent.mWallpaperController.collectTopWallpapers(this);
         }
+    }
+
+    private boolean isLaunchingRecents(@NonNull WindowContainer<?> wc) {
+        if (mParallelCollectType != PARALLEL_TYPE_RECENTS || mTransientLaunches == null) {
+            return false;
+        }
+        final ActivityRecord activity = wc.asActivityRecord();
+        return activity != null && mTransientLaunches.containsKey(activity);
     }
 
     /** "snapshot" `wc` and all its parents (as potential promotion targets). */
