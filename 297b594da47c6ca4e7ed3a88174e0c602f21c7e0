@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f0213f5_083526a0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2025-08-20T01:14:33Z",
+      "side": 1,
+      "message": "It is permitted to drop sounds under concurrency cases for SoundPool, so we have relaxed the condition in the latest SoundPool test.  The update should be available in the 25Q3 AOSP drop.",
+      "revId": "297b594da47c6ca4e7ed3a88174e0c602f21c7e0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
