@@ -35,6 +35,7 @@ import static android.view.SurfaceControl.Transaction;
 import static android.view.WindowInsets.Type.InsetsType;
 import static android.view.WindowManager.LayoutParams.INVALID_WINDOW_TYPE;
 import static android.view.WindowManager.TRANSIT_CHANGE;
+import static android.view.WindowManager.TRANSIT_FLAG_IS_RECENTS;
 import static android.window.TaskFragmentAnimationParams.DEFAULT_ANIMATION_BACKGROUND_COLOR;
 import static android.window.DesktopModeFlags.ENABLE_CAPTION_COMPAT_INSET_FORCE_CONSUMPTION;
 
@@ -4095,6 +4096,9 @@ class WindowContainer<E extends WindowContainer> extends ConfigurationContainer<
         if (mSyncState == SYNC_STATE_WAITING_FOR_DRAW) {
             return false;
         }
+        if(canIgnoreLauncherFromRecents()){
+            return true;
+        }
         // READY
         // Loop from top-down.
         for (int i = mChildren.size() - 1; i >= 0; --i) {
@@ -4401,5 +4405,27 @@ class WindowContainer<E extends WindowContainer> extends ConfigurationContainer<
 
     int getSyncTransactionCommitCallbackDepth() {
         return mSyncTransactionCommitCallbackDepth;
+    }
+
+    /**
+     * Check if the sync-group ignores the container Launcher when window is animating
+     * by recents. if the wallpaper has been drawn, we consider it unnecessary to wait
+     * for the container Launcher to draw. 
+    */
+    private boolean canIgnoreLauncherFromRecents(){
+
+        Transition transition = mTransitionController.getCollectingTransition();
+        //Only check Launcher/Home Activity in Recents transition while an activity sync is happenin.
+        if(asActivityRecord() == null || !asActivityRecord().isActivityTypeHome()
+            || transition == null || (transition.getFlags() & TRANSIT_FLAG_IS_RECENTS) == 0){
+            return false;
+        }
+
+        if(getDisplayContent() != null
+            && getDisplayContent().mWallpaperController.wallpaperTransitionReady()
+            && getDisplayContent().mWallpaperController.getTopVisibleWallpaper() != null){
+            return true;
+        }
+        return false;
     }
 }
