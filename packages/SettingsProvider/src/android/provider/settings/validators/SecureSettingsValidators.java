@@ -563,5 +563,7 @@ public class SecureSettingsValidators {
         VALIDATORS.put(Secure.DOZE_ON_CHARGE, BOOLEAN_VALIDATOR);
         VALIDATORS.put(Secure.NAVIGATION_BAR_HINT, BOOLEAN_VALIDATOR);
         VALIDATORS.put(Secure.TETHERING_ALLOW_VPN_UPSTREAMS, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(Secure.QS_SHOW_DATA_USAGE, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(Secure.QS_DATA_USAGE_CYCLE_TYPE, new InclusiveIntegerRangeValidator(0, 1));
     }
 }
