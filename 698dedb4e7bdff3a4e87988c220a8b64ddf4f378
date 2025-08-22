@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c27d979f_710cd315",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 2016516
+      },
+      "writtenOn": "2025-08-22T06:53:50Z",
+      "side": 1,
+      "message": "Please explain what race condition it has, maybe we the sequences on two threads.\n\nhttps://www.baeldung.com/kotlin/singleton-classes",
+      "range": {
+        "startLine": 10,
+        "startChar": 48,
+        "endLine": 11,
+        "endChar": 47
+      },
+      "revId": "698dedb4e7bdff3a4e87988c220a8b64ddf4f378",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
