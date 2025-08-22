@@ -450,10 +450,16 @@ public abstract class ActivatableNotificationView extends ExpandableOutlineView 
                 } else {
                     InteractionJankMonitor.getInstance().cancel(getCujType(isAppearing));
                 }
+                if (!isAppearing && mIsHeadsUpAnimation) {
+                    JankMonitorUtils.getInstance().updateJunkMonitorScene(false, "NOTIFICATION_HEADS_UP_DISAPPEAR");
+                }
             }
 
             @Override
             public void onAnimationStart(Animator animation) {
+                if (!isAppearing && mIsHeadsUpAnimation) {
+                    JankMonitorUtils.getInstance().updateJunkMonitorScene(true, "NOTIFICATION_HEADS_UP_DISAPPEAR");
+                }
                 if (onStartedRunnable != null) {
                     onStartedRunnable.run();
                 }
@@ -466,6 +472,7 @@ public abstract class ActivatableNotificationView extends ExpandableOutlineView 
 
             @Override
             public void onAnimationCancel(Animator animation) {
+                JankMonitorUtils.getInstance().updateJunkMonitorScene(false, "NOTIFICATION_HEADS_UP_DISAPPEAR");
                 mRunWithoutInterruptions = false;
             }
         });

@@ -22,7 +22,7 @@ import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.UiBackground
 import com.android.systemui.plugins.statusbar.StatusBarStateController
 import com.android.systemui.scene.domain.interactor.WindowRootViewVisibilityInteractor
-import com.android.systemui.statusbar.NotificationListener
+import com.android.systemui.statusbar.AsyncNotificationListener
 import com.android.systemui.statusbar.notification.collection.NotifLiveDataStore
 import com.android.systemui.statusbar.notification.collection.NotifPipeline
 import com.android.systemui.statusbar.notification.collection.render.NotificationVisibilityProvider
@@ -81,7 +81,7 @@ interface NotificationStatsLoggerModule {
         @Provides
         @SysUISingleton
         fun provideLegacyLoggerOptional(
-            notificationListener: NotificationListener?,
+            notificationListener: AsyncNotificationListener?,
             @UiBackground uiBgExecutor: Executor?,
             notifLiveDataStore: NotifLiveDataStore?,
             visibilityProvider: NotificationVisibilityProvider?,

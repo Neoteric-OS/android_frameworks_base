@@ -31,7 +31,7 @@ import com.android.systemui.dagger.SysUISingleton;
 import com.android.systemui.dagger.qualifiers.Application;
 import com.android.systemui.dagger.qualifiers.Background;
 import com.android.systemui.res.R;
-import com.android.systemui.statusbar.NotificationListener;
+import com.android.systemui.statusbar.AsyncNotificationListener;
 import com.android.systemui.statusbar.notification.NotificationActivityStarter;
 import com.android.systemui.statusbar.notification.NotificationLaunchAnimatorControllerProvider;
 import com.android.systemui.statusbar.notification.VisibilityLocationProvider;
@@ -266,7 +266,7 @@ public interface NotificationsModule {
 
     /** */
     @Binds
-    NotificationListenerService bindNotificationListener(NotificationListener notificationListener);
+    NotificationListenerService bindNotificationListener(AsyncNotificationListener notificationListener);
 
     /** */
     @Provides
