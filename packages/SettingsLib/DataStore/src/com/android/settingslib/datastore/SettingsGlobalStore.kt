@@ -75,12 +75,10 @@ class SettingsGlobalStore private constructor(contentResolver: ContentResolver) 
 
         @JvmStatic
         fun get(context: Context): SettingsGlobalStore =
-            instance
-                ?: synchronized(this) {
-                    instance
-                        ?: SettingsGlobalStore(context.applicationContext.contentResolver).also {
-                            instance = it
-                        }
+            synchronized(this) {
+                instance ?: SettingsGlobalStore(context.applicationContext.contentResolver).also {
+                    instance = it
                 }
+            }
     }
 }
