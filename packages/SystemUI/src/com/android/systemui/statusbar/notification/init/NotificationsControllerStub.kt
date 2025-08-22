@@ -18,7 +18,7 @@ package com.android.systemui.statusbar.notification.init
 
 import android.service.notification.StatusBarNotification
 import com.android.systemui.plugins.statusbar.NotificationSwipeActionHelper.SnoozeOption
-import com.android.systemui.statusbar.NotificationListener
+import com.android.systemui.statusbar.AsyncNotificationListener
 import com.android.systemui.statusbar.NotificationPresenter
 import com.android.systemui.statusbar.notification.NotificationActivityStarter
 import com.android.systemui.statusbar.notification.collection.render.NotifStackController
@@ -30,7 +30,7 @@ import javax.inject.Inject
  */
 class NotificationsControllerStub
 @Inject
-constructor(private val notificationListener: NotificationListener) : NotificationsController {
+constructor(private val notificationListener: AsyncNotificationListener) : NotificationsController {
 
     override fun initialize(
         presenter: NotificationPresenter,

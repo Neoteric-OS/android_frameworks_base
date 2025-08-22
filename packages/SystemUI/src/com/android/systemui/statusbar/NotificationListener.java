@@ -73,7 +73,6 @@ public class NotificationListener extends NotificationListenerWithPlugins implem
     /**
      * Injected constructor. See {@link CentralSurfacesModule}.
      */
-    @Inject
     public NotificationListener(
             Context context,
             NotificationManager notificationManager,

@@ -147,6 +147,7 @@ import com.android.systemui.statusbar.policy.ZenModeController;
 import com.android.systemui.tuner.TunerService;
 import com.android.systemui.util.Compile;
 import com.android.systemui.util.settings.SecureSettings;
+import com.android.systemui.util.JankMonitorUtils;
 import com.android.systemui.wallpapers.domain.interactor.WallpaperInteractor;
 
 import java.io.PrintWriter;
@@ -2175,6 +2176,8 @@ public class NotificationStackScrollLayoutController implements Dumpable {
             if (mJankMonitor != null && scrollWantsIt
                     && ev.getActionMasked() != MotionEvent.ACTION_DOWN) {
                 mJankMonitor.begin(mView, CUJ_NOTIFICATION_SHADE_SCROLL_FLING);
+                JankMonitorUtils.getInstance().updateJunkMonitorScene(true,
+                        "NOTIFICATION_SHADE_SCROLL_FLING");
             }
             return swipeWantsIt || scrollWantsIt || expandWantsIt || longPressWantsIt || hunWantsIt;
         }
@@ -2269,16 +2272,22 @@ public class NotificationStackScrollLayoutController implements Dumpable {
                 case MotionEvent.ACTION_DOWN:
                     if (scrollerWantsIt) {
                         mJankMonitor.begin(mView, CUJ_NOTIFICATION_SHADE_SCROLL_FLING);
+                        JankMonitorUtils.getInstance().updateJunkMonitorScene(true,
+                                "NOTIFICATION_SHADE_SCROLL_FLING");
                     }
                     break;
                 case MotionEvent.ACTION_UP:
                     if (scrollerWantsIt && !mView.isFlingAfterUpEvent()) {
                         mJankMonitor.end(CUJ_NOTIFICATION_SHADE_SCROLL_FLING);
+                        JankMonitorUtils.getInstance().updateJunkMonitorScene(false,
+                                "NOTIFICATION_SHADE_SCROLL_FLING");
                     }
                     break;
                 case MotionEvent.ACTION_CANCEL:
                     if (scrollerWantsIt) {
                         mJankMonitor.cancel(CUJ_NOTIFICATION_SHADE_SCROLL_FLING);
+                        JankMonitorUtils.getInstance().updateJunkMonitorScene(false,
+                                "NOTIFICATION_SHADE_SCROLL_FLING");
                     }
                     break;
             }

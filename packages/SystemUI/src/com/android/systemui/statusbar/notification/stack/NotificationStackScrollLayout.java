@@ -135,6 +135,7 @@ import com.android.systemui.util.DumpUtilsKt;
 import com.android.systemui.util.ListenerSet;
 import com.android.systemui.wallpapers.domain.interactor.WallpaperInteractor;
 
+import com.android.systemui.util.JankMonitorUtils;
 import com.google.errorprone.annotations.CompileTimeConstant;
 
 import java.io.PrintWriter;
@@ -3903,6 +3904,8 @@ public class NotificationStackScrollLayout
                                         InteractionJankMonitor.getInstance()
                                                 .end(CUJ_NOTIFICATION_SHADE_SCROLL_FLING);
                                         setFinishScrollingCallback(null);
+                                         JankMonitorUtils.getInstance().updateJunkMonitorScene(false,
+                                                "NOTIFICATION_SHADE_SCROLL_FLING");
                                     });
                                     fling(-initialVelocity);
                                 } else {
@@ -6861,6 +6864,7 @@ public class NotificationStackScrollLayout
             mExpandedGroupView = changedRow;
             mNeedsAnimation = true;
         }
+        JankMonitorUtils.getInstance().updateJunkMonitorScene(true, "NOTICE_GROUP_EXPAND_COLLAPSE");
         changedRow.setChildrenExpanded(expanded);
         onChildHeightChanged(changedRow, false /* needsAnimation */);
 
@@ -6868,6 +6872,7 @@ public class NotificationStackScrollLayout
             @Override
             public void run() {
                 changedRow.onFinishedExpansionChange();
+                JankMonitorUtils.getInstance().updateJunkMonitorScene(false, "NOTICE_GROUP_EXPAND_COLLAPSE");
             }
         });
     }

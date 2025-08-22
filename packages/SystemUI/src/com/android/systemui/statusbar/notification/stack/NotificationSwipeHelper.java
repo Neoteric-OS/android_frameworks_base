@@ -45,6 +45,7 @@ import com.android.systemui.statusbar.NotificationShelf;
 import com.android.systemui.statusbar.notification.SourceType;
 import com.android.systemui.statusbar.notification.row.ExpandableNotificationRow;
 import com.android.systemui.statusbar.notification.row.ExpandableView;
+import com.android.systemui.util.JankMonitorUtils;
 
 import java.lang.ref.WeakReference;
 
@@ -144,6 +145,7 @@ class NotificationSwipeHelper extends SwipeHelper implements NotificationSwipeAc
         }
 
         InteractionJankMonitor.getInstance().end(CUJ_NOTIFICATION_SHADE_ROW_SWIPE);
+        JankMonitorUtils.getInstance().updateJunkMonitorScene(false, "CUJ_NOTIFICATION_SHADE_ROW_SWIPE");
     }
 
     @Override
@@ -297,6 +299,7 @@ class NotificationSwipeHelper extends SwipeHelper implements NotificationSwipeAc
         boolean ret = super.onInterceptTouchEvent(ev);
         final View swipedView = getSwipedView();
         if (!previousIsSwiping && swipedView != null) {
+            JankMonitorUtils.getInstance().updateJunkMonitorScene(true, "CUJ_NOTIFICATION_SHADE_ROW_SWIPE");
             InteractionJankMonitor.getInstance().begin(swipedView,
                     CUJ_NOTIFICATION_SHADE_ROW_SWIPE);
         }
@@ -305,6 +308,7 @@ class NotificationSwipeHelper extends SwipeHelper implements NotificationSwipeAc
 
     protected void onDismissChildWithAnimationFinished() {
         InteractionJankMonitor.getInstance().end(CUJ_NOTIFICATION_SHADE_ROW_SWIPE);
+        JankMonitorUtils.getInstance().updateJunkMonitorScene(false, "CUJ_NOTIFICATION_SHADE_ROW_SWIPE");
     }
 
     @Override

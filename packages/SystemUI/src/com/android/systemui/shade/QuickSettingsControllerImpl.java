@@ -103,6 +103,7 @@ import com.android.systemui.statusbar.policy.CastController;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
 import com.android.systemui.statusbar.policy.SplitShadeStateController;
 import com.android.systemui.util.LargeScreenUtils;
+import com.android.systemui.util.JankMonitorUtils;
 import com.android.systemui.util.kotlin.JavaAdapter;
 
 import dalvik.annotation.optimization.NeverCompile;
@@ -2394,9 +2395,11 @@ public class QuickSettingsControllerImpl implements QuickSettingsController, Dum
                         Cuj.CUJ_NOTIFICATION_SHADE_EXPAND_COLLAPSE,
                         mPanelView).setTag(isFullyCollapsed ? "Expand" : "Collapse");
         monitor.begin(builder);
+        JankMonitorUtils.getInstance().updateJunkMonitorScene(true, "CUJ_NOTIFICATION_SHADE_EXPAND_COLLAPSE");
     }
 
     void endJankMonitoring() {
+        JankMonitorUtils.getInstance().updateJunkMonitorScene(false, "CUJ_NOTIFICATION_SHADE_EXPAND_COLLAPSE");
         InteractionJankMonitor monitor = mInteractionJankMonitorLazy.get();
         if (monitor == null) {
             return;
@@ -2405,6 +2408,7 @@ public class QuickSettingsControllerImpl implements QuickSettingsController, Dum
     }
 
     void cancelJankMonitoring() {
+        JankMonitorUtils.getInstance().updateJunkMonitorScene(false, "CUJ_NOTIFICATION_SHADE_EXPAND_COLLAPSE");
         InteractionJankMonitor monitor = mInteractionJankMonitorLazy.get();
         if (monitor == null) {
             return;
