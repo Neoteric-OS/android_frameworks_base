@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0d283a6b_27860468",
+        "filename": "libs/hwui/jni/Paint.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1969763
+      },
+      "writtenOn": "2025-08-25T02:58:46Z",
+      "side": 1,
+      "message": "(not an expert) i have a question: what is the expected return value of this function? it looks like the original design need to return new shader? (replace the old one)\n\nwhy return old shader here?",
+      "range": {
+        "startLine": 870,
+        "startChar": 39,
+        "endLine": 870,
+        "endChar": 48
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "51ee808c_e632aae9",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "libs/hwui/jni/Paint.cpp",
+              "range": {
+                "startLine": 870,
+                "startChar": 0,
+                "endLine": 870,
+                "endChar": 0
+              },
+              "replacement": "        // Return the old shader so the Java side can manage its lifecycle,\n        // potentially releasing the native resource.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "4434263b5137671ec753637bfb178d43821f3ee6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
