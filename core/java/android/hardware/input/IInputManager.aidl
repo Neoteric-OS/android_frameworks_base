@@ -283,4 +283,6 @@ interface IInputManager {
     AidlInputGestureData[] getAppLaunchBookmarks();
 
     void resetLockedModifierState();
+
+    void setSwipeUpChannelRegion(IBinder inputChannelToken,in Region region);
 }

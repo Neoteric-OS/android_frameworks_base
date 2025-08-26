@@ -2263,6 +2263,20 @@ static void nativePilferPointers(JNIEnv* env, jobject nativeImplObj, jobject tok
     im->pilferPointers(token);
 }
 
+static void nativeSetSwipeUpChannelRegion(JNIEnv* env, jobject nativeImplObj,
+                                          jobject inputChannelTokenObj,jobject region) {
+    Region swipeUpChannelRegion;
+    if (region) {
+       for(graphics::RegionIterator it(env, region); !it.isDone(); it.next()){
+           ARect rect = it.getRect();
+           swipeUpChannelRegion.orSelf(Rect(rect.left, rect.top, rect.right, rect.bottom));
+       }
+       NativeInputManager* im = getNativeInputManager(env, nativeImplObj);
+       sp<IBinder> token = ibinderForJavaObject(env, inputChannelTokenObj);
+       im->getInputManager()->getDispatcher().setSwipeUpChannelRegion(token,swipeUpChannelRegion);
+    }
+}
+
 static void nativeSetInputFilterEnabled(JNIEnv* env, jobject nativeImplObj, jboolean enabled) {
     NativeInputManager* im = getNativeInputManager(env, nativeImplObj);
 
@@ -3274,6 +3288,8 @@ static const JNINativeMethod gInputManagerMethods[] = {
         {"setInputMethodConnectionIsActive", "(Z)V", (void*)nativeSetInputMethodConnectionIsActive},
         {"getLastUsedInputDeviceId", "()I", (void*)nativeGetLastUsedInputDeviceId},
         {"setKernelWakeEnabled", "(IZ)Z", (void*)nativeSetKernelWakeEnabled},
+        {"setSwipeUpChannelRegion",
+          "(Landroid/os/IBinder;Landroid/graphics/Region;)V", (void*)nativeSetSwipeUpChannelRegion},
 };
 
 #define FIND_CLASS(var, className) \

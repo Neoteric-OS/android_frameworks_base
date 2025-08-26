@@ -307,6 +307,8 @@ interface NativeInputManagerService {
      */
     boolean setKernelWakeEnabled(int deviceId, boolean enabled);
 
+    void setSwipeUpChannelRegion(IBinder inputChannelToken,Region region);
+
     /** The native implementation of InputManagerService methods. */
     class NativeImpl implements NativeInputManagerService {
         /** Pointer to native input manager service object, used by native code. */
@@ -608,5 +610,8 @@ interface NativeInputManagerService {
 
         @Override
         public native boolean setKernelWakeEnabled(int deviceId, boolean enabled);
+
+        @Override
+        public native void setSwipeUpChannelRegion(IBinder inputChannelToken,Region region);
     }
 }

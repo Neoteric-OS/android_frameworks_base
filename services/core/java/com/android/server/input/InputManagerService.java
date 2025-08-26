@@ -3853,4 +3853,9 @@ public class InputManagerService extends IInputManager.Stub
         default void systemRunning() {}
         default void dump(PrintWriter pw) {}
     }
+
+    @Override
+    public void setSwipeUpChannelRegion(IBinder inputChannelToken,Region region) {
+        mNative.setSwipeUpChannelRegion(inputChannelToken,region);
+    }
 }

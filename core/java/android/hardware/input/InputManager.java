@@ -1752,4 +1752,12 @@ public final class InputManager {
          */
         boolean isKeyGestureSupported(@KeyGestureEvent.KeyGestureType int gestureType);
     }
+
+    public void setSwipeUpChannelRegion(IBinder inputChannelToken,Region region){
+        try {
+            mIm.setSwipeUpChannelRegion (inputChannelToken,region);
+        } catch (RemoteException ex) {
+            throw ex.rethrowFromSystemServer();
+        }
+    }
 }
