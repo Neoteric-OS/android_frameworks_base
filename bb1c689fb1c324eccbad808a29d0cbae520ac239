@@ -22,6 +22,30 @@
       },
       "revId": "bb1c689fb1c324eccbad808a29d0cbae520ac239",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ab908af_6e43618c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4018816
+      },
+      "writtenOn": "2025-08-26T06:34:02Z",
+      "side": 1,
+      "message": "already update the correct bugid.",
+      "parentUuid": "f23f51e4_bd129e75",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 14
+      },
+      "revId": "bb1c689fb1c324eccbad808a29d0cbae520ac239",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
