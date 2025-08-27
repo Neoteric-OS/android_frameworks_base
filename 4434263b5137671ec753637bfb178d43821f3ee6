@@ -40,6 +40,30 @@
       ],
       "revId": "4434263b5137671ec753637bfb178d43821f3ee6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c7e6649_67692b93",
+        "filename": "libs/hwui/jni/Paint.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 4290106
+      },
+      "writtenOn": "2025-08-27T10:19:02Z",
+      "side": 1,
+      "message": "Before the change, the original shader would be released twice when the Java object was garbage collected, resulting in a crash. After the modification, one unref call is removed, so the shader is released only once, which prevents the crash.",
+      "parentUuid": "0d283a6b_27860468",
+      "range": {
+        "startLine": 870,
+        "startChar": 39,
+        "endLine": 870,
+        "endChar": 48
+      },
+      "revId": "4434263b5137671ec753637bfb178d43821f3ee6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
