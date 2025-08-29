@@ -6310,8 +6310,8 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
                 case PAUSING:
                 case PAUSED:
                 case STARTED:
-                    addToStopping(true /* scheduleIdle */,
-                            canEnterPictureInPicture /* idleDelayed */, "makeInvisible");
+                    final boolean idleDelayed = canEnterPictureInPicture || inTransition();
+                    addToStopping(true /* scheduleIdle */, idleDelayed, "makeInvisible");
                     break;
 
                 default:
