@@ -454,6 +454,11 @@ public class StorageNotification implements CoreStartable {
     }
 
     private Notification onVolumeEjecting(VolumeInfo vol) {
+        /** b/432396746 Remove Ejecting Notification for TV */
+        if (isTv()) {
+            return null;
+        }
+
         final DiskInfo disk = vol.getDisk();
         final CharSequence title = mContext.getString(
                 R.string.ext_media_unmounting_notification_title, disk.getDescription());
