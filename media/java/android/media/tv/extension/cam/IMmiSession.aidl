@@ -20,12 +20,27 @@ package android.media.tv.extension.cam;
  * @hide
  */
 interface IMmiSession {
-    // Send user answers to CAM on the MMI Menu screen.
+    /**
+     * Sends the user's selection from a menu list displayed by the CAM.
+     *
+     * @param response The index of the menu item selected by the user.
+     */
     void setMenuListAnswer(int response);
-    // Send user answers to CAM on the MMI Enq screen.
-    void setEnquiryAnswer(int answerId, String answer);
-    // Send CloseMmi APDU to Cam.
+    /**
+     * Sends the user's answer to an enquiry dialog displayed by the CAM.
+     *
+     * @param abort true to cancel, false if answer is okay to set.
+     * @param answer The text entered by the user in response to the enquiry.
+     */
+    void setEnquiryAnswer(boolean abort, String answer);
+    /**
+     * Sends a command to close the current MMI interaction, sending CloseMmi APDU to CAM.
+     */
     void closeMmi();
-    // Release MMI session.
+    /**
+     * Releases all resources associated with this MMI session and terminates the
+     * communication channel. This should be called when the MMI interaction is
+     * completely finished.
+     */
     void close();
 }

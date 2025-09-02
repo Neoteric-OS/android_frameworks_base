@@ -23,10 +23,39 @@ import android.os.Bundle;
  * @hide
  */
 interface IContentControlService {
-    // Register the listener to notify the DRM info changed by the CICAM.
+     /**
+     * Checks if the current channel is scrambled.
+     *
+     * @return true if the channel is scrambled, else false.
+     */
+    boolean isChannelScrambled();
+    /**
+     * Registers a listener to receive notifications when DRM information is changed by the CICAM.
+     *
+     * @param listener The ICamDrmInfoListener to register for receiving notifications.
+     */
     void addCamDrmInfoListener(in ICamDrmInfoListener listener);
-    // Unregister listener to stop monitor DRM Info.
+    /**
+     * Unregisters a previously added listener to stop monitoring DRM info.
+     *
+     * @param listener The ICamDrmInfoListener that was previously registered.
+     */
     void removeCamDrmInfoListener(in ICamDrmInfoListener listener);
-    // Get the DRM Info of current watching channel.
+    /**
+     * Gets the DRM information for the currently watched channel. The application should obtain
+     * the slotId from ICamMonitoringService#getSlotIds and verify that the region supports CAM
+     * before calling this API.
+     *
+     * @param slotId The ID of the corresponding CICAM slot.
+     * @param camDrmInfo An output Bundle that will contain the DRM information with the following keys:
+     * KEY_CAM_DRM_TYPE: The DRM type. The value can be one of the following:
+     *                   -1 - CAM is not capable.
+     *                   0 - Copying is not restricted.
+     *                   1 - No further copying is permitted.
+     *                   2 - One copying is permitted.
+     *                   3 - Copying is prohibited.
+     * KEY_CAM_PRGM_NUM: The program number.
+     * @return An integer status code {@link CamOpResult} indicating the result.
+     */
     int getCamDrmInfo(int slotId, out Bundle camDrmInfo);
 }

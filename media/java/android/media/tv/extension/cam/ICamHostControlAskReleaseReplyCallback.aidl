@@ -20,5 +20,15 @@ package android.media.tv.extension.cam;
  * @hide
  */
 oneway interface ICamHostControlAskReleaseReplyCallback {
+    /**
+     * Notify when the CICAM responds to a host's request to release control of a resource.
+     *
+     * @param sessionToken The unique token that was provided in the initial release request,
+     *                     used to correlate the reply with the original request.
+     * @param replyStatus The status of the reply from the CAM. 0 to indicate the CAM has
+     *                    accepted the release request and the host can proceed.
+     *                    And 1 to Indicate the CAM has refused the release request.
+     *                    The host should not proceed with any action that would disturb the current tuning.
+     */
     void onAskReleaseReply(String sessionToken, int replyStatus);
 }

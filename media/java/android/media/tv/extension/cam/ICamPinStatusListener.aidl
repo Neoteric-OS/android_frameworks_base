@@ -22,5 +22,22 @@ import android.os.Bundle;
  * @hide
  */
 oneway interface ICamPinStatusListener {
-    void onCamPinValidationReply(int slotId, in Bundle bundle);
+    /**
+     * Called to notify the result of a PIN code validation by the CICAM.
+     *
+     * @param slotId The slot ID of the corresponding CICAM.
+     * @param pinValidationReply A Bundle that provides the status of the PIN code validation
+     * from the CICAM, with the following keys:
+     * KEY_PIN_VALIDATION_RESULT: The validation result. Possible values are:
+     *                            0 - Success
+     *                            1 - Invalid SlotId
+     *                            2 - CICAM not inserted
+     *                            3 - CICAM does not support PIN capability
+     * KEY_PIN_VALIDATION_PINCODE_STATUS: The status of the PIN code. Possible values are:
+     *                                    0 - Incorrect PIN passed for CICAM PIN verification.
+     *                                    1 - The host may retry the CAM PIN entry.
+     *                                    2 - Correct PIN passed for CICAM PIN verification.
+     *                                    3 - The host is not required to retry the CAM PIN entry.
+     */
+    void onCamPinValidationReply(int slotId, in Bundle pinValidationReply);
 }

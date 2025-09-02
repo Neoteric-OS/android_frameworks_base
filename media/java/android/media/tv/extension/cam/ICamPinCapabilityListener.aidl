@@ -22,5 +22,16 @@ import android.os.Bundle;
  * @hide
  */
 oneway interface ICamPinCapabilityListener {
-    void onCamPinCapabilityChanged(int slotId, in Bundle bundle);
+    /**
+     * Called to notify that the PIN capabilities of the CICAM have changed.
+     *
+     * @param slotId The slot ID of the corresponding CICAM.
+     * @param pinCapability A Bundle containing the PIN capabilities information:
+     * KEY_PIN_CAP_CAPABILITY: The PIN capability status. The value can be one of the following:
+     *                         0 - The CICAM does not have PIN capability.
+     *                         1 - The CICAM PIN is not cached.
+     *                         2 - The CICAM can cache the PIN sent in the record.
+     * KEY_PIN_CAP_DATE_TIME: The date and time of the PIN capability update.
+     */
+    void onCamPinCapabilityChanged(int slotId, in Bundle pinCapability);
 }

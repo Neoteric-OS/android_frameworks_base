@@ -23,10 +23,25 @@ import android.os.Bundle;
  * @hide
  */
 interface ICamHostControlTuneQuietlyFlag {
-    // Register listener to notify host control tune_quietly_flag.
+    /**
+     * Registers a listener to receive notifications about changes to the Host Control
+     * tune_quietly flag.
+     *
+     * @param listener The ICamHostControlTuneQuietlyFlagListener to add.
+     */
     void addHcTuneQuietlyFlagListener(ICamHostControlTuneQuietlyFlagListener listener);
-    // Remove listener and stop monitor host control tune_quietly_flag.
+    /**
+     * Unregisters a listener to stop monitoring changes to the Host Control tune_quietly flag.
+     *
+     * @param listener The ICamHostControlTuneQuietlyFlagListener to remove.
+     */
     void removeHcTuneQuietlyFlagListener(ICamHostControlTuneQuietlyFlagListener listener);
-    // Returns host control tune_quietly_flag value.
+    /**
+     * Retrieves the current value of the Host Control tune_quietly flag for a specific session.
+     *
+     * @param sessionToken The unique token that identifies the session.
+     * @return A Bundle must containing the value of the tune_quietly_flag (true or false).
+     * This may return null if the session token is invalid or the information is unavailable.
+     */
     Bundle getHcTuneQuietlyFlag(String sessionToken);
 }
