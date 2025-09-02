@@ -23,19 +23,62 @@ import android.os.Bundle;
  */
 interface ITeletextPageSubCode {
     // Get Teletext page number
-    Bundle getTeletextPageNumber(String sessionToken);
-    // Set Teletext page number.
+    /**
+     * Gets Teletext page number related to the current session.
+     *
+     * @param sessionToken The per-session token provided by the host during session creation.
+     * @return The current Teletext page number.
+     */
+    int getTeletextPageNumber(String sessionToken);
+    /**
+     * Sets the Teletext page number.
+     *
+     * @param sessionToken The per-session token provided by the host during session creation.
+     * @param pageNumber   The page number to set.
+     */
     void setTeleltextPageNumber(String sessionToken, int pageNumber);
-    // Get Teletext sub page number.
-    Bundle getTeletextPageSubCode(String sessionToken);
-    // Set Teletext sub page number.
+    /**
+     * Gets the current Teletext sub-page number (subcode).
+     *
+     * @param sessionToken The per-session token provided by the host during session creation.
+     * @return The current Teletext page subcode.
+     */
+    int getTeletextPageSubCode(String sessionToken);
+    /**
+     * Sets the Teletext sub-page number (subcode).
+     *
+     * @param sessionToken The per-session token provided by the host during session creation.
+     * @param pageSubCode  The page subcode to set.
+     */
     void setTeletextPageSubCode(String sessionToken, int pageSubCode);
-    // Get Teletext TopInfo.
-    Bundle getTeletextHasTopInfo(String sessionToken);
-    // Get Teletext TopBlockList.
+    /**
+     * Gets the Teletext TOP (Table of Pages) information status.
+     *
+     * @param sessionToken The per-session token provided by the host during session creation.
+     * @return true if TOP info is available, false otherwise.
+     */
+    boolean getTeletextHasTopInfo(String sessionToken);
+    /**
+     * Gets the list of Teletext TOP blocks.
+     *
+     * @param sessionToken The per-session token provided by the host during session creation.
+     * @return A Bundle containing the list of block information.
+     */
     Bundle getTeletextTopBlockList(String sessionToken);
-    // Get Teletext TopGroupList.
+    /**
+     * Gets the list of Teletext TOP groups.
+     *
+     * @param sessionToken The per-session token provided by the host during session creation.
+     * @param indexGroup The specific group index
+     * @return A Bundle containing the list of group information.
+     */
     Bundle getTeletextTopGroupList(String sessionToken, int indexGroup);
-    // Get Teletext TopPageList.
+    /**
+     * Gets the list of Teletext TOP pages.
+     *
+     * @param sessionToken The per-session token provided by the host during session creation.
+     * @param indexGroup The specific page index
+     * @return A Bundle containing the list of page information.
+     */
     Bundle getTeletextTopPageList(String sessionToken, int indexPage);
 }
