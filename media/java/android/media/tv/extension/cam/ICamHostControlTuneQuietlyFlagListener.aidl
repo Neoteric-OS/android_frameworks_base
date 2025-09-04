@@ -20,5 +20,12 @@ package android.media.tv.extension.cam;
  * @hide
  */
 oneway interface ICamHostControlTuneQuietlyFlagListener {
+    /**
+     * Called when the Host Control tune_quietly flag has changed.
+     *
+     * @param sessionToken The unique token that identifies the session, which was
+     *                     established during the initial tune request.
+     * @param tuneQuietlyFlag The new state of the flag. 1 indicates true, and 0 indicates false.
+     */
     void onHcTuneQuietlyFlagChanged(String sessionToken, int tuneQuietlyFlag);
 }

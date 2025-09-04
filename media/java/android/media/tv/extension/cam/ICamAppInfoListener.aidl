@@ -22,5 +22,15 @@ import android.os.Bundle;
  * @hide
  */
 oneway interface ICamAppInfoListener {
+    /**
+     * Notify the application information change for a specific CICAM.
+     *
+     * @param slotId The ID of the corresponding CICAM slot.
+     * @param appInfo An input bundle that must contain the following keys:
+     *                APP_TYPE: The application type.
+     *                APP_MANUFACTURE: The manufacturer value.
+     *                MANUFACTURE_CODE: The manufacturer code.
+     *                MENU_STRING: The title of the menu.
+     */
     void onCamAppInfoChanged(int slotId, in Bundle appInfo);
 }

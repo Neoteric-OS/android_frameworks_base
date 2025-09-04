@@ -24,12 +24,40 @@ import android.os.Bundle;
  * @hide
  */
 interface ICamPinService {
-    // Register ICamPinCapabilityListener to get CICAM updates.
+    /**
+     * Registers a listener to receive CICAM updates, such as PIN status and PIN capability changes.
+     *
+     * @param listener The ICamPinCapabilityListener to add for receiving notifications.
+     */
     void addCamPinCapabilityListener(in ICamPinCapabilityListener listener);
-    // Unregister ICamPinCapabilityListener and stop monitor PIN status and PIN capability.
+    /**
+     * Unregisters a listener to stop monitoring PIN status and PIN capability.
+     *
+     * @param listener The ICamPinCapabilityListener that was previously registered.
+     */
     void removeCamPinCapabilityListener(in ICamPinCapabilityListener listener);
-    // Send the PinCode that needs to be validated by CICAM.
+    /**
+     * Sends a PIN code to be validated by the CICAM. The application should obtain the slotId from
+     * ICamMonitoringService#getSlotIds() and verify that the region supports CAM before
+     * calling this API.
+     *
+     * @param slotId The ID of the corresponding CICAM.
+     * @param pinCode The PIN code to be validated by the CICAM.
+     * @param listener An ICamPinStatusListener instance to receive the validation result.
+     * @return An integer status code indicating the result {@link CamOpResult}
+     */
     int requestCamPinValidation(int slotId, in int[] pinCode, in ICamPinStatusListener listener);
-    // Get the PIN capabilities of the CICAM.
+    /**
+     * Gets the PIN capabilities of the CICAM.
+     *
+     * @param slotId The ID of the corresponding CICAM.
+     * @param camPinCapability An output Bundle that will contain the PIN capability information:
+     * KEY_PIN_CAP_CAPABILITY: The PIN capability status. The value can be one of the following:
+     *                         0 - The CICAM does not have PIN capability.
+     *                         1 - The CICAM PIN is not cached.
+     *                         2 - The CICAM can cache the PIN sent in the record.
+     * KEY_PIN_CAP_DATE_TIME: The date and time of the PIN capability update.
+     * @return An integer status code indicating the result {@link CamOpResult}
+     */
     int getCamPinCapability(int slotId, out Bundle camPinCapability);
 }

@@ -22,7 +22,23 @@ import android.os.Bundle;
  * @hide
  */
 oneway interface ICamInfoListener {
+    /**
+     * Called when information about the CAM being monitored, such as its insertion or removal,
+     * has changed.
+     *
+     * @param slotId The ID or slot number of the monitored CAM.
+     * @param updatedCamInfo A Bundle containing about the updated CAM information:
+     *                       KEY_CAM_ID: the CAM identifier.
+     *                       KEY_CAM_PROFILE_NAME: The CAM profile name.
+     */
     void onCamInfoChanged(int slotId, in Bundle updatedCamInfo);
+    /**
+     * Called to notify that the status of a CAM slot has been updated.
+     *
+     * @param slotId The ID of the updated slot.
+     * @param updatedSlotInfo A Bundle containing information like insertion status an slot type:
+     *                        KEY_CAM_SLOT_TYPE: Whether the slot supports PCMCIA or USB.
+     *                        KEY_IS_CAM_INSERTED: The physical insertion state of the CAM.
+     */
     void onSlotInfoChanged(int slotId, in Bundle updatedSlotInfo);
-    void onNewTypeCamInsert(int slotId, in Bundle newCamType);
 }
