@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b9010cf_9f83b31f",
+        "filename": "services/core/java/com/android/server/audio/AudioService.java",
+        "patchSetId": 39
+      },
+      "lineNbr": 5384,
+      "author": {
+        "id": 1491204
+      },
+      "writtenOn": "2025-09-04T14:31:53Z",
+      "side": 1,
+      "message": "do not take settings lock, leading to deadlock easily :-( (breaking order...)",
+      "range": {
+        "startLine": 5384,
+        "startChar": 0,
+        "endLine": 5384,
+        "endChar": 39
+      },
+      "revId": "b529b24adef8bb80f6e0001adb45d44c6d6b8ebb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
