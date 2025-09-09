@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a0c9a16_c0da17fe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1969763
+      },
+      "writtenOn": "2025-09-09T07:07:06Z",
+      "side": 1,
+      "message": "please explain how the patch fixed this issue \n\nTest: put how to test here, e.g. manual, fill the device with many apps, etc",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 61
+      },
+      "revId": "0a79d442010a453fc1eba422ccab583f7b82eb50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
