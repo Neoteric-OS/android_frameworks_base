@@ -60,16 +60,12 @@ public class BackgroundInstallControlCallbackHelper {
      * users app installs. This is fine because the API is for SystemServer use only.
      */
     public void registerBackgroundInstallCallback(IRemoteCallback callback) {
-        synchronized (mCallbacks) {
-            mCallbacks.register(callback, null);
-        }
+        mCallbacks.register(callback, null);
     }
 
     /** Unregisters callback */
     public void unregisterBackgroundInstallCallback(IRemoteCallback callback) {
-        synchronized (mCallbacks) {
-            mCallbacks.unregister(callback);
-        }
+        mCallbacks.unregister(callback);
     }
 
     /**
@@ -84,20 +80,18 @@ public class BackgroundInstallControlCallbackHelper {
         extras.putCharSequence(FLAGGED_PACKAGE_NAME_KEY, packageName);
         extras.putInt(FLAGGED_USER_ID_KEY, userId);
         extras.putInt(INSTALL_EVENT_TYPE_KEY, installEventType);
-        synchronized (mCallbacks) {
-            mHandler.post(
-                    () ->
-                            mCallbacks.broadcast(
-                                    callback -> {
-                                        try {
-                                            callback.sendResult(extras);
-                                        } catch (RemoteException e) {
-                                            Slog.e(
-                                                    TAG,
-                                                    "error detected: " + e.getLocalizedMessage(),
-                                                    e);
-                                        }
-                                    }));
+        mHandler.post(
+                () ->
+                        mCallbacks.broadcast(
+                                callback -> {
+                                    try {
+                                        callback.sendResult(extras);
+                                    } catch (RemoteException e) {
+                                        Slog.e(
+                                                TAG,
+                                                "error detected: " + e.getLocalizedMessage(),
+                                                e);
+                                    }
+                                }));
         }
-    }
 }
