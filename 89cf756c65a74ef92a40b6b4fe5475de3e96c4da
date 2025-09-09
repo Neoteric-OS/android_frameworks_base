@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0149733_60d33b3f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1971115
+      },
+      "writtenOn": "2025-09-09T14:54:43Z",
+      "side": 1,
+      "message": "Thanks for sending this fix!\n\nAOSP has been turned down and is now read only.\n\nI\u0027ll cherry pick your change to our internal branch.\n\nIf you want, you can also cherry pick to the partner branch: https://partner-android.googlesource.com/",
+      "revId": "89cf756c65a74ef92a40b6b4fe5475de3e96c4da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
