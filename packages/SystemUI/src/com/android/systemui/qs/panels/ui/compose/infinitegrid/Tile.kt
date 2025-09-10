@@ -35,8 +35,10 @@ import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -65,7 +67,10 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalResources
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.integerResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.role
@@ -92,7 +97,6 @@ import com.android.systemui.lifecycle.rememberViewModel
 import com.android.systemui.qs.flags.QsDetailedView
 import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults.TileCornerRadius
 import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults.TileEndPadding
-import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults.TileHeight
 import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults.TileStartPadding
 import com.android.systemui.qs.panels.ui.compose.infinitegrid.CommonTileDefaults.longPressLabel
 import com.android.systemui.qs.panels.ui.viewmodel.AccessibilityUiState
@@ -277,20 +281,34 @@ fun TileContainer(
     iconOnly: Boolean,
     content: @Composable BoxScope.() -> Unit,
 ) {
-    Box(
-        modifier =
-            Modifier.height(TileHeight)
-                .fillMaxWidth()
-                .tileCombinedClickable(
-                    onClick = onClick,
-                    onLongClick = onLongClick,
-                    accessibilityUiState = uiState.accessibilityUiState,
-                    iconOnly = iconOnly,
-                )
-                .sysuiResTag(if (iconOnly) TEST_TAG_SMALL else TEST_TAG_LARGE)
-                .thenIf(!iconOnly) { Modifier.largeTilePadding(uiState) }, // Icon tiles are center aligned
-        content = content,
-    )
+    BoxWithConstraints {
+        val spacing = dimensionResource(R.dimen.qs_tile_margin_horizontal)
+        val tileHeight = with(LocalDensity.current) {
+            (maxWidth.toPx() / 2) - (spacing.toPx() / 2)
+        }
+        val aspect = if (iconOnly) {
+            1f
+        } else {
+            with(LocalDensity.current) {
+                maxWidth.toPx() / tileHeight
+            }
+        }
+
+        Box(
+            modifier = 
+                Modifier.fillMaxWidth()
+                    .aspectRatio(aspect)
+                    .tileCombinedClickable(
+                        onClick = onClick,
+                        onLongClick = onLongClick,
+                        accessibilityUiState = uiState.accessibilityUiState,
+                        iconOnly = iconOnly,
+                    )
+                    .sysuiResTag(if (iconOnly) TEST_TAG_SMALL else TEST_TAG_LARGE)
+                    .thenIf(!iconOnly) { Modifier.largeTilePadding(uiState) }, // Icon tiles are center aligned
+            content = content,
+        )
+    }
 }
 
 @Composable
@@ -303,9 +321,10 @@ fun LargeStaticTile(
 
     Box(
         modifier
+            .fillMaxWidth()
+            .aspectRatio(2f)
             .clip(RoundedCornerShape(TileCornerRadius))
             .background(colors.background)
-            .height(TileHeight)
             .largeTilePadding(uiState)
     ) {
         LargeTileContent(
