@@ -16,6 +16,24 @@
       "message": "Thanks for sending this fix!\n\nAOSP has been turned down and is now read only.\n\nI\u0027ll cherry pick your change to our internal branch.\n\nIf you want, you can also cherry pick to the partner branch: https://partner-android.googlesource.com/",
       "revId": "89cf756c65a74ef92a40b6b4fe5475de3e96c4da",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e9b59fc_e8feca7c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2025-09-10T09:14:05Z",
+      "side": 1,
+      "message": "Thank you for your review,I have cherry pick this CL to the partner branch,please help review again.The gerrit link:\nhttps://partner-android-review.googlesource.com/c/platform/frameworks/base/+/3453471",
+      "parentUuid": "c0149733_60d33b3f",
+      "revId": "89cf756c65a74ef92a40b6b4fe5475de3e96c4da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
