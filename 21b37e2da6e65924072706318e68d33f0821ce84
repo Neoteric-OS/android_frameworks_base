@@ -1,0 +1,92 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a388a01_7a62c6d5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-09-10T15:55:21Z",
+      "side": 1,
+      "message": "please create a topic with the change in frameworks/av",
+      "revId": "21b37e2da6e65924072706318e68d33f0821ce84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c32bd59d_8cb91928",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1824,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-09-10T15:55:21Z",
+      "side": 1,
+      "message": "rename: hdmiArcSAdUpdate",
+      "range": {
+        "startLine": 1824,
+        "startChar": 16,
+        "endLine": 1824,
+        "endChar": 36
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "9d4ac8cd_44400a5e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+              "range": {
+                "startLine": 1800,
+                "startChar": 0,
+                "endLine": 1801,
+                "endChar": 0
+              },
+              "replacement": "        boolean hdmiArcSAdUpdate \u003d false;\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+              "range": {
+                "startLine": 1824,
+                "startChar": 0,
+                "endLine": 1825,
+                "endChar": 0
+              },
+              "replacement": "                hdmiArcSAdUpdate \u003d true;\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+              "range": {
+                "startLine": 1829,
+                "startChar": 0,
+                "endLine": 1830,
+                "endChar": 0
+              },
+              "replacement": "                        \", hdmiArcSAdUpdate \" + hdmiArcSAdUpdate);\n"
+            },
+            {
+              "path": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+              "range": {
+                "startLine": 1831,
+                "startChar": 0,
+                "endLine": 1832,
+                "endChar": 0
+              },
+              "replacement": "            if ((connect \u0026\u0026 !isConnected) || hdmiArcSAdUpdate) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "21b37e2da6e65924072706318e68d33f0821ce84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
