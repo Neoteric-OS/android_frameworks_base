@@ -1476,12 +1476,13 @@ public final class ActivityThread extends ClientTransactionHandler
                 data.fd = pfd.dup();
                 data.token = servicetoken;
                 data.args = args;
-                sendMessage(H.DUMP_SERVICE, data, 0, 0, true /*async*/);
             } catch (IOException e) {
                 Slog.w(TAG, "dumpService failed", e);
             } finally {
                 IoUtils.closeQuietly(pfd);
             }
+            // Handle the dump work on a thread pool.
+            AsyncTask.THREAD_POOL_EXECUTOR.execute(() -> handleDumpService(data));
         }
 
         // This function exists to make sure all receiver dispatching is
@@ -2393,7 +2394,6 @@ public final class ActivityThread extends ClientTransactionHandler
         public static final int BIND_SERVICE            = 121;
         @UnsupportedAppUsage
         public static final int UNBIND_SERVICE          = 122;
-        public static final int DUMP_SERVICE            = 123;
         public static final int LOW_MEMORY              = 124;
         public static final int PROFILER_CONTROL        = 127;
         public static final int CREATE_BACKUP_AGENT     = 128;
@@ -2455,7 +2455,6 @@ public final class ActivityThread extends ClientTransactionHandler
                     case GC_WHEN_IDLE: return "GC_WHEN_IDLE";
                     case BIND_SERVICE: return "BIND_SERVICE";
                     case UNBIND_SERVICE: return "UNBIND_SERVICE";
-                    case DUMP_SERVICE: return "DUMP_SERVICE";
                     case LOW_MEMORY: return "LOW_MEMORY";
                     case PROFILER_CONTROL: return "PROFILER_CONTROL";
                     case CREATE_BACKUP_AGENT: return "CREATE_BACKUP_AGENT";
@@ -2667,9 +2666,6 @@ public final class ActivityThread extends ClientTransactionHandler
                     } finally {
                         Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
                     }
-                    break;
-                case DUMP_SERVICE:
-                    handleDumpService((DumpComponentInfo)msg.obj);
                     break;
                 case DUMP_GFXINFO:
                     handleDumpGfxInfo((DumpComponentInfo) msg.obj);
