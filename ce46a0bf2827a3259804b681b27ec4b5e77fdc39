@@ -22,6 +22,30 @@
       },
       "revId": "ce46a0bf2827a3259804b681b27ec4b5e77fdc39",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "735e2e4e_eeb1bc05",
+        "filename": "services/core/java/com/android/server/appop/AppOpsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5438,
+      "author": {
+        "id": 1395785
+      },
+      "writtenOn": "2025-09-11T16:51:21Z",
+      "side": 1,
+      "message": "Yeah, in fact we have no reason to be writing it to this file anymore.",
+      "parentUuid": "938b0e25_2307e262",
+      "range": {
+        "startLine": 5435,
+        "startChar": 8,
+        "endLine": 5438,
+        "endChar": 9
+      },
+      "revId": "ce46a0bf2827a3259804b681b27ec4b5e77fdc39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
