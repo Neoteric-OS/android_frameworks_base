@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "df665ed0_f486a6ed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1969763
+      },
+      "writtenOn": "2025-09-12T07:38:48Z",
+      "side": 1,
+      "message": "can someone provide +1 or +2?  then i will cherry pick to internal gerrit for merging since AOSP appears read only now.  thank you",
+      "revId": "4434263b5137671ec753637bfb178d43821f3ee6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0d283a6b_27860468",
