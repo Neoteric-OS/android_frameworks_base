@@ -3046,6 +3046,12 @@ public class DisplayManagerServiceTest {
         LogicalDisplayMapper logicalDisplayMapper = displayManager.getLogicalDisplayMapper();
         FakeDisplayManagerCallback callback = new FakeDisplayManagerCallback();
         bs.registerCallbackWithEventMask(callback, STANDARD_AND_CONNECTION_DISPLAY_EVENTS);
+
+        callback.expectsEvent(EVENT_DISPLAY_ADDED);
+        FakeDisplayDevice displayDevice =
+                createFakeDisplayDevice(displayManager, new float[]{60f}, Display.TYPE_INTERNAL);
+        callback.waitForExpectedEvent();
+
         callback.expectsEvent(EVENT_DISPLAY_CONNECTED);
         FakeDisplayDevice displayDevice =
                 createFakeDisplayDevice(displayManager, new float[]{60f}, Display.TYPE_EXTERNAL);
