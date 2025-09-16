@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "063bd264_217b057b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 3397250
+      },
+      "writtenOn": "2025-09-16T03:25:47Z",
+      "side": 1,
+      "message": "This code is related to https://partnerissuetracker.corp.google.com/u/2/issues/414507692?pli\u003d1.\n\nWe believe that NetworkWatchlistService reporting during the boot phase is inappropriate and will slow down other system services. Therefore, we have decided to postpone it until 1 minute later. We assume that the system is still in the boot phase within 30 seconds. If NetworkWatchlistService reports during this phase, we will postpone it by 1 minute. If there is a better optimization method, I hope reviewers can also provide it, thank you.\n\nThe test steps are as follows:\n1.Install 60 APKs; All Logs, Data filled to 95%;\n2.Close watchdog, open Sysdump;\n3.Repeated restart for a long time (120h)",
+      "parentUuid": "4a0c9a16_c0da17fe",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 61
+      },
+      "revId": "0a79d442010a453fc1eba422ccab583f7b82eb50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "4e2a3c3e_1c2a728d",
