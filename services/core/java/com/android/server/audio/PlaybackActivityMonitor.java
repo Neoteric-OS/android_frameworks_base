@@ -382,6 +382,11 @@ public final class PlaybackActivityMonitor
             sEventLogger.enqueue(new PlayerEvent(piid, event, eventValues));
 
             if (event == AudioPlaybackConfiguration.PLAYER_UPDATE_PORT_ID) {
+                // clear mute state if old port id is valid
+                if (mPiidToPortId.get(piid) != 0) {
+                    mEventHandler.sendMessage(
+                        mEventHandler.obtainMessage(MSG_IIL_UPDATE_PLAYER_MUTED_EVENT, piid, 0, null));
+                }
                 mPiidToPortId.put(piid, eventValues[0]);
                 return;
             } else if (event == AudioPlaybackConfiguration.PLAYER_STATE_STARTED) {
@@ -434,7 +439,6 @@ public final class PlaybackActivityMonitor
             Log.e(TAG, "Forbidden operation from uid " + binderUid);
             return;
         }
-
         synchronized (mPlayerLock) {
             int piid;
             int idxOfPiid = mPiidToPortId.indexOfValue(portId);
