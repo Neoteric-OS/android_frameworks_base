@@ -20,6 +20,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "886a4857_873710a8",
+        "filename": "core/java/android/os/StrictMode.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1500,
+      "author": {
+        "id": 1080076
+      },
+      "writtenOn": "2025-09-17T17:31:43Z",
+      "side": 1,
+      "message": "this change goes directly against the sentiment in this comment - we\u0027d have an unbounded uncontrolled set of excluded apps instead of trying to approach 0",
+      "range": {
+        "startLine": 1500,
+        "startChar": 0,
+        "endLine": 1500,
+        "endChar": 52
+      },
+      "revId": "d490db3dee975f793f421c8fe373fdee2474e5ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5e1d625f_24642a62",
         "filename": "core/java/android/os/StrictMode.java",
         "patchSetId": 1
@@ -31,6 +54,24 @@
       "writtenOn": "2025-06-26T21:25:00Z",
       "side": 1,
       "message": "I\u0027m not opposed to making this customizable. It does look like every system app will end up hitting this resource query 2x at startup, at least on `userdebug`, @zyy@google.com any thoughts on whether it\u0027s worth optimizing the list load (e.g. load/cache in the zygote)? Probably not a big deal either way.",
+      "revId": "d490db3dee975f793f421c8fe373fdee2474e5ee",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59890a7e_84729df4",
+        "filename": "core/java/android/os/StrictMode.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1525,
+      "author": {
+        "id": 1080076
+      },
+      "writtenOn": "2025-09-17T17:31:43Z",
+      "side": 1,
+      "message": "a string array lookup is pretty cheap (microseconds if the files are cached), and it will only be noticeable under heavy memory pressure. On the other hand, it\u0027s still a disk access that makes not much sense for almost any app - the majority isn\u0027t on the list anyway, so a zygote cache is a good idea if we\u0027re ok with the resource to only be overlayable via immutable preconfigured overlays.\n\nBTW, the check should probably go after the next \"if\" in the calling function so that it only runs when we couldn\u0027t determine the result more easily",
+      "parentUuid": "5e1d625f_24642a62",
       "revId": "d490db3dee975f793f421c8fe373fdee2474e5ee",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
