@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "e09d67b5_ce169799",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 4290106
+      },
+      "writtenOn": "2025-09-17T05:34:26Z",
+      "side": 1,
+      "message": "We reproduced this issue through pressure testing.",
+      "parentUuid": "88f6b7b2_381023b7",
+      "range": {
+        "startLine": 10,
+        "startChar": 193,
+        "endLine": 10,
+        "endChar": 204
+      },
+      "revId": "4434263b5137671ec753637bfb178d43821f3ee6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "df665ed0_f486a6ed",
