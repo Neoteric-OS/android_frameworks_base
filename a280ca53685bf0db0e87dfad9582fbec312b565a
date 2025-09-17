@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95dfd00c_cf004058",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1969763
+      },
+      "writtenOn": "2025-09-17T06:02:54Z",
+      "side": 1,
+      "message": "please add one line in commit message\n\nTest: how to verify this patch",
+      "revId": "a280ca53685bf0db0e87dfad9582fbec312b565a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "186edc57_99cc1d70",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1969763
+      },
+      "writtenOn": "2025-09-17T06:02:54Z",
+      "side": 1,
+      "message": "line 54 is too long, need reformat, please run \"alint -- -c CheckContents\"",
+      "revId": "a280ca53685bf0db0e87dfad9582fbec312b565a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
