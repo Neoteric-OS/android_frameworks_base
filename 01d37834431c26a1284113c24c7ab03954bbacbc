@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b6252f3_c060e24b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1014545
+      },
+      "writtenOn": "2025-09-17T17:23:04Z",
+      "side": 1,
+      "message": "This needs an associated minimal automated repro test to consider this patch, ideally contributed to CTS.\n\nIt looks like it targets a case where the start time is in the future relative to AnimationUtils.currentAnimationTimeMillis. A fix should prevent this bad state from entering the system rather than working around bad state that has already been accepted.",
+      "revId": "01d37834431c26a1284113c24c7ab03954bbacbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
