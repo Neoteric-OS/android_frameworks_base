@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "88f6b7b2_381023b7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1969763
+      },
+      "writtenOn": "2025-09-17T03:16:14Z",
+      "side": 1,
+      "message": "I understand the Transsion team has not yet identified reproduction steps for the double free issue. This solution serves as a mitigation, rather than addressing the underlying root cause.",
+      "range": {
+        "startLine": 10,
+        "startChar": 193,
+        "endLine": 10,
+        "endChar": 204
+      },
+      "revId": "4434263b5137671ec753637bfb178d43821f3ee6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "df665ed0_f486a6ed",
