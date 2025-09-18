@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74552739_6b723599",
+        "filename": "packages/SettingsLib/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1472,
+      "author": {
+        "id": 1944471
+      },
+      "writtenOn": "2025-09-18T08:25:20Z",
+      "side": 1,
+      "message": "Need UX input for the wording update. Besides, directly changing the string here could cause translation issues, BACKUP_MESSAGE_ID is necessary to keep the translation until the new one is ready. \n\nCould you please send a bug to request the wording update?",
+      "range": {
+        "startLine": 1472,
+        "startChar": 51,
+        "endLine": 1472,
+        "endChar": 151
+      },
+      "revId": "bfdd1c0b3bacc02eb529888c9d420e8665438fcf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
