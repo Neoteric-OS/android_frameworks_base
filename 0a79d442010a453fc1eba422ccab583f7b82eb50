@@ -74,6 +74,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "3add328f_5a686a87",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 3397250
+      },
+      "writtenOn": "2025-09-18T02:51:47Z",
+      "side": 1,
+      "message": "I think your summary is correct, thank you for that.",
+      "parentUuid": "79152513_a7638a58",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 61
+      },
+      "revId": "0a79d442010a453fc1eba422ccab583f7b82eb50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "4e2a3c3e_1c2a728d",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 2
