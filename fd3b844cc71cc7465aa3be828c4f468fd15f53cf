@@ -16,6 +16,24 @@
       "message": "@bookatz@google.com\nCould you help review this CL?",
       "revId": "fd3b844cc71cc7465aa3be828c4f468fd15f53cf",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e86d3f5c_f93b77e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1165283
+      },
+      "writtenOn": "2025-09-18T22:57:18Z",
+      "side": 1,
+      "message": "This is already fixed in the next release. The new code is:\n```\n    public boolean isForegroundUserAdmin() {\n        // No permission requirements for this API.\n        final int currentUserId \u003d getCurrentUserId();\n        if (currentUserId !\u003d UserHandle.USER_NULL) {\n            synchronized (mUsersLock) {\n                final UserInfo userInfo \u003d getUserInfoLU(currentUserId);\n                return userInfo !\u003d null \u0026\u0026 userInfo.isAdmin();\n            }\n        }\n        return false;\n    }\n```",
+      "parentUuid": "cf607ead_6af13199",
+      "revId": "fd3b844cc71cc7465aa3be828c4f468fd15f53cf",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
