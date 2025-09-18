@@ -1469,7 +1469,7 @@
     <string name="tv_media_transfer_hdmi_title">TV Audio</string>
 
     <!-- Warning message to tell user is have problem during profile connect, it need to turn off device and back on. [CHAR_LIMIT=NONE] -->
-    <string name="profile_connect_timeout_subtext">Problem connecting. Turn device off &amp; back on</string>
+    <string name="profile_connect_timeout_subtext">Connected (no media signal or call audio detected), please check your Bluetooth device and try again</string>
 
     <!-- Name of the 3.5mm audio device. [CHAR LIMIT=40] -->
     <string name="media_transfer_wired_device_name">Wired audio device</string>
