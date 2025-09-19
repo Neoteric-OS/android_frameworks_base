@@ -762,6 +762,8 @@ class Transition implements BLASTSyncEngine.TransactionReadyListener {
         // Snapshot before checking if this is a participant in case it has been re-parented.
         snapshotStartState(getAnimatableParent(wc));
         if (mParticipants.contains(wc)) return;
+        // Transition is aborted, so don't collect.
+        if (mSyncId == -1) return;
         // Transient-hide may be hidden later, so no need to request redraw.
         if (!isInTransientHide(wc)) {
             mSyncEngine.addToSyncSet(mSyncId, wc);
