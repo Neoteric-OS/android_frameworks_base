@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5ee1d208_fc07c994",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1969763
+      },
+      "writtenOn": "2025-09-19T04:16:37Z",
+      "side": 1,
+      "message": "Acknowledged.  if you find a way to reproduce and prove your theory, please reopen this patch, we can resume the code review",
+      "parentUuid": "c789e687_0ecd072c",
+      "revId": "a280ca53685bf0db0e87dfad9582fbec312b565a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "186edc57_99cc1d70",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 2
