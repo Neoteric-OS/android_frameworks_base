@@ -342,7 +342,7 @@ public class WallpaperCropper {
                 adjustedCrop.left = 0;
                 adjustedCrop.right = bitmapSize.x;
             }
-            int heightToRemove = (int) (crop.height() - (adjustedCrop.width() / screenRatio));
+            int heightToRemove = (int) Math.round((crop.height() - (adjustedCrop.width() / screenRatio)));
             adjustedCrop.top += heightToRemove / 2 + heightToRemove % 2;
             adjustedCrop.bottom -= heightToRemove / 2;
         }
