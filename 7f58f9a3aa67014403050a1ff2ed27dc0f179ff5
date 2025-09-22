@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eef73f9b_7d1fbd2e",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1839,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-09-22T23:04:33Z",
+      "side": 1,
+      "message": "(connect \u0026\u0026 (!isConnected) || hdmiArcSadUpdate))\nreflects more accurately that hdmiArcSadUpdate applies only when \"connect\" is true",
+      "range": {
+        "startLine": 1839,
+        "startChar": 16,
+        "endLine": 1839,
+        "endChar": 61
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "e38398ae_c20addbe",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+              "range": {
+                "startLine": 1839,
+                "startChar": 0,
+                "endLine": 1840,
+                "endChar": 0
+              },
+              "replacement": "            if (connect \u0026\u0026 (!isConnected || hdmiArcSadUpdate)) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "7f58f9a3aa67014403050a1ff2ed27dc0f179ff5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
