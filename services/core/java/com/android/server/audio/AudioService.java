@@ -5381,7 +5381,7 @@ public class AudioService extends IAudioService.Stub
     private int getUidForZoneId(int zoneId) {
         int userId = getCurrentUserIdFromCache();
         if (multiZoneAudio()) {
-            synchronized (mSettingsLock) {
+            synchronized (mMultiZoneAudioSettingsLock) {
                 userId = getUserIdForZoneIdLocked(zoneId);
             }
             if (DEBUG_VOL) {
