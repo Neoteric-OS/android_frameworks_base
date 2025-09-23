@@ -25,16 +25,4 @@ import com.android.ims.internal.IImsStreamMediaSession;
  * in the IImsStreamMediaSession AIDL. Override the methods that your implementation of
  * ImsStreamMediaSession supports.
  *
- * DO NOT remove or change the existing APIs, only add new ones to this Base implementation or you
- * will break other implementations of ImsStreamMediaSession maintained by other ImsServices.
- *
- * @hide
- */
-
-public class ImsStreamMediaSessionImplBase extends IImsStreamMediaSession.Stub {
-
-    @Override
-    public void close() throws RemoteException {
-
-    }
-}
+ * DO NOT remove or change the existing APIs, only add new ones to this Base implementation 
