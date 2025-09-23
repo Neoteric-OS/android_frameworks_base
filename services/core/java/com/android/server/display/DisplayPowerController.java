@@ -471,7 +471,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
     private DualRampAnimator<DisplayPowerState> mScreenBrightnessRampAnimator;
 
     // True if this DisplayPowerController has been stopped and should no longer be running.
-    private boolean mStopped;
+    private volatile boolean mStopped;
 
     private DisplayDeviceConfig mDisplayDeviceConfig;
 
