@@ -336,8 +336,14 @@ public final class UsbAlsaManager {
                     new UsbAlsaDevice(mAudioService, cardRec.getCardNum(), 0 /*device*/,
                                       deviceAddress, hasOutput, hasInput,
                                       isInputHeadset, isOutputHeadset, isDock);
-            alsaDevice.setDeviceNameAndDescription(
-                    usbDevice.getProductName(), cardRec.getCardDescription());
+            if (usbDevice.getProductName() == null) {
+                Slog.i(TAG, "product name is null,use card name " + cardRec.getCardName() + " instead.");
+                alsaDevice.setDeviceNameAndDescription(
+                        cardRec.getCardName(), cardRec.getCardDescription());
+            } else {
+                alsaDevice.setDeviceNameAndDescription(
+                        usbDevice.getProductName(), cardRec.getCardDescription());
+            }
             if (IS_MULTI_MODE) {
                 deselectCurrentDevice(alsaDevice.getInputDeviceType());
                 deselectCurrentDevice(alsaDevice.getOutputDeviceType());
