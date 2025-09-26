@@ -167,4 +167,15 @@
         android:title="@string/projection_privacy_indicator_title"
         sysui:defValue="true" />
 
+    <com.android.systemui.tuner.TunerSwitch
+        android:icon="@drawable/ic_statusbar_volte"
+        android:key="show_volte_icon"
+        android:title="@string/statusbar_volte_title"
+        sysui:defValue="false" />
+
+    <com.android.systemui.tuner.TunerSwitch
+        android:icon="@drawable/ic_statusbar_vowifi"
+        android:key="show_vowifi_icon"
+        android:title="@string/statusbar_vowifi_title"
+        sysui:defValue="false" />
 </PreferenceScreen>
