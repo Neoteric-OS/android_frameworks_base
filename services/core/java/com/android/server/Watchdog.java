@@ -685,7 +685,9 @@ public class Watchdog implements Dumpable {
      * <p>This method does not require resume to be called.
      */
     public void pauseWatchingMonitorsFor(int pauseMillis, String reason) {
-        mMonitorChecker.pauseForLocked(pauseMillis, reason);
+        synchronized (mLock) {
+            mMonitorChecker.pauseForLocked(pauseMillis, reason);
+        }
     }
 
     /**
