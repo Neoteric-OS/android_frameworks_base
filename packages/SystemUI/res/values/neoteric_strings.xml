@@ -206,4 +206,8 @@
     <string name="mic_camera_privacy_indicator_title">Mic and camera privacy indicator</string>
     <string name="location_privacy_indicator_title">Location privacy indicator</string>
     <string name="projection_privacy_indicator_title">Media projection privacy indicator</string>
+
+    <!-- VoLTE / VoWiFi -->
+    <string name="statusbar_volte_title">HD calling</string>
+    <string name="statusbar_vowifi_title">Wi-Fi calling</string>
 </resources>
