@@ -68,6 +68,8 @@ public class SignalDrawable extends DrawableWrapper {
     private static final int STATE_MASK = 0xff << STATE_SHIFT;
     private static final int STATE_CUT = 2;
     private static final int STATE_CARRIER_CHANGE = 3;
+    private static final int STATE_R = 4;
+    private static final int STATE_CUT_AND_R = 5;
 
     private static final long DOT_DELAY = 1000;
 
@@ -81,11 +83,15 @@ public class SignalDrawable extends DrawableWrapper {
     private final Path mCutoutPath = new Path();
     private final Path mForegroundPath = new Path();
     private final Path mAttributionPath = new Path();
+    private final Path mVoltePath = new Path();
     private final Matrix mAttributionScaleMatrix = new Matrix();
     private final Path mScaledAttributionPath = new Path();
+    private final Path mScaledVoltePath = new Path();
     private final Handler mHandler;
     private final float mCutoutWidthFraction;
     private final float mCutoutHeightFraction;
+    private final float mRCutoutWidthFraction;
+    private final float mRCutoutHeightFraction;
     private float mDarkIntensity = -1;
     private final int mIntrinsicSize;
     private boolean mAnimating;
@@ -99,12 +105,19 @@ public class SignalDrawable extends DrawableWrapper {
         super(context.getDrawable(ICON_RES));
         final String attributionPathString = context.getString(
                 com.android.internal.R.string.config_signalAttributionPath);
+        final String voltePathString = context.getString(
+                R.string.config_signalVoltePath);
         mAttributionPath.set(PathParser.createPathFromPathData(attributionPathString));
+        mVoltePath.set(PathParser.createPathFromPathData(voltePathString));
         updateScaledAttributionPath();
         mCutoutWidthFraction = context.getResources().getFloat(
                 com.android.internal.R.dimen.config_signalCutoutWidthFraction);
         mCutoutHeightFraction = context.getResources().getFloat(
                 com.android.internal.R.dimen.config_signalCutoutHeightFraction);
+        mRCutoutWidthFraction = context.getResources().getFloat(
+                R.dimen.config_volteCutoutWidthFraction);
+        mRCutoutHeightFraction = context.getResources().getFloat(
+                R.dimen.config_volteCutoutHeightFraction);
         mDarkModeFillColor = Utils.getColorStateListDefaultColor(context,
                 R.color.dark_mode_icon_color_single_tone);
         mLightModeFillColor = Utils.getColorStateListDefaultColor(context,
@@ -124,6 +137,7 @@ public class SignalDrawable extends DrawableWrapper {
                     getBounds().width() / VIEWPORT, getBounds().height() / VIEWPORT);
         }
         mAttributionPath.transform(mAttributionScaleMatrix, mScaledAttributionPath);
+        mVoltePath.transform(mAttributionScaleMatrix, mScaledVoltePath);
     }
 
     @Override
@@ -241,9 +255,32 @@ public class SignalDrawable extends DrawableWrapper {
             drawDotAndPadding(x - dotSpacing * 2, y, dotPadding, dotSize, 0);
             canvas.drawPath(mCutoutPath, mTransparentPaint);
             canvas.drawPath(mForegroundPath, mForegroundPaint);
-        } else if (!newStatusBarIcons() && isInState(STATE_CUT)) {
-            float cutX = (mCutoutWidthFraction * width / VIEWPORT);
-            float cutY = (mCutoutHeightFraction * height / VIEWPORT);
+        } else if (!newStatusBarIcons() && isInState(STATE_CUT_AND_R)) {
+            // Volte
+            float cutWidth = mRCutoutWidthFraction;
+            float cutHeight = mRCutoutHeightFraction;
+            float cutX = (cutWidth * width / VIEWPORT);
+            float cutY = (cutHeight * height / VIEWPORT);
+            float rIconOffset = -0.8f * (mCutoutWidthFraction * width / VIEWPORT);
+            mCutoutPath.moveTo(width + rIconOffset, height);
+            mCutoutPath.rLineTo(-cutX, 0);
+            mCutoutPath.rLineTo(0, -cutY);
+            mCutoutPath.rLineTo(cutX, 0);
+            mCutoutPath.rLineTo(0, cutY);
+            canvas.drawPath(mCutoutPath, mTransparentPaint);
+            // Adjust mScaledVoltePath
+            Path adjustedVoltePath = new Path(mScaledVoltePath);
+            Matrix matrix = new Matrix();
+            matrix.postTranslate(rIconOffset, 0);
+            adjustedVoltePath.transform(matrix);
+            canvas.drawPath(adjustedVoltePath, mForegroundPaint);
+            // Attribution
+            mCutoutPath.reset();
+            mCutoutPath.setFillType(FillType.WINDING);
+            cutWidth = mCutoutWidthFraction;
+            cutHeight = mCutoutHeightFraction;
+            cutX = (cutWidth * width / VIEWPORT);
+            cutY = (cutHeight * height / VIEWPORT);
             mCutoutPath.moveTo(width, height);
             mCutoutPath.rLineTo(-cutX, 0);
             mCutoutPath.rLineTo(0, -cutY);
@@ -251,6 +288,20 @@ public class SignalDrawable extends DrawableWrapper {
             mCutoutPath.rLineTo(0, cutY);
             canvas.drawPath(mCutoutPath, mTransparentPaint);
             canvas.drawPath(mScaledAttributionPath, mForegroundPaint);
+        } else if (!newStatusBarIcons() && (isInState(STATE_CUT) || isInState(STATE_R))) {
+            boolean isVolte = isInState(STATE_R);
+            float cutWidth = isVolte ? mRCutoutWidthFraction : mCutoutWidthFraction;
+            float cutHeight = isVolte ? mRCutoutHeightFraction : mCutoutHeightFraction;
+            float cutX = (cutWidth * width / VIEWPORT);
+            float cutY = (cutHeight * height / VIEWPORT);
+            mCutoutPath.moveTo(width, height);
+            mCutoutPath.rLineTo(-cutX, 0);
+            mCutoutPath.rLineTo(0, -cutY);
+            mCutoutPath.rLineTo(cutX, 0);
+            mCutoutPath.rLineTo(0, cutY);
+            canvas.drawPath(mCutoutPath, mTransparentPaint);
+            canvas.drawPath(isVolte ? mScaledVoltePath : mScaledAttributionPath,
+                    mForegroundPaint);
         }
         if (isRtl) {
             canvas.restore();
@@ -312,10 +363,13 @@ public class SignalDrawable extends DrawableWrapper {
         return (fullState & STATE_MASK) >> STATE_SHIFT;
     }
 
+    public static int getState(int level, int numLevels, boolean cutOut, boolean volte) {
+        int state = cutOut ? (volte ? STATE_CUT_AND_R : STATE_CUT) : (volte ? STATE_R : 0);
+        return (state << STATE_SHIFT) | (numLevels << NUM_LEVEL_SHIFT) | level;
+    }
+
     public static int getState(int level, int numLevels, boolean cutOut) {
-        return ((cutOut ? STATE_CUT : 0) << STATE_SHIFT)
-                | (numLevels << NUM_LEVEL_SHIFT)
-                | level;
+        return getState(level, numLevels, cutOut, false);
     }
 
     @Override
