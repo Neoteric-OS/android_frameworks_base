@@ -200,4 +200,8 @@
     <string name="usage_data">used today</string>
     <string name="usage_data_default_suffix">Data</string>
     <string name="usage_wifi_default_suffix">Wi-Fi</string>
+
+    <!-- VoLTE / VoWiFi -->
+    <string name="statusbar_volte_title">HD calling</string>
+    <string name="statusbar_vowifi_title">Wi-Fi calling</string>
 </resources>

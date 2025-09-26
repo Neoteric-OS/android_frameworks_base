@@ -28,6 +28,7 @@ import android.telephony.SubscriptionManager
 import android.telephony.SubscriptionManager.PROFILE_CLASS_PROVISIONING
 import com.android.settingslib.SignalIcon.MobileIconGroup
 import com.android.settingslib.mobile.TelephonyIcons
+import com.android.systemui.common.coroutine.ConflatedCallbackFlow.conflatedCallbackFlow
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.flags.FeatureFlagsClassic
@@ -43,11 +44,13 @@ import com.android.systemui.statusbar.pipeline.mobile.data.model.MobileIconCusto
 import com.android.systemui.statusbar.pipeline.mobile.domain.model.SignalIconModel
 import com.android.systemui.statusbar.pipeline.shared.data.repository.ConnectivityRepository
 import com.android.systemui.statusbar.policy.data.repository.UserSetupRepository
+import com.android.systemui.tuner.TunerService
 import com.android.systemui.util.CarrierConfigTracker
 import com.android.systemui.util.CarrierNameCustomization
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -165,6 +168,7 @@ constructor(
     private val context: Context,
     private val featureFlagsClassic: FeatureFlagsClassic,
     val carrierNameCustomization: CarrierNameCustomization,
+    private val tunerService: TunerService,
 ) : MobileIconsInteractor {
 
     // Weak reference lookup for created interactors
@@ -456,19 +460,30 @@ constructor(
             .stateIn(scope, SharingStarted.WhileSubscribed(), MobileIconCustomizationMode())
 
     override val showVolteIcon: StateFlow<Boolean> =
-        mobileConnectionsRepo.defaultDataSubRatConfig
-            .mapLatest { it.showVolteIcon }
+        tunerService.asFlow(TUNER_SHOW_VOLTE, defaultValue = false)
             .stateIn(scope, SharingStarted.WhileSubscribed(), false)
 
     override val showVowifiIcon: StateFlow<Boolean> =
-        mobileConnectionsRepo.defaultDataSubRatConfig
-            .mapLatest { it.showVowifiIcon }
+        tunerService.asFlow(TUNER_SHOW_VOWIFI, defaultValue = false)
             .stateIn(scope, SharingStarted.WhileSubscribed(), false)
 
     private val crossSimdisplaySingnalLevel: StateFlow<Boolean> =
         mobileConnectionsRepo.defaultDataSubRatConfig
             .mapLatest { it.crossSimdisplaySingnalLevel }
             .stateIn(scope, SharingStarted.WhileSubscribed(), false)
+
+    private fun TunerService.asFlow(
+        key: String,
+        defaultValue: Boolean
+    ): Flow<Boolean> = conflatedCallbackFlow {
+        val callback = TunerService.Tunable { changedKey, newValue ->
+            if (changedKey == key) {
+                trySend(TunerService.parseIntegerSwitch(newValue, defaultValue))
+            }
+        }
+        addTunable(callback, key)
+        awaitClose { removeTunable(callback) }
+    }
 
     /** Vends out new [MobileIconInteractor] for a particular subId */
     override fun getMobileConnectionInteractorForSubId(subId: Int): MobileIconInteractor =
@@ -502,5 +517,7 @@ constructor(
 
     companion object {
         private const val LOGGING_PREFIX = "Intr"
+        private const val TUNER_SHOW_VOLTE = "show_volte_icon"
+        private const val TUNER_SHOW_VOWIFI = "show_vowifi_icon"
     }
 }
