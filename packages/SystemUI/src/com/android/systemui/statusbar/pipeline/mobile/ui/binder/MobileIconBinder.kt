@@ -71,11 +71,9 @@ object MobileIconBinder {
         val networkTypeContainer = view.requireViewById<FrameLayout>(R.id.mobile_type_container)
         val iconView = view.requireViewById<ImageView>(R.id.mobile_signal)
         val mobileDrawable = SignalDrawable(view.context)
-        val roamingView = view.requireViewById<ImageView>(R.id.mobile_roaming)
-        val roamingSpace = view.requireViewById<Space>(R.id.mobile_roaming_space)
-        val endSideRoamingView = view.requireViewById<ImageView>(R.id.mobile_roaming_updated)
         val dotView = view.requireViewById<StatusBarIconView>(R.id.status_bar_dot)
         val volteView = view.requireViewById<ImageView>(R.id.mobile_volte)
+        val volteSpace = view.requireViewById<Space>(R.id.mobile_volte_space)
         view.isVisible = viewModel.isVisible.value
         iconView.isVisible = true
         // TODO(b/238425913): We should log this visibility state.
@@ -216,17 +214,6 @@ object MobileIconBinder {
                             }
                         }
                     }
-                    // Set the roaming indicator
-                    launch {
-                        viewModel.roaming.distinctUntilChanged().collect { isRoaming ->
-                            if (NewStatusBarIcons.isEnabled) {
-                                endSideRoamingView.isVisible = isRoaming
-                            } else {
-                                roamingView.isVisible = isRoaming
-                                roamingSpace.isVisible = isRoaming
-                            }
-                        }
-                    }
 
                     // Set the activity indicators
                     launch { viewModel.activityInVisible.collect { activityIn.isVisible = it } }
@@ -251,8 +238,6 @@ object MobileIconBinder {
                             } else {
                                 networkTypeView.imageTintList = tint
                             }
-                            roamingView.imageTintList = tint
-                            endSideRoamingView.imageTintList = tint
                             activityIn.imageTintList = tint
                             activityOut.imageTintList = tint
                             dotView.setDecorColor(colors.tint)
@@ -266,6 +251,7 @@ object MobileIconBinder {
                             if (volteId != 0 &&
                                 viewModel.location != StatusBarLocation.SHADE_CARRIER_GROUP) {
                                 volteView.visibility = VISIBLE
+                                volteSpace.visibility = VISIBLE 
                                 volteView.setImageResource(volteId)
                             } else {
                                 volteView.visibility = GONE
