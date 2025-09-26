@@ -354,11 +354,6 @@ private class CellularIconViewModel(
             val netWorkType = imsInfo.originNetworkType
             if ((imsInfo.voiceCapable || imsInfo.videoCapable) && imsInfo.imsRegistered) {
                 return@combine R.drawable.ic_volte
-            } else if ((netWorkType == TelephonyManager.NETWORK_TYPE_LTE
-                        || netWorkType == TelephonyManager.NETWORK_TYPE_LTE_CA)
-                && isInService
-                && voiceNetworkType  == TelephonyManager.NETWORK_TYPE_UNKNOWN) {
-                return@combine R.drawable.ic_volte_no_voice
             } else {
                 return@combine 0
             }

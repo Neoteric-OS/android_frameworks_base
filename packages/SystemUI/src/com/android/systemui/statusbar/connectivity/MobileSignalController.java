@@ -460,15 +460,6 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
 // QTI_END: 2019-04-28: Android_UI: SystemUI: Enhancement for volte icon
 // QTI_BEGIN: 2018-08-02: Android_UI: SystemUI: Add new configuration for displaying Volte icon
             resId = R.drawable.ic_volte;
-// QTI_END: 2018-08-02: Android_UI: SystemUI: Add new configuration for displaying Volte icon
-        }else if ( (mCurrentState.telephonyDisplayInfo.getNetworkType() == TelephonyManager.NETWORK_TYPE_LTE
-                    || mCurrentState.telephonyDisplayInfo.getNetworkType() ==
-                        TelephonyManager.NETWORK_TYPE_LTE_CA)
-// QTI_BEGIN: 2019-12-17: Android_UI: SystemUI: Update the condition to show no voice icon
-                    && voiceNetTye  == TelephonyManager.NETWORK_TYPE_UNKNOWN) {
-// QTI_END: 2019-12-17: Android_UI: SystemUI: Update the condition to show no voice icon
-// QTI_BEGIN: 2018-08-02: Android_UI: SystemUI: Add new configuration for displaying Volte icon
-            resId = R.drawable.ic_volte_no_voice;
         }
         return resId;
     }
@@ -1123,9 +1114,7 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
     }
 
     private MobileIconGroup getVowifiIconGroup() {
-        if ( isVowifiAvailable() && !isCallIdle() ) {
-            return TelephonyIcons.VOWIFI_CALLING;
-        }else if (isVowifiAvailable()) {
+        if (isVowifiAvailable()) {
             return TelephonyIcons.VOWIFI;
         }else {
             return null;

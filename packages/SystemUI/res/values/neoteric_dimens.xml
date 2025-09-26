@@ -55,4 +55,7 @@
     <dimen name="ticker_start_padding">@dimen/status_bar_padding_start</dimen>
     <dimen name="ticker_icon_end_margin">4dp</dimen>
     <dimen name="ticker_text_end_padding">4dp</dimen>
+
+    <!-- HD calling icon -->
+    <dimen name="signal_icon_viewport_size">24dp</dimen>
 </resources>
