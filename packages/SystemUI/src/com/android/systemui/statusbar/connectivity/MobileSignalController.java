@@ -370,11 +370,6 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         if ( (mCurrentState.voiceCapable || mCurrentState.videoCapable)
                 &&  mCurrentState.imsRegistered ) {
             resId = R.drawable.ic_volte;
-        }else if ( (mCurrentState.telephonyDisplayInfo.getNetworkType() == TelephonyManager.NETWORK_TYPE_LTE
-                    || mCurrentState.telephonyDisplayInfo.getNetworkType() ==
-                        TelephonyManager.NETWORK_TYPE_LTE_CA)
-                    && voiceNetTye  == TelephonyManager.NETWORK_TYPE_UNKNOWN) {
-            resId = R.drawable.ic_volte_no_voice;
         }
         return resId;
     }
@@ -903,9 +898,7 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
     }
 
     private MobileIconGroup getVowifiIconGroup() {
-        if ( isVowifiAvailable() && !isCallIdle() ) {
-            return TelephonyIcons.VOWIFI_CALLING;
-        }else if (isVowifiAvailable()) {
+        if (isVowifiAvailable()) {
             return TelephonyIcons.VOWIFI;
         }else {
             return null;
