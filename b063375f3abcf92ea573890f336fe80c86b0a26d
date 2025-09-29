@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3aca676_0bb63793",
+        "filename": "services/core/java/com/android/server/Watchdog.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1898965
+      },
+      "writtenOn": "2025-09-29T08:48:55Z",
+      "side": 1,
+      "message": "Why is this lock needed?",
+      "revId": "b063375f3abcf92ea573890f336fe80c86b0a26d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
