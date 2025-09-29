@@ -30,6 +30,7 @@ import android.util.ArraySet;
 import android.util.Slog;
 
 import com.android.internal.pm.pkg.component.ParsedUsesPermission;
+import com.android.internal.annotations.GuardedBy;
 import com.android.server.pm.parsing.pkg.AndroidPackageUtils;
 import com.android.server.pm.pkg.AndroidPackage;
 
@@ -43,6 +44,7 @@ public class UpdateOwnershipHelper {
     // Called out in PackageManager.PROPERTY_LEGACY_UPDATE_OWNERSHIP_DENYLIST docs
     private static final int MAX_DENYLIST_SIZE = 500;
     private static final String TAG_OWNERSHIP_OPT_OUT = "deny-ownership";
+    @GuardedBy("mLock")
     private final ArrayMap<String, ArraySet<String>> mUpdateOwnerOptOutsToOwners =
             new ArrayMap<>(200);
 
@@ -163,7 +165,9 @@ public class UpdateOwnershipHelper {
      * Returns {@code true} if the provided package name is on a valid update ownership deny list.
      */
     public boolean isUpdateOwnershipDenylisted(String packageName) {
-        return mUpdateOwnerOptOutsToOwners.containsKey(packageName);
+        synchronized (mLock) {
+            return mUpdateOwnerOptOutsToOwners.containsKey(packageName);
+        }
     }
 
     /**
