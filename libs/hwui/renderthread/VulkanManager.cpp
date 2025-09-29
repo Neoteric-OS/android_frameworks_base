@@ -474,7 +474,6 @@ void VulkanManager::initialize() {
         this->setupDevice(mExtensions, mPhysicalDeviceFeatures2);
 
         mGetDeviceQueue(mDevice, mGraphicsQueueIndex, 0, &mGraphicsQueue);
-        mGetDeviceQueue(mDevice, mGraphicsQueueIndex, 1, &mAHBUploadQueue);
 
         if (Properties::enablePartialUpdates && Properties::useBufferAge) {
             mSwapBehavior = SwapBehavior::BufferAge;
@@ -575,6 +574,9 @@ sk_sp<GrDirectContext> VulkanManager::createContext(GrContextOptions& options,
     backendContext.fInstance = mInstance;
     backendContext.fPhysicalDevice = mPhysicalDevice;
     backendContext.fDevice = mDevice;
+    if (mAHBUploadQueue == VK_NULL_HANDLE && contextType == ContextType::kUploadThread) {
+        mGetDeviceQueue(mDevice, mGraphicsQueueIndex, 1, &mAHBUploadQueue);
+    }
     backendContext.fQueue =
             (contextType == ContextType::kRenderThread) ? mGraphicsQueue : mAHBUploadQueue;
     backendContext.fGraphicsQueueIndex = mGraphicsQueueIndex;
