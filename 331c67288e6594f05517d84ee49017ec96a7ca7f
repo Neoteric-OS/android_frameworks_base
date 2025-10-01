@@ -1,0 +1,69 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b27e2e36_b4497384",
+        "filename": "libs/hwui/jni/Paint.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2025-10-01T19:16:51Z",
+      "side": 1,
+      "message": "this changed the behavior of the return value, this is the wrong shader.\n\nHowever it looks like the return value isn\u0027t ever used, so this function should just be changed to return void.",
+      "fixSuggestions": [
+        {
+          "fixId": "740cedbc_2bb2eaa7",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "libs/hwui/jni/Paint.cpp",
+              "range": {
+                "startLine": 865,
+                "startChar": 0,
+                "endLine": 866,
+                "endChar": 0
+              },
+              "replacement": "    static void setShader(CRITICAL_JNI_PARAMS_COMMA jlong objHandle, jlong shaderHandle) {\n"
+            },
+            {
+              "path": "libs/hwui/jni/Paint.cpp",
+              "range": {
+                "startLine": 867,
+                "startChar": 0,
+                "endLine": 868,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "libs/hwui/jni/Paint.cpp",
+              "range": {
+                "startLine": 870,
+                "startChar": 0,
+                "endLine": 871,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "libs/hwui/jni/Paint.cpp",
+              "range": {
+                "startLine": 1250,
+                "startChar": 0,
+                "endLine": 1251,
+                "endChar": 0
+              },
+              "replacement": "        {\"nSetShader\", \"(JJ)V\", (void*)PaintGlue::setShader},\n"
+            }
+          ]
+        }
+      ],
+      "revId": "331c67288e6594f05517d84ee49017ec96a7ca7f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
