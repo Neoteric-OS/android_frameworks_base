@@ -234,6 +234,8 @@
    status_bar_mobile_type_size + 2, to account for 1sp top and bottom padding -->
     <dimen name="status_bar_mobile_container_height_updated">12sp</dimen>
     <dimen name="status_bar_mobile_type_container_margin_end">6sp</dimen>
+    <!-- Space between network traffic and the following status bar icon -->
+    <dimen name="status_bar_network_traffic_margin_end">8sp</dimen>
     <dimen name="status_bar_end_side_roam_icon_margin_start">2sp</dimen>
     <!-- Corner radius for the background of the network type indicator. Should be equal to
         status_bar_mobile_container_height / 2 -->

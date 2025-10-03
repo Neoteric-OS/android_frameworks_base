@@ -27,6 +27,7 @@ import com.android.app.tracing.coroutines.launchTraced as launch
 import com.android.systemui.common.ui.binder.IconViewBinder
 import com.android.systemui.lifecycle.repeatWhenAttached
 import com.android.systemui.res.R
+import com.android.systemui.statusbar.NetworkTraffic
 import com.android.systemui.statusbar.StatusBarIconView
 import com.android.systemui.statusbar.StatusBarIconView.STATE_HIDDEN
 import com.android.systemui.statusbar.pipeline.shared.ui.binder.ModernStatusBarViewBinding
@@ -58,6 +59,7 @@ object WifiViewBinder {
         val activityInView = view.requireViewById<ImageView>(R.id.wifi_in)
         val activityOutView = view.requireViewById<ImageView>(R.id.wifi_out)
         val activityContainerView = view.requireViewById<View>(R.id.inout_container)
+        val networkTraffic = view.requireViewById<NetworkTraffic>(R.id.network_traffic)
 
         view.isVisible = true
         iconView.isVisible = true
@@ -107,6 +109,7 @@ object WifiViewBinder {
                         iconView.imageTintList = tintList
                         activityInView.imageTintList = tintList
                         activityOutView.imageTintList = tintList
+                        networkTraffic.setTint(tint)
                         dotView.setDecorColor(tint)
                     }
                 }

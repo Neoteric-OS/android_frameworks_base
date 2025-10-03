@@ -120,6 +120,14 @@ class ModernStatusBarMobileView(context: Context, attrs: AttributeSet?) :
             layoutParams.height =
                 context.resources.getDimensionPixelSize(R.dimen.status_bar_mobile_type_size_updated)
         }
+
+        // Network traffic container
+        requireViewById<FrameLayout>(R.id.network_traffic_container).apply {
+            (layoutParams as MarginLayoutParams).marginEnd =
+                context.resources.getDimensionPixelSize(
+                    R.dimen.status_bar_network_traffic_margin_end
+                )
+        }
     }
 
     override fun initView(slot: String, bindingCreator: () -> ModernStatusBarViewBinding) {

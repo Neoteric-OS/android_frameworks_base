@@ -21,6 +21,7 @@ import android.content.Context
 import android.content.res.Configuration
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.android.keyguard.AlphaOptimizedLinearLayout
@@ -105,6 +106,13 @@ class ModernStatusBarWifiView(context: Context, attrs: AttributeSet?) :
                     marginStart = margin
                     marginEnd = margin
                 }
+
+            (requireViewById<View>(R.id.network_traffic).layoutParams as MarginLayoutParams).apply {
+                marginEnd =
+                    context.resources.getDimensionPixelSize(
+                        R.dimen.status_bar_network_traffic_margin_end
+                    )
+            }
         }
     }
 }
