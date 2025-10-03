@@ -37,12 +37,14 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.android.app.tracing.coroutines.launchTraced as launch
+import com.android.settingslib.mobile.TelephonyIcons
 import com.android.settingslib.graph.SignalDrawable
 import com.android.systemui.Flags.statusBarStaticInoutIndicators
 import com.android.systemui.common.ui.binder.IconViewBinder
 import com.android.systemui.lifecycle.repeatWhenAttached
 import com.android.systemui.plugins.DarkIconDispatcher
 import com.android.systemui.res.R
+import com.android.systemui.statusbar.NetworkTraffic
 import com.android.systemui.statusbar.StatusBarIconView
 import com.android.systemui.statusbar.StatusBarIconView.STATE_HIDDEN
 // QTI_BEGIN: 2025-04-15: Android_UI: SystemUI: Readapt Mobile Icon Features For Kairos part 1
@@ -82,6 +84,8 @@ object MobileIconBinder {
         val volteView = view.requireViewById<ImageView>(R.id.mobile_volte)
 // QTI_END: 2025-04-15: Android_UI: SystemUI: Readapt Mobile Icon Features For Kairos part 1
         val volteSpace = view.requireViewById<Space>(R.id.mobile_volte_space)
+        val networkTraffic = view.requireViewById<NetworkTraffic>(R.id.network_traffic)
+        val networkTrafficContainer = view.requireViewById<FrameLayout>(R.id.network_traffic_container)
         view.isVisible = viewModel.isVisible.value
         iconView.isVisible = true
         // TODO(b/238425913): We should log this visibility state.
@@ -178,12 +182,16 @@ object MobileIconBinder {
                                 dataTypeId,
                             )
                             dataTypeId?.let { IconViewBinder.bind(dataTypeId, networkTypeView) }
+                            val isVoWifi = dataTypeId?.res == TelephonyIcons.VOWIFI.dataType
+
+// QTI_BEGIN: 2025-04-15: Android_UI: SystemUI: Readapt Mobile Icon Features For Kairos part 1
+                            val shouldShowNetworkType =
+                                dataTypeId != null &&
+                                viewModel.location != StatusBarLocation.SHADE_CARRIER_GROUP
+
                             val prevVis = networkTypeContainer.visibility
                             networkTypeContainer.visibility =
-// QTI_BEGIN: 2025-04-15: Android_UI: SystemUI: Readapt Mobile Icon Features For Kairos part 1
-                                if (dataTypeId != null
-                                    && viewModel.location != StatusBarLocation.SHADE_CARRIER_GROUP)
-                                    VISIBLE else GONE
+                                if (shouldShowNetworkType) VISIBLE else GONE
 
 // QTI_END: 2025-04-15: Android_UI: SystemUI: Readapt Mobile Icon Features For Kairos part 1
                             if (prevVis != networkTypeContainer.visibility) {
@@ -251,6 +259,7 @@ object MobileIconBinder {
                             dotView.setDecorColor(colors.tint)
 // QTI_BEGIN: 2025-04-15: Android_UI: SystemUI: Readapt Mobile Icon Features For Kairos part 1
                             volteView.imageTintList = tint
+                            networkTraffic.setTint(colors.tint)
                         }
                     }
 
