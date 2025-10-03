@@ -23,7 +23,6 @@ import android.util.ArraySet;
 
 import com.android.internal.statusbar.StatusBarIcon;
 import com.android.systemui.res.R;
-import com.android.systemui.statusbar.phone.PhoneStatusBarPolicy.NetworkTrafficState;
 import com.android.systemui.statusbar.phone.StatusBarSignalPolicy.CallIndicatorIconState;
 
 import java.util.List;
@@ -63,9 +62,6 @@ public interface StatusBarIconController {
      * set up (inflated and added to the view hierarchy).
      */
     void setNewWifiIcon();
-
-    /** */
-    void setNetworkTraffic(String slot, NetworkTrafficState state);
 
     /**
      * Notify this class that there is a new set of mobile icons to display, keyed off of this list

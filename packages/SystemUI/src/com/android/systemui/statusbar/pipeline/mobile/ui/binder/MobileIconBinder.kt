@@ -35,6 +35,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.android.settingslib.mobile.TelephonyIcons
 import com.android.settingslib.graph.SignalDrawable
 import com.android.systemui.Flags.statusBarStaticInoutIndicators
 import com.android.systemui.common.ui.binder.ContentDescriptionViewBinder
@@ -42,6 +43,7 @@ import com.android.systemui.common.ui.binder.IconViewBinder
 import com.android.systemui.lifecycle.repeatWhenAttached
 import com.android.systemui.plugins.DarkIconDispatcher
 import com.android.systemui.res.R
+import com.android.systemui.statusbar.NetworkTraffic
 import com.android.systemui.statusbar.StatusBarIconView
 import com.android.systemui.statusbar.StatusBarIconView.STATE_HIDDEN
 import com.android.systemui.statusbar.phone.StatusBarLocation
@@ -82,6 +84,8 @@ object MobileIconBinder {
         val dotView = view.requireViewById<StatusBarIconView>(R.id.status_bar_dot)
         val volteView = view.requireViewById<ImageView>(R.id.mobile_volte)
         val volteSpace = view.requireViewById<Space>(R.id.mobile_volte_space)
+        val networkTraffic = view.requireViewById<NetworkTraffic>(R.id.network_traffic)
+        val networkTrafficContainer = view.requireViewById<FrameLayout>(R.id.network_traffic_container)
         view.isVisible = viewModel.isVisible.value
         iconView.isVisible = true
 
@@ -171,11 +175,18 @@ object MobileIconBinder {
                                 dataTypeId,
                             )
                             dataTypeId?.let { IconViewBinder.bind(dataTypeId, networkTypeView) }
+                            val isVoWifi = dataTypeId?.res == TelephonyIcons.VOWIFI.dataType
+
+                            val shouldShowNetworkType =
+                                dataTypeId != null &&
+                                viewModel.location != StatusBarLocation.SHADE_CARRIER_GROUP
+
                             val prevVis = networkTypeContainer.visibility
                             networkTypeContainer.visibility =
-                                if (dataTypeId != null
-                                    && viewModel.location != StatusBarLocation.SHADE_CARRIER_GROUP)
-                                    VISIBLE else GONE
+                                if (shouldShowNetworkType) VISIBLE else GONE
+
+                            networkTrafficContainer.visibility =
+                                if (shouldShowNetworkType && !isVoWifi) VISIBLE else GONE
 
                             if (prevVis != networkTypeContainer.visibility) {
                                 view.requestLayout()
@@ -249,6 +260,7 @@ object MobileIconBinder {
                             activityOut.imageTintList = tint
                             dotView.setDecorColor(colors.tint)
                             volteView.imageTintList = tint
+                            networkTraffic.setTint(colors.tint)
                         }
                     }
 
