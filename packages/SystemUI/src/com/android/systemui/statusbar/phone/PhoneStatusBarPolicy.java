@@ -119,9 +119,6 @@ public class PhoneStatusBarPolicy
     private static final String BLUETOOTH_SHOW_BATTERY =
             "system:" + Settings.System.BLUETOOTH_SHOW_BATTERY;
 
-    private static final String NETWORK_TRAFFIC_ENABLED =
-            "system:" + Settings.System.NETWORK_TRAFFIC_ENABLED;
-
     private final String mSlotCast;
     private final String mSlotHotspot;
     private final String mSlotBluetooth;
@@ -138,7 +135,6 @@ public class PhoneStatusBarPolicy
     private final String mSlotScreenRecord;
     private final String mSlotConnectedDisplay;
     private final String mSlotNfc;
-    private final String mSlotNetworkTraffic;
     private final String mSlotFirewall;
     private final int mDisplayId;
     private final SharedPreferences mSharedPreferences;
@@ -189,8 +185,6 @@ public class PhoneStatusBarPolicy
     private final Context mContext;
 
     private TunerService mTunerService;
-
-    private boolean mShowNetworkTraffic;
 
     private boolean mShowBluetoothBattery;
 
@@ -265,7 +259,6 @@ public class PhoneStatusBarPolicy
         mSlotScreenRecord = resources.getString(
                 com.android.internal.R.string.status_bar_screen_record);
         mSlotNfc = resources.getString(com.android.internal.R.string.status_bar_nfc);
-        mSlotNetworkTraffic = resources.getString(com.android.internal.R.string.status_bar_network_traffic);
         mSlotFirewall = resources.getString(R.string.status_bar_firewall_slot);
 
         mDisplayId = displayId;
@@ -365,11 +358,6 @@ public class PhoneStatusBarPolicy
         mIconController.setIconVisibility(mSlotNfc, false);
         updateNfc();
 
-        // network traffic
-        mShowNetworkTraffic = Settings.System.getIntForUser(mContext.getContentResolver(),
-            NETWORK_TRAFFIC_ENABLED, 0, UserHandle.USER_CURRENT) == 1;
-        updateNetworkTraffic();
-
         // firewall
         mIconController.setIcon(mSlotFirewall, R.drawable.stat_sys_firewall, null);
         mIconController.setIconVisibility(mSlotFirewall, mFirewallVisible);
@@ -395,7 +383,6 @@ public class PhoneStatusBarPolicy
 
         mCommandQueue.addCallback(this);
 
-        mTunerService.addTunable(this, NETWORK_TRAFFIC_ENABLED);
         mTunerService.addTunable(this, BLUETOOTH_SHOW_BATTERY);
     }
 
@@ -446,11 +433,6 @@ public class PhoneStatusBarPolicy
     @Override
     public void onTuningChanged(String key, String newValue) {
         switch (key) {
-            case NETWORK_TRAFFIC_ENABLED:
-                mShowNetworkTraffic =
-                        TunerService.parseIntegerSwitch(newValue, false);
-                updateNetworkTraffic();
-                break;
             case BLUETOOTH_SHOW_BATTERY:
                 mShowBluetoothBattery =
                         TunerService.parseIntegerSwitch(newValue, true);
@@ -618,11 +600,6 @@ public class PhoneStatusBarPolicy
 
         mIconController.setIcon(mSlotBluetooth, iconId, contentDescription);
         mIconController.setIconVisibility(mSlotBluetooth, bluetoothVisible);
-    }
-
-    private final void updateNetworkTraffic() {
-        mIconController.setNetworkTraffic(mSlotNetworkTraffic, new NetworkTrafficState(mShowNetworkTraffic));
-        mIconController.setIconVisibility(mSlotNetworkTraffic, mShowNetworkTraffic);
     }
 
     private final void updateTTY() {
@@ -942,18 +919,5 @@ public class PhoneStatusBarPolicy
         }
 
         mIconController.setIconVisibility(mSlotConnectedDisplay, visible);
-    }
-
-    public static class NetworkTrafficState {
-        public boolean visible;
-
-        public NetworkTrafficState(boolean visible) {
-            this.visible = visible;
-        }
-
-        @Override
-        public String toString() {
-            return "NetworkTrafficState(visible=" + visible + ")";
-        }
     }
 }
