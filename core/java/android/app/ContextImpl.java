@@ -78,7 +78,9 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.Process;
 import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.os.StrictMode;
+import android.os.SystemProperties;
 import android.os.Trace;
 import android.os.UserHandle;
 import android.os.UserManager;
@@ -3142,12 +3144,28 @@ class ContextImpl extends Context {
 
     @Override
     public Display getDisplayNoVerify() {
-        if (mDisplay == null) {
-            return mResourcesManager.getAdjustedDisplay(Display.DEFAULT_DISPLAY,
-                    mResources);
+        if (mDisplay != null) {
+            return mDisplay;
         }
 
-        return mDisplay;
+        int targetDisplayId = Display.DEFAULT_DISPLAY;
+        if ("1".equals(SystemProperties.get("sys.boot_completed"))) {
+            UserManager userManager = getSystemService(UserManager.class);
+
+            if (userManager != null && UserManager.isVisibleBackgroundUsersEnabled()) {
+                try {
+                    int mainDisplayId = userManager.getMainDisplayIdAssignedToUser();
+                    Log.i(TAG, "getDisplayId mainDisplayId: " + mainDisplayId);
+                    if (mainDisplayId != Display.INVALID_DISPLAY) {
+                        targetDisplayId = mainDisplayId;
+                    }
+                } catch (SecurityException e) {
+                    Log.w(TAG, "SecurityException when getting display id, fallback to default", e);
+                }
+            }
+        }
+
+        return mResourcesManager.getAdjustedDisplay(targetDisplayId, mResources);
     }
 
     @Override
