@@ -64,6 +64,30 @@
       },
       "revId": "7f58f9a3aa67014403050a1ff2ed27dc0f179ff5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "67b6a4a2_49014f57",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceInventory.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1839,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-10-07T09:31:34Z",
+      "side": 1,
+      "message": "No change beteen PS 9 amd PS 11.\n\nLine 1832 was changed but it was correct",
+      "parentUuid": "6fe622ee_6f2df8af",
+      "range": {
+        "startLine": 1839,
+        "startChar": 16,
+        "endLine": 1839,
+        "endChar": 61
+      },
+      "revId": "7f58f9a3aa67014403050a1ff2ed27dc0f179ff5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
