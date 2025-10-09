@@ -33,6 +33,8 @@ public class RoSystemProperties {
             SystemProperties.get("ro.control_privapp_permissions");
     public static final boolean SUPPORT_ONE_HANDED_MODE =
             SystemProperties.getBoolean("ro.support_one_handed_mode", /* def= */ false);
+    public static final boolean FACTORYMODE =
+            SystemProperties.getBoolean("ro.boot.vendor.factorymode", false);
 
     // ------ ro.hdmi.* -------- //
     /**

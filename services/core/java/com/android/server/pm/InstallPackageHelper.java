@@ -47,6 +47,7 @@ import static android.os.storage.StorageManager.FLAG_STORAGE_CE;
 import static android.os.storage.StorageManager.FLAG_STORAGE_DE;
 import static android.os.storage.StorageManager.FLAG_STORAGE_EXTERNAL;
 
+import static com.android.internal.os.RoSystemProperties.FACTORYMODE;
 import static com.android.server.pm.InstructionSets.getAppDexInstructionSets;
 import static com.android.server.pm.PackageManagerException.INTERNAL_ERROR_ARCHIVE_NO_INSTALLER_TITLE;
 import static com.android.server.pm.PackageManagerService.APP_METADATA_FILE_NAME;
@@ -189,8 +190,10 @@ import com.android.server.utils.WatchedLongSparseArray;
 
 import dalvik.system.VMRuntime;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
@@ -226,6 +229,7 @@ final class InstallPackageHelper {
     private final SharedLibrariesImpl mSharedLibraries;
     private final PackageManagerServiceInjector mInjector;
     private final UpdateOwnershipHelper mUpdateOwnershipHelper;
+    private final Set<String> mEnableOnFactoryModePaths;
 
     private final Object mInternalLock = new Object();
     @GuardedBy("mInternalLock")
@@ -250,6 +254,7 @@ final class InstallPackageHelper {
         mPackageAbiHelper = pm.mInjector.getAbiHelper();
         mSharedLibraries = pm.mInjector.getSharedLibrariesImpl();
         mUpdateOwnershipHelper = pm.mInjector.getUpdateOwnershipHelper();
+        mEnableOnFactoryModePaths = FACTORYMODE ? readEnableOnFactoryModePaths() : null;
     }
 
     /**
@@ -3838,6 +3843,13 @@ final class InstallPackageHelper {
                 // Ignore entries which are not packages
                 continue;
             }
+            if (mEnableOnFactoryModePaths != null
+                    && !mEnableOnFactoryModePaths.contains(file.getPath())) {
+                Log.d(TAG, "Skip file : " + file.getPath());
+                continue;
+            } else {
+                Log.d(TAG, "Process file : " + file.getPath());
+            }
             if ((scanFlags & SCAN_DROP_CACHE) != 0) {
                 final PackageCacher cacher = new PackageCacher(mPm.getCacheDir(),
                         mPm.mPackageParserCallback);
@@ -3889,6 +3901,24 @@ final class InstallPackageHelper {
                 mRemovePackageHelper.removeCodePath(parseResult.scanFile);
             }
         }
+    }
+
+    private Set readEnableOnFactoryModePaths() {
+        File listFile = new File("/vendor/etc/enable.paths.on.factory.mode.txt");
+        Set paths = new HashSet<String>();
+        try (BufferedReader br = new BufferedReader(new FileReader(listFile))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                if (line.isEmpty() || line.startsWith("#")) {
+                    continue;
+                }
+                String p = line.trim();
+                paths.add(p);
+            }
+        } catch (IOException e) {
+            Slog.w(TAG, "Failed to read enable on factory mode paths config file " + listFile, e);
+        }
+        return paths;
     }
 
     /**
