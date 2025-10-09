@@ -94,6 +94,7 @@ binder::Status JNIAudioTrackCallback::onCodecFormatChanged(
         env->ExceptionDescribe();
         env->ExceptionClear();
     }
+    env->DeleteLocalRef(byteBuffer);
 
     return binder::Status::ok();
 }
