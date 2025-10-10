@@ -439,6 +439,11 @@ public class SecurityControllerImpl implements SecurityController {
 
     private void refreshCACerts(int userId) {
         mBgExecutor.execute(() -> {
+            // Check if the user is locked
+            if (!mUserManager.isUserUnlocked(UserHandle.of(userId))) {
+                if (DEBUG) Log.d(TAG, "User " + userId + " is locked, skipping CA certs refresh.");
+                return;
+            }
             Pair<Integer, Boolean> idWithCert = null;
             try (KeyChain.KeyChainConnection conn = KeyChain.bindAsUser(mContext,
                     UserHandle.of(userId))) {
