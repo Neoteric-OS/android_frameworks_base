@@ -57,7 +57,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.StringJoiner;
 import java.util.TreeMap;
-
+//Mediatek patch start
+import java.util.ArrayList;
+//Mediatek patch end
 import javax.inject.Provider;
 
 /**
@@ -70,7 +72,19 @@ public class SystemUIApplication extends Application implements
     private static final boolean DEBUG = false;
 
     private BootCompleteCacheImpl mBootCompleteCache;
-
+    //Mediatek patch start
+    private final ArrayList<String> mtkBlackListService = new ArrayList<String>();
+    {
+        mtkBlackListService.add("com.android.systemui.keyguard");//tv no keyguard
+        mtkBlackListService.add("com.android.systemui.biometrics");//tv no face biometrics
+        mtkBlackListService.add("com.android.systemui.statusbar.phone");//tv no phone statusbar
+        mtkBlackListService.add("com.android.systemui.statusbar.pipeline.mobile");//tv no mobile statusbar
+        mtkBlackListService.add("com.android.systemui.qs.pipeline");//tv no qs pipeline
+        mtkBlackListService.add("com.android.systemui.accessibility.WindowMagnification");//tv no WindowMagnification feature
+        mtkBlackListService.add("com.android.systemui.recents.Recents");// tv no need recent ui on aosp ww
+    }
+    private int mServicesCount;
+    //Mediatek patch end
     /**
      * Hold a reference on the stuff we start.
      */
@@ -96,6 +110,17 @@ public class SystemUIApplication extends Application implements
     public void attachBaseContext(Context base) {
         super.attachBaseContext(base);
     }
+
+    //Mediatek patch start
+    public boolean isContainBlackService(String clsName){
+        for (String element : mtkBlackListService) {
+            if(clsName.contains(element)){
+                return true;
+            }
+        }
+        return false;
+    }
+    //Mediatek patch End
 
     protected GlobalRootComponent getRootComponent() {
         return mInitializer.getRootComponent();
@@ -322,6 +347,12 @@ public class SystemUIApplication extends Application implements
                         mSysUIComponent.getStartableDependencies().get(cls);
                 if (deps == null || startedStartables.containsAll(deps)) {
                     String clsName = cls.getName();
+                    //Mediatek patch start
+                    if (isContainBlackService(clsName)) {
+                        Log.e(TAG, "Starting SystemUI services for blackservice: " + clsName);
+                        continue;
+                    }
+                    //Mediatek patch End
                     int i = serviceIndex;  // Copied to make lambda happy.
                     timeInitialization(
                             clsName,
@@ -370,6 +401,11 @@ public class SystemUIApplication extends Application implements
 
         for (serviceIndex = 0; serviceIndex < mServices.length; serviceIndex++) {
             final CoreStartable service = mServices[serviceIndex];
+	    //Mediatek patch start
+	    if (service == null) {
+		continue;
+	    }
+	    //Mediatek patch end
             if (mBootCompleteCache.isBootComplete()) {
                 notifyBootCompleted(service);
             }
