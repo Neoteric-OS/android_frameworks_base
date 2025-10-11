@@ -730,16 +730,18 @@ class BroadcastProcessQueue {
     public void makeActiveNextPending() {
         // TODO: what if the next broadcast isn't runnable yet?
         final SomeArgs next = removeNextBroadcast();
-        mActive = (BroadcastRecord) next.arg1;
-        mActiveIndex = next.argi1;
-        mActiveReEnqueued = (next.argi2 == 1);
-        mActiveCountSinceIdle++;
-        mActiveAssumedDeliveryCountSinceIdle +=
-                (mActive.isAssumedDelivered(mActiveIndex) ? 1 : 0);
-        mActiveViaColdStart = false;
-        mActiveWasStopped = false;
-        next.recycle();
-        onBroadcastDequeued(mActive, mActiveIndex);
+        if (next != null) {
+            mActive = (BroadcastRecord) next.arg1;
+            mActiveIndex = next.argi1;
+            mActiveReEnqueued = (next.argi2 == 1);
+            mActiveCountSinceIdle++;
+            mActiveAssumedDeliveryCountSinceIdle +=
+                    (mActive.isAssumedDelivered(mActiveIndex) ? 1 : 0);
+            mActiveViaColdStart = false;
+            mActiveWasStopped = false;
+            next.recycle();
+            onBroadcastDequeued(mActive, mActiveIndex);
+       }
     }
 
     /**
