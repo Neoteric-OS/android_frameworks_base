@@ -2411,11 +2411,6 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
             } else if (mState == StatusBarState.KEYGUARD
                     && !mStatusBarKeyguardViewManager.primaryBouncerIsOrWillBeShowing()) {
                 boolean needsBouncer = mStatusBarKeyguardViewManager.isSecure();
-                if (relockWithPowerButtonImmediately()) {
-                    // Only request if SIM bouncer is needed
-                    needsBouncer = mStatusBarKeyguardViewManager.needsFullscreenBouncer();
-                }
-
                 if (needsBouncer) {
                     Log.d(TAG, "showBouncerOrLockScreenIfKeyguard, showingBouncer");
                     if (SceneContainerFlag.isEnabled()) {
