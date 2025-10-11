@@ -326,6 +326,7 @@ jobject GnssAntennaInfoCallbackUtil::translateSingleGnssAntennaInfo(JNIEnv* env,
     env->DeleteLocalRef(phaseCenterOffset);
     env->DeleteLocalRef(phaseCenterVariationCorrections);
     env->DeleteLocalRef(signalGainCorrections);
+    env->DeleteLocalRef(gnssAntennaInfoBuilderObject);
 
     return gnssAntennaInfoObject;
 }
