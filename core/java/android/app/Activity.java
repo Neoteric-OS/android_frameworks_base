@@ -762,6 +762,8 @@ import java.util.function.Consumer;
  * important than other non-visible applications) for the duration of the
  * upload, independent of whether the original activity is paused, stopped,
  * or finished.
+ *
+ * Noop line in comment to test presubmit flow using Turboci.
  */
 @UiContext
 public class Activity extends ContextThemeWrapper
