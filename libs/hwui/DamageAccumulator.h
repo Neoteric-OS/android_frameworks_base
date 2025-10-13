@@ -89,6 +89,10 @@ public:
 
     [[nodiscard]] StretchResult findNearestStretchEffect() const;
 
+    void setRefuseDamage(bool refuseDamage) {
+        mRefuseDamage = refuseDamage;
+    }
+
 private:
     void pushCommon();
     void applyMatrix4Transform(DirtyStack* frame);
@@ -96,6 +100,8 @@ private:
 
     LinearAllocator mAllocator;
     DirtyStack* mHead;
+
+    bool mRefuseDamage = false;
 };
 
 } /* namespace uirenderer */

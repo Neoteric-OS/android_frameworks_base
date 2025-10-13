@@ -461,6 +461,10 @@ void CanvasContext::prepareTree(TreeInfo& info, int64_t* uiFrameInfo, int64_t sy
     info.damageGenerationId = mDamageId++;
     info.out.skippedFrameReason = std::nullopt;
 
+    if (mHaveNewSurface || mLastFrameWidth == 0 || mLastFrameHeight == 0) {
+        mDamageAccumulator.setRefuseDamage(true);
+    }
+
     mAnimationContext->startFrame(info.mode);
     for (const sp<RenderNode>& node : mRenderNodes) {
         // Only the primary target node will be drawn full - all other nodes would get drawn in
@@ -470,6 +474,7 @@ void CanvasContext::prepareTree(TreeInfo& info, int64_t* uiFrameInfo, int64_t sy
         node->prepareTree(info);
         GL_CHECKPOINT(MODERATE);
     }
+    mDamageAccumulator.setRefuseDamage(false);
     mAnimationContext->runRemainingAnimations(info);
     GL_CHECKPOINT(MODERATE);
 

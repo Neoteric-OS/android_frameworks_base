@@ -78,6 +78,9 @@ void DamageAccumulator::computeCurrentTransform(Matrix4* outMatrix) const {
 }
 
 void DamageAccumulator::pushCommon() {
+    if (mRefuseDamage) {
+        return;
+    }
     if (!mHead->next) {
         DirtyStack* nextFrame = mAllocator.create_trivial<DirtyStack>();
         nextFrame->next = nullptr;
@@ -102,6 +105,9 @@ void DamageAccumulator::pushTransform(const Matrix4* transform) {
 
 void DamageAccumulator::popTransform() {
     LOG_ALWAYS_FATAL_IF(mHead->prev == mHead, "Cannot pop the root frame!");
+    if (mRefuseDamage) {
+        return;
+    }
     DirtyStack* dirtyFrame = mHead;
     mHead = mHead->prev;
     switch (dirtyFrame->type) {
