@@ -16,6 +16,24 @@
       "message": "Commented on the bug to request more details to understand the underlying issue here.",
       "revId": "a74ed04863183b6155bcaa4d823f24780b7ffd64",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f12ebd50_401bb42e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3183690
+      },
+      "writtenOn": "2025-10-13T02:09:49Z",
+      "side": 1,
+      "message": "Hello.google:\n   BroadcastProcessQueue.makeActiveNextPending() only be called once we check that it is runnable,It only means that the process has started to run normally.\nBut if the BroadcastQueue  is empty,t he return value of removeNextBroadcast method will be null. we should make non-null judgement for this situation。\n\nThanks.",
+      "parentUuid": "1cf456ec_c16c29c7",
+      "revId": "a74ed04863183b6155bcaa4d823f24780b7ffd64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
