@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "306aac0e_86712ab3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1358281
+      },
+      "writtenOn": "2025-10-13T17:48:04Z",
+      "side": 1,
+      "message": "Thanks for the fix. This will need a flag guarding the change. I\u0027ll make a change for that in the internal main branch.",
+      "revId": "7ecb0446a8e9e4135252280a44595e23c202c653",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
