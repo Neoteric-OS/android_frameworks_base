@@ -34,6 +34,23 @@
       "parentUuid": "1cf456ec_c16c29c7",
       "revId": "a74ed04863183b6155bcaa4d823f24780b7ffd64",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4691e80_6381aeee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2025-10-13T03:13:26Z",
+      "side": 1,
+      "message": "Removing self from reviewers until the concerns on the bug are resolved.",
+      "revId": "a74ed04863183b6155bcaa4d823f24780b7ffd64",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
