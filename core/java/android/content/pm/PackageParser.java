@@ -6433,6 +6433,9 @@ public class PackageParser {
             if (this == UNKNOWN || oldDetails == UNKNOWN) {
                 return false;
             }
+            if (oldDetails.signatures == null || oldDetails.signatures.length == 0) {
+                return false;
+            }
             if (oldDetails.signatures.length > 1) {
 
                 // multiple-signer packages cannot rotate signing certs, so we must have an exact
