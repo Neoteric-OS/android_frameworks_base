@@ -274,26 +274,20 @@ public class TransferPipe implements Runnable, Closeable {
                     fos.write(buffer, 0, size);
                 } else {
                     int start = 0;
-                    for (int i=0; i<size; i++) {
-                        if (buffer[i] != '\n') {
-                            if (i > start) {
-                                fos.write(buffer, start, i-start);
-                            }
-                            start = i;
-                            if (needPrefix) {
-                                fos.write(bufferPrefix);
-                                needPrefix = false;
-                            }
-                            do {
-                                i++;
-                            } while (i<size && buffer[i] != '\n');
-                            if (i < size) {
-                                needPrefix = true;
-                            }
+                    for (int i = 0; i < size; ) {
+                        while (i < size && buffer[i] != '\n') {
+                            i++;
                         }
-                    }
-                    if (size > start) {
-                        fos.write(buffer, start, size-start);
+                        final int mid = i;
+                        while (i < size && buffer[i] == '\n') {
+                            i++;
+                        }
+                        if (needPrefix && mid > start) {
+                            fos.write(bufferPrefix);
+                        }
+                        needPrefix = i > mid;
+                        fos.write(buffer, start, i - start);
+                        start = i;
                     }
                 }
             }
