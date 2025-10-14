@@ -39,6 +39,30 @@
       },
       "revId": "288f759edf6ead67901b90abadcb47f50ed945be",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86968efb_e0ee8658",
+        "filename": "services/core/java/com/android/server/inputmethod/HandwritingModeController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1424137
+      },
+      "writtenOn": "2025-10-14T08:30:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8e4e933_160e3c45",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 106
+      },
+      "revId": "288f759edf6ead67901b90abadcb47f50ed945be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
