@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e7de84a_0322cb25",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1424137
+      },
+      "writtenOn": "2025-10-14T07:52:33Z",
+      "side": 1,
+      "message": "Hi google friends, this patch is to fix below CTS cases on low-performance devices.\nCtsInputMethodTestCases android.view.inputmethod.cts.StylusHandwritingTest#testHandwriting_delegateFromHomePackage CtsInputMethodTestCases android.view.inputmethod.cts.StylusHandwritingTest#testHandwriting_delegateToDifferentPackage\n\nAbove 2 CTS cases failed on low-performance devices due to handwriting session\nbeing early terminated on low-performance, so this patch adjusts the HANDWRITING_DELEGATION_IDLE_TIMEOUT_MS based on the board \"ro.hw_timeout_multiplier\" property, giving low-performance devices sufficient time to complete the handwriting delegation process and avoid premature cleanup.",
+      "revId": "288f759edf6ead67901b90abadcb47f50ed945be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
