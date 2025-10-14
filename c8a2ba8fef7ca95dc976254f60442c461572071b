@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73e0798d_ec384b09",
+        "filename": "services/core/java/com/android/server/inputmethod/HandwritingModeController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1072749
+      },
+      "writtenOn": "2025-10-14T17:33:45Z",
+      "side": 1,
+      "message": "3seconds is fairly long time for a delegation (launching into a new window and  editor gaining focus). \ndo you\u0027ve a bug for this?",
+      "range": {
+        "startLine": 73,
+        "startChar": 12,
+        "endLine": 73,
+        "endChar": 16
+      },
+      "revId": "c8a2ba8fef7ca95dc976254f60442c461572071b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
