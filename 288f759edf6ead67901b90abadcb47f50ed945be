@@ -16,6 +16,29 @@
       "message": "Hi google friends, this patch is to fix below CTS cases on low-performance devices.\nCtsInputMethodTestCases android.view.inputmethod.cts.StylusHandwritingTest#testHandwriting_delegateFromHomePackage CtsInputMethodTestCases android.view.inputmethod.cts.StylusHandwritingTest#testHandwriting_delegateToDifferentPackage\n\nAbove 2 CTS cases failed on low-performance devices due to handwriting session\nbeing early terminated on low-performance, so this patch adjusts the HANDWRITING_DELEGATION_IDLE_TIMEOUT_MS based on the board \"ro.hw_timeout_multiplier\" property, giving low-performance devices sufficient time to complete the handwriting delegation process and avoid premature cleanup.",
       "revId": "288f759edf6ead67901b90abadcb47f50ed945be",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e8e4e933_160e3c45",
+        "filename": "services/core/java/com/android/server/inputmethod/HandwritingModeController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1987832
+      },
+      "writtenOn": "2025-10-14T08:19:11Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Check Contents: Lines longer than 100 characters should be wrapped to improve readability; see h...\n\nLines longer than 100 characters should be wrapped to improve readability; see https://source.android.com/setup/contribute/code-style#limit-line-length for more details. See go/ayeaye-long-lines for ayeaye-specific info.",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 106
+      },
+      "revId": "288f759edf6ead67901b90abadcb47f50ed945be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
