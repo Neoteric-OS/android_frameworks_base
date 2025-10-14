@@ -16,8 +16,6 @@
 
 package com.android.server.biometrics.sensors;
 
-import android.util.SparseArray;
-
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -49,17 +47,15 @@ public class PerformanceTracker {
     }
 
     // Keyed by UserId
-    private final SparseArray<Info> mAllUsersInfo;
+    private final ConcurrentHashMap<Integer, Info> mAllUsersInfo;
     private int mHALDeathCount;
 
     private PerformanceTracker() {
-        mAllUsersInfo = new SparseArray<>();
+        mAllUsersInfo = new ConcurrentHashMap<>();
     }
 
     private void createUserEntryIfNecessary(int userId) {
-        if (!mAllUsersInfo.contains(userId)) {
-            mAllUsersInfo.put(userId, new Info());
-        }
+            mAllUsersInfo.putIfAbsent(userId, new Info());
     }
 
     public void incrementAuthForUser(int userId, boolean accepted) {
@@ -114,35 +110,43 @@ public class PerformanceTracker {
     }
 
     public int getAcceptForUser(int userId) {
-        return mAllUsersInfo.contains(userId) ? mAllUsersInfo.get(userId).mAccept : 0;
+        final Info info = mAllUsersInfo.get(userId);
+        return info != null ? info.mAccept : 0;
     }
 
     public int getRejectForUser(int userId) {
-        return mAllUsersInfo.contains(userId) ? mAllUsersInfo.get(userId).mReject : 0;
+        final Info info = mAllUsersInfo.get(userId);
+        return info != null ? info.mReject : 0;
     }
 
     public int getAcquireForUser(int userId) {
-        return mAllUsersInfo.contains(userId) ? mAllUsersInfo.get(userId).mAcquire : 0;
+        final Info info = mAllUsersInfo.get(userId);
+        return info != null ? info.mAcquire : 0;
     }
 
     public int getAcceptCryptoForUser(int userId) {
-        return mAllUsersInfo.contains(userId) ? mAllUsersInfo.get(userId).mAcceptCrypto : 0;
+        final Info info = mAllUsersInfo.get(userId);
+        return info != null ? info.mAcceptCrypto : 0;
     }
 
     public int getRejectCryptoForUser(int userId) {
-        return mAllUsersInfo.contains(userId) ? mAllUsersInfo.get(userId).mRejectCrypto : 0;
+        final Info info = mAllUsersInfo.get(userId);
+        return info != null ? info.mRejectCrypto : 0;
     }
 
     public int getAcquireCryptoForUser(int userId) {
-        return mAllUsersInfo.contains(userId) ? mAllUsersInfo.get(userId).mAcquireCrypto : 0;
+        final Info info = mAllUsersInfo.get(userId);
+        return info != null ? info.mAcquireCrypto : 0;
     }
 
     public int getTimedLockoutForUser(int userId) {
-        return mAllUsersInfo.contains(userId) ? mAllUsersInfo.get(userId).mTimedLockout : 0;
+        final Info info = mAllUsersInfo.get(userId);
+        return info != null ? info.mTimedLockout : 0;
     }
 
     public int getPermanentLockoutForUser(int userId) {
-        return mAllUsersInfo.contains(userId) ? mAllUsersInfo.get(userId).mPermanentLockout : 0;
+        final Info info = mAllUsersInfo.get(userId);
+        return info != null ? info.mPermanentLockout : 0;
     }
 
     public int getHALDeathCount() {
