@@ -22,6 +22,30 @@
       },
       "revId": "c8a2ba8fef7ca95dc976254f60442c461572071b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "531ebe02_e280c862",
+        "filename": "services/core/java/com/android/server/inputmethod/HandwritingModeController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1424137
+      },
+      "writtenOn": "2025-10-15T02:02:59Z",
+      "side": 1,
+      "message": "yes, on one of our low-performance devices, it needs more time to finish the delegate, 3s is not enough, this device HW_TIMEOUT_MULTIPLIER set to 2, so with this patch, 6s is enough for our device, if 3s, the 2 cases may pass 1 with 10 runs cts, with 6s, 10 runs cts can all pass.",
+      "parentUuid": "73e0798d_ec384b09",
+      "range": {
+        "startLine": 73,
+        "startChar": 12,
+        "endLine": 73,
+        "endChar": 16
+      },
+      "revId": "c8a2ba8fef7ca95dc976254f60442c461572071b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
