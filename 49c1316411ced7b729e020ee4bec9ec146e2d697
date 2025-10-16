@@ -16,6 +16,23 @@
       "message": "This change is ready for review.",
       "revId": "49c1316411ced7b729e020ee4bec9ec146e2d697",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18bcaaf4_a0005cae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2025-10-16T14:55:20Z",
+      "side": 1,
+      "message": "This breaks things like SurfaceView which uses the position listener and need the transformation information, see https://cs.android.com/android/platform/superproject/main/+/main:frameworks/base/libs/hwui/jni/android_graphics_RenderNode.cpp;drc\u003de0a468552113769bc40e56985d4af2f62ca1cb66;l\u003d608\n\nAt most you could no-op DamageAccumulator::dirty in this case, but I suspect that doesn\u0027t do much. Branches aren\u0027t free either, and this scenario isn\u0027t common.",
+      "revId": "49c1316411ced7b729e020ee4bec9ec146e2d697",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
