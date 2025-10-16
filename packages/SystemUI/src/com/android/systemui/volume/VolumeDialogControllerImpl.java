@@ -554,6 +554,7 @@ public class VolumeDialogControllerImpl implements VolumeDialogController, Dumpa
         } else if (stream == AudioManager.STREAM_VOICE_CALL) {
             final int devices = mAudio.getDevicesForStream(AudioManager.STREAM_VOICE_CALL);
             final int bluetoothDevicesMask = (AudioManager.DEVICE_OUT_BLE_HEADSET
+                    | AudioManager.DEVICE_OUT_BLUETOOTH_SCO
                     | AudioManager.DEVICE_OUT_BLUETOOTH_SCO_HEADSET
                     | AudioManager.DEVICE_OUT_BLUETOOTH_SCO_CARKIT);
             changed |= updateStreamRoutedToBluetoothW(stream,
