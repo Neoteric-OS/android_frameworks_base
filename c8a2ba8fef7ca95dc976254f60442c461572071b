@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0c56ea6_6398fae7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1424137
+      },
+      "writtenOn": "2025-10-20T02:40:05Z",
+      "side": 1,
+      "message": "Hi google friends, could you please give update about this patch review? thanks.",
+      "revId": "c8a2ba8fef7ca95dc976254f60442c461572071b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "73e0798d_ec384b09",
