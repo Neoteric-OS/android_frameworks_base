@@ -17,6 +17,7 @@
 package com.android.systemui.statusbar.pipeline.mobile.data.repository.prod
 
 import android.annotation.SuppressLint
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
@@ -443,6 +444,7 @@ constructor(
             subscriptionModelForSubId(subId),
             defaultNetworkName,
             networkNameSeparator,
+            networkNameSubmitter,
         )
     }
 
@@ -487,6 +489,26 @@ constructor(
             carrierName = carrierName.toString(),
             profileClass = profileClass,
         )
+
+    override val networkNameSubmitter: StateFlow<Intent> =
+        conflatedCallbackFlow {
+            val receiver = object : BroadcastReceiver() {
+                override fun onReceive(context: Context, intent: Intent) {
+                    trySend(intent)
+                }
+            }
+
+            context.registerReceiver(
+                receiver,
+                IntentFilter(TelephonyManager.ACTION_SERVICE_PROVIDERS_UPDATED),
+            )
+
+            awaitClose {
+                context.unregisterReceiver(receiver)
+            }
+        }
+        .flowOn(bgDispatcher)
+        .stateIn(scope, SharingStarted.Eagerly, Intent())
 
     override fun dump(pw: PrintWriter, args: Array<String>) {
         val ipw = IndentingPrintWriter(pw, " ")

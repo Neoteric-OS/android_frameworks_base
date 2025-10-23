@@ -107,6 +107,7 @@ class MobileConnectionRepositoryImpl(
     override val tableLogBuffer: TableLogBuffer,
     flags: FeatureFlagsClassic,
     scope: CoroutineScope,
+    networkNameSubmitter: StateFlow<Intent>,
 ) : MobileConnectionRepository {
     init {
         if (telephonyManager.subscriptionId != subId) {
@@ -384,42 +385,15 @@ class MobileConnectionRepositoryImpl(
             }
             .stateIn(scope, SharingStarted.WhileSubscribed(), telephonyManager.simCarrierId)
 
-    /**
-     * BroadcastDispatcher does not handle sticky broadcasts, so we can't use it here. Note that we
-     * now use the [SharingStarted.Eagerly] strategy, because there have been cases where the sticky
-     * broadcast does not represent the correct state.
-     *
-     * See b/322432056 for context.
-     */
-    @SuppressLint("RegisterReceiverViaContext")
     override val networkName: StateFlow<NetworkNameModel> =
-        conflatedCallbackFlow {
-                val receiver =
-                    object : BroadcastReceiver() {
-                        override fun onReceive(context: Context, intent: Intent) {
-                            if (
-                                intent.getIntExtra(
-                                    EXTRA_SUBSCRIPTION_INDEX,
-                                    INVALID_SUBSCRIPTION_ID,
-                                ) == subId
-                            ) {
-                                logger.logServiceProvidersUpdatedBroadcast(intent)
-                                trySend(
-                                    intent.toNetworkNameModel(networkNameSeparator)
-                                        ?: defaultNetworkName
-                                )
-                            }
-                        }
-                    }
-
-                context.registerReceiver(
-                    receiver,
-                    IntentFilter(TelephonyManager.ACTION_SERVICE_PROVIDERS_UPDATED),
-                )
-
-                awaitClose { context.unregisterReceiver(receiver) }
+        networkNameSubmitter
+            .filter { intent ->
+                intent.getIntExtra(EXTRA_SUBSCRIPTION_INDEX, INVALID_SUBSCRIPTION_ID,) == subId
             }
-            .flowOn(bgDispatcher)
+            .map { intent ->
+                logger.logServiceProvidersUpdatedBroadcast(intent)
+                intent.toNetworkNameModel(networkNameSeparator)?: defaultNetworkName
+            }
             .stateIn(scope, SharingStarted.Eagerly, defaultNetworkName)
 
     override val dataEnabled = run {
@@ -494,6 +468,7 @@ class MobileConnectionRepositoryImpl(
             subscriptionModel: Flow<SubscriptionModel?>,
             defaultNetworkName: NetworkNameModel,
             networkNameSeparator: String,
+            networkNameSubmitter: StateFlow<Intent>,
         ): MobileConnectionRepository {
             return MobileConnectionRepositoryImpl(
                 subId,
@@ -511,6 +486,7 @@ class MobileConnectionRepositoryImpl(
                 mobileLogger,
                 flags,
                 scope,
+                networkNameSubmitter,
             )
         }
     }

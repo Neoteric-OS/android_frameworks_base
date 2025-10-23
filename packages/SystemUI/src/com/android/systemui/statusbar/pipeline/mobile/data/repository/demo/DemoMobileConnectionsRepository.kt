@@ -17,6 +17,7 @@
 package com.android.systemui.statusbar.pipeline.mobile.data.repository.demo
 
 import android.content.Context
+import android.content.Intent
 import android.telephony.SubscriptionManager.INVALID_SUBSCRIPTION_ID
 import android.telephony.SubscriptionManager.PROFILE_CLASS_UNSET
 import android.util.Log
@@ -218,6 +219,8 @@ constructor(
     }
 
     override suspend fun isInEcmMode(): Boolean = false
+
+    override val networkNameSubmitter: StateFlow<Intent> = MutableStateFlow(Intent())
 
     private fun processMobileEvent(event: FakeNetworkEventModel) {
         when (event) {

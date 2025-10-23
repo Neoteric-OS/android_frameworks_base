@@ -16,6 +16,7 @@
 
 package com.android.systemui.statusbar.pipeline.mobile.data.repository
 
+import android.content.Intent
 import android.telephony.CarrierConfigManager
 import android.telephony.SubscriptionManager
 import com.android.settingslib.SignalIcon.MobileIconGroup
@@ -126,4 +127,7 @@ interface MobileConnectionsRepository {
      * == true
      */
     suspend fun isInEcmMode(): Boolean
+
+    /** Observable broadcast with action {TelephonyManager.ACTION_SERVICE_PROVIDERS_UPDATED} */
+    val networkNameSubmitter: StateFlow<Intent>
 }

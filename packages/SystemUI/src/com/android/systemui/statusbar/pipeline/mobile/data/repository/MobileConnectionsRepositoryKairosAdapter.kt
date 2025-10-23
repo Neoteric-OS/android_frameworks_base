@@ -17,6 +17,7 @@
 package com.android.systemui.statusbar.pipeline.mobile.data.repository
 
 import android.content.Context
+import android.content.Intent
 import com.android.settingslib.SignalIcon
 import com.android.settingslib.mobile.MobileMappings
 import com.android.systemui.Flags
@@ -41,6 +42,7 @@ import javax.inject.Inject
 import javax.inject.Provider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
@@ -152,6 +154,8 @@ constructor(
 
     override suspend fun isInEcmMode(): Boolean =
         kairosNetwork.transact { kairosRepo.isInEcmMode.sample() }
+
+    override val networkNameSubmitter: StateFlow<Intent> = MutableStateFlow(Intent())
 
     @dagger.Module
     object Module {
