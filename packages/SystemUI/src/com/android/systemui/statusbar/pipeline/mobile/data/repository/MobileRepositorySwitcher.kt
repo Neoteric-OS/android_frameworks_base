@@ -16,8 +16,10 @@
 
 package com.android.systemui.statusbar.pipeline.mobile.data.repository
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.annotation.VisibleForTesting
+
 import com.android.settingslib.SignalIcon
 import com.android.settingslib.mobile.MobileMappings
 import com.android.systemui.dagger.SysUISingleton
@@ -32,6 +34,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -203,4 +206,6 @@ constructor(
         } else {
             realRepository.isInEcmMode()
         }
+
+    override val networkNameSubmitter: StateFlow<Intent> = MutableStateFlow(Intent())
 }
