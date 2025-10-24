@@ -574,6 +574,7 @@ class InsetsSourceProvider {
         final Transaction t = mWindowContainer.getSyncTransaction();
         mWindowContainer.startAnimation(t, mAdapter, !initiallyVisible /* hidden */,
                 ANIMATION_TYPE_INSETS_CONTROL);
+        t.apply();
 
         // The leash was just created. We cannot dispatch it until its surface transaction is
         // committed. Otherwise, the client's operation to the leash might be overwritten by us.
