@@ -37,6 +37,7 @@ import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.plugins.PluginDependencyProvider;
 import com.android.systemui.plugins.VolumeDialog;
 import com.android.systemui.plugins.VolumeDialogController;
+import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.statusbar.policy.ExtensionController;
 import com.android.systemui.tuner.TunerService;
 
@@ -83,6 +84,7 @@ public class VolumeDialogComponent implements VolumeComponent, TunerService.Tuna
             KeyguardViewMediator keyguardViewMediator,
             ActivityStarter activityStarter,
             VolumeDialogControllerImpl volumeDialogController,
+            ConfigurationController configurationController,
             DemoModeController demoModeController,
             PluginDependencyProvider pluginDependencyProvider,
             ExtensionController extensionController,
@@ -110,7 +112,8 @@ public class VolumeDialogComponent implements VolumeComponent, TunerService.Tuna
                         if (mTriStateController != null) {
                             mTriStateController.destroy();
                         }
-                        mTriStateController = new TriStateUiControllerImpl(mContext);
+                        mTriStateController = new TriStateUiControllerImpl(mContext,
+                            volumeDialogController, configurationController);
                         mTriStateController.init(LayoutParams.TYPE_VOLUME_OVERLAY, this);
                     }
                 }).build();
