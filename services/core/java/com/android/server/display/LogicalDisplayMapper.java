@@ -851,8 +851,11 @@ class LogicalDisplayMapper implements DisplayDeviceRepository.Listener {
                 } else {
                     // This display never left this class, safe to remove without notification
                     mLogicalDisplays.removeAt(i);
+                    logicalDisplayEventMask = LOGICAL_DISPLAY_EVENT_BASE;
                 }
-                mLogicalDisplaysToUpdate.put(displayId, logicalDisplayEventMask);
+                if (logicalDisplayEventMask != LOGICAL_DISPLAY_EVENT_BASE) {
+                    mLogicalDisplaysToUpdate.put(displayId, logicalDisplayEventMask);
+                }
                 continue;
 
             // The display is new.
