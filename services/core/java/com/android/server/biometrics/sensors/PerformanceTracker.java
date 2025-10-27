@@ -16,7 +16,6 @@
 
 package com.android.server.biometrics.sensors;
 
-import android.util.SparseArray;
 
 import java.util.concurrent.ConcurrentHashMap;
 
