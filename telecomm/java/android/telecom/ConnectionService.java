@@ -3736,11 +3736,14 @@ public abstract class ConnectionService extends Service {
     }
 
     private Connection findConnectionForAction(String callId, String action) {
-        if (callId != null && mConnectionById.containsKey(callId)) {
-            return mConnectionById.get(callId);
+        Connection conn = callId != null
+                ? mConnectionById.getOrDefault(callId, getNullConnection())
+                : getNullConnection();
+
+        if (conn == getNullConnection()) {
+            Log.w(this, "%s - Cannot find Connection %s", action, callId);
         }
-        Log.w(this, "%s - Cannot find Connection %s", action, callId);
-        return getNullConnection();
+        return conn;
     }
 
     static synchronized Connection getNullConnection() {
@@ -3751,11 +3754,12 @@ public abstract class ConnectionService extends Service {
     }
 
     private Conference findConferenceForAction(String conferenceId, String action) {
-        if (mConferenceById.containsKey(conferenceId)) {
-            return mConferenceById.get(conferenceId);
+        Conference conf = conferenceId != null
+                ? mConferenceById.getOrDefault(conferenceId, getNullConference());
+        if (conf == getNullConnection()) {
+            Log.w(this, "%s - Cannot find conference %s", action, conferenceId);
         }
-        Log.w(this, "%s - Cannot find conference %s", action, conferenceId);
-        return getNullConference();
+        return conf;
     }
 
     private List<String> createConnectionIdList(List<Connection> connections) {
