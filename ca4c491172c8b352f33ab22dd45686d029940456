@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea2408c7_99636e75",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2025-10-30T17:26:41Z",
+      "side": 1,
+      "message": "Thanks for the patch. This has been fixed in the next Android release.",
+      "revId": "ca4c491172c8b352f33ab22dd45686d029940456",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
