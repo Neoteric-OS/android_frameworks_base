@@ -82,7 +82,7 @@ public final class AssociationState {
         DurationsTable mActiveDurations;
 
         SourceState(@NonNull ProcessStats processStats, @Nullable AssociationState associationState,
-                @NonNull ProcessState targetProcess, SourceKey key) {
+                @Nullable ProcessState targetProcess, SourceKey key) {
             mProcessStats = processStats;
             mAssociationState = associationState;
             mTargetProcess = targetProcess;
@@ -104,7 +104,7 @@ public final class AssociationState {
 
         @Nullable
         private SourceState getCommonSourceState(boolean createIfNeeded) {
-            if (mCommonSourceState == null && createIfNeeded) {
+            if (mCommonSourceState == null && mTargetProcess != null && createIfNeeded) {
                 mCommonSourceState = mTargetProcess.getOrCreateSourceState(mKey);
             }
             return mCommonSourceState;
