@@ -239,6 +239,7 @@ import com.android.internal.os.BackgroundThread;
 import com.android.internal.os.BinderCallsStats;
 import com.android.internal.os.BinderInternal;
 import com.android.internal.os.DebugStore;
+import com.android.internal.os.Lockdep;
 import com.android.internal.os.RuntimeInit;
 import com.android.internal.os.SafeZipPathValidatorCallback;
 import com.android.internal.os.SomeArgs;
@@ -7768,6 +7769,10 @@ public final class ActivityThread extends ClientTransactionHandler
         final ContextImpl appContext = ContextImpl.createAppContext(this, data.info);
         mConfigurationController.updateLocaleListFromAppContext(appContext);
 
+        // It's possible that we're overwriting an existing handler if we have multiple Applications
+        // in a single process, but it's not like we can disambiguate them anyway in lockdep.
+        Lockdep.registerHandler(appContext);
+
         // Initialize the default http proxy in this process.
         Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "Setup proxies");
         try {
@@ -8899,6 +8904,7 @@ public final class ActivityThread extends ClientTransactionHandler
             thread.mInstrumentation.basicInit(thread);
             ContextImpl context = ContextImpl.createAppContext(
                     thread, thread.getSystemContext().mPackageInfo);
+            Lockdep.registerHandler(context);
             thread.mInitialApplication = context.mPackageInfo.makeApplicationInner(true, null);
             thread.mInitialApplication.onCreate();
         } catch (Exception e) {
