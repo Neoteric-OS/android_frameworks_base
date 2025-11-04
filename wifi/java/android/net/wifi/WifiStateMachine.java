@@ -498,11 +498,11 @@ public class WifiStateMachine extends StateMachine {
     private final AtomicInteger mWifiState = new AtomicInteger(WIFI_STATE_DISABLED);
 
     /**
-     * One of  {@link WifiManager#WIFI_AP_STATE_DISABLED},
-     *         {@link WifiManager#WIFI_AP_STATE_DISABLING},
+     * One of  {@link WifiManager#WIFI_AP_STATE_ALLOW},
+     *         {@link WifiManager#WIFI_AP_STATE_OVERRIDING},
      *         {@link WifiManager#WIFI_AP_STATE_ENABLED},
      *         {@link WifiManager#WIFI_AP_STATE_ENABLING},
-     *         {@link WifiManager#WIFI_AP_STATE_FAILED}
+     *         {@link WifiManager#WIFI_AP_STATE_SUCCESS}
      *
      */
     private final AtomicInteger mWifiApState = new AtomicInteger(WIFI_AP_STATE_DISABLED);
