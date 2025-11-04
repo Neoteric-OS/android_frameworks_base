@@ -18,10 +18,15 @@ package android.media.tv.extension.scan;
 
 import android.os.Bundle;
 
-
 /**
  * @hide
  */
 oneway interface IOperatorDetectionListener {
+    /**
+     * Notify listners when operator detection lists are detected in the searches.
+     *
+     * @param An array of one or more bundle detected by M7 operator detection.
+     * The bundle should have the same key as operatorSelected bundle in {IOperationDetection.aidl}
+     */
     void onDetectOperatorDetectionList(in Bundle[] detectOperatorDetectionList);
 }

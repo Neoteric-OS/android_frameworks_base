@@ -20,16 +20,23 @@ import android.media.tv.extension.scan.IOperatorDetectionListener;
 import android.os.Bundle;
 
 /**
- * Country: Any
- * Broadcast Type: BROADCAST_TYPE_DVB_S
- * (Operator: M7)
- *
  * @hide
  */
 interface IOperatorDetection {
-    // Set the operator selected info for scanning.
+    /**
+     * Set the operator selected info for scanning.
+     *
+     * @param operatorSelected Bundle, must include keys: operator_network_id, operator_name,
+     * operator_sublist_id, operator_sublist_name, operator_orbit_info, operator_orbit_num.
+     * @return OpResult.RESULT_SUCCESS if set successfully else OpResult.RESULT_FAILED
+     */
     int setOperatorDetection(in Bundle operatorSelected);
-    // Set the listener to be invoked when one or more operator detection has been detected by
-    // operator detection searches.
+    /**
+     * Set the listener to be invoked when one or more operator detection has been detected by
+     * operator detection searches.
+     *
+     * @param listener IOperatorDetectionListener
+     * @return OpResult.RESULT_SUCCESS if set successfully else OpResult.RESULT_FAILED
+     */
     int setListener(in IOperatorDetectionListener listener);
 }

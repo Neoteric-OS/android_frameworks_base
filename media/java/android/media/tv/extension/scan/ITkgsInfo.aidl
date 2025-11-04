@@ -23,6 +23,18 @@ import android.os.Bundle;
  * @hide
  */
 interface ITkgsInfo {
-     int setPrefServiceList(String prefServiceList);
-     int setTkgsInfoListener(in ITkgsInfoListener listener);
+    /**
+    * TKGS operator sets prefer service list, the service list is selected by End-User.
+    *
+    * @param prefServiceList the service list selected by end-user.
+    * @return OpResult.RESULT_SUCCESS if successfully sets else OpResult.RESULT_FAILED
+    */
+    int setPrefServiceList(String prefServiceList);
+    /**
+    * Set Tkgs info listener.
+    *
+    * @param listener ITkgsInfoListener
+    * @return OpResult.RESULT_SUCCESS if successfully sets else OpResult.RESULT_FAILED
+    */
+    int setTkgsInfoListener(in ITkgsInfoListener listener);
 }

@@ -20,16 +20,30 @@ import android.media.tv.extension.scan.ILcnConflictListener;
 import android.os.Bundle;
 
 /**
- * Country: Italy, France
- * Broadcast Type: BROADCAST_TYPE_DVB_T
- *
  * @hide
  */
 interface ILcnConflict {
-    // Get the LCN conflict groups information, If there are no conflicts, the array of Bundle is empty.
+    /**
+     * Get the LCN conflict groups information.
+     * If there are no conflicts, the array of Bundle is empty.
+     *
+     * @return an array of bundle containing Lcn conflict groups information
+     *         each bundle must contain Lcn_type and service_name
+     */
     Bundle[] getLcnConflictGroups();
-    // Resolve LCN conflicts caused by service scans.
+    /**
+     * Resolve LCN conflicts caused by service scans.
+     *
+     * @param an array of bundle of user selected lcn conflict results,
+     *         each bundle must contain Lcn_type and id.
+     * @return OpResult.RESULT_SUCCESS if resolve successfully else OpResult.RESULT_FAILED
+     */
     int resolveLcnConflict(in Bundle[] lcnConflictSettings);
-    // Set the listener to be invoked the LCN conflict event.
+    /**
+     * Set the listener to be invoked the LCN conflict event.
+     *
+     * @param listener ILcnConflictListener
+     * @return OpResult.RESULT_SUCCESS if set successfully else OpResult.RESULT_FAILED
+     */
     int setListener(in ILcnConflictListener listener);
 }

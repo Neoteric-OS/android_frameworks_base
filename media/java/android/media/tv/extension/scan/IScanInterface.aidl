@@ -23,8 +23,29 @@ import android.os.Bundle;
  * @hide
  */
 interface IScanInterface {
+    /**
+     * Create scan session.
+     *
+     * @param broadcastType @ScanConstants.BroadcastType broadcast type, such as ATSC
+     *        countryCode  countryCode based on ISO 3166-1 alpha-3
+     *        operator  @ScanConstants.OperatorType satellite, cable and IP-based operator type
+     *        listener  ScanListener listens for updates
+     *        optionalParams  other optional scan parameters
+     * @return IBinder of IScanSession
+     */
     IBinder createSession(int broadcastType, String countryCode, String operator,
-        in IScanListener listener);
-    Bundle getParameters(int broadcastType, String countryCode, String operator,
-        in Bundle params);
+        in IScanListener listener, in Bundle optionalParams);
+    /**
+     * Get parameters, such as quick scan default parameters
+     *
+     * @param broadcastType   @ScanConstants.BroadcastType broadcast type, such as ATSC
+     *        countryCode  countryCode based on ISO 3166-1 alpha-3
+     *        operator  @ScanConstants.OperatorType satellite, cable and IP-based operator type
+     *        listener  ScanListener listens for updates
+     *        params  specify the type of parameters to be acquired, including frequency_list,
+     *        quickScan_parameter, singleCable_bandFrequency, DCSS_bandFrequency, transponder,
+     *        LNB_settings, LCN_type
+     * @return Bundle with acquied information with the params
+     */
+    Bundle getParameters(int broadcastType, String countryCode, String operator, in Bundle params);
 }
