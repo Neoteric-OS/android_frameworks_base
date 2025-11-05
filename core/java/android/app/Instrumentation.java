@@ -460,10 +460,10 @@ public class Instrumentation {
         synchronized (mAnimationCompleteLock) {
             long timeout = 5000;
             try {
-                // We need to check that this specified Activity completed the animation, not just
-                // any Activity. If it was another Activity, then decrease the timeout by how long
-                // it's already waited and wait for the thread to wakeup again.
-                while (timeout > 0 && !activity.mEnterAnimationComplete) {
+                // Wait until the specified Activity either completes its enter animation
+                // or is destroyed. We only care about this Activity; if another Activity
+                // triggers a wakeup, adjust the remaining timeout and continue waiting.
+                while (timeout > 0 && !activity.mEnterAnimationComplete && !activity.isDestroyed()) {
                     long startTime = System.currentTimeMillis();
                     mAnimationCompleteLock.wait(timeout);
                     long totalTime = System.currentTimeMillis() - startTime;
@@ -1565,6 +1565,11 @@ public class Instrumentation {
 //      }
       
       activity.performDestroy();
+      if (!activity.mEnterAnimationComplete) {
+          synchronized (mAnimationCompleteLock) {
+              mAnimationCompleteLock.notifyAll();
+          }
+      }
   }
 
     /**
