@@ -226,6 +226,24 @@
       "parentUuid": "9bdf0c4f_4551a9de",
       "revId": "b519a23c97a1d2d0c2dfd19ff16b137315c73e47",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6bb564c7_c144b89a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2025-11-06T12:14:55Z",
+      "side": 1,
+      "message": "How exactly did you test this, were the virtual/overlay displays in another power group, or in the default power group? How did you \"turn the device off\"?",
+      "parentUuid": "61dce5ef_e7757db7",
+      "revId": "b519a23c97a1d2d0c2dfd19ff16b137315c73e47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
