@@ -298,6 +298,24 @@
       "parentUuid": "0858ec1e_dc94f59c",
       "revId": "b519a23c97a1d2d0c2dfd19ff16b137315c73e47",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b67c27b0_3d8d18f6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2025-11-06T16:58:09Z",
+      "side": 1,
+      "message": "When `requestDisplayState()` was called to turn off the last display, `allOff` should\u0027ve been set to true and the suspended state should\u0027ve been set",
+      "parentUuid": "5c18f5ab_66cda0c4",
+      "revId": "b519a23c97a1d2d0c2dfd19ff16b137315c73e47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
