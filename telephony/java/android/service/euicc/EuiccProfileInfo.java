@@ -160,7 +160,7 @@ public final class EuiccProfileInfo implements Parcelable {
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public EuiccProfileInfo(String iccid, @Nullable UiccAccessRule[] accessRules,
             @Nullable String nickname) {
-        if (!TextUtils.isDigitsOnly(iccid)) {
+        if (!isHexOnly(iccid)) {
             throw new IllegalArgumentException("iccid contains invalid characters: " + iccid);
         }
         this.mIccid = iccid;
@@ -228,7 +228,7 @@ public final class EuiccProfileInfo implements Parcelable {
         @PolicyRule private int mPolicyRules;
 
         public Builder(String value) {
-            if (!TextUtils.isDigitsOnly(value)) {
+            if (!isHexOnly(value)) {
                 throw new IllegalArgumentException("iccid contains invalid characters: " + value);
             }
             mIccid = value;
@@ -267,7 +267,7 @@ public final class EuiccProfileInfo implements Parcelable {
 
         /** Sets the iccId of the subscription. */
         public Builder setIccid(String value) {
-            if (!TextUtils.isDigitsOnly(value)) {
+            if (!isHexOnly(value)) {
                 throw new IllegalArgumentException("iccid contains invalid characters: " + value);
             }
             mIccid = value;
@@ -346,6 +346,10 @@ public final class EuiccProfileInfo implements Parcelable {
         } else {
             this.mAccessRules = null;
         }
+    }
+
+    private static boolean isHexOnly(String iccid) {
+        return iccid != null && iccid.matches("^[0-9a-fA-F]+$");
     }
 
     /** Gets the ICCID string. */
