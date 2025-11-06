@@ -316,6 +316,24 @@
       "parentUuid": "5c18f5ab_66cda0c4",
       "revId": "b519a23c97a1d2d0c2dfd19ff16b137315c73e47",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed728248_14c72d37",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2037182
+      },
+      "writtenOn": "2025-11-06T17:07:37Z",
+      "side": 1,
+      "message": "I honestly can\u0027t remember. All I remember is that the `mHalAutoSuspendModeEnabled` was false after we turned off the physical display and with this change it wasn\u0027t. \nI can check this again to see, but it will take a few days.",
+      "parentUuid": "b67c27b0_3d8d18f6",
+      "revId": "b519a23c97a1d2d0c2dfd19ff16b137315c73e47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
