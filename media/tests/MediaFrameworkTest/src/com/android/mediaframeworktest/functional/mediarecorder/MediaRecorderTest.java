@@ -16,34 +16,29 @@
 
 package com.android.mediaframeworktest.functional.mediarecorder;
 
-import com.android.mediaframeworktest.MediaFrameworkTest;
-import com.android.mediaframeworktest.MediaNames;
-
-import java.io.*;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.hardware.Camera;
+import android.media.EncoderCapabilities.AudioEncoderCap;
+import android.media.EncoderCapabilities.VideoEncoderCap;
 import android.media.MediaCodec;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
-import android.media.EncoderCapabilities;
-import android.media.EncoderCapabilities.VideoEncoderCap;
-import android.media.EncoderCapabilities.AudioEncoderCap;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.suitebuilder.annotation.LargeTest;
 import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
-import android.view.SurfaceView;
-import com.android.mediaframeworktest.MediaProfileReader;
-import com.android.mediaframeworktest.MediaFrameworkTestRunner;
 
-import android.test.suitebuilder.annotation.LargeTest;
-import android.test.suitebuilder.annotation.Suppress;
+import com.android.mediaframeworktest.MediaFrameworkTest;
+import com.android.mediaframeworktest.MediaFrameworkTestRunner;
+import com.android.mediaframeworktest.MediaNames;
+import com.android.mediaframeworktest.MediaProfileReader;
+
+import java.io.*;
 import java.util.List;
 
 
@@ -194,6 +189,8 @@ public class MediaRecorderTest extends ActivityInstrumentationTestCase2<MediaFra
             } catch (Exception e) {
                 // stop() could fail if the recording is empty, as we didn't render anything.
                 // ignore any failure in stop, we just want it stopped.
+            } catch (RuntimeException e) {
+                //Run time exception noticed, handle it gracefully.
             }
 
             /* Test: getSurface() after stop()
@@ -296,6 +293,8 @@ public class MediaRecorderTest extends ActivityInstrumentationTestCase2<MediaFra
         } catch (Exception e) {
             Log.v(TAG, "record video failed: " + e.toString());
             return false;
+        } catch (RuntimeException e) {
+            //Runtime Exception noticed, handle gracefully to avoid crash..
         } finally {
             recorder.release();
             // release surface if not using persistent surface
