@@ -244,6 +244,24 @@
       "parentUuid": "61dce5ef_e7757db7",
       "revId": "b519a23c97a1d2d0c2dfd19ff16b137315c73e47",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60834df0_8b001a18",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2037182
+      },
+      "writtenOn": "2025-11-06T16:41:05Z",
+      "side": 1,
+      "message": "As far as I remember (it has been a while I am afraid) they were in the default power group. We did not \"turn the device off\" but the display by short press on the power button.",
+      "parentUuid": "6bb564c7_c144b89a",
+      "revId": "b519a23c97a1d2d0c2dfd19ff16b137315c73e47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
