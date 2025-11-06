@@ -334,6 +334,23 @@
       "parentUuid": "b67c27b0_3d8d18f6",
       "revId": "b519a23c97a1d2d0c2dfd19ff16b137315c73e47",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba2accc1_f4240a7f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015328
+      },
+      "writtenOn": "2025-11-06T22:38:37Z",
+      "side": 1,
+      "message": "We  are not seeing the behavior you\u0027re mentioning here.  Our AOSP builds seem to put the device to suspend even if there are virtual or overlay displays present because those displays are correctly changing states from what we see.\n\nGiven that, we cannot take this change at this time.",
+      "revId": "b519a23c97a1d2d0c2dfd19ff16b137315c73e47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
