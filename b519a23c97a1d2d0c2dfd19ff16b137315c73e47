@@ -208,6 +208,24 @@
       "message": "Santos, long time no see :) Wanted to check if there is something we can do on our side to move forward and merge this diff?",
       "revId": "b519a23c97a1d2d0c2dfd19ff16b137315c73e47",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61dce5ef_e7757db7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2025-11-06T11:38:57Z",
+      "side": 1,
+      "message": "If the virtual displays remain on, don\u0027t we want to prevent the device from suspending?",
+      "parentUuid": "9bdf0c4f_4551a9de",
+      "revId": "b519a23c97a1d2d0c2dfd19ff16b137315c73e47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
