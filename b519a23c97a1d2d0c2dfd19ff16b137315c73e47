@@ -262,6 +262,24 @@
       "parentUuid": "6bb564c7_c144b89a",
       "revId": "b519a23c97a1d2d0c2dfd19ff16b137315c73e47",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0858ec1e_dc94f59c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2025-11-06T16:45:38Z",
+      "side": 1,
+      "message": "If they were in the default power group, why weren\u0027t they turned off after the power button press? We need to investigate that first\n\nHow did you create the virtual displays? I\u0027m not sure what you mean by \"Create a virtual display from your launcher app\"",
+      "parentUuid": "60834df0_8b001a18",
+      "revId": "b519a23c97a1d2d0c2dfd19ff16b137315c73e47",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
