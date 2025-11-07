@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2fce16a0_70ebd263",
+        "filename": "services/tests/displayservicetests/src/com/android/server/display/DisplayManagerServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2943,
+      "author": {
+        "id": 1962150
+      },
+      "writtenOn": "2025-11-07T16:35:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffe439af_34f4728f",
+      "revId": "08842d18a678a8dd04dce200eee7e4829b62eba4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "881fa926_91c867a3",
@@ -53,6 +71,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f2e8b6e_75483376",
+        "filename": "services/tests/displayservicetests/src/com/android/server/display/DisplayManagerServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2945,
+      "author": {
+        "id": 1962150
+      },
+      "writtenOn": "2025-11-07T16:35:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "881fa926_91c867a3",
+      "revId": "08842d18a678a8dd04dce200eee7e4829b62eba4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "32cc501c_306ddf05",
@@ -66,6 +102,24 @@
       "writtenOn": "2025-11-07T16:19:22Z",
       "side": 1,
       "message": "Can you rename this like in the original CL?",
+      "revId": "08842d18a678a8dd04dce200eee7e4829b62eba4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "54dd83f8_95a8202e",
+        "filename": "services/tests/displayservicetests/src/com/android/server/display/ExternalDisplayPolicyTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1962150
+      },
+      "writtenOn": "2025-11-07T16:35:24Z",
+      "side": 1,
+      "message": "that is a rather big change, not directly related to the feature. if we ever need to cherry pick again can be difficult to merge",
+      "parentUuid": "32cc501c_306ddf05",
       "revId": "08842d18a678a8dd04dce200eee7e4829b62eba4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
