@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a8431beb_5a65c367",
+        "filename": "media/java/android/media/tv/extension/pvr/IGetInfoRecordedContentsCallback.aidl",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 4443465
+      },
+      "writtenOn": "2025-11-07T08:41:54Z",
+      "side": 1,
+      "message": "Error repeat the word \"notify the\"",
+      "revId": "affb663b42c6e2cfb430382812fb23fd7a536590",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
