@@ -16,6 +16,24 @@
       "message": "Thank you for the fix!\n\nThere is already a system in place to perform periodic syncs of this data using `ReportWatchlistJobService`.  So I think having a custom delay added here might make it quite confusing to predict how the system will behave.\n\nTo resolve this but achieve the intended goal, I wonder if it might be possible to instead change how `reportWatchlistIfNecessary()` is called in this case.  It appears it is called on service start, so very early in the boot process.  I wonder if we could simply remove this call from `NetworkWatchlistService` and instead make the call in `NetworkWatchlistService.Lifecycle.onBootPhase` when the boot phase reaches `PHASE_BOOT_COMPLETED`?  I think this would avoid the clash with other essential boot processes, but still result in the processing happening on boot as intended.  (Possibly an even better alternative would be to schedule an immediate run of `ReportWatchlistJobService`, alongside scheduling the periodic run, but that is a larger change so I\u0027m leaning towards the simpler, easier to reason about change).\n\nSince you have a working reproduction of this issue, would you be able to let me know your thoughts and also test this alternative out and make sure it would also resolve the ANRs? Many thanks!",
       "revId": "9bd136cd6c2d96adce33ac9d542db30d37ecfc77",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a393da75_79867b25",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3397250
+      },
+      "writtenOn": "2025-11-07T09:35:51Z",
+      "side": 1,
+      "message": "Acknowledged \nI think your solution is more reasonable. Could you provide the implementation of this solution, as you are an expert in this area? If you publish a solution that fixes this problem, please update it to us promptly. For example, update it at https://partnerissuetracker.corp.google.com/u/2/issues/414507692?pli\u003d1. Thank you.",
+      "parentUuid": "533ead63_3c4414cd",
+      "revId": "9bd136cd6c2d96adce33ac9d542db30d37ecfc77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
