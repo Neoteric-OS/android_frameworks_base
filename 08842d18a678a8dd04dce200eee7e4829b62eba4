@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ffe439af_34f4728f",
+        "filename": "services/tests/displayservicetests/src/com/android/server/display/DisplayManagerServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2943,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2025-11-07T16:19:22Z",
+      "side": 1,
+      "message": "Nit: there was a comment here in the original CL",
+      "revId": "08842d18a678a8dd04dce200eee7e4829b62eba4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "881fa926_91c867a3",
+        "filename": "services/tests/displayservicetests/src/com/android/server/display/DisplayManagerServiceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2945,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2025-11-07T16:19:22Z",
+      "side": 1,
+      "message": "Nit: I think this shows the \"variable not used\" warning, the original code didn\u0027t create this variable",
+      "fixSuggestions": [
+        {
+          "fixId": "6d8fad0f_68765156",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/tests/displayservicetests/src/com/android/server/display/DisplayManagerServiceTest.java",
+              "range": {
+                "startLine": 2945,
+                "startChar": 0,
+                "endLine": 2947,
+                "endChar": 0
+              },
+              "replacement": "        createFakeDisplayDevice(displayManager, new float[]{60f}, Display.TYPE_INTERNAL);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "08842d18a678a8dd04dce200eee7e4829b62eba4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "32cc501c_306ddf05",
+        "filename": "services/tests/displayservicetests/src/com/android/server/display/ExternalDisplayPolicyTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2025-11-07T16:19:22Z",
+      "side": 1,
+      "message": "Can you rename this like in the original CL?",
+      "revId": "08842d18a678a8dd04dce200eee7e4829b62eba4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
