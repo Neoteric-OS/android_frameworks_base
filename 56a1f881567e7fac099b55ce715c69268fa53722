@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b545d6ff_72812b2f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1962150
+      },
+      "writtenOn": "2025-11-07T17:42:36Z",
+      "side": 1,
+      "message": "Hi @mariiasand@google.com, this CL needs DrNo approval. Could you please take a look?",
+      "revId": "56a1f881567e7fac099b55ce715c69268fa53722",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
