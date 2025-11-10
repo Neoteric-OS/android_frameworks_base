@@ -94,6 +94,10 @@ class PowerManagerShellCommand extends ShellCommand {
                     return runSleep();
                 case "wakeup":
                     return runWakeUp();
+                case "power-on":
+                    return wakeUpWithDisplayId();
+                case "power-off":
+                    return goToSleepWithDisplayId();
                 default:
                     return handleDefaultCommands(cmd);
             }
@@ -290,6 +294,63 @@ class PowerManagerShellCommand extends ShellCommand {
                 pw.println("Error: " + e);
                 return -1;
             }
+        }
+        return 0;
+    }
+
+    private int wakeUpWithDisplayId() {
+        final PrintWriter pw = getOutPrintWriter();
+        final String displayIdText = getNextArg();
+        if (displayIdText == null) {
+            pw.println("Error: no displayId specified");
+            return 1;
+        }
+        final int displayId;
+        try {
+            displayId = Integer.parseInt(displayIdText);
+        } catch (NumberFormatException e) {
+            pw.println("Error: invalid displayId: '" + displayIdText + "'");
+            return 1;
+        }
+        try {
+            pw.println("Displayid[" + displayId + "] ready wake up by excuting power-on cmd");
+            mService.wakeUpWithDisplayId(
+                    SystemClock.uptimeMillis(),
+                    PowerManager.WAKE_REASON_APPLICATION,
+                    "PowerManagerShellCommand",
+                    mContext.getOpPackageName(),
+                    displayId);
+        } catch (Exception e) {
+            pw.println("Error: " + e);
+            return -1;
+        }
+        return 0;
+    }
+
+    private int goToSleepWithDisplayId() {
+        final PrintWriter pw = getOutPrintWriter();
+        final String displayIdText = getNextArg();
+        if (displayIdText == null) {
+            pw.println("Error: no displayId specified");
+            return 1;
+        }
+        final int displayId;
+        try {
+            displayId = Integer.parseInt(displayIdText);
+        } catch (NumberFormatException e) {
+            pw.println("Error: invalid displayId: '" + displayIdText + "'");
+            return 1;
+        }
+        try {
+            pw.println("Displayid[" + displayId + "] ready go to sleep  by excuting power-off cmd");
+            mService.goToSleepWithDisplayId(
+                    displayId,
+                    SystemClock.uptimeMillis(),
+                    PowerManager.GO_TO_SLEEP_REASON_APPLICATION,
+                    PowerManager.GO_TO_SLEEP_FLAG_NO_DOZE);
+        } catch (Exception e) {
+            pw.println("Error: " + e);
+            return -1;
         }
         return 0;
     }
