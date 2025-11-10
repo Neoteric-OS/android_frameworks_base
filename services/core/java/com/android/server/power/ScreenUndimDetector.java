@@ -120,10 +120,6 @@ public class ScreenUndimDetector {
      * called by the parent that is trying to update the screen policy.
      */
     public void recordScreenPolicy(int displayGroupId, int newPolicy) {
-        if (displayGroupId != Display.DEFAULT_DISPLAY_GROUP || newPolicy == mCurrentScreenPolicy) {
-            return;
-        }
-
         if (DEBUG) {
             Slog.d(TAG,
                     "Screen policy transition: " + mCurrentScreenPolicy + " -> " + newPolicy);
