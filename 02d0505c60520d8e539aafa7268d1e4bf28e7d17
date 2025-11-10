@@ -16,6 +16,47 @@
       "message": "Adding Beverly who develops system UI security.",
       "revId": "02d0505c60520d8e539aafa7268d1e4bf28e7d17",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2f835c5_d1c01cac",
+        "filename": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1165189
+      },
+      "writtenOn": "2025-11-10T19:26:55Z",
+      "side": 1,
+      "message": "`userManager` needs to be instantiated?",
+      "range": {
+        "startLine": 443,
+        "startChar": 17,
+        "endLine": 443,
+        "endChar": 28
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "8d85f6b0_d868737a",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "packages/SystemUI/src/com/android/systemui/statusbar/policy/SecurityControllerImpl.java",
+              "range": {
+                "startLine": 443,
+                "startChar": 0,
+                "endLine": 444,
+                "endChar": 0
+              },
+              "replacement": "            if (!mUserManager.isUserUnlocked(UserHandle.of(userId))) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "02d0505c60520d8e539aafa7268d1e4bf28e7d17",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
