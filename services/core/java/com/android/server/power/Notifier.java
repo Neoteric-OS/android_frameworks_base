@@ -196,6 +196,7 @@ public class Notifier {
     private final AtomicBoolean mIsPlayingChargingStartedFeedback = new AtomicBoolean(false);
 
     private final Injector mInjector;
+    int mCurrentScreenPolicy;
 
     private final PowerManagerFlags mFlags;
 
@@ -904,11 +905,26 @@ public class Notifier {
      * Called when the screen policy changes.
      */
     public void onScreenPolicyUpdate(int displayGroupId, int newPolicy) {
-        if (DEBUG) {
-            Slog.d(TAG, "onScreenPolicyUpdate: newPolicy=" + newPolicy);
-        }
         mWakefulnessSessionObserver.onScreenPolicyUpdate(
                 SystemClock.uptimeMillis(), displayGroupId, newPolicy);
+
+        if (newPolicy == mCurrentScreenPolicy) {
+            if (DEBUG) {
+                Slog.d(TAG, "onScreenPolicyUpdate: Screen policy is already " + newPolicy
+                        + " for group " + displayGroupId);
+            }
+            return;
+        }
+
+        if (displayGroupId != Display.DEFAULT_DISPLAY_GROUP) {
+            return;
+        }
+
+        if (DEBUG) {
+            Slog.d(TAG, "onScreenPolicyUpdate: Screen policy transition " + mCurrentScreenPolicy + " -> " + newPolicy);
+        }
+
+        mCurrentScreenPolicy = newPolicy;
 
         synchronized (mLock) {
             Message msg = mHandler.obtainMessage(MSG_SCREEN_POLICY);
@@ -1273,6 +1289,7 @@ public class Notifier {
                     showWiredChargingStarted(msg.arg1);
                     break;
                 case MSG_SCREEN_POLICY:
+                    removeMessages(MSG_SCREEN_POLICY);
                     screenPolicyChanging(msg.arg1, msg.arg2);
                     break;
             }
