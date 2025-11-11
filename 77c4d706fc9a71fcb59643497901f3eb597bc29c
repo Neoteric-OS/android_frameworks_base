@@ -16,6 +16,24 @@
       "message": "Hi @Eric I have applied the patch.\n\nHi @beverlyt@google.com yes Illegal State Exception will catch the same. But I think before execution checking the user state is better than catching the exception.\n\nRegards,\nParijat",
       "revId": "77c4d706fc9a71fcb59643497901f3eb597bc29c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88925bce_7d355f4c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1059499
+      },
+      "writtenOn": "2025-11-11T15:35:48Z",
+      "side": 1,
+      "message": "Given the crash is not longer observed since we already catch IllegalStateException, I\u0027m not sure this CL is strictly needed any more.",
+      "parentUuid": "4f1a0270_7516b84c",
+      "revId": "77c4d706fc9a71fcb59643497901f3eb597bc29c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
