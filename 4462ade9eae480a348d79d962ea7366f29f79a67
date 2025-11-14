@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79198abd_86088e12",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2025-11-14T06:07:27Z",
+      "side": 1,
+      "message": "The original implementation already does a lazy fetch. In fact, with your impl, we may see multiple threads call getCarrierPrivilegedPackagesForAllActiveSubscriptions() upon empty cache. Why would this solve your issue?",
+      "range": {
+        "startLine": 9,
+        "startChar": 2,
+        "endLine": 10,
+        "endChar": 74
+      },
+      "revId": "4462ade9eae480a348d79d962ea7366f29f79a67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41ea1c7a_c41bb154",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1061057
+      },
+      "writtenOn": "2025-11-14T06:07:27Z",
+      "side": 1,
+      "message": "It seems to me that we can only further reduce the lock holding time by moving the contains() out of the synchronized block like:\n```\nprivate boolean isCarrierApp(String packageName) {\n    List\u003cString\u003e snapshot;\n    synchronized (mCarrierPrivilegedLock) {\n        if (!mHaveCarrierPrivilegedApps) {\n            fetchCarrierPrivilegedAppsCPL();\n        }\n        snapshot \u003d mCarrierPrivilegedApps;\n    }\n    if (snapshot !\u003d null) {\n      return snapshot.contains(packageName);\n    }\n    return false;\n}\n```",
+      "range": {
+        "startLine": 15,
+        "startChar": 61,
+        "endLine": 16,
+        "endChar": 38
+      },
+      "revId": "4462ade9eae480a348d79d962ea7366f29f79a67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
