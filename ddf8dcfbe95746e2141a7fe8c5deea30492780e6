@@ -33,6 +33,23 @@
       "message": "Over to Andy for review",
       "revId": "ddf8dcfbe95746e2141a7fe8c5deea30492780e6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85153b30_e73efba9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1040213
+      },
+      "writtenOn": "2025-11-18T02:56:42Z",
+      "side": 1,
+      "message": "Kevin, I\u0027ll need a bit of time to validate this.  The restart queue actually invokes stop and then checks if there is another stream available to be played.",
+      "revId": "ddf8dcfbe95746e2141a7fe8c5deea30492780e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
