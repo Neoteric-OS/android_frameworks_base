@@ -36,7 +36,7 @@ public final class GateKeeper {
 
     public static IGateKeeperService getService() {
         IGateKeeperService service = IGateKeeperService.Stub.asInterface(
-                ServiceManager.getService(Context.GATEKEEPER_SERVICE));
+                ServiceManager.waitForService(Context.GATEKEEPER_SERVICE));
         if (service == null) {
             throw new IllegalStateException("Gatekeeper service not available");
         }
