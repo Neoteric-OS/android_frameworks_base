@@ -133,7 +133,7 @@ public class OneTimePermissionUserManager {
             PackageInactivityListener listener = mListeners.get(uid);
             if (listener != null) {
                 mListeners.remove(uid);
-                listener.cancel();
+                mHandler.post(listener::cancel);
             }
         }
     }
@@ -222,7 +222,7 @@ public class OneTimePermissionUserManager {
                 }
             }
 
-            updateUidState();
+            mHandler.post(this::updateUidState);
         }
 
         public void updateSessionParameters(long timeoutMillis, long revokeAfterKilledDelayMillis) {
