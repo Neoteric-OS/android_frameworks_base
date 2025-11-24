@@ -338,7 +338,7 @@ public class UserManagerService extends IUserManager.Stub {
     static final int WRITE_USER_LIST_MSG = 2;
     static final int WRITE_USER_DELAY = 2*1000;  // 2 seconds
 
-    private static final long BOOT_USER_SET_TIMEOUT_MS = 300_000;
+    private static final long BOOT_USER_SET_TIMEOUT_MS = 50_000;
 
     /**
      * The time duration (in milliseconds) post device inactivity after which the private space
