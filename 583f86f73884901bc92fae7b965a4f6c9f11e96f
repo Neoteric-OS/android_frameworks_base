@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1eb4d4b5_b7ffd719",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101746
+      },
+      "writtenOn": "2025-11-24T18:55:12Z",
+      "side": 1,
+      "message": "Could you file a bug highlighting the issue and the impact of this?",
+      "revId": "583f86f73884901bc92fae7b965a4f6c9f11e96f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
