@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "438032d0_3dcf6bb2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1583555
+      },
+      "writtenOn": "2025-11-24T11:13:51Z",
+      "side": 1,
+      "message": "Hi Hung-ying, could you help with DrNo? Thanks",
+      "revId": "09f9d8b4b2cf4b62ba68085ab3919f1b1766fdfe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
