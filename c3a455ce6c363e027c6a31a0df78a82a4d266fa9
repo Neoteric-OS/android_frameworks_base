@@ -1,6 +1,29 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "7c533b49_05a1499f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2025-11-24T20:58:29Z",
+      "side": 1,
+      "message": "Could you please elaborate on how this is possible? The only place `PackageInactivityListener` constructor is called is in `startPackageOneTimeSession()`, but that is grabbing `mLock` before calling it.",
+      "range": {
+        "startLine": 10,
+        "startChar": 18,
+        "endLine": 10,
+        "endChar": 123
+      },
+      "revId": "c3a455ce6c363e027c6a31a0df78a82a4d266fa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "9fa7288d_166ff1eb",
