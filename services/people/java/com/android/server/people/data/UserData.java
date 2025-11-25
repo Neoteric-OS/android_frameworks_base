@@ -22,7 +22,6 @@ import android.annotation.UserIdInt;
 import android.annotation.WorkerThread;
 import android.os.Environment;
 import android.text.TextUtils;
-import android.util.ArrayMap;
 import android.util.Slog;
 
 import java.io.ByteArrayInputStream;
@@ -33,6 +32,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
 /** The data associated with a user profile. */
@@ -50,7 +50,7 @@ class UserData {
 
     private boolean mIsUnlocked;
 
-    private Map<String, PackageData> mPackageDataMap = new ArrayMap<>();
+    private final ConcurrentHashMap<String, PackageData> mPackageDataMap = new ConcurrentHashMap<>();
 
     @Nullable
     private String mDefaultDialer;
