@@ -16,6 +16,23 @@
       "message": "danieladam@google.com",
       "revId": "4f74d61aa1cebb5dbca32ddf503cd4d30c520412",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f49117c7_8e2b5294",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1455854
+      },
+      "writtenOn": "2025-11-26T00:24:32Z",
+      "side": 1,
+      "message": "Sorry for the delay in responding. The change LGTM, I will cherry-pick this to the internal branch and add a test for this.",
+      "revId": "4f74d61aa1cebb5dbca32ddf503cd4d30c520412",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
