@@ -4483,9 +4483,12 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
 
     private static void copyFiles(List<File> fromFiles, File toDir) throws IOException {
         // Remove any partial files from previous attempt
-        for (File file : toDir.listFiles()) {
-            if (file.getName().endsWith(".tmp")) {
-                file.delete();
+        final File[] files = toDir.listFiles();
+        if (files != null && files.size() != 0) {
+            for (File file : files) {
+                if (file.getName().endsWith(".tmp")) {
+                    file.delete();
+                }
             }
         }
 
