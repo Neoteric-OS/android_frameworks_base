@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67ac9ef5_be9eaaea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1891398
+      },
+      "writtenOn": "2025-12-01T18:56:31Z",
+      "side": 1,
+      "message": "Hi, thank you for submitting a patch!\n\nCould you please open a tracker in https://issuetracker.google.com/ and assign it to us? Also, please add more details about when did you see this issue and which are the reproduction steps.\n\nThank you!",
+      "revId": "ee437e56a1416610c170d0867a82561b684998a9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
