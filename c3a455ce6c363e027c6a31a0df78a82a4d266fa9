@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ace3783_052f0110",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1785775
+      },
+      "writtenOn": "2025-12-01T06:35:52Z",
+      "side": 1,
+      "message": "PackageInactivityListener is constructor and stored by mListeners, which the key is uid. So when calling startOneTime or stopOneTime with different permissions for a particular application, the following may occur:\n1. startPackageOneTime for permission1 with App1, and the revokeAfterKilledDelayMillis is 0.\n2. App1 is dead, and trigger PackageInactivityListener#mObserver.onUidGone, this first hold app1\u0027s `PackageInactivityListener#mInnerLock` the mLock.\n3. Call stopOneTimePermissionSession for App1, this first hold mLock, then is App1\u0027s PackageInactivityListener.cancel, which need App1\u0027s PackageInactivityListener#mInnerLock",
+      "parentUuid": "7c533b49_05a1499f",
+      "range": {
+        "startLine": 10,
+        "startChar": 18,
+        "endLine": 10,
+        "endChar": 123
+      },
+      "revId": "c3a455ce6c363e027c6a31a0df78a82a4d266fa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "9fa7288d_166ff1eb",
