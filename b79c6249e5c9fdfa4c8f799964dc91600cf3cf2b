@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fef14768_01350caa",
+        "filename": "services/tests/servicestests/src/com/android/server/audio/AudioServiceTest.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-12-02T14:19:08Z",
+      "side": 1,
+      "message": "according to the implementation of AudioService.getUserIdForZoneIdLocked(int zoneId) , given zoneId is different from DEFAULT_ZONE_ID, we should return UserHandle.USER_NULL.",
+      "range": {
+        "startLine": 295,
+        "startChar": 27,
+        "endLine": 295,
+        "endChar": 39
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "06b6d3e1_a33d1f96",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/tests/servicestests/src/com/android/server/audio/AudioServiceTest.java",
+              "range": {
+                "startLine": 295,
+                "startChar": 0,
+                "endLine": 296,
+                "endChar": 0
+              },
+              "replacement": "                UserHandle.USER_NULL, mAudioService.getUserIdForZoneId(zoneId));\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b79c6249e5c9fdfa4c8f799964dc91600cf3cf2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "809c70c2_b8e97bf9",
+        "filename": "services/tests/servicestests/src/com/android/server/audio/AudioServiceTest.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1003259
+      },
+      "writtenOn": "2025-12-02T14:19:08Z",
+      "side": 1,
+      "message": "same here an below: if no mapping is found the value returned is UserHandle.USER_NULL",
+      "range": {
+        "startLine": 304,
+        "startChar": 27,
+        "endLine": 304,
+        "endChar": 39
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "5dec5964_2365f3b0",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/tests/servicestests/src/com/android/server/audio/AudioServiceTest.java",
+              "range": {
+                "startLine": 295,
+                "startChar": 0,
+                "endLine": 296,
+                "endChar": 0
+              },
+              "replacement": "                UserHandle.USER_NULL, mAudioService.getUserIdForZoneId(zoneId));\n"
+            },
+            {
+              "path": "services/tests/servicestests/src/com/android/server/audio/AudioServiceTest.java",
+              "range": {
+                "startLine": 303,
+                "startChar": 0,
+                "endLine": 305,
+                "endChar": 0
+              },
+              "replacement": "        Assert.assertEquals(\"Zone should not be mapped\",\n                UserHandle.USER_NULL, mAudioService.getUserIdForZoneId(zoneId));\n"
+            },
+            {
+              "path": "services/tests/servicestests/src/com/android/server/audio/AudioServiceTest.java",
+              "range": {
+                "startLine": 315,
+                "startChar": 0,
+                "endLine": 317,
+                "endChar": 0
+              },
+              "replacement": "        Assert.assertEquals(\"Unset zone should not be mapped\",\n                UserHandle.USER_NULL, mAudioService.getUserIdForZoneId(zoneId));\n"
+            }
+          ]
+        }
+      ],
+      "revId": "b79c6249e5c9fdfa4c8f799964dc91600cf3cf2b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
