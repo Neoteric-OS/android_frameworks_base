@@ -22,6 +22,30 @@
       },
       "revId": "0b39c7c5bb91ea29bae8d22209ed379d6fe91594",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16a9f18c_47f7a806",
+        "filename": "services/core/java/com/android/server/wm/TaskFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1667,
+      "author": {
+        "id": 1381446
+      },
+      "writtenOn": "2025-12-03T09:34:27Z",
+      "side": 1,
+      "message": "iiuc, the issue was that the `next` was removed from the `mStoppingActivities`, but the activity didn\u0027t not have a running process, so had to restart the process first. However, the activity was no longer the top activity after the process restarted. So, the activity didn\u0027t stop.",
+      "parentUuid": "0bdc0291_84368eec",
+      "range": {
+        "startLine": 1667,
+        "startChar": 17,
+        "endLine": 1667,
+        "endChar": 37
+      },
+      "revId": "0b39c7c5bb91ea29bae8d22209ed379d6fe91594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
