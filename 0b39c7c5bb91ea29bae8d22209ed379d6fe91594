@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0bdc0291_84368eec",
+        "filename": "services/core/java/com/android/server/wm/TaskFragment.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1667,
+      "author": {
+        "id": 1320563
+      },
+      "writtenOn": "2025-12-03T07:49:44Z",
+      "side": 1,
+      "message": "This will call `mTaskSupervisor.mStoppingActivities.remove(this);`\nWhat\u0027s the path it is not called?",
+      "range": {
+        "startLine": 1667,
+        "startChar": 17,
+        "endLine": 1667,
+        "endChar": 37
+      },
+      "revId": "0b39c7c5bb91ea29bae8d22209ed379d6fe91594",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
