@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b1e00d6_542697ab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4374573
+      },
+      "writtenOn": "2025-12-04T11:46:57Z",
+      "side": 1,
+      "message": "Hi @varunshah@google.com, can you please give +2 for this patch? It has been merged into the main, but we need it for GSI.",
+      "revId": "541950b56053f90b9f965f172623ff80056adbbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
