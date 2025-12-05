@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8675c15a_e7b47e2f",
+        "filename": "services/core/java/com/android/server/accounts/AccountManagerService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 4575,
+      "author": {
+        "id": 1362778
+      },
+      "writtenOn": "2025-12-05T19:00:52Z",
+      "side": 1,
+      "message": "Thank you for the fix. I will apply to internal branch and it will be added to next AOSP release.",
+      "range": {
+        "startLine": 4575,
+        "startChar": 0,
+        "endLine": 4575,
+        "endChar": 41
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "1896da58_586e3775",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/accounts/AccountManagerService.java",
+              "range": {
+                "startLine": 4575,
+                "startChar": 0,
+                "endLine": 4576,
+                "endChar": 0
+              },
+              "replacement": "            } catch (SQLiteException | IllegalArgumentException e) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "9b9e2dea75160a97d8b9c75b5747dd9ab4daf251",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
