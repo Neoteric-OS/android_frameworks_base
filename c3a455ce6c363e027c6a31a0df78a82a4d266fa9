@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3c27431_f3c964da",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1351609
+      },
+      "writtenOn": "2025-12-05T02:44:31Z",
+      "side": 1,
+      "message": "I think the problem is `onPackageInactiveLocked()` requiring caller to hold `mInnerLock` and then grabbing `mLock` in it, which violates the lock ordering in other parts of the class.\n\nI\u0027ll defer to @evanseverson@google.com to see if there should be a better solution than posting things to handler thread. (And not sure if posting would create any kind of raciness - haven\u0027t checked.)",
+      "parentUuid": "2ace3783_052f0110",
+      "range": {
+        "startLine": 10,
+        "startChar": 18,
+        "endLine": 10,
+        "endChar": 123
+      },
+      "revId": "c3a455ce6c363e027c6a31a0df78a82a4d266fa9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "9fa7288d_166ff1eb",
