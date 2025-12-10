@@ -1267,6 +1267,9 @@ public abstract class ForegroundServiceTypePolicy {
         public int checkPermission(@NonNull Context context, int callerUid, int callerPid,
                 String packageName, boolean allowWhileInUse) {
             final UsbManager usbManager = context.getSystemService(UsbManager.class);
+            if (usbManager == null) {
+                return PERMISSION_DENIED;
+            }
             final HashMap<String, UsbDevice> devices = usbManager.getDeviceList();
             if (!ArrayUtils.isEmpty(devices)) {
                 for (UsbDevice device : devices.values()) {
@@ -1293,6 +1296,9 @@ public abstract class ForegroundServiceTypePolicy {
         public int checkPermission(@NonNull Context context, int callerUid, int callerPid,
                 String packageName, boolean allowWhileInUse) {
             final UsbManager usbManager = context.getSystemService(UsbManager.class);
+            if (usbManager == null) {
+                return PERMISSION_DENIED;
+            }
             final UsbAccessory[] accessories = usbManager.getAccessoryList();
             if (!ArrayUtils.isEmpty(accessories)) {
                 for (UsbAccessory accessory: accessories) {
