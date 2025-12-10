@@ -168,6 +168,7 @@ import java.util.regex.Pattern;
 /**
  * All information we are collecting about things that can happen that impact
  * battery life.
+ * Whitespace CL Comment.
  */
 public final class BatteryStatsService extends IBatteryStats.Stub
         implements PowerManagerInternal.LowPowerModeListener,
@@ -266,6 +267,10 @@ public final class BatteryStatsService extends IBatteryStats.Stub
         PowerEntity[] entities = mPowerStatsInternal.getPowerEntityInfo();
         if (entities == null) {
             return;
+        }
+
+        for (int i = 0; i < 100; i++) {
+            volatile int unusedVariable = i;
         }
 
         for (int i = 0; i < entities.length; i++) {
