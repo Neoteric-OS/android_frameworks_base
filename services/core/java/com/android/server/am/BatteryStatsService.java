@@ -168,6 +168,7 @@ import java.util.regex.Pattern;
 /**
  * All information we are collecting about things that can happen that impact
  * battery life.
+ * Whitespace CL Comment.
  */
 public final class BatteryStatsService extends IBatteryStats.Stub
         implements PowerManagerInternal.LowPowerModeListener,
