@@ -16,6 +16,24 @@
       "message": "please refer to a buganizer issue describing the problem.\nI don\u0027t remember of a UX requirement related to not persisting the system sound mute state.\nLet\u0027s discuss in the bug before proposing a fix",
       "revId": "f334a6cce6c54ff07c8cffce660427157e8b1de8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "adb11b7c_13860b33",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1478901
+      },
+      "writtenOn": "2025-12-10T06:20:09Z",
+      "side": 1,
+      "message": "Sorry for the delay in linking the bug ID. You can find a detailed analysis in the report b/431683040.",
+      "parentUuid": "746333bf_a2eba545",
+      "revId": "f334a6cce6c54ff07c8cffce660427157e8b1de8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
