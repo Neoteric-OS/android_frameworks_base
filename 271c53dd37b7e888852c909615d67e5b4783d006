@@ -86,6 +86,23 @@
       "parentUuid": "5a5d29c0_42f45a7b",
       "revId": "271c53dd37b7e888852c909615d67e5b4783d006",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34c5fd24_b16a5885",
+        "filename": "services/autofill/java/com/android/server/autofill/AutofillManagerServiceImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1961015
+      },
+      "writtenOn": "2025-12-10T18:56:29Z",
+      "side": 1,
+      "message": "Not sure why, but \"import android.content.pm.ResolveInfo;\" is missing from the cherrypick (the original CL has it) so the build failed. Could you add the import in?",
+      "revId": "271c53dd37b7e888852c909615d67e5b4783d006",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
