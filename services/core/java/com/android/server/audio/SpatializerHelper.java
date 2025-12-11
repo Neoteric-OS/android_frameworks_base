@@ -830,10 +830,8 @@ public class SpatializerHelper {
     }
 
     synchronized void setFeatureEnabled(boolean enabled) {
-        loglogi("setFeatureEnabled(" + enabled + ") was featureEnabled:" + mFeatureEnabled);
-        if (mFeatureEnabled == enabled) {
-            return;
-        }
+        loglogi("setFeatureEnabled(" + enabled + ") was featureEnabled:" + mFeatureEnabled
+                + " mState: " + spatStateString(mState));
         mFeatureEnabled = enabled;
         if (mFeatureEnabled) {
             if (mState == STATE_NOT_SUPPORTED) {
