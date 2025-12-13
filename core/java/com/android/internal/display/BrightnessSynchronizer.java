@@ -95,7 +95,7 @@ public class BrightnessSynchronizer {
             mDisplayManager = mContext.getSystemService(DisplayManager.class);
         }
         if (mBrightnessSyncObserver.isObserving()) {
-            Slog.wtf(TAG, "Brightness sync observer requesting synchronization a second time.");
+            Slog.w(TAG, "Brightness sync observer requesting synchronization a second time.");
             return;
         }
         mLatestFloatBrightness = getScreenBrightnessFloat();
