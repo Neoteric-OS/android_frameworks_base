@@ -9317,10 +9317,6 @@ public final class ActiveServices {
                     + r.mInfoAllowStartForeground
                     + (r.isShortFgs() ? " (Called on SHORT_SERVICE)" : "");
             if (r.isFgsAllowedStart()) {
-                if (ActivityManagerUtils.shouldSamplePackageForAtom(r.packageName,
-                        mAm.mConstants.mFgsStartAllowedLogSampleRate)) {
-                    Slog.wtfQuiet(TAG, msg);
-                }
                 Slog.i(TAG, msg);
             } else {
                 Slog.wtf(TAG, msg);
