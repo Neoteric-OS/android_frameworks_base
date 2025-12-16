@@ -121,6 +121,24 @@
       "parentUuid": "34c5fd24_b16a5885",
       "revId": "271c53dd37b7e888852c909615d67e5b4783d006",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "354392ba_1398e1d8",
+        "filename": "services/autofill/java/com/android/server/autofill/AutofillManagerServiceImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1961015
+      },
+      "writtenOn": "2025-12-16T17:49:22Z",
+      "side": 1,
+      "message": "Please check ag/26738221 for exact location to add this import. I think this would help reduce chance of merge conflict (if in any case it should occur).\n\nThe `import android.content.pm.ResolveInfo;` should be positioned below `import android.content.pm.PackageManager.NameNotFoundException;` and above `import android.content.pm.ServiceInfo;`",
+      "parentUuid": "dfb52403_e24db6a1",
+      "revId": "271c53dd37b7e888852c909615d67e5b4783d006",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
