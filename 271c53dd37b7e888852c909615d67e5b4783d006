@@ -139,6 +139,24 @@
       "parentUuid": "dfb52403_e24db6a1",
       "revId": "271c53dd37b7e888852c909615d67e5b4783d006",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6a529131_fde48d93",
+        "filename": "services/autofill/java/com/android/server/autofill/AutofillManagerServiceImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 3841943
+      },
+      "writtenOn": "2025-12-17T12:37:32Z",
+      "side": 1,
+      "message": "Hey @Haoran Zhang,\n\nI have updated the Gerrit please check.\n\nThanks,\nSwapnil",
+      "parentUuid": "354392ba_1398e1d8",
+      "revId": "271c53dd37b7e888852c909615d67e5b4783d006",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
