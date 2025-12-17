@@ -2290,7 +2290,7 @@ public class PermissionManagerService extends IPermissionManager.Stub {
                                     revokeRuntimePermissionInternal(packageName, permissionName,
                                             false, callingUid, userId, null,
                                             mDefaultPermissionCallback);
-                                } catch (IllegalArgumentException e) {
+                                } catch (IllegalArgumentException | SecurityException e) {
                                     Slog.e(TAG, "Could not revoke " + permissionName + " from "
                                             + packageName, e);
                                 }
