@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec1b695e_c396ef4d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1961015
+      },
+      "writtenOn": "2025-12-17T18:08:15Z",
+      "side": 1,
+      "message": "Could you also update this Change-Id to be same with the Merged-In id to prevent future possible merge conflicts: \n`\nChange-Id: I51c2e3788ac29ff4d6b86aa2a735ff2ea1463a77\n`\n\nOr is there any particular reason to keep them different?",
+      "revId": "c8f722c3b11b46439b4ebf867a4507a1a60b250e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
