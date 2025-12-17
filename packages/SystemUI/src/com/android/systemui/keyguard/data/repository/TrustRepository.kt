@@ -17,6 +17,7 @@
 package com.android.systemui.keyguard.data.repository
 
 import android.app.trust.TrustManager
+import android.util.Log
 import com.android.keyguard.TrustGrantFlags
 import com.android.keyguard.logging.TrustRepositoryLogger
 import com.android.systemui.common.coroutine.ChannelExt.trySendWithFailureLogging
@@ -31,6 +32,7 @@ import com.android.systemui.user.data.repository.UserRepository
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -39,6 +41,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -46,6 +49,7 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeout
 
 /** Encapsulates any state relevant to trust agents and trust grants. */
 interface TrustRepository {
@@ -80,6 +84,7 @@ constructor(
     private val trustManager: TrustManager,
     private val logger: TrustRepositoryLogger,
 ) : TrustRepository {
+    private val TAG = "TrustRepositoryImpl"
     private val latestTrustModelForUser = mutableMapOf<Int, TrustModel>()
     private val activeUnlockRunningForUser = mutableMapOf<Int, ActiveUnlockModel>()
     private val trustManagedForUser = mutableMapOf<Int, TrustManagedModel>()
@@ -190,8 +195,28 @@ constructor(
 
     override val isCurrentUserTrustUsuallyManaged: StateFlow<Boolean> =
         userRepository.selectedUserInfo
-            .flatMapLatest { flowOf(trustManager.isTrustUsuallyManaged(it.id)) }
-            .stateIn(applicationScope, started = SharingStarted.Eagerly, false)
+            .flatMapLatest { userInfo ->
+                flow {
+                    try {
+                        // Execute Binder call on background thread with timeout protection
+                        val isTrustManaged = withTimeout(5000L) {
+                            withContext(backgroundDispatcher) {
+                                trustManager.isTrustUsuallyManaged(userInfo.id)
+                            }
+                        }
+                        emit(isTrustManaged)
+                    } catch (e: TimeoutCancellationException) {
+                        Log.w(TAG, "isTrustUsuallyManaged timeout for user ${userInfo.id}", e)
+                        // Safe fallback: assume not trusted on timeout
+                        emit(false)
+                    }
+                }
+            }
+            .stateIn(
+                scope = applicationScope,
+                started = SharingStarted.WhileSubscribed(),
+                initialValue = false
+            )
 
     private fun isUserTrustManaged(userId: Int) =
         trustManagedForUser[userId]?.isTrustManaged ?: false
