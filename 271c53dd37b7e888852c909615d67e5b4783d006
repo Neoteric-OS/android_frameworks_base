@@ -157,6 +157,24 @@
       "parentUuid": "354392ba_1398e1d8",
       "revId": "271c53dd37b7e888852c909615d67e5b4783d006",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8a2a0a9c_cbae118f",
+        "filename": "services/autofill/java/com/android/server/autofill/AutofillManagerServiceImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1961015
+      },
+      "writtenOn": "2025-12-17T18:04:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a529131_fde48d93",
+      "revId": "271c53dd37b7e888852c909615d67e5b4783d006",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
