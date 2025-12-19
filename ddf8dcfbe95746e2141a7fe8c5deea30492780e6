@@ -50,6 +50,24 @@
       "message": "Kevin, I\u0027ll need a bit of time to validate this.  The restart queue actually invokes stop and then checks if there is another stream available to be played.",
       "revId": "ddf8dcfbe95746e2141a7fe8c5deea30492780e6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9593b6fe_eed12e0f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4435447
+      },
+      "writtenOn": "2025-12-19T04:08:01Z",
+      "side": 1,
+      "message": "Hi Andy, thanks for taking a look. Totally understand that it needs to be validated and if there\u0027s anything I can do to help, please let me know.\n\nRegarding your second sentence: I understand that\u0027s the intention but I wasn\u0027t observing that when testing (refer to attached drive links to show my bug repro). Is it possible there\u0027s some kind of race-condition or logic bug that prevents \u0027stop\u0027 from being called on time?",
+      "parentUuid": "85153b30_e73efba9",
+      "revId": "ddf8dcfbe95746e2141a7fe8c5deea30492780e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
