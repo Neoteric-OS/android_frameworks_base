@@ -17,7 +17,6 @@
 package android.hardware.biometrics;
 
 import android.annotation.NonNull;
-import android.security.identity.IdentityCredential;
 import android.security.keystore.AndroidKeyStoreProvider;
 
 import java.security.Signature;
@@ -27,8 +26,7 @@ import javax.crypto.Mac;
 
 /**
  * A wrapper class for the crypto objects supported by BiometricPrompt and FingerprintManager.
- * Currently the framework supports {@link Signature}, {@link Cipher}, {@link Mac} and
- * {@link IdentityCredential} objects.
+ * Currently the framework supports {@link Signature}, {@link Cipher} and {@link Mac} objects.
  * @hide
  */
 public class CryptoObject {
@@ -44,10 +42,6 @@ public class CryptoObject {
 
     public CryptoObject(@NonNull Mac mac) {
         mCrypto = mac;
-    }
-
-    public CryptoObject(@NonNull IdentityCredential credential) {
-        mCrypto = credential;
     }
 
     /**
@@ -75,23 +69,11 @@ public class CryptoObject {
     }
 
     /**
-     * Get {@link IdentityCredential} object.
-     * @return {@link IdentityCredential} object or null if this doesn't contain one.
-     */
-    public IdentityCredential getIdentityCredential() {
-        return mCrypto instanceof IdentityCredential ? (IdentityCredential) mCrypto : null;
-    }
-
-    /**
      * @hide
      * @return the opId associated with this object or 0 if none
      */
     public final long getOpId() {
-        if (mCrypto == null) {
-            return 0;
-        } else if (mCrypto instanceof IdentityCredential) {
-            return ((IdentityCredential) mCrypto).getCredstoreOperationHandle();
-        }
-        return AndroidKeyStoreProvider.getKeyStoreOperationHandle(mCrypto);
+        return mCrypto != null
+                ? AndroidKeyStoreProvider.getKeyStoreOperationHandle(mCrypto) : 0;
     }
 };
