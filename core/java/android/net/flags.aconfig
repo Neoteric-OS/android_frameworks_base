@@ -95,3 +95,10 @@ flag {
     purpose: PURPOSE_BUGFIX
   }
 }
+
+flag {
+  name: "vpn_set_mtu_api"
+  namespace: "android_core_networking"
+  description: "Flag for setMtu API in VpnService to allow dynamic MTU configuration"
+  bug: "470288158"
+}

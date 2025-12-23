@@ -23,6 +23,7 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
+import android.annotation.FlaggedApi;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -378,6 +379,37 @@ public class VpnService extends Service {
             throw new IllegalStateException(e);
         }
     }
+
+    /**
+     * Sets the MTU (Maximum Transmission Unit) of the VPN interface.
+     *
+     * <p>This method allows dynamic adjustment of the VPN interface MTU after the VPN
+     * has been established. The MTU determines the maximum size of packets that can be
+     * transmitted over the VPN interface.
+     *
+     * <p>The VPN must already be established by calling {@link Builder#establish()}.
+     * Only the application that established the VPN can modify its MTU.
+     *
+     * @param mtu The new MTU value in bytes. Must be positive, in range of 68-65535
+     *            for IPv4, or 1280-65535 for IPv6.
+     *
+     * @return {@code true} if the MTU was successfully updated, {@code false} otherwise.
+     *         Returns {@code false} if the VPN is not established, the caller is not the
+     *         VPN owner, or the MTU value is invalid.
+     *
+     * @throws IllegalStateException if there is an error communicating with the system service.
+     *
+     * @see Builder#setMtu(int)
+     */
+    @FlaggedApi(android.net.platform.flags.Flags.FLAG_VPN_SET_MTU_API)
+    public boolean setMtu(int mtu) {
+        try {
+            return getService().setVpnMtu(mtu);
+        } catch (RemoteException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
 
     /**
      * Returns whether the service is running in always-on VPN mode. In this mode the system ensures

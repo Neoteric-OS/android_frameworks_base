@@ -50,6 +50,8 @@ import static android.telephony.CarrierConfigManager.KEY_MIN_UDP_PORT_4500_NAT_T
 import static android.telephony.CarrierConfigManager.KEY_PREFERRED_IKE_PROTOCOL_INT;
 
 import static com.android.net.module.util.NetworkStackConstants.IPV6_MIN_MTU;
+import static com.android.net.module.util.NetworkStackConstants.IPV4_MAX_MTU;
+import static com.android.net.module.util.NetworkStackConstants.IPV4_MIN_MTU;
 import static com.android.server.connectivity.Vpn.AUTOMATIC_KEEPALIVE_DELAY_SECONDS;
 import static com.android.server.connectivity.Vpn.DEFAULT_LONG_LIVED_TCP_CONNS_EXPENSIVE_TIMEOUT_SEC;
 import static com.android.server.connectivity.Vpn.DEFAULT_UDP_PORT_4500_NAT_TIMEOUT_SEC_INT;
@@ -245,6 +247,8 @@ public class VpnTest extends VpnTestBase {
     private static final int IP6_PREFIX_LEN = 64;
     private static final int MIN_PORT = 0;
     private static final int MAX_PORT = 65535;
+
+    private static final int TEST_MTU_STANDARD = 1400;
 
     private static final InetAddress TEST_VPN_CLIENT_IP =
             InetAddresses.parseNumericAddress(TEST_VPN_CLIENT);
@@ -2313,6 +2317,240 @@ public class VpnTest extends VpnTestBase {
         verify(mConnectivityManager).setVpnDefaultForUids(anyString(), eq(Collections.EMPTY_LIST));
     }
 
+    /**
+     * Helper method to create and establish a VPN for testing
+     */
+    private Vpn createVpnAndEstablish(UserInfo user) throws Exception {
+        final Vpn vpn = createVpn(user.id);
+        setMockedUsers(user);
+
+        // This simulates an established VPN without triggering native methods
+        synchronized (vpn) {
+            vpn.mInterface = TEST_IFACE_NAME;
+            vpn.mConfig = new VpnConfig();
+            vpn.mConfig.user = TEST_VPN_PKG;
+            vpn.mConfig.addresses =
+                    Arrays.asList(new LinkAddress(TEST_VPN_INTERNAL_IP, IP4_PREFIX_LEN));
+            vpn.mConfig.mtu = IPV6_MIN_MTU;
+            vpn.mNetworkAgent = mMockNetworkAgent;
+
+            // Set ownership directly (normally done by prepare())
+            vpn.mPackage = TEST_VPN_PKG;
+            vpn.mOwnerUID = Process.myUid();
+        }
+
+        return vpn;
+    }
+
+    @Test
+    public void testSetMtu_Success() throws Exception {
+        final Vpn vpn = createVpnAndEstablish(PRIMARY_USER);
+        final int newMtu = TEST_MTU_STANDARD;
+
+        // Mock successful JNI call
+        doReturn(0).when(mTestDeps).jniSetMtu(eq(vpn), eq(TEST_IFACE_NAME), eq(newMtu));
+
+        // Call setMtu
+        assertTrue(vpn.setMtu(newMtu));
+
+        // Verify JNI was called
+        verify(mTestDeps).jniSetMtu(vpn, TEST_IFACE_NAME, newMtu);
+
+        // Verify config was updated
+        synchronized (vpn) {
+            assertEquals(newMtu, vpn.mConfig.mtu);
+        }
+
+        // Verify LinkProperties were sent to NetworkAgent
+        final ArgumentCaptor<LinkProperties> lpCaptor = ArgumentCaptor.forClass(LinkProperties.class);
+        verify(mMockNetworkAgent).doSendLinkProperties(lpCaptor.capture());
+        assertEquals(newMtu, lpCaptor.getValue().getMtu());
+    }
+
+    @Test
+    public void testSetMtu_UnauthorizedCaller() throws Exception {
+        final Vpn vpn = createVpnAndEstablish(PRIMARY_USER);
+
+        // Mock successful JNI call
+        doReturn(0).when(mTestDeps).jniSetMtu(eq(vpn), eq(TEST_IFACE_NAME), anyInt());
+
+        // Mock jniReset for the second prepare() call
+        doNothing().when(mTestDeps).jniReset(eq(vpn), anyString());
+
+        synchronized (vpn) {
+            vpn.mPackage = "com.different.vpn";
+            vpn.mOwnerUID = Process.myUid() + 1; // Different UID to simulate different owner
+        }
+
+        // Enable UID checking - this will make isCallerEstablishedOwnerLocked() fail
+        mTestDeps.mIgnoreCallingUidChecks = false;
+
+        // Call setMtu (should fail permission check because caller is TEST_VPN_PKG
+        // but owner is now "com.different.vpn")
+        assertFalse(vpn.setMtu(TEST_MTU_STANDARD));
+
+        // Verify JNI was NOT called
+        verify(mTestDeps, never()).jniSetMtu(any(), anyString(), anyInt());
+
+        // Re-enable UID checks bypass for other tests
+        mTestDeps.mIgnoreCallingUidChecks = true;
+    }
+
+    @Test
+    public void testSetMtu_NoInterface() throws Exception {
+        final Vpn vpn = createVpn(PRIMARY_USER.id);
+        setMockedUsers(PRIMARY_USER);
+
+        // VPN not established, no interface
+        synchronized (vpn) {
+                vpn.mInterface = null;
+        }
+
+        // Call setMtu (should fail due to no interface)
+        assertFalse(vpn.setMtu(TEST_MTU_STANDARD));
+
+        // Verify JNI was NOT called
+        verify(mTestDeps, never()).jniSetMtu(any(), anyString(), anyInt());
+    }
+
+    @Test
+    public void testSetMtu_JniFailure() throws Exception {
+        final Vpn vpn = createVpnAndEstablish(PRIMARY_USER);
+        final int newMtu = TEST_MTU_STANDARD;
+
+        // Mock JNI failure (non-zero return)
+        doReturn(-1).when(mTestDeps).jniSetMtu(eq(vpn), eq(TEST_IFACE_NAME), eq(newMtu));
+
+        // Call setMtu (should fail due to JNI error)
+        assertFalse(vpn.setMtu(newMtu));
+
+        // Verify JNI was called
+        verify(mTestDeps).jniSetMtu(vpn, TEST_IFACE_NAME, newMtu);
+
+        // Verify config was NOT updated
+        synchronized (vpn) {
+            assertEquals(IPV6_MIN_MTU, vpn.mConfig.mtu);
+        }
+
+        // Verify LinkProperties were NOT sent
+        verify(mMockNetworkAgent, never()).doSendLinkProperties(any());
+    }
+
+    @Test
+    public void testSetMtu_UpdatesLinkProperties() throws Exception {
+        final Vpn vpn = createVpnAndEstablish(PRIMARY_USER);
+        final int newMtu = 1400; // Jumbo frames
+
+        // Mock successful JNI call
+        doReturn(0).when(mTestDeps).jniSetMtu(eq(vpn), eq(TEST_IFACE_NAME), eq(newMtu));
+
+        // Call setMtu
+        assertTrue(vpn.setMtu(newMtu));
+
+        // Capture and verify LinkProperties
+        final ArgumentCaptor<LinkProperties> lpCaptor = ArgumentCaptor.forClass(LinkProperties.class);
+        verify(mMockNetworkAgent).doSendLinkProperties(lpCaptor.capture());
+
+        final LinkProperties lp = lpCaptor.getValue();
+        assertEquals(newMtu, lp.getMtu());
+        assertEquals(TEST_IFACE_NAME, lp.getInterfaceName());
+    }
+
+    @Test
+    public void testSetMtu_MultipleCalls() throws Exception {
+        final Vpn vpn = createVpnAndEstablish(PRIMARY_USER);
+
+        // First MTU change
+        final int mtu1 = TEST_MTU_STANDARD;
+        doReturn(0).when(mTestDeps).jniSetMtu(eq(vpn), eq(TEST_IFACE_NAME), eq(mtu1));
+        assertTrue(vpn.setMtu(mtu1));
+
+        synchronized (vpn) {
+            assertEquals(mtu1, vpn.mConfig.mtu);
+        }
+
+        // Second MTU change
+        final int mtu2 = 1500;
+        doReturn(0).when(mTestDeps).jniSetMtu(eq(vpn), eq(TEST_IFACE_NAME), eq(mtu2));
+        assertTrue(vpn.setMtu(mtu2));
+
+        synchronized (vpn) {
+            assertEquals(mtu2, vpn.mConfig.mtu);
+        }
+
+        // Verify both JNI calls were made
+        verify(mTestDeps).jniSetMtu(vpn, TEST_IFACE_NAME, mtu1);
+        verify(mTestDeps).jniSetMtu(vpn, TEST_IFACE_NAME, mtu2);
+
+        // Verify LinkProperties were sent twice
+        verify(mMockNetworkAgent, times(2)).doSendLinkProperties(any());
+    }
+
+    /**
+     * Helper method to set allowed IP families on a Vpn instance
+     */
+    private void setAllowedFamilies(Vpn vpn, boolean allowV4, boolean allowV6) {
+        synchronized (vpn) {
+            vpn.mConfig.allowIPv4 = allowV4;
+            vpn.mConfig.allowIPv6 = allowV6;
+        }
+    }
+
+    /**
+     * Helper method to test MTU range enforcement
+     */
+    private void testMtuRange(Vpn vpn, int minMtu, int maxMtu) {
+        // Accept lower bound
+        doReturn(0).when(mTestDeps).jniSetMtu(eq(vpn), eq(TEST_IFACE_NAME), eq(minMtu));
+        assertTrue(vpn.setMtu(minMtu));
+        verify(mTestDeps).jniSetMtu(vpn, TEST_IFACE_NAME, minMtu);
+
+        // Reject below min
+        assertFalse(vpn.setMtu(minMtu - 1));
+        verify(mTestDeps, never()).jniSetMtu(any(), anyString(), eq(minMtu - 1));
+
+        // Accept upper bound
+        doReturn(0).when(mTestDeps).jniSetMtu(eq(vpn), eq(TEST_IFACE_NAME), eq(maxMtu));
+        assertTrue(vpn.setMtu(maxMtu));
+        verify(mTestDeps).jniSetMtu(vpn, TEST_IFACE_NAME, maxMtu);
+
+        // Reject above max
+        assertFalse(vpn.setMtu(maxMtu + 1));
+        verify(mTestDeps, never()).jniSetMtu(any(), anyString(), eq(maxMtu + 1));
+    }
+
+    @Test
+    public void testSetMtu_Ipv4Only_Bounds() throws Exception {
+        final Vpn vpn = createVpnAndEstablish(PRIMARY_USER);
+        setAllowedFamilies(vpn, true /* v4 */, false /* v6 */);
+
+        testMtuRange(vpn, IPV4_MIN_MTU, IPV4_MAX_MTU);
+    }
+
+    @Test
+    public void testSetMtu_Ipv6Only_Bounds() throws Exception {
+        final Vpn vpn = createVpnAndEstablish(PRIMARY_USER);
+        setAllowedFamilies(vpn, false /* v4 */, true /* v6 */);
+
+        testMtuRange(vpn, IPV6_MIN_MTU, IPV4_MAX_MTU);
+    }
+
+    @Test
+    public void testSetMtu_DualStack_Bounds() throws Exception {
+        final Vpn vpn = createVpnAndEstablish(PRIMARY_USER);
+        setAllowedFamilies(vpn, true /* v4 */, true /* v6 */);
+
+        testMtuRange(vpn, IPV6_MIN_MTU, IPV4_MAX_MTU);
+    }
+
+    @Test
+    public void testSetMtu_NeitherStack_Bounds() throws Exception {
+        final Vpn vpn = createVpnAndEstablish(PRIMARY_USER);
+        setAllowedFamilies(vpn, false /* v4 */, false /* v6 */);
+
+        testMtuRange(vpn, IPV6_MIN_MTU, IPV4_MAX_MTU);
+    }
+
     @Test
     public void testMigrateIkeSession_FromIkeTunnConnParams_AutoTimerNoTimer() throws Exception {
         doTestMigrateIkeSession_FromIkeTunnConnParams(
@@ -3309,6 +3547,11 @@ public class VpnTest extends VpnTestBase {
             // Return the number of addresses.
             return addresses.split(" ").length;
         }
+
+        public void jniReset(Vpn vpn, String interfaze) {
+            // Mock implementation - do nothing
+        }
+
 
         @Override
         public void setBlocking(FileDescriptor fd, boolean blocking) {}

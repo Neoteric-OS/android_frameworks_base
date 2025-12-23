@@ -30418,6 +30418,7 @@ package android.net {
     method public boolean protect(int);
     method public boolean protect(java.net.Socket);
     method public boolean protect(java.net.DatagramSocket);
+    method @FlaggedApi("android.net.platform.flags.vpn_set_mtu_api") public boolean setMtu(int);
     method public boolean setUnderlyingNetworks(android.net.Network[]);
     field public static final String SERVICE_INTERFACE = "android.net.VpnService";
     field public static final String SERVICE_META_DATA_SUPPORTS_ALWAYS_ON = "android.net.VpnService.SUPPORTS_ALWAYS_ON";

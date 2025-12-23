@@ -35,6 +35,7 @@ interface IVpnManager {
     boolean addVpnAddress(String address, int prefixLength);
     boolean removeVpnAddress(String address, int prefixLength);
     boolean setUnderlyingNetworksForVpn(in Network[] networks);
+    boolean setVpnMtu(int mtu);
 
     /** VpnManager APIs */
     boolean provisionVpnProfile(in VpnProfile profile, String packageName);

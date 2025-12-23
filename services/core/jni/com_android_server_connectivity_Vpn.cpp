@@ -313,6 +313,38 @@ error:
     return count;
 }
 
+static jint setMtu(JNIEnv* env, jobject /* thiz */, jstring jName, jint mtu)
+{
+    const char *name = jName ? env->GetStringUTFChars(jName, NULL) : NULL;
+    ifreq ifr4;
+
+    if (!name) {
+        jniThrowNullPointerException(env, "name");
+        return SYSTEM_ERROR;
+    }
+
+    int fd = socket(AF_INET, SOCK_DGRAM, 0);
+    if (fd < 0) {
+        ALOGE("Cannot set MTU on %s: %s", ifr4.ifr_name, strerror(errno));
+        env->ReleaseStringUTFChars(jName, name);
+        return SYSTEM_ERROR;
+    }
+
+    strlcpy(ifr4.ifr_name, name, IFNAMSIZ);
+    ifr4.ifr_mtu = mtu;
+
+    int result = ioctl(fd, SIOCSIFMTU, &ifr4);
+
+    close(fd);
+    env->ReleaseStringUTFChars(jName, name);
+
+    if (result < 0) {
+        ALOGE("Cannot set MTU on %s: %s", ifr4.ifr_name, strerror(errno));
+        return SYSTEM_ERROR;
+    }
+    return 0;
+}
+
 static void reset(JNIEnv *env, jobject /* thiz */, jstring jName)
 {
     const char *name = jName ? env->GetStringUTFChars(jName, NULL) : NULL;
@@ -356,6 +388,7 @@ static const JNINativeMethod gMethods[] = {
     {"jniCreate", "(I)I", (void *)create},
     {"jniGetName", "(I)Ljava/lang/String;", (void *)getName},
     {"jniSetAddresses", "(Ljava/lang/String;Ljava/lang/String;)I", (void *)setAddresses},
+    {"jniSetMtu", "(Ljava/lang/String;I)I", (void *)setMtu},
     {"jniReset", "(Ljava/lang/String;)V", (void *)reset},
     {"jniCheck", "(Ljava/lang/String;)I", (void *)check},
     {"jniAddAddress", "(Ljava/lang/String;Ljava/lang/String;I)Z", (void *)addAddress},

@@ -303,6 +303,19 @@ public class VpnManagerService extends IVpnManager.Stub {
         return success;
     }
 
+    @Override
+    public boolean setVpnMtu(int mtu) {
+        int user = UserHandle.getUserId(mDeps.getCallingUid());
+        synchronized (mVpns) {
+            throwIfLockdownEnabled();
+            Vpn vpn = mVpns.get(user);
+            if (vpn == null) {
+                return false;
+            }
+            return vpn.setMtu(mtu);
+        }
+    }
+
     /**
      * Stores the given VPN profile based on the provisioning package name.
      *

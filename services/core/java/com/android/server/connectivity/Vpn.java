@@ -361,7 +361,7 @@ public class Vpn {
     private int mLegacyState;
     @GuardedBy("this")
     @VisibleForTesting protected String mPackage;
-    private int mOwnerUID;
+    @VisibleForTesting int mOwnerUID;
     private boolean mIsPackageTargetingAtLeastQ;
     @VisibleForTesting
     protected String mInterface;
@@ -516,6 +516,13 @@ public class Vpn {
          */
         public int jniSetAddresses(Vpn vpn, String interfaze, String addresses) {
             return vpn.jniSetAddresses(interfaze, addresses);
+        }
+
+        /**
+         * Change the MTU of the VPN interface.
+         */
+        public int jniSetMtu(Vpn vpn, String iface, int mtu) {
+            return vpn.jniSetMtu(iface, mtu);
         }
 
         /**
@@ -1751,6 +1758,57 @@ public class Vpn {
     }
 
     /**
+     * Change the MTU of an active VPN connection.
+     *
+     * @param mtu The new MTU value to set
+     */
+    public synchronized boolean setMtu(int mtu) {
+
+        // Determine which protocols are enabled
+        final boolean allowIPv4 = mConfig != null && mConfig.allowIPv4;
+        final boolean allowIPv6 = mConfig != null && mConfig.allowIPv6;
+
+        int minMtu = Integer.MIN_VALUE;
+        int maxMtu = Integer.MAX_VALUE;
+
+        if (allowIPv4 && !allowIPv6) {
+            // IPv4
+            minMtu = NetworkStackConstants.IPV4_MIN_MTU;
+            maxMtu = NetworkStackConstants.IPV4_MAX_MTU;
+        } else {
+            // IPv6, both, or neither
+            minMtu = NetworkStackConstants.IPV6_MIN_MTU;
+            maxMtu = NetworkStackConstants.IPV4_MAX_MTU;
+        }
+
+        if (mtu < minMtu || mtu > maxMtu) {
+            Log.w(TAG, "Invalid MTU: " + mtu);
+            return false;
+        }
+        if (!isCallerEstablishedOwnerLocked()) {
+            Log.w(TAG, "Unauthorized attempt to set MTU");
+            return false;
+        }
+
+        if (mInterface == null) {
+            Log.w(TAG, "No interface to set MTU on.");
+            return false;
+        }
+
+        Log.i(TAG, "Setting MTU=" + mtu + " for " + mInterface);
+        int result = mDeps.jniSetMtu(this, mInterface, mtu);
+        if (result != 0) {
+            Log.e(TAG, "Failed to set MTU: ioctl result=" + result);
+            return false;
+        }
+
+        mConfig.mtu = mtu;
+        doSendLinkProperties(mNetworkAgent, makeLinkProperties());
+
+        return true;
+    }
+
+    /**
      * Establish a VPN network and return the file descriptor of the VPN interface. This methods
      * returns {@code null} if the application is revoked or not prepared.
      *
@@ -2486,6 +2544,7 @@ public class Vpn {
     private native int jniCreate(int mtu);
     private native String jniGetName(int tun);
     private native int jniSetAddresses(String interfaze, String addresses);
+    private native int jniSetMtu(String interfaze, int mtu);
     private native void jniReset(String interfaze);
     private native int jniCheck(String interfaze);
     private native boolean jniAddAddress(String interfaze, String address, int prefixLen);
