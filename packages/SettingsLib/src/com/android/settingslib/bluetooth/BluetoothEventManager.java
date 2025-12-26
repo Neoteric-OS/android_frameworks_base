@@ -28,8 +28,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -65,6 +67,10 @@ public class BluetoothEventManager {
     private final android.os.Handler mReceiverHandler;
     private final UserHandle mUserHandle;
     private final Context mContext;
+
+    boolean mShowDevicesWithoutNames;
+    private static final String BLUETOOTH_SHOW_DEVICES_WITHOUT_NAMES_PROPERTY =
+            "persist.bluetooth.showdeviceswithoutnames";
 
     interface Handler {
         void onReceive(Context context, Intent intent, BluetoothDevice device);
@@ -140,6 +146,9 @@ public class BluetoothEventManager {
         addHandler(BluetoothAdapter.ACTION_AUTO_ON_STATE_CHANGED, new AutoOnStateChangedHandler());
 
         registerAdapterIntentReceiver();
+
+        mShowDevicesWithoutNames = SystemProperties.getBoolean(
+                BLUETOOTH_SHOW_DEVICES_WITHOUT_NAMES_PROPERTY, false);
     }
 
     /** Register to start receiving callbacks for Bluetooth events. */
@@ -346,6 +355,9 @@ public class BluetoothEventManager {
                     intent.getBooleanExtra(BluetoothDevice.EXTRA_IS_COORDINATED_SET_MEMBER, false);
             // TODO Pick up UUID. They should be available for 2.1 devices.
             // Skip for now, there's a bluez problem and we are not getting uuids even for 2.1.
+            if(!mShowDevicesWithoutNames && TextUtils.isEmpty(name)){
+                return;
+            }
             CachedBluetoothDevice cachedDevice = mDeviceManager.findDevice(device);
             if (cachedDevice == null) {
                 cachedDevice = mDeviceManager.addDevice(device);
