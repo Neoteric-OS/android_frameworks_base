@@ -304,7 +304,7 @@ final class WifiDisplayController implements DumpUtils.Dump {
                     @Override
                     public void onSuccess() {
                         if (DEBUG) {
-                            Slog.d(TAG, "Successfully set WFD info.");
+                            Slog.e(TAG, "Successfully set WFD info.");
                         }
                         if (mWfdEnabling) {
                             mWfdEnabling = false;
