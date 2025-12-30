@@ -348,17 +348,7 @@ final class ConversionUtils {
 
     static ProgramIdentifier identifierToHalProgramIdentifier(ProgramSelector.Identifier id) {
         ProgramIdentifier hwId = new ProgramIdentifier();
-        if (id.getType() == ProgramSelector.IDENTIFIER_TYPE_DAB_DMB_SID_EXT) {
-            hwId.type = IdentifierType.DAB_SID_EXT;
-        } else if (Flags.hdRadioImproved()) {
-            if (id.getType() == ProgramSelector.IDENTIFIER_TYPE_HD_STATION_LOCATION) {
-                hwId.type = IdentifierType.HD_STATION_LOCATION;
-            } else {
-                hwId.type = id.getType();
-            }
-        } else {
-            hwId.type = id.getType();
-        }
+        hwId.type = identifierFromHalProgramIdentifier(id.getType());
         long value = id.getValue();
         if (id.getType() == ProgramSelector.IDENTIFIER_TYPE_DAB_SID_EXT) {
             hwId.value = (value & 0xFFFF) | ((value >>> 16) << 32);
@@ -366,6 +356,17 @@ final class ConversionUtils {
             hwId.value = value;
         }
         return hwId;
+    }
+
+    private @IdentifierType int identifierTypeToHalIdentifierType(int identifierType) {
+        if (identifierType == ProgramSelector.IDENTIFIER_TYPE_DAB_DMB_SID_EXT) {
+            return IdentifierType.DAB_SID_EXT;
+        } else if (Flags.hdRadioImproved()) {
+            if (identifierType == ProgramSelector.IDENTIFIER_TYPE_HD_STATION_LOCATION) {
+                return IdentifierType.HD_STATION_LOCATION;
+            }
+        }
+        return identifierType;
     }
 
     @Nullable
@@ -732,7 +733,7 @@ final class ConversionUtils {
         ArrayList<ProgramIdentifier> identifiersList = new ArrayList<>();
         Iterator<Integer> typeIterator = filter.getIdentifierTypes().iterator();
         while (typeIterator.hasNext()) {
-            identifierTypeList.add(typeIterator.next());
+            identifierTypeList.add(identifierTypeToHalIdentifierType(typeIterator.next()));
         }
         Iterator<ProgramSelector.Identifier> idIterator = filter.getIdentifiers().iterator();
         while (idIterator.hasNext()) {
