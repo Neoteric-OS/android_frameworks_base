@@ -16,6 +16,24 @@
       "message": "This needs an associated minimal automated repro test to consider this patch, ideally contributed to CTS.\n\nIt looks like it targets a case where the start time is in the future relative to AnimationUtils.currentAnimationTimeMillis. A fix should prevent this bad state from entering the system rather than working around bad state that has already been accepted.",
       "revId": "01d37834431c26a1284113c24c7ab03954bbacbc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "944c790e_ce9b4626",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4282726
+      },
+      "writtenOn": "2026-01-04T08:23:20Z",
+      "side": 1,
+      "message": "We are still investigating the root cause, but this WA is currently being used by multiple OEMs. It has been integrated into our trunk for some time now with no reported crashes or negative impact. Given its proven stability in our products, we recommend considering this patch,Thanks",
+      "parentUuid": "5b6252f3_c060e24b",
+      "revId": "01d37834431c26a1284113c24c7ab03954bbacbc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
