@@ -305,10 +305,11 @@ class UserUsageStatsService {
                     + "[" + event.mTimeStamp + "]: "
                     + eventToString(event.mEventType));
         }
-
+        
+	checkAndGetTimeLocked();
+	
         if (event.mEventType != Event.USER_INTERACTION
                 && event.mEventType != Event.APP_COMPONENT_USED) {
-            checkAndGetTimeLocked();
             convertToSystemTimeLocked(event);
         }
 
