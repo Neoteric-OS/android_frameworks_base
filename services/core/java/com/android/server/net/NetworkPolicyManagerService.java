@@ -2374,6 +2374,14 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
         for (int i = mNetworkPolicy.size() - 1; i >= 0; i--) {
            final NetworkPolicy policy = mNetworkPolicy.valueAt(i);
 
+            final int subId = findRelevantSubIdNL(policy.template);
+
+            // ignore policies that aren't relevant to user
+            if (subId == INVALID_SUBSCRIPTION_ID) continue;
+            // ignore if the data sub is neither default nor active for data at the moment.
+            if (subId != mActiveDataSubIdListener.mDefaultDataSubId
+                    && subId != mActiveDataSubIdListener.mActiveDataSubId) continue;
+
             // Collect all ifaces that match this policy
             matchingIfaces.clear();
             for (int j = identified.size() - 1; j >= 0; j--) {
