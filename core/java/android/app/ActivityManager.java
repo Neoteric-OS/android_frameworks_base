@@ -223,6 +223,17 @@ public class ActivityManager {
                     procState, mContext));
         }
 
+	@Override
+        public void onUidCachedChanged(int uid, boolean cached) {
+            try {
+                int procState = getService().getUidProcessState(uid, mContext.getOpPackageName());
+                int importance = RunningAppProcessInfo.procStateToImportanceForClient(procState, mContext);
+                mListener.onUidImportance(uid, importance);
+            } catch (RemoteException e) {
+                throw e.rethrowFromSystemServer();
+            }
+        }
+
         @Override
         public void onUidGone(int uid, boolean disabled) {
             mListener.onUidImportance(uid, RunningAppProcessInfo.IMPORTANCE_GONE);
@@ -4776,7 +4787,7 @@ public class ActivityManager {
             MyUidObserver observer = new MyUidObserver(listener, mContext);
             try {
                 getService().registerUidObserverForUids(observer,
-                        UID_OBSERVER_PROCSTATE | UID_OBSERVER_GONE,
+                        UID_OBSERVER_PROCSTATE | UID_OBSERVER_GONE | UID_OBSERVER_CACHED,
                         RunningAppProcessInfo.importanceToProcState(importanceCutpoint),
                         mContext.getOpPackageName(), uids);
             } catch (RemoteException e) {
