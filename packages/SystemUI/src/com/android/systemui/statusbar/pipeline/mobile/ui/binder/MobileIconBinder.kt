@@ -197,6 +197,7 @@ object MobileIconBinder {
                             networkTrafficContainer.visibility =
                                 if (shouldShowNetworkType && !isVoWifi) VISIBLE else GONE
 
+// QTI_END: 2025-04-15: Android_UI: SystemUI: Readapt Mobile Icon Features For Kairos part 1
                             if (prevVis != networkTypeContainer.visibility) {
                                 view.requestLayout()
                             }
