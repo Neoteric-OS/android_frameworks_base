@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c431290_95bc74ba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010211
+      },
+      "writtenOn": "2026-01-12T21:23:59Z",
+      "side": 1,
+      "message": "Just removing myself as this isn\u0027t part of the codebase I\u0027m familiar with.",
+      "revId": "cbf98868c0a8ea14f759596733ba705dac866fd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
