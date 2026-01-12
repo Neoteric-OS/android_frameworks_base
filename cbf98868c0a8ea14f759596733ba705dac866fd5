@@ -16,6 +16,23 @@
       "message": "Just removing myself as this isn\u0027t part of the codebase I\u0027m familiar with.",
       "revId": "cbf98868c0a8ea14f759596733ba705dac866fd5",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8ae78fe4_77511caa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1101726
+      },
+      "writtenOn": "2026-01-12T22:07:11Z",
+      "side": 1,
+      "message": "Can you open a bug on the issuetracker? \nThis change is going to have a wide impact and is unlikely to be accepted without detailed analysis and discussion.",
+      "revId": "cbf98868c0a8ea14f759596733ba705dac866fd5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
