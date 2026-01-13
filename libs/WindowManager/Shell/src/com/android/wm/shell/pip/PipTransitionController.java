@@ -257,7 +257,7 @@ public abstract class PipTransitionController implements Transitions.TransitionH
                         new PictureInPictureUiState.Builder()
                                 .setTransitioningToPip(false)
                                 .build());
-            } catch (RemoteException | IllegalStateException e) {
+            } catch (RemoteException | IllegalStateException | NullPointerException e) {
                 ProtoLog.e(ShellProtoLogGroup.WM_SHELL_PICTURE_IN_PICTURE,
                         "Failed to set alert PiP state change.");
             }
