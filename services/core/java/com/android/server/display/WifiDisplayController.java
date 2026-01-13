@@ -194,18 +194,84 @@ final class WifiDisplayController implements DumpUtils.Dump {
 
     /**
      * Used to lazily retrieve WifiP2pManager service.
+     * Only creates P2P channel when wireless display is enabled AND discovery is requested.
      */
     private void retrieveWifiP2pManagerAndChannel() {
-        if (mWifiP2pManager == null) {
+        // Only create P2P manager if wireless display setting is enabled
+        if (mWifiDisplayOnSetting && mWifiP2pManager == null) {
             mWifiP2pManager = (WifiP2pManager)mContext.getSystemService(Context.WIFI_P2P_SERVICE);
         }
-        if (mWifiP2pChannel == null && mWifiP2pManager != null) {
+
+        // Only create P2P channel if:
+        // 1. Wireless display is enabled in settings
+        // 2. Discovery is requested (scan is active)
+        // 3. Channel doesn't already exist
+        if (mWifiDisplayOnSetting && mScanRequested &&
+            mWifiP2pManager != null && mWifiP2pChannel == null) {
             mWifiP2pChannel = mWifiP2pManager.initialize(mContext, mHandler.getLooper(), null);
+            Slog.i(TAG, "Initialized P2P Channel");
+            if (mWifiP2pChannel == null) {
+                Slog.e(TAG, "Failed to initialize WifiP2pManager channel.");
+                mWifiP2pManager = null;
+            } else {
+                // If WFD is enabled but we deferred setting WFD info earlier, set it now
+                if (mWfdEnabled && mWifiP2pEnabled) {
+                    Slog.i(TAG, "Setting deferred WFD info now that channel is available");
+                    setWfdInfo(true);
+                }
+            }
         }
+    }
+
+    private void destroyWifiP2pChannel() {
+        if (mWifiP2pChannel != null) {
+            try {
+                mWifiP2pChannel.close();
+                Slog.i(TAG, "P2P Channel closed successfully");
+            } catch (Exception e) {
+                Slog.e(TAG, "Exception during P2P channel close: " + e.getMessage());
+            } finally {
+                mWifiP2pChannel = null;
+            }
+        }
+    }
+
+    private void setWfdInfo(boolean enabled) {
+        if (mWifiP2pManager == null || mWifiP2pChannel == null) {
+            Slog.w(TAG, "Cannot set WFD info, Invalid mWifiP2pManager or mWifiP2pChannel");
+            return;
+        }
+
+        WifiP2pWfdInfo wfdInfo = new WifiP2pWfdInfo();
+        wfdInfo.setEnabled(enabled);
+        if (enabled) {
+            wfdInfo.setDeviceType(WifiP2pWfdInfo.DEVICE_TYPE_WFD_SOURCE);
+            wfdInfo.setSessionAvailable(true);
+            wfdInfo.setControlPort(DEFAULT_CONTROL_PORT);
+            wfdInfo.setMaxThroughput(MAX_THROUGHPUT);
+        }
+
+        mWifiP2pManager.setWfdInfo(mWifiP2pChannel, wfdInfo, new ActionListener() {
+            @Override
+            public void onSuccess() {
+                if (DEBUG) {
+                    Slog.d(TAG,
+                           "Successfully set WFD info to " + (enabled ? "enabled" : "disabled"));
+                }
+            }
+
+            @Override
+            public void onFailure(int reason) {
+                if (DEBUG) {
+                    Slog.d(TAG, "Failed to set WFD info with reason " + reason + ".");
+                }
+            }
+        });
     }
 
     private void updateSettings() {
         final ContentResolver resolver = mContext.getContentResolver();
+        boolean previousWifiDisplaySetting = mWifiDisplayOnSetting;
         mWifiDisplayOnSetting = Settings.Global.getInt(resolver,
                 Settings.Global.WIFI_DISPLAY_ON, 0) != 0;
         mWifiDisplayCertMode = Settings.Global.getInt(resolver,
@@ -217,6 +283,11 @@ final class WifiDisplayController implements DumpUtils.Dump {
                   Settings.Global.WIFI_DISPLAY_WPS_CONFIG, WpsInfo.INVALID);
         }
 
+        // Clean up P2P channel if wireless display is disabled
+        if (previousWifiDisplaySetting && !mWifiDisplayOnSetting) {
+            destroyWifiP2pChannel();
+            mWifiP2pManager = null;
+        }
         updateWfdEnableState();
     }
 
@@ -257,10 +328,29 @@ final class WifiDisplayController implements DumpUtils.Dump {
         }
     }
 
+    private boolean isCastingActive() {
+        return (mConnectedDevice != null ||           // Connected to device
+                mConnectingDevice != null ||          // Connecting to device
+                mDesiredDevice != null ||             // Want to connect
+                mRemoteDisplayConnected ||            // RTSP streaming active
+                mRemoteDisplay != null ||             // Display listener active
+                mExtRemoteDisplay != null ||          // Extended display active
+                mDisconnectingDevice != null);        // Disconnecting (still active)
+    }
+
     public void requestStopScan() {
         if (mScanRequested) {
             mScanRequested = false;
             updateScanState();
+
+            // Check if casting is in-progress
+            if (!isCastingActive()) {
+                // Only close channel if no casting activity and WFD is disconnected
+                if (mWifiP2pChannel != null &&
+                    (mNetworkInfo == null || !mNetworkInfo.isConnectedOrConnecting())) {
+                    destroyWifiP2pChannel();
+                }
+            }
         }
     }
 
@@ -293,6 +383,22 @@ final class WifiDisplayController implements DumpUtils.Dump {
             // WFD should be enabled.
             if (!mWfdEnabled && !mWfdEnabling) {
                 mWfdEnabling = true;
+                retrieveWifiP2pManagerAndChannel();
+                if (mWifiP2pManager == null) {
+                    Slog.e(TAG, "Failed to enable WFD, Invalid mWifiP2pManager");
+                    mWfdEnabling = false;
+                    return;
+                }
+
+                // Only set WFD info if we have a valid p2p channel
+                if (mWifiP2pChannel == null) {
+                    Slog.e(TAG, "Skip setting WFDinfo in P2P IE until channel is created");
+                    mWfdEnabling = false;
+                    mWfdEnabled = true; // Mark as enabled, set info when channel is created
+                    reportFeatureState();
+                    updateScanState();
+                    return;
+                }
 
                 WifiP2pWfdInfo wfdInfo = new WifiP2pWfdInfo();
                 wfdInfo.setEnabled(true);
@@ -326,23 +432,23 @@ final class WifiDisplayController implements DumpUtils.Dump {
         } else {
             // WFD should be disabled.
             if (mWfdEnabled || mWfdEnabling) {
-                WifiP2pWfdInfo wfdInfo = new WifiP2pWfdInfo();
-                wfdInfo.setEnabled(false);
-                mWifiP2pManager.setWfdInfo(mWifiP2pChannel, wfdInfo, new ActionListener() {
-                    @Override
-                    public void onSuccess() {
+                if (mWifiP2pManager != null && mWifiP2pChannel != null) {
+                    WifiP2pWfdInfo wfdInfo = new WifiP2pWfdInfo();
+                    wfdInfo.setEnabled(false);
+                    mWifiP2pManager.setWfdInfo(mWifiP2pChannel, wfdInfo, new ActionListener() {
+                        @Override
+                        public void onSuccess() {
                         if (DEBUG) {
                             Slog.d(TAG, "Successfully set WFD info.");
                         }
-                    }
 
-                    @Override
-                    public void onFailure(int reason) {
-                        if (DEBUG) {
-                            Slog.d(TAG, "Failed to set WFD info with reason " + reason + ".");
+                        @Override
+                        public void onFailure(int reason) {
+                            if (DEBUG) Slog.d(TAG,
+                                "Failed to set WFD info to disabled with reason " + reason + ".");
                         }
-                    }
-                });
+                    });
+                }
             }
             mWfdEnabling = false;
             mWfdEnabled = false;
@@ -397,6 +503,15 @@ final class WifiDisplayController implements DumpUtils.Dump {
     }
 
     private void tryDiscoverPeers() {
+        retrieveWifiP2pManagerAndChannel();
+        if (mWifiP2pManager == null) {
+            Slog.e(TAG, "Failed to discover peers, invalid mWifiP2pManager");
+            return;
+        }
+        if (mWifiP2pChannel == null) {
+            Slog.e(TAG, "Failed to discover peers, invalid mWifiP2pChannel");
+            return;
+        }
         mWifiP2pManager.discoverPeers(mWifiP2pChannel, new ActionListener() {
             @Override
             public void onSuccess() {
@@ -425,24 +540,32 @@ final class WifiDisplayController implements DumpUtils.Dump {
     }
 
     private void stopPeerDiscovery() {
-        mWifiP2pManager.stopPeerDiscovery(mWifiP2pChannel, new ActionListener() {
-            @Override
-            public void onSuccess() {
-                if (DEBUG) {
-                    Slog.d(TAG, "Stop peer discovery succeeded.");
+        if (mWifiP2pManager != null) {
+            mWifiP2pManager.stopPeerDiscovery(mWifiP2pChannel, new ActionListener() {
+                @Override
+                public void onSuccess() {
+                    if (DEBUG) Slog.d(TAG, "Stop peer discovery succeeded.");
                 }
-            }
 
-            @Override
-            public void onFailure(int reason) {
-                if (DEBUG) {
-                    Slog.d(TAG, "Stop peer discovery failed with reason " + reason + ".");
+                @Override
+                public void onFailure(int reason) {
+                    if (DEBUG) Slog.d(TAG,
+                        "Stop peer discovery failed with reason " + reason + ".");
                 }
-            }
-        });
+            });
+        }
     }
 
     private void requestPeers() {
+        retrieveWifiP2pManagerAndChannel();
+        if (mWifiP2pManager == null) {
+            Slog.e(TAG, "Request peers failed, invalid mWifiP2pManager");
+            return;
+        }
+        if (mWifiP2pChannel == null) {
+            Slog.e(TAG, "Request peers failed, invalid mWifiP2pChannel");
+            return;
+        }
         mWifiP2pManager.requestPeers(mWifiP2pChannel, new PeerListListener() {
             @Override
             public void onPeersAvailable(WifiP2pDeviceList peers) {
@@ -547,6 +670,11 @@ final class WifiDisplayController implements DumpUtils.Dump {
             return;
         }
 
+        if (handlePreExistingConnection(device)) {
+            Slog.i(TAG, "already handle the preexisting p2p connection status");
+            return;
+        }
+
         mDesiredDevice = device;
         mConnectionRetriesLeft = CONNECT_MAX_RETRIES;
         updateConnection();
@@ -571,9 +699,15 @@ final class WifiDisplayController implements DumpUtils.Dump {
      * connection is established (or not).
      */
     private void updateConnection() {
+        retrieveWifiP2pManagerAndChannel();
         // Step 0. Stop scans if necessary to prevent interference while connected.
         // Resume scans later when no longer attempting to connect.
         updateScanState();
+        if (mWifiP2pManager == null && mDesiredDevice != null) {
+            Slog.e(TAG, "Failed in updateConnection, invalid mWifiP2pManager");
+            handleConnectionFailure(false);
+            return;
+        }
 
         // Step 1. Before we try to connect to a new device, tell the system we
         // have disconnected from the old one.
@@ -671,10 +805,10 @@ final class WifiDisplayController implements DumpUtils.Dump {
         // Step 4. If we wanted to disconnect, or we're updating after starting an
         // autonomous GO, then mission accomplished.
         if (mDesiredDevice == null) {
-            if (mWifiDisplayCertMode) {
+            if (mWifiDisplayCertMode)
                 mListener.onDisplaySessionInfo(getSessionInfo(mConnectedDeviceGroupInfo, 0));
-            }
             unadvertiseDisplay();
+            destroyWifiP2pChannel();
             return; // done
         }
 
@@ -816,9 +950,6 @@ final class WifiDisplayController implements DumpUtils.Dump {
 
     private void handleStateChanged(boolean enabled) {
         mWifiP2pEnabled = enabled;
-        if (enabled) {
-            retrieveWifiP2pManagerAndChannel();
-        }
         updateWfdEnableState();
     }
 
@@ -834,11 +965,16 @@ final class WifiDisplayController implements DumpUtils.Dump {
 
     private void handleConnectionChanged(NetworkInfo networkInfo) {
         mNetworkInfo = networkInfo;
-        if (mWfdEnabled && networkInfo.isConnected()) {
+        retrieveWifiP2pManagerAndChannel();
+        if (mWifiP2pManager != null && mWfdEnabled && networkInfo.isConnected()) {
             if (mDesiredDevice != null || mWifiDisplayCertMode) {
                 mWifiP2pManager.requestGroupInfo(mWifiP2pChannel, new GroupInfoListener() {
                     @Override
                     public void onGroupInfoAvailable(WifiP2pGroup info) {
+                        if(info == null) {
+                           Slog.e(TAG, "Invalid Group Info");
+                           return;
+                        }
                         if (DEBUG) {
                             Slog.d(TAG, "Received group info: " + describeWifiP2pGroup(info));
                         }
@@ -1013,6 +1149,42 @@ final class WifiDisplayController implements DumpUtils.Dump {
                 mAdvertisedDisplayFlags);
     }
 
+    private boolean handlePreExistingConnection(final WifiP2pDevice device) {
+        if (mNetworkInfo == null || !mNetworkInfo.isConnected() || mWifiDisplayCertMode) {
+            return false;
+        }
+        retrieveWifiP2pManagerAndChannel();
+        if (mWifiP2pManager == null) {
+            Slog.e(TAG, "Invalid mWifiP2pManager");
+            return false;
+        }
+        Slog.i(TAG, "handle the preexisting p2p connection status");
+        mWifiP2pManager.requestGroupInfo(mWifiP2pChannel, new GroupInfoListener() {
+            @Override
+            public void onGroupInfoAvailable(WifiP2pGroup info) {
+                if (info == null) {
+                    return;
+                }
+                if (contains(info, device)) {
+                    Slog.i(TAG, "already connected to the desired device: " + device.deviceName);
+                    handleConnectionChanged(mNetworkInfo);
+                } else {
+                    mWifiP2pManager.removeGroup(mWifiP2pChannel, new ActionListener() {
+                        @Override
+                        public void onSuccess() { Slog.i(TAG, "disconnect the old device"); }
+                        @Override
+                        public void onFailure(int reason) {
+                            Slog.i(TAG, "Failed to disconnect the old device: reason=" + reason);
+                        }
+                    });
+                }
+            }
+        });
+        mDesiredDevice = device;
+        mConnectionRetriesLeft = CONNECT_MAX_RETRIES;
+        return true;
+    }
+
     private static Inet4Address getInterfaceAddress(WifiP2pGroup info) {
         NetworkInterface iface;
         try {
@@ -1046,10 +1218,10 @@ final class WifiDisplayController implements DumpUtils.Dump {
     }
 
     private static boolean isWifiDisplay(WifiP2pDevice device) {
+        if (device == null) return false;
         WifiP2pWfdInfo wfdInfo = device.getWfdInfo();
-        return wfdInfo != null
-                && wfdInfo.isEnabled()
-                && isPrimarySinkDeviceType(wfdInfo.getDeviceType());
+        return wfdInfo != null && wfdInfo.isEnabled()
+                               && isPrimarySinkDeviceType(wfdInfo.getDeviceType());
     }
 
     private static boolean isPrimarySinkDeviceType(int deviceType) {
@@ -1105,7 +1277,8 @@ final class WifiDisplayController implements DumpUtils.Dump {
                 handleConnectionChanged(networkInfo);
             } else if (action.equals(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION)) {
                 mThisDevice = (WifiP2pDevice) intent.getParcelableExtra(
-                        WifiP2pManager.EXTRA_WIFI_P2P_DEVICE, android.net.wifi.p2p.WifiP2pDevice.class);
+                        WifiP2pManager.EXTRA_WIFI_P2P_DEVICE,
+                        android.net.wifi.p2p.WifiP2pDevice.class);
                 if (DEBUG) {
                     Slog.d(TAG, "Received WIFI_P2P_THIS_DEVICE_CHANGED_ACTION: mThisDevice= "
                             + mThisDevice);
