@@ -4226,6 +4226,12 @@ public class WindowManagerService extends IWindowManager.Stub
             mInputManagerCallback.setEventDispatchingLw(mEventDispatchingEnabled);
         }
 
+        synchronized (mGlobalLock) {
+            mAtmService.getTransitionController().mIsWaitingForDisplayEnabled = false;
+            ProtoLog.v(WmProtoLogGroups.WM_DEBUG_WINDOW_TRANSITIONS,
+                    "Notified TransitionController that the display is ready.");
+        }
+
         try {
             mActivityManager.bootAnimationComplete();
         } catch (RemoteException e) {
@@ -4235,12 +4241,6 @@ public class WindowManagerService extends IWindowManager.Stub
 
         // Make sure the last requested orientation has been applied.
         updateRotationUnchecked(false, false);
-
-        synchronized (mGlobalLock) {
-            mAtmService.getTransitionController().mIsWaitingForDisplayEnabled = false;
-            ProtoLog.v(WmProtoLogGroups.WM_DEBUG_WINDOW_TRANSITIONS,
-                    "Notified TransitionController that the display is ready.");
-        }
     }
 
     private boolean checkBootAnimationCompleteLocked() {
