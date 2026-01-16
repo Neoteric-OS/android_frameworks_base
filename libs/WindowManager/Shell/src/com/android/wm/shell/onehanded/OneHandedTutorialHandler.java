@@ -93,6 +93,18 @@ public class OneHandedTutorialHandler implements OneHandedTransitionCallback,
         if (mAlphaAnimator != null) {
             mAlphaAnimator.cancel();
         }
+        handleOnOneHandedAnimationEndOrCancel();
+    }
+
+    @Override
+    public void onOneHandedAnimationEnd(SurfaceControl.Transaction tx, OneHandedAnimationController.OneHandedTransitionAnimator animator) {
+        handleOnOneHandedAnimationEndOrCancel();
+    }
+
+    private void handleOnOneHandedAnimationEndOrCancel() {
+        if (mCurrentState == OneHandedState.STATE_ACTIVE && mTargetViewContainer != null) {
+            mTargetViewContainer.setAlpha(1f);
+        }
     }
 
     @Override
