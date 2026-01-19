@@ -817,7 +817,7 @@ public class BaseBundle {
 
     /**
      * Inserts a Boolean value into the mapping of this Bundle, replacing
-     * any existing value for the given key.  Either key or value may be null.
+     * any existing value for the given key.
      *
      * @param key a String, or null
      * @param value a boolean
