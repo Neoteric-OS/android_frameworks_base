@@ -456,6 +456,22 @@ public final class AutofillManagerService
         mAutofillCompatState.removeCompatibilityModeRequests(userId);
     }
 
+    @GuardedBy("mLock")
+    @Override
+    protected void onDeviceProvisionedLocked() {
+        final List<UserInfo> users = getSupportedUsers();
+        for (int i = 0; i < users.size(); i++) {
+            final int uId = users.get(i).id;
+            final AutofillManagerServiceImpl service = peekServiceForUserLocked(uId);
+            if (service != null && service.getServiceInfo() == null) {
+                final String defaultService = getContext().getString(
+                        com.android.internal.R.string.config_defaultAutofillService);
+                Settings.Secure.putStringForUser(getContext().getContentResolver(),
+                        getServiceSettingsProperty(), defaultService, uId);
+            }
+        }
+    }
+
     @Override // from AbstractMasterSystemService
     protected void onServiceEnabledLocked(@NonNull AutofillManagerServiceImpl service,
             @UserIdInt int userId) {

@@ -184,6 +184,11 @@ public abstract class AbstractMasterSystemService<M extends AbstractMasterSystem
     private final @ServicePackagePolicyFlags int mServicePackagePolicyFlags;
 
     /**
+     * Whether the device is provisioned.
+     */
+    private boolean mDeviceProvisioned;
+
+    /**
      * Name of the service packages whose APK are being updated, keyed by user id.
      */
     @GuardedBy("mLock")
@@ -258,6 +263,9 @@ public abstract class AbstractMasterSystemService<M extends AbstractMasterSystem
             servicePackagePolicyFlags |= PACKAGE_RESTART_POLICY_REFRESH_LAZY;
         }
         mServicePackagePolicyFlags = servicePackagePolicyFlags;
+
+        mDeviceProvisioned = Settings.Global.getInt(getContext().getContentResolver(),
+                Settings.Global.DEVICE_PROVISIONED, 0) == 1;
 
         mServiceNameResolver = serviceNameResolver;
         if (mServiceNameResolver != null) {
@@ -609,6 +617,13 @@ public abstract class AbstractMasterSystemService<M extends AbstractMasterSystem
      * @param property Settings property changed.
      */
     protected void onSettingsChanged(@UserIdInt int userId, @NonNull String property) {
+    }
+
+    /**
+     * Called when the device has been provisioned for the first time.
+     */
+    @GuardedBy("mLock")
+    protected void onDeviceProvisionedLocked() {
     }
 
     /**
@@ -1375,6 +1390,9 @@ public abstract class AbstractMasterSystemService<M extends AbstractMasterSystem
             }
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.USER_SETUP_COMPLETE), false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.Global.getUriFor(
+                    Settings.Global.DEVICE_PROVISIONED), false, this,
+                    UserHandle.USER_ALL);
             registerForExtraSettingsChanges(resolver, this);
         }
 
@@ -1390,6 +1408,21 @@ public abstract class AbstractMasterSystemService<M extends AbstractMasterSystem
                 synchronized (mLock) {
                     updateCachedServiceLocked(userId);
                 }
+            } else if (property.equals(Settings.Global.DEVICE_PROVISIONED)){
+                synchronized (mLock) {
+                    if (mDeviceProvisioned) {
+                        return;
+                    }
+                    final int isProvisioned = Settings.Global.getInt(
+                            getContext().getContentResolver(),
+                            Settings.Global.DEVICE_PROVISIONED, 0);
+                    if (isProvisioned != 1) {
+                        return;
+                    }
+                    mDeviceProvisioned = true;
+                    onDeviceProvisionedLocked();
+                }
+                return;
             } else {
                 onSettingsChanged(userId, property);
             }
