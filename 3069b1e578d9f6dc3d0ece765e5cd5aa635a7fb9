@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9db40144_e73e1ad0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010211
+      },
+      "writtenOn": "2026-01-20T19:18:15Z",
+      "side": 1,
+      "message": "Do you mind providing a stack trace of where the animator is canceled?\nAnd if you could file a bug for the change as well.\n\nThanks",
+      "revId": "3069b1e578d9f6dc3d0ece765e5cd5aa635a7fb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
