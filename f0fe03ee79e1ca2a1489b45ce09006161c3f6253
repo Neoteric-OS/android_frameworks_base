@@ -20,6 +20,46 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "eb842a16_36c0c773",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1870696
+      },
+      "writtenOn": "2026-01-21T19:44:35Z",
+      "side": 1,
+      "message": "This change needs to go to the internal main, and then cherry-picked to older branches. @jainrachit@google.com Can you please help with that?",
+      "revId": "f0fe03ee79e1ca2a1489b45ce09006161c3f6253",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb3a577a_3fe62eed",
+        "filename": "core/java/android/app/ContextImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3152,
+      "author": {
+        "id": 1870696
+      },
+      "writtenOn": "2026-01-21T19:44:35Z",
+      "side": 1,
+      "message": "What happens if we remove this check? Either userManager is null or getMainDisplayIdAssginedToUser returns INVALID_DISPLAY, then we will use DEFAULT_DISPLAY, right?",
+      "range": {
+        "startLine": 3152,
+        "startChar": 8,
+        "endLine": 3152,
+        "endChar": 69
+      },
+      "revId": "f0fe03ee79e1ca2a1489b45ce09006161c3f6253",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2d4dc067_72e3ce21",
         "filename": "core/java/android/app/ContextImpl.java",
         "patchSetId": 3
@@ -106,6 +146,23 @@
         "endLine": 3163,
         "endChar": 94
       },
+      "revId": "f0fe03ee79e1ca2a1489b45ce09006161c3f6253",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57a650bd_588d7ab4",
+        "filename": "core/java/android/app/ContextImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3163,
+      "author": {
+        "id": 1870696
+      },
+      "writtenOn": "2026-01-21T19:44:35Z",
+      "side": 1,
+      "message": "When does this exception occur? When the calling user is different from the context user? Can we instead check the user before calling getMainDisplayIdAssignedToUser()?\n\nWe should avoid relying on exceptions for normal operations if possible.",
       "revId": "f0fe03ee79e1ca2a1489b45ce09006161c3f6253",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
