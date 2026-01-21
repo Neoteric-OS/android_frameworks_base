@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09c5fb7e_ade84fc7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2001270
+      },
+      "writtenOn": "2026-01-21T22:46:08Z",
+      "side": 1,
+      "message": "Switched teams and no longer working on car power, removing self as a reviewer",
+      "revId": "f3992982fce5a9df6d47d970e7d16c76924e283d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
