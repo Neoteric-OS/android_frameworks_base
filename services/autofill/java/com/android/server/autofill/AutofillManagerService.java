@@ -43,7 +43,9 @@ import android.content.pm.PackageManager;
 import android.content.pm.UserInfo;
 import android.database.ContentObserver;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -92,6 +94,7 @@ import com.android.internal.util.SyncResultReceiver;
 import com.android.server.FgThread;
 import com.android.server.LocalServices;
 import com.android.server.autofill.ui.AutoFillUI;
+import com.android.server.os.BackgroundThread;
 import com.android.server.infra.AbstractMasterSystemService;
 import com.android.server.infra.FrameworkResourcesServiceNameResolver;
 import com.android.server.infra.SecureSettingsServiceNameResolver;
@@ -471,6 +474,13 @@ public final class AutofillManagerService
     public void onStart() {
         publishBinderService(AUTOFILL_MANAGER_SERVICE, new AutoFillManagerServiceStub());
         publishLocalService(AutofillManagerInternal.class, mLocalService);
+    }
+
+    @Override
+    public void onBootPhase(int phase) {
+        if (phase == PHASE_THIRD_PARTY_APPS_CAN_START) {
+            new SettingsObserver(BackgroundThread.getHandler());
+        }
     }
 
     @Override // from SystemService
@@ -1112,6 +1122,70 @@ public final class AutofillManagerService
     public static int getVisibleDatasetsMaxCount() {
         synchronized (sLock) {
             return sVisibleDatasetsMaxCount;
+        }
+    }
+
+    @GuardedBy("mLock")
+    protected void onDeviceProvisionedLocked() {
+        final List<UserInfo> users = getSupportedUsers();
+        final String defaultService = getContext().getString(
+                        com.android.internal.R.string.config_defaultAutofillService);
+        for (int i = 0; i < users.size(); i++) {
+            final int userId = users.get(i).id;
+            final String componentName = mServiceNameResolver.getServiceName(userId);
+            if (TextUtils.isEmpty(componentName)) {
+                continue;
+            }
+            final AutofillManagerServiceImpl service = getServiceForUserLocked(userId);
+            if (service.getServiceInfo() == null) {
+                Slog.i(TAG, "Invalid autofill service setting " + componentName + " for user "
+                        + userId + "; resetting to default");
+                Settings.Secure.putStringForUser(getContext().getContentResolver(),
+                        getServiceSettingsProperty(), defaultService, userId);
+            }
+        }
+    }
+
+    private final class SettingsObserver extends ContentObserver {
+        private final ContentResolver resolver;
+        private boolean mDeviceProvisioned;
+        SettingsObserver(Handler handler) {
+            super(handler);
+            resolver = getContext().getContentResolver();
+            mDeviceProvisioned = Settings.Global.getInt(getContext().getContentResolver(),
+                Settings.Global.DEVICE_PROVISIONED, 0) == 1;
+            if (!mDeviceProvisioned) {
+                resolver.registerContentObserver(Settings.Global.getUriFor(
+                    Settings.Global.DEVICE_PROVISIONED), false, this,
+                    UserHandle.USER_ALL);
+            }
+            registerForExtraSettingsChanges(resolver, this);
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri, @UserIdInt int userId) {
+            if (verbose) Slog.v(mTag, "onChange(): uri=" + uri + ", userId=" + userId);
+            final String property = uri.getLastPathSegment();
+            if (property == null) {
+                return;
+            }
+            if (property.equals(Settings.Global.DEVICE_PROVISIONED)){
+                synchronized (mLock) {
+                    if (mDeviceProvisioned) {
+                        return;
+                    }
+                    final int isProvisioned = Settings.Global.getInt(
+                            getContext().getContentResolver(),
+                            Settings.Global.DEVICE_PROVISIONED, 0);
+                    if (isProvisioned != 1) {
+                        return;
+                    }
+                    mDeviceProvisioned = true;
+                    onDeviceProvisionedLocked();
+                    resolver.unregisterContentObserver(this);
+                }
+                return;
+            }
         }
     }
 
