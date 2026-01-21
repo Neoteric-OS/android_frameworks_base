@@ -644,6 +644,9 @@ public class AudioDeviceInventory {
             mGroupId = groupId;
             mPeerDeviceAddress = TextUtils.emptyIfNull(peerAddress);
             mPeerIdentityDeviceAddress = TextUtils.emptyIfNull(peerIdentityAddress);
+            if (mPeerIdentityDeviceAddress.isEmpty()) {
+                mPeerIdentityDeviceAddress = mPeerDeviceAddress;
+            }
             mAudioProfiles = profiles;
             mAudioDescriptors = descriptors;
         }
