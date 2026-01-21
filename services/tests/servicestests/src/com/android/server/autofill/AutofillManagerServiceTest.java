@@ -18,15 +18,60 @@ package com.android.server.autofill;
 import static com.android.server.autofill.AutofillManagerService.getAllowedCompatModePackages;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.timeout;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+import android.content.Context;
+import android.content.pm.UserInfo;
+import android.database.ContentObserver;
+import android.os.UserHandle;
+import android.provider.Settings;
+import android.test.mock.MockContentResolver;
+
+import com.android.server.LocalServices;
+import com.android.server.SystemService;
+import com.android.server.pm.UserManagerInternal;
+
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.mockito.ArgumentCaptor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @RunWith(JUnit4.class)
 public class AutofillManagerServiceTest {
+
+    private static final int USER_ID = 42;
+
+    private Context mContext;
+    private MockContentResolver mContentResolver;
+
+    @Before
+    public void setup() {
+        mContext = mock(Context.class);
+        mContentResolver = new MockContentResolver(mContext);
+        when(mContext.getContentResolver()).thenReturn(mContentResolver);
+    }
+
+    @After
+    public void teardown() {
+        LocalServices.removeServiceForTest(UserManagerInternal.class);
+    }
 
     @Test
     public void testGetAllowedCompatModePackages_null() {
@@ -90,5 +135,63 @@ public class AutofillManagerServiceTest {
         assertThat(result).hasSize(2);
         assertThat(result.get("p1")).asList().containsExactly("p1u1");
         assertThat(result.get("p3")).asList().containsExactly("p3u1", "p3u2");
+    }
+
+    @Test
+    public void testOnDeviceProvisionedLocked_invokedAfterProvisioning() throws Exception {
+        // Arrange
+        UserManagerInternal umi = mock(UserManagerInternal.class);
+        LocalServices.addService(UserManagerInternal.class, umi);
+
+        Settings.Global.putInt(mContentResolver, Settings.Global.DEVICE_PROVISIONED, 0);
+        MockContentResolver spiedResolver = spy(mContentResolver);
+        when(mContext.getContentResolver()).thenReturn(spiedResolver);
+
+        List<UserInfo> users = new ArrayList<>();
+        users.add(new UserInfo(10, "user10", UserInfo.FLAG_FULL));
+        users.add(new UserInfo(12, "user12", UserInfo.FLAG_FULL));
+        when(umi.getUserInfos()).thenReturn(users.toArray(new UserInfo[0]));
+
+        AutofillManagerService service = spy(new AutofillManagerService(mContext));
+        doReturn(mock(AutofillManagerServiceImpl.class)).when(service)
+                .newServiceLocked(anyInt(), anyBoolean());
+        doNothing().when(service).updateCachedServiceLocked(anyInt());
+
+        ArgumentCaptor<ContentObserver> observerCaptor =
+                ArgumentCaptor.forClass(ContentObserver.class);
+        service.onBootPhase(SystemService.PHASE_THIRD_PARTY_APPS_CAN_START);
+        verify(spiedResolver).registerContentObserver(
+                eq(Settings.Global.getUriFor(Settings.Global.DEVICE_PROVISIONED)), eq(false),
+                observerCaptor.capture(), eq(UserHandle.USER_ALL));
+        ContentObserver observer = observerCaptor.getValue();
+
+        // Act
+        Settings.Global.putInt(mContentResolver, Settings.Global.DEVICE_PROVISIONED, 1);
+        mContentResolver.notifyChange(
+                Settings.Global.getUriFor(Settings.Global.DEVICE_PROVISIONED),
+                null /* observer */,
+                USER_ID);
+
+        // Assert
+        verify(service, timeout(1000)).onDeviceProvisionedLocked();
+        verify(spiedResolver, timeout(1000)).unregisterContentObserver(observer);
+    }
+
+    @Test
+    public void testOnDeviceProvisionedLocked_notInvokedIfAlreadyProvisioned() throws Exception {
+        // Arrange
+        Settings.Global.putInt(mContentResolver, Settings.Global.DEVICE_PROVISIONED, 1);
+        MockContentResolver spiedResolver = spy(mContentResolver);
+        when(mContext.getContentResolver()).thenReturn(spiedResolver);
+
+        AutofillManagerService service = new AutofillManagerService(mContext);
+
+        // Act
+        service.onBootPhase(SystemService.PHASE_THIRD_PARTY_APPS_CAN_START);
+
+        // Assert
+        verify(spiedResolver, never()).registerContentObserver(
+                eq(Settings.Global.getUriFor(Settings.Global.DEVICE_PROVISIONED)),
+                anyBoolean(), any(), anyInt());
     }
 }
