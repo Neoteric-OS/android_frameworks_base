@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7d1d9de_ad0cd9cf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1954245
+      },
+      "writtenOn": "2026-01-21T18:24:00Z",
+      "side": 1,
+      "message": "Additionally, this should not be on the test branch and instead be on the `main` branch.",
+      "revId": "f0fe03ee79e1ca2a1489b45ce09006161c3f6253",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d4dc067_72e3ce21",
+        "filename": "core/java/android/app/ContextImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3155,
+      "author": {
+        "id": 1954245
+      },
+      "writtenOn": "2026-01-21T18:24:00Z",
+      "side": 1,
+      "message": "Can you leave a comment explaining why this is necessary?",
+      "range": {
+        "startLine": 3155,
+        "startChar": 12,
+        "endLine": 3155,
+        "endChar": 87
+      },
+      "revId": "f0fe03ee79e1ca2a1489b45ce09006161c3f6253",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf0a3788_8466c2a7",
+        "filename": "core/java/android/app/ContextImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3157,
+      "author": {
+        "id": 1954245
+      },
+      "writtenOn": "2026-01-21T18:24:00Z",
+      "side": 1,
+      "message": "Can this run into problems when we have more than one displays assigned to the user? I think L#3148 will make it work but just for my understanding.",
+      "range": {
+        "startLine": 3157,
+        "startChar": 20,
+        "endLine": 3157,
+        "endChar": 85
+      },
+      "revId": "f0fe03ee79e1ca2a1489b45ce09006161c3f6253",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bbd63f62_b2602f84",
+        "filename": "core/java/android/app/ContextImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3158,
+      "author": {
+        "id": 1954245
+      },
+      "writtenOn": "2026-01-21T18:24:00Z",
+      "side": 1,
+      "message": "nit: don\u0027t log this",
+      "range": {
+        "startLine": 3158,
+        "startChar": 20,
+        "endLine": 3158,
+        "endChar": 79
+      },
+      "revId": "f0fe03ee79e1ca2a1489b45ce09006161c3f6253",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de345160_1ead42dd",
+        "filename": "core/java/android/app/ContextImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3163,
+      "author": {
+        "id": 1954245
+      },
+      "writtenOn": "2026-01-21T18:24:00Z",
+      "side": 1,
+      "message": "nit: include in the message that this is for the visible background case.",
+      "range": {
+        "startLine": 3163,
+        "startChar": 32,
+        "endLine": 3163,
+        "endChar": 94
+      },
+      "revId": "f0fe03ee79e1ca2a1489b45ce09006161c3f6253",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
