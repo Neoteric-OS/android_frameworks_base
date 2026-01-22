@@ -16,6 +16,87 @@
       "message": "Switched teams and no longer working on car power, removing self as a reviewer",
       "revId": "f3992982fce5a9df6d47d970e7d16c76924e283d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5cc2f3a_338b4b57",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1464582
+      },
+      "writtenOn": "2026-01-22T22:25:25Z",
+      "side": 1,
+      "message": "lgtm but I\u0027m not the owner of this :)",
+      "revId": "f3992982fce5a9df6d47d970e7d16c76924e283d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6326fa7a_84d63e81",
+        "filename": "services/core/java/com/android/server/power/Notifier.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 912,
+      "author": {
+        "id": 1464582
+      },
+      "writtenOn": "2026-01-22T22:25:25Z",
+      "side": 1,
+      "message": "log the dup here instead?",
+      "range": {
+        "startLine": 912,
+        "startChar": 12,
+        "endLine": 912,
+        "endChar": 19
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "61bb7e04_edddb81e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/power/Notifier.java",
+              "range": {
+                "startLine": 911,
+                "startChar": 0,
+                "endLine": 912,
+                "endChar": 0
+              },
+              "replacement": "        if (newPolicy \u003d\u003d mCurrentScreenPolicy) {\n            if (DEBUG) {\n                Slog.d(TAG, \"onScreenPolicyUpdate: Screen policy is already \" + newPolicy\n                        + \" for group \" + displayGroupId);\n            }\n            return;\n        }\n\n        if (displayGroupId !\u003d Display.DEFAULT_DISPLAY_GROUP) {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "f3992982fce5a9df6d47d970e7d16c76924e283d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b8ed7067_5778294c",
+        "filename": "services/core/java/com/android/server/power/Notifier.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1284,
+      "author": {
+        "id": 1464582
+      },
+      "writtenOn": "2026-01-22T22:25:25Z",
+      "side": 1,
+      "message": "why is this needed?",
+      "range": {
+        "startLine": 1284,
+        "startChar": 20,
+        "endLine": 1284,
+        "endChar": 54
+      },
+      "revId": "f3992982fce5a9df6d47d970e7d16c76924e283d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
