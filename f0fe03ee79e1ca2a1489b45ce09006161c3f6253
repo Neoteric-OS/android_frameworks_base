@@ -58,6 +58,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fd138525_2ee29a52",
+        "filename": "core/java/android/app/ContextImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3152,
+      "author": {
+        "id": 2042336
+      },
+      "writtenOn": "2026-01-23T08:44:30Z",
+      "side": 1,
+      "message": "UserManagerService is a system service that is started by SystemServer.  \nIf an attempt is made to obtain this service before UserManagerService has been initialized, it may result in a null object.  \nTherefore, it is necessary to include checks to handle such cases appropriately.",
+      "parentUuid": "fb3a577a_3fe62eed",
+      "range": {
+        "startLine": 3152,
+        "startChar": 8,
+        "endLine": 3152,
+        "endChar": 69
+      },
+      "revId": "f0fe03ee79e1ca2a1489b45ce09006161c3f6253",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2d4dc067_72e3ce21",
@@ -71,6 +95,30 @@
       "writtenOn": "2026-01-21T18:24:00Z",
       "side": 1,
       "message": "Can you leave a comment explaining why this is necessary?",
+      "range": {
+        "startLine": 3155,
+        "startChar": 12,
+        "endLine": 3155,
+        "endChar": 87
+      },
+      "revId": "f0fe03ee79e1ca2a1489b45ce09006161c3f6253",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0c7c085_920b1afb",
+        "filename": "core/java/android/app/ContextImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3155,
+      "author": {
+        "id": 2042336
+      },
+      "writtenOn": "2026-01-23T08:44:30Z",
+      "side": 1,
+      "message": "UserManagerService is a system service that is started by SystemServer.  \nIf an attempt is made to obtain this service before UserManagerService has been initialized, it may result in a null object.  \nTherefore, it is necessary to include checks to handle such cases appropriately.",
+      "parentUuid": "2d4dc067_72e3ce21",
       "range": {
         "startLine": 3155,
         "startChar": 12,
@@ -106,6 +154,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8b4eec4b_adda77ea",
+        "filename": "core/java/android/app/ContextImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3157,
+      "author": {
+        "id": 2042336
+      },
+      "writtenOn": "2026-01-23T08:44:30Z",
+      "side": 1,
+      "message": "getMainDisplayIdAssignedToUser only returns the main display assigned to the user.\nIn practice, a user can be associated with multiple displays: one main display and several extra displays. \nThis interface only returns the main display ID.",
+      "parentUuid": "cf0a3788_8466c2a7",
+      "range": {
+        "startLine": 3157,
+        "startChar": 20,
+        "endLine": 3157,
+        "endChar": 85
+      },
+      "revId": "f0fe03ee79e1ca2a1489b45ce09006161c3f6253",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "bbd63f62_b2602f84",
         "filename": "core/java/android/app/ContextImpl.java",
         "patchSetId": 3
@@ -117,6 +189,30 @@
       "writtenOn": "2026-01-21T18:24:00Z",
       "side": 1,
       "message": "nit: don\u0027t log this",
+      "range": {
+        "startLine": 3158,
+        "startChar": 20,
+        "endLine": 3158,
+        "endChar": 79
+      },
+      "revId": "f0fe03ee79e1ca2a1489b45ce09006161c3f6253",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6bc1854d_e25234f1",
+        "filename": "core/java/android/app/ContextImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3158,
+      "author": {
+        "id": 2042336
+      },
+      "writtenOn": "2026-01-23T08:44:30Z",
+      "side": 1,
+      "message": "Okay, we will proceed to remove it.",
+      "parentUuid": "bbd63f62_b2602f84",
       "range": {
         "startLine": 3158,
         "startChar": 20,
@@ -163,6 +259,48 @@
       "writtenOn": "2026-01-21T19:44:35Z",
       "side": 1,
       "message": "When does this exception occur? When the calling user is different from the context user? Can we instead check the user before calling getMainDisplayIdAssignedToUser()?\n\nWe should avoid relying on exceptions for normal operations if possible.",
+      "revId": "f0fe03ee79e1ca2a1489b45ce09006161c3f6253",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8b56588_dd9d2150",
+        "filename": "core/java/android/app/ContextImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3163,
+      "author": {
+        "id": 2042336
+      },
+      "writtenOn": "2026-01-23T08:44:30Z",
+      "side": 1,
+      "message": "The getMainDisplayIdAssignedToUser API checks whether the caller has the INTERACT_ACROSS_USERS permission,\nand will throw a SecurityException if the permission is missing.  \nWe do not want this SecurityException to affect the flow in this context.\n\nIn the MUMD project, we currently do not have a good solution for this issue.  \nIf you have any better suggestions, we would appreciate your analysis and advice.\nThank you very much.",
+      "parentUuid": "de345160_1ead42dd",
+      "range": {
+        "startLine": 3163,
+        "startChar": 32,
+        "endLine": 3163,
+        "endChar": 94
+      },
+      "revId": "f0fe03ee79e1ca2a1489b45ce09006161c3f6253",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "13a309cb_49b1b7d3",
+        "filename": "core/java/android/app/ContextImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3163,
+      "author": {
+        "id": 2042336
+      },
+      "writtenOn": "2026-01-23T08:44:30Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "57a650bd_588d7ab4",
       "revId": "f0fe03ee79e1ca2a1489b45ce09006161c3f6253",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
