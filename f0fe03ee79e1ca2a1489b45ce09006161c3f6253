@@ -84,6 +84,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3d48a9e7_17253048",
+        "filename": "core/java/android/app/ContextImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3152,
+      "author": {
+        "id": 1870696
+      },
+      "writtenOn": "2026-01-23T19:04:50Z",
+      "side": 1,
+      "message": "but there is already a check for null userManager at line 3155, so wondering why we need this additional check.",
+      "parentUuid": "fd138525_2ee29a52",
+      "range": {
+        "startLine": 3152,
+        "startChar": 8,
+        "endLine": 3152,
+        "endChar": 69
+      },
+      "revId": "f0fe03ee79e1ca2a1489b45ce09006161c3f6253",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2d4dc067_72e3ce21",
         "filename": "core/java/android/app/ContextImpl.java",
         "patchSetId": 3
