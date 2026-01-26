@@ -132,6 +132,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "05047491_6d8183e1",
+        "filename": "core/java/android/app/ContextImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3152,
+      "author": {
+        "id": 1870696
+      },
+      "writtenOn": "2026-01-26T18:10:21Z",
+      "side": 1,
+      "message": "Thanks. Please remove the unnecessary check.",
+      "parentUuid": "07e7f271_57142b9c",
+      "range": {
+        "startLine": 3152,
+        "startChar": 8,
+        "endLine": 3152,
+        "endChar": 69
+      },
+      "revId": "f0fe03ee79e1ca2a1489b45ce09006161c3f6253",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2d4dc067_72e3ce21",
         "filename": "core/java/android/app/ContextImpl.java",
         "patchSetId": 3
