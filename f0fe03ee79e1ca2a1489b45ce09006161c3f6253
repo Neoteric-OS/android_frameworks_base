@@ -106,6 +106,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "07e7f271_57142b9c",
+        "filename": "core/java/android/app/ContextImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3152,
+      "author": {
+        "id": 2042336
+      },
+      "writtenOn": "2026-01-26T01:19:45Z",
+      "side": 1,
+      "message": "Yes, you are correct. We can proceed to remove this check.",
+      "parentUuid": "3d48a9e7_17253048",
+      "range": {
+        "startLine": 3152,
+        "startChar": 8,
+        "endLine": 3152,
+        "endChar": 69
+      },
+      "revId": "f0fe03ee79e1ca2a1489b45ce09006161c3f6253",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2d4dc067_72e3ce21",
@@ -153,6 +177,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "55a779b6_614459fb",
+        "filename": "core/java/android/app/ContextImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3155,
+      "author": {
+        "id": 2042336
+      },
+      "writtenOn": "2026-01-26T01:19:45Z",
+      "side": 1,
+      "message": "Marked as resolved.",
+      "parentUuid": "e0c7c085_920b1afb",
+      "range": {
+        "startLine": 3155,
+        "startChar": 12,
+        "endLine": 3155,
+        "endChar": 87
+      },
+      "revId": "f0fe03ee79e1ca2a1489b45ce09006161c3f6253",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cf0a3788_8466c2a7",
@@ -190,6 +238,30 @@
       "side": 1,
       "message": "getMainDisplayIdAssignedToUser only returns the main display assigned to the user.\nIn practice, a user can be associated with multiple displays: one main display and several extra displays. \nThis interface only returns the main display ID.",
       "parentUuid": "cf0a3788_8466c2a7",
+      "range": {
+        "startLine": 3157,
+        "startChar": 20,
+        "endLine": 3157,
+        "endChar": 85
+      },
+      "revId": "f0fe03ee79e1ca2a1489b45ce09006161c3f6253",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c6e5a5ea_411b6872",
+        "filename": "core/java/android/app/ContextImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3157,
+      "author": {
+        "id": 2042336
+      },
+      "writtenOn": "2026-01-26T01:19:45Z",
+      "side": 1,
+      "message": "Marked as resolved.",
+      "parentUuid": "8b4eec4b_adda77ea",
       "range": {
         "startLine": 3157,
         "startChar": 20,
