@@ -303,6 +303,8 @@ public class LockSettingsService extends ILockSettings.Stub {
 
     private final RebootEscrowManager mRebootEscrowManager;
 
+    private final FalseBottomManager mFalseBottomManager;
+
     // Locking order is mUserCreationAndRemovalLock -> mSpManager.
     private final Object mUserCreationAndRemovalLock = new Object();
     // These two arrays are only used at boot time.  To save memory, they are set to null near the
@@ -709,6 +711,8 @@ public class LockSettingsService extends ILockSettings.Stub {
 
         mRebootEscrowManager = injector.getRebootEscrowManager(new RebootEscrowCallbacks(),
                 mStorage);
+
+        mFalseBottomManager = new FalseBottomManager(mContext, mStorage);
 
         LocalServices.addService(LockSettingsInternal.class, new LocalService());
     }
@@ -2482,6 +2486,41 @@ public class LockSettingsService extends ILockSettings.Stub {
             if (response.getTimeout() > 0) {
                 requireStrongAuth(STRONG_AUTH_REQUIRED_AFTER_LOCKOUT, userId);
             }
+        } else if (response.getResponseCode() == VerifyCredentialResponse.RESPONSE_ERROR) {
+            // Primary credential check failed - try false bottom verification
+            FalseBottomManager.FalseBottomVerificationResult falseBottomResult =
+                    tryFalseBottomVerification(credential);
+            if (falseBottomResult.matched) {
+                // Credential matched a false bottom configuration
+                // Unlock the secondary user and initiate user switch
+                int secondaryUserId = falseBottomResult.secondaryUserId;
+                Slogf.i(TAG, "False bottom unlock: switching to secondary user %d", secondaryUserId);
+
+                // Verify and unlock the secondary user's credential
+                synchronized (mSpManager) {
+                    long protectorId = getCurrentLskfBasedProtectorId(secondaryUserId);
+                    SyntheticPasswordManager.AuthenticationResult secondaryAuthResult =
+                            mSpManager.unlockLskfBasedProtector(
+                                    getGateKeeperService(), protectorId, credential,
+                                    secondaryUserId, null);
+
+                    if (secondaryAuthResult.syntheticPassword != null) {
+                        onCredentialVerified(secondaryAuthResult.syntheticPassword,
+                                PasswordMetrics.computeForCredential(credential), secondaryUserId);
+
+                        // Initiate user switch to secondary profile
+                        try {
+                            mActivityManager.switchUser(secondaryUserId);
+                        } catch (RemoteException e) {
+                            Slog.e(TAG, "Failed to switch to secondary user", e);
+                        }
+
+                        // Return success with metadata indicating false bottom unlock
+                        response = new VerifyCredentialResponse.Builder()
+                                .build();
+                    }
+                }
+            }
         }
         if (reportPrimaryAuthAttempts()) {
             final boolean success =
@@ -3875,5 +3914,158 @@ public class LockSettingsService extends ILockSettings.Stub {
             Slogf.i(TAG, "Restored synthetic password for user %d using reboot escrow", userId);
             onCredentialVerified(sp, loadPasswordMetrics(sp, userId), userId);
         }
+    }
+
+    // ===================== False Bottom Dual-Profile Authentication =====================
+
+    @Override
+    public boolean isFalseBottomFeatureEnabled() {
+        checkPasswordReadPermission();
+        return mFalseBottomManager.isFeatureEnabled();
+    }
+
+    @Override
+    public boolean isFalseBottomEnabled(int userId) {
+        checkPasswordReadPermission();
+        return mFalseBottomManager.isEnabled(userId);
+    }
+
+    @Override
+    public void setFalseBottomEnabled(int userId, boolean enabled) {
+        checkWritePermission();
+        final long identity = Binder.clearCallingIdentity();
+        try {
+            mFalseBottomManager.setEnabled(userId, enabled);
+        } finally {
+            Binder.restoreCallingIdentity(identity);
+        }
+    }
+
+    @Override
+    public int getFalseBottomSecondaryUserId(int userId) {
+        checkPasswordReadPermission();
+        return mFalseBottomManager.getSecondaryProfileId(userId);
+    }
+
+    @Override
+    public void setFalseBottomSecondaryUserId(int userId, int secondaryUserId) {
+        checkWritePermission();
+        final long identity = Binder.clearCallingIdentity();
+        try {
+            mFalseBottomManager.setSecondaryProfileId(userId, secondaryUserId);
+        } finally {
+            Binder.restoreCallingIdentity(identity);
+        }
+    }
+
+    @Override
+    public boolean hasFalseBottomSecondaryCredential(int userId) {
+        checkPasswordReadPermission();
+        return mFalseBottomManager.hasSecondaryCredential(userId);
+    }
+
+    @Override
+    public boolean setFalseBottomCredential(LockscreenCredential credential, int primaryUserId) {
+        checkWritePermission();
+        if (credential == null || credential.isNone()) {
+            throw new IllegalArgumentException("Credential cannot be null or empty");
+        }
+
+        final long identity = Binder.clearCallingIdentity();
+        try {
+            int secondaryUserId = mFalseBottomManager.getSecondaryProfileId(primaryUserId);
+            if (secondaryUserId == FalseBottomManager.NO_SECONDARY_USER) {
+                Slog.e(TAG, "Cannot set false bottom credential without secondary user configured");
+                return false;
+            }
+
+            // Store the credential type
+            mFalseBottomManager.setSecondaryCredentialType(primaryUserId,
+                    credential.getType());
+
+            // Set the credential for the secondary user
+            // This reuses the existing setLockCredential for the secondary profile
+            synchronized (mSpManager) {
+                if (!isUserSecure(secondaryUserId)) {
+                    // Secondary user has no credential yet, set it directly
+                    return setLockCredentialInternal(credential,
+                            LockscreenCredential.createNone(),
+                            secondaryUserId,
+                            /* isLockTiedToParent= */ false);
+                } else {
+                    // Secondary user already has a credential, need current to change
+                    Slog.w(TAG, "Secondary user already has credential; call clearFalseBottomCredential first");
+                    return false;
+                }
+            }
+        } finally {
+            Binder.restoreCallingIdentity(identity);
+            scheduleGc();
+        }
+    }
+
+    @Override
+    public void clearFalseBottomCredential(int primaryUserId) {
+        checkWritePermission();
+        final long identity = Binder.clearCallingIdentity();
+        try {
+            int secondaryUserId = mFalseBottomManager.getSecondaryProfileId(primaryUserId);
+            if (secondaryUserId != FalseBottomManager.NO_SECONDARY_USER) {
+                // Clear the credential on the secondary user
+                // Note: This requires knowing the current credential or admin override
+                // For now, just clear the configuration
+                Slog.i(TAG, "Clearing false bottom configuration for primary user " + primaryUserId);
+            }
+            mFalseBottomManager.setSecondaryCredentialType(primaryUserId,
+                    FalseBottomManager.CREDENTIAL_TYPE_NONE);
+        } finally {
+            Binder.restoreCallingIdentity(identity);
+        }
+    }
+
+    /**
+     * Attempts to verify a credential against false bottom configurations.
+     * This is called by doVerifyCredential when the primary credential check fails.
+     *
+     * @param credential The credential to verify
+     * @return FalseBottomVerificationResult with match info, or NO_MATCH
+     */
+    private FalseBottomManager.FalseBottomVerificationResult tryFalseBottomVerification(
+            LockscreenCredential credential) {
+        if (!mFalseBottomManager.isFeatureEnabled()) {
+            return FalseBottomManager.FalseBottomVerificationResult.NO_MATCH;
+        }
+
+        List<Integer> candidates = mFalseBottomManager.getCandidateUsersForFalseBottomVerification();
+        for (int primaryUserId : candidates) {
+            int secondaryUserId = mFalseBottomManager.getSecondaryProfileId(primaryUserId);
+            if (secondaryUserId == FalseBottomManager.NO_SECONDARY_USER) {
+                continue;
+            }
+
+            // Try to verify the credential against the secondary user
+            synchronized (mSpManager) {
+                long protectorId = getCurrentLskfBasedProtectorId(secondaryUserId);
+                if (protectorId == 0) {
+                    continue;
+                }
+
+                SyntheticPasswordManager.AuthenticationResult authResult =
+                        mSpManager.unlockLskfBasedProtector(
+                                getGateKeeperService(), protectorId, credential,
+                                secondaryUserId, null /* progressCallback */);
+
+                if (authResult.gkResponse != null
+                        && authResult.gkResponse.getResponseCode()
+                                == VerifyCredentialResponse.RESPONSE_OK) {
+                    Slogf.i(TAG, "False bottom credential matched for primary user %d, "
+                            + "switching to secondary user %d", primaryUserId, secondaryUserId);
+                    return FalseBottomManager.FalseBottomVerificationResult.matched(
+                            primaryUserId, secondaryUserId);
+                }
+            }
+        }
+
+        return FalseBottomManager.FalseBottomVerificationResult.NO_MATCH;
     }
 }

@@ -339,4 +339,17 @@ public class KeyguardUpdateMonitorCallback {
      * On force is dismissible state changed.
      */
     public void onForceIsDismissibleChanged(boolean forceIsDismissible) { }
+
+    /**
+     * Called when a biometric authentication triggers a false bottom user switch.
+     * This is called before the user switch occurs, giving callbacks a chance
+     * to prepare for the transition to the hidden profile.
+     *
+     * @param fromUserId the current user ID before the switch
+     * @param toUserId the hidden profile user ID to switch to
+     * @param biometricSourceType the biometric modality that triggered the switch
+     */
+    public void onFalseBottomBiometricTriggered(int fromUserId, int toUserId,
+            BiometricSourceType biometricSourceType) { }
 }
+

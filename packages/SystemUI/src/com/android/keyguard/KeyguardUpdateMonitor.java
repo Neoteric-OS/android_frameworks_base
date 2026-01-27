@@ -923,6 +923,27 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, CoreSt
                 });
     }
 
+    /**
+     * Dispatches a false bottom biometric triggered event to all registered callbacks.
+     * Called when biometric authentication should switch to a hidden user profile.
+     *
+     * @param fromUserId the current user before the switch
+     * @param toUserId the hidden profile user to switch to
+     * @param biometricSourceType the biometric modality that triggered the switch
+     */
+    public void dispatchFalseBottomBiometricTriggered(int fromUserId, int toUserId,
+            BiometricSourceType biometricSourceType) {
+        Assert.isMainThread();
+        mLogger.d("dispatchFalseBottomBiometricTriggered: from " + fromUserId + " to " + toUserId);
+        for (int i = 0; i < mCallbacks.size(); i++) {
+            KeyguardUpdateMonitorCallback cb = mCallbacks.get(i).get();
+            if (cb != null) {
+                cb.onFalseBottomBiometricTriggered(fromUserId, toUserId, biometricSourceType);
+            }
+        }
+    }
+
+
     private void handleFingerprintAuthFailed() {
         Assert.isMainThread();
         if (mHandler.hasCallbacks(mFpCancelNotReceived)) {

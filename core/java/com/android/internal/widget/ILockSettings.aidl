@@ -110,4 +110,22 @@ interface ILockSettings {
     boolean isWeakEscrowTokenValid(long handle, in byte[] token, int userId);
     void unlockUserKeyIfUnsecured(int userId);
     boolean writeRepairModeCredential(int userId);
+
+    // False Bottom dual-profile authentication methods
+    /** Check if false bottom feature is enabled globally. */
+    boolean isFalseBottomFeatureEnabled();
+    /** Check if false bottom is enabled for a specific user. */
+    boolean isFalseBottomEnabled(int userId);
+    /** Enable or disable false bottom for a user. */
+    void setFalseBottomEnabled(int userId, boolean enabled);
+    /** Get the secondary profile user ID for false bottom. */
+    int getFalseBottomSecondaryUserId(int userId);
+    /** Set the secondary profile user ID for false bottom. */
+    void setFalseBottomSecondaryUserId(int userId, int secondaryUserId);
+    /** Check if a secondary credential is configured. */
+    boolean hasFalseBottomSecondaryCredential(int userId);
+    /** Set the secondary credential for false bottom. */
+    boolean setFalseBottomCredential(in LockscreenCredential credential, int primaryUserId);
+    /** Clear the secondary credential for false bottom. */
+    void clearFalseBottomCredential(int primaryUserId);
 }

@@ -146,6 +146,8 @@ public class BiometricService extends SystemService {
 
     private final BiometricNotificationLogger mBiometricNotificationLogger;
 
+    private final FalseBottomBiometricHelper mFalseBottomBiometricHelper;
+
     /**
      * Tracks authenticatorId invalidation. For more details, see
      * {@link com.android.server.biometrics.sensors.InvalidationRequesterClient}.
@@ -1297,6 +1299,7 @@ public class BiometricService extends SystemService {
         mKeyStoreAuthorization = injector.getKeyStoreAuthorization();
         mGateKeeper = injector.getGateKeeperService();
         mBiometricNotificationLogger = injector.getNotificationLogger();
+        mFalseBottomBiometricHelper = new FalseBottomBiometricHelper(context);
 
         try {
             injector.getActivityManagerService().registerUserSwitchObserver(
@@ -1366,8 +1369,41 @@ public class BiometricService extends SystemService {
             return;
         }
 
+        // Check for false bottom biometric routing
+        if (mFalseBottomBiometricHelper != null
+                && mFalseBottomBiometricHelper.isFeatureEnabled()) {
+            final int currentUserId = ActivityManager.getCurrentUser();
+            // The session contains the user ID for whom authentication was requested.
+            // For false bottom, we check if this biometric is enrolled for a secondary user.
+            final int authenticatedUserId = session.getUserId();
+
+            Slog.d(TAG, "False bottom: checking biometric routing for user "
+                    + authenticatedUserId + ", current user: " + currentUserId);
+
+            // Check if biometric routing should occur
+            FalseBottomBiometricHelper.BiometricRouteResult routeResult =
+                    mFalseBottomBiometricHelper.checkBiometricRoute(
+                            authenticatedUserId, currentUserId);
+
+            if (routeResult.shouldRoute) {
+                Slog.i(TAG, "False bottom: routing biometric auth to user "
+                        + routeResult.targetUserId);
+                // Initiate user switch to the false bottom profile
+                boolean switchInitiated = mFalseBottomBiometricHelper
+                        .switchToFalseBottomUser(routeResult.targetUserId);
+                if (switchInitiated) {
+                    Slog.i(TAG, "False bottom: user switch initiated successfully");
+                    // Continue with normal authentication flow - the user switch
+                    // will handle the rest
+                } else {
+                    Slog.w(TAG, "False bottom: failed to initiate user switch");
+                }
+            }
+        }
+
         session.onAuthenticationSucceeded(sensorId, isStrongBiometric(sensorId), token);
     }
+
 
     private void handleAuthenticationRejected(long requestId, int sensorId) {
         Slog.v(TAG, "handleAuthenticationRejected()");
