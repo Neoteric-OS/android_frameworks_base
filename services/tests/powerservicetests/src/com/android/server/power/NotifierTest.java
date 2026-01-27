@@ -65,7 +65,6 @@ import android.os.WorkSource.WorkChain;
 import android.os.test.TestLooper;
 import android.provider.Settings;
 import android.testing.TestableContext;
-import android.util.IntArray;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
 import android.view.Display;
@@ -302,7 +301,7 @@ public class NotifierTest {
         final int displayId1 = 101;
         final int displayId2 = 102;
         final int[] displayIds = new int[]{displayId1, displayId2};
-        when(mDisplayManagerInternal.getDisplayIds()).thenReturn(IntArray.wrap(displayIds));
+        when(mDisplayManagerInternal.getDisplayIds(eq(false))).thenReturn(displayIds);
         mNotifier.onGlobalWakefulnessChangeStarted(WAKEFULNESS_ASLEEP,
                 PowerManager.GO_TO_SLEEP_REASON_POWER_BUTTON, /* eventTime= */ 1000);
         mTestLooper.dispatchAll();
@@ -335,7 +334,7 @@ public class NotifierTest {
 
         // THEN window manager policy is informed that device has started waking up
         verify(mPolicy).startedWakingUp(groupId, changeReason);
-        verify(mDisplayManagerInternal, never()).getDisplayIds();
+        verify(mDisplayManagerInternal, never()).getDisplayIds(eq(false));
         verify(mInputManagerInternal, never()).setDisplayInteractivities(any());
     }
 
@@ -358,7 +357,7 @@ public class NotifierTest {
 
         // THEN policy is only informed once of non-interactive wakefulness change
         verify(mPolicy, times(1)).startedGoingToSleep(groupId, changeReason);
-        verify(mDisplayManagerInternal, never()).getDisplayIds();
+        verify(mDisplayManagerInternal, never()).getDisplayIds(eq(false));
         verify(mInputManagerInternal, never()).setDisplayInteractivities(any());
     }
 
@@ -381,7 +380,7 @@ public class NotifierTest {
 
         // THEN policy is informed of the change
         verify(mPolicy).startedWakingUp(groupId, secondChangeReason);
-        verify(mDisplayManagerInternal, never()).getDisplayIds();
+        verify(mDisplayManagerInternal, never()).getDisplayIds(eq(false));
         verify(mInputManagerInternal, never()).setDisplayInteractivities(any());
     }
 
@@ -394,7 +393,7 @@ public class NotifierTest {
         final int displayId1 = 1001;
         final int displayId2 = 1002;
         final int[] displays = new int[]{displayId1, displayId2};
-        when(mDisplayManagerInternal.getDisplayIds()).thenReturn(IntArray.wrap(displays));
+        when(mDisplayManagerInternal.getDisplayIds(eq(false))).thenReturn(displays);
         when(mDisplayManagerInternal.getDisplayIdsForGroup(groupId)).thenReturn(displays);
         final int changeReason = PowerManager.WAKE_REASON_TAP;
 
@@ -419,7 +418,7 @@ public class NotifierTest {
         final int displayId1 = 3113;
         final int displayId2 = 4114;
         final int[] displays = new int[]{displayId1, displayId2};
-        when(mDisplayManagerInternal.getDisplayIds()).thenReturn(IntArray.wrap(displays));
+        when(mDisplayManagerInternal.getDisplayIds(eq(false))).thenReturn(displays);
         when(mDisplayManagerInternal.getDisplayIdsForGroup(groupId)).thenReturn(displays);
         mNotifier.onGroupWakefulnessChangeStarted(
                 groupId, WAKEFULNESS_AWAKE, PowerManager.WAKE_REASON_TAP, /* eventTime= */ 1000);
@@ -446,7 +445,7 @@ public class NotifierTest {
         final int displayId1 = 1221;
         final int displayId2 = 1222;
         final int[] displays = new int[]{displayId1, displayId2};
-        when(mDisplayManagerInternal.getDisplayIds()).thenReturn(IntArray.wrap(displays));
+        when(mDisplayManagerInternal.getDisplayIds(eq(false))).thenReturn(display);
         when(mDisplayManagerInternal.getDisplayIdsForGroup(groupId)).thenReturn(displays);
         SparseArray<int[]> displayIdsByGroupId = new SparseArray<>();
         displayIdsByGroupId.put(groupId, displays);

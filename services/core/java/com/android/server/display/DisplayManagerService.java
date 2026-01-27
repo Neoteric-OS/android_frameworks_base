@@ -148,6 +148,7 @@ import android.provider.Settings;
 import android.sysprop.DisplayProperties;
 import android.text.TextUtils;
 import android.util.ArraySet;
+import android.util.CopyOnWriteSparseArray;
 import android.util.EventLog;
 import android.util.IndentingPrintWriter;
 import android.util.IntArray;
@@ -183,9 +184,11 @@ import com.android.server.LocalServices;
 import com.android.server.SystemService;
 import com.android.server.UiThread;
 import com.android.server.companion.virtual.VirtualDeviceManagerInternal;
+import com.android.server.display.LogicalDisplay.CachedDisplayInfo;
 import com.android.server.display.config.SensorData;
 import com.android.server.display.feature.DeviceConfigParameterProvider;
 import com.android.server.display.feature.DisplayManagerFlags;
+import com.android.server.display.feature.flags.Flags;
 import com.android.server.display.layout.Layout;
 import com.android.server.display.mode.DisplayModeDirector;
 import com.android.server.display.notifications.DisplayNotificationManager;
@@ -285,6 +288,7 @@ public final class DisplayManagerService extends SystemService {
     private static final int[] EMPTY_ARRAY = new int[0];
     private static final HdrConversionMode HDR_CONVERSION_MODE_UNSUPPORTED = new HdrConversionMode(
             HDR_CONVERSION_UNSUPPORTED);
+    private static final int[] ARRAY_DEFAULT_DISPLAY_ONLY = new int[] { Display.DEFAULT_DISPLAY };
 
     private final Context mContext;
     private final DisplayManagerHandler mHandler;
@@ -513,7 +517,7 @@ public final class DisplayManagerService extends SystemService {
     private final int mDefaultDisplayDefaultColorMode;
 
     // Lists of UIDs that are present on the displays. Maps displayId -> array of UIDs.
-    private final SparseArray<IntArray> mDisplayAccessUIDs = new SparseArray<>();
+    private volatile SparseArray<IntArray> mDisplayAccessUIDs = new SparseArray<>();
 
     private final Injector mInjector;
 
@@ -602,6 +606,9 @@ public final class DisplayManagerService extends SystemService {
     private final ExternalDisplayStatsService mExternalDisplayStatsService;
     private final PluginManager mPluginManager;
 
+    private final CopyOnWriteSparseArray<CachedDisplayInfo> mDisplayInfoCache =
+            new CopyOnWriteSparseArray<CachedDisplayInfo>(TAG + ".DisplayInfoCache", DEBUG);
+
     // Manages the relative placement of extended displays
     @Nullable
     private final DisplayTopologyCoordinator mDisplayTopologyCoordinator;
@@ -646,7 +653,8 @@ public final class DisplayManagerService extends SystemService {
         mDisplayDeviceRepo = new DisplayDeviceRepository(mSyncRoot, mPersistentDataStore);
         mLogicalDisplayMapper = new LogicalDisplayMapper(mContext,
                 foldSettingProvider, new FoldGracePeriodProvider(),
-                mDisplayDeviceRepo, new LogicalDisplayListener(), mSyncRoot, mHandler, mFlags);
+                mDisplayDeviceRepo, new LogicalDisplayListener(), mSyncRoot, mHandler, mFlags,
+                Flags.displayInfoCopyOnWriteCacheEnabled() ? mDisplayInfoCache : null);
         mDisplayModeDirector = new DisplayModeDirector(
                 context, mHandler, mFlags, mDisplayDeviceConfigProvider);
         mBrightnessSynchronizer = new BrightnessSynchronizer(mContext, displayThreadLooper,
@@ -1332,7 +1340,7 @@ public final class DisplayManagerService extends SystemService {
                 mUserDisabledHdrTypes = new int[userDisabledHdrTypeStrings.length];
                 for (int i = 0; i < userDisabledHdrTypeStrings.length; i++) {
                     mUserDisabledHdrTypes[i] = Integer.parseInt(userDisabledHdrTypeStrings[i]);
-                }
+                }m
 
                 if (!mAreUserDisabledHdrTypesAllowed) {
                     mLogicalDisplayMapper.forEachLocked(
@@ -1378,8 +1386,9 @@ public final class DisplayManagerService extends SystemService {
         }
     }
 
-    private DisplayInfo getDisplayInfoForFrameRateOverride(DisplayEventReceiver.FrameRateOverride[]
-            frameRateOverrides, DisplayInfo info, int callingUid) {
+    private DisplayInfo getDisplayInfoForFrameRateOverride(
+            DisplayEventReceiver.FrameRateOverride[] frameRateOverrides,
+            DisplayInfo info, int callingUid) {
         // Start with the display frame rate
         float frameRateHz = info.renderFrameRate;
 
@@ -1455,21 +1464,62 @@ public final class DisplayManagerService extends SystemService {
         return overriddenInfo;
     }
 
+    private int[] getDisplayIdsInternal(int callingUid, boolean includeDisabled) {
+        if (!Flags.displayInfoCopyOnWriteCacheEnabled()) {
+            synchronized (mSyncRoot) {
+                return mLogicalDisplayMapper.getDisplayIdsLocked(callingUid, includeDisabled);
+            }
+        }
+        if (mDisplayInfoCache.size() <= 1) {
+            return ARRAY_DEFAULT_DISPLAY_ONLY;
+        }
+        return mDisplayInfoCache.filteredKeys((Integer key, CachedDisplayInfo value) ->
+                (includeDisabled || value.isEnabled())
+                        && doesCallingUidHaveAccessToDisplay(callingUid, value.info()));
+    }
+
     private DisplayInfo getDisplayInfoInternal(int displayId, int callingUid) {
+        if (Flags.displayInfoCopyOnWriteCacheEnabled()) {
+            CachedDisplayInfo info = mDisplayInfoCache.get(displayId);
+            if (info == null) {
+                if (displayId != Display.DEFAULT_DISPLAY) {
+                    Slog.e(TAG, "Display info not found in cache for display " + displayId);
+                    return null;
+                }
+                Slog.w(TAG, "Default display not found in cache");
+            } else if (!doesCallingUidHaveAccessToDisplay(callingUid, info.info())) {
+                Slog.w(TAG, "Calling uid " + callingUid + " does not have access to display "
+                        + displayId);
+                return null;
+            } else {
+                if (DEBUG) {
+                    Slog.d(TAG, "getDisplayInfoInternal: for display from cache "
+                            + " for uid " + callingUid
+                            + " displayId " + displayId);
+                }
+                return getDisplayInfoForFrameRateOverride(
+                        info.frameRateOverrides(), info.info(), callingUid);
+            }
+        }
         synchronized (mSyncRoot) {
             final LogicalDisplay display = mLogicalDisplayMapper.getDisplayLocked(displayId);
             if (display != null) {
                 final DisplayInfo info =
                         getDisplayInfoForFrameRateOverride(display.getFrameRateOverrides(),
                                 display.getDisplayInfoLocked(), callingUid);
-                if (info.hasAccess(callingUid)
-                        || isUidPresentOnDisplayInternal(callingUid, displayId)) {
+                if (doesCallingUidHaveAccessToDisplay(callingUid, info)) {
+                    if (DEBUG) {
+                        Slog.d(TAG, "getDisplayInfoInternal: for display"
+                                + " for uid " + callingUid + " displayId " + displayId);
+                    }
                     return info;
                 }
             } else if (displayId == Display.DEFAULT_DISPLAY) {
                 Slog.e(TAG, "Default display is null for info request from uid "
                         + callingUid);
             }
+
+            Slog.w(TAG, "getDisplayInfoInternal: display not found " + displayId);
             return null;
         }
     }
@@ -3241,21 +3291,23 @@ public final class DisplayManagerService extends SystemService {
 
     // Updates the lists of UIDs that are present on displays.
     private void setDisplayAccessUIDsInternal(SparseArray<IntArray> newDisplayAccessUIDs) {
-        synchronized (mSyncRoot) {
-            mDisplayAccessUIDs.clear();
-            for (int i = newDisplayAccessUIDs.size() - 1; i >= 0; i--) {
-                mDisplayAccessUIDs.append(newDisplayAccessUIDs.keyAt(i),
-                        newDisplayAccessUIDs.valueAt(i));
-            }
+        var displayAccessUIDsCopy = new SparseArray<IntArray>(newDisplayAccessUIDs.size());
+        for (int i = newDisplayAccessUIDs.size() - 1; i >= 0; i--) {
+            displayAccessUIDsCopy.put(
+                    newDisplayAccessUIDs.keyAt(i),
+                    newDisplayAccessUIDs.valueAt(i).clone());
         }
+        mDisplayAccessUIDs = displayAccessUIDsCopy;
     }
 
     // Checks if provided UID's content is present on the display and UID has access to it.
     private boolean isUidPresentOnDisplayInternal(int uid, int displayId) {
-        synchronized (mSyncRoot) {
-            final IntArray displayUIDs = mDisplayAccessUIDs.get(displayId);
-            return displayUIDs != null && displayUIDs.indexOf(uid) != -1;
-        }
+        final IntArray displayUIDs = mDisplayAccessUIDs.get(displayId);
+        return displayUIDs != null && displayUIDs.indexOf(uid) != -1;
+    }
+
+    private boolean doesCallingUidHaveAccessToDisplay(int uid, DisplayInfo info) {
+        return info.hasAccess(uid) || isUidPresentOnDisplayInternal(uid, info.displayId);
     }
 
     @Nullable
@@ -4685,17 +4737,9 @@ public final class DisplayManagerService extends SystemService {
         /**
          * Returns the list of all display ids.
          */
-        @Override // Binder call
+        @Override
         public int[] getDisplayIds(boolean includeDisabled) {
-            final int callingUid = Binder.getCallingUid();
-            final long token = Binder.clearCallingIdentity();
-            try {
-                synchronized (mSyncRoot) {
-                    return mLogicalDisplayMapper.getDisplayIdsLocked(callingUid, includeDisabled);
-                }
-            } finally {
-                Binder.restoreCallingIdentity(token);
-            }
+            return getDisplayIdsInternal(Process.myUid(), includeDisabled);
         }
 
         @Override // Binder call
