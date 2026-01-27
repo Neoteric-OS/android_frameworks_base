@@ -1388,16 +1388,32 @@ public class BiometricService extends SystemService {
             if (routeResult.shouldRoute) {
                 Slog.i(TAG, "False bottom: routing biometric auth to user "
                         + routeResult.targetUserId);
-                // Initiate user switch to the false bottom profile
-                boolean switchInitiated = mFalseBottomBiometricHelper
-                        .switchToFalseBottomUser(routeResult.targetUserId);
-                if (switchInitiated) {
-                    Slog.i(TAG, "False bottom: user switch initiated successfully");
-                    // Continue with normal authentication flow - the user switch
-                    // will handle the rest
-                } else {
-                    Slog.w(TAG, "False bottom: failed to initiate user switch");
-                }
+                // Use async switch with callback to properly wait for completion
+                // before reporting authentication success
+                final int targetSensorId = sensorId;
+                final boolean isStrong = isStrongBiometric(sensorId);
+                mFalseBottomBiometricHelper.switchToFalseBottomUserAsync(
+                        routeResult.targetUserId,
+                        new FalseBottomBiometricHelper.UserSwitchCallback() {
+                            @Override
+                            public void onUserSwitchComplete(int targetUserId) {
+                                Slog.i(TAG, "False bottom: user switch completed, "
+                                        + "completing authentication for user " + targetUserId);
+                                // Now complete the authentication for the switched-to user
+                                session.onAuthenticationSucceeded(targetSensorId, isStrong, token);
+                            }
+
+                            @Override
+                            public void onUserSwitchFailed(int targetUserId, boolean timedOut) {
+                                Slog.w(TAG, "False bottom: user switch failed"
+                                        + (timedOut ? " (timed out)" : "")
+                                        + ", completing authentication anyway");
+                                // Fall back to completing authentication for the current user
+                                session.onAuthenticationSucceeded(targetSensorId, isStrong, token);
+                            }
+                        });
+                // Return early - callback will handle completion
+                return;
             }
         }
 

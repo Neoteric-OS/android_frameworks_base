@@ -21,6 +21,10 @@ import android.annotation.Nullable;
 import android.annotation.UserIdInt;
 import android.content.Context;
 import android.content.pm.UserInfo;
+import android.database.ContentObserver;
+import android.net.Uri;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.provider.Settings;
@@ -97,9 +101,60 @@ public class FalseBottomManager {
     @GuardedBy("mLock")
     private final SparseIntArray mSecondaryUserCache = new SparseIntArray();
 
+    /** ContentObserver for Settings changes. */
+    private final SettingObserver mSettingObserver;
+
     public FalseBottomManager(Context context, LockSettingsStorage storage) {
         mContext = context;
         mStorage = storage;
+        mSettingObserver = new SettingObserver(new Handler(Looper.getMainLooper()));
+        registerSettingsObserver();
+    }
+
+    @VisibleForTesting
+    FalseBottomManager(Context context, LockSettingsStorage storage, boolean registerObserver) {
+        mContext = context;
+        mStorage = storage;
+        if (registerObserver) {
+            mSettingObserver = new SettingObserver(new Handler(Looper.getMainLooper()));
+            registerSettingsObserver();
+        } else {
+            mSettingObserver = null;
+        }
+    }
+
+    /**
+     * Registers the ContentObserver to watch for Settings changes.
+     */
+    private void registerSettingsObserver() {
+        Uri uri = Settings.Secure.getUriFor(SETTINGS_FALSE_BOTTOM_ENABLED);
+        mContext.getContentResolver().registerContentObserver(
+                uri, false /* notifyForDescendants */, mSettingObserver);
+    }
+
+    /**
+     * ContentObserver that invalidates caches when Settings change externally.
+     */
+    private class SettingObserver extends ContentObserver {
+        SettingObserver(Handler handler) {
+            super(handler);
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            Slog.d(TAG, "Settings changed externally, invalidating all caches");
+            invalidateAllCaches();
+        }
+    }
+
+    /**
+     * Invalidates all caches. Called when Settings change externally.
+     */
+    private void invalidateAllCaches() {
+        synchronized (mLock) {
+            mEnabledCache.clear();
+            mSecondaryUserCache.clear();
+        }
     }
 
     /**

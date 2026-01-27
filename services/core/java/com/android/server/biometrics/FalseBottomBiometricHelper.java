@@ -19,15 +19,24 @@ package com.android.server.biometrics;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.UserIdInt;
+import android.app.ActivityManager;
 import android.app.IActivityManager;
+import android.app.UserSwitchObserver;
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.Slog;
 
+import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.widget.LockPatternUtils;
+
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Helper class to manage false bottom biometric authentication.
@@ -56,12 +65,43 @@ public class FalseBottomBiometricHelper {
     public static final String SETTINGS_FALSE_BOTTOM_BIOMETRIC_ENABLED =
             "lock_screen_false_bottom_biometric_enabled";
 
+    /** Timeout for user switch completion in milliseconds. */
+    private static final long USER_SWITCH_TIMEOUT_MS = 5000;
+
+    /**
+     * Callback interface for user switch completion.
+     * Used to notify callers when a false bottom user switch completes or fails.
+     */
+    public interface UserSwitchCallback {
+        /**
+         * Called when user switch completes successfully.
+         * @param targetUserId The user ID that was switched to
+         */
+        void onUserSwitchComplete(int targetUserId);
+
+        /**
+         * Called when user switch fails or times out.
+         * @param targetUserId The user ID that was attempted
+         * @param timedOut true if the switch timed out, false if it failed immediately
+         */
+        void onUserSwitchFailed(int targetUserId, boolean timedOut);
+    }
+
     private final Context mContext;
     private final LockPatternUtils mLockPatternUtils;
+    private final Handler mHandler;
 
     public FalseBottomBiometricHelper(@NonNull Context context) {
         mContext = context;
         mLockPatternUtils = new LockPatternUtils(context);
+        mHandler = new Handler(Looper.getMainLooper());
+    }
+
+    @VisibleForTesting
+    FalseBottomBiometricHelper(@NonNull Context context, @NonNull Handler handler) {
+        mContext = context;
+        mLockPatternUtils = new LockPatternUtils(context);
+        mHandler = handler;
     }
 
     /**
@@ -215,6 +255,124 @@ public class FalseBottomBiometricHelper {
 
         if (result.shouldRoute) {
             return switchToFalseBottomUser(result.targetUserId);
+        }
+
+        return false;
+    }
+
+    /**
+     * Initiates a user switch to the false bottom user with async completion callback.
+     *
+     * <p>This method registers a UserSwitchObserver to track the user switch completion,
+     * providing a callback when the switch finishes or times out. This prevents race
+     * conditions where authentication completes before the user switch is finished.
+     *
+     * @param targetUserId The user ID to switch to
+     * @param callback Callback to notify on completion or failure
+     */
+    public void switchToFalseBottomUserAsync(@UserIdInt int targetUserId,
+            @NonNull UserSwitchCallback callback) {
+        final AtomicBoolean completed = new AtomicBoolean(false);
+        final IActivityManager am = IActivityManager.Stub.asInterface(
+                ServiceManager.getService("activity"));
+
+        if (am == null) {
+            Slog.e(TAG, "ActivityManager not available for user switch");
+            callback.onUserSwitchFailed(targetUserId, false);
+            return;
+        }
+
+        // Register a timeout runnable
+        final Runnable timeoutRunnable = () -> {
+            if (completed.compareAndSet(false, true)) {
+                Slog.w(TAG, "User switch to " + targetUserId + " timed out after "
+                        + USER_SWITCH_TIMEOUT_MS + "ms");
+                callback.onUserSwitchFailed(targetUserId, true);
+            }
+        };
+        mHandler.postDelayed(timeoutRunnable, USER_SWITCH_TIMEOUT_MS);
+
+        try {
+            // Register observer before initiating switch
+            am.registerUserSwitchObserver(new UserSwitchObserver() {
+                @Override
+                public void onUserSwitchComplete(int newUserId) throws RemoteException {
+                    if (newUserId == targetUserId && completed.compareAndSet(false, true)) {
+                        mHandler.removeCallbacks(timeoutRunnable);
+                        Slog.i(TAG, "User switch to false bottom user " + targetUserId
+                                + " completed successfully");
+                        mHandler.post(() -> callback.onUserSwitchComplete(targetUserId));
+                        // Unregister self
+                        try {
+                            am.unregisterUserSwitchObserver(this);
+                        } catch (RemoteException e) {
+                            Slog.w(TAG, "Failed to unregister UserSwitchObserver", e);
+                        }
+                    }
+                }
+
+                @Override
+                public void onUserSwitching(int newUserId, android.os.IRemoteCallback reply)
+                        throws RemoteException {
+                    // Called when switch is starting, not complete yet
+                    if (reply != null) {
+                        reply.sendResult(null);
+                    }
+                }
+
+                @Override
+                public void onForegroundProfileSwitch(int newProfileId) throws RemoteException {
+                    // Not relevant for our use case
+                }
+
+                @Override
+                public void onLockedBootComplete(int newUserId) throws RemoteException {
+                    // Not relevant for our use case
+                }
+            }, TAG);
+
+            // Now initiate the switch
+            Slog.i(TAG, "Initiating async user switch to false bottom user: " + targetUserId);
+            boolean initiated = am.switchUser(targetUserId);
+
+            if (!initiated) {
+                mHandler.removeCallbacks(timeoutRunnable);
+                if (completed.compareAndSet(false, true)) {
+                    Slog.e(TAG, "Failed to initiate user switch to " + targetUserId);
+                    callback.onUserSwitchFailed(targetUserId, false);
+                }
+            }
+        } catch (RemoteException e) {
+            mHandler.removeCallbacks(timeoutRunnable);
+            if (completed.compareAndSet(false, true)) {
+                Slog.e(TAG, "Failed to switch to false bottom user", e);
+                callback.onUserSwitchFailed(targetUserId, false);
+            }
+        }
+    }
+
+    /**
+     * Called when biometric authentication succeeds on the lock screen.
+     * Determines if false bottom routing is needed and initiates user switch with callback.
+     *
+     * <p>This is the preferred method for handling biometric unlock as it properly
+     * waits for user switch completion before reporting success.
+     *
+     * @param authenticatedUserId User whose biometric was authenticated
+     * @param currentUserId Currently active foreground user
+     * @param callback Callback for user switch completion
+     * @return true if false bottom routing was detected and switch is being initiated
+     */
+    public boolean handleBiometricUnlockAsync(
+            @UserIdInt int authenticatedUserId,
+            @UserIdInt int currentUserId,
+            @NonNull UserSwitchCallback callback) {
+
+        BiometricRouteResult result = checkBiometricRoute(authenticatedUserId, currentUserId);
+
+        if (result.shouldRoute) {
+            switchToFalseBottomUserAsync(result.targetUserId, callback);
+            return true;
         }
 
         return false;

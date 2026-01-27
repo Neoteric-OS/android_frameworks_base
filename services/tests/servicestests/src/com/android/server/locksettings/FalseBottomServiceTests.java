@@ -239,4 +239,79 @@ public class FalseBottomServiceTests extends BaseLockSettingsServiceTests {
         assertEquals(PRIMARY_USER_ID, result.primaryUserId);
         assertEquals(HIDDEN_SECONDARY_USER_ID, result.secondaryUserId);
     }
+
+    // ==================== Cache Invalidation Tests ====================
+
+    @Test
+    public void testFalseBottomManager_cacheInvalidation_clearsEnabledCache() {
+        // Use test constructor that doesn't register observer
+        FalseBottomManager manager = new FalseBottomManager(mContext, mStorage, false);
+
+        // Set enabled and verify cached
+        manager.setEnabled(PRIMARY_USER_ID, true);
+        assertTrue(manager.isEnabled(PRIMARY_USER_ID));
+
+        // Manually invalidate cache (simulating Settings change)
+        manager.invalidateCache(PRIMARY_USER_ID);
+
+        // Should still return same value (reads from storage)
+        assertTrue(manager.isEnabled(PRIMARY_USER_ID));
+
+        // Now disable in storage directly and invalidate
+        mStorage.setBoolean(FalseBottomManager.KEY_FALSE_BOTTOM_ENABLED, false, PRIMARY_USER_ID);
+        manager.invalidateCache(PRIMARY_USER_ID);
+
+        // Should now return false
+        assertFalse(manager.isEnabled(PRIMARY_USER_ID));
+    }
+
+    @Test
+    public void testFalseBottomManager_cacheInvalidation_clearsSecondaryUserCache() {
+        FalseBottomManager manager = new FalseBottomManager(mContext, mStorage, false);
+
+        // Set secondary and verify cached
+        manager.setSecondaryProfileId(PRIMARY_USER_ID, HIDDEN_SECONDARY_USER_ID);
+        assertEquals(HIDDEN_SECONDARY_USER_ID, manager.getSecondaryProfileId(PRIMARY_USER_ID));
+
+        // Invalidate and check still reads from storage
+        manager.invalidateCache(PRIMARY_USER_ID);
+        assertEquals(HIDDEN_SECONDARY_USER_ID, manager.getSecondaryProfileId(PRIMARY_USER_ID));
+    }
+
+    // ==================== Credential Cleanup Tests ====================
+
+    @Test
+    public void testClearFalseBottomCredential_clearsConfiguration() {
+        // Set up false bottom
+        mService.setFalseBottomEnabled(PRIMARY_USER_ID, true);
+        mService.setFalseBottomSecondaryUserId(PRIMARY_USER_ID, SECONDARY_USER_ID);
+
+        LockscreenCredential credential = newPin("5678");
+        mService.setFalseBottomCredential(credential, PRIMARY_USER_ID);
+        credential.zeroize();
+
+        assertTrue(mService.hasFalseBottomSecondaryCredential(PRIMARY_USER_ID));
+
+        // Clear it
+        mService.clearFalseBottomCredential(PRIMARY_USER_ID);
+
+        // Verify configuration is cleared
+        assertFalse(mService.hasFalseBottomSecondaryCredential(PRIMARY_USER_ID));
+        assertFalse(mService.isFalseBottomEnabled(PRIMARY_USER_ID));
+    }
+
+    @Test
+    public void testClearFalseBottomCredential_clearsSecondaryUserAssociation() {
+        // Set up false bottom with secondary user
+        mService.setFalseBottomEnabled(PRIMARY_USER_ID, true);
+        mService.setFalseBottomSecondaryUserId(PRIMARY_USER_ID, HIDDEN_SECONDARY_USER_ID);
+
+        // Clear it
+        mService.clearFalseBottomCredential(PRIMARY_USER_ID);
+
+        // Verify secondary user association is cleared
+        assertEquals(FalseBottomManager.NO_SECONDARY_USER,
+                mService.getFalseBottomSecondaryUserId(PRIMARY_USER_ID));
+    }
 }
+

@@ -157,4 +157,92 @@ public class FalseBottomBiometricTests {
     public void testHelperCreation_notNull() {
         assertNotNull(mHelper);
     }
+
+    // ==================== UserSwitchCallback Tests ====================
+
+    @Test
+    public void testUserSwitchCallback_onComplete_callsCallback() {
+        // Verify the callback interface can be instantiated and used
+        final int[] capturedUserId = new int[1];
+        final boolean[] callbackCalled = new boolean[1];
+
+        FalseBottomBiometricHelper.UserSwitchCallback callback =
+                new FalseBottomBiometricHelper.UserSwitchCallback() {
+                    @Override
+                    public void onUserSwitchComplete(int targetUserId) {
+                        capturedUserId[0] = targetUserId;
+                        callbackCalled[0] = true;
+                    }
+
+                    @Override
+                    public void onUserSwitchFailed(int targetUserId, boolean timedOut) {
+                        // Not testing failure path here
+                    }
+                };
+
+        // Simulate a successful callback
+        callback.onUserSwitchComplete(HIDDEN_PROFILE_ID);
+
+        assertTrue(callbackCalled[0]);
+        assertEquals(HIDDEN_PROFILE_ID, capturedUserId[0]);
+    }
+
+    @Test
+    public void testUserSwitchCallback_onFailed_callsCallback() {
+        final int[] capturedUserId = new int[1];
+        final boolean[] timedOutFlag = new boolean[1];
+        final boolean[] callbackCalled = new boolean[1];
+
+        FalseBottomBiometricHelper.UserSwitchCallback callback =
+                new FalseBottomBiometricHelper.UserSwitchCallback() {
+                    @Override
+                    public void onUserSwitchComplete(int targetUserId) {
+                        // Not testing success path here
+                    }
+
+                    @Override
+                    public void onUserSwitchFailed(int targetUserId, boolean timedOut) {
+                        capturedUserId[0] = targetUserId;
+                        timedOutFlag[0] = timedOut;
+                        callbackCalled[0] = true;
+                    }
+                };
+
+        // Simulate a timeout failure
+        callback.onUserSwitchFailed(HIDDEN_PROFILE_ID, true);
+
+        assertTrue(callbackCalled[0]);
+        assertEquals(HIDDEN_PROFILE_ID, capturedUserId[0]);
+        assertTrue(timedOutFlag[0]);
+
+        // Simulate immediate failure
+        callbackCalled[0] = false;
+        callback.onUserSwitchFailed(SECONDARY_USER_ID, false);
+
+        assertTrue(callbackCalled[0]);
+        assertEquals(SECONDARY_USER_ID, capturedUserId[0]);
+        assertFalse(timedOutFlag[0]);
+    }
+
+    // ==================== handleBiometricUnlockAsync Tests ====================
+
+    @Test
+    public void testHandleBiometricUnlockAsync_whenFeatureDisabled_returnsFalse() {
+        Settings.Secure.putInt(mContext.getContentResolver(),
+                FalseBottomBiometricHelper.SETTINGS_FALSE_BOTTOM_ENABLED, 0);
+
+        FalseBottomBiometricHelper.UserSwitchCallback callback =
+                new FalseBottomBiometricHelper.UserSwitchCallback() {
+                    @Override
+                    public void onUserSwitchComplete(int targetUserId) {}
+                    @Override
+                    public void onUserSwitchFailed(int targetUserId, boolean timedOut) {}
+                };
+
+        boolean result = mHelper.handleBiometricUnlockAsync(
+                PRIMARY_USER_ID, PRIMARY_USER_ID, callback);
+
+        assertFalse(result);
+    }
 }
+
