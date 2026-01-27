@@ -82,6 +82,7 @@ import android.os.test.TestLooper;
 import android.platform.test.annotations.RequiresFlagsEnabled;
 import android.platform.test.flag.junit.CheckFlagsRule;
 import android.platform.test.flag.junit.DeviceFlagsValueProvider;
+import android.util.CopyOnWriteSparseArray;
 import android.view.Display;
 import android.view.DisplayAddress;
 import android.view.DisplayInfo;
@@ -166,6 +167,8 @@ public class LogicalDisplayMapperTest {
     @Mock
     SyntheticModeManager mSyntheticModeManagerMock;
 
+    @Mock
+    CopyOnWriteSparseArray<LogicalDisplay.CachedDisplayInfo> mDisplayInfoCacheMock;
     @Captor ArgumentCaptor<LogicalDisplay> mDisplayCaptor;
     @Captor ArgumentCaptor<Integer> mDisplayEventCaptor;
 
@@ -229,7 +232,8 @@ public class LogicalDisplayMapperTest {
                 mFoldGracePeriodProvider,
                 mDisplayDeviceRepo,
                 mListenerMock, new DisplayManagerService.SyncRoot(), mHandler,
-                mDeviceStateToLayoutMapSpy, mFlagsMock, mSyntheticModeManagerMock);
+                mDeviceStateToLayoutMapSpy, mFlagsMock, mSyntheticModeManagerMock,
+                mDisplayInfoCacheMock);
         mLogicalDisplayMapper.onWindowManagerReady();
     }
 
@@ -1369,8 +1373,11 @@ public class LogicalDisplayMapperTest {
     private void testDisplayDeviceAddAndRemove_NonInternal(int type) {
         DisplayDevice device = createDisplayDevice(type, 600, 800, 0);
 
+        clearInvocations(mDisplayInfoCacheMock);
         // add
         LogicalDisplay displayAdded = add(device);
+        verify(mDisplayInfoCacheMock, atLeastOnce())
+                .put(eq(displayAdded.getDisplayIdLocked()), any());
         assertEquals(info(displayAdded).address, info(device).address);
         assertNotEquals(DEFAULT_DISPLAY, id(displayAdded));
 
