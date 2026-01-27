@@ -9667,6 +9667,8 @@ public class AudioService extends IAudioService.Stub
         @GuardedBy("mVolumeStateLock")
         /*package*/ void applyDeviceVolume_syncVSS(int device) {
             int index;
+            Log.d(TAG, "setting mIsMutedInternally to false");
+            mIsMutedInternally = false;
             if (isFullyMuted() && !ringMyCar()) {
                 index = 0;
             } else if (isAbsoluteVolumeDevice(device)
