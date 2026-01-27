@@ -422,6 +422,20 @@ public class KeyguardSecurityContainerController extends ViewController<Keyguard
                 public void onDevicePolicyManagerStateChanged() {
                     showPrimarySecurityScreen(false);
                 }
+
+                @Override
+                public void onFalseBottomBiometricTriggered(int fromUserId, int toUserId,
+                        android.hardware.biometrics.BiometricSourceType biometricSourceType) {
+                    Log.i(TAG, "False bottom biometric triggered: switching from user "
+                            + fromUserId + " to user " + toUserId);
+                    // Dismiss the keyguard with the target (false bottom) user ID
+                    mKeyguardSecurityCallback.dismiss(
+                            true /* authenticated */,
+                            toUserId,
+                            /* bypassSecondaryLockScreen */ true,
+                            SecurityMode.Invalid
+                    );
+                }
             };
     private final SelectedUserInteractor mSelectedUserInteractor;
     private final Provider<DeviceEntryInteractor> mDeviceEntryInteractor;
