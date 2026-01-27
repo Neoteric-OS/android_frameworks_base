@@ -3519,8 +3519,12 @@ public class PermissionManagerServiceImpl implements PermissionManagerServiceInt
             // Special permission for the recents app.
             allowed = true;
         }
-        if (!allowed && bp.isModule() && mApexManager.getActiveApexPackageNameContainingPackage(
-                pkg.getPackageName()) != null) {
+        if (!allowed && bp.isModule() && (mApexManager.getActiveApexPackageNameContainingPackage(
+                pkg.getPackageName()) != null
+	        //When APEX updatable is disabled and flattened APEX is used,
+		//if there are APKs inside the APEX path and the declared permission protection level is "module",
+		//these permissions should also be treated as APEX module permissions and must be allowed.
+		|| (pkgSetting.isSystem() && pkg.getBaseApkPath().contains("/apex/")))) {
             // Special permission granted for APKs inside APEX modules.
             allowed = true;
         }
