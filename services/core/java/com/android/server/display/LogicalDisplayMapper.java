@@ -37,6 +37,7 @@ import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.text.TextUtils;
 import android.util.ArrayMap;
+import android.util.CopyOnWriteSparseArray;
 import android.util.IndentingPrintWriter;
 import android.util.Slog;
 import android.util.SparseArray;
@@ -216,17 +217,19 @@ class LogicalDisplayMapper implements DisplayDeviceRepository.Listener {
     private final DisplayManagerFlags mFlags;
     private final SyntheticModeManager mSyntheticModeManager;
     private final FeatureFlags mDeviceStateManagerFlags;
+    private final CopyOnWriteSparseArray<LogicalDisplay.CachedDisplayInfo> mDisplayInfoCache;
 
     LogicalDisplayMapper(@NonNull Context context, FoldSettingProvider foldSettingProvider,
             FoldGracePeriodProvider foldGracePeriodProvider,
             @NonNull DisplayDeviceRepository repo,
             @NonNull Listener listener, @NonNull DisplayManagerService.SyncRoot syncRoot,
-            @NonNull Handler handler, DisplayManagerFlags flags) {
+            @NonNull Handler handler, DisplayManagerFlags flags,
+            CopyOnWriteSparseArray<LogicalDisplay.CachedDisplayInfo> displayInfoCache) {
         this(context, foldSettingProvider, foldGracePeriodProvider, repo, listener, syncRoot,
                 handler,
                 new DeviceStateToLayoutMap((isDefault) -> isDefault ? DEFAULT_DISPLAY
                         : sNextNonDefaultDisplayId++, flags), flags,
-                new SyntheticModeManager(flags));
+                new SyntheticModeManager(flags), displayInfoCache);
     }
 
     LogicalDisplayMapper(@NonNull Context context, FoldSettingProvider foldSettingProvider,
@@ -234,7 +237,8 @@ class LogicalDisplayMapper implements DisplayDeviceRepository.Listener {
             @NonNull DisplayDeviceRepository repo,
             @NonNull Listener listener, @NonNull DisplayManagerService.SyncRoot syncRoot,
             @NonNull Handler handler, @NonNull DeviceStateToLayoutMap deviceStateToLayoutMap,
-            DisplayManagerFlags flags, SyntheticModeManager syntheticModeManager) {
+            DisplayManagerFlags flags, SyntheticModeManager syntheticModeManager,
+            CopyOnWriteSparseArray<LogicalDisplay.CachedDisplayInfo> displayInfoCache) {
         mSyncRoot = syncRoot;
         mPowerManager = context.getSystemService(PowerManager.class);
         mInteractive = mPowerManager.isInteractive();
@@ -256,6 +260,7 @@ class LogicalDisplayMapper implements DisplayDeviceRepository.Listener {
         mFlags = flags;
         mSyntheticModeManager = syntheticModeManager;
         mDeviceStateManagerFlags = new FeatureFlagsImpl();
+        mDisplayInfoCache = displayInfoCache;
     }
 
     @Override
@@ -851,6 +856,9 @@ class LogicalDisplayMapper implements DisplayDeviceRepository.Listener {
                 } else {
                     // This display never left this class, safe to remove without notification
                     mLogicalDisplays.removeAt(i);
+                    if (mDisplayInfoCache != null && displayId != Display.DEFAULT_DISPLAY) {
+                        mDisplayInfoCache.remove(displayId);
+                    }
                 }
                 mLogicalDisplaysToUpdate.put(displayId, logicalDisplayEventMask);
                 continue;
@@ -1013,11 +1021,15 @@ class LogicalDisplayMapper implements DisplayDeviceRepository.Listener {
                 mDisplaysEnabledCache.delete(id);
             }
 
-            mListener.onLogicalDisplayEventLocked(display, logicalDisplayEvent);
 
             if (logicalDisplayEvent == LOGICAL_DISPLAY_EVENT_DISCONNECTED) {
                 mLogicalDisplays.delete(id);
+                if (mDisplayInfoCache != null && id != Display.DEFAULT_DISPLAY) {
+                    mDisplayInfoCache.remove(id);
+                }
             }
+
+            mListener.onLogicalDisplayEventLocked(display, logicalDisplayEvent);
         }
     }
 
@@ -1274,7 +1286,8 @@ class LogicalDisplayMapper implements DisplayDeviceRepository.Listener {
         final LogicalDisplay display = new LogicalDisplay(displayId, layerStack, device,
                 mFlags.isPixelAnisotropyCorrectionInLogicalDisplayEnabled(),
                 mFlags.isAlwaysRotateDisplayDeviceEnabled(),
-                mFlags.isSyncedResolutionSwitchEnabled());
+                mFlags.isSyncedResolutionSwitchEnabled(),
+                mDisplayInfoCache);
         display.updateLocked(mDisplayDeviceRepo, mSyntheticModeManager);
 
         final DisplayInfo info = display.getDisplayInfoLocked();
