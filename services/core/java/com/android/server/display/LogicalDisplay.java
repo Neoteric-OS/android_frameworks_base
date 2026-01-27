@@ -28,12 +28,22 @@ import android.graphics.Rect;
 import android.hardware.display.DisplayManagerInternal;
 import android.util.ArraySet;
 import android.util.SparseArray;
+<<<<<<< HEAD
 import android.view.Display;
 import android.view.DisplayEventReceiver;
 import android.view.DisplayInfo;
 import android.view.Surface;
 import android.view.SurfaceControl;
 
+=======
+import android.graphics.Rect;
+import android.hardware.display.DisplayManagerInternal;
+import android.util.ArraySet;
+import android.util.CopyOnWriteSparseArray;
+import android.util.DisplayMetrics;
+import android.util.IndentingPrintWriter;
+import android.util.Slog;
+>>>>>>> PATCH
 import com.android.server.display.layout.Layout;
 import com.android.server.display.mode.DisplayModeDirector;
 import com.android.server.display.mode.SyntheticModeManager;
@@ -228,6 +238,7 @@ final class LogicalDisplay {
      */
     private final boolean mIsAnisotropyCorrectionEnabled;
 
+<<<<<<< HEAD
     private final boolean mSyncedResolutionSwitchEnabled;
 
     private boolean mCanHostTasks;
@@ -242,6 +253,36 @@ final class LogicalDisplay {
         mDisplayId = displayId;
         mLayerStack = layerStack;
         mPrimaryDisplayDevice = primaryDisplayDevice;
+=======
+    private final boolean mSizeOverrideEnabled;
+
+    private boolean mCanHostTasks;
+    private final CopyOnWriteSparseArray<CachedDisplayInfo> mDisplayInfoCache;
+
+    LogicalDisplay(int displayId, int layerStack, DisplayDevice primaryDisplayDevice,
+            CopyOnWriteSparseArray<CachedDisplayInfo> displayInfoCache) {
+        this(displayId, layerStack, primaryDisplayDevice, false,
+                true, false, displayInfoCache);
+<<<<<<< HEAD
+    }
+
+    LogicalDisplay(int displayId, int layerStack, DisplayDevice primaryDisplayDevice,
+            boolean isSyncedResolutionSwitchEnabled, boolean syntheticModesV2Enabled,
+            boolean sizeOverrideEnabled,
+            CopyOnWriteSparseArray<CachedDisplayInfo> displayInfoCache) {
+=======
+        mSyncedResolutionSwitchEnabled = isSyncedResolutionSwitchEnabled;
+        mSyntheticModesV2Enabled = syntheticModesV2Enabled;
+        mSizeOverrideEnabled = sizeOverrideEnabled;
+        mDisplayInfoCache = displayInfoCache;
+
+        mIsAnisotropicModesEnabled = Flags.enableAnisotropyCorrectedModes();
+        // No need to initialize mCanHostTasks here; it's handled in
+>>>>>>> PATCH
+        mDisplayId = displayId;
+        mLayerStack = layerStack;
+        mPrimaryDisplayDevice = primaryDisplayDevice;
+>>>>>>> PATCH
         mPendingFrameRateOverrideUids = new ArraySet<>();
         mTempFrameRateOverride = new SparseArray<>();
         mIsEnabled = true;
@@ -275,6 +316,7 @@ final class LogicalDisplay {
     }
 
     /**
+<<<<<<< HEAD
      * Gets the primary display device associated with this logical display.
      *
      * @return The primary display device.
@@ -288,6 +330,24 @@ final class LogicalDisplay {
      *
      * @return The device info, which should be treated as immutable by the caller.
      * The logical display should allocate a new display info object whenever
+=======
+
+    /**
+     * Computes the current display information based on the base and override info.
+     * <p>
+     * Warning: this updates cache on system server side.
+     */
+    private DisplayInfo computeCurrentDisplayInfoLocked() {
+        DisplayInfo info = new DisplayInfo();
+        copyDisplayInfoFields(info, mBaseDisplayInfo, mOverrideDisplayInfo,
+                WM_OVERRIDE_FIELDS);
+        if (Flags.displayInfoCopyOnWriteCacheEnabled() && info.supportedModes.length > 0) {
+            mDisplayInfoCache.put(info.displayId, new CachedDisplayInfo(info, mFrameRateOverrides));
+        }
+        return info;
+    }
+
+>>>>>>> PATCH
      * the data changes.
      */
     public DisplayInfo getDisplayInfoLocked() {
@@ -1175,4 +1235,14 @@ final class LogicalDisplay {
         dumpLocked(new PrintWriter(sw));
         return sw.toString();
     }
+
+
+    /**
+     * A class that holds the display info and the frame rate overrides for a display.
+     * @hide
+     */
+    @SuppressWarnings("ArrayRecordComponent")
+    public record CachedDisplayInfo(
+            DisplayInfo info,
+            DisplayEventReceiver.FrameRateOverride[] frameRateOverrides) {}
 }

@@ -37,6 +37,7 @@ import android.os.SystemClock;
 import android.os.SystemProperties;
 import android.text.TextUtils;
 import android.util.ArrayMap;
+import android.util.CopyOnWriteSparseArray;
 import android.util.IndentingPrintWriter;
 import android.util.Slog;
 import android.util.SparseArray;
@@ -216,6 +217,7 @@ class LogicalDisplayMapper implements DisplayDeviceRepository.Listener {
     private final DisplayManagerFlags mFlags;
     private final SyntheticModeManager mSyntheticModeManager;
     private final FeatureFlags mDeviceStateManagerFlags;
+<<<<<<< HEAD
 
     LogicalDisplayMapper(@NonNull Context context, FoldSettingProvider foldSettingProvider,
             FoldGracePeriodProvider foldGracePeriodProvider,
@@ -234,7 +236,50 @@ class LogicalDisplayMapper implements DisplayDeviceRepository.Listener {
             @NonNull DisplayDeviceRepository repo,
             @NonNull Listener listener, @NonNull DisplayManagerService.SyncRoot syncRoot,
             @NonNull Handler handler, @NonNull DeviceStateToLayoutMap deviceStateToLayoutMap,
+=======
+    private final Context mContext;
+    private final DisplayGroupAllocator mDisplayGroupAllocator;
+<<<<<<< HEAD
+    private final Predicate<DisplayInfo> mIsDisplayAllowedInTopology;
+    private final CopyOnWriteSparseArray<LogicalDisplay.CachedDisplayInfo> mDisplayInfoCache;
+
+    LogicalDisplayMapper(@NonNull Context context, FoldSettingProvider foldSettingProvider,
+            @NonNull DisplayDeviceRepository repo,
+            @NonNull Listener listener, @NonNull DisplayManagerService.SyncRoot syncRoot,
+            @NonNull Handler handler, DisplayManagerFlags flags,
+=======
+            @NonNull Handler handler, @NonNull DeviceStateToLayoutMap deviceStateToLayoutMap,
+            DisplayManagerFlags flags, SyntheticModeManager syntheticModeManager,
+            DisplayGroupAllocator displayGroupAllocator,
+            Predicate<DisplayInfo> isDisplayAllowedInTopology,
+            CopyOnWriteSparseArray<LogicalDisplay.CachedDisplayInfo> displayInfoCache) {
+        mSyncRoot = syncRoot;
+        mContext = context;
+        mPowerManager = context.getSystemService(PowerManager.class);
+>>>>>>> PATCH
+            Predicate<DisplayInfo> isDisplayAllowedInTopology, boolean stableEdidsFlag,
+            CopyOnWriteSparseArray<LogicalDisplay.CachedDisplayInfo> displayInfoCache) {
+        this(context, foldSettingProvider, repo, listener, syncRoot, handler,
+                new DeviceStateToLayoutMap(
+                        (isDefault) -> isDefault ? DEFAULT_DISPLAY
+                                : sNextNonDefaultDisplayId++, stableEdidsFlag),
+                flags, new SyntheticModeManager(flags), new DisplayGroupAllocator(context),
+<<<<<<< HEAD
+                isDisplayAllowedInTopology, displayInfoCache);
+    }
+
+    LogicalDisplayMapper(@NonNull Context context, FoldSettingProvider foldSettingProvider,
+>>>>>>> PATCH
             DisplayManagerFlags flags, SyntheticModeManager syntheticModeManager) {
+=======
+        mDeviceStateManagerFlags = new FeatureFlagsImpl();
+        mDisplayGroupAllocator = displayGroupAllocator;
+        mIsDisplayAllowedInTopology = isDisplayAllowedInTopology;
+        mDisplayInfoCache = displayInfoCache;
+    }
+
+    @Override
+>>>>>>> PATCH
         mSyncRoot = syncRoot;
         mPowerManager = context.getSystemService(PowerManager.class);
         mInteractive = mPowerManager.isInteractive();
@@ -851,6 +896,10 @@ class LogicalDisplayMapper implements DisplayDeviceRepository.Listener {
                 } else {
                     // This display never left this class, safe to remove without notification
                     mLogicalDisplays.removeAt(i);
+                    if (Flags.displayInfoCopyOnWriteCacheEnabled()
+                            && displayId != Display.DEFAULT_DISPLAY) {
+                        mDisplayInfoCache.remove(displayId);
+                    }
                 }
                 mLogicalDisplaysToUpdate.put(displayId, logicalDisplayEventMask);
                 continue;
@@ -1039,12 +1088,25 @@ class LogicalDisplayMapper implements DisplayDeviceRepository.Listener {
                 mDisplayGroups.delete(id);
                 // Remove possible reference to the removed group.
                 int deviceIndex = mDeviceDisplayGroupIds.indexOfValue(id);
+<<<<<<< HEAD
                 if (deviceIndex >= 0) {
                     mDeviceDisplayGroupIds.removeAt(deviceIndex);
                 }
             }
         }
     }
+=======
+
+            if ((eventsToDispatch & LOGICAL_DISPLAY_EVENT_DISCONNECTED) != 0) {
+                mLogicalDisplays.delete(id);
+                if (Flags.displayInfoCopyOnWriteCacheEnabled()
+                        && id != Display.DEFAULT_DISPLAY) {
+                    mDisplayInfoCache.remove(id);
+                }
+            }
+        }
+    }
+>>>>>>> PATCH
 
     /** This method should be called before LogicalDisplay.updateLocked,
      * DisplayInfo in LogicalDisplay (display.getDisplayInfoLocked()) is not updated yet,
@@ -1314,6 +1376,7 @@ class LogicalDisplayMapper implements DisplayDeviceRepository.Listener {
             // A value of 0 indicates that no device display group was found.
             if (deviceDisplayGroupId == 0) {
                 deviceDisplayGroupId = mNextNonDefaultGroupId++;
+<<<<<<< HEAD
                 mDeviceDisplayGroupIds.put(linkedDeviceUniqueId, deviceDisplayGroupId);
             }
             return deviceDisplayGroupId;
@@ -1321,6 +1384,15 @@ class LogicalDisplayMapper implements DisplayDeviceRepository.Listener {
         if (!isOwnDisplayGroup) return Display.DEFAULT_DISPLAY_GROUP;
         Integer displayGroupId = mDisplayGroupIdsByName.get(displayGroupName);
         if (displayGroupId == null) {
+=======
+        final int layerStack = assignLayerStackLocked(displayId);
+        final LogicalDisplay display = new LogicalDisplay(displayId, layerStack, device,
+                mFlags.isSyncedResolutionSwitchEnabled(), mFlags.isSyntheticModesV2Enabled(),
+                mFlags.isSizeOverrideForExternalDisplaysEnabled(), mDisplayInfoCache);
+        display.updateLocked(mDisplayDeviceRepo, mSyntheticModeManager);
+
+        final DisplayInfo info = display.getDisplayInfoLocked();
+>>>>>>> PATCH
             displayGroupId = Integer.valueOf(mNextNonDefaultGroupId++);
             mDisplayGroupIdsByName.put(displayGroupName, displayGroupId);
         }
