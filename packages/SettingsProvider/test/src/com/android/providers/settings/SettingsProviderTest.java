@@ -395,6 +395,44 @@ public class SettingsProviderTest extends BaseSettingsProviderTest {
     }
 
     @Test
+    public void testResetModePackageWrongPackageGlobal() throws Exception {
+        testResetModePackageWrongPackageCommon(SETTING_TYPE_GLOBAL);
+    }
+
+    @Test
+    public void testResetModePackageWrongPackageSecure() throws Exception {
+        testResetModePackageWrongPackageCommon(SETTING_TYPE_SECURE);
+    }
+
+    private void testResetModePackageWrongPackageCommon(int type) throws Exception {
+        // Make sure we have a clean slate.
+        setSettingViaShell(type, FAKE_SETTING_NAME, null, true);
+        try {
+            // Set a value but don't make it the default
+            setSettingViaShell(type, FAKE_SETTING_NAME,
+                    FAKE_SETTING_VALUE, false);
+
+            // Reset the changes with the wrong package
+            resetToDefaultsViaShell(type, "com.not.a.real.package");
+
+            // Make sure the setting was not reset
+            assertEquals(FAKE_SETTING_VALUE, getSetting(type, FAKE_SETTING_NAME));
+
+            // Reset the changes made by the "shell/root" package
+            resetToDefaultsViaShell(type, "com.android.shell");
+            resetToDefaultsViaShell(type, "root");
+
+            // Make sure the old APIs don't set defaults
+            assertNull(getSetting(type, FAKE_SETTING_NAME));
+
+        } finally {
+            // Make sure we have a clean slate.
+            setSettingViaShell(type, FAKE_SETTING_NAME, null, true);
+        }
+    }
+
+
+    @Test
     public void testResetModePackageDefaultsWithTokensGlobal() throws Exception {
         testResetModePackageDefaultsWithTokensCommon(SETTING_TYPE_GLOBAL);
     }
