@@ -76,6 +76,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0bf91ec3_d2b3e0ad",
+        "filename": "services/core/java/com/android/server/power/Notifier.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 912,
+      "author": {
+        "id": 4460690
+      },
+      "writtenOn": "2026-01-28T01:07:03Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "6326fa7a_84d63e81",
+      "range": {
+        "startLine": 912,
+        "startChar": 12,
+        "endLine": 912,
+        "endChar": 19
+      },
+      "revId": "f3992982fce5a9df6d47d970e7d16c76924e283d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b8ed7067_5778294c",
@@ -89,6 +113,30 @@
       "writtenOn": "2026-01-22T22:25:25Z",
       "side": 1,
       "message": "why is this needed?",
+      "range": {
+        "startLine": 1284,
+        "startChar": 20,
+        "endLine": 1284,
+        "endChar": 54
+      },
+      "revId": "f3992982fce5a9df6d47d970e7d16c76924e283d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0d876c1_f152b3d9",
+        "filename": "services/core/java/com/android/server/power/Notifier.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1284,
+      "author": {
+        "id": 4460690
+      },
+      "writtenOn": "2026-01-28T01:07:03Z",
+      "side": 1,
+      "message": "Avoid accumulating outdated or duplicate messages in the message queue. If a message carries a reference to an Activity/Context and multiple unprocessed messages are accumulated in the message queue, these messages may prevent the Context from being reclaimed, leading to memory leaks.",
+      "parentUuid": "b8ed7067_5778294c",
       "range": {
         "startLine": 1284,
         "startChar": 20,
