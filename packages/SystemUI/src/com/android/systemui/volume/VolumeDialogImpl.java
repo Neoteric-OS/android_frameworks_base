@@ -817,7 +817,8 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
     }
 
     private VolumeRow getActiveRow() {
-	    // BLRDroid
+	if(mRows.size() == 0)
+		return null;
         for (VolumeRow row : mRows) {
             if (row.stream == mActiveStream) {
                 return row;
