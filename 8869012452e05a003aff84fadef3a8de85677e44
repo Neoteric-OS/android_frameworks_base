@@ -33,6 +33,23 @@
       "message": "Hi, friendly ping on this change to improve test coverage. I believe the presubmit checks might need a manual trigger since this is my first contribution. Thanks!",
       "revId": "8869012452e05a003aff84fadef3a8de85677e44",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7f28373_96da9bc3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4093081
+      },
+      "writtenOn": "2026-02-02T17:00:44Z",
+      "side": 1,
+      "message": "Hi, just a gentle follow-up on this CL. \nHappy to make any changes if needed. \nThanks for your time!",
+      "revId": "8869012452e05a003aff84fadef3a8de85677e44",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
