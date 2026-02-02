@@ -173,6 +173,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3fa9a8c4_4089da6e",
+        "filename": "core/java/android/app/ContextImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3152,
+      "author": {
+        "id": 1954245
+      },
+      "writtenOn": "2026-02-02T19:35:20Z",
+      "side": 1,
+      "message": "Hi folks, once you resolve all the comments, the CL can be reviewed entirely.",
+      "parentUuid": "05047491_6d8183e1",
+      "range": {
+        "startLine": 3152,
+        "startChar": 8,
+        "endLine": 3152,
+        "endChar": 69
+      },
+      "revId": "f0fe03ee79e1ca2a1489b45ce09006161c3f6253",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2d4dc067_72e3ce21",
         "filename": "core/java/android/app/ContextImpl.java",
         "patchSetId": 3
