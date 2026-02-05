@@ -402,6 +402,9 @@ public class EdgeBackGestureHandler implements PluginListener<NavigationEdgeBack
                 mTrackpadsConnected.remove(deviceId);
                 if (mTrackpadsConnected.isEmpty()) {
                     update();
+                    if (mStateChangeCallback != null) {
+                        mStateChangeCallback.run();
+                    }
                 }
             });
         }
