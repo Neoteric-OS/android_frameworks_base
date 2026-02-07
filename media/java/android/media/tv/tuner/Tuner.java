@@ -2742,6 +2742,18 @@ public class Tuner implements AutoCloseable  {
         long[] descramblerHandle = new long[1];
         TunerDescramblerRequest request = new TunerDescramblerRequest();
         request.clientId = mClientId;
+		/*Firstly try to release closed descrambler'handle */
+        synchronized (mDescramblers) {
+            if (!mDescramblers.isEmpty()) {
+                for (Map.Entry<Long, WeakReference<Descrambler>> d : mDescramblers.entrySet()) {
+                    Descrambler descrambler = d.getValue().get();
+                    if (descrambler == null) {
+                        mTunerResourceManager.releaseDescrambler(d.getKey(), mClientId);
+                        mDescramblers.remove(d.getKey());
+                    }
+                }
+            }
+        }
         boolean granted = mTunerResourceManager.requestDescrambler(request, descramblerHandle);
         if (!granted) {
             return null;
