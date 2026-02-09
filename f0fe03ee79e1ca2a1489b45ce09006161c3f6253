@@ -52,6 +52,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc8f59ab_48f98e8e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4223511
+      },
+      "writtenOn": "2026-02-09T07:56:53Z",
+      "side": 1,
+      "message": "We propose to revise android 15 GSI first.",
+      "parentUuid": "d7d1d9de_ad0cd9cf",
+      "revId": "f0fe03ee79e1ca2a1489b45ce09006161c3f6253",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fb3a577a_3fe62eed",
@@ -209,6 +227,30 @@
       "side": 1,
       "message": "Thanks for your comment, MTK is trying to upgrade a revised one.",
       "parentUuid": "3fa9a8c4_4089da6e",
+      "range": {
+        "startLine": 3152,
+        "startChar": 8,
+        "endLine": 3152,
+        "endChar": 69
+      },
+      "revId": "f0fe03ee79e1ca2a1489b45ce09006161c3f6253",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60508c82_6ca8f509",
+        "filename": "core/java/android/app/ContextImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3152,
+      "author": {
+        "id": 4223511
+      },
+      "writtenOn": "2026-02-09T07:56:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e77eb6a0_1d4d9ba1",
       "range": {
         "startLine": 3152,
         "startChar": 8,
