@@ -1085,6 +1085,11 @@ public final class ViewRootImpl implements ViewParent,
     private boolean mRelayoutRequested;
 
     /**
+     * Set when a view's matrix changed; next traversal recomputes transparent region.
+     */
+    private boolean mMatrixTransformChanged;
+
+    /**
      * Whether sandboxing of {@link android.view.View#getBoundsOnScreen},
      * {@link android.view.View#getLocationOnScreen(int[])},
      * {@link android.view.View#getWindowDisplayFrame} and
@@ -4146,48 +4151,49 @@ public final class ViewRootImpl implements ViewParent,
                 || mAttachInfo.mRecomputeGlobalAttributes;
         if (didLayout) {
             performLayout(lp, mWidth, mHeight);
-
-            // By this point all views have been sized and positioned
-            // We can compute the transparent area
-
-            if ((host.mPrivateFlags & View.PFLAG_REQUEST_TRANSPARENT_REGIONS) != 0) {
-                // start out transparent
-                // TODO: AVOID THAT CALL BY CACHING THE RESULT?
-                host.getLocationInWindow(mTmpLocation);
-                mTransparentRegion.set(mTmpLocation[0], mTmpLocation[1],
-                        mTmpLocation[0] + host.mRight - host.mLeft,
-                        mTmpLocation[1] + host.mBottom - host.mTop);
-
-                host.gatherTransparentRegion(mTransparentRegion);
-                final Rect bounds = mAttachInfo.mTmpInvalRect;
-                if (getAccessibilityFocusedRect(bounds)) {
-                  host.applyDrawableToTransparentRegion(getAccessibilityFocusedDrawable(),
-                      mTransparentRegion);
-                }
-                if (mTranslator != null) {
-                    mTranslator.translateRegionInWindowToScreen(mTransparentRegion);
-                }
-
-                if (!mTransparentRegion.equals(mPreviousTransparentRegion)) {
-                    mPreviousTransparentRegion.set(mTransparentRegion);
-                    mFullRedrawNeeded = true;
-                    // TODO: Ideally we would do this in prepareSurfaces,
-                    // but prepareSurfaces is currently working under
-                    // the assumption that we paused the render thread
-                    // via the WM relayout code path. We probably eventually
-                    // want to synchronize transparent region hint changes
-                    // with draws.
-                    SurfaceControl sc = getSurfaceControl();
-                    if (sc.isValid()) {
-                        mTransaction.setTransparentRegionHint(sc, mTransparentRegion).apply();
-                    }
-                }
-            }
-
             if (DBG) {
                 System.out.println("======================================");
                 System.out.println("performTraversals -- after setFrame");
                 host.debug();
+            }
+        }
+
+        // By this point all views have been sized and positioned
+        // We can compute the transparent area
+
+        // Note: We need to recompute transparent region not only on layout, but also whenever
+        // there's a matrix transform change (e.g., during animations), because animations can
+        // change the matrix transform of views without triggering layout, which affects the
+        // transparent region calculation (especially for rotated views). We recompute transparent
+        // region when matrix changes occur, ensuring that transparent region stays in sync with
+        // view transformations during animations.
+        if ((host.mPrivateFlags & View.PFLAG_REQUEST_TRANSPARENT_REGIONS) != 0 && (didLayout
+                || mMatrixTransformChanged)) {
+            // start out transparent
+            // TODO: AVOID THAT CALL BY CACHING THE RESULT?
+            host.getLocationInWindow(mTmpLocation);
+            mTransparentRegion.set(mTmpLocation[0], mTmpLocation[1],
+                    mTmpLocation[0] + host.mRight - host.mLeft,
+                    mTmpLocation[1] + host.mBottom - host.mTop);
+
+            host.gatherTransparentRegion(mTransparentRegion);
+            final Rect bounds = mAttachInfo.mTmpInvalRect;
+            if (getAccessibilityFocusedRect(bounds)) {
+                host.applyDrawableToTransparentRegion(getAccessibilityFocusedDrawable(),
+                        mTransparentRegion);
+            }
+            if (mTranslator != null) {
+                mTranslator.translateRegionInWindowToScreen(mTransparentRegion);
+            }
+
+            if (!mTransparentRegion.equals(mPreviousTransparentRegion)) {
+                mPreviousTransparentRegion.set(mTransparentRegion);
+                mFullRedrawNeeded = true;
+                SurfaceControl sc = getSurfaceControl();
+                if (sc.isValid()) {
+                    mTransaction.setTransparentRegionHint(sc, mTransparentRegion);
+                    applyTransactionOnDraw(mTransaction);
+                }
             }
         }
 
@@ -13503,5 +13509,15 @@ public final class ViewRootImpl implements ViewParent,
             ProtoLog.init(ViewProtoLogGroups.ALL_GROUPS);
             sProtoLogInitialized = true;
         }
+    }
+
+    /**
+     * Called when a view's matrix transform (e.g. rotation, scale, translation) has changed.
+     * Sets a flag so that the transparent region is recomputed on the next traversal even when
+     * layout is not requested (e.g. during animations). See
+     * {@link View#notifyMatrixTransformChanged}.
+     */
+    public void matrixTransformChanged() {
+        mMatrixTransformChanged = true;
     }
 }
