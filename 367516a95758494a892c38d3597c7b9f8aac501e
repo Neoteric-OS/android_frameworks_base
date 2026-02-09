@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32c1c88d_12009884",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4634357
+      },
+      "writtenOn": "2026-02-09T06:50:40Z",
+      "side": 1,
+      "message": "This patch is intended to address the synchronization issue where the window\u0027s transparent region (punch-through hole) fails to track a View\u0027s movement during property animations (e.g., rotation, scale, or translation).\n﻿\nDetailed background and reproduction steps can be found in the following issue: https://issuetracker.google.com/issues/467179141",
+      "revId": "367516a95758494a892c38d3597c7b9f8aac501e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
