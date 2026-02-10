@@ -18,6 +18,23 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "583a6fcc_f7019bfb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1951823
+      },
+      "writtenOn": "2026-02-10T11:26:56Z",
+      "side": 1,
+      "message": "I\u0027m on the input team, and don\u0027t know anything about this code, so removing myself.\n\nPlease don\u0027t add excessive numbers of reviewers for the same file. Check the history, or the blame for the specific lines/methods that you\u0027re changing, for hints as to who a good reviewer would be.",
+      "revId": "367516a95758494a892c38d3597c7b9f8aac501e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "91f56837_c1962b73",
