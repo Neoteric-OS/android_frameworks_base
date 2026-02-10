@@ -22,6 +22,47 @@
       },
       "revId": "1cdfff555f4a21f71ccc978290e2e212e2f8b168",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8e0a73f3_e1c7ddcc",
+        "filename": "services/core/java/com/android/server/power/Notifier.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1944905
+      },
+      "writtenOn": "2026-02-10T11:59:19Z",
+      "side": 0,
+      "message": "+1",
+      "parentUuid": "071cbe35_d44a4ce0",
+      "range": {
+        "startLine": 907,
+        "startChar": 5,
+        "endLine": 909,
+        "endChar": 9
+      },
+      "revId": "1cdfff555f4a21f71ccc978290e2e212e2f8b168",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "184566e6_2560037f",
+        "filename": "services/core/java/com/android/server/power/ScreenUndimDetector.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1944905
+      },
+      "writtenOn": "2026-02-10T11:59:19Z",
+      "side": 0,
+      "message": "Why is this check being removed ?",
+      "revId": "1cdfff555f4a21f71ccc978290e2e212e2f8b168",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6dd43656_406c1ad4",
+        "filename": "services/core/java/com/android/server/power/Notifier.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1944905
+      },
+      "writtenOn": "2026-02-10T11:59:19Z",
+      "side": 1,
+      "message": "make this private please",
+      "fixSuggestions": [
+        {
+          "fixId": "1ecdc410_22ae2b4e",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/power/Notifier.java",
+              "range": {
+                "startLine": 199,
+                "startChar": 0,
+                "endLine": 200,
+                "endChar": 0
+              },
+              "replacement": "    private int mCurrentScreenPolicy;\n"
+            }
+          ]
+        }
+      ],
+      "revId": "1908c4c60bf93bbd126a81b03af4c65e8eaf5682",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "abd040ea_7d446389",
+        "filename": "services/core/java/com/android/server/power/Notifier.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1944905
+      },
+      "writtenOn": "2026-02-10T11:59:19Z",
+      "side": 1,
+      "message": "Why do you need this check?",
+      "revId": "1908c4c60bf93bbd126a81b03af4c65e8eaf5682",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
