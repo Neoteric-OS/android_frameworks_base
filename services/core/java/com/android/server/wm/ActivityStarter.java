@@ -1109,7 +1109,7 @@ class ActivityStarter {
 
             AppBackgroundManager appBgManager = AppBackgroundManager.getInstance();
             if (appBgManager != null) {
-                appBgManager.handleActivityStart(aInfo.applicationInfo);
+                appBgManager.handleActivityStart(aInfo != null ? aInfo.applicationInfo : null);
             }
 // QTI_END: 2025-12-09: Performance: Introduce restrictions on BG process restart and package-level freezer
         }
