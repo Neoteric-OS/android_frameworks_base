@@ -917,6 +917,10 @@ public class TelecomManager {
     public static final String EXTRA_NOTIFICATION_PHONE_NUMBER =
             "android.telecom.extra.NOTIFICATION_PHONE_NUMBER";
 
+    @FlaggedApi(Flags.FLAG_AUTO_MISSED_UNWANTED)
+    public static final String EXTRA_NOTIFICATION_IS_UNWANTED =
+            "android.telecom.extra.NOTIFICATION_IS_UNWANTED";
+
     /**
      * Included in the extras of the {@link #ACTION_SHOW_MISSED_CALLS_NOTIFICATION}, provides a
      * pending intent which can be used to clear the missed calls notification and mark unread

@@ -1384,6 +1384,7 @@ public class CallLog {
                 AUTO_MISSED_EMERGENCY_CALL,
                 AUTO_MISSED_MAXIMUM_RINGING,
                 AUTO_MISSED_MAXIMUM_DIALING,
+                AUTO_MISSED_UNWANTED,
                 USER_MISSED_NO_ANSWER,
                 USER_MISSED_SHORT_RING,
                 USER_MISSED_DND_MODE,
@@ -1423,6 +1424,9 @@ public class CallLog {
          * system because the system cannot support any more dialing calls.
          */
         public static final long AUTO_MISSED_MAXIMUM_DIALING = 1 << 2;
+
+        @FlaggedApi(Flags.FLAG_AUTO_MISSED_UNWANTED)
+        public static final long AUTO_MISSED_UNWANTED = 1<<3;
 
         /**
          * When {@link CallLog.Calls#TYPE} is {@link CallLog.Calls#MISSED_TYPE}, set this bit when

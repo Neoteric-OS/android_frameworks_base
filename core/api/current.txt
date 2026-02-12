@@ -36602,6 +36602,7 @@ package android.provider {
     field public static final long AUTO_MISSED_EMERGENCY_CALL = 1L; // 0x1L
     field public static final long AUTO_MISSED_MAXIMUM_DIALING = 4L; // 0x4L
     field public static final long AUTO_MISSED_MAXIMUM_RINGING = 2L; // 0x2L
+    field @FlaggedApi("com.android.server.telecom.flags.auto_missed_unwanted") public static final long AUTO_MISSED_UNWANTED = 8L; // 0x8L
     field public static final int BLOCKED_TYPE = 6; // 0x6
     field public static final String BLOCK_REASON = "block_reason";
     field public static final int BLOCK_REASON_BLOCKED_NUMBER = 3; // 0x3
@@ -44107,6 +44108,7 @@ package android.telecom {
     field public static final int REMOTE = 3; // 0x3
     field public static final int RESTRICTED = 8; // 0x8
     field public static final int UNKNOWN = 0; // 0x0
+    field @FlaggedApi("com.android.internal.telephony.flags.auto_missed_unwanted") public static final int AUTO_MISSED_UNWANTED = 83;
   }
 
   public class GatewayInfo implements android.os.Parcelable {
