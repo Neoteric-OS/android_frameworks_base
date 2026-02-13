@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "11ef06cf_9e7b84c9",
+        "filename": "libs/androidfw/AssetManager2.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1261,
+      "author": {
+        "id": 1961565
+      },
+      "writtenOn": "2026-02-13T15:39:28Z",
+      "side": 1,
+      "message": "This can suffer from infinite recursion if a resource is circular such as `a -\u003e b -\u003e a`. I\u0027ll add an exit in this case.",
+      "revId": "2fb31a58e8fd9708618c80076de35d5732def97c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4d7f9894_da368181",
         "filename": "libs/androidfw/tests/data/basic/res/values/values.xml",
         "patchSetId": 2
