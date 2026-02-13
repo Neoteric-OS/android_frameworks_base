@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2ff30100_f8ca428b",
+        "filename": "libs/androidfw/AssetManager2.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1261,
+      "author": {
+        "id": 1961565
+      },
+      "writtenOn": "2026-02-13T19:12:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11ef06cf_9e7b84c9",
+      "revId": "2fb31a58e8fd9708618c80076de35d5732def97c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4d7f9894_da368181",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-02-12T19:25:43Z",
       "side": 1,
       "message": "The `build` script forced me to add a name and the policy to this section.",
+      "revId": "2fb31a58e8fd9708618c80076de35d5732def97c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e6b3a956_ec3f60c1",
+        "filename": "libs/androidfw/tests/data/basic/res/values/values.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1961565
+      },
+      "writtenOn": "2026-02-13T19:12:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d7f9894_da368181",
       "revId": "2fb31a58e8fd9708618c80076de35d5732def97c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
