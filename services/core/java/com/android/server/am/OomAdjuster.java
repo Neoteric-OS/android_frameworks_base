@@ -3985,7 +3985,9 @@ public class OomAdjuster {
                     if (oldSchedGroup != SCHED_GROUP_TOP_APP) {
                         app.getWindowProcessController().onTopProcChanged();
                         if (app.useFifoUiScheduling()
-                                || AppBackgroundManager.getInstance().useUIRTSettings()) {
+                                || ((AppBackgroundManager.getInstance().useUIRTSettings())
+                                    && (!app.info.isSystemApp() && !app.info.isUpdatedSystemApp()
+                                    && app.processName.equals(app.info.packageName)))) {
                             // Switch UI pipeline for app to SCHED_FIFO
                             state.setSavedPriority(Process.getThreadPriority(app.getPid()));
                             ActivityManagerService.setFifoPriority(app, true /* enable */);
@@ -4016,7 +4018,9 @@ public class OomAdjuster {
                         && curSchedGroup != SCHED_GROUP_TOP_APP) {
                     app.getWindowProcessController().onTopProcChanged();
                     if (app.useFifoUiScheduling()
-                            || AppBackgroundManager.getInstance().useUIRTSettings()) {
+                            || ((AppBackgroundManager.getInstance().useUIRTSettings())
+                                && (!app.info.isSystemApp() && !app.info.isUpdatedSystemApp()
+                                && app.processName.equals(app.info.packageName)))) {
                         // Reset UI pipeline to SCHED_OTHER
                         ActivityManagerService.setFifoPriority(app, false /* enable */);
                         mInjector.setThreadPriority(app.getPid(), state.getSavedPriority());
@@ -4477,9 +4481,6 @@ public class OomAdjuster {
     @GuardedBy({"mService", "mProcLock"})
     void updateAppFreezeStateLSP(ProcessRecord app, @OomAdjReason int oomAdjReason,
             boolean immediate, int oldOomAdj) {
-        if (AppBackgroundManager.getInstance().usePackageLevelFreezer()) {
-            return;
-        }
         if (!mCachedAppOptimizer.useFreezer()) {
             return;
         }
@@ -4549,9 +4550,6 @@ public class OomAdjuster {
 
     @GuardedBy("mService")
     void unfreezeTemporarily(ProcessRecord app, @OomAdjReason int reason) {
-        if (AppBackgroundManager.getInstance().usePackageLevelFreezer()) {
-            return;
-        }
         if (!mCachedAppOptimizer.useFreezer()) {
             return;
         }
