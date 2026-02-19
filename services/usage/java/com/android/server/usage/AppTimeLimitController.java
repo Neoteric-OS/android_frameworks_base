@@ -485,8 +485,12 @@ public class AppTimeLimitController {
                 if (mUsageTimeMs >= mTimeLimitMs) {
                     // Usage has ended. Schedule the session end callback to be triggered once
                     // the new session threshold has been reached
-                    getAlarmManager().setExact(AlarmManager.ELAPSED_REALTIME,
-                            getElapsedRealtime() + mNewSessionThresholdMs, TAG, this, mHandler);
+                    // Post to mHandler to avoid calling AlarmManager.setExact while holding
+                    // UsageStatsService lock (deadlock: AMS -> UsageStats -> AlarmManager -> AMS).
+                    final long triggerTime = getElapsedRealtime() + mNewSessionThresholdMs;
+                    final SessionUsageGroup group = this;
+                    mHandler.post(() -> getAlarmManager().setExact(AlarmManager.ELAPSED_REALTIME,
+                            triggerTime, TAG, group, mHandler));
                 }
             }
         }
