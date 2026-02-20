@@ -59,6 +59,9 @@ import android.util.Pair;
 import android.util.Slog;
 import android.util.SparseArray;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.app.BlockedAppActivity;
 import com.android.internal.app.HarmfulAppWarningActivity;
@@ -77,6 +80,15 @@ import com.android.server.wm.ActivityInterceptorCallback.ActivityInterceptResult
  */
 class ActivityStartInterceptor {
     private static final String TAG = "ActivityStartInterceptor";
+    private static final String DIGITAL_WELLBEING_PACKAGE = "com.google.android.apps.wellbeing";
+    private static final String ACTION_CONFIRM_APP_LAUNCH =
+            "com.google.android.apps.wellbeing.action.CONFIRM_APP_LAUNCH";
+    private static final List<String> INTERCEPT_PACKAGES = Arrays.asList(
+            "com.google.android.youtube",
+            "com.google.android.apps.messaging",
+            "com.google.android.gm",
+            "com.android.chrome"
+    );
 
     private final ActivityTaskManagerService mService;
     private final ActivityTaskSupervisor mSupervisor;
@@ -218,6 +230,9 @@ class ActivityStartInterceptor {
             return true;
         }
         if (interceptLockTaskModeViolationPackageIfNeeded()) {
+            return true;
+        }
+        if (interceptDigitalWellbeingIfNeeded()) {
             return true;
         }
         if (interceptHarmfulAppIfNeeded()) {
@@ -372,6 +387,40 @@ class ActivityStartInterceptor {
             return false;
         }
         mIntent = BlockedAppActivity.createIntent(mUserId, mAInfo.applicationInfo.packageName);
+        mCallingPid = mRealCallingPid;
+        mCallingUid = mRealCallingUid;
+        mResolvedType = null;
+        mRInfo = mSupervisor.resolveIntent(mIntent, mResolvedType, mUserId, 0,
+                mRealCallingUid, mRealCallingPid);
+        mAInfo = mSupervisor.resolveActivity(mIntent, mRInfo, mStartFlags, null /*profilerInfo*/);
+        return true;
+    }
+
+    private boolean interceptDigitalWellbeingIfNeeded() {
+        if (mAInfo == null || mAInfo.packageName == null) {
+            return false;
+        }
+
+        if (DIGITAL_WELLBEING_PACKAGE.equals(mCallingPackage)) {
+            // Launched from Digital Wellbeing, so don't intercept.
+            return false;
+        }
+
+        if (!INTERCEPT_PACKAGES.contains(mAInfo.packageName)) {
+            return false;
+        }
+
+        Slog.i(TAG, "Intercepting " + mAInfo.packageName + " for Digital Wellbeing confirmation.");
+
+        final IntentSender target = createIntentSenderForOriginalIntent(mCallingUid,
+                FLAG_CANCEL_CURRENT | FLAG_ONE_SHOT | FLAG_IMMUTABLE);
+
+        mIntent = new Intent(ACTION_CONFIRM_APP_LAUNCH);
+        mIntent.setPackage(DIGITAL_WELLBEING_PACKAGE);
+        mIntent.putExtra(EXTRA_INTENT, target);
+        mIntent.putExtra(EXTRA_PACKAGE_NAME, mAInfo.packageName);
+        mIntent.addFlags(FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+
         mCallingPid = mRealCallingPid;
         mCallingUid = mRealCallingUid;
         mResolvedType = null;
