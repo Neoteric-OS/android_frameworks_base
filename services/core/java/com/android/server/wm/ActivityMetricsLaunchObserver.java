@@ -142,8 +142,11 @@ public class ActivityMetricsLaunchObserver {
      *           if the launching activity is started from an existing launch sequence (trampoline)
      *           but cannot coalesce to the existing one, e.g. to a different display.
      * @param name The launching activity name.
+     * @param processName The process name of the launching activity.
+     * @param uid The uid of the launching activity.
      */
-    public void onActivityLaunched(long id, ComponentName name, @Temperature int temperature) {
+    public void onActivityLaunched(long id, ComponentName name, @Temperature int temperature,
+            String processName, int uid) {
     }
 
     /**

@@ -139,6 +139,7 @@ import android.app.Dialog;
 import android.app.IActivityClientController;
 import android.app.IActivityController;
 import android.app.IActivityTaskManager;
+import android.app.IAppLaunchObserver;
 import android.app.IAppTask;
 import android.app.IApplicationThread;
 import android.app.IAssistDataReceiver;
@@ -182,6 +183,7 @@ import android.graphics.Rect;
 import android.hardware.power.Mode;
 import android.net.Uri;
 import android.os.Binder;
+import android.os.RemoteCallbackList;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.FactoryTest;
@@ -460,6 +462,24 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
 
     @Nullable
     final BackNavigationController mBackNavigationController;
+
+    final RemoteCallbackList<IAppLaunchObserver> mAppLaunchObservers = new RemoteCallbackList<>();
+
+    private final ActivityMetricsLaunchObserver mLaunchObserver = new ActivityMetricsLaunchObserver() {
+        @Override
+        public void onActivityLaunched(long id, ComponentName name, int temperature, String processName, int uid) {
+            int i = mAppLaunchObservers.beginBroadcast();
+            while (i > 0) {
+                i--;
+                try {
+                    mAppLaunchObservers.getBroadcastItem(i).onAppLaunched(name, UserHandle.getUserId(uid));
+                } catch (RemoteException e) {
+                    // RemoteCallbackList handles this
+                }
+            }
+            mAppLaunchObservers.finishBroadcast();
+        }
+    };
 
     private TaskChangeNotificationController mTaskChangeNotificationController;
     /** The controller for all operations related to locktask. */
@@ -992,6 +1012,11 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
         mVrController = new VrController(mGlobalLock);
         mKeyguardController = mTaskSupervisor.getKeyguardController();
         mPackageConfigPersister = new PackageConfigPersister(mTaskSupervisor.mPersisterQueue, this);
+        mTaskSupervisor.getActivityMetricsLogger().getLaunchObserverRegistry()
+                .registerLaunchObserver(mLaunchObserver);
+        mInternal.registerActivityStartInterceptor(
+                ActivityInterceptorCallback.APP_LAUNCH_TIMER_ORDERED_ID,
+                new AppLaunchTimerInterceptor(this));
     }
 
     public void onActivityManagerInternalAdded() {
@@ -1198,6 +1223,18 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
         public ActivityTaskManagerService getService() {
             return mService;
         }
+    }
+
+    @Override
+    public void registerAppLaunchObserver(IAppLaunchObserver observer) {
+        enforceTaskPermission("registerAppLaunchObserver()");
+        mAppLaunchObservers.register(observer);
+    }
+
+    @Override
+    public void unregisterAppLaunchObserver(IAppLaunchObserver observer) {
+        enforceTaskPermission("unregisterAppLaunchObserver()");
+        mAppLaunchObservers.unregister(observer);
     }
 
     @Override

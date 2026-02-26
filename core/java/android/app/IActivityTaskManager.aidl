@@ -24,6 +24,7 @@ import android.app.GrantedUriPermission;
 import android.app.IApplicationThread;
 import android.app.IActivityClientController;
 import android.app.IActivityController;
+import android.app.IAppLaunchObserver;
 import android.app.IAppTask;
 import android.app.IAssistDataReceiver;
 import android.app.IInstrumentationWatcher;
@@ -358,4 +359,20 @@ interface IActivityTaskManager {
      */
     android.window.BackNavigationInfo startBackNavigation(in boolean requestAnimation,
             in IWindowFocusObserver focusObserver, in BackAnimationAdaptor adaptor);
+
+    /**
+     * Registers an observer to be notified when an application is launched.
+     *
+     * @param observer The observer to register.
+     * @hide
+     */
+    void registerAppLaunchObserver(in IAppLaunchObserver observer);
+
+    /**
+     * Unregisters a previously registered app launch observer.
+     *
+     * @param observer The observer to unregister.
+     * @hide
+     */
+    void unregisterAppLaunchObserver(in IAppLaunchObserver observer);
 }
