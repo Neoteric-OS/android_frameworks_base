@@ -16,6 +16,23 @@
       "message": "git clone https://android.googlesource.com/platform/frameworks/base",
       "revId": "98e11358f3f78b0ace609d8ed5eb09129ebee1fe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "807ed626_78a27186",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4598005
+      },
+      "writtenOn": "2026-02-27T18:06:54Z",
+      "side": 1,
+      "message": "Gu",
+      "revId": "98e11358f3f78b0ace609d8ed5eb09129ebee1fe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
