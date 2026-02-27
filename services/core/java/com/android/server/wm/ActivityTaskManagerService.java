@@ -6505,6 +6505,11 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
         }
 
         @Override
+        public void setAppLaunchDelay(String packageName, long delayMs, PendingIntent interceptorScreen, int userId) {
+            ActivityTaskManagerService.this.getAppDelayController().setPolicy(packageName, delayMs, interceptorScreen, userId);
+        }
+
+        @Override
         public void moveAllTasks(int fromDisplayId, int toDisplayId) {
             enforceTaskPermission("moveAllTasks()");
             synchronized (mGlobalLock) {
@@ -8126,5 +8131,61 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
                     && (!isTv || Flags.enablePip2OnTv());
         }
         return sIsPip2ExperimentEnabled;
+    }
+
+    static class AppDelayPolicy {
+        final long delayMs;
+        final ComponentName interceptorComponent;
+
+        AppDelayPolicy(long delayMs, ComponentName interceptorComponent) {
+            this.delayMs = delayMs;
+            this.interceptorComponent = interceptorComponent;
+        }
+    }
+
+    class AppDelayController {
+        private final SparseArray<Map<String, AppDelayPolicy>> mPolicies = new SparseArray<>();
+
+        void setPolicy(String packageName, long delayMs, PendingIntent interceptorScreen, int userId) {
+            synchronized (mGlobalLock) {
+                if (delayMs <= 0) {
+                    Map<String, AppDelayPolicy> userPolicies = mPolicies.get(userId);
+                    if (userPolicies != null) {
+                        userPolicies.remove(packageName);
+                        if (userPolicies.isEmpty()) {
+                            mPolicies.remove(userId);
+                        }
+                    }
+                } else {
+                    Map<String, AppDelayPolicy> userPolicies = mPolicies.get(userId);
+                    if (userPolicies == null) {
+                        userPolicies = new HashMap<>();
+                        mPolicies.put(userId, userPolicies);
+                    }
+                    // We need the component name from the PendingIntent
+                    Intent intent = interceptorScreen.getIntent();
+                    ComponentName component = intent != null ? intent.getComponent() : null;
+                    if (component != null) {
+                        userPolicies.put(packageName, new AppDelayPolicy(delayMs, component));
+                    }
+                }
+            }
+        }
+
+        AppDelayPolicy getPolicy(String packageName, int userId) {
+            synchronized (mGlobalLock) {
+                Map<String, AppDelayPolicy> userPolicies = mPolicies.get(userId);
+                if (userPolicies != null) {
+                    return userPolicies.get(packageName);
+                }
+                return null;
+            }
+        }
+    }
+
+    final AppDelayController mAppDelayController = new AppDelayController();
+
+    AppDelayController getAppDelayController() {
+        return mAppDelayController;
     }
 }

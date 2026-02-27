@@ -845,6 +845,11 @@ public abstract class ActivityTaskManagerInternal implements ActiveUids.Observer
     public abstract void unregisterHandoffEnablementListener(
         @NonNull HandoffEnablementListener listener);
 
+    /**
+     * Set the app launch delay for a specific package.
+     */
+    public abstract void setAppLaunchDelay(String packageName, long delayMs, PendingIntent interceptorScreen, int userId);
+
     /** Moves all tasks from the source display to the destination display. */
     public abstract void moveAllTasks(int fromDisplayId, int toDisplayId);
 }
