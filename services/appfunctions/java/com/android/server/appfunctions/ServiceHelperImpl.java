@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.content.pm.ServiceInfo;
 import android.os.UserHandle;
+import android.text.TextUtils;
 
 import java.util.Objects;
 
@@ -40,8 +41,19 @@ class ServiceHelperImpl implements ServiceHelper {
     @Override
     public Intent resolveAppFunctionService(
             @NonNull String targetPackageName, @NonNull UserHandle targetUser) {
+        return resolveAppFunctionService(targetPackageName, "", targetUser);
+    }
+
+    @Override
+    public Intent resolveAppFunctionService(
+            @NonNull String targetPackageName,
+            @NonNull String targetServiceName,
+            @NonNull UserHandle targetUser) {
         Intent serviceIntent = new Intent(AppFunctionService.SERVICE_INTERFACE);
         serviceIntent.setPackage(targetPackageName);
+        if (!TextUtils.isEmpty(targetServiceName)) {
+            serviceIntent.setClassName(targetPackageName, targetServiceName);
+        }
         ResolveInfo resolveInfo =
                 mContext.createContextAsUser(targetUser, /* flags= */ 0)
                         .getPackageManager()

@@ -25,6 +25,7 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.WorkerThread;
 import android.app.appfunctions.AppFunctionException;
+import android.app.appfunctions.AppFunctionExecutionInfo;
 import android.app.appfunctions.AppFunctionManager;
 import android.app.appfunctions.AppFunctionManagerHelper;
 import android.app.appfunctions.AppFunctionRuntimeMetadata;
@@ -155,19 +156,20 @@ public class AppFunctionManagerServiceImpl extends IAppFunctionManager.Stub {
         int callingPid = Binder.getCallingPid();
 
         final SafeOneTimeExecuteAppFunctionCallback safeExecuteAppFunctionCallback =
-                new SafeOneTimeExecuteAppFunctionCallback(executeAppFunctionCallback,
+                new SafeOneTimeExecuteAppFunctionCallback(
+                        executeAppFunctionCallback,
                         new SafeOneTimeExecuteAppFunctionCallback.CompletionCallback() {
                             @Override
                             public void finalizeOnSuccess(
                                     @NonNull ExecuteAppFunctionResponse result) {
-                                mLoggerWrapper.logAppFunctionSuccess(requestInternal, result,
-                                        callingUid);
+                                mLoggerWrapper.logAppFunctionSuccess(
+                                        requestInternal, result, callingUid);
                             }
 
                             @Override
                             public void finalizeOnError(@NonNull AppFunctionException error) {
-                                mLoggerWrapper.logAppFunctionError(requestInternal,
-                                        error.getErrorCode(), callingUid);
+                                mLoggerWrapper.logAppFunctionError(
+                                        requestInternal, error.getErrorCode(), callingUid);
                             }
                         });
 
@@ -248,24 +250,26 @@ public class AppFunctionManagerServiceImpl extends IAppFunctionManager.Stub {
                             }
                         })
                 .thenCompose(
-                        isEnabled ->
-                                isAppFunctionEnabled(
+                        canExecute ->
+                                getAppFunctionExecutionInfo(
                                         requestInternal.getClientRequest().getFunctionIdentifier(),
                                         requestInternal.getClientRequest().getTargetPackageName(),
                                         getAppSearchManagerAsUser(requestInternal.getUserHandle()),
                                         THREAD_POOL_EXECUTOR))
                 .thenAccept(
-                        isEnabled -> {
-                            if (!isEnabled) {
+                        executionInfo -> {
+                            if (!executionInfo.isEnabled()) {
                                 throw new DisabledAppFunctionException(
                                         "The app function is disabled");
                             }
-                        })
-                .thenAccept(
-                        unused -> {
+
+                            String serviceName =
+                                    executionInfo.getServiceName() == null
+                                            ? ""
+                                            : executionInfo.getServiceName();
                             Intent serviceIntent =
                                     mInternalServiceHelper.resolveAppFunctionService(
-                                            targetPackageName, targetUser);
+                                            targetPackageName, serviceName, targetUser);
                             if (serviceIntent == null) {
                                 safeExecuteAppFunctionCallback.onError(
                                         new AppFunctionException(
@@ -291,20 +295,20 @@ public class AppFunctionManagerServiceImpl extends IAppFunctionManager.Stub {
                         });
     }
 
-    private static AndroidFuture<Boolean> isAppFunctionEnabled(
+    private static AndroidFuture<AppFunctionExecutionInfo> getAppFunctionExecutionInfo(
             @NonNull String functionIdentifier,
             @NonNull String targetPackage,
             @NonNull AppSearchManager appSearchManager,
             @NonNull Executor executor) {
-        AndroidFuture<Boolean> future = new AndroidFuture<>();
-        AppFunctionManagerHelper.isAppFunctionEnabled(
+        AndroidFuture<AppFunctionExecutionInfo> future = new AndroidFuture<>();
+        AppFunctionManagerHelper.getAppFunctionExecutionInfo(
                 functionIdentifier,
                 targetPackage,
                 appSearchManager,
                 executor,
-                new OutcomeReceiver<>() {
+                new OutcomeReceiver<AppFunctionExecutionInfo, Exception>() {
                     @Override
-                    public void onResult(@NonNull Boolean result) {
+                    public void onResult(@NonNull AppFunctionExecutionInfo result) {
                         future.complete(result);
                     }
 

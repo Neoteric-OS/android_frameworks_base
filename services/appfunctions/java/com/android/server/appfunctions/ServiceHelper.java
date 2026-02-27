@@ -33,5 +33,11 @@ public interface ServiceHelper {
      * @return The intent to bind to the target service.
      */
     Intent resolveAppFunctionService(
+            @NonNull String targetPackageName,
+            @NonNull String targetServiceName,
+            @NonNull UserHandle targetUser);
+
+    // TODO: remove old method
+    Intent resolveAppFunctionService(
             @NonNull String targetPackageName, @NonNull UserHandle targetUser);
 }
