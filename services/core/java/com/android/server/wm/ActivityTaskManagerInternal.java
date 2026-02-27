@@ -26,6 +26,7 @@ import android.app.IAppTask;
 import android.app.IApplicationThread;
 import android.app.IHandoffTaskDataReceiver;
 import android.app.ITaskStackListener;
+import android.app.PendingIntent;
 import android.app.ProfilerInfo;
 import android.content.ComponentName;
 import android.content.IIntentSender;
@@ -844,6 +845,11 @@ public abstract class ActivityTaskManagerInternal implements ActiveUids.Observer
     /** Unregisters a listener for handoff enablement changes. */
     public abstract void unregisterHandoffEnablementListener(
         @NonNull HandoffEnablementListener listener);
+
+    /**
+     * Set the app launch delay for a specific package.
+     */
+    public abstract void setAppLaunchDelay(String packageName, long delayMs, PendingIntent interceptorScreen, int userId);
 
     /** Moves all tasks from the source display to the destination display. */
     public abstract void moveAllTasks(int fromDisplayId, int toDisplayId);
