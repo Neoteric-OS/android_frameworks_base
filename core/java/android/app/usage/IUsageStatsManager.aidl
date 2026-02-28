@@ -95,4 +95,6 @@ interface IUsageStatsManager {
     boolean isPackageExemptedFromBroadcastResponseStats(String packageName, int userId);
     @JavaPassthrough(annotation="@android.annotation.RequiresPermission(android.Manifest.permission.READ_DEVICE_CONFIG)")
     String getAppStandbyConstant(String key);
+    @JavaPassthrough(annotation="@android.annotation.RequiresPermission(android.Manifest.permission.SUSPEND_APPS)")
+    void setAppLaunchDelay(String packageName, long delayMs, in PendingIntent interceptorScreen, int userId);
 }

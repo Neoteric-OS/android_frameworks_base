@@ -1645,4 +1645,15 @@ public final class UsageStatsManager {
             throw re.rethrowFromSystemServer();
         }
     }
+
+    /** @hide */
+    @SystemApi
+    @RequiresPermission(android.Manifest.permission.SUSPEND_APPS)
+    public void setAppLaunchDelay(@NonNull String packageName, long delayMs, @NonNull PendingIntent interceptorScreen) {
+        try {
+            mService.setAppLaunchDelay(packageName, delayMs, interceptorScreen, mContext.getUserId());
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
+        }
+    }
 }

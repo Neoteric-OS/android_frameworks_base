@@ -257,6 +257,9 @@ class ActivityStartInterceptor {
         if (interceptLockedProfileIfNeeded()) {
             return true;
         }
+        if (interceptAppDelayIfNeeded(mAInfo, mCallingPackage)) {
+            return true;
+        }
         if (interceptHomeIfNeeded()) {
             // Replace primary home intents directed at displays that do not support primary home
             // but support secondary home with the relevant secondary home activity. Or the home
@@ -320,6 +323,41 @@ class ActivityStartInterceptor {
             return ActivityOptions.makeOpenCrossProfileAppsAnimation();
         }
         return ActivityOptions.makeBasic();
+    }
+
+    private boolean interceptAppDelayIfNeeded(ActivityInfo aInfo, String packageName) {
+        if (aInfo == null || aInfo.packageName == null) {
+            return false;
+        }
+        // 1. O(1) lookup in memory to see if this app has a 10-second delay
+        ActivityTaskManagerService.AppDelayPolicy policy = mService.getAppDelayController().getPolicy(aInfo.packageName, mUserId);
+
+        if (policy == null || policy.delayMs <= 0) {
+            return false; // No delay, continue normal launch
+        }
+
+        // 2. Wrap the original intent (the app the user tried to open) into an IntentSender
+        // This acts as a "token" that DWB can use to resume the launch later.
+        IntentSender originalIntentToken = createIntentSenderForOriginalIntent(mCallingUid,
+                FLAG_CANCEL_CURRENT | FLAG_ONE_SHOT | FLAG_IMMUTABLE);
+
+        // 3. Create the Intent to launch DWB's 10-Second Timer Screen
+        mIntent = new Intent();
+        mIntent.setComponent(policy.interceptorComponent); // DWB's timer activity
+        mIntent.putExtra("android.intent.extra.ORIGINAL_INTENT_TOKEN", originalIntentToken);
+        mIntent.putExtra("android.intent.extra.DELAY_MS", policy.delayMs);
+        mIntent.putExtra(Intent.EXTRA_PACKAGE_NAME, aInfo.packageName);
+        mIntent.setFlags(FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | FLAG_ACTIVITY_TASK_ON_HOME);
+
+        mCallingPid = mRealCallingPid;
+        mCallingUid = mRealCallingUid;
+        mResolvedType = null;
+
+        mRInfo = mSupervisor.resolveIntent(mIntent, mResolvedType, mUserId, 0,
+                mRealCallingUid, mRealCallingPid);
+        mAInfo = mSupervisor.resolveActivity(mIntent, mRInfo, mStartFlags, null /*profilerInfo*/);
+
+        return true;
     }
 
     private boolean interceptQuietProfileIfNeeded() {

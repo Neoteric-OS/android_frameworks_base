@@ -3157,6 +3157,26 @@ public class UsageStatsService extends SystemService implements
             return mAppStandby.getAppStandbyConstant(key);
         }
 
+        @android.annotation.EnforcePermission(android.Manifest.permission.SUSPEND_APPS)
+        @Override
+        public void setAppLaunchDelay(String packageName, long delayMs, PendingIntent interceptorScreen, int userId) {
+            super.setAppLaunchDelay_enforcePermission();
+
+            final int callingUid = Binder.getCallingUid();
+            try {
+                userId = ActivityManager.getService().handleIncomingUser(
+                        Binder.getCallingPid(), callingUid, userId, false, true,
+                        "setAppLaunchDelay", null);
+            } catch (RemoteException re) {
+                throw re.rethrowFromSystemServer();
+            }
+
+            final ActivityTaskManagerInternal atmInternal = LocalServices.getService(ActivityTaskManagerInternal.class);
+            if (atmInternal != null) {
+                atmInternal.setAppLaunchDelay(packageName, delayMs, interceptorScreen, userId);
+            }
+        }
+
         @Override
         public int handleShellCommand(@NonNull ParcelFileDescriptor in,
                 @NonNull ParcelFileDescriptor out, @NonNull ParcelFileDescriptor err,
