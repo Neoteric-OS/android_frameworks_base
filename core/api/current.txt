@@ -44728,7 +44728,6 @@ package android.text {
 
   @Deprecated public class AlteredCharSequence implements java.lang.CharSequence android.text.GetChars {
     method @Deprecated public char charAt(int);
-    method @Deprecated public void getChars(int, int, char[], int);
     method @Deprecated public int length();
     method @Deprecated public static android.text.AlteredCharSequence make(CharSequence, char[], int, int);
     method @Deprecated public CharSequence subSequence(int, int);
@@ -45197,7 +45196,6 @@ package android.text {
     method public void clear();
     method public void clearSpans();
     method public android.text.SpannableStringBuilder delete(int, int);
-    method public void getChars(int, int, char[], int);
     method public android.text.InputFilter[] getFilters();
     method public int getSpanEnd(Object);
     method public int getSpanFlags(Object);
