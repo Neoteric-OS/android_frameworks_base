@@ -17,6 +17,7 @@
 package android.app.usage;
 
 import android.app.PendingIntent;
+import android.content.Intent;
 import android.app.usage.BroadcastResponseStats;
 import android.app.usage.BroadcastResponseStatsList;
 import android.app.usage.UsageEvents;
@@ -95,4 +96,7 @@ interface IUsageStatsManager {
     boolean isPackageExemptedFromBroadcastResponseStats(String packageName, int userId);
     @JavaPassthrough(annotation="@android.annotation.RequiresPermission(android.Manifest.permission.READ_DEVICE_CONFIG)")
     String getAppStandbyConstant(String key);
+
+    @JavaPassthrough(annotation="@android.annotation.RequiresPermission(android.Manifest.permission.SUSPEND_APPS)")
+    void setAppInterception(String packageName, in Intent interceptIntent, int userId);
 }

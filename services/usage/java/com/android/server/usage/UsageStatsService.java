@@ -117,6 +117,10 @@ import com.android.server.SystemService;
 import com.android.server.pm.UserManagerInternal;
 import com.android.server.usage.AppStandbyInternal.AppIdleStateChangeListener;
 import com.android.server.utils.AlarmQueue;
+import com.android.server.wm.ActivityInterceptorCallback;
+import com.android.server.wm.ActivityInterceptorCallback.ActivityInterceptResult;
+import com.android.server.wm.ActivityInterceptorCallback.ActivityInterceptorInfo;
+import com.android.server.wm.ActivityTaskManagerInternal;
 
 import libcore.util.EmptyArray;
 
@@ -140,6 +144,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.TimeUnit;
 
@@ -267,6 +272,8 @@ public class UsageStatsService extends SystemService implements
     private final SparseSetArray<String> mPendingLaunchTimeChangePackages = new SparseSetArray<>();
 
     private BroadcastResponseStatsTracker mResponseStatsTracker;
+
+    private final Map<String, Intent> mInterceptedPackages = new ConcurrentHashMap<>();
 
     private static class ActivityData {
         private final String mTaskRootPackage;
@@ -460,6 +467,11 @@ public class UsageStatsService extends SystemService implements
                 Slog.w(TAG, "Missing procfs interface: " + KERNEL_COUNTER_FILE);
             }
             readUsageSourceSetting();
+
+            ActivityTaskManagerInternal atmInternal = LocalServices.getService(ActivityTaskManagerInternal.class);
+            atmInternal.registerActivityStartInterceptor(
+                    ActivityInterceptorCallback.DIGITAL_WELLBEING_ORDERED_ID,
+                    new DigitalWellbeingActivityInterceptor());
         }
     }
 
@@ -2248,6 +2260,26 @@ public class UsageStatsService extends SystemService implements
         }
     }
 
+    private class DigitalWellbeingActivityInterceptor implements ActivityInterceptorCallback {
+        @Nullable
+        @Override
+        public ActivityInterceptResult onInterceptActivityLaunch(@NonNull ActivityInterceptorInfo info) {
+            if (info.getActivityInfo() == null || info.getActivityInfo().packageName == null) {
+                return null;
+            }
+            String packageName = info.getActivityInfo().packageName;
+            Intent interceptIntent = mInterceptedPackages.get(packageName);
+            if (interceptIntent != null) {
+                Intent blockingIntent = new Intent(interceptIntent);
+                blockingIntent.putExtra(Intent.EXTRA_PACKAGE_NAME, packageName);
+                blockingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                android.app.ActivityOptions options = android.app.ActivityOptions.makeBasic();
+                return new ActivityInterceptResult(blockingIntent, options);
+            }
+            return null;
+        }
+    }
+
     private final class BinderService extends IUsageStatsManager.Stub {
 
         private boolean hasQueryPermission(String callingPackage) {
@@ -3190,6 +3222,33 @@ public class UsageStatsService extends SystemService implements
                 @NonNull String[] args) {
             return new UsageStatsShellCommand(UsageStatsService.this).exec(this,
                     in.getFileDescriptor(), out.getFileDescriptor(), err.getFileDescriptor(), args);
+        }
+
+        @Override
+        public void setAppInterception(String packageName, Intent interceptIntent, int userId) {
+            // Check for permission.
+            // Using SUSPEND_APPS as a proxy for "Can control app availability".
+            getContext().enforceCallingPermission(Manifest.permission.SUSPEND_APPS,
+                    "setAppInterception requires SUSPEND_APPS permission");
+
+            if (packageName == null) {
+                throw new IllegalArgumentException("packageName cannot be null");
+            }
+
+            final int callingUid = Binder.getCallingUid();
+            // userId verification logic similar to other methods
+            try {
+                userId = ActivityManager.getService().handleIncomingUser(Binder.getCallingPid(),
+                        callingUid, userId, false, true, "setAppInterception", null);
+            } catch (RemoteException re) {
+                throw re.rethrowFromSystemServer();
+            }
+
+            if (interceptIntent != null) {
+                mInterceptedPackages.put(packageName, interceptIntent);
+            } else {
+                mInterceptedPackages.remove(packageName);
+            }
         }
     }
 
