@@ -921,7 +921,7 @@ public class TextToSpeech {
             Log.e(TAG, "Failed to bind to " + engine);
             return false;
         } else {
-            Log.i(TAG, "Sucessfully bound to " + engine);
+            Log.i(TAG, "Successfully bound to " + engine);
             mConnectingServiceConnection = connection;
             return true;
         }
