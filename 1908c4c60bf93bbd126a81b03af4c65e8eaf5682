@@ -36,6 +36,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4693e3c_e72569b3",
+        "filename": "services/core/java/com/android/server/power/Notifier.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 4460690
+      },
+      "writtenOn": "2026-03-11T03:03:26Z",
+      "side": 1,
+      "message": "\u003e make this private please",
+      "parentUuid": "6dd43656_406c1ad4",
+      "revId": "1908c4c60bf93bbd126a81b03af4c65e8eaf5682",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "abd040ea_7d446389",
@@ -49,6 +67,24 @@
       "writtenOn": "2026-02-10T11:59:19Z",
       "side": 1,
       "message": "Why do you need this check?",
+      "revId": "1908c4c60bf93bbd126a81b03af4c65e8eaf5682",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb50374b_fbf8a390",
+        "filename": "services/core/java/com/android/server/power/Notifier.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 4460690
+      },
+      "writtenOn": "2026-03-11T03:03:26Z",
+      "side": 1,
+      "message": "Since the displayGroupId check has been removed from the recordScreenPolicy method in ScreenUndimDetector.java, a displayGroupId check is added here",
+      "parentUuid": "abd040ea_7d446389",
       "revId": "1908c4c60bf93bbd126a81b03af4c65e8eaf5682",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }

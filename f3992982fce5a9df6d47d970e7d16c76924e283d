@@ -145,6 +145,30 @@
       },
       "revId": "f3992982fce5a9df6d47d970e7d16c76924e283d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a266b7d_30e454d7",
+        "filename": "services/core/java/com/android/server/power/Notifier.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1284,
+      "author": {
+        "id": 4460690
+      },
+      "writtenOn": "2026-03-11T03:03:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0d876c1_f152b3d9",
+      "range": {
+        "startLine": 1284,
+        "startChar": 20,
+        "endLine": 1284,
+        "endChar": 54
+      },
+      "revId": "f3992982fce5a9df6d47d970e7d16c76924e283d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

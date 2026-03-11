@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cb438568_80b1db3c",
+        "filename": "services/core/java/com/android/server/power/Notifier.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 4460690
+      },
+      "writtenOn": "2026-03-11T03:03:26Z",
+      "side": 0,
+      "message": "There is already log printing after this point. Will adding a log here cause duplication?",
+      "parentUuid": "8e0a73f3_e1c7ddcc",
+      "range": {
+        "startLine": 907,
+        "startChar": 5,
+        "endLine": 909,
+        "endChar": 9
+      },
+      "revId": "1cdfff555f4a21f71ccc978290e2e212e2f8b168",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "184566e6_2560037f",
         "filename": "services/core/java/com/android/server/power/ScreenUndimDetector.java",
         "patchSetId": 8
@@ -61,6 +85,24 @@
       "writtenOn": "2026-02-10T11:59:19Z",
       "side": 0,
       "message": "Why is this check being removed ?",
+      "revId": "1cdfff555f4a21f71ccc978290e2e212e2f8b168",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6eb3c8e5_8a9e2aaa",
+        "filename": "services/core/java/com/android/server/power/ScreenUndimDetector.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 4460690
+      },
+      "writtenOn": "2026-03-11T03:03:26Z",
+      "side": 0,
+      "message": "Because recordScreenPolicy is only called when screenPolicyChanging is true, but my modification has already performed duplicate removal checks on displayGroupId and policy in onScreenPolicyUpdate, so this logic has been removed here",
+      "parentUuid": "184566e6_2560037f",
       "revId": "1cdfff555f4a21f71ccc978290e2e212e2f8b168",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
