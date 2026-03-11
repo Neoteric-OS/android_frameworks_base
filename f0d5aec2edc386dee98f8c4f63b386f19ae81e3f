@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c636059_a4e21a7e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2026-03-11T11:11:26Z",
+      "side": 1,
+      "message": "It looks like the bug has been marked as fixed, can you clarify?",
+      "revId": "f0d5aec2edc386dee98f8c4f63b386f19ae81e3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
