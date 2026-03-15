@@ -159,7 +159,9 @@ public class SmsMessage {
 
     public static class SubmitPdu {
 
+        @UnsupportedAppUsage
         public byte[] encodedScAddress; // Null if not applicable.
+        @UnsupportedAppUsage
         public byte[] encodedMessage;
 
         @Override
@@ -168,6 +170,13 @@ public class SmsMessage {
                     + Arrays.toString(encodedScAddress)
                     + ", encodedMessage = "
                     + Arrays.toString(encodedMessage);
+        }
+
+        /**
+         * @hide
+         */
+        @UnsupportedAppUsage
+        public SubmitPdu() {
         }
 
         /**

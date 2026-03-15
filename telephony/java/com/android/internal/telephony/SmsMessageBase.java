@@ -123,18 +123,10 @@ public abstract class SmsMessageBase {
     }
 
     // TODO(): This class is duplicated in SmsMessage.java. Refactor accordingly.
-    public static abstract class SubmitPduBase  {
+    public static abstract class SubmitPduBase extends SmsMessage.SubmitPdu {
         @UnsupportedAppUsage
-        public byte[] encodedScAddress; // Null if not applicable.
-        @UnsupportedAppUsage
-        public byte[] encodedMessage;
-
-        @Override
-        public String toString() {
-            return "SubmitPdu: encodedScAddress = "
-                    + Arrays.toString(encodedScAddress)
-                    + ", encodedMessage = "
-                    + Arrays.toString(encodedMessage);
+        public SubmitPduBase() {
+            super();
         }
     }
 
