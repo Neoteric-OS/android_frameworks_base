@@ -43,7 +43,9 @@ import android.content.pm.PackageManager;
 import android.content.pm.UserInfo;
 import android.database.ContentObserver;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -85,6 +87,7 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.infra.AbstractRemoteService;
 import com.android.internal.infra.GlobalWhitelistState;
 import com.android.internal.infra.WhitelistHelper;
+import com.android.internal.os.BackgroundThread;
 import com.android.internal.os.IResultReceiver;
 import com.android.internal.util.DumpUtils;
 import com.android.internal.util.Preconditions;
@@ -234,6 +237,9 @@ public final class AutofillManagerService
 
     @GuardedBy("mFlagLock")
     private boolean mIsFillFieldsFromCurrentSessionOnly;
+
+    @GuardedBy("mFlagLock")
+    private boolean mResetInvalidServiceOnFirstUse;
 
     // Default flag values for Autofill PCC
 
@@ -719,6 +725,10 @@ public final class AutofillManagerService
             mAutofillCredmanIntegrationEnabled = Flags.autofillCredmanIntegration();
             mIsFillFieldsFromCurrentSessionOnly = AutofillFeatureFlags
                     .shouldFillFieldsFromCurrentSessionOnly();
+            mResetInvalidServiceOnFirstUse = DeviceConfig.getBoolean(
+                    DeviceConfig.NAMESPACE_AUTOFILL,
+                    "autofill_reset_invalid_service_on_first_use",
+                    false);
             if (verbose) {
                 Slog.v(mTag, "setDeviceConfigProperties() for PCC: "
                         + "mPccClassificationEnabled=" + mPccClassificationEnabled
@@ -728,7 +738,9 @@ public final class AutofillManagerService
                         + ", mAutofillCredmanIntegrationEnabled="
                         + mAutofillCredmanIntegrationEnabled
                         + ", mIsFillFieldsFromCurrentSessionOnly="
-                        + mIsFillFieldsFromCurrentSessionOnly);
+                        + mIsFillFieldsFromCurrentSessionOnly
+                        + ", mResetInvalidServiceOnFirstUse="
+                        + mResetInvalidServiceOnFirstUse);
             }
         }
     }
@@ -1041,6 +1053,15 @@ public final class AutofillManagerService
     public boolean getIsFillFieldsFromCurrentSessionOnly() {
         synchronized (mFlagLock) {
             return mIsFillFieldsFromCurrentSessionOnly;
+        }
+    }
+
+    /**
+     * Whether the feature to reset invalid autofill service on first use is enabled.
+     */
+    public boolean isResetInvalidServiceOnFirstUse() {
+        synchronized (mFlagLock) {
+            return mResetInvalidServiceOnFirstUse;
         }
     }
 
@@ -1624,9 +1645,13 @@ public final class AutofillManagerService
             int flags = 0;
             try {
                 synchronized (mLock) {
-                    final int enabledFlags =
-                            getServiceForUserWithLocalBinderIdentityLocked(userId)
-                            .addClientLocked(client, componentName, credmanRequested);
+                    AutofillManagerServiceImpl service =
+                            getServiceForUserWithLocalBinderIdentityLocked(userId);
+                    if (service.onFirstUseAutofillLocked()) {
+                        updateCachedServiceLocked(userId);
+                        service = getServiceForUserWithLocalBinderIdentityLocked(userId);
+                    }
+                    final int enabledFlags = service.addClientLocked(client, componentName, credmanRequested);
                     if (enabledFlags != 0) {
                         flags |= enabledFlags;
                     }

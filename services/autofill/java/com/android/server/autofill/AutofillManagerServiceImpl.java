@@ -137,6 +137,12 @@ final class AutofillManagerServiceImpl
     private final LocalLog mWtfHistory;
     private final FieldClassificationStrategy mFieldClassificationStrategy;
 
+    /**
+     * Flag to track if this is the first time the user uses autofill.
+     */
+    @GuardedBy("mLock")
+    private boolean mIsFirstTimeUse = true;
+
     @GuardedBy("mLock")
     @Nullable
     private RemoteInlineSuggestionRenderService mRemoteInlineSuggestionRenderService;
@@ -346,6 +352,34 @@ final class AutofillManagerServiceImpl
     @Nullable
     String[] getUrlBarResourceIdsForCompatMode(@NonNull String packageName) {
         return mAutofillCompatState.getUrlBarResourceIds(packageName, mUserId);
+    }
+
+    @GuardedBy("mLock")
+    boolean onFirstUseAutofillLocked() {
+        if (!mIsFirstTimeUse) {
+            return false;
+        }
+        mIsFirstTimeUse = false;
+
+        if (!mMaster.isResetInvalidServiceOnFirstUse()) {
+            return false;
+        }
+
+        final String componentName = mMaster.mServiceNameResolver.getServiceName(mUserId);
+        if (android.text.TextUtils.isEmpty(componentName)) {
+            return false;
+        }
+
+        if (getServiceInfo() == null) {
+            final String defaultService = getContext().getString(
+                    com.android.internal.R.string.config_defaultAutofillService);
+            Slog.i(TAG, "Invalid autofill service setting " + componentName + " for user "
+                    + mUserId + "; resetting to default");
+            Settings.Secure.putStringForUser(getContext().getContentResolver(),
+                    mMaster.getServiceSettingsProperty(), defaultService, mUserId);
+            return true;
+        }
+        return false;
     }
 
     /**
