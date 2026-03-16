@@ -940,10 +940,10 @@ public class UserManager {
 
     /**
      * Specifies if a user is disallowed from resetting network settings
-     * from Settings. This can only be set by device owners and profile owners on the primary user.
+     * from Settings. This can be set by device owners and profile owners on the main user.
      * The default value is <code>false</code>.
-     * <p>This restriction has no effect on secondary users and managed profiles since only the
-     * primary user can reset the network settings of the device.
+     * <p>On devices in headless system user mode, this restriction can be set globally
+     * by the device owner to prevent any user from resetting network settings.
      *
      * <p>Holders of the permission
      * {@link android.Manifest.permission#MANAGE_DEVICE_POLICY_MOBILE_NETWORK}
