@@ -6204,6 +6204,16 @@ public class BatteryStatsImpl extends BatteryStats {
         int newState = connected ? USB_DATA_CONNECTED : USB_DATA_DISCONNECTED;
         if (mUsbDataState != newState) {
             mUsbDataState = newState;
+        }
+
+        // Bug: DTV04873249 - Add null check to prevent SIGSEGV
+        if (mHistory == null) {
+            Slog.e(TAG, "noteUsbConnectionStateLocked: mHistory is null! connected="
+                    + connected, new Throwable());
+            return;
+        }
+
+        try {
             if (connected) {
                 mHistory.recordState2StartEvent(elapsedRealtimeMs, uptimeMs,
                         HistoryItem.STATE2_USB_DATA_LINK_FLAG);
@@ -6211,6 +6221,13 @@ public class BatteryStatsImpl extends BatteryStats {
                 mHistory.recordState2StopEvent(elapsedRealtimeMs, uptimeMs,
                         HistoryItem.STATE2_USB_DATA_LINK_FLAG);
             }
+        } catch (Exception e) {
+            // Bug: DTV04873249 - Prevent system_server crash
+            Slog.e(TAG, "noteUsbConnectionStateLocked: Exception recording USB state! "
+                    + "connected=" + connected
+                    + ", elapsedRealtime=" + elapsedRealtimeMs
+                    + ", uptime=" + uptimeMs
+                    + ", mHistory=" + mHistory, e);
         }
     }
 
