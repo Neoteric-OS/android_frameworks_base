@@ -1095,6 +1095,11 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
         }
     }
 
+    private boolean isCallerTelecom(int uid, String callingPackageName) {
+        return uid == android.os.Process.SYSTEM_UID
+               && ("com.android.server.telecom").equals(callingPackageName);
+    }
+
     /** @see AudioManager#requestAudioFocus(AudioManager.OnAudioFocusChangeListener, int, int, int)
      * @param aa
      * @param focusChangeHint
@@ -1173,7 +1178,8 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
             }
 
             boolean enteringRingOrCall = !mRingOrCallActive
-                    & (AudioSystem.IN_VOICE_COMM_FOCUS_ID.compareTo(clientId) == 0);
+                    & (AudioSystem.IN_VOICE_COMM_FOCUS_ID.compareTo(clientId) == 0
+                    || isCallerTelecom(uid, callingPackageName));
             if (enteringRingOrCall) { mRingOrCallActive = true; }
 
             final AudioFocusInfo afiForExtPolicy;
@@ -1338,7 +1344,8 @@ public class MediaFocusControl implements PlayerFocusEnforcer {
                 }
 
                 boolean exitingRingOrCall = mRingOrCallActive
-                        & (AudioSystem.IN_VOICE_COMM_FOCUS_ID.compareTo(clientId) == 0);
+                        & (AudioSystem.IN_VOICE_COMM_FOCUS_ID.compareTo(clientId) == 0
+                        || isCallerTelecom(callingUid, callingPackageName));
                 if (exitingRingOrCall) { mRingOrCallActive = false; }
 
                 removeFocusStackEntry(clientId, true /*signal*/, true /*notifyFocusFollowers*/);
