@@ -129,13 +129,6 @@ public class BatterySaverPolicy extends ContentObserver implements
     @VisibleForTesting
     static final String KEY_ENABLE_NIGHT_MODE = "enable_night_mode";
 
-    /** @deprecated Old key used to set CPU frequency caps directly in sys files. */
-    @Deprecated
-    private static final String KEY_CPU_FREQ_INTERACTIVE = "cpufreq-i";
-    /** @deprecated Old key used to set CPU frequency caps directly in sys files. */
-    @Deprecated
-    private static final String KEY_CPU_FREQ_NONINTERACTIVE = "cpufreq-n";
-
     private static final String KEY_SUFFIX_ADAPTIVE = "_adaptive";
 
     @VisibleForTesting
