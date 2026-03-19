@@ -2396,26 +2396,20 @@ public class AccountManagerService
             return;
         }
         final long identityToken = clearCallingIdentity();
-        UserAccounts accounts = getUserAccounts(userId);
-        cancelNotification(getSigninRequiredNotificationId(accounts, account), accounts);
-        synchronized(accounts.credentialsPermissionNotificationIds) {
-            for (Pair<Pair<Account, String>, Integer> pair:
-                accounts.credentialsPermissionNotificationIds.keySet()) {
-                if (account.equals(pair.first.first)) {
-                    NotificationId id = accounts.credentialsPermissionNotificationIds.get(pair);
-                    cancelNotification(id, accounts);
+        try {
+            UserAccounts accounts = getUserAccounts(userId);
+            cancelNotification(getSigninRequiredNotificationId(accounts, account), accounts);
+            synchronized(accounts.credentialsPermissionNotificationIds) {
+                for (Pair<Pair<Account, String>, Integer> pair:
+                    accounts.credentialsPermissionNotificationIds.keySet()) {
+                    if (account.equals(pair.first.first)) {
+                        NotificationId id = accounts.credentialsPermissionNotificationIds.get(pair);
+                        cancelNotification(id, accounts);
+                    }
                 }
             }
-        }
-        final long accountId = accounts.accountsDb.findDeAccountId(account);
-        logRecord(
-                AccountsDb.DEBUG_ACTION_CALLED_ACCOUNT_REMOVE,
-                AccountsDb.TABLE_ACCOUNTS,
-                accountId,
-                accounts,
-                callingUid);
-        try {
-            new RemoveAccountSession(accounts, response, account, expectActivityLaunch).bind();
+            new RemoveAccountSession(accounts, response, account, expectActivityLaunch,
+                    callingUid).bind();
         } finally {
             restoreCallingIdentity(identityToken);
         }
@@ -2450,7 +2444,7 @@ public class AccountManagerService
                     account.type);
             throw new SecurityException(msg);
         }
-        if (isFirstAccountRemovalDisabled(account)) {
+        if (isFirstAccountRemovalDisabled(account, userId)) {
             Log.e(TAG, "Cannot remove the first " + account.type + " account on the device.");
             return false;
         }
@@ -2472,12 +2466,14 @@ public class AccountManagerService
 
     private class RemoveAccountSession extends Session {
         final Account mAccount;
+        final int mCallingUid;
         public RemoveAccountSession(UserAccounts accounts, IAccountManagerResponse response,
-                Account account, boolean expectActivityLaunch) {
+                Account account, boolean expectActivityLaunch, int callingUid) {
             super(accounts, response, account.type, expectActivityLaunch,
                     true /* stripAuthTokenFromResult */, account.name,
                     false /* authDetailsRequired */);
             mAccount = account;
+            mCallingUid = callingUid;
         }
 
         @Override
@@ -2488,6 +2484,13 @@ public class AccountManagerService
 
         @Override
         public void run() throws RemoteException {
+            final long accountId = mAccounts.accountsDb.findDeAccountId(mAccount);
+            logRecord(
+                    AccountsDb.DEBUG_ACTION_CALLED_ACCOUNT_REMOVE,
+                    AccountsDb.TABLE_ACCOUNTS,
+                    accountId,
+                    mAccounts,
+                    mCallingUid);
             mAuthenticator.getAccountRemovalAllowed(this, mAccount);
         }
 
@@ -6559,10 +6562,9 @@ public class AccountManagerService
      * Returns true if the config_canRemoveOrRenameFirstUser is false, and the given account type
      * matches the one provided by config_accountTypeToKeepFirstUser.
      */
-    private boolean isFirstAccountRemovalDisabled(Account account) {
+    private boolean isFirstAccountRemovalDisabled(Account account, int callingUserId) {
         // Skip if not targeting the first user.
-        int userId = UserHandle.getCallingUserId();
-        if (userId != 0) {
+        if (callingUserId != 0) {
             return false;
         }
 
