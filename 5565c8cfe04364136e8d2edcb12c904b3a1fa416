@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f5e6f05_156148fa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1870696
+      },
+      "writtenOn": "2026-03-19T18:10:08Z",
+      "side": 1,
+      "message": "This is a CP of ag/31857552",
+      "revId": "5565c8cfe04364136e8d2edcb12c904b3a1fa416",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
