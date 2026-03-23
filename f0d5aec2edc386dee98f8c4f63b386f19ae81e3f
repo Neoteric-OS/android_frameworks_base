@@ -16,6 +16,24 @@
       "message": "It looks like the bug has been marked as fixed, can you clarify?",
       "revId": "f0d5aec2edc386dee98f8c4f63b386f19ae81e3f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3635ac54_9a40deae",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 4460690
+      },
+      "writtenOn": "2026-03-23T03:48:22Z",
+      "side": 1,
+      "message": "Sorry, the bug ID was filled in incorrectly and has been corrected",
+      "parentUuid": "9c636059_a4e21a7e",
+      "revId": "f0d5aec2edc386dee98f8c4f63b386f19ae81e3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
