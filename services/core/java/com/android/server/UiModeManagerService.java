@@ -37,6 +37,7 @@ import static android.provider.Settings.Secure.CONTRAST_LEVEL;
 import static android.util.TimeUtils.isTimeBetween;
 
 import static com.android.internal.util.FunctionalUtils.ignoreRemoteException;
+import static com.android.server.pm.UserManagerService.enforceCurrentUserIfVisibleBackgroundEnabled;
 
 import android.annotation.IntRange;
 import android.annotation.NonNull;
@@ -849,6 +850,8 @@ final class UiModeManagerService extends SystemService {
                     throw new IllegalArgumentException("Unknown mode: " + mode);
             }
 
+            enforceCurrentUserIfVisibleBackgroundEnabled();
+
             final int user = UserHandle.getCallingUserId();
             enforceValidCallingUser(user);
 
@@ -914,7 +917,7 @@ final class UiModeManagerService extends SystemService {
                 @AttentionModeThemeOverlayType int attentionModeThemeOverlayType) {
             setAttentionModeThemeOverlay_enforcePermission();
 
-            enforceValidCallingUser(UserHandle.getCallingUserId());
+            enforceCurrentUserIfVisibleBackgroundEnabled();
 
             synchronized (mLock) {
                 if (mAttentionModeThemeOverlay != attentionModeThemeOverlayType) {
@@ -1015,6 +1018,8 @@ final class UiModeManagerService extends SystemService {
                 return false;
 
             }
+            enforceCurrentUserIfVisibleBackgroundEnabled();
+
             // Store the last requested bedtime night mode state so that we don't need to notify
             // anyone if the user decides to switch to the night mode to bedtime.
             if (modeCustomType == MODE_NIGHT_CUSTOM_TYPE_BEDTIME) {
@@ -1063,6 +1068,8 @@ final class UiModeManagerService extends SystemService {
                 Slog.e(TAG, "Set custom time start, requires MODIFY_DAY_NIGHT_MODE permission");
                 return;
             }
+            enforceCurrentUserIfVisibleBackgroundEnabled();
+
             final int user = UserHandle.getCallingUserId();
             enforceValidCallingUser(user);
 
@@ -1093,6 +1100,8 @@ final class UiModeManagerService extends SystemService {
                 Slog.e(TAG, "Set custom time end, requires MODIFY_DAY_NIGHT_MODE permission");
                 return;
             }
+            enforceCurrentUserIfVisibleBackgroundEnabled();
+
             final int user = UserHandle.getCallingUserId();
             enforceValidCallingUser(user);
 
@@ -1116,7 +1125,7 @@ final class UiModeManagerService extends SystemService {
             assertLegit(callingPackage);
             assertSingleProjectionType(projectionType);
             enforceProjectionTypePermissions(projectionType);
-            enforceValidCallingUser(getCallingUserId());
+            enforceCurrentUserIfVisibleBackgroundEnabled();
 
             synchronized (mLock) {
                 if (mProjectionHolders == null) {
@@ -1162,7 +1171,7 @@ final class UiModeManagerService extends SystemService {
             assertLegit(callingPackage);
             assertSingleProjectionType(projectionType);
             enforceProjectionTypePermissions(projectionType);
-            enforceValidCallingUser(getCallingUserId());
+            enforceCurrentUserIfVisibleBackgroundEnabled();
 
             return releaseProjectionUnchecked(projectionType, callingPackage);
         }
@@ -1204,7 +1213,7 @@ final class UiModeManagerService extends SystemService {
                 return;
             }
 
-            enforceValidCallingUser(getCallingUserId());
+            enforceCurrentUserIfVisibleBackgroundEnabled();
 
             synchronized (mLock) {
                 if (mProjectionListeners == null) {
