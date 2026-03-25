@@ -2731,6 +2731,10 @@ class Transition implements BLASTSyncEngine.TransactionReadyListener {
             if (!changeInfo.hasChanged()) {
                 ProtoLog.v(WmProtoLogGroups.WM_DEBUG_WINDOW_TRANSITIONS,
                         "  Rejecting as no-op: %s  vis: %b", wc, wc.isVisibleRequested());
+                if (wc.asTask() != null && wc.asTask().mReparentIntoSplitScreen) {
+                    wc.asTask().mReparentIntoSplitScreen = false;
+                    targets.add(changeInfo);
+                }
                 continue;
             }
             targets.add(changeInfo);

@@ -622,6 +622,8 @@ class Task extends TaskFragment {
 
     boolean mAlignActivityLocaleWithTask = false;
 
+    public boolean mReparentIntoSplitScreen = false;
+
     private Task(ActivityTaskManagerService atmService, int _taskId, Intent _intent,
             Intent _affinityIntent, String _affinity, String _rootAffinity,
             ComponentName _realActivity, ComponentName _origActivity, boolean _rootWasReset,
@@ -2751,6 +2753,12 @@ class Task extends TaskFragment {
                 + " from rootTask=" + getRootTask());
         EventLogTags.writeWmTaskRemoved(mTaskId, getRootTaskId(), getDisplayId(),
                 "reParentTask:" + reason);
+        if (getRootTask().getWindowingMode() == WINDOWING_MODE_MULTI_WINDOW &&
+                rootTask.getWindowingMode() == WINDOWING_MODE_MULTI_WINDOW &&
+                "anyTaskForId".equals(reason)) {
+            getRootTask().mReparentIntoSplitScreen = true;
+            rootTask.mReparentIntoSplitScreen = true;
+        }
 
         reparent(rootTask, position);
 
