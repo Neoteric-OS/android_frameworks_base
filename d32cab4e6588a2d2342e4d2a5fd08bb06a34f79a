@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e32af1fc_c48a9818",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1381453
+      },
+      "writtenOn": "2026-03-25T04:00:32Z",
+      "side": 1,
+      "message": "Thanks for providing the patch! We have identified this issue and fixed in future release.",
+      "revId": "d32cab4e6588a2d2342e4d2a5fd08bb06a34f79a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
