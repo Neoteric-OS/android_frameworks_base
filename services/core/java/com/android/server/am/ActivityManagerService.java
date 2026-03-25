@@ -449,6 +449,10 @@ import com.android.server.SystemServiceManager;
 import com.android.server.ThreadPriorityBooster;
 import com.android.server.UiThread;
 import com.android.server.Watchdog;
+import com.android.server.am.ActivityManagerService.HiddenApiSettings;
+import com.android.server.am.ActivityManagerService.Injector;
+import com.android.server.am.ActivityManagerService.IntentCreatorToken;
+import com.android.server.am.ActivityManagerService.MemItem;
 import com.android.server.am.LowMemDetector.MemFactor;
 import com.android.server.appop.AppOpsService;
 import com.android.server.compat.PlatformCompat;
@@ -1844,7 +1848,9 @@ public class ActivityManagerService extends IActivityManager.Stub
                     }
                 } break;
             case CHECK_EXCESSIVE_POWER_USE_MSG: {
-                checkExcessivePowerUsage();
+                BackgroundThread.getHandler().post(() -> {
+                    checkExcessivePowerUsage();
+                });
                 removeMessages(CHECK_EXCESSIVE_POWER_USE_MSG);
                 Message nmsg = obtainMessage(CHECK_EXCESSIVE_POWER_USE_MSG);
                 sendMessageDelayed(nmsg, mConstants.POWER_CHECK_INTERVAL);
