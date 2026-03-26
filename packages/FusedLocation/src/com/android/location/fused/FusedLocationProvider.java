@@ -66,6 +66,12 @@ public class FusedLocationProvider extends LocationProviderBase {
     // excessive power with large intervals).
     private static final long MAX_GPS_INTERVAL_MS = 5 * 1000; // 5 seconds
 
+    /**
+     * Conflict threshold multiplier. Two temporally comparable fixes are treated as conflicting
+     * when their spatial separation exceeds this multiple of their combined reported uncertainty.
+     */
+    private static final float CROSS_CHECK_SIGMA_MULTIPLIER = 3.0f;
+
     private final Object mLock = new Object();
 
     private final Context mContext;
@@ -182,17 +188,20 @@ public class FusedLocationProvider extends LocationProviderBase {
 
     @GuardedBy("mLock")
     void reportBestLocationLocked() {
-        Location bestLocation = chooseBestLocation(mGpsListener.getLocation(),
-                mNetworkListener.getLocation());
+        Location bestLocation = chooseBestLocation(
+                mGpsListener.getLocation(), mNetworkListener.getLocation());
+
+        // If fresh independent sources strongly conflict, do not publish a new fused result.
+        // Keep the last trusted fused location unchanged.
+        if (bestLocation == null) {
+            return;
+        }
+
         if (bestLocation == mFusedLocation) {
             return;
         }
 
         mFusedLocation = bestLocation;
-        if (mFusedLocation == null) {
-            return;
-        }
-
         reportLocation(mFusedLocation);
     }
 
@@ -234,13 +243,20 @@ public class FusedLocationProvider extends LocationProviderBase {
             return locationA;
         }
 
-        if (locationA.getElapsedRealtimeNanos()
-                > locationB.getElapsedRealtimeNanos() + MAX_LOCATION_COMPARISON_NS) {
+        long elapsedRealtimeA = locationA.getElapsedRealtimeNanos();
+        long elapsedRealtimeB = locationB.getElapsedRealtimeNanos();
+
+        if (elapsedRealtimeA > elapsedRealtimeB + MAX_LOCATION_COMPARISON_NS) {
             return locationA;
         }
-        if (locationB.getElapsedRealtimeNanos()
-                > locationA.getElapsedRealtimeNanos() + MAX_LOCATION_COMPARISON_NS) {
+        if (elapsedRealtimeB > elapsedRealtimeA + MAX_LOCATION_COMPARISON_NS) {
             return locationB;
+        }
+
+        // Within the comparison window, first cross-check whether the two sources are
+        // mutually consistent before selecting by reported accuracy.
+        if (locationsConflict(locationA, locationB)) {
+            return null;
         }
 
         if (!locationA.hasAccuracy()) {
@@ -250,6 +266,18 @@ public class FusedLocationProvider extends LocationProviderBase {
             return locationA;
         }
         return locationA.getAccuracy() < locationB.getAccuracy() ? locationA : locationB;
+    }
+
+    private static boolean locationsConflict(Location locationA, Location locationB) {
+        if (!locationA.hasAccuracy() || !locationB.hasAccuracy()) {
+            return false;
+        }
+
+        float distanceMeters = locationA.distanceTo(locationB);
+        float combinedUncertaintyMeters =
+                (float) Math.hypot(locationA.getAccuracy(), locationB.getAccuracy());
+
+        return distanceMeters > CROSS_CHECK_SIGMA_MULTIPLIER * combinedUncertaintyMeters;
     }
 
     private class ChildLocationListener implements LocationListener {
