@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c46a771_85a27708",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4651901
+      },
+      "writtenOn": "2026-03-26T22:20:22Z",
+      "side": 1,
+      "message": "This change adds a consistency check between independent location\nproviders before selecting a fused result.\n\nWhen two temporally comparable location fixes differ beyond their\ncombined reported accuracy, the fused provider does not select either\nsource and retains the last fused result.\n\nThe goal is to avoid selecting a location when providers produce\nmutually inconsistent outputs, while preserving existing behavior when\ninputs are consistent.\n\nHappy to refine the threshold or behavior based on feedback.",
+      "revId": "2c240a9cfb28ab29cb9dadac32110632ba00add8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
