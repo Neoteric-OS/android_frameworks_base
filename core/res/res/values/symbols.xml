@@ -767,6 +767,7 @@
   <java-symbol type="string" name="widget_default_class_name" />
   <java-symbol type="string" name="emergency_calls_only" />
   <java-symbol type="array" name="config_ephemeralResolverPackage" />
+  <java-symbol type="string" name="config_hiddenLibraries" />
   <java-symbol type="array" name="config_forceQueryablePackages" />
   <java-symbol type="bool" name="config_forceSystemPackagesQueryable" />
   <java-symbol type="string" name="eventTypeAnniversary" />

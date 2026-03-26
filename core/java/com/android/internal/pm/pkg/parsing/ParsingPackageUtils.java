@@ -3441,6 +3441,14 @@ public class ParsingPackageUtils {
             return;
         }
 
+        final Resources overlayableRes = getFrameworkResourcesWithOverlays();
+        sUseRoundIcon = overlayableRes.getBoolean(com.android.internal.R.bool.config_useRoundIcon);
+    }
+
+    /**
+     * @hide
+     */
+    public static Resources getFrameworkResourcesWithOverlays() {
         final ApplicationInfo androidAppInfo;
         try {
             androidAppInfo = ActivityThread.getPackageManager().getApplicationInfo(
@@ -3452,7 +3460,7 @@ public class ParsingPackageUtils {
         final Resources systemResources = Resources.getSystem();
 
         // Create in-flight as this overlayable resource is only used when config changes
-        final Resources overlayableRes = ResourcesManager.getInstance().getResources(
+        return ResourcesManager.getInstance().getResources(
                 null /* activityToken */,
                 null /* resDir */,
                 null /* splitResDirs */,
@@ -3464,8 +3472,6 @@ public class ParsingPackageUtils {
                 systemResources.getCompatibilityInfo(),
                 systemResources.getClassLoader(),
                 null /* loaders */);
-
-        sUseRoundIcon = overlayableRes.getBoolean(com.android.internal.R.bool.config_useRoundIcon);
     }
 
     /*

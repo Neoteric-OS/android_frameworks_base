@@ -101,6 +101,7 @@ import android.content.pm.SigningInfo;
 import android.content.pm.UserInfo;
 import android.content.pm.UserPackage;
 import android.content.pm.VersionedPackage;
+import android.content.res.Resources;
 import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
@@ -133,6 +134,8 @@ import com.android.internal.pm.pkg.component.ParsedIntentInfo;
 import com.android.internal.pm.pkg.component.ParsedMainComponent;
 import com.android.internal.pm.pkg.component.ParsedProvider;
 import com.android.internal.pm.pkg.component.ParsedService;
+import com.android.internal.pm.pkg.parsing.ParsingPackageUtils;
+import com.android.internal.R;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.CollectionUtils;
 import com.android.internal.util.IndentingPrintWriter;
@@ -2197,6 +2200,25 @@ public class ComputerEngine implements Computer {
         return true;
     }
 
+    public boolean isVendorLibrary(SharedLibraryInfo libraryInfo) {
+        if (libraryInfo == null) {
+            return false;
+        }
+        String path = libraryInfo.getPath();
+        return path != null && (path.startsWith("/vendor") || path.startsWith("/product"));
+    }
+
+    private boolean filterVendorHiddenPackage(@Nullable SharedLibraryInfo libraryInfo) {
+        if (libraryInfo == null || !isVendorLibrary(libraryInfo)) {
+            return false;
+        }
+        final Resources overlaidResources = ParsingPackageUtils.getFrameworkResourcesWithOverlays();
+        final String hiddenLibrariesConfig =
+                overlaidResources.getString(R.string.config_hiddenLibraries);
+        ArrayList<String> hiddenLibraries = new ArrayList<>(Arrays.asList(hiddenLibrariesConfig.split(";")));
+        return hiddenLibraries.contains(libraryInfo.getName());
+    }
+
     @Override
     public final boolean filterSharedLibPackage(@Nullable PackageStateInternal ps, int uid,
             int userId, @PackageManager.ComponentInfoFlagsBits long flags) {
@@ -4122,7 +4144,9 @@ public class ComputerEngine implements Computer {
             for (int j = 0; j < versionCount; j++) {
                 SharedLibraryInfo libraryInfo = versionedLib.valueAt(j);
                 if (!libraryInfo.isStatic()) {
-                    libs.put(libraryInfo.getName(), libraryInfo.getPath());
+                    if(!filterVendorHiddenPackage(libraryInfo)) {
+                        libs.put(libraryInfo.getName(), libraryInfo.getPath());
+                    }
                     break;
                 }
                 final PackageStateInternal ps =

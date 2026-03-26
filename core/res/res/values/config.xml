@@ -1993,6 +1993,10 @@
         <!-- Add packages here -->
     </string-array>
 
+    <!-- A list of packages, that shall be hidden in Package Manager output.
+         Package can be hidden in runtime, to disable visibility of dependent Apps in the Store. -->
+    <string name="config_hiddenLibraries">"default"</string>
+
     <!-- The set of system packages on device that are queryable by any app regardless of the
          contents of its manifest. -->
     <string-array name="config_forceQueryablePackages" translatable="false">
