@@ -19568,6 +19568,15 @@ public final class Settings {
                 "hearing_device_local_notification";
 
         /**
+         * Control access point mode on runtime in CarProjectionService.
+         * 1 - tethering
+         * 2 - LOHS
+         */
+        @SuppressLint("NoSettingsProvider")
+        @Readable
+        public static final String PROJECTION_ACCESS_POINT_TETHERING = "projection_access_point_tethering";
+
+        /**
          * Global settings that shouldn't be persisted.
          *
          * @hide
