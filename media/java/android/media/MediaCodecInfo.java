@@ -4617,7 +4617,7 @@ public final class MediaCodecInfo {
          * multiple of.
          */
         public int getHeightAlignment() {
-            return mImpl.getWidthAlignment();
+            return mImpl.getHeightAlignment();
         }
 
         /**
