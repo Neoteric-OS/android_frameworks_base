@@ -721,7 +721,18 @@ public final class ViewRootImpl implements ViewParent,
     private Predicate<KeyEvent> mWindowlessBackKeyCallback;
 
     public boolean mTraversalScheduled;
+    /**
+     * Tracks the current traversal scheduling state atomically.
+     *
+     * This exists to reduce the impact of data races on the view root, ensuring that
+     * concurrent scheduling and unscheduling of traversals (only possible under racy access)
+     * will not result in inconsistent state or missed traversals.
+     *
+     * Only used if {@link Flags#atomicTraversalBarrier} is enabled.
+     */
+    private final AtomicBoolean mTraversalScheduledAtomic = new AtomicBoolean(false);
     int mTraversalBarrier;
+    private final boolean mAtomicTraversalScheduled = atomicTraversalBarrier();
     boolean mWillDrawSoon;
     /** Set to true while in performTraversals for detecting when die(true) is called from internal
      * callbacks such as onMeasure, onPreDraw, onDraw and deferring doDie() until later. */
@@ -2492,7 +2503,10 @@ public final class ViewRootImpl implements ViewParent,
             // usually they are system windows.
             return;
         }
-        if (mAdded && mTraversalScheduled && mAttachInfo.mHasWindowFocus) {
+        // Use atomic read when atomic traversal is enabled
+        boolean isTraversalScheduled = mAtomicTraversalScheduled ?
+                mTraversalScheduledAtomic.get() : mTraversalScheduled;
+        if (mAdded && isTraversalScheduled && mAttachInfo.mHasWindowFocus) {
             try {
                 mWindowSession.pokeDrawLock(mWindow);
             } catch (RemoteException ex) {
@@ -2978,7 +2992,12 @@ public final class ViewRootImpl implements ViewParent,
 
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     void scheduleTraversals() {
-        if (!mTraversalScheduled) {
+            if (mAtomicTraversalScheduled) {
+                // Atomically set the scheduled flag
+                if (!mTraversalScheduledAtomic.compareAndSet(false, true)) {
+                    return; // Another thread already scheduled traversal
+                }
+            }
             mTraversalScheduled = true;
             mTraversalBarrier = mHandler.getLooper().getQueue().postSyncBarrier();
             mChoreographer.postCallback(
@@ -2990,6 +3009,10 @@ public final class ViewRootImpl implements ViewParent,
 
     void unscheduleTraversals() {
         if (mTraversalScheduled) {
+            if (mAtomicTraversalScheduled) {
+                // Atomically unset the scheduled flag
+                mTraversalScheduledAtomic.set(false);
+            }
             mTraversalScheduled = false;
             mHandler.getLooper().getQueue().removeSyncBarrier(mTraversalBarrier);
             mChoreographer.removeCallbacks(
@@ -2999,6 +3022,10 @@ public final class ViewRootImpl implements ViewParent,
 
     void doTraversal() {
         if (mTraversalScheduled) {
+            if (mAtomicTraversalScheduled) {
+                // Atomically unset the scheduled flag
+                mTraversalScheduledAtomic.set(false);
+            }
             mTraversalScheduled = false;
             mHandler.getLooper().getQueue().removeSyncBarrier(mTraversalBarrier);
 
@@ -9853,8 +9880,10 @@ public final class ViewRootImpl implements ViewParent,
         writer.println(innerPrefix + "mPendingInputEventCount=" + mPendingInputEventCount);
         writer.println(innerPrefix + "mProcessInputEventsScheduled="
                 + mProcessInputEventsScheduled);
-        writer.println(innerPrefix + "mTraversalScheduled=" + mTraversalScheduled);
-        if (mTraversalScheduled) {
+        boolean traversalScheduled = mAtomicTraversalScheduled ?
+                mTraversalScheduledAtomic.get() : mTraversalScheduled;
+        writer.println(innerPrefix + "mTraversalScheduled=" + traversalScheduled);
+        if (traversalScheduled) {
             writer.println(innerPrefix + " (barrier=" + mTraversalBarrier + ")");
         }
         writer.println(innerPrefix + "mReportNextDraw=" + mReportNextDraw);
