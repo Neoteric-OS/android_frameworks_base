@@ -1,0 +1,264 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0807ef71_eaa9f32f",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3075,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2026-04-01T22:41:33Z",
+      "side": 1,
+      "message": "Do we need N jobs for N users, or can we just change the only one job to write files for multiple users?",
+      "fixSuggestions": [
+        {
+          "fixId": "51c25023_03efd401",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+              "range": {
+                "startLine": 1037,
+                "startChar": 0,
+                "endLine": 1038,
+                "endChar": 0
+              },
+              "replacement": "                        // The single fallback job will pick up the user removal on its next run.\n"
+            },
+            {
+              "path": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+              "range": {
+                "startLine": 3067,
+                "startChar": 0,
+                "endLine": 3069,
+                "endChar": 0
+              },
+              "replacement": "        final JobScheduler namespacedJobScheduler \u003d jobScheduler.forNamespace(\n                SETTINGS_PROVIDER_JOBS_NS);\n\n        // Generate a unique job id for all users.\n        final int jobId \u003d WRITE_FALLBACK_SETTINGS_FILES_JOB_ID;\n\n        // Check if the job is already scheduled. If so, skip scheduling another one.\n        // The contents of the job (file paths) will be regenerated on each run.\n        if (namespacedJobScheduler.getPendingJob(jobId) !\u003d null) {\n            return;\n        }\n\n        // Back up all settings files for all alive users.\n"
+            },
+            {
+              "path": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+              "range": {
+                "startLine": 3074,
+                "startChar": 0,
+                "endLine": 3076,
+                "endChar": 0
+              },
+              "replacement": "        if (users.isEmpty()) {\n            Slog.w(LOG_TAG, \"No users found to schedule fallback write job for.\");\n            return;\n"
+            },
+            {
+              "path": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+              "range": {
+                "startLine": 3077,
+                "startChar": 0,
+                "endLine": 3078,
+                "endChar": 0
+              },
+              "replacement": ""
+            },
+            {
+              "path": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+              "range": {
+                "startLine": 3079,
+                "startChar": 0,
+                "endLine": 3086,
+                "endChar": 0
+              },
+              "replacement": "        ArrayList\u003cString\u003e allFilePaths \u003d new ArrayList\u003c\u003e();\n        for (UserInfo user : users) {\n            final int userId \u003d user.id;\n            // Global and Config are only for USER_SYSTEM\n            if (userId \u003d\u003d UserHandle.USER_SYSTEM) {\n                allFilePaths.add(mSettingsRegistry.getSettingsFile(\n                        makeKey(SETTINGS_TYPE_GLOBAL, userId)).getAbsolutePath());\n                allFilePaths.add(mSettingsRegistry.getSettingsFile(\n                        makeKey(SETTINGS_TYPE_CONFIG, userId)).getAbsolutePath());\n            }\n            allFilePaths.add(mSettingsRegistry.getSettingsFile(\n                    makeKey(SETTINGS_TYPE_SYSTEM, userId)).getAbsolutePath());\n            allFilePaths.add(mSettingsRegistry.getSettingsFile(\n                    makeKey(SETTINGS_TYPE_SECURE, userId)).getAbsolutePath());\n            allFilePaths.add(mSettingsRegistry.getSettingsFile(\n                    makeKey(SETTINGS_TYPE_SSAID, userId)).getAbsolutePath());\n"
+            },
+            {
+              "path": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+              "range": {
+                "startLine": 3087,
+                "startChar": 0,
+                "endLine": 3088,
+                "endChar": 0
+              },
+              "replacement": "\n"
+            },
+            {
+              "path": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+              "range": {
+                "startLine": 3089,
+                "startChar": 0,
+                "endLine": 3104,
+                "endChar": 0
+              },
+              "replacement": "        bundle.putStringArray(\"file_paths\", allFilePaths.toArray(new String[0]));\n\n"
+            },
+            {
+              "path": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+              "range": {
+                "startLine": 3105,
+                "startChar": 0,
+                "endLine": 3106,
+                "endChar": 0
+              },
+              "replacement": "        namespacedJobScheduler.schedule(new JobInfo.Builder(jobId,\n"
+            },
+            {
+              "path": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+              "range": {
+                "startLine": 3112,
+                "startChar": 0,
+                "endLine": 3127,
+                "endChar": 0
+              },
+              "replacement": "        Slog.i(LOG_TAG, \"Scheduled single fallback write job for \" + users.size() + \" users.\");\n"
+            },
+            {
+              "path": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+              "range": {
+                "startLine": 3129,
+                "startChar": 0,
+                "endLine": 3130,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "f6b79e089a76b6b7d288f4f14260aebdbe04ad6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "226dc1fb_1cad393f",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3116,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2026-04-01T22:41:33Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Check Contents: Prefer to use context.getSystemService(JobScheduler.class) instead to avoid the ...\n\nPrefer to use context.getSystemService(JobScheduler.class) instead to avoid the cast.",
+      "range": {
+        "startLine": 3116,
+        "startChar": 16,
+        "endLine": 3116,
+        "endChar": 56
+      },
+      "revId": "f6b79e089a76b6b7d288f4f14260aebdbe04ad6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d7c3da1c_61a7b573",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3122,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2026-04-01T22:41:33Z",
+      "side": 1,
+      "message": "nit: missing a space after \"//\". Same below",
+      "range": {
+        "startLine": 3122,
+        "startChar": 8,
+        "endLine": 3122,
+        "endChar": 10
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "43ed1423_9d56b9b9",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+              "range": {
+                "startLine": 3122,
+                "startChar": 0,
+                "endLine": 3123,
+                "endChar": 0
+              },
+              "replacement": "        // Generate a unique job id for removed user\n"
+            },
+            {
+              "path": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+              "range": {
+                "startLine": 3124,
+                "startChar": 0,
+                "endLine": 3125,
+                "endChar": 0
+              },
+              "replacement": "        // Cancel the job for removed user\n"
+            }
+          ]
+        }
+      ],
+      "revId": "f6b79e089a76b6b7d288f4f14260aebdbe04ad6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76c42ba3_79cc4ff5",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3123,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2026-04-01T22:41:33Z",
+      "side": 1,
+      "message": "Let\u0027s create a util method for computing the jobId per user so we don\u0027t duplicate the code here and in line 3082",
+      "range": {
+        "startLine": 3123,
+        "startChar": 24,
+        "endLine": 3123,
+        "endChar": 70
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "393511e8_15b40dd4",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+              "range": {
+                "startLine": 1,
+                "startChar": 0,
+                "endLine": 1,
+                "endChar": 0
+              },
+              "replacement": "    private static int getFallbackJobIdForUser(int userId) {\n        // Generate a unique job id for each user\n        return WRITE_FALLBACK_SETTINGS_FILES_JOB_ID + userId;\n    }\n\n"
+            },
+            {
+              "path": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+              "range": {
+                "startLine": 3081,
+                "startChar": 0,
+                "endLine": 3083,
+                "endChar": 0
+              },
+              "replacement": "        final int jobUserId \u003d getFallbackJobIdForUser(userId);\n"
+            },
+            {
+              "path": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+              "range": {
+                "startLine": 3122,
+                "startChar": 0,
+                "endLine": 3124,
+                "endChar": 0
+              },
+              "replacement": "        final int jobUserId \u003d getFallbackJobIdForUser(userId);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "f6b79e089a76b6b7d288f4f14260aebdbe04ad6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
