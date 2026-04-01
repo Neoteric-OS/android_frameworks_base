@@ -1792,4 +1792,9 @@
             <axis tag="wght" stylevalue="700"/>
         </font>
     </family>
+    <family lang="und-Zmth">
+        <font weight="400" style="normal" postScriptName="NotoSansMath-Regular">
+            NotoSansMath-Regular.otf
+        </font>
+    </family>
 </familyset>

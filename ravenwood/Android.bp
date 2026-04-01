@@ -453,6 +453,7 @@ filegroup {
         ":NotoSansManichaean-Regular.otf",
         ":NotoSansMarchen-Regular.otf",
         ":NotoSansMasaramGondi-Regular.otf",
+        ":NotoSansMath-Regular.otf",
         ":NotoSansMedefaidrin-VF.ttf",
         ":NotoSansMeeteiMayek-Regular.ttf",
         ":NotoSansMeroitic-Regular.otf",
