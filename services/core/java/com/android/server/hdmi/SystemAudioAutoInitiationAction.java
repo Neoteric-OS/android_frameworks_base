@@ -28,6 +28,7 @@ import com.android.server.hdmi.HdmiControlService.SendMessageCallback;
  */
 // Seq #27
 final class SystemAudioAutoInitiationAction extends HdmiCecFeatureAction {
+    private static final String TAG = "SystemAudioAutoInitiationAction";
     private final int mAvrAddress;
 
     // State that waits for <System Audio Mode Status> once send
@@ -90,11 +91,15 @@ final class SystemAudioAutoInitiationAction extends HdmiCecFeatureAction {
             return;
         }
 
-        // If System Audio Control feature is enabled, turn on system audio mode when new AVR is
-        // detected. Otherwise, turn off system audio mode.
-        boolean targetSystemAudioMode = tv().isSystemAudioControlFeatureEnabled();
-        addAndStartAction(
-                    new SystemAudioActionFromTv(tv(), mAvrAddress, targetSystemAudioMode, null));
+        if(currentSystemAudioMode && (tv().isSystemAudioActivated() == currentSystemAudioMode)) {
+            Slog.d(TAG, "System Audio Mode is already on, don't need start SystemAudioActionFromTv again");
+        } else {
+            // If System Audio Control feature is enabled, turn on system audio mode when new AVR is
+            // detected. Otherwise, turn off system audio mode.
+            boolean targetSystemAudioMode = tv().isSystemAudioControlFeatureEnabled();
+            addAndStartAction(
+                        new SystemAudioActionFromTv(tv(), mAvrAddress, targetSystemAudioMode, null));
+        }
         finish();
     }
 
