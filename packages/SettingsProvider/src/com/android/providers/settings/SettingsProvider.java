@@ -262,6 +262,7 @@ public class SettingsProvider extends ContentProvider {
     public static final String SETTINGS_PROVIDER_JOBS_NS = "SettingsProviderJobsNamespace";
     // Used for scheduling jobs to make a copy for the settings files
     public static final int WRITE_FALLBACK_SETTINGS_FILES_JOB_ID = 1;
+    public static final String EXTRA_FILE_PATHS = "file_paths";
     public static final long ONE_DAY_INTERVAL_MILLIS = 24 * 60 * 60 * 1000L;
 
     // Overlay specified settings allowlisted for Instant Apps
@@ -1062,6 +1063,9 @@ public class SettingsProvider extends ContentProvider {
                                         deviceId);
                             }
                         }
+                        // When adding a new user,
+                        // the job must be reset to ensure that backups are performed for the new user as well.
+                        scheduleWriteFallbackFilesJob(true);
                     }
                     case Intent.ACTION_USER_REMOVED -> {
                         synchronized (mLock) {
@@ -1071,6 +1075,7 @@ public class SettingsProvider extends ContentProvider {
                                         true);
                             }
                         }
+                        // The single fallback job will pick up the user removal on its next run.
                     }
                 }
             }
@@ -3153,22 +3158,61 @@ public class SettingsProvider extends ContentProvider {
     /**
      * Schedule the job service to make a copy of all the settings files.
      */
-    public void scheduleWriteFallbackFilesJob() {
+    public void scheduleWriteFallbackFilesJob(boolean forceReschedule) {
         final Context context = getContext();
-        JobScheduler jobScheduler =
-                (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        JobScheduler jobScheduler = context.getSystemService(JobScheduler.class);
         if (jobScheduler == null) {
             // Might happen: SettingsProvider is created before JobSchedulerService in system server
             return;
         }
-        jobScheduler = jobScheduler.forNamespace(SETTINGS_PROVIDER_JOBS_NS);
-        // Check if the job is already scheduled. If so, skip scheduling another one
-        if (jobScheduler.getPendingJob(WRITE_FALLBACK_SETTINGS_FILES_JOB_ID) != null) {
+        final JobScheduler namespacedJobScheduler = jobScheduler.forNamespace(
+            SETTINGS_PROVIDER_JOBS_NS);
+
+        // Check if the job is already scheduled. If so, skip scheduling another one.
+        // When adding a new user, the job must be reset.
+        // The contents of the job (file paths) will be regenerated on each run.
+        if (!forceReschedule
+                && namespacedJobScheduler.getPendingJob(WRITE_FALLBACK_SETTINGS_FILES_JOB_ID) != null) {
             return;
         }
+<<<<<<< HEAD   (45034f0663f960d9ee5fb0a101a4732b71f6e2f4 Merge cherrypicks of ['googleplex-android-review.googlesourc)
         // Back up all settings files.
         // Note that only default device settings need to be persisted.
+||||||| BASE   (99b01a65cc4c104933788b3143285ab6bae65827 Merge cherrypicks of ['googleplex-android-review.googlesourc)
+        // Back up all settings files
+=======
+
+        // Back up all settings files for all alive users.
+        // Profile users such as clone profiles or managed profiles also have their own
+        // settings files (secure, system, ssaid). If those files become corrupted and
+        // no fallback exists, readStateSyncLocked() will throw IllegalStateException
+        // and crash system_server on next boot.
+        final List<UserInfo> users = mUserManager.getAliveUsers();
+        if (users.isEmpty()) {
+            Slog.w(LOG_TAG, "No users found to schedule fallback write job for.");
+            return;
+        }
+        ArrayList<String> allFilePaths = new ArrayList<>();
+        for (UserInfo user : users) {
+            final int userId = user.id;
+            // Global and Config are only for USER_SYSTEM
+            if (userId == UserHandle.USER_SYSTEM) {
+                allFilePaths.add(mSettingsRegistry.getSettingsFile(
+                        makeKey(SETTINGS_TYPE_GLOBAL, userId)).getAbsolutePath());
+                allFilePaths.add(mSettingsRegistry.getSettingsFile(
+                        makeKey(SETTINGS_TYPE_CONFIG, userId)).getAbsolutePath());
+            }
+            allFilePaths.add(mSettingsRegistry.getSettingsFile(
+                    makeKey(SETTINGS_TYPE_SYSTEM, userId)).getAbsolutePath());
+            allFilePaths.add(mSettingsRegistry.getSettingsFile(
+                    makeKey(SETTINGS_TYPE_SECURE, userId)).getAbsolutePath());
+            allFilePaths.add(mSettingsRegistry.getSettingsFile(
+                    makeKey(SETTINGS_TYPE_SSAID, userId)).getAbsolutePath());
+        }
+
+>>>>>>> CHANGE (ce7e885f8da4137fe16d7b6b182fccafc06cee69 Fixed the issue where settings_secure.xml.fallback fails to )
         final PersistableBundle bundle = new PersistableBundle();
+<<<<<<< HEAD   (45034f0663f960d9ee5fb0a101a4732b71f6e2f4 Merge cherrypicks of ['googleplex-android-review.googlesourc)
         final File globalSettingsFile = SettingsRegistry.getSettingsFile(
                 makeKey(SETTINGS_TYPE_GLOBAL, UserHandle.USER_SYSTEM, Context.DEVICE_ID_DEFAULT));
         final File systemSettingsFile = SettingsRegistry.getSettingsFile(
@@ -3184,14 +3228,35 @@ public class SettingsProvider extends ContentProvider {
         bundle.putString(TABLE_SECURE, secureSettingsFile.getAbsolutePath());
         bundle.putString(TABLE_SSAID, ssaidSettingsFile.getAbsolutePath());
         bundle.putString(TABLE_CONFIG, configSettingsFile.getAbsolutePath());
+||||||| BASE   (99b01a65cc4c104933788b3143285ab6bae65827 Merge cherrypicks of ['googleplex-android-review.googlesourc)
+        final File globalSettingsFile = mSettingsRegistry.getSettingsFile(
+                makeKey(SETTINGS_TYPE_GLOBAL, UserHandle.USER_SYSTEM));
+        final File systemSettingsFile = mSettingsRegistry.getSettingsFile(
+                makeKey(SETTINGS_TYPE_SYSTEM, UserHandle.USER_SYSTEM));
+        final File secureSettingsFile = mSettingsRegistry.getSettingsFile(
+                makeKey(SETTINGS_TYPE_SECURE, UserHandle.USER_SYSTEM));
+        final File ssaidSettingsFile = mSettingsRegistry.getSettingsFile(
+                makeKey(SETTINGS_TYPE_SSAID, UserHandle.USER_SYSTEM));
+        final File configSettingsFile = mSettingsRegistry.getSettingsFile(
+                makeKey(SETTINGS_TYPE_CONFIG, UserHandle.USER_SYSTEM));
+        bundle.putString(TABLE_GLOBAL, globalSettingsFile.getAbsolutePath());
+        bundle.putString(TABLE_SYSTEM, systemSettingsFile.getAbsolutePath());
+        bundle.putString(TABLE_SECURE, secureSettingsFile.getAbsolutePath());
+        bundle.putString(TABLE_SSAID, ssaidSettingsFile.getAbsolutePath());
+        bundle.putString(TABLE_CONFIG, configSettingsFile.getAbsolutePath());
+=======
+        bundle.putStringArray(EXTRA_FILE_PATHS, allFilePaths.toArray(new String[0]));
+
+>>>>>>> CHANGE (ce7e885f8da4137fe16d7b6b182fccafc06cee69 Fixed the issue where settings_secure.xml.fallback fails to )
         // Schedule the job to write the fallback files, once daily when phone is charging
-        jobScheduler.schedule(new JobInfo.Builder(WRITE_FALLBACK_SETTINGS_FILES_JOB_ID,
+        namespacedJobScheduler.schedule(new JobInfo.Builder(WRITE_FALLBACK_SETTINGS_FILES_JOB_ID,
                 new ComponentName(context, WriteFallbackSettingsFilesJobService.class))
                 .setExtras(bundle)
                 .setPeriodic(ONE_DAY_INTERVAL_MILLIS)
                 .setRequiresCharging(true)
                 .setPersisted(true)
                 .build());
+        Slog.i(LOG_TAG, "Scheduled single fallback write job for " + users.size() + " users.");
     }
 
     /**
@@ -4260,7 +4325,7 @@ public class SettingsProvider extends ContentProvider {
                     }
                     case MSG_NOTIFY_DATA_CHANGED -> {
                         mBackupManager.dataChanged();
-                        scheduleWriteFallbackFilesJob();
+                        scheduleWriteFallbackFilesJob(false);
                     }
                 }
             }
