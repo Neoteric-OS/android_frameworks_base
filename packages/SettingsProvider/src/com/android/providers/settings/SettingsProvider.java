@@ -258,7 +258,7 @@ public class SettingsProvider extends ContentProvider {
 
     public static final String SETTINGS_PROVIDER_JOBS_NS = "SettingsProviderJobsNamespace";
     // Used for scheduling jobs to make a copy for the settings files
-    public static final int WRITE_FALLBACK_SETTINGS_FILES_JOB_ID = 1;
+    public static final int WRITE_FALLBACK_SETTINGS_FILES_JOB_ID = 0;
     public static final long ONE_DAY_INTERVAL_MILLIS = 24 * 60 * 60 * 1000L;
 
     // Overlay specified settings allowlisted for Instant Apps
@@ -1034,6 +1034,7 @@ public class SettingsProvider extends ContentProvider {
                         synchronized (mLock) {
                             mSettingsRegistry.removeUserStateLocked(userId, true);
                         }
+                        // The single fallback job will pick up the user removal on its next run.
                     }
                 }
             }
@@ -3057,42 +3058,55 @@ public class SettingsProvider extends ContentProvider {
      */
     public void scheduleWriteFallbackFilesJob() {
         final Context context = getContext();
-        JobScheduler jobScheduler =
-                (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        JobScheduler jobScheduler = context.getSystemService(JobScheduler.class);
         if (jobScheduler == null) {
             // Might happen: SettingsProvider is created before JobSchedulerService in system server
             return;
         }
-        jobScheduler = jobScheduler.forNamespace(SETTINGS_PROVIDER_JOBS_NS);
-        // Check if the job is already scheduled. If so, skip scheduling another one
-        if (jobScheduler.getPendingJob(WRITE_FALLBACK_SETTINGS_FILES_JOB_ID) != null) {
+        final JobScheduler namespacedJobScheduler = jobScheduler.forNamespace(
+            SETTINGS_PROVIDER_JOBS_NS);
+        // Generate a unique job id for all users.
+        final int jobId = WRITE_FALLBACK_SETTINGS_FILES_JOB_ID;
+        // Back up all settings files for all alive users.
+        // Profile users such as clone profiles or managed profiles also have their own
+        // settings files (secure, system, ssaid). If those files become corrupted and
+        // no fallback exists, readStateSyncLocked() will throw IllegalStateException
+        // and crash system_server on next boot.
+        final List<UserInfo> users = mUserManager.getAliveUsers();
+        if (users.isEmpty()) {
+            Slog.w(LOG_TAG, "No users found to schedule fallback write job for.");
             return;
         }
-        // Back up all settings files
+        ArrayList<String> allFilePaths = new ArrayList<>();
+        for (UserInfo user : users) {
+            final int userId = user.id;
+            // Global and Config are only for USER_SYSTEM
+            if (userId == UserHandle.USER_SYSTEM) {
+                allFilePaths.add(mSettingsRegistry.getSettingsFile(
+                        makeKey(SETTINGS_TYPE_GLOBAL, userId)).getAbsolutePath());
+                allFilePaths.add(mSettingsRegistry.getSettingsFile(
+                        makeKey(SETTINGS_TYPE_CONFIG, userId)).getAbsolutePath());
+            }
+            allFilePaths.add(mSettingsRegistry.getSettingsFile(
+                    makeKey(SETTINGS_TYPE_SYSTEM, userId)).getAbsolutePath());
+            allFilePaths.add(mSettingsRegistry.getSettingsFile(
+                    makeKey(SETTINGS_TYPE_SECURE, userId)).getAbsolutePath());
+            allFilePaths.add(mSettingsRegistry.getSettingsFile(
+                    makeKey(SETTINGS_TYPE_SSAID, userId)).getAbsolutePath());
+        }
+
         final PersistableBundle bundle = new PersistableBundle();
-        final File globalSettingsFile = mSettingsRegistry.getSettingsFile(
-                makeKey(SETTINGS_TYPE_GLOBAL, UserHandle.USER_SYSTEM));
-        final File systemSettingsFile = mSettingsRegistry.getSettingsFile(
-                makeKey(SETTINGS_TYPE_SYSTEM, UserHandle.USER_SYSTEM));
-        final File secureSettingsFile = mSettingsRegistry.getSettingsFile(
-                makeKey(SETTINGS_TYPE_SECURE, UserHandle.USER_SYSTEM));
-        final File ssaidSettingsFile = mSettingsRegistry.getSettingsFile(
-                makeKey(SETTINGS_TYPE_SSAID, UserHandle.USER_SYSTEM));
-        final File configSettingsFile = mSettingsRegistry.getSettingsFile(
-                makeKey(SETTINGS_TYPE_CONFIG, UserHandle.USER_SYSTEM));
-        bundle.putString(TABLE_GLOBAL, globalSettingsFile.getAbsolutePath());
-        bundle.putString(TABLE_SYSTEM, systemSettingsFile.getAbsolutePath());
-        bundle.putString(TABLE_SECURE, secureSettingsFile.getAbsolutePath());
-        bundle.putString(TABLE_SSAID, ssaidSettingsFile.getAbsolutePath());
-        bundle.putString(TABLE_CONFIG, configSettingsFile.getAbsolutePath());
+        bundle.putStringArray("file_paths", allFilePaths.toArray(new String[0]));
+
         // Schedule the job to write the fallback files, once daily when phone is charging
-        jobScheduler.schedule(new JobInfo.Builder(WRITE_FALLBACK_SETTINGS_FILES_JOB_ID,
+        namespacedJobScheduler.schedule(new JobInfo.Builder(jobId,
                 new ComponentName(context, WriteFallbackSettingsFilesJobService.class))
                 .setExtras(bundle)
                 .setPeriodic(ONE_DAY_INTERVAL_MILLIS)
                 .setRequiresCharging(true)
                 .setPersisted(true)
                 .build());
+        Slog.i(LOG_TAG, "Scheduled single fallback write job for " + users.size() + " users.");
     }
 
     /**
