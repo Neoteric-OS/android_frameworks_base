@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e93b19a_e4280004",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3068,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2026-04-02T20:40:15Z",
+      "side": 0,
+      "message": "I think this check is still needed",
+      "range": {
+        "startLine": 3067,
+        "startChar": 8,
+        "endLine": 3068,
+        "endChar": 87
+      },
+      "revId": "99b01a65cc4c104933788b3143285ab6bae65827",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}

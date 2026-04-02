@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2674221_de318407",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2026-04-02T20:40:15Z",
+      "side": 1,
+      "message": "Revert this change? No longer needed",
+      "range": {
+        "startLine": 261,
+        "startChar": 67,
+        "endLine": 261,
+        "endChar": 68
+      },
+      "revId": "7b040f29fa1da606321e5467ba9a66559392737a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c499a0c_7b6a4d8d",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 3069,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2026-04-02T20:40:15Z",
+      "side": 1,
+      "message": "Revert this change? No longer needed",
+      "range": {
+        "startLine": 3068,
+        "startChar": 8,
+        "endLine": 3069,
+        "endChar": 63
+      },
+      "revId": "7b040f29fa1da606321e5467ba9a66559392737a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
