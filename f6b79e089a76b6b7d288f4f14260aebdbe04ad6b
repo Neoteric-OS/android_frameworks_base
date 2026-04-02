@@ -128,6 +128,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ebc4b12a_bdf3232a",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3075,
+      "author": {
+        "id": 3869110
+      },
+      "writtenOn": "2026-04-02T11:26:13Z",
+      "side": 1,
+      "message": "Yes, all you need to do is modify that single job to allow multiple users to write to the file. I’ve also removed ```if (jobScheduler.getPendingJob(jobUserId) !\u003d null)``` so that backups can be performed for multiple users; otherwise, the backup would only be created for user 0. I’ve also updated the way filePatches are retrieved in onStartJob. Local validation can support multi-user backups. Please review this again to confirm if it’s feasible. Thank you.",
+      "parentUuid": "0807ef71_eaa9f32f",
+      "revId": "f6b79e089a76b6b7d288f4f14260aebdbe04ad6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "226dc1fb_1cad393f",
         "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
         "patchSetId": 1
@@ -139,6 +157,30 @@
       "writtenOn": "2026-04-01T22:41:33Z",
       "side": 1,
       "message": "Please fix this WARNING reported by Check Contents: Prefer to use context.getSystemService(JobScheduler.class) instead to avoid the ...\n\nPrefer to use context.getSystemService(JobScheduler.class) instead to avoid the cast.",
+      "range": {
+        "startLine": 3116,
+        "startChar": 16,
+        "endLine": 3116,
+        "endChar": 56
+      },
+      "revId": "f6b79e089a76b6b7d288f4f14260aebdbe04ad6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3cd377ee_4ca3fa22",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3116,
+      "author": {
+        "id": 3869110
+      },
+      "writtenOn": "2026-04-02T11:26:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "226dc1fb_1cad393f",
       "range": {
         "startLine": 3116,
         "startChar": 16,
@@ -200,6 +242,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4ca98f3_873118ef",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3122,
+      "author": {
+        "id": 3869110
+      },
+      "writtenOn": "2026-04-02T11:26:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7c3da1c_61a7b573",
+      "range": {
+        "startLine": 3122,
+        "startChar": 8,
+        "endLine": 3122,
+        "endChar": 10
+      },
+      "revId": "f6b79e089a76b6b7d288f4f14260aebdbe04ad6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "76c42ba3_79cc4ff5",
@@ -257,6 +323,30 @@
           ]
         }
       ],
+      "revId": "f6b79e089a76b6b7d288f4f14260aebdbe04ad6b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2bd59976_a6ed207f",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 3123,
+      "author": {
+        "id": 3869110
+      },
+      "writtenOn": "2026-04-02T11:26:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76c42ba3_79cc4ff5",
+      "range": {
+        "startLine": 3123,
+        "startChar": 24,
+        "endLine": 3123,
+        "endChar": 70
+      },
       "revId": "f6b79e089a76b6b7d288f4f14260aebdbe04ad6b",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
