@@ -1,0 +1,62 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4cb544c_63db045e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2026-04-03T23:51:28Z",
+      "side": 1,
+      "message": "nit: fix the long lines",
+      "revId": "4926a71d76a6d4bc4f59a846a7a66c849ecee9f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2491115_e346e139",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3177,
+      "author": {
+        "id": 1480715
+      },
+      "writtenOn": "2026-04-03T23:51:28Z",
+      "side": 1,
+      "message": "Let\u0027s also cancel the old job if forceReschedule\u003d\u003dtrue",
+      "range": {
+        "startLine": 3177,
+        "startChar": 6,
+        "endLine": 3177,
+        "endChar": 7
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "1976c0eb_b58b7c52",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+              "range": {
+                "startLine": 3174,
+                "startChar": 0,
+                "endLine": 3177,
+                "endChar": 0
+              },
+              "replacement": "        if (namespacedJobScheduler.getPendingJob(WRITE_FALLBACK_SETTINGS_FILES_JOB_ID) !\u003d null) {\n            if (!forceReschedule) {\n                return;\n            }\n            // Cancel the old job if forceReschedule is true.\n            namespacedJobScheduler.cancel(WRITE_FALLBACK_SETTINGS_FILES_JOB_ID);\n"
+            }
+          ]
+        }
+      ],
+      "revId": "4926a71d76a6d4bc4f59a846a7a66c849ecee9f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
