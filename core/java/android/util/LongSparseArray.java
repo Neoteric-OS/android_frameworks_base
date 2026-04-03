@@ -385,6 +385,8 @@ public class LongSparseArray<E> implements Cloneable {
      * Beware that this is a linear search, unlike lookups by key,
      * and that multiple keys can map to the same value and this will
      * find only one of them.
+     * <p>Note also that unlike most collections' {@code indexOf} methods,
+     * this method compares values using {@code ==} rather than {@code equals}.
      */
     public int indexOfValue(E value) {
         if (mGarbage) {
