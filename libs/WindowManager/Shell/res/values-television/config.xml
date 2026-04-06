@@ -22,7 +22,11 @@
     <!-- The percentage of the screen width to use for the default width or height of
          picture-in-picture windows. Regardless of the percent set here, calculated size will never
          be smaller than @dimen/default_minimal_size_pip_resizable_task. -->
-    <item name="config_pictureInPictureDefaultSizePercent" format="float" type="dimen">0.2</item>
+    <item name="config_pictureInPictureDefaultSizePercent" format="float" type="dimen">0.3</item>
+
+    <!-- Min and max percentages of the display shortest edge for user-configurable PiP window size. -->
+    <integer name="config_pictureInPictureMinSizePercent">20</integer>
+    <integer name="config_pictureInPictureMaxSizePercent">55</integer>
 
     <!-- Default insets [LEFT/RIGHTxTOP/BOTTOM] from the screen edge for picture-in-picture windows.
          These values are in DPs and will be converted to pixel sizes internally. -->

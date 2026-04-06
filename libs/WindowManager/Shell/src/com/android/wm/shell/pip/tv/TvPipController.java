@@ -275,6 +275,13 @@ public class TvPipController implements PipTransitionController.PipTransitionCal
     public void onUserChanged(int newUserId, @NonNull Context userContext) {
         // Re-register the media session listener when switching users
         registerSessionListenerForCurrentUser();
+
+        // Reload per-user PiP size preference for the new foreground user.
+        mTvPipBoundsState.onConfigurationChanged();
+
+        if (isPipShown()) {
+            updatePinnedStackBounds();
+        }
     }
 
     @Override

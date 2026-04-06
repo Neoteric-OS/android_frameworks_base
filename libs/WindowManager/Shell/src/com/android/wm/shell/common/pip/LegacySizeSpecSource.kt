@@ -16,9 +16,15 @@
 
 package com.android.wm.shell.common.pip
 
+import android.app.ActivityManager
 import android.content.Context
 import android.content.res.Resources
+import android.database.ContentObserver
 import android.graphics.PointF
+import android.os.Handler
+import android.os.Looper
+import android.os.UserHandle
+import android.provider.Settings
 import android.util.Size
 import com.android.wm.shell.R
 
@@ -40,6 +46,15 @@ class LegacySizeSpecSource(
 
     init {
         reloadResources()
+        context.contentResolver.registerContentObserver(
+                Settings.Secure.getUriFor(PIP_SETTING_KEY),
+                false,
+                object : ContentObserver(Handler(Looper.getMainLooper())) {
+                    override fun onChange(selfChange: Boolean) {
+                        onConfigurationChanged()
+                    }
+                },
+                UserHandle.USER_ALL)
     }
 
     private fun reloadResources() {
@@ -50,7 +65,16 @@ class LegacySizeSpecSource(
         mOverridableMinSize = res.getDimensionPixelSize(
                 R.dimen.overridable_minimal_size_pip_resizable_task)
 
-        mDefaultSizePercent = res.getFloat(R.dimen.config_pictureInPictureDefaultSizePercent)
+        val defaultPercent = (res.getFloat(R.dimen.config_pictureInPictureDefaultSizePercent)
+                * 100).toInt()
+        val minPercent = res.getInteger(R.integer.config_pictureInPictureMinSizePercent)
+        val maxPercent = res.getInteger(R.integer.config_pictureInPictureMaxSizePercent)
+        mDefaultSizePercent = Settings.Secure.getIntForUser(
+                context.contentResolver,
+                PIP_SETTING_KEY,
+                defaultPercent,
+                ActivityManager.getCurrentUser(),
+        ).coerceIn(minPercent, maxPercent) / 100f
         mMinimumSizePercent = res.getFraction(R.fraction.config_pipShortestEdgePercent, 1, 1)
 
         mMaxAspectRatioForMinSize = res.getFloat(
@@ -197,5 +221,10 @@ class LegacySizeSpecSource(
             // Size is taller, fix the height and adjust the width.
             Size((size.height * aspectRatio).toInt(), size.height)
         }
+    }
+
+    companion object {
+        /** Secure setting: PiP window size as a percentage (20–55). */
+        const val PIP_SETTING_KEY = "picture_in_picture_window_size_percent"
     }
 }
