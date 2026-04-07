@@ -285,7 +285,7 @@ class TaskOrganizerController extends ITaskOrganizerController.Stub {
             }
         }
 
-        private void dispatchTaskInfoChanged(Task task, boolean force) {
+        private synchronized void dispatchTaskInfoChanged(Task task, boolean force) {
             RunningTaskInfo lastInfo = mLastSentTaskInfos.get(task);
             if (mTmpTaskInfo == null) {
                 mTmpTaskInfo = new RunningTaskInfo();
