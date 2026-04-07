@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3a5a105e_3f403c31",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3869110
+      },
+      "writtenOn": "2026-04-07T02:07:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4cb544c_63db045e",
+      "revId": "4926a71d76a6d4bc4f59a846a7a66c849ecee9f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f2491115_e346e139",
@@ -55,6 +73,30 @@
           ]
         }
       ],
+      "revId": "4926a71d76a6d4bc4f59a846a7a66c849ecee9f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "53316a95_9eb3c46c",
+        "filename": "packages/SettingsProvider/src/com/android/providers/settings/SettingsProvider.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3177,
+      "author": {
+        "id": 3869110
+      },
+      "writtenOn": "2026-04-07T02:07:13Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "f2491115_e346e139",
+      "range": {
+        "startLine": 3177,
+        "startChar": 6,
+        "endLine": 3177,
+        "endChar": 7
+      },
       "revId": "4926a71d76a6d4bc4f59a846a7a66c849ecee9f3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
