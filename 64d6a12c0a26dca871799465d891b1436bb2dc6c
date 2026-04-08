@@ -67,6 +67,29 @@
       "message": "I\u0027m not working on Android anymore.",
       "revId": "64d6a12c0a26dca871799465d891b1436bb2dc6c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7200482f_1d6474a7",
+        "filename": "services/core/java/com/android/server/media/MediaRouterService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1576211
+      },
+      "writtenOn": "2026-04-08T18:48:04Z",
+      "side": 1,
+      "message": "The way I understand this change, this would essentially break the MediaRouter#select API, which is equivalent to enabling the flag Flags.disableSetBluetoothAd2pOnCalls(), which is something we\u0027ve been intentionally delaying.\n\nI\u0027ll have a think on how we can address this. We\u0027d also need to flag this change, since it doesn\u0027t seem trivially safe. And, also, we won\u0027t be able to backport it easily.",
+      "range": {
+        "startLine": 775,
+        "startChar": 18,
+        "endLine": 775,
+        "endChar": 67
+      },
+      "revId": "64d6a12c0a26dca871799465d891b1436bb2dc6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
