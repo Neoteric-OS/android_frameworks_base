@@ -111,6 +111,10 @@ public final class AppStartInfoTracker {
 
     private static final int APP_START_INFO_MONITORING_MODE_LIST_SIZE = 100;
 
+    @VisibleForTesting static final long MAX_PROC_START_INFO_FILE_BYTES = 5L * 1024 * 1024;
+
+    private boolean mIsAvoidReadingAppStartInfo = false;
+
     @VisibleForTesting static final String APP_START_STORE_DIR = "procstartstore";
 
     @VisibleForTesting static final String APP_START_INFO_FILE = "procstartinfo";
@@ -977,6 +981,13 @@ public final class AppStartInfoTracker {
             return;
         }
 
+        final long fileSize = mProcStartInfoFile.length();
+        if (fileSize > MAX_PROC_START_INFO_FILE_BYTES) {
+            Slog.w(TAG, "App start info file too large (" + fileSize
+                    + " bytes), avoid reading AppStartInfo records.");
+            mIsAvoidReadingAppStartInfo = true;
+        }
+
         FileInputStream fin = null;
         try {
             AtomicFile af = new AtomicFile(mProcStartInfoFile);
@@ -1499,6 +1510,9 @@ public final class AppStartInfoTracker {
                         mUid = proto.readInt(AppsStartInfoProto.Package.User.UID);
                         break;
                     case (int) AppsStartInfoProto.Package.User.APP_START_INFO:
+                        if (mIsAvoidReadingAppStartInfo) {
+                            continue;
+                        }
                         // Create record with monotonic time 0 in case the persisted record does not
                         // have a create time.
                         ApplicationStartInfo info = new ApplicationStartInfo(0);
