@@ -224,6 +224,7 @@ public final class WallpaperColors implements Parcelable {
             int minPixelsPerCluster = 16;
             int numberOfColors = Math.max(minClusters,
                     Math.min(maxClusters, bitmapArea / minPixelsPerCluster));
+            Log.i("WallpaperColors", "numberOfColors: " + numberOfColors + " bitmapArea: " + bitmapArea);
             palette = Palette
                     .from(bitmap, new CelebiQuantizer())
                     .maximumColorCount(numberOfColors)
@@ -246,12 +247,21 @@ public final class WallpaperColors implements Parcelable {
 
         int hints = calculateDarkHints(bitmap, dimAmount);
 
+        StringBuilder swatchesLog = new StringBuilder();
+        for (int i = 0; i < Math.min(30, swatchesSize); i++) {
+            swatchesLog.append("swatch ").append(i).append(": #")
+                    .append(Integer.toHexString(swatches.get(i).getInt())).append(", ");
+        }
+        Log.i("WallpaperColors", swatchesLog.toString());
+
         if (shouldRecycle) {
             bitmap.recycle();
         }
 
+        WallpaperColors result = new WallpaperColors(populationByColor, HINT_FROM_BITMAP | hints);
+        Log.i("WallpaperColors", "wallpaperColors: " + result);
         Trace.endSection();
-        return new WallpaperColors(populationByColor, HINT_FROM_BITMAP | hints);
+        return result;
     }
 
     /**
@@ -642,7 +652,7 @@ public final class WallpaperColors implements Parcelable {
     public String toString() {
         final StringBuilder colors = new StringBuilder();
         for (int i = 0; i < mMainColors.size(); i++) {
-            colors.append(Integer.toHexString(mMainColors.get(i).toArgb())).append(" ");
+            colors.append("#").append(Integer.toHexString(mMainColors.get(i).toArgb())).append(" ");
         }
         return "[WallpaperColors: " + colors.toString() + "h: " + mColorHints + "]";
     }

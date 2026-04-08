@@ -917,6 +917,7 @@ public class MediaControlPanel {
             WallpaperColors wallpaperColors = getWallpaperColor(artworkIcon);
             if (wallpaperColors != null) {
                 mutableColorScheme = new ColorScheme(wallpaperColors, true, Style.CONTENT);
+                Log.i("WallpaperColors", "wallpaperColors: " + mutableColorScheme);
                 artwork = addGradientToPlayerAlbum(artworkIcon, mutableColorScheme, finalWidth,
                         finalHeight);
                 isArtworkBound = true;
