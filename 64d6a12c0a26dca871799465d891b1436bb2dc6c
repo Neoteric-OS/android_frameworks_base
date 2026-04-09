@@ -90,6 +90,30 @@
       },
       "revId": "64d6a12c0a26dca871799465d891b1436bb2dc6c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "353cabec_2c71c560",
+        "filename": "services/core/java/com/android/server/media/MediaRouterService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1970830
+      },
+      "writtenOn": "2026-04-09T02:54:31Z",
+      "side": 1,
+      "message": "1. MediaRouter#select path is NOT affected by the cross-check\n\nThe concern is that after an app calls MediaRouter#select(defaultRoute) to turn A2DP off, restoreBluetoothA2dp(false) might be skipped by the cross-check.\n\nThis cannot happen because:\n\n- select(defaultRoute) -\u003e setBluetoothA2dpOn(client, false) -\u003e MediaRouterService.setBluetoothA2dpOn() -\u003e mAudioService.setBluetoothA2dpOn(false) -\u003e AudioDeviceBroker.setBluetoothA2dpOn_Async(false)\n- The very first line of setBluetoothA2dpOn_Async is mBluetoothA2dpEnabled.getAndSet(on) -- a synchronous write to an AtomicBoolean\n- Therefore mAudioService.isBluetoothA2dpOn() immediately returns false\n- The cross-check condition !a2dpOn \u0026\u0026 mAudioService.isBluetoothA2dpOn() evaluates to true \u0026\u0026 false \u003d false -\u003e no skip\n\nKey code path (AudioDeviceBroker.java:383-384):\n\n    /*package*/ void setBluetoothA2dpOn_Async(boolean on, String source) {\n        boolean wasOn \u003d mBluetoothA2dpEnabled.getAndSet(on);  // synchronous write\n        sendLMsgNoDelay(...);  // async force-use processing\n    }\n\nAnd isBluetoothA2dpOn() reads the same AtomicBoolean (AudioDeviceBroker.java:1363):\n\n    /*package*/ boolean isBluetoothA2dpOn() {\n        return mBluetoothA2dpEnabled.get();  // synchronous read\n    }\n\nThere is no window where select has called setBluetoothA2dpOn(false) but isBluetoothA2dpOn() still returns true. Both share the same AtomicBoolean, and the write is synchronous.\n\n2. This patch is NOT equivalent to disableSetBluetoothAd2pOnCalls()\n\n- disableSetBluetoothAd2pOnCalls() unconditionally skips all setBluetoothA2dpOn calls (both true and false)\n- The cross-check only skips in one specific condition: the locally cached state says \"off\" but AudioService\u0027s authoritative state says \"on\" -- i.e., the local state is stale\n- When the two are consistent (both true or both false), there is no skip\n\nSince the two are not equivalent, this change does not interfere with the rollout plan for disableSetBluetoothAd2pOnCalls().\n\n3. Regarding flagging this change\n\nThe cross-check is a read-only comparison against the authoritative mBluetoothA2dpEnabled AtomicBoolean. It has no side effects on the normal code path -- it only prevents an action when the local mGlobalBluetoothA2dpOn is provably stale. The log evidence (see below) confirms the exact race window this addresses.\n\nThat said, if there are still concerns about safety, I\u0027m open to gating this behind a flag for additional protection during rollout.\n\n4. Log evidence\n\nThe log captures the exact race condition during USB headset disconnection:\n\n    57.101  USB disconnected -\u003e setBluetoothA2dpOnInt(true) completes synchronously\n            At this point: mBluetoothA2dpEnabled\u003dtrue, mGlobalBluetoothA2dpOn\u003dfalse (stale)\n    57.669  Playback state change -\u003e restoreBluetoothA2dp()\n            Reads mGlobalBluetoothA2dpOn\u003dfalse (stale!) -\u003e setBluetoothA2dpOn(false) \u003c- WRONG\n    57.685  dispatchAudioRoutesChanged async callback arrives\n            mGlobalBluetoothA2dpOn\u003dtrue \u003c- 16ms too late\n\nThe cross-check detects this: at 57.669, a2dpOn\u003dfalse but isBluetoothA2dpOn()\u003dtrue (already synchronously set at 57.101), identifying the stale state and skipping the erroneous setBluetoothA2dpOn(false).\n\nWithout the fix, the erroneous setBluetoothA2dpOn(false) at 57.669 overrides the already-restored A2DP state, causing Bluetooth audio to be suppressed. Although a subsequent playback state change at 58.249 eventually corrects this with restoreBluetoothA2dp(true), users experience a ~580ms audio interruption on Bluetooth during USB disconnection.\n\n5. Regarding backport\n\nThe change adds a single conditional check in restoreBluetoothA2dp() with no new fields, callbacks, or state management. The scope is minimal and self-contained.",
+      "parentUuid": "7200482f_1d6474a7",
+      "range": {
+        "startLine": 775,
+        "startChar": 18,
+        "endLine": 775,
+        "endChar": 67
+      },
+      "revId": "64d6a12c0a26dca871799465d891b1436bb2dc6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
