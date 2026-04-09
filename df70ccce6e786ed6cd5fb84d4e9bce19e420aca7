@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3e43ac1_b34784ae",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010103
+      },
+      "writtenOn": "2026-04-09T02:12:05Z",
+      "side": 1,
+      "message": "This change breaks the threading model of RenderNode",
+      "revId": "df70ccce6e786ed6cd5fb84d4e9bce19e420aca7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
