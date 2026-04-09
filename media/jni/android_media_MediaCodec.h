@@ -218,6 +218,8 @@ private:
     std::once_flag mReleaseFlag;
     std::once_flag mAsyncReleaseFlag;
 
+    uint32_t mCurThread;
+
     sp<AMessage> mCallbackNotification;
     sp<AMessage> mOnFirstTunnelFrameReadyNotification;
     sp<AMessage> mOnFrameRenderedNotification;

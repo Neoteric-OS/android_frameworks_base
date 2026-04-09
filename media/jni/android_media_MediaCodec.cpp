@@ -248,7 +248,8 @@ JMediaCodec::JMediaCodec(
         JNIEnv *env, jobject thiz,
         const char *name, bool nameIsType, bool encoder, int pid, int uid)
     : mClass(NULL),
-      mObject(NULL) {
+      mObject(NULL),
+      mCurThread(0) {
     jclass clazz = env->GetObjectClass(thiz);
     CHECK(clazz != NULL);
 
@@ -261,7 +262,7 @@ JMediaCodec::JMediaCodec(
     mLooper->start(
             false,      // runOnCallingThread
             true,       // canCallJava
-            ANDROID_PRIORITY_VIDEO);
+            ANDROID_PRIORITY_HIGHEST);
 
     if (nameIsType) {
         mCodec = MediaCodec::CreateByType(mLooper, name, encoder, &mInitStatus, pid, uid);
@@ -551,6 +552,16 @@ status_t JMediaCodec::dequeueOutputBuffer(
 
 status_t JMediaCodec::releaseOutputBuffer(
         size_t index, bool render, bool updatePTS, int64_t timestampNs) {
+    if ((render || updatePTS) && (mCurThread != gettid())) {
+        jint ret = androidSetThreadPriority(0, ANDROID_PRIORITY_HIGHEST);
+        if (ret != 0) {
+            ALOGE("Set thread %d priority failed! err %d", gettid(), ret);
+        } else {
+            mCurThread = gettid();
+            jint priority = androidGetThreadPriority(mCurThread);
+            ALOGD("Set thread %d priority %d success", mCurThread, priority);
+        }
+    }
     if (updatePTS) {
         return mCodec->renderOutputBufferAndRelease(index, timestampNs);
     }
