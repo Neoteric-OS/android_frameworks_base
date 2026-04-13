@@ -916,24 +916,17 @@ final class Session
                 Slog.v(TAG, "New structure for requestId " + requestId + ": " + structure);
             }
 
+            try {
+                structure.ensureDataForAutofill();
+            } catch (RuntimeException e) {
+                wtf(e,
+                    "Exception lazy loading assist structure for %s: %s",
+                    structure.getActivityComponent(), e);
+                return;
+            }
+
             final FillRequest request;
             synchronized (mLock) {
-                // TODO(b/35708678): Must fetch the data so it's available later on handleSave(),
-                // even if if the activity is gone by then, but structure .ensureData() gives a
-                // ONE_WAY warning because system_service could block on app calls. We need to
-                // change AssistStructure so it provides a "one-way" writeToParcel() method that
-                // sends all the data
-                try {
-                    structure.ensureDataForAutofill();
-                } catch (RuntimeException e) {
-                    wtf(
-                            e,
-                            "Exception lazy loading assist structure for %s: %s",
-                            structure.getActivityComponent(),
-                            e);
-                    return;
-                }
-
                 final ArrayList<AutofillId> ids =
                         Helper.getAutofillIds(structure, /* autofillableOnly= */ false);
                 for (int i = 0; i < ids.size(); i++) {
@@ -1143,23 +1136,15 @@ final class Session
                                 + structure);
             }
 
-            synchronized (mLock) {
-                // TODO(b/35708678): Must fetch the data so it's available later on handleSave(),
-                // even if the activity is gone by then, but structure .ensureData() gives a
-                // ONE_WAY warning because system_service could block on app calls. We need to
-                // change AssistStructure so it provides a "one-way" writeToParcel() method that
-                // sends all the data
-                try {
-                    structure.ensureDataForAutofill();
-                } catch (RuntimeException e) {
-                    wtf(
-                            e,
-                            "Exception lazy loading assist structure for %s: %s",
-                            structure.getActivityComponent(),
-                            e);
-                    return;
-                }
+            try {
+                structure.ensureDataForAutofill();
+            } catch (RuntimeException e) {
+                wtf(e, "Exception lazy loading assist structure for %s: %s",
+                        structure.getActivityComponent(), e);
+                return;
+            }
 
+            synchronized (mLock) {
                 final ArrayList<AutofillId> ids =
                         Helper.getAutofillIds(structure, /* autofillableOnly= */ false);
                 for (int i = 0; i < ids.size(); i++) {
