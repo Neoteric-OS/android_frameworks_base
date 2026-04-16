@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bea6c4fe_027e11a6",
+        "filename": "services/core/java/com/android/server/broadcastradio/aidl/RadioModule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 4335366
+      },
+      "writtenOn": "2026-04-16T15:34:21Z",
+      "side": 1,
+      "message": "The only concern I have with pushing updates about the program list only for the current user is the situation below:\n\n1) We use the Radio app as the User A\n2) We switch the current user to User B\n3) The new `programListChunk` is pushed for User B only\n4) We switch the current user to User A back\n5) There is a missing `programListChunk` for User A\n\nSo the User A would have the stale data as the result. I believe the difference between the `fanoutAidlCallbackLocked` function and `onProgramListUpdated` is that the latter receives chunks and is stateful.\n\nTherefore, I would recommend only catching the `DeadObjectException` to prevent the  bug where the user switch is delayed because of dead TunerSessions. Let me know if it makes sense.",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 149,
+        "endChar": 20
+      },
+      "revId": "4e5f5b3fd300f541b5f341cf873475e5c8d8e631",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
