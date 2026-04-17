@@ -25,6 +25,7 @@ import android.hardware.radio.ProgramList;
 import android.hardware.radio.ProgramSelector;
 import android.hardware.radio.RadioManager;
 import android.os.Binder;
+import android.os.DeadObjectException;
 import android.os.RemoteException;
 import android.util.ArrayMap;
 import android.util.ArraySet;
@@ -333,6 +334,10 @@ final class TunerSession extends ITuner.Stub {
                 } else {
                     mCallback.onProgramListUpdated(chunks.get(i));
                 }
+            } catch (DeadObjectException ex) {
+                Slogf.w(TAG, "Client died without calling close(); removing dead TunerSession");
+                close();
+                return;
             } catch (RemoteException ex) {
                 Slogf.w(TAG, ex, "mCallback.onProgramListUpdated() failed");
             }

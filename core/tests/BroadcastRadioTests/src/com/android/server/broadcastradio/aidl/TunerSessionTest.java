@@ -48,6 +48,7 @@ import android.hardware.radio.ProgramSelector;
 import android.hardware.radio.RadioManager;
 import android.hardware.radio.RadioTuner;
 import android.os.Binder;
+import android.os.DeadObjectException;
 import android.os.ParcelableException;
 import android.os.RemoteException;
 import android.os.ServiceSpecificException;
@@ -1159,6 +1160,23 @@ public final class TunerSessionTest extends ExtendedRadioMockitoTestCase {
 
         assertWithMessage("Exception for getting parameters when HAL throws remote exception")
                 .that(thrown).hasMessageThat().contains(exceptionMessage);
+    }
+    @Test
+    public void onProgramListUpdated_withDeadClient_removesDeadSession()
+            throws Exception {
+        openAidlClients(1);
+        ProgramList.Filter filter = new ProgramList.Filter(new ArraySet<>(), new ArraySet<>(),
+                /* includeCategories= */ true, /* excludeModifications= */ false);
+        mTunerSessions[0].startProgramListUpdates(filter);
+        doThrow(new DeadObjectException()).when(mAidlTunerCallbackMocks[0])
+                .onProgramListUpdated(any());
+
+        mHalTunerCallback.onProgramListUpdated(AidlTestUtils.makeHalChunk(/* purge= */ true,
+                /* complete= */ true, List.of(TEST_FM_INFO), new ArrayList<>()));
+
+        verify(mAidlTunerCallbackMocks[0], CALLBACK_TIMEOUT).onProgramListUpdated(any());
+        assertWithMessage("Session close state after dead object exception")
+                .that(mTunerSessions[0].isClosed()).isTrue();
     }
 
     @Test
