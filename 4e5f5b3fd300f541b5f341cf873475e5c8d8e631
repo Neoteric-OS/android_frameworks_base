@@ -22,6 +22,30 @@
       },
       "revId": "4e5f5b3fd300f541b5f341cf873475e5c8d8e631",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfe6da96_785e0cfd",
+        "filename": "services/core/java/com/android/server/broadcastradio/aidl/RadioModule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1019443
+      },
+      "writtenOn": "2026-04-20T12:36:49Z",
+      "side": 1,
+      "message": "Hi @abror@google.com, thanks a lot for the carefull review!\n\nYou\u0027re absolutley right. I didn\u0027t think through the stateful nature of\nonProgramListUpdated() — since it delivers incremental chunks that build\nup the full program list, filtering by userId would cause User A to miss\nchunks while User B is active, and end up with stale data after switching\nback. That\u0027s clearly worse than the original bug.\n\nfanoutAidlCallbackLocked() is statless in comparison, so missing one event\nthere is fine since the next callback catches up naturally.\n\nJust to give some context — I\u0027m working on an IVI product (in-vehicle\ninfotainment) and we\u0027ve actually been hitting this exact issue in the field.\nProfile switches during radio playback cause the system_server main thread\nto get blocked for 80~145 seconds, and in repeated test runs it escalates\nto an ANR. Thats what motivated me to look into this.\n\nUpdated in PS2: removed the userId filtering from onProgramListUpdated()\nand kept only the DeadObjectException handling in dispatchClientUpdateChunks().\nAdded a note in the commit message explaining why the filtering was dropped.\n\nLet me know if there\u0027s anything else to address!",
+      "parentUuid": "bea6c4fe_027e11a6",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 149,
+        "endChar": 20
+      },
+      "revId": "4e5f5b3fd300f541b5f341cf873475e5c8d8e631",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
