@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bf64783_433df62b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4335366
+      },
+      "writtenOn": "2026-04-20T14:14:14Z",
+      "side": 1,
+      "message": "Thanks for the detailed explanation and the quick update!\n\nThis seems to be a serious issue, so I really appreciate you fixing it. I\u0027ve just left a minor comment regarding the test.",
+      "revId": "5cf04e367b8720b8aad0cacb6cfdc330883a76bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a4ddf76_3e29cc4a",
+        "filename": "core/tests/BroadcastRadioTests/src/com/android/server/broadcastradio/aidl/TunerSessionTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1166,
+      "author": {
+        "id": 4335366
+      },
+      "writtenOn": "2026-04-20T14:14:14Z",
+      "side": 1,
+      "message": "Do we need this test as `userid` filtering was not applied?",
+      "revId": "5cf04e367b8720b8aad0cacb6cfdc330883a76bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
