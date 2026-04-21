@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa85a12d_966dcb1b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4335366
+      },
+      "writtenOn": "2026-04-21T09:52:53Z",
+      "side": 1,
+      "message": "Looks great! Thanks for implementing the fix. Now waiting for Hubert as owner to return from vacation to have a look.",
+      "revId": "7ec40e3d26615461be92d3b257ae8cab4dfcddb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
