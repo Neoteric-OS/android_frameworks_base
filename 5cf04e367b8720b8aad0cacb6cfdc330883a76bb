@@ -33,6 +33,24 @@
       "message": "Do we need this test as `userid` filtering was not applied?",
       "revId": "5cf04e367b8720b8aad0cacb6cfdc330883a76bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09b7f2b1_c4d025e0",
+        "filename": "core/tests/BroadcastRadioTests/src/com/android/server/broadcastradio/aidl/TunerSessionTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1166,
+      "author": {
+        "id": 1019443
+      },
+      "writtenOn": "2026-04-21T09:35:31Z",
+      "side": 1,
+      "message": "Thanks for the carefull review and sorry for the delay in addressing it!\n\nI was at work when I saw your comment and rushed to fix it quickly — turns out I accidently left onProgramListUpdated_withNoncurrentUser_doesNotInvokeCallback from PS1 when userId filtering was still in place. Since the filtering was dropped in PS2, this test was verifying behavior that no longer exists (and would actually fail if run). Removed it in PS5.\n\nThe remaining tests should now correctly reflect the actual fix: onProgramListUpdated_withDeadClient_removesDeadSession verifies the dead session is removed on DeadObjectException, and onCurrentProgramInfoChanged_withNoncurrentUser_doesNotInvokeCallback covers the existing userId filtering in fanoutAidlCallbackLocked.",
+      "parentUuid": "3a4ddf76_3e29cc4a",
+      "revId": "5cf04e367b8720b8aad0cacb6cfdc330883a76bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
