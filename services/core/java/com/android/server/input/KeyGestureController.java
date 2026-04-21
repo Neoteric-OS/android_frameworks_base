@@ -282,32 +282,34 @@ final class KeyGestureController {
             }
         }
 
-        mKeyCombinationManager.addRule(
-                new KeyCombinationManager.TwoKeysCombinationRule(KeyEvent.KEYCODE_VOLUME_DOWN,
-                        KeyEvent.KEYCODE_VOLUME_UP) {
-                    @Override
-                    public boolean preCondition() {
-                        return isKeyGestureSupported(
-                                KeyGestureEvent.KEY_GESTURE_TYPE_ACCESSIBILITY_SHORTCUT_CHORD);
-                    }
+        if (!mHasFeatureLeanback) {
+            mKeyCombinationManager.addRule(
+                    new KeyCombinationManager.TwoKeysCombinationRule(KeyEvent.KEYCODE_VOLUME_DOWN,
+                            KeyEvent.KEYCODE_VOLUME_UP) {
+                        @Override
+                        public boolean preCondition() {
+                            return isKeyGestureSupported(
+                                    KeyGestureEvent.KEY_GESTURE_TYPE_ACCESSIBILITY_SHORTCUT_CHORD);
+                        }
 
-                    @Override
-                    public void execute() {
-                        handleMultiKeyGesture(
-                                new int[]{KeyEvent.KEYCODE_VOLUME_DOWN, KeyEvent.KEYCODE_VOLUME_UP},
-                                KeyGestureEvent.KEY_GESTURE_TYPE_ACCESSIBILITY_SHORTCUT_CHORD,
-                                KeyGestureEvent.ACTION_GESTURE_START, 0);
-                    }
+                        @Override
+                        public void execute() {
+                            handleMultiKeyGesture(
+                                    new int[]{KeyEvent.KEYCODE_VOLUME_DOWN, KeyEvent.KEYCODE_VOLUME_UP},
+                                    KeyGestureEvent.KEY_GESTURE_TYPE_ACCESSIBILITY_SHORTCUT_CHORD,
+                                    KeyGestureEvent.ACTION_GESTURE_START, 0);
+                        }
 
-                    @Override
-                    public void cancel() {
-                        handleMultiKeyGesture(
-                                new int[]{KeyEvent.KEYCODE_VOLUME_DOWN, KeyEvent.KEYCODE_VOLUME_UP},
-                                KeyGestureEvent.KEY_GESTURE_TYPE_ACCESSIBILITY_SHORTCUT_CHORD,
-                                KeyGestureEvent.ACTION_GESTURE_COMPLETE,
-                                KeyGestureEvent.FLAG_CANCELLED);
-                    }
-                });
+                        @Override
+                        public void cancel() {
+                            handleMultiKeyGesture(
+                                    new int[]{KeyEvent.KEYCODE_VOLUME_DOWN, KeyEvent.KEYCODE_VOLUME_UP},
+                                    KeyGestureEvent.KEY_GESTURE_TYPE_ACCESSIBILITY_SHORTCUT_CHORD,
+                                    KeyGestureEvent.ACTION_GESTURE_COMPLETE,
+                                    KeyGestureEvent.FLAG_CANCELLED);
+                        }
+                    });
+        }
 
         // Volume up + power can either be the "ringer toggle chord" or as another way to
         // launch GlobalActions. This behavior can change at runtime so we must check behavior

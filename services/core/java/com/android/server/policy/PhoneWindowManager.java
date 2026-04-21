@@ -2534,22 +2534,24 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             }
         }
 
-        mKeyCombinationManager.addRule(
-                new TwoKeysCombinationRule(KEYCODE_VOLUME_DOWN, KEYCODE_VOLUME_UP) {
-                    @Override
-                    public boolean preCondition() {
-                        return mAccessibilityShortcutController
-                                .isAccessibilityShortcutAvailable(isKeyguardLocked());
-                    }
-                    @Override
-                    public void execute() {
-                        interceptAccessibilityShortcutChord();
-                    }
-                    @Override
-                    public void cancel() {
-                        cancelPendingAccessibilityShortcutAction();
-                    }
-                });
+        if (!mHasFeatureLeanback) {
+            mKeyCombinationManager.addRule(
+                    new TwoKeysCombinationRule(KEYCODE_VOLUME_DOWN, KEYCODE_VOLUME_UP) {
+                        @Override
+                        public boolean preCondition() {
+                            return mAccessibilityShortcutController
+                                    .isAccessibilityShortcutAvailable(isKeyguardLocked());
+                        }
+                        @Override
+                        public void execute() {
+                            interceptAccessibilityShortcutChord();
+                        }
+                        @Override
+                        public void cancel() {
+                            cancelPendingAccessibilityShortcutAction();
+                        }
+                    });
+        }
 
         // Volume up + power can either be the "ringer toggle chord" or as another way to
         // launch GlobalActions. This behavior can change at runtime so we must check behavior
