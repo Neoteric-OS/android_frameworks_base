@@ -915,7 +915,7 @@ public class OomAdjusterModernImpl extends OomAdjuster {
     @Override
     protected void performUpdateOomAdjPendingTargetsLocked(@OomAdjReason int oomAdjReason) {
         mLastReason = oomAdjReason;
-        mProcessStateCurTop = enqueuePendingTopAppIfNecessaryLSP();
+        mProcessStateCurTop = enqueuePendingTopAppIfNecessaryLocked();
         Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, oomAdjReasonToString(oomAdjReason));
 
         synchronized (mProcLock) {

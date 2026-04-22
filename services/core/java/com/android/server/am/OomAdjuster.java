@@ -694,7 +694,7 @@ public class OomAdjuster {
         ArrayList<ProcessRecord> processes = mTmpProcessList;
         ActiveUids uids = mTmpUidRecords;
         mPendingProcessSet.add(app);
-        mProcessStateCurTop = enqueuePendingTopAppIfNecessaryLSP();
+        mProcessStateCurTop = enqueuePendingTopAppIfNecessaryLocked();
 
         boolean containsCycle = collectReachableProcessesLocked(mPendingProcessSet,
                 processes, uids);
@@ -720,8 +720,8 @@ public class OomAdjuster {
         return true;
     }
 
-    @GuardedBy({"mService", "mProcLock"})
-    protected int enqueuePendingTopAppIfNecessaryLSP() {
+    @GuardedBy("mService")
+    protected int enqueuePendingTopAppIfNecessaryLocked() {
         final int prevTopProcessState = mService.mAtmInternal.getTopProcessState();
         mService.enqueuePendingTopAppIfNecessaryLocked();
         final int topProcessState = mService.mAtmInternal.getTopProcessState();
@@ -968,7 +968,7 @@ public class OomAdjuster {
 
         mLastReason = oomAdjReason;
         Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, oomAdjReasonToString(oomAdjReason));
-        mProcessStateCurTop = enqueuePendingTopAppIfNecessaryLSP();
+        mProcessStateCurTop = enqueuePendingTopAppIfNecessaryLocked();
 
         final ArrayList<ProcessRecord> processes = mTmpProcessList;
         final ActiveUids uids = mTmpUidRecords;

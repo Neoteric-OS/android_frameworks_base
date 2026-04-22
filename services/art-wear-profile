@@ -5210,7 +5210,7 @@ HPLcom/android/server/am/OomAdjuster;->computeProviderHostOomAdjLSP(Lcom/android
 HPLcom/android/server/am/OomAdjuster;->computeServiceHostOomAdjLSP(Lcom/android/server/am/ConnectionRecord;Lcom/android/server/am/ProcessRecord;Lcom/android/server/am/ProcessRecord;JLcom/android/server/am/ProcessRecord;ZZZIIZZ)Z
 PLcom/android/server/am/OomAdjuster;->dumpCacheOomRankerSettings(Ljava/io/PrintWriter;)V
 PLcom/android/server/am/OomAdjuster;->dumpCachedAppOptimizerSettings(Ljava/io/PrintWriter;)V
-HPLcom/android/server/am/OomAdjuster;->enqueuePendingTopAppIfNecessaryLSP()I+]Lcom/android/server/wm/ActivityTaskManagerInternal;Lcom/android/server/wm/ActivityTaskManagerService$LocalService;
+HPLcom/android/server/am/OomAdjuster;->enqueuePendingTopAppIfNecessaryLocked()I+]Lcom/android/server/wm/ActivityTaskManagerInternal;Lcom/android/server/wm/ActivityTaskManagerService$LocalService;
 HPLcom/android/server/am/OomAdjuster;->evaluateConnectionPrelude(Lcom/android/server/am/ProcessRecord;Lcom/android/server/am/ProcessRecord;)Z
 HPLcom/android/server/am/OomAdjuster;->evaluateProviderConnectionAdd(Lcom/android/server/am/ProcessRecord;Lcom/android/server/am/ProcessRecord;)Z
 HPLcom/android/server/am/OomAdjuster;->getDefaultCapability(ILcom/android/server/am/ProcessRecord;)I
