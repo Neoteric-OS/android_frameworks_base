@@ -739,11 +739,23 @@ public final class ApplicationStartInfo implements Parcelable {
         dest.writeString(mPackageName);
         dest.writeString(mProcessName);
         dest.writeInt(mReason);
-        dest.writeInt(mStartupTimestampsNs == null ? 0 : mStartupTimestampsNs.size());
-        if (mStartupTimestampsNs != null) {
+        if (mStartupTimestampsNs == null) {
+            dest.writeInt(0);
+        } else {
+            int validCount = 0;
             for (int i = 0; i < mStartupTimestampsNs.size(); i++) {
-                dest.writeInt(mStartupTimestampsNs.keyAt(i));
-                dest.writeLong(mStartupTimestampsNs.valueAt(i));
+                if (mStartupTimestampsNs.keyAt(i) != null && mStartupTimestampsNs.valueAt(i) != null) {
+                    validCount++;
+                }
+            }
+            dest.writeInt(validCount);
+            for (int i = 0; i < mStartupTimestampsNs.size(); i++) {
+                Integer key = mStartupTimestampsNs.keyAt(i);
+                Long val = mStartupTimestampsNs.valueAt(i);
+                if (key != null && val != null) {
+                    dest.writeInt(key);
+                    dest.writeLong(val);
+                }
             }
         }
         dest.writeInt(mStartType);
@@ -851,11 +863,16 @@ public final class ApplicationStartInfo implements Parcelable {
             serializer.startDocument(null, true);
             serializer.startTag(null, PROTO_SERIALIZER_ATTRIBUTE_TIMESTAMPS);
             for (int i = 0; i < mStartupTimestampsNs.size(); i++) {
+                Integer key = mStartupTimestampsNs.keyAt(i);
+                Long val = mStartupTimestampsNs.valueAt(i);
+                if (key == null || val == null) {
+                    continue;
+                }
                 serializer.startTag(null, PROTO_SERIALIZER_ATTRIBUTE_TIMESTAMP);
                 serializer.attributeInt(null, PROTO_SERIALIZER_ATTRIBUTE_KEY,
-                        mStartupTimestampsNs.keyAt(i));
+                        key);
                 serializer.attributeLong(null, PROTO_SERIALIZER_ATTRIBUTE_TS,
-                        mStartupTimestampsNs.valueAt(i));
+                        val);
                 serializer.endTag(null, PROTO_SERIALIZER_ATTRIBUTE_TIMESTAMP);
             }
             serializer.endTag(null, PROTO_SERIALIZER_ATTRIBUTE_TIMESTAMPS);
@@ -1010,8 +1027,11 @@ public final class ApplicationStartInfo implements Parcelable {
         if (mStartupTimestampsNs != null && mStartupTimestampsNs.size() > 0) {
             sb.append(" timestamps: ");
             for (int i = 0; i < mStartupTimestampsNs.size(); i++) {
-                sb.append(mStartupTimestampsNs.keyAt(i)).append("=").append(mStartupTimestampsNs
-                        .valueAt(i)).append(" ");
+                Integer key = mStartupTimestampsNs.keyAt(i);
+                Long val = mStartupTimestampsNs.valueAt(i);
+                if (key != null && val != null) {
+                    sb.append(key).append("=").append(val).append(" ");
+                }
             }
             sb.append('\n');
         }
