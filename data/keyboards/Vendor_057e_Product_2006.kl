@@ -1,0 +1,49 @@
+# Copyright (C) 2026 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Nintendo Switch Joycon(L) - HAC-015 - Bluetooth
+
+# Mapping according to https://developer.android.com/training/game-controllers/controller-input.html
+
+# Currently, the dpad produces key events
+key 544   DPAD_UP
+key 545   DPAD_DOWN
+key 546   DPAD_LEFT
+key 547   DPAD_RIGHT
+
+# ↓ According to Vendor_057e_Product_2009.kl
+# Hat - currently not being produced by hid-nintendo, but an upcoming patch set will change the behaviour.
+# Keep these mappings in anticipation of that change
+axis 0x10    HAT_X
+axis 0x11    HAT_Y
+
+# Button labeled as "L"
+key 310   BUTTON_L1
+# No LT axes on this controller. Instead, there are keys.
+# Trigger labeled as "ZL"
+key 312   BUTTON_L2
+
+# Left stick click
+key 317   BUTTON_THUMBL
+
+# Mapping according to https://www.kernel.org/doc/Documentation/input/gamepad.txt
+# Minus
+key 314   BUTTON_SELECT
+
+# Circle
+key 309   BUTTON_MODE
+
+# Left Analog Stick
+axis 0x00 X
+axis 0x01 Y
