@@ -68,6 +68,24 @@
       "message": "@hubertmis@google.com / @abror@google.com \nCould one of you please click Submit to merge this change? The Presubmit-Verified vote will expire again after 2 working days, so an early submit would be greatly appreciated.",
       "revId": "7ec40e3d26615461be92d3b257ae8cab4dfcddb9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "98d79c59_82b375e7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4335366
+      },
+      "writtenOn": "2026-04-28T13:00:08Z",
+      "side": 1,
+      "message": "Hi! I\u0027m not able to submit the change, as it appears we need an additional approval from the code owner. Thank you for your patience!",
+      "parentUuid": "57537672_6b857910",
+      "revId": "7ec40e3d26615461be92d3b257ae8cab4dfcddb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
