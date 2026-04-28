@@ -103,6 +103,23 @@
       "message": "@oscarazu@google.com/ @xuweilin@google.com, who was added as reviewer owns the following files:\n\ncore/tests/BroadcastRadioTests/src/com/android/server/broadcastradio/aidl/TunerSessionTest.java\nservices/core/java/com/android/server/broadcastradio/aidl/TunerSession.java",
       "revId": "7ec40e3d26615461be92d3b257ae8cab4dfcddb9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "929a8f4d_80c828fe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1512908
+      },
+      "writtenOn": "2026-04-28T18:00:55Z",
+      "side": 1,
+      "message": "Raj can you comment on the process for new owner to bring this change into Android now?",
+      "revId": "7ec40e3d26615461be92d3b257ae8cab4dfcddb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
