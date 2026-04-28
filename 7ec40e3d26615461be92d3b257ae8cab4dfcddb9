@@ -34,6 +34,23 @@
       "parentUuid": "aa85a12d_966dcb1b",
       "revId": "7ec40e3d26615461be92d3b257ae8cab4dfcddb9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7b9430e9_ca4db503",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1019443
+      },
+      "writtenOn": "2026-04-28T00:27:28Z",
+      "side": 1,
+      "message": "All submit conditions are now satisfied (Code-Review+2 ×2, Presubmit-Verified+2 from TreeHugger today Apr 28).\nCould you please Submit this CL? Thanks!",
+      "revId": "7ec40e3d26615461be92d3b257ae8cab4dfcddb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
