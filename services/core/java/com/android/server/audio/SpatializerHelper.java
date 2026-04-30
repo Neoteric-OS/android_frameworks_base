@@ -336,7 +336,7 @@ public class SpatializerHelper {
         mState = STATE_UNINITIALIZED;
         mSpatLevel = Spatializer.SPATIALIZER_IMMERSIVE_LEVEL_NONE;
         mActualHeadTrackingMode = Spatializer.HEAD_TRACKING_MODE_UNSUPPORTED;
-        init(/*effectExpected=*/true);
+        init(/*effectExpected=*/featureEnabled);
         setSpatializerEnabledInt(featureEnabled);
     }
 
