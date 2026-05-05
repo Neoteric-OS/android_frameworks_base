@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c71c2359_4c939f28",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1395785
+      },
+      "writtenOn": "2026-05-05T22:24:12Z",
+      "side": 1,
+      "message": "This is certainly not the correct fix. Appop modes are persisted so just being cached or not running at the moment shouldn\u0027t exempt them them being reset to default state. It\u0027s also not clear to me why overlay package should be having a big impact because for those `getNonDefaultUidModes` ideally should be returning an empty or near empty list.\n\nI belive there is something here that can be improved here but we still need to operate on all packages and we need to at least apply\n\n```\nmAppOpsCheckingService.setUidMode()\n```\n\nunder this lock. Perhaps the callbacks can noted down to be dispatched outside of the lock or something; it\u0027s not quite clear to me right now what we can do without heavy risk.\n\nHow common is it to reset all apps on your devices?",
+      "revId": "470fd65d7985fcf882c80b130eda6b13be22d558",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
