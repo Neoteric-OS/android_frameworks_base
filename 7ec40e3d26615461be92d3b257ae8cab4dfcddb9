@@ -154,6 +154,24 @@
       "message": "Hi @oscarazu@google.com / @abror@google.com\n\nI wanted to reach out because the CL has been waiting for a few weeks now, and I\u0027m not sure what\u0027s holding it back. The Presubmit-Verified+2 from TreeHugger keeps expiring before the change gets merged (it just got re-issued on May 6, but will expire again around May 8–9).\n\nCould you help me understand:\n1. Is there anything else I need to do on my end to get this merged?\n2. Could you (or @abror@google.com) set the `Autosubmit+1` label, or click Submit when you get a chance?\n\nI completely understand if there\u0027s a specific Google-internal process I should be waiting on — just let me know and I\u0027ll be patient! 😊",
       "revId": "7ec40e3d26615461be92d3b257ae8cab4dfcddb9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "13f40e27_13c4ceaa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4335366
+      },
+      "writtenOn": "2026-05-08T12:01:32Z",
+      "side": 1,
+      "message": "Hi! Sorry for the late response. We\u0027re in the process for the CL to be cherry-picked to the internal branch first, then we\u0027d be able to submit it. No actions needed from your side.\nThanks for your patience!",
+      "parentUuid": "ccd533e6_2ca03ced",
+      "revId": "7ec40e3d26615461be92d3b257ae8cab4dfcddb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
