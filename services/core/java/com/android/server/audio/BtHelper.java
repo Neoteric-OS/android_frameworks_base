@@ -402,7 +402,9 @@ public class BtHelper {
             mDeviceBroker.onSetBtScoActiveDevice(btDevice, deviceSwitch);
         } else if (action.equals(BluetoothHeadset.ACTION_AUDIO_STATE_CHANGED)) {
             int btState = intent.getIntExtra(BluetoothProfile.EXTRA_STATE, -1);
-            onScoAudioStateChanged(btState);
+            BluetoothDevice scoDevice = intent.getParcelableExtra(
+                    BluetoothDevice.EXTRA_DEVICE, BluetoothDevice.class);
+            onScoAudioStateChanged(btState, scoDevice);
         }
     }
 
@@ -412,11 +414,13 @@ public class BtHelper {
      * as part of the serialization of the communication route selection
      */
     @GuardedBy("mDeviceBroker.mDeviceStateLock")
-    private synchronized void onScoAudioStateChanged(int state) {
+    private synchronized void onScoAudioStateChanged(int state,
+            @Nullable BluetoothDevice device) {
         boolean broadcast = false;
         int scoAudioState = AudioManager.SCO_AUDIO_STATE_ERROR;
         Log.i(TAG, "onScoAudioStateChanged  state: " + state
-                + ", mScoAudioState: " + mScoAudioState);
+                + ", mScoAudioState: " + mScoAudioState
+                + ", device: " + getAnonymizedAddress(device));
         switch (state) {
             case BluetoothHeadset.STATE_AUDIO_CONNECTED:
                 scoAudioState = AudioManager.SCO_AUDIO_STATE_CONNECTED;
@@ -433,6 +437,18 @@ public class BtHelper {
                 }
                 break;
             case BluetoothHeadset.STATE_AUDIO_DISCONNECTED:
+                // Ignore disconnect events from a device that is no longer the current
+                // active device. During BT active device switch, the old device's
+                // DISCONNECTED callback may arrive after mBluetoothHeadsetDevice has
+                // been updated to the new device and SCO has been started for it.
+                if (device != null && mBluetoothHeadsetDevice != null
+                        && !device.equals(mBluetoothHeadsetDevice)) {
+                    Log.i(TAG, "onScoAudioStateChanged: ignoring DISCONNECTED from"
+                            + " stale device " + getAnonymizedAddress(device)
+                            + ", current device: "
+                            + getAnonymizedAddress(mBluetoothHeadsetDevice));
+                    return;
+                }
                 if (!mDeviceBroker.isScoManagedByAudio()) {
                     mDeviceBroker.setBluetoothScoOn(
                             false, "BtHelper.onScoAudioStateChanged, state: " + state);
