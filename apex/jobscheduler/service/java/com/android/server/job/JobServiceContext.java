@@ -167,7 +167,7 @@ public final class JobServiceContext implements ServiceConnection {
     // Execution state.
     private JobParameters mParams;
     @VisibleForTesting
-    int mVerb;
+    volatile int mVerb;
     private boolean mCancelled;
     /**
      * True if the previous job on this context successfully finished (ie. called jobFinished or
