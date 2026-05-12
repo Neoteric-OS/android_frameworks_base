@@ -259,6 +259,24 @@
       "message": "I understand that `isClosed()` is checked for the state consistency in the test, so I believe we need to use `close()` function, which already contains the `onTunerSessionClosed(this)` call and switches the state of `mIsClosed` to true.",
       "revId": "7ec40e3d26615461be92d3b257ae8cab4dfcddb9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b6aee80_62d49f84",
+        "filename": "services/core/java/com/android/server/broadcastradio/aidl/TunerSession.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1019443
+      },
+      "writtenOn": "2026-05-12T15:26:59Z",
+      "side": 1,
+      "message": "Hi @abror@google.com, I\u0027ve uploaded PS7 to address your feedback — thank you again for the detailed comments!\n\nTunerSession.java: Replaced mModule.onTunerSessionClosed(this) with close() so that mIsClosed is proerly set to true alongside the session removal.\n\nTunerSessionTest.java: Added verify(mAidlTunerCallbackMocks[0], CALLBACK_TIMEOUT).onProgramListUpdated(any()) before the assertion to account for the async fireLater() behavior.\n\nAlso ran atest com.android.server.broadcastradio locally and the tests passsed.\n\nWould really appreciate it if you and the team could do a re-review on PS7 when you get a chance. Thank you so much for all your help! .",
+      "parentUuid": "e2ba58d6_c23a6f7c",
+      "revId": "7ec40e3d26615461be92d3b257ae8cab4dfcddb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
