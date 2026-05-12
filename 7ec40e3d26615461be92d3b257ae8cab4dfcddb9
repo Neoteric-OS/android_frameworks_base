@@ -226,6 +226,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fda665eb_ffe441a6",
+        "filename": "core/tests/BroadcastRadioTests/src/com/android/server/broadcastradio/aidl/TunerSessionTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1178,
+      "author": {
+        "id": 1019443
+      },
+      "writtenOn": "2026-05-12T10:41:40Z",
+      "side": 1,
+      "message": "Hi @abror, thank you so much for cherry-picking internally and catching these \nissues! I really appreciate the detailed feedback.\n\nI\u0027ve already made the changes locally based on your suggestions:\n1. Replaced `mModule.onTunerSessionClosed(this)` with `close()` in the \n   DeadObjectException catch block\n2. Added `verify(mAidlTunerCallbackMocks[0], CALLBACK_TIMEOUT)\n   .onProgramListUpdated(any())` before the assertion\n\nI\u0027d like to verify the fix properly before uploading a new patch set. \nCould you give me a little time to run the tests? I\u0027ll upload PS7 shortly.",
+      "parentUuid": "e3538656_6dea97d6",
+      "revId": "7ec40e3d26615461be92d3b257ae8cab4dfcddb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e2ba58d6_c23a6f7c",
