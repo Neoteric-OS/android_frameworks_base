@@ -190,6 +190,57 @@
       "parentUuid": "13f40e27_13c4ceaa",
       "revId": "7ec40e3d26615461be92d3b257ae8cab4dfcddb9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c6e61fe_f0cf74d1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4335366
+      },
+      "writtenOn": "2026-05-12T10:07:30Z",
+      "side": 1,
+      "message": "Hi! While cherry-picking to the internal branch, there were some test failures connected to `mIsClose` flag. I commented on how we can avoid those failures, while keeping the goal of the fix. Let me know if you have any questions.",
+      "revId": "7ec40e3d26615461be92d3b257ae8cab4dfcddb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3538656_6dea97d6",
+        "filename": "core/tests/BroadcastRadioTests/src/com/android/server/broadcastradio/aidl/TunerSessionTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1178,
+      "author": {
+        "id": 4335366
+      },
+      "writtenOn": "2026-05-12T10:07:30Z",
+      "side": 1,
+      "message": "I noticed that this test fails because we haven\u0027t set `mIsClosed` to true before calling `onTunerSessionClosed(this)` in `dispatchClientUpdateChunks()` function.\n\nAs fireLater() is used for the onProgramListUpdated, we need to use verify to make sure that the handler is executed. We can use the following before asswerWithMessage:\n`verify(mAidlTunerCallbackMocks[0], CALLBACK_TIMEOUT).onProgramListUpdated(any());`.",
+      "revId": "7ec40e3d26615461be92d3b257ae8cab4dfcddb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e2ba58d6_c23a6f7c",
+        "filename": "services/core/java/com/android/server/broadcastradio/aidl/TunerSession.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 4335366
+      },
+      "writtenOn": "2026-05-12T10:07:30Z",
+      "side": 1,
+      "message": "I understand that `isClosed()` is checked for the state consistency in the test, so I believe we need to use `close()` function, which already contains the `onTunerSessionClosed(this)` call and switches the state of `mIsClosed` to true.",
+      "revId": "7ec40e3d26615461be92d3b257ae8cab4dfcddb9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
