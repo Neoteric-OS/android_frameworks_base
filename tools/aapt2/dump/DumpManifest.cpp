@@ -1181,6 +1181,8 @@ class CommonFeatureGroup : public FeatureGroup {
       if (features_.find(feature.first) == features_.end()) {
         auto out_feature = feature_group->add_features();
         out_feature->set_name(feature.first);
+        // Implied features are required by default https://developer.android.com/guide/topics/manifest/uses-feature-element#implicit
+        out_feature->set_required(true);
         auto implied_data = out_feature->mutable_implied_data();
         implied_data->set_from_sdk_23_permission(feature.second.implied_from_sdk_k23);
         for (auto& reason : feature.second.reasons) {
