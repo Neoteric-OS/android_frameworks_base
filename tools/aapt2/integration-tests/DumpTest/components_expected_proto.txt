@@ -113,12 +113,14 @@ badging {
     }
     features {
       name: "android.hardware.faketouch"
+      required: true
       implied_data {
         reasons: "default feature for all apps"
       }
     }
     features {
       name: "android.hardware.telephony"
+      required: true
       implied_data {
         from_sdk_23_permission: true
         reasons: "requested a telephony permission"
