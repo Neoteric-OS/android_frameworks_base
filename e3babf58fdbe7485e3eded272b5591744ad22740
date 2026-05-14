@@ -33,6 +33,23 @@
       "message": "Thank you for your patch to address the stale TunerSession issue on DeadObjectException. We appreciate you taking the time to work on this.\n\nAs we were reviewing and testing, we ran into some complexities that required a bit more consideration. To ensure a robust solution, we\u0027ve started working on an internal change that builds upon the direction of your patch.\n\nWe\u0027ll keep you posted on the progress. Thanks again for your valuable input!",
       "revId": "e3babf58fdbe7485e3eded272b5591744ad22740",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c3410481_a6da0ff1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4335366
+      },
+      "writtenOn": "2026-05-14T09:52:41Z",
+      "side": 1,
+      "message": "Hi!\n\nI\u0027d like to ask one more request: Could you please raise a separate bug report describing the original issue with the stale TunerSession and the DeadObjectException you observed?\n\nThanks!\nAbror",
+      "revId": "e3babf58fdbe7485e3eded272b5591744ad22740",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
