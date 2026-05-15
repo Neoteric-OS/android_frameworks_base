@@ -33,6 +33,23 @@
       "message": "Hi reviewers, could you kindly review this CL?",
       "revId": "c3afe65fab589c67177a85c3d61c55319d8088da",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5d1f6ac_a834d44b",
+        "filename": "core/java/android/view/MotionEvent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2187,
+      "author": {
+        "id": 1994600
+      },
+      "writtenOn": "2026-05-15T08:23:15Z",
+      "side": 1,
+      "message": "Have you considered modifying the test to supply display id to `MotionEvent.obtain`. It doesn\u0027t feel right MotionEvent class to have logic related to user resolution.",
+      "revId": "c3afe65fab589c67177a85c3d61c55319d8088da",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
