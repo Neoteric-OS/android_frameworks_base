@@ -1822,7 +1822,8 @@ public abstract class WallpaperService extends Service {
                 final long timeToWait = Math.max(0,
                         PROCESS_LOCAL_COLORS_INTERVAL_MS - timeSinceLastColorProcess);
 
-                mHandler.postDelayed(() -> {
+                //Move to background
+                mBackgroundHandler.postDelayed(() -> {
                     mLastProcessLocalColorsTimestamp = now + timeToWait;
                     mProcessLocalColorsPending.set(false);
                     processLocalColorsInternal();
