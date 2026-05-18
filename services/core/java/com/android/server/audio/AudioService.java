@@ -493,6 +493,7 @@ public class AudioService extends IAudioService.Stub
     private static final int MSG_CONFIGURATION_CHANGED = 54;
     private static final int MSG_BROADCAST_MASTER_MUTE = 55;
     private static final int MSG_UPDATE_CONTEXTUAL_VOLUMES = 56;
+    private static final int MSG_SCREEN_STATE_CHANGED = 57;
 
     /**
      * Messages handled by the {@link SoundDoseHelper}, do not exceed
@@ -11311,6 +11312,10 @@ public class AudioService extends IAudioService.Stub
                     onConfigurationChanged();
                     break;
 
+                case MSG_SCREEN_STATE_CHANGED:
+                    mAudioSystem.setParameters((String) msg.obj);
+                    break;
+
                 case MSG_UPDATE_CONTEXTUAL_VOLUMES:
                     onUpdateContextualVolumes();
                     break;
@@ -11550,13 +11555,15 @@ public class AudioService extends IAudioService.Stub
                 if (mMonitorRotation) {
                     RotationHelper.enable();
                 }
-                AudioSystem.setParameters("screen_state=on");
+                sendMsg(mAudioHandler, MSG_SCREEN_STATE_CHANGED, SENDMSG_REPLACE,
+                        0, 0, "screen_state=on", 0);
             } else if (action.equals(Intent.ACTION_SCREEN_OFF)) {
                 if (mMonitorRotation) {
                     //reduce wakeups (save current) by only listening when display is on
                     RotationHelper.disable();
                 }
-                AudioSystem.setParameters("screen_state=off");
+                sendMsg(mAudioHandler, MSG_SCREEN_STATE_CHANGED, SENDMSG_REPLACE,
+                        0, 0, "screen_state=off", 0);
             } else if (action.equals(Intent.ACTION_CONFIGURATION_CHANGED)) {
                 sendMsg(mAudioHandler,
                         MSG_CONFIGURATION_CHANGED,
