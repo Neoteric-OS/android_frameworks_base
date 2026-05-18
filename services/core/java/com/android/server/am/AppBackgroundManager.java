@@ -124,6 +124,17 @@ public class AppBackgroundManager {
         }
     }
 
+    private boolean mUseBgMallocPurge = false;
+    private boolean mUseIdleMallocPurge = false;
+
+    public void requestIdleProcessMallocPurge() {
+        if (mUseIdleMallocPurge) {
+            Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "idleMallocPurge");
+            Process.sendMallocPurgeSignalToAll();
+            Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
+        }
+    }
+
     private void syncAppFreezerStateWithUiFluencyMode() {
         final String targetState = mUseUiFluencyMode ? "disabled" : "enabled";
         final String currentState = Settings.Global.getString(
@@ -333,6 +344,10 @@ public class AppBackgroundManager {
                 String.valueOf(DEFAULT_DELAY_UNFREEZER_TIMEOUT)));
         mUseDebug = Boolean.valueOf(mPerf.perfGetProp(
                 "ro.vendor.perf.app_bg_manager.enable_debug", "true"));
+        mUseBgMallocPurge = Boolean.valueOf(mPerf.perfGetProp(
+                "ro.vendor.perf.app_bg_manager.enable_bg_malloc_purge", "true"));
+        mUseIdleMallocPurge = Boolean.valueOf(mPerf.perfGetProp(
+                "ro.vendor.perf.app_bg_manager.enable_idle_malloc_purge", "false"));
     }
 
     public class CpuLoadMonitor {
@@ -1755,6 +1770,38 @@ public class AppBackgroundManager {
         }
     }
 
+    private void sendMallocPurgeToApp(String packageName) {
+        if (mAm == null) {
+            return;
+        }
+
+        synchronized (mAm.mProcLock) {
+            final ArrayList<ProcessRecord> lruList = mAm.mProcessList.getLruProcessesLOSP();
+            for (int i = lruList.size() - 1; i >= 0; i--) {
+                final ProcessRecord app = lruList.get(i);
+
+                if (app.info != null && packageName.equals(app.info.packageName)) {
+                    int pid = app.getPid();
+                    if (pid <= 0) {
+                        continue;
+                    }
+
+                    try {
+                        Process.sendMallocPurgeSignalToPid(pid);
+                        if (mUseDebug) {
+                            Slog.d(TAG, String.format(
+                                "Sent malloc purge signal to %s (pid=%d)", app.processName, pid));
+                        }
+                    } catch (Exception e) {
+                        Slog.e(TAG, String.format(
+                            "Failed to send malloc purge signal to %s (pid=%d): %s",
+                            app.processName, pid, e.getMessage()));
+                    }
+                }
+            }
+        }
+    }
+
     public void setPackageAutoStartAllowed(String packageName) {
         mAutoStartManagement.setPackageAutoStartAllowed(packageName);
     }
@@ -1902,6 +1949,10 @@ public class AppBackgroundManager {
                 setPackageAutoStartBlocked(packageName);
             }
         }
+
+        if (mUseBgMallocPurge) {
+            sendMallocPurgeToApp(packageName);
+        }
     }
 
     public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
@@ -1919,6 +1970,8 @@ public class AppBackgroundManager {
         // Configuration dump
         pw.println("CONFIGURATION:");
         pw.println("  app_bg_manager.enable: " + mUseAppBgManager);
+        pw.println("  app_bg_manager.enable_bg_malloc_purge: " + mUseBgMallocPurge);
+        pw.println("  app_bg_manager.enable_idle_malloc_purge: " + mUseIdleMallocPurge);
         pw.println("  app_bg_manager.enable_restrict_auto_start: " + mUseRestrictBgAutoStart);
         pw.println("  app_bg_manager.enable_process_level_freezer: " + mUseProcessLevelFreezer);
         pw.println("  app_bg_manager.enable_package_level_freezer: " + mUsePackageLevelFreezer);
