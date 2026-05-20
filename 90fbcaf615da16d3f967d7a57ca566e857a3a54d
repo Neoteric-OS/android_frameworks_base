@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf1c8379_9fdfb178",
+        "filename": "apex/jobscheduler/service/java/com/android/server/job/JobServiceContext.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1492,
+      "author": {
+        "id": 1886067
+      },
+      "writtenOn": "2026-05-20T08:42:50Z",
+      "side": 1,
+      "message": "I do not think this kind of scenario can ever happen, this looks more a cpu optimization problem then a fix on framework side, variable mVerb is gurded by lock and if mParams is cleaned up and null then mVerb will be `VERB_FINISHED `.\n\nScenarios where mParams becomes null \n1. Start the execution of job and binding unable to happen.\n2. Cleaning up the job\n\nin either case we use common mLock which should handle this and set mVerb to FINISHED hence along with mParams \u003d\u003d null , VERB_EXECUTING can not possible.\nnullifying mPrams and updating mVerb is always happened under common mLock, hence in any case even a case describe in this bug is not possible.\n\n-\u003e When this rare scenario could happen?\n\nWhenever MSG_TIMEOUT is received and we are in process to handleOpTimeoutLocked() at the same time closeAndCleanupJobLocked() is called and executed first.\nHere closeAndCleanupJobLocked() is executed and it sets the mParams to null with mVerb \u003d FINISHED. After completing this execution , handleOpTimeoutLocked()  started executing while holding mLock. This method under low level memory might get old cached value for mVerb which might be VERB_EXECUTING and it entered specific switch case where it found mParams is null which leads to NPE.\n\nConclusion:  This case looks more on specific processor side then framework side, It has to be handled and memory needs to be refreshed with latest results to avoid such case.\n\nSuggestion: You could define mVerb as volatile and verify if this issue persist?",
+      "range": {
+        "startLine": 1488,
+        "startChar": 24,
+        "endLine": 1492,
+        "endChar": 25
+      },
+      "revId": "90fbcaf615da16d3f967d7a57ca566e857a3a54d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
