@@ -80,6 +80,7 @@ import android.os.Trace;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.os.storage.StorageManager;
+import android.os.storage.StorageVolume;
 import android.permission.PermissionControllerManager;
 import android.permission.PermissionManager;
 import android.system.ErrnoException;
@@ -3592,6 +3593,15 @@ class ContextImpl extends Context {
                             // Failing to mkdir() may be okay, since we might not have
                             // enough permissions; ask vold to create on our behalf.
                             sm.mkdirs(dir);
+                            // Skip vold IPC if volume is not mounted to avoid
+                            // blocking mSync for ~48s (ANR / black screen).
+                            final StorageVolume vol = sm.getStorageVolume(dir);
+                            if (vol != null && !Environment.MEDIA_MOUNTED
+                                    .equals(vol.getState())) {
+                                dir = null;
+                            } else {
+                                sm.mkdirs(dir);
+                            }
                         }
                     }
                 } catch (Exception e) {
