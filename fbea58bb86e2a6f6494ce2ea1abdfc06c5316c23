@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1cc77fbc_273cbb95",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3965455
+      },
+      "writtenOn": "2026-05-22T01:34:09Z",
+      "side": 1,
+      "message": "There is XR_API_FEATURE defined in FeatureUtil.java.",
+      "revId": "fbea58bb86e2a6f6494ce2ea1abdfc06c5316c23",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
