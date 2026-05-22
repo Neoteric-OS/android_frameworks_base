@@ -23,9 +23,10 @@ import android.annotation.SdkConstant.SdkConstantType;
  * The AlarmClock provider contains an Intent action and extras that can be used
  * to start an Activity to set a new alarm or timer in an alarm clock application.
  *
- * Applications that wish to receive the ACTION_SET_ALARM  and ACTION_SET_TIMER Intents
- * should create an activity to handle the Intent that requires the permission
- * com.android.alarm.permission.SET_ALARM.  Applications that wish to create a
+ * Applications that wish to receive the ACTION_SET_ALARM, ACTION_SET_TIMER,
+ * ACTION_DISMISS_ALARM, and ACTION_SNOOZE_ALARM Intents should create an activity to handle
+ * the Intent that requires the permission, com.android.alarm.permission.SET_ALARM.
+ *  Applications that wish to create a
  * new alarm or timer should use
  * {@link android.content.Context#startActivity Context.startActivity()} so that
  * the user has the option of choosing which alarm clock application to use.
@@ -114,7 +115,11 @@ public final class AlarmClock {
      * optionally set to specify the snooze duration; if unset, the implementation should use a
      * reasonable default, for example 10 minutes. The alarm should ring again after the snooze
      * duration.
-     * </p><p>
+     * </p>
+     * <p>Any application that wants to use this action should also be granted the
+     * {@link android.Manifest.permission#SET_ALARM} permission.
+     * </p>
+     * <p>
      * Note: setting the extra {@link #EXTRA_ALARM_SNOOZE_DURATION} does not change the default
      * snooze duration; it's only applied to the currently ringing alarm.
      * </p><p>
