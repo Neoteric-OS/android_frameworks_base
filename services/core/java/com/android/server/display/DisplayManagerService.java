@@ -274,6 +274,7 @@ public final class DisplayManagerService extends SystemService {
     private static final int MSG_DELIVER_DISPLAY_GROUP_EVENT = 8;
     private static final int MSG_RECEIVED_DEVICE_STATE = 9;
     private static final int[] EMPTY_ARRAY = new int[0];
+    private static final WifiDisplayStatus EMPTY_WIFI_DISPLAY_STATUS = new WifiDisplayStatus();
     private static final HdrConversionMode HDR_CONVERSION_MODE_UNSUPPORTED = new HdrConversionMode(
             HDR_CONVERSION_UNSUPPORTED);
 
@@ -1030,12 +1031,14 @@ public final class DisplayManagerService extends SystemService {
             }
 
             if (Trace.isTagEnabled(Trace.TRACE_TAG_POWER)) {
-                traceMessage = Display.stateToString(state)
-                           + ", brightness=" + brightnessState
-                           + ", sdrBrightness=" + sdrBrightnessState;
+                StringBuilder sb = new StringBuilder(64);
+                sb.append(Display.stateToString(state))
+                  .append(", brightness=").append(brightnessState)
+                  .append(", sdrBrightness=").append(sdrBrightnessState);
+                
                 Trace.asyncTraceForTrackBegin(Trace.TRACE_TAG_POWER,
                         "requestDisplayStateInternal:" + displayId,
-                        traceMessage, displayId);
+                        sb.toString(), displayId);
             }
 
             mDisplayStates.setValueAt(index, state);
@@ -1590,7 +1593,7 @@ public final class DisplayManagerService extends SystemService {
             if (mWifiDisplayAdapter != null) {
                 return mWifiDisplayAdapter.getWifiDisplayStatusLocked();
             }
-            return new WifiDisplayStatus();
+            return EMPTY_WIFI_DISPLAY_STATUS;
         }
     }
 
