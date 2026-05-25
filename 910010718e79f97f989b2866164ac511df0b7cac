@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "791e6c6a_ea6aa993",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4790607
+      },
+      "writtenOn": "2026-05-25T10:50:43Z",
+      "side": 1,
+      "message": "Hello! Could you ptal at this when you have some free time?",
+      "revId": "910010718e79f97f989b2866164ac511df0b7cac",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
