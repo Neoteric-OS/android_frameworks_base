@@ -1347,6 +1347,14 @@ class LogicalDisplayMapper implements DisplayDeviceRepository.Listener {
         }
     }
 
+    boolean isEnabledInLayoutLocked(LogicalDisplay display) {
+        final DisplayInfo info = display.getDisplayInfoLocked();
+        Layout layout = mCurrentLayout != null
+                ? mCurrentLayout : mDeviceStateToLayoutMap.get(mDeviceState);
+        Layout.Display displayLayout = layout.getByAddress(info.address);
+        return displayLayout != null && displayLayout.isEnabled();
+    }
+
     private int assignDisplayGroupIdLocked(boolean needsDeviceDisplayGroup,
             boolean isOwnDisplayGroup, String displayGroupName,
             boolean isDeviceDisplayGroup, Integer linkedDeviceUniqueId, int decidedGroupId) {
