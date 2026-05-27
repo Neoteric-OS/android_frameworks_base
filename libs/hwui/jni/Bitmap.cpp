@@ -406,7 +406,7 @@ static jobject Bitmap_copy(JNIEnv* env, jobject, jlong srcHandle, jint dstConfig
     if (!bitmapCopyTo(&result, dstCT, src, &allocator)) {
         return NULL;
     }
-    auto bitmap = allocator.getStorageObjAndReset();
+    sk_sp<Bitmap> bitmap(allocator.getStorageObjAndReset());
     if (hasGainmap) {
         auto gainmap = sp<uirenderer::Gainmap>::make();
         gainmap->info = original.gainmap()->info;
@@ -419,7 +419,7 @@ static jobject Bitmap_copy(JNIEnv* env, jobject, jlong srcHandle, jint dstConfig
         gainmap->bitmap = sk_sp<Bitmap>(destAllocator.getStorageObjAndReset());
         bitmap->setGainmap(std::move(gainmap));
     }
-    return createBitmap(env, bitmap, getPremulBitmapCreateFlags(isMutable));
+    return createBitmap(env, bitmap.release(), getPremulBitmapCreateFlags(isMutable));
 }
 
 static Bitmap* Bitmap_copyAshmemImpl(JNIEnv* env, SkBitmap& src, SkColorType& dstCT) {
