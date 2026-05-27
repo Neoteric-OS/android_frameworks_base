@@ -1089,6 +1089,7 @@ public class LogicalDisplayMapperTest {
     }
 
     @Test
+<<<<<<< HEAD   (45034f0663f960d9ee5fb0a101a4732b71f6e2f4 Merge cherrypicks of ['googleplex-android-review.googlesourc)
     @EnableFlags(Flags.FLAG_CHANGE_DEFAULT_DISPLAY_LID_CLOSED)
     public void testDeviceState_LaptopLidClosed() {
         initLogicalDisplayMapper();
@@ -1353,6 +1354,70 @@ public class LogicalDisplayMapperTest {
         assertEquals(DEFAULT_DISPLAY, id(display1));
         assertEquals(device1, display1.getPrimaryDisplayDeviceLocked());
         assertTrue(mLogicalDisplayMapper.getDisplayLocked(device1).isEnabledLocked());
+    }
+
+    @Test
+    public void testDisplayIsEnabledInLayout() {
+        initLogicalDisplayMapper();
+        DisplayAddress displayAddressOne = createTestDisplayAddress();
+        DisplayAddress displayAddressTwo = createTestDisplayAddress();
+        TestDisplayDevice device1 = createDisplayDevice(displayAddressOne, "one",
+                TYPE_INTERNAL, 600, 800, DisplayDeviceInfo.FLAG_ALLOWED_TO_BE_DEFAULT_DISPLAY);
+        TestDisplayDevice device2 = createDisplayDevice(displayAddressTwo, "two",
+                TYPE_EXTERNAL, 1920, 1080, DisplayDeviceInfo.FLAG_OWN_DISPLAY_GROUP);
+        Layout twoDevicesEnabledLayout = new Layout();
+        createDefaultDisplay(twoDevicesEnabledLayout, displayAddressOne);
+        createNonDefaultDisplay(twoDevicesEnabledLayout, displayAddressTwo,
+                /* enabled= */ true, /* group= */ null);
+        when(mDeviceStateToLayoutMapSpy.get(STATE_DEFAULT)).thenReturn(twoDevicesEnabledLayout);
+
+        LogicalDisplay display1 = add(device1);
+        LogicalDisplay display2 = add(device2);
+
+        assertThat(mLogicalDisplayMapper.isEnabledInLayoutLocked(display1)).isTrue();
+        assertThat(mLogicalDisplayMapper.isEnabledInLayoutLocked(display2)).isTrue();
+    }
+
+    @Test
+    public void testDisplayIsDisabledInLayout() {
+        initLogicalDisplayMapper();
+        DisplayAddress displayAddressOne = createTestDisplayAddress();
+        DisplayAddress displayAddressTwo = createTestDisplayAddress();
+        TestDisplayDevice device1 = createDisplayDevice(displayAddressOne, "one",
+                TYPE_INTERNAL, 600, 800, DisplayDeviceInfo.FLAG_ALLOWED_TO_BE_DEFAULT_DISPLAY);
+        TestDisplayDevice device2 = createDisplayDevice(displayAddressTwo, "two",
+                TYPE_EXTERNAL, 1920, 1080, DisplayDeviceInfo.FLAG_OWN_DISPLAY_GROUP);
+        Layout oneDeviceEnabledLayout = new Layout();
+        createDefaultDisplay(oneDeviceEnabledLayout, displayAddressOne);
+        createNonDefaultDisplay(oneDeviceEnabledLayout, displayAddressTwo,
+                /* enabled= */ false, /* group= */ null);
+        when(mDeviceStateToLayoutMapSpy.get(STATE_DEFAULT)).thenReturn(oneDeviceEnabledLayout);
+
+        LogicalDisplay display1 = add(device1);
+        LogicalDisplay display2 = add(device2);
+
+        assertThat(mLogicalDisplayMapper.isEnabledInLayoutLocked(display1)).isTrue();
+        assertThat(mLogicalDisplayMapper.isEnabledInLayoutLocked(display2)).isFalse();
+    }
+
+    @Test
+    public void testDisplayIsDisabledNotInLayout() {
+        initLogicalDisplayMapper();
+        DisplayAddress displayAddressOne = createTestDisplayAddress();
+        DisplayAddress displayAddressTwo = createTestDisplayAddress();
+        TestDisplayDevice device1 = createDisplayDevice(displayAddressOne, "one",
+                TYPE_INTERNAL, 600, 800, DisplayDeviceInfo.FLAG_ALLOWED_TO_BE_DEFAULT_DISPLAY);
+        TestDisplayDevice device2 = createDisplayDevice(displayAddressTwo, "two",
+                TYPE_EXTERNAL, 1920, 1080, DisplayDeviceInfo.FLAG_OWN_DISPLAY_GROUP);
+        Layout oneDeviceLayout = new Layout();
+        createDefaultDisplay(oneDeviceLayout, displayAddressOne);
+        when(mDeviceStateToLayoutMapSpy.get(STATE_DEFAULT)).thenReturn(oneDeviceLayout);
+
+        LogicalDisplay display1 = add(device1);
+        LogicalDisplay display2 = add(device2);
+
+        assertThat(mLogicalDisplayMapper.isEnabledInLayoutLocked(display1)).isTrue();
+        assertThat(mLogicalDisplayMapper.isEnabledInLayoutLocked(display2)).isFalse();
     }
 
     @Test
