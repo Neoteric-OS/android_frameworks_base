@@ -113,10 +113,12 @@ import android.os.Environment;
 import android.os.FileUtils;
 import android.os.Handler;
 import android.os.HandlerExecutor;
+import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.IProgressListener;
 import android.os.IUserManager;
 import android.os.IUserRestrictionsListener;
+import android.os.Looper;
 import android.os.Message;
 import android.os.ParcelFileDescriptor;
 import android.os.Parcelable;
@@ -409,6 +411,7 @@ public class UserManagerService extends IUserManager.Stub {
     private final MultiuserNonComplianceLogger mNonComplianceLogger;
 
     private final ThreadPoolExecutor mInternalExecutor;
+    private final Handler mWriteHandler;
 
     private final File mUsersDir;
     private final File mUserListFile;
@@ -1142,6 +1145,10 @@ public class UserManagerService extends IUserManager.Stub {
         mNonComplianceLogger = new MultiuserNonComplianceLogger(mHandler);
         mInternalExecutor = new ThreadPoolExecutor(/* corePoolSize */ 0, /* maximumPoolSize */ 1,
                 /* keepAliveTime */ 24, TimeUnit.HOURS, new LinkedBlockingQueue<>());
+        HandlerThread umsWriteThread = new HandlerThread("UmsWriteThread",
+                Process.THREAD_PRIORITY_BACKGROUND);
+        umsWriteThread.start();
+        mWriteHandler = new WriteHandler(umsWriteThread.getLooper());
         mUserVisibilityMediator = new UserVisibilityMediator(mHandler);
         mUserDataPreparer = userDataPreparer;
         mUserTypes = UserTypeFactory.getUserTypes();
@@ -5681,9 +5688,9 @@ public class UserManagerService extends IUserManager.Stub {
         }
         // No need to wrap it within a lock -- worst case, we'll just post the same message
         // twice.
-        if (!mHandler.hasMessages(WRITE_USER_LIST_MSG)) {
-            Message msg = mHandler.obtainMessage(WRITE_USER_LIST_MSG);
-            mHandler.sendMessageDelayed(msg, WRITE_USER_DELAY);
+        if (!mWriteHandler.hasMessages(WRITE_USER_LIST_MSG)) {
+            Message msg = mWriteHandler.obtainMessage(WRITE_USER_LIST_MSG);
+            mWriteHandler.sendMessageDelayed(msg, WRITE_USER_DELAY);
         }
         // Invalidate cache when {@link UserData} changed, but write was scheduled for later.
         UserManager.invalidateCacheOnUserDataChanged();
@@ -5695,9 +5702,9 @@ public class UserManagerService extends IUserManager.Stub {
         }
         // No need to wrap it within a lock -- worst case, we'll just post the same message
         // twice.
-        if (!mHandler.hasMessages(WRITE_USER_MSG, userId)) {
-            Message msg = mHandler.obtainMessage(WRITE_USER_MSG, userId);
-            mHandler.sendMessageDelayed(msg, WRITE_USER_DELAY);
+        if (!mWriteHandler.hasMessages(WRITE_USER_MSG, userId)) {
+            Message msg = mWriteHandler.obtainMessage(WRITE_USER_MSG, userId);
+            mWriteHandler.sendMessageDelayed(msg, WRITE_USER_DELAY);
         }
         // Invalidate cache when {@link Data} changed, but write was scheduled for later.
         UserManager.invalidateCacheOnUserDataChanged();
@@ -8524,6 +8531,17 @@ public class UserManagerService extends IUserManager.Stub {
     }
 
     final class MainHandler extends Handler {
+
+        @Override
+        public void handleMessage(Message msg) {
+        }
+    }
+
+    final class WriteHandler extends Handler {
+
+        WriteHandler(Looper looper) {
+            super(looper);
+        }
 
         @Override
         public void handleMessage(Message msg) {
