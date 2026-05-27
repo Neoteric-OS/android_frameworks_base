@@ -204,6 +204,7 @@ class ExternalDisplayPolicy {
 
         if (!mFlags.isConnectedDisplayManagementEnabled()) {
             if (DEBUG) {
+<<<<<<< HEAD
                 Slog.d(TAG, "handleExternalDisplayConnectedLocked connected display management"
                                     + " flag is off");
             }
@@ -211,6 +212,15 @@ class ExternalDisplayPolicy {
         }
 
         if (!mIsBootCompleted) {
+=======
+
+        mExternalDisplayStatsService.onDisplayConnected(logicalDisplay);
+
+        if (shouldAutoEnable(logicalDisplay)) {
+            Slog.w(TAG, "External display is enabled by default, bypassing user consent.");
+            mInjector.sendExternalDisplayEventLocked(logicalDisplay, EVENT_DISPLAY_CONNECTED);
+            return;
+>>>>>>> PATCH
             mDisplayIdsWaitingForBootCompletion.add(logicalDisplay.getDisplayIdLocked());
             return;
         }
@@ -262,6 +272,7 @@ class ExternalDisplayPolicy {
     }
 
     /**
+<<<<<<< HEAD
      * Upon external display gets added.
      */
     void handleLogicalDisplayAddedLocked(@NonNull final LogicalDisplay logicalDisplay) {
@@ -271,6 +282,18 @@ class ExternalDisplayPolicy {
 
         if (!mFlags.isConnectedDisplayManagementEnabled()) {
             return;
+=======
+        }
+    }
+
+    private boolean shouldAutoEnable(LogicalDisplay logicalDisplay) {
+        return ((Build.IS_ENG || Build.IS_USERDEBUG)
+                && SystemProperties.getBoolean(ENABLE_ON_CONNECT, false))
+                || mLogicalDisplayMapper.isEnabledInLayoutLocked(logicalDisplay);
+    }
+
+    @GuardedBy("mSyncRoot")
+>>>>>>> PATCH
         }
 
         mExternalDisplayStatsService.onDisplayAdded(logicalDisplay.getDisplayIdLocked());
