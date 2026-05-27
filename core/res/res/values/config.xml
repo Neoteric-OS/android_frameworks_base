@@ -3431,6 +3431,10 @@
          mirror the content of the default display. -->
     <bool name="config_localDisplaysMirrorContent">true</bool>
 
+    <!-- When true, external displays are automatically enabled on connect without requiring
+         user interaction. -->
+    <bool name="config_external_display_auto_enable">false</bool>
+
     <!-- When true, the {@link Display#FLAG_PRESENTATION} flag is set to all internal displays.
          When false, presentations are not allowed on internal displays by default, but vendors can
          still explicitly override this by explicitly adding the flag to the internal display(s).
