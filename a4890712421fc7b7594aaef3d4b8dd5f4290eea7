@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6cc33eea_4f9b108f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1870696
+      },
+      "writtenOn": "2026-05-28T04:14:38Z",
+      "side": 1,
+      "message": "Need to merge this in android15-tests-dev for Android15 GSI.",
+      "revId": "a4890712421fc7b7594aaef3d4b8dd5f4290eea7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
