@@ -12,6 +12,17 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ *  Not a contribution
+ * Changes made by NVIDIA CORPORATION
+ * NVIDIA-proprietary are not a contribution and subject to the following terms and conditions:
+ * Copyright (C) 2026 NVIDIA CORPORATION. All Rights Reserved.
+ * NVIDIA CORPORATION and its licensors retain all intellectual property
+ * and proprietary rights in and to this software, related documentation
+ * and any modifications thereto. Any use, reproduction, disclosure or
+ * distribution of this software and related documentation is governed by
+ * the NVIDIA Pre-Release License Agreement between NVIDIA CORPORATION and
+ * the licensee. All other uses are strictly forbidden.
  */
 
 #ifndef ANDROID_BOOTANIMATION_H
@@ -32,6 +43,7 @@
 
 #include <ui/Rotation.h>
 #include <ui/LayerStack.h>
+#include <ui/Size.h>
 
 #include <EGL/egl.h>
 #include <GLES2/gl2.h>
@@ -126,6 +138,7 @@ public:
         int height;
         int initWidth;
         int initHeight;
+        ui::Size physicalResolution;
         EGLDisplay  eglSurface;
         sp<IBinder> displayToken;
         sp<SurfaceControl> surfaceControl;
@@ -217,6 +230,9 @@ private:
     bool preloadAnimation();
     EGLConfig getEglConfig(const EGLDisplay&);
     ui::Size limitSurfaceSize(int width, int height) const;
+    ui::Size getEffectiveResolution(const sp<IBinder>& displayToken,
+                                    const ui::Size& physicalResolution) const;
+    void checkAndApplyResolutionOverride();
     void resizeSurface(int newWidth, int newHeight, Display& display);
     void projectSceneToWindow(const Display& display);
     void rotateAwayFromNaturalOrientationIfNeeded(Display& display);
