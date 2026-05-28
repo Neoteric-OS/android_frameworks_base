@@ -1,0 +1,45 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e6ce801_5247f7da",
+        "filename": "core/java/android/provider/AlarmClock.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3236026
+      },
+      "writtenOn": "2026-05-28T04:12:54Z",
+      "side": 1,
+      "message": "And ACTION_DISMISS_ALARM?",
+      "range": {
+        "startLine": 27,
+        "startChar": 3,
+        "endLine": 27,
+        "endChar": 22
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "ab17beeb_2aa7c5ee",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/java/android/provider/AlarmClock.java",
+              "range": {
+                "startLine": 26,
+                "startChar": 0,
+                "endLine": 29,
+                "endChar": 0
+              },
+              "replacement": " * Applications that wish to receive the ACTION_SET_ALARM, ACTION_SET_TIMER,\n * ACTION_DISMISS_ALARM, and ACTION_SNOOZE_ALARM Intents should create an activity to handle\n * the Intent that requires the permission, com.android.alarm.permission.SET_ALARM.\n"
+            }
+          ]
+        }
+      ],
+      "revId": "0a04079fa7ea470313a29b8d16fdb356478b7d5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
