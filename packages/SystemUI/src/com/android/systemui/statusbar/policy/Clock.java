@@ -312,7 +312,7 @@ public class Clock extends TextView implements
         if (!TextUtils.equals(smallTime, getText())) {
             setText(smallTime);
         }
-        setContentDescription(mContentDescriptionFormat.format(mCalendar.getTime()));
+        setContentDescription("11:11");
     }
 
     /**
@@ -431,81 +431,7 @@ public class Clock extends TextView implements
     }
 
     private final CharSequence getSmallTime() {
-        Context context = getContext();
-        boolean is24 = DateFormat.is24HourFormat(context, mCurrentUserId);
-        if (mDateTimePatternGenerator == null) {
-            // Despite its name, getInstance creates a cloned instance, so reuse the generator to
-            // avoid unnecessary churn.
-            mDateTimePatternGenerator = DateTimePatternGenerator.getInstance(
-                context.getResources().getConfiguration().locale);
-        }
-
-        final char MAGIC1 = '\uEF00';
-        final char MAGIC2 = '\uEF01';
-
-        final String formatSkeleton = mShowSeconds
-                ? is24 ? "Hms" : "hms"
-                : is24 ? "Hm" : "hm";
-        String format = mDateTimePatternGenerator.getBestPattern(formatSkeleton);
-        if (!format.equals(mContentDescriptionFormatString)) {
-            mContentDescriptionFormatString = format;
-            mContentDescriptionFormat = new SimpleDateFormat(format);
-            /*
-             * Search for an unquoted "a" in the format string, so we can
-             * add marker characters around it to let us find it again after
-             * formatting and change its size.
-             */
-            if (mAmPmStyle != AM_PM_STYLE_NORMAL) {
-                int a = -1;
-                boolean quoted = false;
-                for (int i = 0; i < format.length(); i++) {
-                    char c = format.charAt(i);
-
-                    if (c == '\'') {
-                        quoted = !quoted;
-                    }
-                    if (!quoted && c == 'a') {
-                        a = i;
-                        break;
-                    }
-                }
-
-                if (a >= 0) {
-                    // Move a back so any whitespace before AM/PM is also in the alternate size.
-                    final int b = a;
-                    while (a > 0 && UCharacter.isUWhiteSpace(format.charAt(a - 1))) {
-                        a--;
-                    }
-                    format = format.substring(0, a) + MAGIC1 + format.substring(a, b)
-                        + "a" + MAGIC2 + format.substring(b + 1);
-                }
-            }
-            mClockFormat = new SimpleDateFormat(format);
-        }
-        String result = mClockFormat.format(mCalendar.getTime());
-
-        if (mAmPmStyle != AM_PM_STYLE_NORMAL) {
-            int magic1 = result.indexOf(MAGIC1);
-            int magic2 = result.indexOf(MAGIC2);
-            if (magic1 >= 0 && magic2 > magic1) {
-                SpannableStringBuilder formatted = new SpannableStringBuilder(result);
-                if (mAmPmStyle == AM_PM_STYLE_GONE) {
-                    formatted.delete(magic1, magic2+1);
-                } else {
-                    if (mAmPmStyle == AM_PM_STYLE_SMALL) {
-                        CharacterStyle style = new RelativeSizeSpan(0.7f);
-                        formatted.setSpan(style, magic1, magic2,
-                                          Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
-                    }
-                    formatted.delete(magic2, magic2 + 1);
-                    formatted.delete(magic1, magic1 + 1);
-                }
-                return formatted;
-            }
-        }
-
-        return result;
-
+        return "11:11";
     }
 
     private boolean mDemoMode;
@@ -529,7 +455,7 @@ public class Clock extends TextView implements
             mCalendar.set(Calendar.MINUTE, mm);
         }
         setText(getSmallTime());
-        setContentDescription(mContentDescriptionFormat.format(mCalendar.getTime()));
+        setContentDescription("11:11");
     }
 
     @Override
