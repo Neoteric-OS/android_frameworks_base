@@ -174,15 +174,40 @@ class SoundTriggerModule implements IBinder.DeathRecipient, ISoundTriggerHal.Glo
                 mHalService = new SoundTriggerHalEnforcer(
                         new SoundTriggerHalWatchdog(
                             new SoundTriggerDuplicateModelHandler(mHalFactory.create())));
+                mHalService.linkToDeath(this);
+                mHalService.registerCallback(this);
+                mProperties = mHalService.getProperties();
+            } catch (RemoteException e) {
+                safelyDetach();
+                mHalService = null;
             } catch (RuntimeException e) {
                 if (!(e.getCause() instanceof RemoteException)) {
                     throw e;
                 }
+                safelyDetach();
+                mHalService = null;
             }
         }
-        mHalService.linkToDeath(this);
-        mHalService.registerCallback(this);
-        mProperties = mHalService.getProperties();
+    }
+
+    /**
+     * Safely detaches from the HAL service, ignoring any exceptions that occur during
+     * cleanup. This ensures that a cleanup failure does not break the retry loop in
+     * {@link #attachToHal()}.
+     *
+     * If the detach call itself fails (e.g., the underlying HAL has already died), we
+     * must not let the exception propagate. Otherwise, the {@code mHalService = null}
+     * assignment would be skipped, effectively breaking the retry mechanism.
+     */
+    private void safelyDetach() {
+        try {
+            if (mHalService != null) {
+                mHalService.detach();
+            }
+        } catch (Exception ignored) {
+            // Intentionally swallow the exception to ensure the retry logic can proceed
+            // and nullify the mHalService reference.
+        }
     }
 
     /**
