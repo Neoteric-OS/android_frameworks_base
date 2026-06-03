@@ -2192,12 +2192,12 @@ public class WindowManagerService extends IWindowManager.Stub
         try {
             synchronized (mGlobalLock) {
                 WindowState w = windowForClientLocked(session, client, false);
-                if (DEBUG_LAYOUT) Slog.d(TAG, "setInsetsWindow " + w
-                        + ", contentInsets=" + w.mGivenContentInsets + " -> " + contentInsets
-                        + ", visibleInsets=" + w.mGivenVisibleInsets + " -> " + visibleInsets
-                        + ", touchableRegion=" + w.mGivenTouchableRegion + " -> " + touchableRegion
-                        + ", touchableInsets " + w.mTouchableInsets + " -> " + touchableInsets);
                 if (w != null) {
+                    if (DEBUG_LAYOUT) Slog.d(TAG, "setInsetsWindow " + w
+                            + ", contentInsets=" + w.mGivenContentInsets + " -> " + contentInsets
+                            + ", visibleInsets=" + w.mGivenVisibleInsets + " -> " + visibleInsets
+                            + ", touchableRegion=" + w.mGivenTouchableRegion + " -> " + touchableRegion
+                            + ", touchableInsets " + w.mTouchableInsets + " -> " + touchableInsets);
                     final boolean wasGivenInsetsPending = w.mGivenInsetsPending;
                     w.mGivenInsetsPending = false;
                     if ((!wasGivenInsetsPending || !w.hasInsetsSourceProvider())
