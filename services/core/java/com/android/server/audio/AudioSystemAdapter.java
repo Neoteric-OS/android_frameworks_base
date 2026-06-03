@@ -128,6 +128,9 @@ public class AudioSystemAdapter implements AudioSystem.RoutingUpdateCallback,
         synchronized (mRegisteredAttributesMap) {
             final int nbCallbacks = mDevicesForAttributesCallbacks.beginBroadcast();
 
+            ArrayMap<Pair<AudioAttributes, Boolean>, ArrayList<AudioDeviceAttributes>> updatedDevices =
+                    new ArrayMap<>();
+
             for (int i = 0; i < nbCallbacks; i++) {
                 IDevicesForAttributesCallback cb =
                         mDevicesForAttributesCallbacks.getBroadcastItem(i);
@@ -139,8 +142,11 @@ public class AudioSystemAdapter implements AudioSystem.RoutingUpdateCallback,
                 }
 
                 for (Pair<AudioAttributes, Boolean> attr : attrList) {
-                    ArrayList<AudioDeviceAttributes> devices =
-                            getDevicesForAttributes(attr.first, attr.second);
+                    ArrayList<AudioDeviceAttributes> devices = updatedDevices.get(attr);
+                    if (devices == null) {
+                        devices = getDevicesForAttributes(attr.first, attr.second);
+                        updatedDevices.put(attr, devices);
+                    }
                     if (!mLastDevicesForAttr.containsKey(attr)
                             || !sameDeviceList(devices, mLastDevicesForAttr.get(attr))) {
                         try {
@@ -151,6 +157,10 @@ public class AudioSystemAdapter implements AudioSystem.RoutingUpdateCallback,
                 }
             }
             mDevicesForAttributesCallbacks.finishBroadcast();
+
+            for (int i = 0; i < updatedDevices.size(); i++) {
+                mLastDevicesForAttr.put(updatedDevices.keyAt(i), updatedDevices.valueAt(i));
+            }
         }
     }
 
@@ -290,9 +300,11 @@ public class AudioSystemAdapter implements AudioSystem.RoutingUpdateCallback,
         synchronized (sDeviceCacheLock) {
             if (mDevicesForAttrCache != null) {
                 mDevicesForAttributesCacheClearTimeMs = System.currentTimeMillis();
-                // Save latest cache to determine routing updates
-                mLastDevicesForAttr.putAll(mDevicesForAttrCache);
-
+                // Save latest cache to determine routing updates only if no baseline exists.
+                // This prevents overwriting the baseline with a newer state before we broadcast it.
+                for (Map.Entry<Pair<AudioAttributes, Boolean>, ArrayList<AudioDeviceAttributes>> entry : mDevicesForAttrCache.entrySet()) {
+                    mLastDevicesForAttr.putIfAbsent(entry.getKey(), entry.getValue());
+                }
                 mDevicesForAttrCache.clear();
             }
         }
