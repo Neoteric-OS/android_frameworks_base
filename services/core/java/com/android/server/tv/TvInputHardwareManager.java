@@ -50,6 +50,8 @@ import android.media.tv.tunerresourcemanager.ResourceClientProfile;
 import android.media.tv.tunerresourcemanager.TunerResourceManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.HandlerExecutor;
+import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.RemoteException;
@@ -939,9 +941,11 @@ class TvInputHardwareManager implements TvInputHal.Callback {
                 new AudioManager.OnAudioPortUpdateListener() {
             @Override
             public void onAudioPortListUpdate(AudioPort[] portList) {
-                synchronized (mImplLock) {
-                    updateAudioConfigLocked();
-                }
+                // No-op
+                // When forcing audio to a specific output device, we don't need
+                // add/remove events from other output devices. We only need to
+                // monitor routing changes on the target device to decide whether
+                // to recreate the AudioPatch.
             }
 
             @Override
@@ -958,6 +962,18 @@ class TvInputHardwareManager implements TvInputHal.Callback {
                         mAudioManager.releaseAudioPatch(mAudioPatch);
                         mAudioPatch = null;
                     }
+                }
+            }
+        };
+
+        private final AudioManager.OnDevicesForAttributesChangedListener mDevicesListener =
+                new AudioManager.OnDevicesForAttributesChangedListener() {
+            @Override
+            public void onDevicesForAttributesChanged(
+                    AudioAttributes attributes, List<AudioDeviceAttributes> devices) {
+                Slog.d(TAG, "onDevicesForAttributesChanged: sink devices:" + devices);
+                synchronized (mImplLock) {
+                    updateAudioConfigLocked();
                 }
             }
         };
@@ -990,9 +1006,17 @@ class TvInputHardwareManager implements TvInputHal.Callback {
         @GuardedBy("mImplLock")
         private int mDesiredFormat = AudioFormat.ENCODING_DEFAULT;
 
+        private final HandlerThread mAudioListenerThread =
+                new HandlerThread("TvInputHardwareAudioThread");
+
         public TvInputHardwareImpl(TvInputHardwareInfo info) {
             mInfo = info;
+            mAudioListenerThread.start();
             mAudioManager.registerAudioPortUpdateListener(mAudioListener);
+            mAudioManager.addOnDevicesForAttributesChangedListener(
+                    new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_MEDIA).build(),
+                    new HandlerExecutor(new Handler(mAudioListenerThread.getLooper())),
+                    mDevicesListener);
             if (mInfo.getAudioType() != AudioManager.DEVICE_NONE) {
                 synchronized (mImplLock) {
                     mAudioSource =
@@ -1036,6 +1060,8 @@ class TvInputHardwareManager implements TvInputHal.Callback {
         public void release() {
             synchronized (mImplLock) {
                 mAudioManager.unregisterAudioPortUpdateListener(mAudioListener);
+                mAudioManager.removeOnDevicesForAttributesChangedListener(mDevicesListener);
+                mAudioListenerThread.quitSafely();
                 if (mAudioPatch != null) {
                     mAudioManager.releaseAudioPatch(mAudioPatch);
                     mAudioPatch = null;
