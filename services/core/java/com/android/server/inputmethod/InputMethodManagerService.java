@@ -3750,6 +3750,19 @@ public final class InputMethodManagerService implements IInputMethodManagerImpl.
             return InputBindResult.INVALID_USER;
         }
         final var userData = getUserData(userId);
+        if (editorInfo == null 
+                || editorInfo.inputType == EditorInfo.TYPE_NULL
+                || inputConnection == null) {
+                
+            Slog.w(TAG, "Skipping IME start: no valid editor. editorInfo=" + editorInfo);
+        
+            hideCurrentInputLocked(userData.mImeBindingState.mFocusedWindow,
+                    0,
+                    SoftInputShowHideReason.HIDE_INVALID_USER,
+                    userId);
+        
+            return InputBindResult.NULL;
+        }
         try {
             Trace.traceBegin(TRACE_TAG_WINDOW_MANAGER,
                     "IMMS.startInputOrWindowGainedFocus");
