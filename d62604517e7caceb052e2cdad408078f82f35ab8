@@ -52,6 +52,24 @@
       "parentUuid": "8116f5b5_b2aaf344",
       "revId": "d62604517e7caceb052e2cdad408078f82f35ab8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c4f48ee_02cd8fcf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1950366
+      },
+      "writtenOn": "2026-06-05T20:59:20Z",
+      "side": 1,
+      "message": "Handing over to mpietal@. I believe that ag/36438155 may remove the need for this fix, but please confirm.",
+      "parentUuid": "45b8d88e_aba1b21a",
+      "revId": "d62604517e7caceb052e2cdad408078f82f35ab8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
