@@ -22,6 +22,30 @@
       },
       "revId": "90fbcaf615da16d3f967d7a57ca566e857a3a54d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "064cc084_07647153",
+        "filename": "apex/jobscheduler/service/java/com/android/server/job/JobServiceContext.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1492,
+      "author": {
+        "id": 4835618
+      },
+      "writtenOn": "2026-06-05T12:55:04Z",
+      "side": 1,
+      "message": "Done.\nWe conducted MTBF testing using 100 Xiaomi devices and were unable to reproduce the issue within 50 hours of testing.",
+      "parentUuid": "cf1c8379_9fdfb178",
+      "range": {
+        "startLine": 1488,
+        "startChar": 24,
+        "endLine": 1492,
+        "endChar": 25
+      },
+      "revId": "90fbcaf615da16d3f967d7a57ca566e857a3a54d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
