@@ -104,4 +104,20 @@ public class EnterpriseSpecificIdCalculatorTest {
         assertThat(mEsidCalculator.calculateEnterpriseId(ANOTHER_PACKAGE,
                 ANOTHER_ENTERPRISE_ID)).isEqualTo("LEF3-QBEC-UQ6O-RIOCX-TQF6-GRLV-F");
     }
+
+    @Test
+    public void paddingOfSerialNumber_desktop_flagEnabled() {
+        EnterpriseSpecificIdCalculator esidCalculator = new EnterpriseSpecificIdCalculator(
+                SOME_IMEI, NO_MEID, SOME_SERIAL_NUMBER, SOME_MAC_ADDRESS, true, true);
+        assertThat(esidCalculator.getPaddedSerialNumber().length()).isEqualTo(64);
+    }
+
+    @Test
+    public void truncationOfLongSerialNumber_desktop_flagEnabled() {
+        String longSn = "A".repeat(70);
+        EnterpriseSpecificIdCalculator esidCalculator = new EnterpriseSpecificIdCalculator(
+                SOME_IMEI, NO_MEID, longSn, SOME_MAC_ADDRESS, true, true);
+        assertThat(esidCalculator.getPaddedSerialNumber().length()).isEqualTo(64);
+        assertThat(esidCalculator.getPaddedSerialNumber()).isEqualTo("A".repeat(64));
+    }
 }

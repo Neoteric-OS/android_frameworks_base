@@ -34,37 +34,38 @@ class EnterpriseSpecificIdCalculator {
     private static final int PADDED_HW_ID_LENGTH = 16;
     private static final int PADDED_PROFILE_OWNER_LENGTH = 64;
     private static final int PADDED_ENTERPRISE_ID_LENGTH = 64;
+    private static final int PADDED_EXTENDED_SN_LENGTH = 64;
     private static final int ESID_LENGTH = 16;
 
     private final String mImei;
     private final String mMeid;
     private final String mSerialNumber;
     private final String mMacAddress;
+    private final boolean mIsPc;
+    private final boolean mUseExtendedSn;
 
     @VisibleForTesting
     EnterpriseSpecificIdCalculator(String imei, String meid, String serialNumber,
             String macAddress) {
+        this(imei, meid, serialNumber, macAddress, false, false);
+    }
+
+    @VisibleForTesting
+    EnterpriseSpecificIdCalculator(String imei, String meid, String serialNumber,
+            String macAddress, boolean isPc, boolean useExtendedSn) {
         mImei = imei;
         mMeid = meid;
         mSerialNumber = serialNumber;
         mMacAddress = macAddress;
+        mIsPc = isPc;
+        mUseExtendedSn = useExtendedSn;
     }
 
     EnterpriseSpecificIdCalculator(Context context) {
         TelephonyManager telephonyService = context.getSystemService(TelephonyManager.class);
         Preconditions.checkState(telephonyService != null, "Unable to access telephony service");
 
-        String imei;
-        try {
-            imei = telephonyService.getImei(0);
-        } catch (UnsupportedOperationException doesNotSupportGms) {
-            // Instead of catching the exception, we could check for FEATURE_TELEPHONY_GSM.
-            // However that runs the risk of changing a device's existing ESID if on these devices
-            // telephonyService.getImei() actually returns non-null even when the device does not
-            // declare FEATURE_TELEPHONY_GSM.
-            imei = null;
-        }
-        mImei = imei;
+        mImei = telephonyService.getImei(0);
         String meid;
         try {
             meid = telephonyService.getMeid(0);
@@ -86,6 +87,9 @@ class EnterpriseSpecificIdCalculator {
             }
         }
         mMacAddress = macAddress;
+        mIsPc = context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_PC);
+        mUseExtendedSn = android.app.admin.flags.Flags.extendEsidSnLengthForDesktop()
+                && Build.VERSION.DEVICE_INITIAL_SDK_INT > Build.VERSION_CODES.CINNAMON_BUN;
     }
 
     private static String getPaddedTruncatedString(String input, int maxLength) {
@@ -108,7 +112,15 @@ class EnterpriseSpecificIdCalculator {
         return getPaddedHardwareIdentifier(mMeid);
     }
 
+    /**
+     * Warning: Changing the length of the padded serial number will change the ESID for existing
+     * devices. This should only be enabled for new devices or when acceptable.
+     */
     String getPaddedSerialNumber() {
+        if (mIsPc && mUseExtendedSn) {
+            String sn = mSerialNumber != null ? mSerialNumber : "";
+            return getPaddedTruncatedString(sn, PADDED_EXTENDED_SN_LENGTH);
+        }
         return getPaddedHardwareIdentifier(mSerialNumber);
     }
 
