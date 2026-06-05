@@ -382,7 +382,6 @@ flag {
   namespace: "enterprise"
   description: "Split up existing create and provision managed profile API."
   bug: "375382324"
-  is_exported: true
 }
 
 flag {
@@ -391,4 +390,12 @@ flag {
   namespace: "enterprise"
   description: "Add new API for secondary lockscreen"
   bug: "336297680"
+}
+
+flag {
+  name: "extend_esid_sn_length_for_desktop"
+  namespace: "enterprise"
+  description: "Extend the length of serial number used in ESID calculation for desktop devices to avoid collisions."
+  bug: "512868337"
+  is_fixed_read_only: true
 }
