@@ -1022,7 +1022,6 @@ public class Resources {
         }
     }
 
-    @NonNull
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     Drawable loadDrawable(@NonNull TypedValue value, int id, int density, @Nullable Theme theme)
             throws NotFoundException {
