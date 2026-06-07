@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * Copyright (c) 2024 Neoteric OS
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Alert slide extras -->
+    <string name="volume_ringer_priority_only">仅限优先通知</string>
+    <string name="volume_ringer_alarms_only">仅限闹钟</string>
+    <string name="volume_ringer_dnd">勿扰</string>
+    <string name="tristate_flashlight">手电筒</string>
+    <string name="tristate_flashlight_on">手电筒开启</string>
+    <string name="tristate_flashlight_off">手电筒关闭</string>
+    <string name="tristate_flashlight_blink">手电筒闪烁</string>
+    <string name="tristate_brightness_bright">最大亮度</string>
+    <string name="tristate_brightness_dark">最小亮度</string>
+    <string name="tristate_brightness_auto">自动亮度</string>
+    <string name="tristate_rotation_auto">自动旋转</string>
+    <string name="tristate_rotation_0">竖屏</string>
+    <string name="tristate_rotation_90">横屏 (90°)</string>
+    <string name="tristate_rotation_270">横屏 (270°)</string>
+
+    <!-- Status bar - icons -->
+    <string name="status_bar_icons_title">状态栏图标</string>
+    <!-- WiFi standard numbering on statusbar -->
+    <string name="status_bar_wifi_standard">Wi-Fi 标准代数</string>
+
+    <!-- Custom QS tiles -->
+    <!-- Ambient display QS tile -->
+    <string name="quick_settings_ambient_display_label">环境显示</string>
+    <string name="accessibility_quick_settings_ambient_display_off">环境显示已关闭。</string>
+    <string name="accessibility_quick_settings_ambient_display_on">环境显示已开启。</string>
+
+    <!-- AOD QS tile -->
+    <string name="quick_settings_aod_label">AOD</string>
+    <string name="quick_settings_aod_off_powersave_label">AOD 已关闭\n省电模式</string>
+
+    <!-- Caffeine QS tile -->
+    <string name="quick_settings_caffeine_label">咖啡因</string>
+    <string name="accessibility_quick_settings_caffeine_off">咖啡因已关闭。</string>
+    <string name="accessibility_quick_settings_caffeine_on">咖啡因已开启。</string>
+
+    <!-- Heads up QS tile -->
+    <string name="quick_settings_heads_up_label">浮动通知</string>
+    <string name="accessibility_quick_settings_heads_up_off">浮动通知已关闭。</string>
+    <string name="accessibility_quick_settings_heads_up_on">浮动通知已开启。</string>
+
+    <!-- Sync QS tile -->
+    <string name="quick_settings_sync_label">同步</string>
+    <string name="accessibility_quick_settings_sync_off">同步已关闭。</string>
+    <string name="accessibility_quick_settings_sync_on">同步已开启。</string>
+
+    <!-- USB tethering QS tile -->
+    <string name="quick_settings_usb_tether_label">USB 网络共享</string>
+
+    <!-- VPN QS tile -->
+    <string name="quick_settings_vpn_label">VPN</string>
+    <string name="quick_settings_vpn_connect_dialog_title">连接到\u2026</string>
+    <string name="vpn_credentials_hint">请输入连接到 <xliff:g id="name">%s</xliff:g> 的凭据</string>
+    <string name="vpn_credentials_username">用户名</string>
+    <string name="vpn_credentials_password">密码</string>
+    <string name="vpn_credentials_dialog_connect">连接</string>
+
+    <!-- Sound QS Tile -->
+    <string name="quick_settings_sound_label">声音</string>
+    <string name="quick_settings_sound_ring">响铃</string>
+    <string name="quick_settings_sound_vibrate">振动</string>
+    <string name="quick_settings_sound_silent">静音</string>
+
+    <!-- Compass QS Tile -->
+    <string name="quick_settings_compass_label">指南针</string>
+    <string name="quick_settings_compass_value"><xliff:g id="degrees">%1$.0f</xliff:g>\u00b0 <xliff:g id="direction">%2$s</xliff:g></string>
+    <string name="quick_settings_compass_init">正在初始化\u2026</string>
+    <string name="quick_settings_compass_N">北</string>
+    <string name="quick_settings_compass_NE">东北</string>
+    <string name="quick_settings_compass_E">东</string>
+    <string name="quick_settings_compass_SE">东南</string>
+    <string name="quick_settings_compass_S">南</string>
+    <string name="quick_settings_compass_SW">西南</string>
+    <string name="quick_settings_compass_W">西</string>
+    <string name="quick_settings_compass_NW">西北</string>
+
+    <!-- DataSwitch Tile -->
+    <string name="qs_data_switch_label">切换数据卡</string>
+    <string name="qs_data_switch_toast_0">当前未插入 SIM 卡</string>
+    <string name="qs_data_switch_toast_1">当前仅插入了一张 SIM 卡</string>
+    <string name="qs_data_switch_text_1">SIM 1</string>
+    <string name="qs_data_switch_text_2">SIM 2</string>
+    <string name="qs_data_switch_changed_1">已将数据卡切换至 SIM 1。</string>
+    <string name="qs_data_switch_changed_2">已将数据卡切换至 SIM 2。</string>
+
+    <!-- Language toggle tile -->
+    <string name="quick_settings_locale_label">语言</string>
+    <string name="quick_settings_locale_more_locales_toast">请先配置多种语言</string>
+
+    <!-- Refresh rate tile -->
+    <string name="refresh_rate_tile_label">刷新率</string>
+    <string name="refresh_rate_adaptive">自适应</string>
+
+    <!-- Preferred network tile -->
+    <string name="quick_settings_preferred_network_label">首选网络类型</string>
+    <string name="quick_settings_preferred_network_unsupported">不支持</string>
+
+    <!-- PowerShare QS tile -->
+    <string name="quick_settings_powershare_label">电池共享</string>
+    <string name="quick_settings_powershare_off_powersave_label">电池共享已关闭\n省电模式</string>
+    <string name="quick_settings_powershare_off_low_battery_label">电池共享已关闭\n电量过低</string>
+    <string name="quick_settings_powershare_enabled_label">电池共享已启用</string>
+
+    <!-- Private DNS Tile -->
+    <string name="qs_dns_label">私人 DNS</string>
+
+    <!-- Screen record -->
+    <string name="screenrecord_lowquality_label">较低画质</string>
+    <string name="screenrecord_lowquality_summary">以减小文件体积</string>
+    <string name="screenrecord_longer_timeout_switch_label">更大的文件大小限制</string>
+    <string name="screenrecord_longer_timeout_switch_summary">将录屏文件大小限制扩展至 15 GB</string>
+    <string name="screenrecord_skip_time_label">跳过倒计时</string>
+    <string name="screenrecord_skip_time_summary">取消录屏前的 3 秒等待时间</string>
+    <string name="screenrecord_hevc_switch_label">HEVC 编码</string>
+    <string name="screenrecord_hevc_switch_summary">使用更高效率的 HEVC 编码器</string>
+
+    <!-- Label for notification action to delete a screen recording file [CHAR LIMIT=35] -->
+    <string name="screenrecord_delete_label">删除</string>
+    <!-- A toast message shown after successfully deleting a screen recording [CHAR LIMIT=NONE] -->
+    <string name="screenrecord_delete_description">录屏文件已删除</string>
+
+    <!-- QuickSettings: InternetDialog: Summary for how many devices are connected to the hotspot [CHAR LIMIT=NONE] -->
+    <plurals name="quick_settings_internet_hotspot_summary_num_devices">
+        <item quantity="one">已连接 %d 台设备</item>
+        <item quantity="other">已连接 %d 台设备</item>
+    </plurals>
+
+    <!-- Label for UI element which allows deleting the screenshot [CHAR LIMIT=30] -->
+    <string name="screenshot_delete_label">删除</string>
+    <!-- Content description indicating that tapping the element will allow deleting the screenshot [CHAR LIMIT=NONE] -->
+    <string name="screenshot_delete_description">删除屏幕截图</string>
+
+    <!-- Label for UI element which allows to use lens on screenshot [CHAR LIMIT=30] -->
+    <string name="screenshot_lens_label">智能镜头</string>
+
+    <!-- Advanced restart menu -->
+    <!-- Button to indicate more options -->
+    <string name="global_action_restart_more">重启至\u2026</string>
+    <!-- Button to restart the device, within the Restart Options dialog -->
+    <string name="global_action_restart_system">系统</string>
+    <!-- Button to restart the device into recovery mode, within the Restart Options dialog -->
+    <string name="global_action_restart_recovery">Recovery</string>
+    <!-- Button to restart the device into bootloader mode, within the Restart Options dialog -->
+    <string name="global_action_restart_bootloader">Bootloader</string>
+    <!-- Button to restart the device into download mode, within the Restart Options dialog -->
+    <string name="global_action_restart_download">Download 模式</string>
+    <!-- Button to restart the device into fastboot mode, within the Restart Options dialog -->
+    <string name="global_action_restart_fastboot">Fastbootd</string>
+    <!-- Restart progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_progress">正在重启\u2026</string>
+    <!-- Restart to recovery mode progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_recovery_progress">正在重启至 Recovery 模式\u2026</string>
+    <!-- Restart to bootloader mode progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_bootloader_progress">正在重启至 Bootloader 模式\u2026</string>
+    <!-- Restart to download mode progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_download_progress">正在重启至 Download 模式\u2026</string>
+    <!-- Restart to fastboot mode progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_fastboot_progress">正在重启至 Fastbootd 模式\u2026</string>
+
+    <!-- Button to restart SystemUI, within the Restart Options dialog -->
+    <string name="global_action_restart_systemui">SystemUI</string>
+
+    <!-- Status bar network traffic monitor strings -->
+    <string name="kilobitspersecond_short">kb/s</string>
+    <string name="megabitspersecond_short">Mb/s</string>
+    <string name="gigabitspersecond_short">Gb/s</string>
+    <string name="kilobytespersecond_short">kB/s</string>
+    <string name="megabytespersecond_short">MB/s</string>
+    <string name="gigabytespersecond_short">GB/s</string>
+
+    <!-- Heads up snooze toast -->
+    <string name="heads_up_snooze_message_one_minute"><xliff:g id="string">%s</xliff:g> - 浮动通知已静音 1 分钟。</string>
+    <string name="heads_up_snooze_message"><xliff:g id="string">%1$s</xliff:g> - 浮动通知已静音 <xliff:g id="number">%2$d</xliff:g> 分钟。</string>
+
+    <!-- Name of the firewall status bar icon. -->
+    <string name="status_bar_firewall">防火墙</string>
+    <string name="status_bar_firewall_slot" translatable="false">firewall</string>
+
+    <!-- Data usage info in QS footer -->
+    <string name="usage_data">今日已用</string>
+    <string name="usage_data_weekly">本周已用</string>
+    <string name="usage_data_default_suffix">移动数据</string>
+    <string name="usage_wifi_default_suffix">Wi-Fi 数据</string>
+
+    <!-- Flashlight Strength -->
+    <string name="flashlight_strength_title">手电筒亮度</string>
+    <string name="flashlight_strength_turn_off">关闭</string>
+    <string name="flashlight_strength_turn_on">开启</string>
+
+    <!-- Data disabled icon -->
+    <string name="data_disabled_icon_title">移动数据状态图标</string>
+
+    <!-- Bluetooth battery status -->
+    <string name="status_bar_bluetooth_battery_title">蓝牙设备电量状态</string>
+
+    <!-- Privacy Indicator -->
+    <string name="mic_camera_privacy_indicator_title">麦克风和摄像头隐私指示器</string>
+    <string name="location_privacy_indicator_title">位置信息隐私指示器</string>
+    <string name="projection_privacy_indicator_title">媒体投射/录屏隐私指示器</string>
+
+    <!-- VoLTE / VoWiFi -->
+    <string name="statusbar_volte_title">高清通话</string>
+    <string name="statusbar_vowifi_title">Wi-Fi 通话</string>
+</resources>
