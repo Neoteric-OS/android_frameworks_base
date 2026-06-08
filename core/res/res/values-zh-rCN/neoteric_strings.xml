@@ -16,11 +16,11 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- PowerShare -->
-    <string name="battery_share_label">电池共享</string>
-    <string name="battery_share_notification_summary">电池共享状态的相关通知</string>
-    <string name="battery_share_disabled">电池共享已禁用</string>
-    <string name="battery_share_disabled_power_saver">由于已启用省电模式，电池共享已被禁用。</string>
-    <string name="battery_share_disabled_low_battery">由于电量达到设定的最低阈值，电池共享已被禁用。</string>
+    <string name="battery_share_label">无线反充</string>
+    <string name="battery_share_notification_summary">无线反充状态的相关通知</string>
+    <string name="battery_share_disabled">无线反充已禁用</string>
+    <string name="battery_share_disabled_power_saver">由于已启用省电模式，无线反充已被禁用。</string>
+    <string name="battery_share_disabled_low_battery">由于电量达到设定的最低阈值，无线反充已被禁用。</string>
 
     <!-- Health interface -->
     <string name="charging_control_notification_channel">充电控制</string>
@@ -33,10 +33,10 @@
 
     <!-- Pocket Lock -->
     <string name="pocket_mode_title">口袋模式已激活</string>
-    <string name="pocket_mode_illustration_description">手机放在口袋中的插图</string>
+    <string name="pocket_mode_illustration_description">口袋模式说明</string>
     <string name="pocket_mode_instructions_header">如需使用手机：</string>
-    <string name="pocket_mode_instruction_step1">1. 请确保上图所示的绿色区域（非接触/距离传感器）未被遮挡，且没有灰尘或脏污。</string>
-    <string name="pocket_mode_instruction_step2">2. 长按电源键即可退出口袋模式。</string>
+    <string name="pocket_mode_instruction_step1">1. 请确保上图所示的绿色区域（距离传感器）未被遮挡，且没有灰尘或脏污。</string>
+    <string name="pocket_mode_instruction_step2">2. 长按电源键可强制退出口袋模式。</string>
 
     <!-- App lock -->
     <string name="unlock_application">解锁 <xliff:g id="label" example="Telegram">%1$s</xliff:g></string>
