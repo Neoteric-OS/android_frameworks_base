@@ -70,6 +70,24 @@
       "parentUuid": "45b8d88e_aba1b21a",
       "revId": "d62604517e7caceb052e2cdad408078f82f35ab8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "614ff551_2b634281",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1568592
+      },
+      "writtenOn": "2026-06-08T12:42:23Z",
+      "side": 1,
+      "message": "That is correct. We have fixed this internally. `android-latest-release` currently points to `android16-qpr2-release`, not `android16-release`, which should have the fix.",
+      "parentUuid": "3c4f48ee_02cd8fcf",
+      "revId": "d62604517e7caceb052e2cdad408078f82f35ab8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
