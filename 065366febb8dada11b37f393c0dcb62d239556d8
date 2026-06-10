@@ -16,6 +16,46 @@
       "message": "Kindly review code, thanks",
       "revId": "065366febb8dada11b37f393c0dcb62d239556d8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "853b7a9c_fc10f4b3",
+        "filename": "services/core/java/com/android/server/tv/tunerresourcemanager/TunerResourceManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1082,
+      "author": {
+        "id": 1735919
+      },
+      "writtenOn": "2026-06-10T22:18:55Z",
+      "side": 1,
+      "message": "Did you intend to check process id?",
+      "range": {
+        "startLine": 1082,
+        "startChar": 31,
+        "endLine": 1082,
+        "endChar": 41
+      },
+      "revId": "065366febb8dada11b37f393c0dcb62d239556d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c8b5333_38cd7da4",
+        "filename": "services/core/java/com/android/server/tv/tunerresourcemanager/TunerResourceManagerService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1092,
+      "author": {
+        "id": 1735919
+      },
+      "writtenOn": "2026-06-10T22:18:55Z",
+      "side": 1,
+      "message": "We should check if there is another resource with even lower priority.",
+      "revId": "065366febb8dada11b37f393c0dcb62d239556d8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
