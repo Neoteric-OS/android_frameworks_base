@@ -826,8 +826,8 @@ public class StageCoordinator implements SplitLayout.SplitLayoutHandler,
                 "startIntentAndTask: intent=%s task1=%d position=%d snapPosition=%d",
                 pendingIntent.getIntent(), taskId, splitPosition, snapPosition);
         final WindowContainerTransaction wct = new WindowContainerTransaction();
-        boolean firstIntentPipped = mMixedHandler.isIntentInPip(pendingIntent);
-        boolean secondTaskPipped = mMixedHandler.isTaskInPip(taskId, mTaskOrganizer);
+        boolean firstIntentPipped = mMixedHandler != null && mMixedHandler.isIntentInPip(pendingIntent);
+        boolean secondTaskPipped = mMixedHandler != null && mMixedHandler.isTaskInPip(taskId, mTaskOrganizer);
         if (taskId == INVALID_TASK_ID || secondTaskPipped) {
             startSingleIntent(pendingIntent, fillInIntent, options1, wct, remoteTransition);
             return;
@@ -1091,8 +1091,8 @@ public class StageCoordinator implements SplitLayout.SplitLayoutHandler,
             ShortcutInfo shortcutInfo1, ShortcutInfo shortcutInfo2, WindowContainerTransaction wct,
             Intent fillInIntent1, Intent fillInIntent2, RemoteTransition remoteTransition) {
         // If one of the split apps to start is in Pip, only launch the non-pip app in fullscreen
-        boolean firstIntentPipped = mMixedHandler.isIntentInPip(pendingIntent1);
-        boolean secondIntentPipped = mMixedHandler.isIntentInPip(pendingIntent2);
+        boolean firstIntentPipped = mMixedHandler != null && mMixedHandler.isIntentInPip(pendingIntent1);
+        boolean secondIntentPipped = mMixedHandler != null && mMixedHandler.isIntentInPip(pendingIntent2);
         if (firstIntentPipped || secondIntentPipped) {
             Bundle options = secondIntentPipped ? options1 : options2;
             options = options == null ? new Bundle() : options;
@@ -2964,7 +2964,7 @@ public class StageCoordinator implements SplitLayout.SplitLayoutHandler,
                     mSplitLayout.update(startTransaction, false /* resetImePosition */);
                 }
 
-                if (mMixedHandler.isEnteringPip(change, transitType)
+                if (mMixedHandler != null && mMixedHandler.isEnteringPip(change, transitType)
                         && getSplitItemStage(change.getLastParent()) != STAGE_TYPE_UNDEFINED) {
                     pipChange = change;
                 }
