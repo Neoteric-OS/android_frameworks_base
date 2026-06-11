@@ -105,7 +105,8 @@ public class LocalePicker extends ListFragment {
         }
         String[] allLocales = context.getResources().getStringArray(R.array.supported_locales);
 
-        Predicate<String> localeFilter = getLocaleFilter();
+        Predicate<String> vendorLocaleFilter = getVendorLocaleFilter();
+        Predicate<String> localeFilter = vendorLocaleFilter == null ? getLocaleFilter() : vendorLocaleFilter;
         if (localeFilter == null) {
             return allLocales;
         }
@@ -117,6 +118,8 @@ public class LocalePicker extends ListFragment {
             }
         }
 
+        Log.d(TAG, "TJJ, getSupportedLocales: " + result);
+
         int localeCount = result.size();
         return (localeCount == allLocales.length) ? allLocales
                 : result.toArray(new String[localeCount]);
@@ -126,6 +129,21 @@ public class LocalePicker extends ListFragment {
     private static Predicate<String> getLocaleFilter() {
         try {
             return LocalizationProperties.locale_filter()
+                    .map(filter -> Pattern.compile(filter).asPredicate())
+                    .orElse(null);
+        } catch (SecurityException e) {
+            Log.e(TAG, "Failed to read locale filter.", e);
+        } catch (PatternSyntaxException e) {
+            Log.e(TAG, "Bad locale filter format (\"" + e.getPattern() + "\"), skipping.");
+        }
+
+        return null;
+    }
+
+    @Nullable
+    private static Predicate<String> getVendorLocaleFilter() {
+        try {
+            return LocalizationProperties.vendor_locale_filter()
                     .map(filter -> Pattern.compile(filter).asPredicate())
                     .orElse(null);
         } catch (SecurityException e) {
@@ -329,7 +347,8 @@ public class LocalePicker extends ListFragment {
 
     @NonNull
     private static LocaleList removeExcludedLocales(@NonNull LocaleList locales) {
-        Predicate<String> localeFilter = getLocaleFilter();
+        Predicate<String> vendorLocaleFilter = getVendorLocaleFilter();
+        Predicate<String> localeFilter = vendorLocaleFilter == null ? getLocaleFilter() : vendorLocaleFilter;
         if (localeFilter == null) {
             return locales;
         }

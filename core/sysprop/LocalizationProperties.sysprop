@@ -22,3 +22,10 @@ prop {
     scope: Internal
     access: Readonly
 }
+
+prop {api_name: "vendor_locale_filter"
+    type: String
+    prop_name: "ro.localization.vendor.locale_filter"
+    scope: Internal
+    access: Readonly
+}
