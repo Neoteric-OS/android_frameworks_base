@@ -952,6 +952,14 @@ public class PackageInstallerService extends IPackageInstaller.Stub implements
                 if (!InstallLocationUtils.fitsOnInternal(mContext, params)) {
                     throw new IOException("No suitable internal storage available");
                 }
+                // Check if volumeUuid value is valid, else fail.
+                try {
+                    StorageManager.convert(params.volumeUuid);
+                } catch (IllegalArgumentException e) {
+                    throw new IllegalArgumentException("Invalid volumeUuid value in session "
+                            + "params: "
+                            + params.volumeUuid);
+                }
             } else if ((params.installFlags & PackageManager.INSTALL_FORCE_VOLUME_UUID) != 0) {
                 // For now, installs to adopted media are treated as internal from
                 // an install flag point-of-view.
