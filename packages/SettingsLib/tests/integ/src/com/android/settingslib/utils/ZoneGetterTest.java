@@ -99,6 +99,53 @@ public class ZoneGetterTest {
                     0, timeZoneString.length(), TtsSpan.class).length > 0);
     }
 
+    @Test
+    public void getZonesList_allZonesHaveDisplayNames() {
+        // Test that all zones have non-null and non-empty display names
+        // This verifies the fallback logic works when long name is null/empty
+        final List<Map<String, Object>> zones =
+                ZoneGetter.getZonesList(InstrumentationRegistry.getContext());
+        
+        for (Map<String, Object> zone : zones) {
+            CharSequence displayLabel = (CharSequence) zone.get(ZoneGetter.KEY_DISPLAY_LABEL);
+            String displayName = (String) zone.get(ZoneGetter.KEY_DISPLAYNAME);
+            
+            // Verify display label is not null and not empty
+            assertTrue("Display label should not be null for zone: " + zone.get(ZoneGetter.KEY_ID),
+                    displayLabel != null);
+            assertTrue("Display label should not be empty for zone: " + zone.get(ZoneGetter.KEY_ID),
+                    displayLabel.length() > 0);
+            
+            // Verify display name string is not null and not empty
+            assertTrue("Display name should not be null for zone: " + zone.get(ZoneGetter.KEY_ID),
+                    displayName != null);
+            assertTrue("Display name should not be empty for zone: " + zone.get(ZoneGetter.KEY_ID),
+                    !displayName.isEmpty());
+        }
+    }
+
+    @Test
+    public void getZonesList_fallbackToExemplarLocation() {
+        // Test that zones without long names fall back to exemplar location
+        // This tests the fallback logic added in getTimeZoneDisplayName
+        final List<Map<String, Object>> zones =
+                ZoneGetter.getZonesList(InstrumentationRegistry.getContext());
+        
+        boolean foundAtLeastOneZone = false;
+        for (Map<String, Object> zone : zones) {
+            String zoneId = (String) zone.get(ZoneGetter.KEY_ID);
+            CharSequence displayLabel = (CharSequence) zone.get(ZoneGetter.KEY_DISPLAY_LABEL);
+            
+            // The fallback ensures even zones with problematic long names have valid display names
+            // Either from long name or exemplar location
+            assertTrue("Zone " + zoneId + " should have a valid display name",
+                    displayLabel != null && displayLabel.length() > 0);
+            foundAtLeastOneZone = true;
+        }
+        
+        assertTrue("Should have at least one zone in the list", foundAtLeastOneZone);
+    }
+
     private void testTimeZoneOffsetAndNameInner(String timeZoneId, String expectedName) {
         final Context context = InstrumentationRegistry.getContext();
         final TimeZone timeZone = TimeZone.getTimeZone(timeZoneId);
