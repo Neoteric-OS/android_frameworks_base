@@ -234,6 +234,15 @@ public class ZoneGetter {
 
         if (preferLongName) {
             displayName = getZoneLongName(locale, timeZoneNames, tz, now);
+            if (displayName == null || displayName.isEmpty()) {
+                // Fall back to the Exemplar Location
+                String canonicalZoneId = android.icu.util.TimeZone.getCanonicalID(tz.getID());
+                if (canonicalZoneId == null) {
+                    canonicalZoneId = tz.getID();
+                }
+                displayName = capitalizeForStandaloneDisplay(
+                    locale, timeZoneNames.getExemplarLocationName(canonicalZoneId));
+            }
         } else {
             // Canonicalize the zone ID for ICU. It will only return valid strings for zone IDs
             // that match ICUs zone IDs (which are similar but not guaranteed the same as those
