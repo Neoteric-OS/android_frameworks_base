@@ -412,6 +412,8 @@ interface IWindowManager
     /**
      * Registers a system gesture exclusion listener for a given display.
      */
+    @JavaPassthrough(annotation = "@android.annotation.RequiresPermission(android.Manifest"
+            + ".permission.MONITOR_INPUT)")
     void registerSystemGestureExclusionListener(ISystemGestureExclusionListener listener,
         int displayId);
 
