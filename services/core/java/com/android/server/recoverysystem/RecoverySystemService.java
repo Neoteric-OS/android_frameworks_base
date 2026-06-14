@@ -541,6 +541,12 @@ public class RecoverySystemService extends IRecoverySystem.Stub implements Reboo
 
             if (isForcedWipe) {
                 deleteSecrets();
+
+                // Signal ShutdownThread that this is a genuine factory-reset path.
+                // Allows skipping ACTION_SHUTDOWN broadcast safely (data wiped anyway)
+                // without affecting manual recovery reboots or other callers of
+                // pm.reboot(REBOOT_RECOVERY) that must follow the normal shutdown sequence.
+                SystemProperties.set("sys.factoryreset.pending", "1");
                 // TODO: consider adding a dedicated forced-wipe-reboot method to PowerManager and
                 // calling here.
             }

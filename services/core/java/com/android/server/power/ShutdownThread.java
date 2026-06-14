@@ -40,6 +40,7 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.os.SystemProperties;
+import android.os.SystemService;
 import android.os.SystemVibrator;
 import android.os.Trace;
 import android.os.UserHandle;
@@ -496,6 +497,30 @@ public final class ShutdownThread extends Thread {
             Slog.e(TAG, "Failed to log pre-reboot information", e);
         }
         shutdownTimingLog.traceEnd(); // DumpPreRebootInfo
+
+        // Factory-reset fast path: skip ACTION_SHUTDOWN broadcast and AM shutdown.
+        // Conditions:
+        //   1. reason == "recovery"            — distinguishes from OTA ("recovery-update")
+        //                                        and all other shutdown/reboot paths.
+        //   2. sys.factoryreset.pending == "1" — set by RecoverySystemService only on
+        //                                        forced-wipe paths (isForcedWipe == true).
+        //                                        Guards against "adb reboot recovery" or
+        //                                        non-wipe BCB commands that also use
+        //                                        REBOOT_RECOVERY but must run full shutdown.
+        // keystore2 stopped first: abrupt kill leaves TEE secure storage inconsistent,
+        // causing earlyBootEnded error -68 on next boot.
+        if (PowerManager.REBOOT_RECOVERY.equals(mReason)
+                && "1".equals(SystemProperties.get("sys.factoryreset.pending", "0"))) {
+            Log.i(TAG, "Factory-reset reboot: stopping keystore2 for TEE cleanup, then rebooting");
+            SystemService.stop("keystore2");
+            // poll up to 10s; TEE ops measured at 5-8s overdue
+            SystemService.waitForAnyStopped("keystore2");
+            shutdownTimingLog.traceEnd(); // SystemServerShutdown
+            metricEnded(METRIC_SYSTEM_SERVER);
+            saveMetrics(mReboot, mReason);
+            rebootOrShutdown(mContext, mReboot, mReason);
+            return;
+        }
 
         metricStarted(METRIC_SEND_BROADCAST);
         shutdownTimingLog.traceBegin("SendShutdownBroadcast");
