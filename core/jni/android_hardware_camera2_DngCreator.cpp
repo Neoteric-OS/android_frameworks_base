@@ -912,6 +912,12 @@ static bool validateDngHeader(JNIEnv* env, sp<TiffWriter> writer,
     bool matchesPreCorrectionArray = (cWidth == width && cHeight == height);
 
     if (!(matchesPixelArray || matchesPreCorrectionArray)) {
+        if (android::base::GetBoolProperty("persist.sys.camera.allow_ultraraw_dng_size", false)) {
+            ALOGW("%s: accepting DNG header size %dx%d that does not match active array %dx%d "
+                    "or pixel array %dx%d", __FUNCTION__, width, height, cWidth, cHeight, pWidth,
+                    pHeight);
+            return true;
+        }
         jniThrowExceptionFmt(env, "java/lang/IllegalArgumentException", \
                         "Image dimensions (w=%d,h=%d) are invalid, must match either the pixel "
                         "array size (w=%d, h=%d) or the pre-correction array size (w=%d, h=%d)",
@@ -1300,6 +1306,7 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
     uint32_t preHeight = 0;
     uint8_t colorFilter = 0;
     bool isBayer = true;
+    bool useBufferSizeForXiaomiUltraRaw = false;
     bool isMaximumResolutionMode =
             isMaximumResolutionModeImage(characteristics, imageWidth, imageHeight, writer, env);
     {
@@ -1321,12 +1328,27 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
         uint32_t pixWidth = static_cast<uint32_t>(pixelArrayEntry.data.i32[0]);
         uint32_t pixHeight = static_cast<uint32_t>(pixelArrayEntry.data.i32[1]);
 
-        if (!((imageWidth == preWidth && imageHeight == preHeight) ||
-                (imageWidth == pixWidth && imageHeight == pixHeight))) {
+        const bool matchesReportedSize =
+                (imageWidth == preWidth && imageHeight == preHeight) ||
+                (imageWidth == pixWidth && imageHeight == pixHeight);
+        const bool allowXiaomiUltraRawSize =
+                android::base::GetBoolProperty("persist.sys.camera.allow_ultraraw_dng_size",
+                        false);
+        if (!matchesReportedSize && !allowXiaomiUltraRawSize) {
             jniThrowException(env, "java/lang/AssertionError",
                               "Height and width of image buffer did not match height and width of"
                               " either the preCorrectionActiveArraySize or the pixelArraySize.");
             return nullptr;
+        }
+        useBufferSizeForXiaomiUltraRaw = !matchesReportedSize && allowXiaomiUltraRawSize;
+        if (useBufferSizeForXiaomiUltraRaw) {
+            ALOGW("%s: accepting DNG buffer size %ux%u that does not match active array %ux%u "
+                    "or pixel array %ux%u", __FUNCTION__, imageWidth, imageHeight, preWidth,
+                    preHeight, pixWidth, pixHeight);
+            preXMin = 0;
+            preYMin = 0;
+            preWidth = imageWidth;
+            preHeight = imageHeight;
         }
 
         camera_metadata_entry colorFilterEntry =
@@ -1890,17 +1912,40 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
 
     {
         // Set dimensions
-        if (calculateAndSetCrop(env, characteristics, writer, isMaximumResolutionMode) != OK) {
+        if (useBufferSizeForXiaomiUltraRaw) {
+            const uint32_t margin = 8;
+            if (imageWidth < margin * 2 || imageHeight < margin * 2) {
+                ALOGE("%s: Cannot calculate default crop for image, buffer is too small: "
+                        "h=%" PRIu32 ", w=%" PRIu32, __FUNCTION__, imageHeight, imageWidth);
+                jniThrowException(env, "java/lang/IllegalStateException",
+                        "Image buffer is too small.");
+                return nullptr;
+            }
+            uint32_t defaultCropOrigin[] = {margin, margin};
+            uint32_t defaultCropSize[] = {imageWidth - defaultCropOrigin[0] - margin,
+                                          imageHeight - defaultCropOrigin[1] - margin};
+            BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_DEFAULTCROPORIGIN, 2,
+                    defaultCropOrigin, TIFF_IFD_0), env, TAG_DEFAULTCROPORIGIN, writer);
+            BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_DEFAULTCROPSIZE, 2,
+                    defaultCropSize, TIFF_IFD_0), env, TAG_DEFAULTCROPSIZE, writer);
+        } else if (calculateAndSetCrop(env, characteristics, writer, isMaximumResolutionMode)
+                != OK) {
             return nullptr;
         }
-        camera_metadata_entry entry = characteristics.find(
-                getAppropriateModeTag(ANDROID_SENSOR_INFO_PRE_CORRECTION_ACTIVE_ARRAY_SIZE,
-                                      isMaximumResolutionMode));
-        BAIL_IF_EMPTY_RET_NULL_SP(entry, env, TAG_ACTIVEAREA, writer);
-        uint32_t xmin = static_cast<uint32_t>(entry.data.i32[0]);
-        uint32_t ymin = static_cast<uint32_t>(entry.data.i32[1]);
-        uint32_t width = static_cast<uint32_t>(entry.data.i32[2]);
-        uint32_t height = static_cast<uint32_t>(entry.data.i32[3]);
+        uint32_t xmin = 0;
+        uint32_t ymin = 0;
+        uint32_t width = imageWidth;
+        uint32_t height = imageHeight;
+        if (!useBufferSizeForXiaomiUltraRaw) {
+            camera_metadata_entry entry = characteristics.find(
+                    getAppropriateModeTag(ANDROID_SENSOR_INFO_PRE_CORRECTION_ACTIVE_ARRAY_SIZE,
+                                          isMaximumResolutionMode));
+            BAIL_IF_EMPTY_RET_NULL_SP(entry, env, TAG_ACTIVEAREA, writer);
+            xmin = static_cast<uint32_t>(entry.data.i32[0]);
+            ymin = static_cast<uint32_t>(entry.data.i32[1]);
+            width = static_cast<uint32_t>(entry.data.i32[2]);
+            height = static_cast<uint32_t>(entry.data.i32[3]);
+        }
 
         // If we only have a buffer containing the pre-correction rectangle, ignore the offset
         // relative to the pixel array.
