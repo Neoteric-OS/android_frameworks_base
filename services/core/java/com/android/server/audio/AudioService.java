@@ -6980,6 +6980,19 @@ public class AudioService extends IAudioService.Stub
 
         checkAllFixedVolumeDevices();
         checkAllAliasStreamVolumes();
+
+        // Fix: During boot, reading a persisted volume of 0 will cause VolumeGroupState
+        // to incorrectly flag alias streams (e.g. STREAM_SYSTEM) as muted.
+        // For single volume devices, we must ensure alias streams follow the exact mute state
+        // of their base stream (STREAM_MUSIC) to prevent audio routing inconsistencies.
+        if (mIsSingleVolume) {
+            int streamTypeAlias = AudioSystem.STREAM_MUSIC;
+            VolumeStreamState streamState = getVssForStreamOrDefault(streamTypeAlias);
+            if (streamState != null) {
+                muteAliasStreams(streamTypeAlias, streamState.mIsMuted);
+            }
+        }
+
         checkMuteAffectedStreams();
 
         mSoundDoseHelper.restoreMusicActiveMs();
