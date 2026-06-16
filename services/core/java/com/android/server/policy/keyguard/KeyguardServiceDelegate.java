@@ -43,6 +43,8 @@ import java.io.PrintWriter;
 public class KeyguardServiceDelegate {
     private static final String TAG = "KeyguardServiceDelegate";
     private static final boolean DEBUG = false;
+    private static final String FEATURE_LOCKSCREEN_DISABLED =
+            "android.software.lockscreen_disabled";
 
     private static final int SCREEN_STATE_OFF = 0;
     private static final int SCREEN_STATE_TURNING_ON = 1;
@@ -57,6 +59,7 @@ public class KeyguardServiceDelegate {
     protected KeyguardServiceWrapper mKeyguardService;
     private final Context mContext;
     private final Handler mHandler;
+    private final boolean mLockscreenDisabled;
     private final KeyguardState mKeyguardState = new KeyguardState();
     private final KeyguardStateMonitor.StateCallback mCallback;
 
@@ -104,6 +107,12 @@ public class KeyguardServiceDelegate {
             enabled = true;
             currentUser = UserHandle.USER_NULL;
         }
+        private void disable() {
+            showing = false;
+            inputRestricted = false;
+            secure = false;
+            deviceHasKeyguard = false;
+        }
     };
 
     public interface DrawnListener {
@@ -147,6 +156,11 @@ public class KeyguardServiceDelegate {
     public KeyguardServiceDelegate(Context context, KeyguardStateMonitor.StateCallback callback) {
         mContext = context;
         mHandler = UiThread.getHandler();
+        mLockscreenDisabled = context.getPackageManager().hasSystemFeature(
+                FEATURE_LOCKSCREEN_DISABLED);
+        if (mLockscreenDisabled) {
+            mKeyguardState.disable();
+        }
         mCallback = callback;
     }
 
@@ -231,6 +245,9 @@ public class KeyguardServiceDelegate {
             if (DEBUG) Log.v(TAG, "*** Keyguard disconnected (boo!)");
             mKeyguardService = null;
             mKeyguardState.reset();
+            if (mLockscreenDisabled) {
+                mKeyguardState.disable();
+            }
             mHandler.post(() -> {
                 try {
                     ActivityTaskManager.getService().setLockScreenShown(true /* keyguardShowing */,
