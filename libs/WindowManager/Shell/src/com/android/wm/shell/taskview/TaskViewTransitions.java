@@ -510,7 +510,46 @@ public class TaskViewTransitions implements Transitions.TransitionHandler, TaskV
             boolean nonBlockingIfPossible, WindowContainerTransaction overrideTransaction) {
         final TaskViewRepository.TaskViewState state = mTaskViewRepo.byTaskView(taskView);
         if (state == null) return;
-        if (state.mVisible == visible) return;
+        if (state.mVisible == visible) {
+            if (!(visible && reorder)) {
+                return;
+            }
+            // An external transition (e.g., user pressed HOME while a TaskView task
+            // was the focused task) may have hidden the task by sending it TO_BACK
+            // without going through TaskViewTransitions, leaving state.mVisible stale.
+            // Schedule a recovery TO_FRONT transition.
+            mShellExecutor.execute(() -> {
+                if (findPending(taskView, TRANSIT_TO_FRONT) != null) {
+                    return;
+                }
+                if (taskView.getTaskInfo() == null) {
+                    return;
+                }
+                final WindowContainerTransaction wct;
+                if (overrideTransaction != null) {
+                    wct = overrideTransaction;
+                } else {
+                    final WindowContainerToken token = taskView.getTaskInfo().token;
+                    wct = new WindowContainerTransaction();
+                    wct.setBounds(token, state.mBounds);
+                    wct.setHidden(token, false /* hidden */);
+                    if (!syncHiddenWithVisibilityOnReorder) {
+                        wct.setAlwaysOnTop(token, true /* alwaysOnTop */);
+                    }
+                    wct.reorder(token, true /* onTop */);
+                }
+                final PendingTransition pending = new PendingTransition(
+                        TRANSIT_TO_FRONT, wct, taskView, null /* cookie */);
+                mPending.add(pending);
+                if (nonBlockingIfPossible
+                        && mShellExecutor instanceof ShellExecutor executor) {
+                    executor.executeDelayed(this::startNextTransition, 0);
+                } else {
+                    startNextTransition();
+                }
+            });
+            return;
+        }
         if (taskView.getTaskInfo() == null) {
             // Nothing to update, task is not yet available
             return;

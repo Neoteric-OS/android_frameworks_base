@@ -289,6 +289,92 @@ public class TaskViewTransitionsTest extends ShellTestCase {
     }
 
     @Test
+    public void testSetTaskVisibility_alreadyVisibleWithReorder_enqueuesRecoveryTransition() {
+        final Rect bounds = new Rect(0, 0, 100, 100);
+        mTaskViewRepository.byTaskView(mTaskViewTaskController).mBounds = bounds;
+        mTaskViewRepository.byTaskView(mTaskViewTaskController).mVisible = true;
+        final IBinder mockBinder = mock(IBinder.class);
+        when(mToken.asBinder()).thenReturn(mockBinder);
+
+        mTaskViewTransitions.setTaskViewVisible(mTaskViewTaskController, true /* visible */,
+                true /* reorder */, false /* syncHiddenWithVisibilityOnReorder */);
+
+        // A recovery TRANSIT_TO_FRONT should be enqueued rather than early-returning.
+        final TaskViewTransitions.PendingTransition pending =
+                mTaskViewTransitions.findPending(mTaskViewTaskController, TRANSIT_TO_FRONT);
+        assertThat(pending).isNotNull();
+        final Map<IBinder, WindowContainerTransaction.Change> chgs = pending.mWct.getChanges();
+        assertThat(chgs.keySet()).containsExactly(mockBinder);
+        assertThat(chgs.get(mockBinder).getConfiguration().windowConfiguration.getBounds())
+                .isEqualTo(bounds);
+        assertThat(chgs.get(mockBinder).getHidden()).isFalse();
+        final List<WindowContainerTransaction.HierarchyOp> ops = pending.mWct.getHierarchyOps();
+        assertThat(ops).hasSize(2);
+        assertThat(ops.get(0).isAlwaysOnTop()).isTrue();
+        assertThat(ops.get(1).getToTop()).isTrue();
+    }
+
+    @Test
+    public void testSetTaskVisibility_alreadyVisibleWithReorder_syncHidden_noAlwaysOnTop() {
+        final Rect bounds = new Rect(0, 0, 100, 100);
+        mTaskViewRepository.byTaskView(mTaskViewTaskController).mBounds = bounds;
+        mTaskViewRepository.byTaskView(mTaskViewTaskController).mVisible = true;
+        final IBinder mockBinder = mock(IBinder.class);
+        when(mToken.asBinder()).thenReturn(mockBinder);
+
+        mTaskViewTransitions.setTaskViewVisible(mTaskViewTaskController, true /* visible */,
+                true /* reorder */, true /* syncHiddenWithVisibilityOnReorder */);
+
+        // Recovery should be enqueued, but without setAlwaysOnTop.
+        final TaskViewTransitions.PendingTransition pending =
+                mTaskViewTransitions.findPending(mTaskViewTaskController, TRANSIT_TO_FRONT);
+        assertThat(pending).isNotNull();
+        final Map<IBinder, WindowContainerTransaction.Change> chgs = pending.mWct.getChanges();
+        assertThat(chgs.keySet()).containsExactly(mockBinder);
+        assertThat(chgs.get(mockBinder).getHidden()).isFalse();
+        final List<WindowContainerTransaction.HierarchyOp> ops = pending.mWct.getHierarchyOps();
+        assertThat(ops).hasSize(1);
+        assertThat(ops.get(0).getToTop()).isTrue();
+    }
+
+    @Test
+    public void testSetTaskVisibility_alreadyVisibleWithReorder_noDuplicate() {
+        final Rect bounds = new Rect(0, 0, 100, 100);
+        mTaskViewRepository.byTaskView(mTaskViewTaskController).mBounds = bounds;
+        mTaskViewRepository.byTaskView(mTaskViewTaskController).mVisible = true;
+
+        mTaskViewTransitions.setTaskViewVisible(mTaskViewTaskController, true /* visible */,
+                true /* reorder */, false /* syncHiddenWithVisibilityOnReorder */);
+
+        // First call enqueues recovery.
+        final TaskViewTransitions.PendingTransition pending =
+                mTaskViewTransitions.findPending(mTaskViewTaskController, TRANSIT_TO_FRONT);
+        assertThat(pending).isNotNull();
+
+        // Second call should not enqueue a duplicate.
+        mTaskViewTransitions.setTaskViewVisible(mTaskViewTaskController, true /* visible */,
+                true /* reorder */, false /* syncHiddenWithVisibilityOnReorder */);
+
+        // Still only one TRANSIT_TO_FRONT pending (findPending returns the first match).
+        // Remove it and verify there's no second one.
+        mTaskViewTransitions.removePendingTransitions(mTaskViewTaskController);
+        assertThat(mTaskViewTransitions.findPending(mTaskViewTaskController,
+                TRANSIT_TO_FRONT)).isNull();
+    }
+
+    @Test
+    public void testSetTaskVisibility_alreadyVisibleNoReorder_earlyReturn() {
+        mTaskViewRepository.byTaskView(mTaskViewTaskController).mVisible = true;
+
+        mTaskViewTransitions.setTaskViewVisible(mTaskViewTaskController, true /* visible */,
+                false /* reorder */, false /* syncHiddenWithVisibilityOnReorder */);
+
+        // No reorder requested, so the method should early-return with no transition.
+        assertThat(mTaskViewTransitions.findPending(mTaskViewTaskController,
+                TRANSIT_TO_FRONT)).isNull();
+    }
+
+    @Test
     public void testSetTaskBounds_taskRemoved_noNPE() {
         mTaskViewTransitions.unregisterTaskView(mTaskViewTaskController);
 
