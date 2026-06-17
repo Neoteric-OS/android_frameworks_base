@@ -135,7 +135,7 @@ class ExternalDisplayPolicy {
             for (var displayId : mDisplayIdsWaitingForBootCompletion) {
                 var logicalDisplay = mLogicalDisplayMapper.getDisplayLocked(displayId);
                 if (logicalDisplay != null) {
-                    handleExternalDisplayConnectedLocked(logicalDisplay);
+                    handleExternalDisplayConnectedAtBootLocked(logicalDisplay);
                 }
             }
             if (!mDisplayIdsWaitingForBootCompletion.isEmpty()) {
@@ -187,6 +187,27 @@ class ExternalDisplayPolicy {
         }
 
         mLogicalDisplayMapper.setDisplayEnabledLocked(logicalDisplay, enabled);
+    }
+
+    /**
+     * Variant of {@link #handleExternalDisplayConnectedLocked} for displays connected before boot.
+     * If the display is already enabled, skips the intermediate disable from
+     * TODO(b/292196201) (that is, the {@code setEnabledLocked(false)} workaround).
+     * Falls back to the normal flow otherwise.
+     */
+    @GuardedBy("mSyncRoot")
+    private void handleExternalDisplayConnectedAtBootLocked(
+            @NonNull final LogicalDisplay logicalDisplay) {
+        if (shouldAutoEnable(logicalDisplay) || !logicalDisplay.isEnabledLocked()
+                || !isExternalDisplayAllowed()) {
+            handleExternalDisplayConnectedLocked(logicalDisplay);
+            return;
+        }
+
+        Slog.i(TAG, "Display " + logicalDisplay.getDisplayIdLocked()
+                + " already enabled at boot; sending CONNECTED without disable.");
+        mExternalDisplayStatsService.onDisplayConnected(logicalDisplay);
+        mInjector.sendExternalDisplayEventLocked(logicalDisplay, EVENT_DISPLAY_CONNECTED);
     }
 
     /**
