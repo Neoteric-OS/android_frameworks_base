@@ -12016,7 +12016,7 @@ public final class Settings {
          * @hide
          *
          * @deprecated This has been moved to DeviceConfig property
-         * {@link LocationAccessCheck#PROPERTY_LOCATION_ACCESS_PERIODIC_INTERVAL_MILLIS} in a T
+         * {@code LocationAccessCheck#PROPERTY_LOCATION_ACCESS_PERIODIC_INTERVAL_MILLIS} in a T
          * module update
          *
          * Before Android T set this property to control the interval for the check
@@ -12034,7 +12034,7 @@ public final class Settings {
          * @hide
          *
          * @deprecated This has been moved to DeviceConfig property
-         * {@link LocationAccessCheck#PROPERTY_LOCATION_ACCESS_CHECK_DELAY_MILLIS} in a T module
+         * {@code LocationAccessCheck#PROPERTY_LOCATION_ACCESS_CHECK_DELAY_MILLIS} in a T module
          * update
          *
          * Before Android T set this property to control the delay for the check
