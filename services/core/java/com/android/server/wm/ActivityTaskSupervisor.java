@@ -132,6 +132,7 @@ import android.os.Bundle;
 import android.os.DeadObjectException;
 import android.os.Debug;
 import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
@@ -213,6 +214,12 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
      * is starting while the device is sleeping and then the device is unlocked in a short time.
      */
     private static final int IDLE_NOW_DELAY_WHILE_SLEEPING_MS = 100;
+
+    /**
+     * How long we wait for User 0 to unlock in HSUM mode before completing a user switch.
+     * This prevents race conditions where User 10 switch completes before User 0 unlocks.
+     */
+    private static final int USER_UNLOCK_WAIT_TIMEOUT = 10 * 1000; // 10 seconds
 
     private static final int IDLE_TIMEOUT_MSG = FIRST_SUPERVISOR_TASK_MSG;
     private static final int IDLE_NOW_MSG = FIRST_SUPERVISOR_TASK_MSG + 1;
@@ -367,6 +374,22 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
     /** Used on user changes */
     final ArrayList<UserState> mStartingUsers = new ArrayList<>();
 
+    /** Dedicated lock for User 0 unlock synchronization in HSUM mode */
+    private final Object mUser0UnlockLock = new Object();
+
+    /** Flag indicating User 0 has unlocked in HSUM mode */
+    @GuardedBy("mUser0UnlockLock")
+    private volatile boolean mUser0Unlocked = false;
+
+    /** Flag to prevent multiple handler posts for user switch completion */
+    private boolean mUserSwitchCompletionPosted = false;
+
+    /** Dedicated handler thread for User 0 unlock waiting (used only in HSUM mode) */
+    private HandlerThread mUserSwitchHandlerThread;
+
+    /** Handler for User 0 unlock waiting (runs on separate thread, used only in HSUM mode) */
+    private Handler mUserSwitchHandler;
+
     /** Set to indicate whether to issue an onUserLeaving callback when a newly launched activity
      * is being brought in front of us. */
     boolean mUserLeaving = false;
@@ -503,6 +526,14 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
         // unlocked.
         mPersisterQueue.startPersisting();
         mLaunchParamsPersister.onUnlockUser(userId);
+
+        if (UserManager.isHeadlessSystemUserMode() && userId == UserHandle.USER_SYSTEM) {
+            Slogf.i(TAG, "User 0 unlocked in HSUM mode, signaling waiting threads");
+            synchronized (mUser0UnlockLock) {
+                mUser0Unlocked = true;
+                mUser0UnlockLock.notifyAll();
+            }
+        }
 
         // Need to launch home again for those displays that do not have encryption aware home app.
         scheduleStartHome("userUnlocked");
@@ -1565,6 +1596,22 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
         }
     }
 
+    /**
+     * Completes pending user switches by finishing the switch for all users in mStartingUsers.
+     * Must be called with mGlobalLock held.
+     */
+    @GuardedBy("mService.mGlobalLock")
+    private void completeUserSwitchInternalLocked() {
+        final ArrayList<UserState> startingUsers = new ArrayList<>(mStartingUsers);
+        mStartingUsers.clear();
+
+        for (int i = 0; i < startingUsers.size(); i++) {
+            UserState userState = startingUsers.get(i);
+            Slogf.i(TAG, "finishing switch of user %d", userState.mHandle.getIdentifier());
+            mService.mAmInternal.finishUserSwitch(userState);
+        }
+    }
+
     void activityIdleInternal(ActivityRecord r, boolean fromTimeout,
             boolean processPausingActivities, Configuration config) {
         if (DEBUG_ALL) Slog.v(TAG, "Activity idle: " + r);
@@ -1625,13 +1672,55 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
         }
 
         if (!mStartingUsers.isEmpty()) {
-            final ArrayList<UserState> startingUsers = new ArrayList<>(mStartingUsers);
-            mStartingUsers.clear();
-            // Complete user switch.
-            for (int i = 0; i < startingUsers.size(); i++) {
-                UserState userState = startingUsers.get(i);
-                Slogf.i(TAG, "finishing switch of user %d", userState.mHandle.getIdentifier());
-                mService.mAmInternal.finishUserSwitch(userState);
+            // In HSUM mode, post to handler to avoid blocking mGlobalLock
+            if (UserManager.isHeadlessSystemUserMode()) {
+                // Only post once, even if activityIdleInternal is called multiple times
+                if (!mUserSwitchCompletionPosted) {
+                    mUserSwitchCompletionPosted = true;
+
+                    // Lazy create handler thread on first use
+                    if (mUserSwitchHandler == null) {
+                        mUserSwitchHandlerThread = new HandlerThread("ActivityTaskSupervisor.UserSwitch");
+                        mUserSwitchHandlerThread.start();
+                        mUserSwitchHandler = new Handler(mUserSwitchHandlerThread.getLooper());
+                    }
+
+                    // Post to dedicated handler thread to release mGlobalLock before waiting
+                    mUserSwitchHandler.post(() -> {
+                        Slogf.i(TAG, "Waiting for User 0 unlock before completing user switch in HSUM mode");
+                        final long startTime = SystemClock.uptimeMillis();
+
+                        // Wait WITHOUT holding mGlobalLock
+                        synchronized (mUser0UnlockLock) {
+                            if (!mUser0Unlocked) {
+                                try {
+                                    mUser0UnlockLock.wait(USER_UNLOCK_WAIT_TIMEOUT);
+                                } catch (InterruptedException e) {
+                                    Slogf.w(TAG, "Interrupted while waiting for User 0 unlock");
+                                }
+                            }
+                        }
+
+                        // Re-acquire mGlobalLock to complete user switch
+                        synchronized (mService.mGlobalLock) {
+                            mUserSwitchCompletionPosted = false;
+
+                            if (!mUser0Unlocked) {
+                                Slogf.w(TAG, "Timeout waiting for User 0 unlock after %d ms. "
+                                        + "Proceeding with user switch anyway.",
+                                        SystemClock.uptimeMillis() - startTime);
+                            } else {
+                                Slogf.i(TAG, "User 0 unlocked after %d ms, proceeding with user switch",
+                                        SystemClock.uptimeMillis() - startTime);
+                            }
+
+                            completeUserSwitchInternalLocked();
+                        }
+                    });
+                }
+            } else {
+                // Non-HSUM mode: complete user switch immediately
+                completeUserSwitchInternalLocked();
             }
         }
 
