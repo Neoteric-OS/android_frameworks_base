@@ -2317,7 +2317,7 @@ public class AudioRecord implements AudioRouting, MicrophoneDirection,
      * which side of the device to optimize capture from. Typically used in conjunction with
      * the camera capturing video.
      *
-     * @return true if sucessful.
+     * @return true if successful.
      */
     public boolean setPreferredMicrophoneDirection(@DirectionMode int direction) {
         return native_set_preferred_microphone_direction(direction) == AudioSystem.SUCCESS;
@@ -2329,7 +2329,7 @@ public class AudioRecord implements AudioRouting, MicrophoneDirection,
      *
      * @param zoom the desired field dimension of microphone capture. Range is from -1 (wide angle),
      * though 0 (no zoom) to 1 (maximum zoom).
-     * @return true if sucessful.
+     * @return true if successful.
      */
     public boolean setPreferredMicrophoneFieldDimension(
                             @FloatRange(from = -1.0, to = 1.0) float zoom) {
