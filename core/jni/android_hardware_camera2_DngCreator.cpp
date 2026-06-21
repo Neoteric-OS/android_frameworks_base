@@ -1755,6 +1755,21 @@ static sp<TiffWriter> DngCreator_setup(JNIEnv* env, jobject thiz, uint32_t image
                 characteristics.find(ANDROID_SENSOR_INFO_WHITE_LEVEL);
         BAIL_IF_EMPTY_RET_NULL_SP(entry, env, TAG_WHITELEVEL, writer);
         uint32_t whiteLevel = static_cast<uint32_t>(entry.data.i32[0]);
+        if (useBufferSizeForXiaomiUltraRaw) {
+            // The static ANDROID_SENSOR_INFO_WHITE_LEVEL reflects the binned
+            // sensor mode (e.g. 10-bit -> 1023) and is wrong for the higher
+            // bit-depth full-res ultra-raw buffer: it ends up <= the (full-res)
+            // dynamic black level, so the DNG normalizes to all-white. There is
+            // no standard max-resolution white-level tag to read, so override it
+            // with the real full-res value (14-bit by default; tunable for other
+            // sensors via property).
+            uint32_t ultraRawWhiteLevel = static_cast<uint32_t>(
+                    android::base::GetIntProperty(
+                            "persist.sys.camera.ultraraw_dng_whitelevel", 16383));
+            ALOGW("%s: overriding ultra-raw DNG white level %u -> %u", __FUNCTION__,
+                    whiteLevel, ultraRawWhiteLevel);
+            whiteLevel = ultraRawWhiteLevel;
+        }
         BAIL_IF_INVALID_RET_NULL_SP(writer->addEntry(TAG_WHITELEVEL, 1, &whiteLevel, TIFF_IFD_0),
                 env, TAG_WHITELEVEL, writer);
     }
