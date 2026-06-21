@@ -16,6 +16,23 @@
       "message": "I think you should add some reviewers, @ayub.rauf92@gmail.com.",
       "revId": "ae9c6c24ac45ec51e006e558a6ee14e1f611ee84",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "61b07849_d09eb5cb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4790607
+      },
+      "writtenOn": "2026-06-21T20:51:29Z",
+      "side": 1,
+      "message": "Hello again. So, I think you need to add a \"Signed-off-by\" line to the commit message, and you also need to write the commit body.",
+      "revId": "ae9c6c24ac45ec51e006e558a6ee14e1f611ee84",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
