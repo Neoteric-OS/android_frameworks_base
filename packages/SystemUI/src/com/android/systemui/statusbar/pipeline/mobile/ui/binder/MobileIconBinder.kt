@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// QTI_BEGIN: 2025-04-15: Android_UI: SystemUI: Readapt Mobile Icon Features For Kairos part 1
 
 /*
  * Changes from Qualcomm Innovation Center are provided under the following license:
@@ -21,7 +20,6 @@
  * SPDX-License-Identifier: BSD-3-Clause-Clear
  */
 
-// QTI_END: 2025-04-15: Android_UI: SystemUI: Readapt Mobile Icon Features For Kairos part 1
 package com.android.systemui.statusbar.pipeline.mobile.ui.binder
 import android.annotation.ColorInt
 import android.content.res.ColorStateList
@@ -47,9 +45,7 @@ import com.android.systemui.res.R
 import com.android.systemui.statusbar.NetworkTraffic
 import com.android.systemui.statusbar.StatusBarIconView
 import com.android.systemui.statusbar.StatusBarIconView.STATE_HIDDEN
-// QTI_BEGIN: 2025-04-15: Android_UI: SystemUI: Readapt Mobile Icon Features For Kairos part 1
 import com.android.systemui.statusbar.phone.StatusBarLocation
-// QTI_END: 2025-04-15: Android_UI: SystemUI: Readapt Mobile Icon Features For Kairos part 1
 import com.android.systemui.statusbar.pipeline.mobile.domain.model.SignalIconModel
 import com.android.systemui.statusbar.pipeline.mobile.ui.MobileViewLogger
 import com.android.systemui.statusbar.pipeline.mobile.ui.viewmodel.LocationBasedMobileViewModel
@@ -80,9 +76,7 @@ object MobileIconBinder {
         val iconView = view.requireViewById<ImageView>(R.id.mobile_signal)
         val mobileDrawable = SignalDrawable(view.context)
         val dotView = view.requireViewById<StatusBarIconView>(R.id.status_bar_dot)
-// QTI_BEGIN: 2025-04-15: Android_UI: SystemUI: Readapt Mobile Icon Features For Kairos part 1
         val volteView = view.requireViewById<ImageView>(R.id.mobile_volte)
-// QTI_END: 2025-04-15: Android_UI: SystemUI: Readapt Mobile Icon Features For Kairos part 1
         val volteSpace = view.requireViewById<Space>(R.id.mobile_volte_space)
         val networkTraffic = view.requireViewById<NetworkTraffic>(R.id.network_traffic)
         val networkTrafficContainer = view.requireViewById<FrameLayout>(R.id.network_traffic_container)
@@ -184,7 +178,6 @@ object MobileIconBinder {
                             dataTypeId?.let { IconViewBinder.bind(dataTypeId, networkTypeView) }
                             val isVoWifi = dataTypeId?.res == TelephonyIcons.VOWIFI.dataType
 
-// QTI_BEGIN: 2025-04-15: Android_UI: SystemUI: Readapt Mobile Icon Features For Kairos part 1
                             val shouldShowNetworkType =
                                 dataTypeId != null &&
                                 viewModel.location != StatusBarLocation.SHADE_CARRIER_GROUP
@@ -193,11 +186,9 @@ object MobileIconBinder {
                             networkTypeContainer.visibility =
                                 if (shouldShowNetworkType) VISIBLE else GONE
 
-// QTI_END: 2025-04-15: Android_UI: SystemUI: Readapt Mobile Icon Features For Kairos part 1
                             networkTrafficContainer.visibility =
                                 if (shouldShowNetworkType && !isVoWifi) VISIBLE else GONE
 
-// QTI_END: 2025-04-15: Android_UI: SystemUI: Readapt Mobile Icon Features For Kairos part 1
                             if (prevVis != networkTypeContainer.visibility) {
                                 view.requestLayout()
                             }
@@ -261,7 +252,6 @@ object MobileIconBinder {
                             activityIn.imageTintList = tint
                             activityOut.imageTintList = tint
                             dotView.setDecorColor(colors.tint)
-// QTI_BEGIN: 2025-04-15: Android_UI: SystemUI: Readapt Mobile Icon Features For Kairos part 1
                             volteView.imageTintList = tint
                             networkTraffic.setTint(colors.tint)
                         }
@@ -281,16 +271,13 @@ object MobileIconBinder {
                             if (prevVisibility != volteView.visibility) {
                                 view.requestLayout()
                             }
-// QTI_END: 2025-04-15: Android_UI: SystemUI: Readapt Mobile Icon Features For Kairos part 1
-// QTI_BEGIN: 2023-04-01: Android_UI: SystemUI: Readapt the Volte HD icon
+// QTI_BEGIN: 2023-04-01: Data: SystemUI: Readapt the Volte HD icon
                         }
                     }
-// QTI_END: 2023-04-01: Android_UI: SystemUI: Readapt the Volte HD icon
-// QTI_BEGIN: 2025-04-15: Android_UI: SystemUI: Readapt Mobile Icon Features For Kairos part 1
+// QTI_END: 2023-04-01: Data: SystemUI: Readapt the Volte HD icon
 
                     launch { viewModel.showSignalStrengthIcon.collect { iconView.isVisible = it } }
 
-// QTI_END: 2025-04-15: Android_UI: SystemUI: Readapt Mobile Icon Features For Kairos part 1
                     launch { decorTint.collect { tint -> dotView.setDecorColor(tint) } }
                     try {
                         awaitCancellation()

@@ -85,9 +85,7 @@ import android.os.Process;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.os.SystemClock;
-// QTI_BEGIN: 2025-06-16: Bluetooth: Squash VOIP LeAudio WAR changes in frameworks
 import android.os.SystemProperties;
-// QTI_END: 2025-06-16: Bluetooth: Squash VOIP LeAudio WAR changes in frameworks
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.sysprop.BluetoothProperties;
@@ -862,14 +860,12 @@ public class AudioDeviceBroker {
      * @return true if Bluetooth SCO is preferred , false otherwise.
      */
     /*package*/ boolean isBluetoothScoOn() {
-// QTI_BEGIN: 2025-06-16: Bluetooth: Squash VOIP LeAudio WAR changes in frameworks
         boolean mVoipLeaWarEnabled =
                 SystemProperties.getBoolean("persist.enable.bluetooth.voipleawar", false);
         return isDeviceOnForCommunication(AudioDeviceInfo.TYPE_BLUETOOTH_SCO)
                 || (mVoipLeaWarEnabled && isBluetoothScoRequested()
                 && mActiveCommunicationDevice != null
                 && mActiveCommunicationDevice.getType() == AudioDeviceInfo.TYPE_BLE_HEADSET);
-// QTI_END: 2025-06-16: Bluetooth: Squash VOIP LeAudio WAR changes in frameworks
     }
 
     private boolean isBluetoothScoActive() {
@@ -1173,12 +1169,10 @@ public class AudioDeviceBroker {
             for (String pair : kvpairs) {
                 String[] kv = pair.split("=");
 // QTI_END: 2024-07-18: Audio: Route SCO related params through AudioDeviceBroker to AHAL
-// QTI_BEGIN: 2024-08-22: Audio: Fix string comparison for received SCO params
                 if (kv[0].equals("bt_lc3_swb")) {
                     mHasSwbLc3Enabled = ((kv[1].equals("on")) ? true : false);
                 } else if (kv[0].equals("bt_swb")) {
                     mHasSwbAptXEnabled = ((kv[1].equals("0")) ? true : false);
-// QTI_END: 2024-08-22: Audio: Fix string comparison for received SCO params
 // QTI_BEGIN: 2024-07-18: Audio: Route SCO related params through AudioDeviceBroker to AHAL
                 }
             }
@@ -1210,14 +1204,12 @@ public class AudioDeviceBroker {
                     AudioSystem.setParameters("A2dpSuspended=true");
                     mBluetoothA2dpSuspendedApplied = true;
                 }
-// QTI_BEGIN: 2025-06-16: Bluetooth: Squash VOIP LeAudio WAR changes in frameworks
                 boolean mVoipLeaWarEnabled =
                         SystemProperties.getBoolean("persist.enable.bluetooth.voipleawar", false);
                 boolean isLeVoIPOngoing = mVoipLeaWarEnabled && !mBtHelper.isAudioConnected();
                 if (isLeVoIPOngoing) {
                     Log.v(TAG, "skip set LeAudioSuspended to true when LEA VoIP was ongoing");
                 } else if (!mBluetoothLeSuspendedApplied) {
-// QTI_END: 2025-06-16: Bluetooth: Squash VOIP LeAudio WAR changes in frameworks
                     AudioSystem.setParameters("LeAudioSuspended=true");
                     mBluetoothLeSuspendedApplied = true;
                 }
@@ -1229,11 +1221,9 @@ public class AudioDeviceBroker {
                         + ";bt_headset_nrec=" + (mHasNrecEnabled ? "on" : "off")
                         + ";bt_wbs=" + (mHasWbsEnabled ? "on" : "off"));
 // QTI_END: 2024-07-18: Audio: Route SCO related params through AudioDeviceBroker to AHAL
-// QTI_BEGIN: 2025-06-16: Bluetooth: Squash VOIP LeAudio WAR changes in frameworks
                 if (!isLeVoIPOngoing) {
                     AudioSystem.setParameters("BT_SCO=on");
                 }
-// QTI_END: 2025-06-16: Bluetooth: Squash VOIP LeAudio WAR changes in frameworks
             } else {
                 AudioSystem.setParameters("BT_SCO=off");
             }
@@ -1316,10 +1306,8 @@ public class AudioDeviceBroker {
 
     @GuardedBy("mDeviceStateLock")
     /*package*/ void setBluetoothScoOn(boolean on, String eventSource) {
-// QTI_BEGIN: 2025-06-16: Bluetooth: Squash VOIP LeAudio WAR changes in frameworks
         boolean mVoipLeaWarEnabled =
                 SystemProperties.getBoolean("persist.enable.bluetooth.voipleawar", false);
-// QTI_END: 2025-06-16: Bluetooth: Squash VOIP LeAudio WAR changes in frameworks
         synchronized (mBluetoothAudioStateLock) {
             AttributionSource btScoRequesterAS = bluetoothScoRequestOwnerAttributionSource();
             Log.i(TAG, "setBluetoothScoOn: " + on + ", mBluetoothScoOn: "
@@ -1327,14 +1315,12 @@ public class AudioDeviceBroker {
                     + safeUidFromAttributionSource(btScoRequesterAS)
                     + ", from: " + eventSource);
             mBluetoothScoOn = on;
-// QTI_BEGIN: 2025-06-16: Bluetooth: Squash VOIP LeAudio WAR changes in frameworks
             // Avoid update BT_SCO=on to Audio Hal if SCO is not connected in BT app
             if (mVoipLeaWarEnabled && on && !mBtHelper.isBluetoothScoOn()) {
                 Log.v(TAG, "skip updateAudioHalBluetoothState if SCO is not on" );
             } else {
                 updateAudioHalBluetoothState();
             }
-// QTI_END: 2025-06-16: Bluetooth: Squash VOIP LeAudio WAR changes in frameworks
             if (!mScoManagedByAudio) {
                 postUpdateCommunicationRouteClient(btScoRequesterAS, eventSource);
             }
@@ -2660,12 +2646,10 @@ public class AudioDeviceBroker {
             // what has been communicated to audio policy manager. The device
             // returned by requestedCommunicationDevice() can be a placeholder SCO device if legacy
             // APIs are used to start SCO audio.
-// QTI_BEGIN: 2026-01-13: Bluetooth: Bthelper: use dummy address for active sco device if voip war enabled
             boolean mVoipLeaWarEnabled =
                     SystemProperties.getBoolean("persist.enable.bluetooth.voipleawar", false);
             AudioDeviceAttributes device = mVoipLeaWarEnabled
                     ? mBtHelper.getHeadsetAudioDummyDevice() : mBtHelper.getHeadsetAudioDevice();
-// QTI_END: 2026-01-13: Bluetooth: Bthelper: use dummy address for active sco device if voip war enabled
             if (device != null) {
                 return device;
             }
@@ -2696,7 +2680,6 @@ public class AudioDeviceBroker {
 
         if (preferredCommunicationDevice == null) {
             AudioDeviceAttributes defaultDevice = getDefaultCommunicationDevice();
-// QTI_BEGIN: 2025-06-16: Bluetooth: Squash VOIP LeAudio WAR changes in frameworks
             boolean mVoipLeaWarEnabled =
                     SystemProperties.getBoolean("persist.enable.bluetooth.voipleawar", false);
             if (AudioService.DEBUG_COMM_RTE) {
@@ -2717,7 +2700,6 @@ public class AudioDeviceBroker {
                     defaultDevice = null;
                 }
             }
-// QTI_END: 2025-06-16: Bluetooth: Squash VOIP LeAudio WAR changes in frameworks
             if (defaultDevice != null) {
                 mDeviceInventory.setPreferredDevicesForStrategyInt(
                         mCommunicationStrategyId, Arrays.asList(defaultDevice));
