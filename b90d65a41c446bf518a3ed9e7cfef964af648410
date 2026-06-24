@@ -16,6 +16,24 @@
       "message": "@donpaul@google.com, could you please check this or recommend someone else who can?",
       "revId": "b90d65a41c446bf518a3ed9e7cfef964af648410",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9583fdf7_ed1affc4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1891398
+      },
+      "writtenOn": "2026-06-24T01:21:48Z",
+      "side": 1,
+      "message": "Hi Sergey,\n\nThanks for the patch! Can you open a tracker please? I think the problem is a valid issue.",
+      "parentUuid": "012a246d_1ac85378",
+      "revId": "b90d65a41c446bf518a3ed9e7cfef964af648410",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
