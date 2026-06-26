@@ -742,7 +742,6 @@ public final class DisplayManager {
      * @see #registerDisplayListener(DisplayListener, Handler, long)
      *
      */
-    @FlaggedApi(FLAG_DISPLAY_LISTENER_PERFORMANCE_IMPROVEMENTS)
     public static final long EVENT_TYPE_DISPLAY_ADDED = 1L << 0;
 
     /**
@@ -752,7 +751,6 @@ public final class DisplayManager {
      * @see #registerDisplayListener(DisplayListener, Handler, long)
      *
      */
-    @FlaggedApi(FLAG_DISPLAY_LISTENER_PERFORMANCE_IMPROVEMENTS)
     public static final long EVENT_TYPE_DISPLAY_REMOVED = 1L << 1;
 
     /**
@@ -766,7 +764,6 @@ public final class DisplayManager {
      * @see #registerDisplayListener(DisplayListener, Handler, long)
      *
      */
-    @FlaggedApi(FLAG_DISPLAY_LISTENER_PERFORMANCE_IMPROVEMENTS)
     public static final long EVENT_TYPE_DISPLAY_CHANGED = 1L << 2;
 
     /**
@@ -777,7 +774,6 @@ public final class DisplayManager {
      *
      * @see #registerDisplayListener(DisplayListener, Handler, long)
      */
-    @FlaggedApi(FLAG_DISPLAY_LISTENER_PERFORMANCE_IMPROVEMENTS)
     public static final long EVENT_TYPE_DISPLAY_REFRESH_RATE = 1L << 3;
 
     /**
@@ -788,7 +784,6 @@ public final class DisplayManager {
      *
      * @see #registerDisplayListener(DisplayListener, Handler, long)
      */
-    @FlaggedApi(FLAG_DISPLAY_LISTENER_PERFORMANCE_IMPROVEMENTS)
     public static final long EVENT_TYPE_DISPLAY_STATE = 1L << 4;
 
     /**
@@ -1042,7 +1037,7 @@ public final class DisplayManager {
      *
      * @hide
      */
-    public void registerDisplayListener(@NonNull DisplayListener listener,
+    public void registerDi  splayListener(@NonNull DisplayListener listener,
             @Nullable Handler handler, @EventType long eventFilter) {
         registerDisplayListener(listener, handler, eventFilter, 0,
                 ActivityThread.currentPackageName(), /* isEventFilterExplicit */ true);
@@ -1059,7 +1054,6 @@ public final class DisplayManager {
      * @see #unregisterDisplayListener
      *
      */
-    @FlaggedApi(FLAG_DISPLAY_LISTENER_PERFORMANCE_IMPROVEMENTS)
     public void registerDisplayListener(@NonNull Executor executor, @EventType long eventFilter,
             @NonNull DisplayListener listener) {
         registerDisplayListener(listener, executor, eventFilter, 0,

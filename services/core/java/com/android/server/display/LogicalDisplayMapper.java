@@ -1097,8 +1097,7 @@ class LogicalDisplayMapper implements DisplayDeviceRepository.Listener {
             mask |= LOGICAL_DISPLAY_EVENT_REFRESH_RATE_CHANGED;
         }
 
-        if (mFlags.isDisplayListenerPerformanceImprovementsEnabled()
-                && mTempDisplayInfo.state != newDisplayInfo.state) {
+        if (mTempDisplayInfo.state != newDisplayInfo.state) {
             mask |= LOGICAL_DISPLAY_EVENT_STATE_CHANGED;
         }
 

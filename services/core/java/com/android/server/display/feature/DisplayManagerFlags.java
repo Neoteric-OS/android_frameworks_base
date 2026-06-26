@@ -91,10 +91,6 @@ public class DisplayManagerFlags {
             Flags::enableHdrOverridePluginType
     );
 
-    private final FlagState mDisplayListenerPerformanceImprovementsFlagState = new FlagState(
-            Flags.FLAG_DISPLAY_LISTENER_PERFORMANCE_IMPROVEMENTS,
-            Flags::displayListenerPerformanceImprovements
-    );
     private final FlagState mEnableDisplayContentModeManagementFlagState = new FlagState(
             Flags.FLAG_ENABLE_DISPLAY_CONTENT_MODE_MANAGEMENT,
             DesktopExperienceFlags.ENABLE_DISPLAY_CONTENT_MODE_MANAGEMENT::isTrue
@@ -202,13 +198,6 @@ public class DisplayManagerFlags {
         return mEnableHdrOverridePluginTypeFlagState.isEnabled();
     }
 
-    /**
-     * @return {@code true} if the flag for display listener performance improvements is enabled
-     */
-    public boolean isDisplayListenerPerformanceImprovementsEnabled() {
-        return mDisplayListenerPerformanceImprovementsFlagState.isEnabled();
-    }
-
     public boolean isDisplayContentModeManagementEnabled() {
         return mEnableDisplayContentModeManagementFlagState.isEnabled();
     }
@@ -291,7 +280,6 @@ public class DisplayManagerFlags {
         pw.println(" " + mBlockAutobrightnessChangesOnStylusUsage);
         pw.println(" " + mHasArrSupport);
         pw.println(" " + mGetSupportedRefreshRatesFlagState);
-        pw.println(" " + mDisplayListenerPerformanceImprovementsFlagState);
         pw.println(" " + mSubscribeGranularDisplayEvents);
         pw.println(" " + mEnableDisplayContentModeManagementFlagState);
         pw.println(" " + mFramerateOverrideTriggersRrCallbacks);
