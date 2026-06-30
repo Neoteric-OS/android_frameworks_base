@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "07d2a5e0_4855dfc2",
+        "filename": "services/core/java/com/android/server/policy/keyguard/KeyguardServiceDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2026-06-30T08:57:00Z",
+      "side": 1,
+      "message": "I\u0027d recommend standardising on config_keyguardComponent",
+      "range": {
+        "startLine": 159,
+        "startChar": 0,
+        "endLine": 160,
+        "endChar": 45
+      },
+      "revId": "951301f0979d4968ec97684ce001bf464cbb4948",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7f25c7f_565d5395",
+        "filename": "services/core/java/com/android/server/policy/keyguard/KeyguardServiceDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2026-06-30T08:57:00Z",
+      "side": 1,
+      "message": "If there\u0027s no keyguard configured, why would onServiceDisconnected ever run?",
+      "range": {
+        "startLine": 248,
+        "startChar": 0,
+        "endLine": 250,
+        "endChar": 13
+      },
+      "revId": "951301f0979d4968ec97684ce001bf464cbb4948",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
