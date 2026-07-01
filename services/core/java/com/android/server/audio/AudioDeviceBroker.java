@@ -1946,6 +1946,29 @@ public class AudioDeviceBroker {
                                         "MSG_L_SET_BT_ACTIVE_DEVICE");
                         synchronized (mSetModeLock) {
                             synchronized (mDeviceStateLock) {
+                                  // For LE Audio (e.g. TWS earbuds), multiple sequential
+                                  // MSG_L_SET_BT_ACTIVE_DEVICE messages keep rescheduling
+                                  // MSG_CHECK_MUTE_MUSIC via SENDMSG_REPLACE, so
+                                  // postApplyVolumeOnDevice() inside makeLeAudioDeviceAvailable()
+                                  // runs while mIsMutedInternally=true, sending volume index=0 to HAL.
+                                  //
+                                  // Only unmute when this is the LAST pending BT device message,
+                                  // ensuring:
+                                  // 1) No premature unmute/pop while earbud routing is still mid-setup
+                                  // 2) postApplyVolumeOnDevice() for the final earbud sees correct vol
+                                  // 3) mMusicMuted kept in sync via compareAndSet to avoid
+                                  //    checkMessagesMuteMusic desync
+                                  if (btInfo.mState == BluetoothProfile.STATE_CONNECTED
+                                          && btInfo.mIsLeOutput
+                                          && (btInfo.mProfile == BluetoothProfile.LE_AUDIO
+                                              || btInfo.mProfile
+                                                  == BluetoothProfile.LE_AUDIO_BROADCAST)
+                                          && !mBrokerHandler.hasMessages(MSG_L_SET_BT_ACTIVE_DEVICE)
+                                          && !mBrokerHandler.hasMessages(
+                                                  MSG_L_BT_ACTIVE_DEVICE_CHANGE_EXT)
+                                          && mMusicMuted.compareAndSet(true, false)) {
+                                      mAudioService.setMusicMute(false);
+                                  }
                                 mDeviceInventory.onSetBtActiveDevice(btInfo, codecAndChanged.first,
                                         (btInfo.mProfile != BluetoothProfile.LE_AUDIO
                                                 || btInfo.mIsLeOutput)
