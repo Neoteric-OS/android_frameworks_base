@@ -101,8 +101,16 @@ class AppCompatAspectRatioPolicy {
 
     void applyAspectRatioForLetterbox(Rect outBounds, Rect containingAppBounds,
             Rect containingBounds) {
+        final AppCompatAspectRatioOverrides overrides = getOverrides();
+        final float desiredAspectRatio;
+        if (overrides.shouldApplyUserMinAspectRatioOverride()) {
+            final float userRatio = overrides.getUserMinAspectRatio();
+            desiredAspectRatio = (userRatio > 0) ? userRatio : 0;
+        } else {
+            desiredAspectRatio = 0;
+        }
         mAppCompatAspectRatioState.mIsAspectRatioApplied = applyAspectRatio(outBounds,
-                containingAppBounds, containingBounds, 0 /* desiredAspectRatio */);
+                containingAppBounds, containingBounds, desiredAspectRatio);
     }
 
     /**
@@ -233,10 +241,15 @@ class AppCompatAspectRatioPolicy {
      */
     void resolveAspectRatioRestrictionIfNeeded(@NonNull Configuration newParentConfiguration) {
         // If activity in fullscreen mode is letterboxed because of fixed orientation then bounds
-        // are already calculated in resolveFixedOrientationConfiguration.
+        // are already calculated in resolveFixedOrientationConfiguration. Skip unless the user
+        // has explicitly requested an aspect ratio override, in which case we allow the override
+        // to be applied even over the fixed-orientation letterbox bounds.
         // Don't apply aspect ratio if app is overridden to fullscreen by device user/manufacturer.
-        if (isLetterboxedForFixedOrientationAndAspectRatio()
-                || getOverrides().hasFullscreenOverride()) {
+        final boolean isFixedOrientLetterbox = isLetterboxedForFixedOrientationAndAspectRatio();
+        final boolean shouldApplyUserOverride = getOverrides().shouldApplyUserMinAspectRatioOverride();
+        final boolean hasFullscreenOverride = getOverrides().hasFullscreenOverride();
+        if ((isFixedOrientLetterbox && !shouldApplyUserOverride)
+                || hasFullscreenOverride) {
             return;
         }
         final ConfigOverrideHint overrideHint =
