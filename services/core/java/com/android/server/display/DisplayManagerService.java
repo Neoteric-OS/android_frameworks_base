@@ -756,6 +756,12 @@ public final class DisplayManagerService extends SystemService {
     public void onUserSwitching(@Nullable TargetUser from, @NonNull TargetUser to) {
         final int newUserId = to.getUserIdentifier();
         final int userSerial = getUserManager().getUserSerialNumber(newUserId);
+        // Must run before the sync block so it writes the setting for the incoming user
+        // before updateMirrorBuiltInDisplaySettingLocked reads it (USER_CURRENT is already
+        // resolved to newUserId by the time this callback fires).
+        if (mFlags.isDisplayContentModeManagementEnabled()) {
+            mSecondaryDisplayPolicy.forceEnableMirrorBuiltInDisplaySettingIfNeeded();
+        }
         synchronized (mSyncRoot) {
             boolean userSwitching = mCurrentUserId != newUserId;
             if (userSwitching) {
