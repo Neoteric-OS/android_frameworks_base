@@ -101,8 +101,16 @@ class AppCompatAspectRatioPolicy {
 
     void applyAspectRatioForLetterbox(Rect outBounds, Rect containingAppBounds,
             Rect containingBounds) {
+        final AppCompatOverrides overrides = getOverrides();
+        final float desiredAspectRatio = 0;
+        if (overrides.shouldApplyUserMinAspectRatioOverride()) {
+            final float userRatio = overrides.getUserMinAspectRatio();
+            if (userRatio > 0) {
+                desiredAspectRatio = userRatio;
+            }
+        }
         mAppCompatAspectRatioState.mIsAspectRatioApplied = applyAspectRatio(outBounds,
-                containingAppBounds, containingBounds, 0 /* desiredAspectRatio */);
+                containingAppBounds, containingBounds, desiredAspectRatio);
     }
 
     /**
@@ -233,10 +241,19 @@ class AppCompatAspectRatioPolicy {
      */
     void resolveAspectRatioRestrictionIfNeeded(@NonNull Configuration newParentConfiguration) {
         // If activity in fullscreen mode is letterboxed because of fixed orientation then bounds
-        // are already calculated in resolveFixedOrientationConfiguration.
+        // are already calculated in resolveFixedOrientationConfiguration. Skip unless the user
+        // has explicitly requested an aspect ratio override, in which case we allow the override
+        // to be applied even over the fixed-orientation letterbox bounds.
+        // Safety: when re-entering here with isFixedOrientLetterbox && shouldApplyUserOverride,
+        // outBounds is reset to containingAppBounds at the call site before this method is
+        // invoked, so there is no cumulative constraint from the prior pass.
         // Don't apply aspect ratio if app is overridden to fullscreen by device user/manufacturer.
-        if (isLetterboxedForFixedOrientationAndAspectRatio()
-                || getOverrides().hasFullscreenOverride()) {
+        final AppCompatOverrides overrides = getOverrides();
+        final boolean isFixedOrientLetterbox = isLetterboxedForFixedOrientationAndAspectRatio();
+        final boolean shouldApplyUserOverride = overrides.shouldApplyUserMinAspectRatioOverride();
+        final boolean hasFullscreenOverride = overrides.hasFullscreenOverride();
+        if ((isFixedOrientLetterbox && !shouldApplyUserOverride)
+                || hasFullscreenOverride) {
             return;
         }
         final ConfigOverrideHint overrideHint =
