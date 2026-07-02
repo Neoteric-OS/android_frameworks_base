@@ -1305,9 +1305,19 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
 
         if (DesktopExperienceFlags.ENABLE_DISPLAY_CONTENT_MODE_MANAGEMENT.isTrue()) {
             if (!displayContent.mDisplay.canHostTasks()) {
-                Slog.w(TAG, "Launch on display check: activity launch is not allowed on a "
-                        + "display that cannot host tasks");
-                return false;
+                if ((displayContent.mDisplay.getFlags()
+                        & Display.FLAG_ALLOWS_CONTENT_MODE_SWITCH) != 0) {
+                    Slog.i(TAG, "Launch on display check: display " + launchDisplayId
+                            + " is mirroring but supports content mode switch, "
+                            + "switching to extended to allow launch");
+                    Settings.Secure.putIntForUser(mService.mContext.getContentResolver(),
+                            Settings.Secure.MIRROR_BUILT_IN_DISPLAY, 0,
+                            UserHandle.USER_CURRENT);
+                } else {
+                    Slog.w(TAG, "Launch on display check: activity launch is not allowed on a "
+                            + "display that cannot host tasks");
+                    return false;
+                }
             }
         }
 
