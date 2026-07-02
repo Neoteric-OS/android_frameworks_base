@@ -29,6 +29,8 @@ filegroup {
         "android/os/*MessageQueue/**/*.java",
         "android/ranging/**/*.java",
         ":dynamic_instrumentation_manager_aidl_sources",
+        "android/os/IProfcollectUploader.aidl",
+        "aidl_api/**/*.aidl",
     ],
     visibility: ["//frameworks/base"],
 }
@@ -695,3 +697,28 @@ java_system_features_srcs {
     full_class_name: "com.android.internal.pm.RoSystemFeatures",
     visibility: ["//visibility:private"],
 }
+
+aidl_interface {
+    name: "profcollect_uploader_aidl",
+    srcs: [
+        "android/os/IProfcollectUploader.aidl",
+    ],
+    stability: "vintf",
+    backend: {
+        java: {
+            enabled: true,
+            platform_apis: true,
+        },
+        rust: {
+            enabled: true,
+        },
+        cpp: {
+            enabled: false,
+        },
+        ndk: {
+            enabled: false,
+        },
+    },
+    frozen: false,
+}
+

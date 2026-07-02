@@ -32,6 +32,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.hardware.camera2.CameraManager;
 import android.hardware.usb.UsbManager;
 import android.os.Handler;
@@ -62,6 +63,15 @@ import com.android.server.wm.ActivityTaskManagerInternal;
 
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
+import android.content.ServiceConnection;
+import android.os.IBinder;
+import android.os.IProfcollectUploader;
+import android.os.ParcelFileDescriptor;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * System-server-local proxy into the {@code IProfcollectd} native service.
@@ -81,8 +91,8 @@ public final class ProfcollectForwardingService extends SystemService {
     static boolean sAdbActive;
     static boolean sIsBatteryLow;
 
-    private static IProfCollectd sIProfcollect;
-    private static ProfcollectForwardingService sSelfService;
+    private static volatile IProfCollectd sIProfcollect;
+    private static volatile ProfcollectForwardingService sSelfService;
     private final Handler mHandler = new ProfcollectdHandler(IoThread.getHandler().getLooper());
 
     private IProviderStatusCallback mProviderStatusCallback = new IProviderStatusCallback.Stub() {
@@ -193,7 +203,8 @@ public final class ProfcollectForwardingService extends SystemService {
             }
         }
         if (phase == PHASE_BOOT_COMPLETED) {
-            if (sIProfcollect == null) {
+            IProfCollectd profcollect = sIProfcollect;
+            if (profcollect == null) {
                 return;
             }
             BackgroundThread.get().getThreadHandler().post(() -> {
@@ -205,22 +216,24 @@ public final class ProfcollectForwardingService extends SystemService {
     }
 
     private void registerProviderStatusCallback() {
-        if (sIProfcollect == null) {
+        IProfCollectd profcollect = sIProfcollect;
+        if (profcollect == null) {
             return;
         }
         try {
-            sIProfcollect.registerProviderStatusCallback(mProviderStatusCallback);
+            profcollect.registerProviderStatusCallback(mProviderStatusCallback);
         } catch (RemoteException e) {
             Log.e(LOG_TAG, "Failed to register provider status callback: " + e.getMessage());
         }
     }
 
     private boolean serviceHasSupportedTraceProvider() {
-        if (sIProfcollect == null) {
+        IProfCollectd profcollect = sIProfcollect;
+        if (profcollect == null) {
             return false;
         }
         try {
-            return !sIProfcollect.get_supported_provider().isEmpty();
+            return !profcollect.get_supported_provider().isEmpty();
         } catch (RemoteException e) {
             Log.e(LOG_TAG, "Failed to get supported provider: " + e.getMessage());
             return false;
@@ -311,8 +324,9 @@ public final class ProfcollectForwardingService extends SystemService {
 
         @Override
         public boolean onStartJob(JobParameters params) {
-            if (sIProfcollect != null) {
-                Utils.traceSystem(sIProfcollect, "periodic");
+            IProfCollectd profcollect = sIProfcollect;
+            if (profcollect != null) {
+                Utils.traceSystem(profcollect, "periodic");
             }
             jobFinished(params, false);
             return true;
@@ -384,7 +398,10 @@ public final class ProfcollectForwardingService extends SystemService {
         @Override
         public void onIntentStarted(Intent intent, long timestampNanos) {
             if (Utils.withFrequency("applaunch_trace_freq", 5)) {
-                Utils.traceSystem(sIProfcollect, "applaunch");
+                IProfCollectd profcollect = sIProfcollect;
+                if (profcollect != null) {
+                    Utils.traceSystem(profcollect, "applaunch");
+                }
             }
         }
     }
@@ -403,8 +420,11 @@ public final class ProfcollectForwardingService extends SystemService {
 
     private void traceOnDex2oatStart() {
         if (Utils.withFrequency("dex2oat_trace_freq", 25)) {
-            // Dex2oat could take a while before it starts. Add a short delay before start tracing.
-            Utils.traceSystem(sIProfcollect, "dex2oat", /* delayMs */ 1000);
+            IProfCollectd profcollect = sIProfcollect;
+            if (profcollect != null) {
+                // Dex2oat could take a while before it starts. Add a short delay before start tracing.
+                Utils.traceSystem(profcollect, "dex2oat", /* delayMs */ 1000);
+            }
         }
     }
 
@@ -426,13 +446,23 @@ public final class ProfcollectForwardingService extends SystemService {
     }
 
     private static void createAndUploadReport(ProfcollectForwardingService pfs) {
+        if (pfs == null) {
+            Log.e(LOG_TAG, "ProfcollectForwardingService is null; skipping report");
+            return;
+        }
         BackgroundThread.get().getThreadHandler().post(() -> {
-            if (pfs.sIProfcollect == null) {
+            IProfCollectd profcollect = sIProfcollect;
+            if (profcollect == null) {
                 return;
             }
             String reportName;
             try {
-                reportName = pfs.sIProfcollect.report(pfs.mUsageSetting) + ".zip";
+                String reportUuid = profcollect.report(pfs.mUsageSetting);
+                if (reportUuid == null || reportUuid.isEmpty()) {
+                    Log.e(LOG_TAG, "Generated report UUID is null or empty; skipping upload");
+                    return;
+                }
+                reportName = reportUuid + ".zip";
             } catch (RemoteException e) {
                 Log.e(LOG_TAG, "Failed to create report: " + e.getMessage());
                 return;
@@ -445,12 +475,151 @@ public final class ProfcollectForwardingService extends SystemService {
                 Log.i(LOG_TAG, "Verity is not enforced.");
                 return;
             }
-            Intent intent = new Intent()
-                    .setPackage("com.android.shell")
-                    .setAction("com.android.shell.action.PROFCOLLECT_UPLOAD")
-                    .putExtra("filename", reportName);
-            pfs.getContext().sendBroadcast(intent);
+            if (Flags.enableProfcollectServiceUploader()) {
+                uploadReportViaService(pfs, reportName);
+            } else {
+                fallbackToBroadcast(pfs, reportName);
+            }
         });
+    }
+
+    private static void uploadReportViaService(ProfcollectForwardingService pfs, String reportName) {
+        Context context = pfs.getContext();
+        String uploaderPackage = context.getResources().getString(
+                R.string.config_defaultProfcollectReportUploaderApp);
+        String uploaderAction = context.getResources().getString(
+                R.string.config_defaultProfcollectReportUploaderAction);
+
+        if (uploaderPackage.isEmpty() || uploaderAction.isEmpty()) {
+            Log.e(LOG_TAG, "Uploader package or action is empty; falling back to broadcast");
+            fallbackToBroadcast(pfs, reportName);
+            return;
+        }
+
+        // Verify package authenticity (must be platform-signed)
+        if (context.getPackageManager().checkSignatures("android", uploaderPackage)
+                != PackageManager.SIGNATURE_MATCH) {
+            Log.e(LOG_TAG, "Uploader package " + uploaderPackage + " is not platform-signed.");
+            fallbackToBroadcast(pfs, reportName);
+            return;
+        }
+
+        Intent intent = new Intent(uploaderAction).setPackage(uploaderPackage);
+        String uuid = UUID.randomUUID().toString();
+
+        ServiceConnection conn = new ServiceConnection() {
+            private final AtomicBoolean mBound = new AtomicBoolean(true);
+
+            private void safeUnbind() {
+                if (mBound.compareAndSet(true, false)) {
+                    try {
+                        context.unbindService(this);
+                    } catch (IllegalArgumentException e) {
+                        Log.w(LOG_TAG, "Service already unbound or not registered", e);
+                    }
+                }
+            }
+
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                Log.d(LOG_TAG, "Connected to uploader service");
+                IProfcollectUploader uploader = IProfcollectUploader.Stub.asInterface(service);
+                
+                ParcelFileDescriptor[] pipes = null;
+                try {
+                    pipes = ParcelFileDescriptor.createPipe();
+                    ParcelFileDescriptor readFd = pipes[0];
+                    ParcelFileDescriptor writeFd = pipes[1];
+
+                    uploader.upload("PROFCOLLECT_PROFILE", readFd, uuid);
+                    
+                    // Close our copy of readFd immediately after passing it
+                    try {
+                        readFd.close();
+                    } catch (IOException e) {
+                        Log.w(LOG_TAG, "Failed to close readFd", e);
+                    }
+
+                    // Use a dedicated thread to avoid blocking BackgroundThread
+                    Thread streamer = new Thread(() -> {
+                        File reportFile = new File("/data/misc/profcollectd/report", reportName);
+                        try (ParcelFileDescriptor pfd = writeFd;
+                             FileInputStream fis = new FileInputStream(reportFile);
+                             ParcelFileDescriptor.AutoCloseOutputStream fos = 
+                                     new ParcelFileDescriptor.AutoCloseOutputStream(pfd)) {
+                            byte[] buffer = new byte[4096];
+                            int bytesRead;
+                            while ((bytesRead = fis.read(buffer)) != -1) {
+                                fos.write(buffer, 0, bytesRead);
+                            }
+                            Log.d(LOG_TAG, "Successfully streamed report: " + reportName);
+                        } catch (IOException e) {
+                            Log.e(LOG_TAG, "Failed to stream report: " + e.getMessage());
+                        } finally {
+                            safeUnbind();
+                        }
+                    }, "profcollect-streamer");
+
+                    try {
+                        streamer.start();
+                    } catch (Throwable t) {
+                        Log.e(LOG_TAG, "Failed to start streamer thread", t);
+                        try {
+                            writeFd.close();
+                        } catch (IOException e) {
+                            // Ignore
+                        }
+                        safeUnbind();
+                    }
+
+                } catch (RemoteException | IOException e) {
+                    Log.e(LOG_TAG, "Failed to upload report via service: " + e.getMessage());
+                    if (pipes != null) {
+                        for (ParcelFileDescriptor pfd : pipes) {
+                            if (pfd != null) {
+                                try {
+                                    pfd.close();
+                                } catch (IOException ex) {
+                                    // Ignore
+                                }
+                            }
+                        }
+                    }
+                    safeUnbind();
+                }
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                Log.d(LOG_TAG, "Disconnected from uploader service");
+            }
+
+            @Override
+            public void onNullBinding(ComponentName name) {
+                Log.e(LOG_TAG, "Null binding received from uploader service");
+                safeUnbind();
+                fallbackToBroadcast(pfs, reportName);
+            }
+
+            @Override
+            public void onBindingDied(ComponentName name) {
+                Log.w(LOG_TAG, "Binding died for uploader service");
+                safeUnbind();
+            }
+        };
+
+        if (!context.bindService(intent, conn, Context.BIND_AUTO_CREATE)) {
+            Log.e(LOG_TAG, "Failed to bind to uploader service; falling back to broadcast");
+            fallbackToBroadcast(pfs, reportName);
+        }
+    }
+
+    private static void fallbackToBroadcast(ProfcollectForwardingService pfs, String reportName) {
+        Intent intent = new Intent()
+                .setPackage("com.android.shell")
+                .setAction("com.android.shell.action.PROFCOLLECT_UPLOAD")
+                .putExtra("filename", reportName);
+        pfs.getContext().sendBroadcast(intent);
     }
 
     private void registerCameraOpenObserver() {
@@ -471,10 +640,13 @@ public final class ProfcollectForwardingService extends SystemService {
                     return;
                 }
                 if (Utils.withFrequency("camera_trace_freq", 10)) {
-                    Utils.traceProcess(sIProfcollect,
-                            "camera",
-                            "android.hardware.camera.provider",
-                            /* durationMs */ 5000);
+                    IProfCollectd profcollect = sIProfcollect;
+                    if (profcollect != null) {
+                        Utils.traceProcess(profcollect,
+                                "camera",
+                                "android.hardware.camera.provider",
+                                /* durationMs */ 5000);
+                    }
                 }
             }
         }, null);

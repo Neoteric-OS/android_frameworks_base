@@ -1,0 +1,9 @@
+package: "com.android.server.profcollect"
+container: "system"
+
+flag {
+    name: "enable_profcollect_service_uploader"
+    namespace: "observability"
+    description: "Enable new AIDL uploader for profcollect."
+    bug: "324608383"
+}

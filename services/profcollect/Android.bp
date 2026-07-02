@@ -41,6 +41,23 @@ java_library_static {
     name: "services.profcollect",
     defaults: ["platform_service_defaults"],
     srcs: [":services.profcollect-sources"],
-    static_libs: ["services.core"],
+    static_libs: [
+        "services.core",
+        "profcollect_flags_java_lib",
+        "profcollect_uploader_aidl-V1-java",
+    ],
     libs: ["service-art.stubs.system_server"],
 }
+
+aconfig_declarations {
+    name: "profcollect_flags_aconfig",
+    package: "com.android.server.profcollect",
+    container: "system",
+    srcs: ["flags.aconfig"],
+}
+
+java_aconfig_library {
+    name: "profcollect_flags_java_lib",
+    aconfig_declarations: "profcollect_flags_aconfig",
+}
+
