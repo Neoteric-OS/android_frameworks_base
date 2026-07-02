@@ -39,6 +39,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.util.proto.ProtoOutputStream;
+import android.util.Slog;
 
 /**
  * Encapsulate app compat policy logic related to aspect ratio.
@@ -101,8 +102,10 @@ class AppCompatAspectRatioPolicy {
 
     void applyAspectRatioForLetterbox(Rect outBounds, Rect containingAppBounds,
             Rect containingBounds) {
+        float desiredAspectRatio = getOverrides().shouldApplyUserMinAspectRatioOverride()
+                ? getOverrides().getUserMinAspectRatio() : 0;
         mAppCompatAspectRatioState.mIsAspectRatioApplied = applyAspectRatio(outBounds,
-                containingAppBounds, containingBounds, 0 /* desiredAspectRatio */);
+                containingAppBounds, containingBounds, desiredAspectRatio );
     }
 
     /**
@@ -235,8 +238,11 @@ class AppCompatAspectRatioPolicy {
         // If activity in fullscreen mode is letterboxed because of fixed orientation then bounds
         // are already calculated in resolveFixedOrientationConfiguration.
         // Don't apply aspect ratio if app is overridden to fullscreen by device user/manufacturer.
-        if (isLetterboxedForFixedOrientationAndAspectRatio()
-                || getOverrides().hasFullscreenOverride()) {
+        final boolean isFixedOrientLetterbox = isLetterboxedForFixedOrientationAndAspectRatio();
+        final boolean shouldApplyUserOverride = getOverrides().shouldApplyUserMinAspectRatioOverride();
+        final boolean hasFullscreenOverride = getOverrides().hasFullscreenOverride();
+        if ((isFixedOrientLetterbox && !shouldApplyUserOverride)
+                || hasFullscreenOverride) {
             return;
         }
         final ConfigOverrideHint overrideHint =
