@@ -101,8 +101,12 @@ class AppCompatAspectRatioPolicy {
 
     void applyAspectRatioForLetterbox(Rect outBounds, Rect containingAppBounds,
             Rect containingBounds) {
+        final AppCompatAspectRatioOverrides overrides = getOverrides();
+        final float desiredAspectRatio = overrides.shouldApplyUserMinAspectRatioOverride()
+                ? Math.max(overrides.getUserMinAspectRatio(), 0f)
+                : 0f;
         mAppCompatAspectRatioState.mIsAspectRatioApplied = applyAspectRatio(outBounds,
-                containingAppBounds, containingBounds, 0 /* desiredAspectRatio */);
+                containingAppBounds, containingBounds, desiredAspectRatio);
     }
 
     /**
@@ -233,10 +237,16 @@ class AppCompatAspectRatioPolicy {
      */
     void resolveAspectRatioRestrictionIfNeeded(@NonNull Configuration newParentConfiguration) {
         // If activity in fullscreen mode is letterboxed because of fixed orientation then bounds
-        // are already calculated in resolveFixedOrientationConfiguration.
+        // are already calculated in resolveFixedOrientationConfiguration. Skip unless the user
+        // has explicitly requested an aspect ratio override, in which case we allow the override
+        // to be applied even over the fixed-orientation letterbox bounds.
         // Don't apply aspect ratio if app is overridden to fullscreen by device user/manufacturer.
-        if (isLetterboxedForFixedOrientationAndAspectRatio()
-                || getOverrides().hasFullscreenOverride()) {
+        final AppCompatAspectRatioOverrides overrides = getOverrides();
+        final boolean isFixedOrientLetterbox = isLetterboxedForFixedOrientationAndAspectRatio();
+        final boolean shouldApplyUserOverride = overrides.shouldApplyUserMinAspectRatioOverride();
+        final boolean hasFullscreenOverride = overrides.hasFullscreenOverride();
+        if ((isFixedOrientLetterbox && !shouldApplyUserOverride)
+                || hasFullscreenOverride) {
             return;
         }
         final ConfigOverrideHint overrideHint =
