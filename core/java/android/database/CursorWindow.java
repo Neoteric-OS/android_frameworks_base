@@ -31,6 +31,10 @@ import android.util.Log;
 import android.util.LongSparseArray;
 import android.util.SparseIntArray;
 
+import static java.lang.ref.Reference.reachabilityFence;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.VarHandle;
+
 import dalvik.annotation.optimization.FastNative;
 import dalvik.system.CloseGuard;
 
@@ -56,7 +60,18 @@ public class CursorWindow extends SQLiteClosable implements Parcelable {
      * @hide
      */
     @UnsupportedAppUsage
-    public long mWindowPtr;
+    public volatile long mWindowPtr;
+
+    private static final VarHandle sWindowPtr;
+
+    static {
+        try {
+            MethodHandles.Lookup l = MethodHandles.lookup();
+            sWindowPtr = l.findVarHandle(CursorWindow.class, "mWindowPtr", long.class);
+        } catch (ReflectiveOperationException e) {
+            throw new ExceptionInInitializerError(e);
+        }
+    }
 
     private int mStartPos;
     private final String mName;
@@ -191,12 +206,16 @@ public class CursorWindow extends SQLiteClosable implements Parcelable {
     }
 
     private void dispose() {
-        if (mCloseGuard != null) {
-            mCloseGuard.close();
-        }
-        if (mWindowPtr != 0) {
-            nativeDispose(mWindowPtr);
-            mWindowPtr = 0;
+        try {
+            if (mCloseGuard != null) {
+                mCloseGuard.close();
+            }
+            long ptr = (long) sWindowPtr.getAndSet(this, 0L);
+            if (ptr != 0) {
+                nativeDispose(ptr);
+            }
+        } finally {
+            reachabilityFence(this);
         }
     }
 
