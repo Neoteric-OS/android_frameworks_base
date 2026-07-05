@@ -16,6 +16,24 @@
       "message": "This looks like a security vulnerability, maybe it\u0027s better to report it to android security team?",
       "revId": "3f18889cee7c313d495245253c5dc75c63cd4136",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "364aa19f_41365047",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4909609
+      },
+      "writtenOn": "2026-07-05T21:47:29Z",
+      "side": 1,
+      "message": "Thanks for taking a look, and for the heads-up — you\u0027re right that this is a security issue. It has already been reported to the Android Security Team through the VRP and is being tracked; this CL is the proposed fix that accompanies that report. Appreciate the diligence.",
+      "parentUuid": "b9df82f1_03a141d9",
+      "revId": "3f18889cee7c313d495245253c5dc75c63cd4136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
