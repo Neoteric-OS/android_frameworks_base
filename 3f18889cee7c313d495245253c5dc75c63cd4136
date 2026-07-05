@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9df82f1_03a141d9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2063055
+      },
+      "writtenOn": "2026-07-05T15:11:36Z",
+      "side": 1,
+      "message": "This looks like a security vulnerability, maybe it\u0027s better to report it to android security team?",
+      "revId": "3f18889cee7c313d495245253c5dc75c63cd4136",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
