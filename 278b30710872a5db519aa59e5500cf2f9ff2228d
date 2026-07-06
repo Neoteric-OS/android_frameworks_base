@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "239eb823_8ac2729c",
+        "filename": "services/core/java/com/android/server/wm/ActivityTaskSupervisor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1316,
+      "author": {
+        "id": 2003655
+      },
+      "writtenOn": "2026-07-06T12:52:34Z",
+      "side": 1,
+      "message": "I think we should avoid this, as the value of `canHostTasks` is determined by the Setting value, not the other way around. `canHostTasks` cannot be used to determine the Setting value.",
+      "range": {
+        "startLine": 1308,
+        "startChar": 16,
+        "endLine": 1316,
+        "endChar": 24
+      },
+      "revId": "278b30710872a5db519aa59e5500cf2f9ff2228d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
