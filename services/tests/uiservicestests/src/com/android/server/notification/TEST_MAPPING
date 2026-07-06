@@ -1,0 +1,12 @@
+{
+  "hsum-presubmit": [
+    {
+      "name": "FrameworksUiServicesNotificationTests",
+      "options": [
+        {
+          "include-filter": "com.android.server.notification.NotificationRecordLoggerTest"
+        }
+      ]
+    }
+  ]
+}
