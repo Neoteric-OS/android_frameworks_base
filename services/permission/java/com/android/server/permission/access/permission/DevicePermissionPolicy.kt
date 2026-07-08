@@ -175,7 +175,7 @@ class DevicePermissionPolicy : SchemePolicy() {
     ): Boolean {
         val packageNames = state.externalState.appIdPackageNames[appId]!!
         return packageNames.anyIndexed { _, packageName ->
-            val packageState = state.externalState.packageStates[packageName]!!
+            val packageState = state.externalState.packageStates[packageName] ?: return@anyIndexed false
             packageState.androidPackage != null && predicate(packageState)
         }
     }
@@ -187,7 +187,7 @@ class DevicePermissionPolicy : SchemePolicy() {
     ) {
         val packageNames = state.externalState.appIdPackageNames[appId]!!
         packageNames.forEachIndexed { _, packageName ->
-            val packageState = state.externalState.packageStates[packageName]!!
+            val packageState = state.externalState.packageStates[packageName] ?: return@forEachIndexed
             if (packageState.androidPackage != null) {
                 action(packageState)
             }

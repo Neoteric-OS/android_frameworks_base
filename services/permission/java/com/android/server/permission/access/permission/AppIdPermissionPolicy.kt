@@ -824,7 +824,7 @@ class AppIdPermissionPolicy : SchemePolicy() {
         val requestingPackageStates = MutableIndexedList<PackageState>()
         var hasMissingPackage = false
         packageNames.forEachIndexed { _, packageName ->
-            val packageState = newState.externalState.packageStates[packageName]!!
+            val packageState = newState.externalState.packageStates[packageName] ?: return@forEachIndexed
             val androidPackage = packageState.androidPackage
             if (androidPackage != null) {
                 if (permissionName in androidPackage.requestedPermissions) {
@@ -1435,7 +1435,7 @@ class AppIdPermissionPolicy : SchemePolicy() {
     ): Boolean {
         val packageNames = state.externalState.appIdPackageNames[appId]!!
         return packageNames.anyIndexed { _, packageName ->
-            val packageState = state.externalState.packageStates[packageName]!!
+            val packageState = state.externalState.packageStates[packageName] ?: return@anyIndexed false
             packageState.androidPackage != null && predicate(packageState)
         }
     }
@@ -1447,7 +1447,7 @@ class AppIdPermissionPolicy : SchemePolicy() {
     ) {
         val packageNames = state.externalState.appIdPackageNames[appId]!!
         packageNames.forEachIndexed { _, packageName ->
-            val packageState = state.externalState.packageStates[packageName]!!
+            val packageState = state.externalState.packageStates[packageName] ?: return@forEachIndexed
             if (packageState.androidPackage != null) {
                 action(packageState)
             }
@@ -1463,7 +1463,7 @@ class AppIdPermissionPolicy : SchemePolicy() {
     ): Int {
         val packageNames = state.externalState.appIdPackageNames[appId]!!
         return packageNames.reduceIndexed(initialValue) { value, _, packageName ->
-            val packageState = state.externalState.packageStates[packageName]!!
+            val packageState = state.externalState.packageStates[packageName] ?: return@reduceIndexed value
             if (packageState.androidPackage != null) {
                 accumulator(value, packageState)
             } else {
