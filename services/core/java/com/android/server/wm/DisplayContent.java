@@ -3399,6 +3399,12 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
             mWallpaperController.resetLargestDisplay(mDisplay);
             mWmService.mDisplayWindowSettings.onDisplayRemoved(this);
         } finally {
+            // Sandbox Reference Quarantine: Sever pointers synchronously 
+            // to avoid races with asynchronous Native Looper destruction
+            synchronized (mWmService.mGlobalLock) {
+                mCurrentFocus = null;
+                mFocusedApp = null;
+            }
             mDisplayReady = false;
         }
 
