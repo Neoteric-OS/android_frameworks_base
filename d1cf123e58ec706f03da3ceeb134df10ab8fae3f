@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d279119a_cba59d4c",
+        "filename": "services/tests/displayservicetests/src/com/android/server/display/ExternalDisplayPolicyTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2026-07-09T12:58:52Z",
+      "side": 1,
+      "message": "In the original CL this was changed to `assertAskedUserIfDisplayShouldBeEnabled()`, can you justify this change?",
+      "revId": "d1cf123e58ec706f03da3ceeb134df10ab8fae3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d05f05f_504bb8f3",
+        "filename": "services/tests/displayservicetests/src/com/android/server/display/ExternalDisplayPolicyTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2026-07-09T12:58:52Z",
+      "side": 1,
+      "message": "In the original CL the test looked like this:\n```\n@Test\n    public void testExternalDisplayAutoEnabledWithLayoutConfiguration() {\n        when(mMockedFlags.isDisplayContentModeManagementEnabled()).thenReturn(true);\n        when(mMockedLogicalDisplay.canHostTasksLocked()).thenReturn(true);\n        when(mMockedLogicalDisplayMapper.isEnabledInLayoutLocked(any())).thenReturn(true);\n        mExternalDisplayPolicy.handleExternalDisplayConnectedLocked(mMockedLogicalDisplay);\n        mExternalDisplayPolicy.onBootCompleted();\n        assertNotAskedUserIfDisplayShouldBeEnabled();\n    }\n```\nCan you justify the change?",
+      "revId": "d1cf123e58ec706f03da3ceeb134df10ab8fae3f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
