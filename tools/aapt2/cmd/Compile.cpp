@@ -216,11 +216,19 @@ static bool CompileTable(IAaptContext* context, const CompileOptions& options,
     }
 
     if (options.product_.has_value()) {
-      if (!ProductFilter({*options.product_}, /* remove_default_config_values = */ true)
-               .Consume(context, &table)) {
-        context->GetDiagnostics()->Error(android::DiagMessage(path_data.source)
-                                         << "failed to filter product");
-        return false;
+      std::unordered_set<std::string> products;
+      for (StringPiece product : util::Tokenize(options.product_.value(), ',')) {
+        if (product != "" && product != "default") {
+          products.emplace(product);
+        }
+      }
+      if (!products.empty()) {
+        if (!ProductFilter(products, /* remove_default_config_values = */ true)
+                  .Consume(context, &table)) {
+          context->GetDiagnostics()->Error(android::DiagMessage(path_data.source)
+                                            << "failed to filter product");
+          return false;
+        }
       }
     }
   }
