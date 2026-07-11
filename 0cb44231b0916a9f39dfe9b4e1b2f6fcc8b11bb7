@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f5f8e51_91ac79b4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1889142
+      },
+      "writtenOn": "2026-07-11T18:31:41Z",
+      "side": 1,
+      "message": "The root issue appears to be that postApplyVolumeOnDevice() derives an effective index affected by the temporary internal routing mute. Please fix the volume initialization path to apply the stored stream/device index independent of mIsMutedInternally, rather than clearing the global routing mute. Otherwise this changes audible playback behavior to work around a volume bookkeeping problem.",
+      "revId": "0cb44231b0916a9f39dfe9b4e1b2f6fcc8b11bb7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90c30f30_470b59fe",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceBroker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1966,
+      "author": {
+        "id": 1889142
+      },
+      "writtenOn": "2026-07-11T18:31:41Z",
+      "side": 1,
+      "message": "This does not use the same pending-message set as checkMessagesMuteMusic(). For example, MSG_L_BLUETOOTH_DEVICE_CONFIG_CHANGE, MSG_L_A2DP_DEVICE_CONNECTION_CHANGE_EXT, or MSG_L_SET_FORCE_BT_A2DP_USE may still require media to remain muted, but this condition clears mMusicMuted anyway. Conversely, MSG_L_BT_ACTIVE_DEVICE_CHANGE_EXT is not part of MESSAGES_MUTE_MUSIC. Please avoid duplicating the mute policy here and route this through a single helper that evaluates all mute-causing messages.",
+      "revId": "0cb44231b0916a9f39dfe9b4e1b2f6fcc8b11bb7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2745ba0_97eaceea",
+        "filename": "services/core/java/com/android/server/audio/AudioDeviceBroker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1970,
+      "author": {
+        "id": 1889142
+      },
+      "writtenOn": "2026-07-11T18:31:41Z",
+      "side": 1,
+      "message": "MSG_L_SET_BT_ACTIVE_DEVICE is itself a member of MESSAGES_MUTE_MUSIC, so clearing the mute from inside its handler violates the existing contract: media remains muted while the routing message is being processed and for the subsequent mute-check delay. This can expose audio during onSetBtActiveDevice() and before follow-up Bluetooth messages arrive. The volume initialization should be fixed without globally unmuting media during routing.",
+      "revId": "0cb44231b0916a9f39dfe9b4e1b2f6fcc8b11bb7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
