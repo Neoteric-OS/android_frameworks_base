@@ -23,10 +23,13 @@
 // JNI registration entry points and native methods use Java-style names.
 #![allow(non_snake_case)]
 
+mod android_app_admin_security_log;
 mod android_os_system_clock;
 mod android_os_system_properties;
 mod android_os_trace;
+mod android_util_event_log;
 mod android_util_log;
+mod event_log_helper;
 mod libbase_parse;
 mod sysprop_change;
 
@@ -85,6 +88,24 @@ pub extern "C" fn register_android_os_SystemProperties(env: jni::EnvUnowned<'_>)
 #[no_mangle]
 pub extern "C" fn register_android_os_Trace(env: jni::EnvUnowned<'_>) -> jni::sys::jint {
     register_natives(env, android_os_trace::register)
+}
+
+/// Registers `android.app.admin.SecurityLog`'s native methods and caches its
+/// class IDs. Device-only: the host runtime does not register SecurityLog.
+/// See `register_natives`.
+#[no_mangle]
+pub extern "C" fn register_android_app_admin_SecurityLog(
+    env: jni::EnvUnowned<'_>,
+) -> jni::sys::jint {
+    register_natives(env, android_app_admin_security_log::register)
+}
+
+/// Registers `android.util.EventLog`'s native methods and caches its class
+/// IDs. Called from the gRegJNI tables of AndroidRuntime.cpp and
+/// HostRuntime.cpp. See `register_natives`.
+#[no_mangle]
+pub extern "C" fn register_android_util_EventLog(env: jni::EnvUnowned<'_>) -> jni::sys::jint {
+    register_natives(env, android_util_event_log::register)
 }
 
 /// Registers `android.util.Log`'s native methods. See `register_natives`.
