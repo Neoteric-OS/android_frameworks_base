@@ -1,0 +1,28 @@
+package {
+    default_applicable_licenses: ["frameworks_base_core_jni_license"],
+}
+
+rust_library {
+    name: "libjni_support",
+    crate_name: "jni_support",
+    crate_root: "jni_support/src/lib.rs",
+    edition: "2021",
+    host_supported: true,
+    rustlibs: [
+        "libjni",
+        "libthiserror",
+    ],
+}
+
+rust_test_host {
+    name: "jni_support_test",
+    crate_name: "jni_support",
+    crate_root: "jni_support/src/lib.rs",
+    edition: "2021",
+    test_suites: ["general-tests"],
+    auto_gen_config: true,
+    rustlibs: [
+        "libjni",
+        "libthiserror",
+    ],
+}
