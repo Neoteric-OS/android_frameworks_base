@@ -99,6 +99,8 @@ rust_defaults {
         "libjni",
         "liblibc",
         "liblog_buffer",
+        "liblog_event_list",
+        "liblog_reader",
         "liblog_rust",
         "liblogger",
         "librustutils",
