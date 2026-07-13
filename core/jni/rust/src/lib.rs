@@ -24,6 +24,7 @@
 #![allow(non_snake_case)]
 
 mod android_os_system_clock;
+mod android_util_log;
 
 /// Shared body of every `register_*` entry point: bootstraps this crate's
 /// logging, borrows the `Env` from the caller's JNI attachment, and runs the
@@ -50,4 +51,10 @@ fn register_natives(
 #[no_mangle]
 pub extern "C" fn register_android_os_SystemClock(env: jni::EnvUnowned<'_>) -> jni::sys::jint {
     register_natives(env, android_os_system_clock::register)
+}
+
+/// Registers `android.util.Log`'s native methods. See `register_natives`.
+#[no_mangle]
+pub extern "C" fn register_android_util_Log(env: jni::EnvUnowned<'_>) -> jni::sys::jint {
+    register_natives(env, android_util_log::register)
 }
