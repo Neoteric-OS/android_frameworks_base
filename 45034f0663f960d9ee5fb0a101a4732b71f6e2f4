@@ -16,6 +16,24 @@
       "message": "Why change this?",
       "revId": "45034f0663f960d9ee5fb0a101a4732b71f6e2f4",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f0f8199_e3ce9499",
+        "filename": "services/core/java/com/android/server/display/LogicalDisplayMapper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1350,
+      "author": {
+        "id": 4973828
+      },
+      "writtenOn": "2026-07-13T11:06:21Z",
+      "side": 0,
+      "message": "Hey Piotr,\nFixed and made the change same as the original CL.",
+      "parentUuid": "43c9fa54_f3546ccb",
+      "revId": "45034f0663f960d9ee5fb0a101a4732b71f6e2f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
