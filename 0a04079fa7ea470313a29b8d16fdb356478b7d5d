@@ -40,6 +40,30 @@
       ],
       "revId": "0a04079fa7ea470313a29b8d16fdb356478b7d5d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fbe4f49d_e9e63dbc",
+        "filename": "core/java/android/provider/AlarmClock.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1396490
+      },
+      "writtenOn": "2026-07-13T21:55:33Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "9e6ce801_5247f7da",
+      "range": {
+        "startLine": 27,
+        "startChar": 3,
+        "endLine": 27,
+        "endChar": 22
+      },
+      "revId": "0a04079fa7ea470313a29b8d16fdb356478b7d5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
