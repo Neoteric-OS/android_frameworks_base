@@ -29,8 +29,11 @@ mod android_os_system_properties;
 mod android_os_trace;
 mod android_util_event_log;
 mod android_util_log;
+mod android_view_key_event;
 mod event_log_helper;
 mod event_wire_format;
+mod input_event_compat;
+mod input_event_ffi;
 mod libbase_parse;
 mod sysprop_change;
 
@@ -157,5 +160,24 @@ pub unsafe extern "C" fn register_android_util_Log(env: *mut jni::sys::JNIEnv) -
     // SAFETY: The caller (AndroidRuntime::startReg) passes a valid JNIEnv.
     let mut env = unsafe { jni::JNIEnv::from_raw(env) }.expect("null JNIEnv");
     android_util_log::register(&mut env);
+    0
+}
+
+/// Called from the gRegJNI tables of AndroidRuntime.cpp and HostRuntime.cpp.
+///
+/// Registers `android.view.KeyEvent`'s native methods, caches its class IDs,
+/// and returns 0. Panics if registration fails, matching the C++
+/// `RegisterMethodsOrDie` semantics.
+///
+/// # Safety
+///
+/// `env` must be a valid, non-null `JNIEnv` pointer for the current thread.
+#[no_mangle]
+pub unsafe extern "C" fn register_android_view_KeyEvent(
+    env: *mut jni::sys::JNIEnv,
+) -> jni::sys::jint {
+    // SAFETY: The caller (AndroidRuntime::startReg) passes a valid JNIEnv.
+    let mut env = unsafe { jni::JNIEnv::from_raw(env) }.expect("null JNIEnv");
+    android_view_key_event::register(&mut env);
     0
 }

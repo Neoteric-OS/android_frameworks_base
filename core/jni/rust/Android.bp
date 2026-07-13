@@ -72,19 +72,57 @@ genrule {
     out: ["sysprop_change.rs.cpp"],
 }
 
+// Generate the C++ side of the cxx bridge declared in
+// src/input_event_ffi.rs.
+genrule {
+    name: "libandroid_runtime_rs_bridge_input_event_header",
+    tools: ["cxxbridge"],
+    cmd: "$(location cxxbridge) $(in) --header > $(out)",
+    srcs: ["src/input_event_ffi.rs"],
+    out: ["input_event_ffi.rs.h"],
+}
+
+genrule {
+    name: "libandroid_runtime_rs_bridge_input_event_code",
+    tools: ["cxxbridge"],
+    cmd: "$(location cxxbridge) $(in) > $(out)",
+    srcs: ["src/input_event_ffi.rs"],
+    out: ["input_event_ffi.rs.cpp"],
+}
+
 // The C++ half of android_runtime's cxx bridges: the generated bridge code
-// plus the handwritten libutils glue it declares.
+// plus the handwritten libutils/libinput glue it declares.
 cc_library_static {
     name: "libandroid_runtime_rs_bridge",
     host_supported: true,
-    srcs: ["ffi/sysprop_change.cpp"],
-    local_include_dirs: ["ffi"],
+    srcs: [
+        "ffi/input_event.cpp",
+        "ffi/sysprop_change.cpp",
+    ],
+    // input_event_compat.h declares the #[repr(C)] bundles that cross the
+    // Rust boundary by layout; the permanent facades in core/jni (e.g.
+    // android_view_KeyEvent.cpp) include it through this export.
+    export_include_dirs: ["ffi"],
     generated_headers: [
         "cxx-bridge-header",
         "libandroid_runtime_rs_bridge_header",
+        "libandroid_runtime_rs_bridge_input_event_header",
     ],
-    generated_sources: ["libandroid_runtime_rs_bridge_code"],
+    generated_sources: [
+        "libandroid_runtime_rs_bridge_code",
+        "libandroid_runtime_rs_bridge_input_event_code",
+    ],
     shared_libs: ["libutils"],
+    // libinput, linked the same way libandroid_runtime links it: shared on
+    // device, static on host.
+    target: {
+        android: {
+            shared_libs: ["libinput"],
+        },
+        host: {
+            static_libs: ["libinput"],
+        },
+    },
 }
 
 rust_defaults {
