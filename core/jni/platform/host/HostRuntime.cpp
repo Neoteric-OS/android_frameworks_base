@@ -88,7 +88,7 @@ extern int register_android_os_FileObserver(JNIEnv* env);
 extern int register_android_os_MessageQueue(JNIEnv* env);
 extern int register_android_os_Parcel(JNIEnv* env);
 extern "C" int register_android_os_SystemClock(JNIEnv* env);
-extern int register_android_os_SystemProperties(JNIEnv* env);
+extern "C" int register_android_os_SystemProperties(JNIEnv* env);
 extern int register_android_text_AndroidCharacter(JNIEnv* env);
 extern int register_android_text_Hyphenator(JNIEnv* env);
 extern int register_android_util_EventLog(JNIEnv* env);
