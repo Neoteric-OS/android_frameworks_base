@@ -23,7 +23,7 @@
 
 namespace android {
 
-bool android_util_Log_isVerboseLogEnabled(const char* tag);
+extern "C" bool android_util_Log_isVerboseLogEnabled(const char* tag);
 
 }
 
