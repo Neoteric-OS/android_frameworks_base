@@ -257,6 +257,135 @@ pub fn build_signature(
     Ok(sig)
 }
 
+/// Maps a friendly Java type name to its JNI signature string.
+///
+/// Supports:
+/// - Primitives: `int` → `I`, `long` → `J`, `float` → `F`, etc.
+/// - `void` → `V`
+/// - `String` → `Ljava/lang/String;`
+/// - Array types: `int[]` → `[I`, `byte[]` → `[B`, `String[]` → `[Ljava/lang/String;`
+/// - Fully qualified classes: `android.view.KeyEvent` → `Landroid/view/KeyEvent;`
+/// - Slash-separated classes: `android/view/KeyEvent` → `Landroid/view/KeyEvent;`
+///
+/// # Examples
+///
+/// ```text
+/// friendly_type_to_sig("int")                     → Ok("I")
+/// friendly_type_to_sig("String")                  → Ok("Ljava/lang/String;")
+/// friendly_type_to_sig("int[]")                   → Ok("[I")
+/// friendly_type_to_sig("android.view.KeyEvent")   → Ok("Landroid/view/KeyEvent;")
+/// friendly_type_to_sig("android.view.KeyEvent[]") → Ok("[Landroid/view/KeyEvent;")
+/// friendly_type_to_sig("")                         → Err("empty type string")
+/// ```
+pub fn friendly_type_to_sig(ty: &str) -> Result<String, String> {
+    let ty = ty.trim();
+    if ty.is_empty() {
+        return Err("empty type string".to_string());
+    }
+
+    // Handle array types (e.g. "int[]", "String[]", "android.view.KeyEvent[]")
+    if let Some(element) = ty.strip_suffix("[]") {
+        let element = element.trim();
+        let inner = friendly_type_to_sig(element)?;
+        return Ok(format!("[{}", inner));
+    }
+
+    // Primitive types
+    match ty {
+        "void" => return Ok("V".to_string()),
+        "int" => return Ok("I".to_string()),
+        "long" => return Ok("J".to_string()),
+        "float" => return Ok("F".to_string()),
+        "double" => return Ok("D".to_string()),
+        "boolean" | "bool" => return Ok("Z".to_string()),
+        "byte" => return Ok("B".to_string()),
+        "char" => return Ok("C".to_string()),
+        "short" => return Ok("S".to_string()),
+        _ => {}
+    }
+
+    // String special case
+    if ty == "String" {
+        return Ok("Ljava/lang/String;".to_string());
+    }
+
+    // Class type — contains dots or slashes, or is a simple class name
+    let normalized = ty.replace('.', "/");
+    validate_class_name(&normalized)?;
+    Ok(format!("L{};", normalized))
+}
+
+/// Validates a slash-normalized Java class name so that malformed type specs
+/// (e.g. `"in t"` or `"long["`) do not silently become nonsense signatures.
+///
+/// Every `/`-separated segment must be non-empty and consist of ASCII
+/// alphanumerics, `_`, or `$`.
+fn validate_class_name(name: &str) -> Result<(), String> {
+    let valid_segment = |segment: &str| {
+        !segment.is_empty()
+            && segment.chars().all(|c| c.is_ascii_alphanumeric() || c == '_' || c == '$')
+    };
+    if name.split('/').all(valid_segment) {
+        Ok(())
+    } else {
+        Err(format!("invalid Java class name: '{}'", name))
+    }
+}
+
+/// Parses a friendly method signature string like `"(int, long) -> void"` into
+/// a JNI method signature like `"(IJ)V"`.
+///
+/// The format is: `"(param1, param2, ...) -> return_type"`
+///
+/// # Examples
+///
+/// ```text
+/// friendly_method_sig("() -> void")          → Ok("()V")
+/// friendly_method_sig("(int) -> String")     → Ok("(I)Ljava/lang/String;")
+/// friendly_method_sig("(int, long) -> void") → Ok("(IJ)V")
+/// friendly_method_sig("(String, int) -> boolean") → Ok("(Ljava/lang/String;I)Z")
+/// friendly_method_sig("(int) void")          → Err("method signature must contain '->'...")
+/// friendly_method_sig("int -> void")         → Err("parameter list must be wrapped in parentheses...")
+/// ```
+pub fn friendly_method_sig(spec: &str) -> Result<String, String> {
+    let spec = spec.trim();
+
+    // Split on "->"
+    let parts: Vec<&str> = spec.splitn(2, "->").collect();
+    if parts.len() != 2 {
+        return Err(format!("method signature must contain '->': got '{}'", spec));
+    }
+
+    let params_part = parts[0].trim();
+    let return_part = parts[1].trim();
+
+    // Parse params: strip parens, split on comma
+    let params_inner = params_part
+        .strip_prefix('(')
+        .and_then(|s| s.strip_suffix(')'))
+        .ok_or_else(|| {
+            format!("parameter list must be wrapped in parentheses: got '{}'", params_part)
+        })?
+        .trim();
+
+    let mut sig = String::from("(");
+
+    if !params_inner.is_empty() {
+        for param in params_inner.split(',') {
+            let param = param.trim();
+            if param.is_empty() {
+                continue;
+            }
+            sig.push_str(&friendly_type_to_sig(param)?);
+        }
+    }
+
+    sig.push(')');
+    sig.push_str(&friendly_type_to_sig(return_part)?);
+
+    Ok(sig)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -681,5 +810,157 @@ mod tests {
     fn test_build_sig_returns_dotted() {
         let result = build_signature(&[], "JObject", Some("java.lang.String"), None);
         assert_eq!(result.unwrap(), "()Ljava/lang/String;");
+    }
+
+    // ---- friendly_type_to_sig tests ----
+
+    #[test]
+    fn test_friendly_type_primitives() {
+        assert_eq!(friendly_type_to_sig("void").unwrap(), "V");
+        assert_eq!(friendly_type_to_sig("int").unwrap(), "I");
+        assert_eq!(friendly_type_to_sig("long").unwrap(), "J");
+        assert_eq!(friendly_type_to_sig("float").unwrap(), "F");
+        assert_eq!(friendly_type_to_sig("double").unwrap(), "D");
+        assert_eq!(friendly_type_to_sig("boolean").unwrap(), "Z");
+        assert_eq!(friendly_type_to_sig("bool").unwrap(), "Z");
+        assert_eq!(friendly_type_to_sig("byte").unwrap(), "B");
+        assert_eq!(friendly_type_to_sig("char").unwrap(), "C");
+        assert_eq!(friendly_type_to_sig("short").unwrap(), "S");
+    }
+
+    #[test]
+    fn test_friendly_type_string() {
+        assert_eq!(friendly_type_to_sig("String").unwrap(), "Ljava/lang/String;");
+    }
+
+    #[test]
+    fn test_friendly_type_arrays() {
+        assert_eq!(friendly_type_to_sig("int[]").unwrap(), "[I");
+        assert_eq!(friendly_type_to_sig("byte[]").unwrap(), "[B");
+        assert_eq!(friendly_type_to_sig("long[]").unwrap(), "[J");
+        assert_eq!(friendly_type_to_sig("float[]").unwrap(), "[F");
+        assert_eq!(friendly_type_to_sig("double[]").unwrap(), "[D");
+        assert_eq!(friendly_type_to_sig("boolean[]").unwrap(), "[Z");
+        assert_eq!(friendly_type_to_sig("char[]").unwrap(), "[C");
+        assert_eq!(friendly_type_to_sig("short[]").unwrap(), "[S");
+        assert_eq!(friendly_type_to_sig("String[]").unwrap(), "[Ljava/lang/String;");
+    }
+
+    #[test]
+    fn test_friendly_type_class_dotted() {
+        assert_eq!(
+            friendly_type_to_sig("android.view.KeyEvent").unwrap(),
+            "Landroid/view/KeyEvent;"
+        );
+    }
+
+    #[test]
+    fn test_friendly_type_class_slashed() {
+        assert_eq!(
+            friendly_type_to_sig("android/view/KeyEvent").unwrap(),
+            "Landroid/view/KeyEvent;"
+        );
+    }
+
+    #[test]
+    fn test_friendly_type_class_array() {
+        assert_eq!(
+            friendly_type_to_sig("android.view.KeyEvent[]").unwrap(),
+            "[Landroid/view/KeyEvent;"
+        );
+    }
+
+    #[test]
+    fn test_friendly_type_simple_class() {
+        assert_eq!(friendly_type_to_sig("KeyEvent").unwrap(), "LKeyEvent;");
+    }
+
+    #[test]
+    fn test_friendly_type_empty_error() {
+        assert!(friendly_type_to_sig("").is_err());
+    }
+
+    #[test]
+    fn test_friendly_type_malformed_class_error() {
+        let err = friendly_type_to_sig("in t").unwrap_err();
+        assert!(err.contains("invalid Java class name"), "{err}");
+        assert!(friendly_type_to_sig("long[").is_err());
+        assert!(friendly_type_to_sig("android..view.KeyEvent").is_err());
+        assert!(friendly_type_to_sig("android.view.").is_err());
+    }
+
+    #[test]
+    fn test_friendly_type_inner_class_dollar_allowed() {
+        assert_eq!(
+            friendly_type_to_sig("android.view.MotionEvent$PointerCoords").unwrap(),
+            "Landroid/view/MotionEvent$PointerCoords;"
+        );
+    }
+
+    #[test]
+    fn test_friendly_type_whitespace() {
+        assert_eq!(friendly_type_to_sig("  int  ").unwrap(), "I");
+        assert_eq!(friendly_type_to_sig("  byte[]  ").unwrap(), "[B");
+    }
+
+    // ---- friendly_method_sig tests ----
+
+    #[test]
+    fn test_friendly_method_void_to_void() {
+        assert_eq!(friendly_method_sig("() -> void").unwrap(), "()V");
+    }
+
+    #[test]
+    fn test_friendly_method_void_to_long() {
+        assert_eq!(friendly_method_sig("() -> long").unwrap(), "()J");
+    }
+
+    #[test]
+    fn test_friendly_method_int_to_string() {
+        assert_eq!(friendly_method_sig("(int) -> String").unwrap(), "(I)Ljava/lang/String;");
+    }
+
+    #[test]
+    fn test_friendly_method_multiple_params() {
+        assert_eq!(friendly_method_sig("(int, long) -> void").unwrap(), "(IJ)V");
+    }
+
+    #[test]
+    fn test_friendly_method_complex_key_event_obtain() {
+        let sig = friendly_method_sig(
+            "(int, long, long, int, int, int, int, int, int, int, int, int, byte[], String) -> android.view.KeyEvent"
+        ).unwrap();
+        assert_eq!(sig, "(IJJIIIIIIIII[BLjava/lang/String;)Landroid/view/KeyEvent;");
+    }
+
+    #[test]
+    fn test_friendly_method_string_to_int() {
+        assert_eq!(friendly_method_sig("(String) -> int").unwrap(), "(Ljava/lang/String;)I");
+    }
+
+    #[test]
+    fn test_friendly_method_string_params() {
+        assert_eq!(
+            friendly_method_sig("(int, int, String, String) -> int").unwrap(),
+            "(IILjava/lang/String;Ljava/lang/String;)I"
+        );
+    }
+
+    #[test]
+    fn test_friendly_method_no_arrow_error() {
+        assert!(friendly_method_sig("(int) void").is_err());
+    }
+
+    #[test]
+    fn test_friendly_method_no_parens_error() {
+        assert!(friendly_method_sig("int -> void").is_err());
+    }
+
+    #[test]
+    fn test_friendly_method_boolean_return() {
+        assert_eq!(
+            friendly_method_sig("(String, int) -> boolean").unwrap(),
+            "(Ljava/lang/String;I)Z"
+        );
     }
 }
