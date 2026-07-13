@@ -67,3 +67,38 @@ rust_test_host {
     ],
     proc_macros: ["libjni_platform_macros"],
 }
+
+rust_defaults {
+    name: "libandroid_runtime_rs_defaults",
+    crate_name: "android_runtime",
+    crate_root: "src/lib.rs",
+    edition: "2021",
+    rustlibs: [
+        "libjni_support",
+        "libatrace_rust",
+        "libcxx",
+        "libjni_next",
+        "liblibc",
+        "liblog_buffer",
+        "liblog_event_list",
+        "liblog_reader",
+        "liblog_rust",
+        "liblogger",
+        "librustutils",
+        "libtracing_perfetto_rust",
+    ],
+    proc_macros: ["libjni_platform_macros"],
+}
+
+rust_ffi_static {
+    name: "libandroid_runtime_rs",
+    defaults: ["libandroid_runtime_rs_defaults"],
+    host_supported: true,
+}
+
+rust_test_host {
+    name: "android_runtime_rs_test",
+    defaults: ["libandroid_runtime_rs_defaults"],
+    test_suites: ["general-tests"],
+    auto_gen_config: true,
+}

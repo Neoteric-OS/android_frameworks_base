@@ -83,7 +83,6 @@ cc_defaults_for_libandroid_runtime {
         "android_media_ImageReader.cpp",
         "android_media_PublicFormatUtils.cpp",
         "android_media_Utils.cpp",
-        "android_os_SystemClock.cpp",
         "android_os_SystemProperties.cpp",
         "android_text_AndroidCharacter.cpp",
         "android_text_Hyphenator.cpp",
@@ -117,6 +116,12 @@ cc_defaults_for_libandroid_runtime {
         "android.content.res.flags-aconfig-cc-host-ro",
         "libziparchive_for_incfs",
         "libguiflags",
+    ],
+
+    // JNI methods implemented in Rust; must be whole_static_libs so their
+    // registration entry points survive static linking.
+    whole_static_libs: [
+        "libandroid_runtime_rs",
     ],
 
     export_include_dirs: [
