@@ -91,7 +91,7 @@ extern "C" int register_android_os_SystemClock(JNIEnv* env);
 extern "C" int register_android_os_SystemProperties(JNIEnv* env);
 extern int register_android_text_AndroidCharacter(JNIEnv* env);
 extern int register_android_text_Hyphenator(JNIEnv* env);
-extern int register_android_util_EventLog(JNIEnv* env);
+extern "C" int register_android_util_EventLog(JNIEnv* env);
 extern "C" int register_android_util_Log(JNIEnv* env);
 extern int register_android_util_jar_StrictJarFile(JNIEnv* env);
 extern int register_android_view_KeyCharacterMap(JNIEnv* env);
