@@ -462,6 +462,8 @@ impl JniMethod {
 
         validate_leading_params(func, &mode)
             .map_err(|e| syn::Error::new_spanned(func, e).to_compile_error())?;
+        validate_jlong_peer_attrs(func)
+            .map_err(|e| syn::Error::new_spanned(func, e).to_compile_error())?;
 
         let java_name =
             options.java_name.unwrap_or_else(|| derive_java_name(&func.sig.ident.to_string()));
@@ -883,10 +885,12 @@ fn param_sig_token(
     // bridges to a string, not an object), so only object inners short-circuit
     // here; the `#[class = "..."]` still applies to the inner object type.
     if let Some(inner) = strip_option(ty) {
-        if matches!(
-            param_bridge(&inner).map(|b| b.kind),
-            Some(ParamBridgeKind::Wrapped { .. }) | Some(ParamBridgeKind::Raw { .. })
-        ) {
+        if is_typed_object_array_name(&inner)
+            || matches!(
+                param_bridge(&inner).map(|b| b.kind),
+                Some(ParamBridgeKind::Wrapped { .. }) | Some(ParamBridgeKind::Raw { .. })
+            )
+        {
             return param_sig_token(&inner, class_attr, module_package, objects);
         }
     }
@@ -927,6 +931,17 @@ fn param_sig_token(
             let class = class_attr.ok_or_else(|| {
                 format!(
                     "JObjectArray parameter requires #[class = \"...\"] annotation, got type '{}'",
+                    ty
+                )
+            })?;
+            let elem = objects.object_token(class, module_package);
+            quote! { [ #elem ] }
+        }
+
+        _ if is_typed_object_array_name(ty) => {
+            let class = class_attr.ok_or_else(|| {
+                format!(
+                    "typed JObjectArray parameter requires #[class = \"...\"] annotation, got type '{}'",
                     ty
                 )
             })?;
@@ -998,6 +1013,10 @@ fn derive_critical_signature(func: &ItemFn) -> Result<String, String> {
     let mut descriptor = String::from("(");
     for arg in &func.sig.inputs {
         if let FnArg::Typed(pat_type) = arg {
+            if find_jlong_peer_attr(pat_type).is_some() {
+                descriptor.push('J');
+                continue;
+            }
             let ty = type_to_string(&pat_type.ty);
             let ch = sig::primitive_sig(&ty).ok_or_else(|| {
                 format!("@CriticalNative parameter type '{}' must be a primitive", ty)
@@ -1031,6 +1050,9 @@ fn validate_critical_native(func: &ItemFn) -> Result<(), String> {
 
     for arg in &inputs {
         if let FnArg::Typed(pat_type) = arg {
+            if find_jlong_peer_attr(pat_type).is_some() {
+                continue;
+            }
             let ty = type_to_string(&pat_type.ty);
             if matches!(ty.as_str(), "&str" | "Option<&str>" | "&JNIStr" | "Option<&JNIStr>") {
                 return Err(format!(
@@ -1085,6 +1107,7 @@ fn bridge_user_param(
     index: usize,
     lifetime: &TokenStream,
     class_attr: Option<&str>,
+    is_critical: bool,
 ) -> Result<BridgedParam, String> {
     let pat = &pat_type.pat;
     // An owned wrapper parameter may carry the lifetime its type needs
@@ -1094,6 +1117,63 @@ fn bridge_user_param(
     let ty = strip_lifetime_arg(&type_to_string(&pat_type.ty)).to_string();
     let raw_ident = format_ident!("__arg{}", index);
     let npe_msg = format!("{} must not be null", quote! { #pat });
+
+    if let Some(kind) = find_jlong_peer_attr(pat_type) {
+        let syn::Pat::Ident(pat_ident) = pat_type.pat.as_ref() else {
+            return Err("jlong peer parameters require an identifier pattern".to_string());
+        };
+        let call_ident = &pat_ident.ident;
+        let target = jlong_peer_target(&pat_type.ty, kind)?;
+        let peer_ident = format_ident!("__arg{}_peer", index);
+        let constructor = match kind {
+            JLongPeerKind::Shared => quote! {
+                jni_support::ForeignPeer::from_handle(
+                    jni_support::JLongHandle::<#target>::from_jlong(#raw_ident))
+            },
+            JLongPeerKind::PinnedMut => quote! {
+                jni_support::ForeignPeerMut::from_handle(
+                    jni_support::JLongHandle::<#target>::from_jlong(#raw_ident))
+            },
+        };
+        let binding = match kind {
+            JLongPeerKind::Shared => quote! { let #peer_ident },
+            JLongPeerKind::PinnedMut => quote! { let mut #peer_ident },
+        };
+        let initialize = if is_critical {
+            quote! {
+                // SAFETY: the Java native-peer field is created and retired by
+                // this registered JNI implementation, remains live for the call,
+                // and its Java/native contract forbids overlapping mutable access.
+                #binding = unsafe { #constructor }
+                    .expect(#npe_msg);
+            }
+        } else {
+            quote! {
+                // SAFETY: the Java native-peer field is created and retired by
+                // this registered JNI implementation, remains live for the call,
+                // and its Java/native contract forbids overlapping mutable access.
+                #binding = unsafe { #constructor }
+                    .ok_or(jni_support::JniError::NullPointer(#npe_msg))?;
+            }
+        };
+        // Bind the converted argument by identifier rather than reproducing
+        // the user's pattern. In particular, `mut event: Pin<&mut T>` needs
+        // mutability in the user function but not in this pass-through local;
+        // copying `mut` here would trigger `unused_mut` under `-D warnings`.
+        let borrow = match kind {
+            JLongPeerKind::Shared => quote! { let #call_ident: &#target = #peer_ident.get(); },
+            JLongPeerKind::PinnedMut => {
+                quote! {
+                    let #call_ident: ::core::pin::Pin<&mut #target> = #peer_ident.pin();
+                }
+            }
+        };
+        return Ok(BridgedParam {
+            shim_param: quote! { #raw_ident: jni::sys::jlong },
+            prelude: Some(quote! { #initialize #borrow }),
+            call_arg: quote! { #call_ident },
+        });
+    }
 
     // A project-defined wrapper produced by `bind_java_type!`. The Java class
     // comes from `#[class = "..."]`; the JVM therefore guarantees the runtime
@@ -1112,8 +1192,20 @@ fn bridge_user_param(
         let custom = custom_wrapper_type(&pat_type.ty)
             .ok_or_else(|| format!("unsupported #[class] wrapper parameter type '{}'", ty))?;
         let wrapper = custom.wrapper;
+        let is_typed_array = is_typed_object_array_type(wrapper);
         let converted_ident = format_ident!("__arg{}_typed", index);
-        let convert = quote! { unsafe { #wrapper::from_raw(env, #raw_ident.as_raw()) } };
+        let convert = if is_typed_array {
+            quote! {
+                unsafe {
+                    <#wrapper>::from_raw(
+                        env,
+                        #raw_ident.as_raw() as jni::sys::jobjectArray,
+                    )
+                }
+            }
+        } else {
+            quote! { unsafe { #wrapper::from_raw(env, #raw_ident.as_raw()) } }
+        };
         let (prelude, call_arg) = match (custom.nullable, custom.by_ref) {
             (false, true) => (
                 quote! {
@@ -1160,8 +1252,13 @@ fn bridge_user_param(
                 quote! { #converted_ident },
             ),
         };
+        let shim_wrapper = if is_typed_array {
+            quote! { jni::objects::JObjectArray<#lifetime> }
+        } else {
+            quote! { jni::objects::JObject<#lifetime> }
+        };
         return Ok(BridgedParam {
-            shim_param: quote! { #raw_ident: jni::objects::JObject<#lifetime> },
+            shim_param: quote! { #raw_ident: #shim_wrapper },
             prelude: Some(prelude),
             call_arg,
         });
@@ -1339,6 +1436,20 @@ fn custom_wrapper_type(ty: &Type) -> Option<CustomWrapperType<'_>> {
     }
 }
 
+fn is_typed_object_array_type(ty: &Type) -> bool {
+    let Type::Path(path) = ty else { return false };
+    let Some(segment) = path.path.segments.last() else {
+        return false;
+    };
+    segment.ident == "JObjectArray"
+        && matches!(segment.arguments, syn::PathArguments::AngleBracketed(_))
+}
+
+fn is_typed_object_array_name(ty: &str) -> bool {
+    let ty = ty.strip_prefix('&').unwrap_or(ty);
+    ty.starts_with("JObjectArray<") && ty.ends_with('>')
+}
+
 /// The shim's `this`/`class` parameter type and the argument passed to the user
 /// function for it.
 ///
@@ -1473,15 +1584,24 @@ fn generate_native_method(
     for (index, arg) in inputs[2..].iter().enumerate() {
         if let FnArg::Typed(pat_type) = arg {
             let class = find_class_attr_on_pat(pat_type);
-            let bridged = bridge_user_param(pat_type, index, &lifetime, class.as_deref())?;
+            let bridged = bridge_user_param(pat_type, index, &lifetime, class.as_deref(), false)?;
             impl_params.push(bridged.shim_param);
             if let Some(prelude) = bridged.prelude {
                 preludes.push(prelude);
             }
             call_args.push(bridged.call_arg);
 
-            let ty = type_to_string(&pat_type.ty);
-            sig_tokens.push(param_sig_token(&ty, class.as_deref(), module_package, &mut objects)?);
+            if find_jlong_peer_attr(pat_type).is_some() {
+                sig_tokens.push(quote! { jlong });
+            } else {
+                let ty = type_to_string(&pat_type.ty);
+                sig_tokens.push(param_sig_token(
+                    &ty,
+                    class.as_deref(),
+                    module_package,
+                    &mut objects,
+                )?);
+            }
         }
     }
 
@@ -1594,11 +1714,15 @@ fn generate_critical_method(
     let jni_sig = derive_critical_signature(func)?;
 
     let mut shim_params: Vec<TokenStream> = Vec::new();
+    let mut preludes: Vec<TokenStream> = Vec::new();
     let mut call_args: Vec<TokenStream> = Vec::new();
     for (index, arg) in func.sig.inputs.iter().enumerate() {
         if let FnArg::Typed(pat_type) = arg {
-            let bridged = bridge_user_param(pat_type, index, &lifetime, None)?;
+            let bridged = bridge_user_param(pat_type, index, &lifetime, None, true)?;
             shim_params.push(bridged.shim_param);
+            if let Some(prelude) = bridged.prelude {
+                preludes.push(prelude);
+            }
             call_args.push(bridged.call_arg);
         }
     }
@@ -1612,8 +1736,8 @@ fn generate_critical_method(
         call
     };
     let body = match &ret {
-        ReturnBridge::Void => quote! { #call; },
-        _ => quote! { #call },
+        ReturnBridge::Void => quote! { #(#preludes)* #call; },
+        _ => quote! { #(#preludes)* #call },
     };
 
     let lint_allows = quote! {
@@ -1683,6 +1807,88 @@ fn find_class_attr_on_pat(pat_type: &PatType) -> Option<String> {
         }
     }
     None
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+enum JLongPeerKind {
+    Shared,
+    PinnedMut,
+}
+
+fn find_jlong_peer_attr(pat_type: &PatType) -> Option<JLongPeerKind> {
+    pat_type.attrs.iter().find_map(|attr| {
+        if attr.path().is_ident("jlong_ref") {
+            Some(JLongPeerKind::Shared)
+        } else if attr.path().is_ident("jlong_mut") {
+            Some(JLongPeerKind::PinnedMut)
+        } else {
+            None
+        }
+    })
+}
+
+fn validate_jlong_peer_attrs(func: &ItemFn) -> Result<(), String> {
+    let mut peer_count = 0;
+    let mut mutable_peer_count = 0;
+    for arg in &func.sig.inputs {
+        let FnArg::Typed(pat_type) = arg else {
+            continue;
+        };
+        let count = pat_type
+            .attrs
+            .iter()
+            .filter(|attr| attr.path().is_ident("jlong_ref") || attr.path().is_ident("jlong_mut"))
+            .count();
+        if count > 1 {
+            return Err("a parameter accepts only one of #[jlong_ref] or #[jlong_mut]".to_string());
+        }
+        if let Some(kind) = find_jlong_peer_attr(pat_type) {
+            peer_count += 1;
+            if kind == JLongPeerKind::PinnedMut {
+                mutable_peer_count += 1;
+            }
+            jlong_peer_target(&pat_type.ty, kind)?;
+        }
+    }
+    if mutable_peer_count > 0 && peer_count > 1 {
+        return Err(
+            "a method with #[jlong_mut] cannot declare another native-peer parameter; use typed handles and handle aliasing explicitly"
+                .to_string(),
+        );
+    }
+    Ok(())
+}
+
+fn jlong_peer_target(ty: &Type, kind: JLongPeerKind) -> Result<&Type, String> {
+    match kind {
+        JLongPeerKind::Shared => match ty {
+            Type::Reference(reference) if reference.mutability.is_none() => Ok(&reference.elem),
+            _ => Err("#[jlong_ref] requires a parameter of type &T".to_string()),
+        },
+        JLongPeerKind::PinnedMut => {
+            let Type::Path(path) = ty else {
+                return Err("#[jlong_mut] requires Pin<&mut T>".to_string());
+            };
+            let Some(segment) = path.path.segments.last().filter(|segment| segment.ident == "Pin")
+            else {
+                return Err("#[jlong_mut] requires Pin<&mut T>".to_string());
+            };
+            let syn::PathArguments::AngleBracketed(arguments) = &segment.arguments else {
+                return Err("#[jlong_mut] requires Pin<&mut T>".to_string());
+            };
+            let Some(syn::GenericArgument::Type(Type::Reference(reference))) = arguments
+                .args
+                .iter()
+                .find(|argument| matches!(argument, syn::GenericArgument::Type(_)))
+            else {
+                return Err("#[jlong_mut] requires Pin<&mut T>".to_string());
+            };
+            if reference.mutability.is_none() {
+                return Err("#[jlong_mut] requires Pin<&mut T>".to_string());
+            }
+            Ok(&reference.elem)
+        }
+    }
 }
 
 /// Converts a `syn::Type` to the small JNI type language this macro accepts.
@@ -1762,10 +1968,14 @@ fn strip_jni_attrs(func: &ItemFn) -> TokenStream {
             && !a.path().is_ident("class")
     });
 
-    // Remove class attributes from parameters
+    // Remove parameter-only JNI bridge attributes.
     for arg in &mut clean_func.sig.inputs {
         if let FnArg::Typed(pat_type) = arg {
-            pat_type.attrs.retain(|a| !a.path().is_ident("class"));
+            pat_type.attrs.retain(|a| {
+                !a.path().is_ident("class")
+                    && !a.path().is_ident("jlong_ref")
+                    && !a.path().is_ident("jlong_mut")
+            });
         }
     }
 
@@ -1922,6 +2132,77 @@ mod tests {
         assert!(generated.contains("JPointerCoords :: from_raw"), "{generated}");
         assert!(generated.contains("let __arg0_typed : JPointerCoords"), "{generated}");
         assert!(generated.contains("coords must not be null"), "{generated}");
+    }
+
+    #[test]
+    fn class_attribute_bridges_typed_object_array() {
+        let generated = gen_regular(quote! {
+            fn f(
+                env: &mut jni::Env<'_>,
+                clazz: jclass,
+                #[class = "android/view/MotionEvent$PointerCoords"]
+                coords: Option<&JObjectArray<JPointerCoords>>,
+            ) {}
+        });
+        let compact = generated.replace(' ', "");
+        assert!(generated.contains("JObjectArray < 'local >"), "{generated}");
+        assert!(
+            generated.contains("< JObjectArray < JPointerCoords > > :: from_raw"),
+            "{generated}"
+        );
+        assert!(compact.contains("sig=([__JniClass_f_0])->void"), "{generated}");
+    }
+
+    #[test]
+    fn jlong_ref_bridges_to_a_typed_borrow() {
+        let generated = gen_regular(quote! {
+            fn f(
+                env: &mut jni::Env<'_>,
+                clazz: jclass,
+                #[jlong_ref] event: &MotionEvent,
+            ) -> jint { 0 }
+        });
+        let compact = generated.replace(' ', "");
+        assert!(generated.contains("JLongHandle :: < MotionEvent > :: from_jlong"), "{generated}");
+        assert!(generated.contains("ForeignPeer :: from_handle"), "{generated}");
+        assert!(generated.contains("let event : & MotionEvent"), "{generated}");
+        assert!(compact.contains("sig=(jlong)->jint"), "{generated}");
+    }
+
+    #[test]
+    fn jlong_mut_bridges_critical_methods_to_a_pinned_borrow() {
+        let generated = gen_critical(quote! {
+            fn f(#[jlong_mut] mut event: Pin<&mut MotionEvent>) {}
+        });
+        let compact = generated.replace(' ', "");
+        assert!(generated.contains("ForeignPeerMut :: from_handle"), "{generated}");
+        assert!(generated.contains("Pin < & mut MotionEvent >"), "{generated}");
+        assert!(compact.contains("jni::jni_str!(\"(J)V\")"), "{generated}");
+        assert!(
+            !generated.contains("let mut event"),
+            "shim local must not copy user mutability: {generated}"
+        );
+    }
+
+    #[test]
+    fn jlong_peer_attributes_reject_mismatched_types() {
+        let error = |tokens| {
+            let func = parse_fn(tokens);
+            validate_jlong_peer_attrs(&func).unwrap_err()
+        };
+        assert!(error(quote! { fn f(#[jlong_ref] event: i64) {} }).contains("&T"));
+        assert!(error(quote! { fn f(#[jlong_mut] event: &mut MotionEvent) {} }).contains("Pin"));
+        assert!(error(quote! {
+            fn f(#[jlong_ref] #[jlong_mut] event: &MotionEvent) {}
+        })
+        .contains("only one"));
+        assert!(error(quote! {
+            fn f(
+                #[jlong_mut] dest: Pin<&mut MotionEvent>,
+                #[jlong_ref] source: &MotionEvent,
+            ) {}
+        })
+        .contains("cannot declare another"));
     }
 
     #[test]

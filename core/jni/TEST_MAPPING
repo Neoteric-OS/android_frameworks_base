@@ -24,6 +24,18 @@
           "include-filter": "android.content.res.loader.cts"
         }
       ]
+    },
+    {
+      "name": "android_runtime_rs_test"
+    },
+    {
+      "name": "jni_platform_macros_test"
+    },
+    {
+      "name": "jni_support_test"
+    },
+    {
+      "name": "jni_shim_abi_test"
     }
   ]
 }

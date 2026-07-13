@@ -29,6 +29,17 @@
 //! decoded to `Cow<str>` (via `.to_str()`). Prefer the borrowed form on hot
 //! paths.
 //!
+//! Native peers stored in Java `long` fields may be declared as
+//! `#[jlong_ref] peer: &T` or `#[jlong_mut] peer: Pin<&mut T>`. The shim
+//! performs the one audited pointer conversion and ties the borrow to that
+//! call. This is a JNI-boundary contract, not runtime pointer validation: the
+//! Java peer must remain live and at a stable address, and callers must obey
+//! the native type's thread-safety rules so mutable access cannot overlap
+//! another call or C++ access. A method with a mutable peer cannot declare a
+//! second peer parameter; multi-handle operations use inert typed handles and
+//! handle equality explicitly. A null regular peer throws NPE; a null
+//! `@CriticalNative` peer is a violated VM/Java invariant and aborts.
+//!
 //! Panics do not unwind into the JVM. Android platform binaries are built with
 //! `panic = "abort"`, so any panic in a native method aborts the process —
 //! equivalent to the C++ `LOG_ALWAYS_FATAL` convention. In unwinding builds
