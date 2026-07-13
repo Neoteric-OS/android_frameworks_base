@@ -83,7 +83,6 @@ cc_defaults_for_libandroid_runtime {
         "android_media_ImageReader.cpp",
         "android_media_PublicFormatUtils.cpp",
         "android_media_Utils.cpp",
-        "android_os_SystemProperties.cpp",
         "android_text_AndroidCharacter.cpp",
         "android_text_Hyphenator.cpp",
         "android_util_AssetManager.cpp",
@@ -119,6 +118,7 @@ cc_defaults_for_libandroid_runtime {
         // Rust deps; Soong does not propagate a rust_library's static_libs
         // through a rust_ffi_static into its cc consumer, so they are linked
         // here explicitly.
+        "libandroid_runtime_rs_bridge",
         "libtracing_perfetto_rust_bridge",
     ],
 
