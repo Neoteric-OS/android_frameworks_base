@@ -24,8 +24,11 @@
 #![allow(non_snake_case)]
 
 mod android_os_system_clock;
+mod android_os_system_properties;
 mod android_os_trace;
 mod android_util_log;
+mod libbase_parse;
+mod sysprop_change;
 
 /// Shared body of every `register_*` entry point: bootstraps this crate's
 /// logging, borrows the `Env` from the caller's JNI attachment, and runs the
@@ -69,6 +72,15 @@ fn init_logging() {
     INIT.call_once(|| {
         logger::init(logger::Config::default().with_max_level(log::LevelFilter::Info));
     });
+}
+
+/// Registers `android.os.SystemProperties`'s native methods. See
+/// `register_natives`.
+#[no_mangle]
+pub extern "C" fn register_android_os_SystemProperties(
+    env: jni::EnvUnowned<'_>,
+) -> jni::sys::jint {
+    register_natives(env, android_os_system_properties::register)
 }
 
 /// Registers `android.os.Trace`'s native methods. See `register_natives`.
