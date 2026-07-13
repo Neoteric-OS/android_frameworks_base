@@ -24,6 +24,7 @@
 #![allow(non_snake_case)]
 
 mod android_os_system_clock;
+mod android_os_trace;
 mod android_util_log;
 
 /// Called from AndroidRuntime.cpp's gRegJNI table.
@@ -41,6 +42,22 @@ pub unsafe extern "C" fn register_android_os_SystemClock(
     // SAFETY: The caller (AndroidRuntime::startReg) passes a valid JNIEnv.
     let mut env = unsafe { jni::JNIEnv::from_raw(env) }.expect("null JNIEnv");
     android_os_system_clock::register(&mut env);
+    0
+}
+
+/// Called from AndroidRuntime.cpp's gRegJNI table.
+///
+/// Registers `android.os.Trace`'s native methods and returns 0. Panics if
+/// registration fails, matching the C++ `RegisterMethodsOrDie` semantics.
+///
+/// # Safety
+///
+/// `env` must be a valid, non-null `JNIEnv` pointer for the current thread.
+#[no_mangle]
+pub unsafe extern "C" fn register_android_os_Trace(env: *mut jni::sys::JNIEnv) -> jni::sys::jint {
+    // SAFETY: The caller (AndroidRuntime::startReg) passes a valid JNIEnv.
+    let mut env = unsafe { jni::JNIEnv::from_raw(env) }.expect("null JNIEnv");
+    android_os_trace::register(&mut env);
     0
 }
 

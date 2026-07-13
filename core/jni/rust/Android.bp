@@ -61,9 +61,11 @@ rust_defaults {
     edition: "2021",
     rustlibs: [
         "libjni_support",
+        "libatrace_rust",
         "libjni",
         "liblibc",
         "liblog_buffer",
+        "libtracing_perfetto_rust",
     ],
     proc_macros: ["libjni_macros"],
 }

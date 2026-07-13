@@ -163,7 +163,7 @@ extern int register_android_os_SystemProperties(JNIEnv *env);
 extern "C" int register_android_os_SystemClock(JNIEnv* env);
 extern int register_android_os_PerfettoTrace(JNIEnv* env);
 extern int register_android_os_PerfettoTrackEventExtra(JNIEnv* env);
-extern int register_android_os_Trace(JNIEnv* env);
+extern "C" int register_android_os_Trace(JNIEnv* env);
 extern int register_android_os_FileObserver(JNIEnv *env);
 extern int register_android_os_UEventObserver(JNIEnv* env);
 extern int register_android_os_HidlMemory(JNIEnv* env);
