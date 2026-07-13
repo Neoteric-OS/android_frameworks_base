@@ -5,8 +5,8 @@
 //! and return types are raw `jni::sys` types — the exact ABI the JVM uses when
 //! invoking a registered native — plus a `register()` function that registers
 //! the shims with the JVM. The user's function keeps its Rust-friendly
-//! signature (`&mut JNIEnv`, `&str`, `bool`, ...) and is called by the shim
-//! after argument conversion.
+//! signature (`&mut JNIEnv`, `&str`, `bool`, `Result`, ...) and is called by
+//! the shim after argument conversion.
 
 use proc_macro2::TokenStream;
 use quote::{format_ident, quote};
@@ -213,16 +213,23 @@ enum ReturnBridge {
 }
 
 impl ReturnBridge {
-    /// Classifies a user return type (textual form).
-    fn parse(ty: &str) -> Result<Self, String> {
+    /// Classifies a user return type (textual form). `Result<T, E>` is
+    /// unwrapped to `T`; the second tuple element reports whether the
+    /// original type was a `Result`.
+    fn parse(ty: &str) -> Result<(Self, bool), String> {
+        if let Some(inner) = sig::extract_result_inner(ty) {
+            let (bridge, _) = Self::parse(&inner)?;
+            return Ok((bridge, true));
+        }
+
         if ty == "()" || ty.is_empty() {
-            return Ok(ReturnBridge::Void);
+            return Ok((ReturnBridge::Void, false));
         }
         if ty == "bool" {
-            return Ok(ReturnBridge::Bool);
+            return Ok((ReturnBridge::Bool, false));
         }
         if ty == "String" {
-            return Ok(ReturnBridge::StringToJstring);
+            return Ok((ReturnBridge::StringToJstring, false));
         }
 
         let bridge = param_bridge(ty).ok_or_else(|| format!("Unknown JNI type: '{}'", ty))?;
@@ -237,7 +244,7 @@ impl ReturnBridge {
             }
             _ => return Err(format!("Unsupported JNI return type: '{}'", ty)),
         };
-        Ok(ret)
+        Ok((ret, false))
     }
 
     /// The shim's return type tokens (empty for void).
@@ -948,7 +955,8 @@ fn this_call_arg(arg: &FnArg) -> Result<TokenStream, String> {
 /// `(*mut JNIEnv, jobject, <args>...)`, critical natives receive only the
 /// arguments. The shim rebuilds a safe `jni::JNIEnv`, converts each argument
 /// to the user's declared type, calls the user's function, and converts the
-/// return value back.
+/// return value back. `Err` values of `Result`-returning functions become
+/// pending Java exceptions plus the JNI zero value.
 ///
 /// # Example
 ///
@@ -978,7 +986,7 @@ fn generate_shim(func: &ItemFn, mode: &JniMode, java_name: &str) -> Result<Token
     let inputs: Vec<&FnArg> = func.sig.inputs.iter().collect();
     let skip = env_this_skip_count(mode);
 
-    let ret = ReturnBridge::parse(&return_type_str(&func.sig.output))?;
+    let (ret, is_result) = ReturnBridge::parse(&return_type_str(&func.sig.output))?;
 
     let mut shim_params: Vec<TokenStream> = Vec::new();
     let mut preludes: Vec<TokenStream> = Vec::new();
@@ -1010,7 +1018,21 @@ fn generate_shim(func: &ItemFn, mode: &JniMode, java_name: &str) -> Result<Token
 
     let output = ret.output_tokens();
 
-    let body = if matches!(ret, ReturnBridge::Void) {
+    let body = if is_result {
+        let ok_ident = format_ident!("__ok");
+        let convert = ret.convert_expr(&ok_ident);
+        let zero = ret.zero_expr();
+        quote! {
+            let __result = #user_fn_name(#(#call_args),*);
+            match __result {
+                Ok(#ok_ident) => #convert,
+                Err(__err) => {
+                    jni_support::throw_unless_pending(&mut env, __err);
+                    #zero
+                }
+            }
+        }
+    } else if matches!(ret, ReturnBridge::Void) {
         quote! {
             #user_fn_name(#(#call_args),*);
         }
@@ -1238,23 +1260,36 @@ mod tests {
 
     #[test]
     fn test_return_bridge_void() {
-        let ret = ReturnBridge::parse("()").unwrap();
+        let (ret, is_result) = ReturnBridge::parse("()").unwrap();
         assert!(matches!(ret, ReturnBridge::Void));
+        assert!(!is_result);
         assert!(ret.output_tokens().is_empty());
     }
 
     #[test]
     fn test_return_bridge_primitive() {
-        let ret = ReturnBridge::parse("jint").unwrap();
+        let (ret, is_result) = ReturnBridge::parse("jint").unwrap();
         assert!(matches!(ret, ReturnBridge::Value { pointer: false, .. }));
+        assert!(!is_result);
         assert_eq!(ret.output_tokens().to_string(), quote! { -> jni::sys::jint }.to_string());
     }
 
     #[test]
     fn test_return_bridge_pointer() {
-        let ret = ReturnBridge::parse("jstring").unwrap();
+        let (ret, _) = ReturnBridge::parse("jstring").unwrap();
         assert!(ret.is_pointer());
         assert_eq!(ret.zero_expr().to_string(), quote! { std::ptr::null_mut() }.to_string());
+    }
+
+    #[test]
+    fn test_return_bridge_result() {
+        let (ret, is_result) = ReturnBridge::parse("Result<jint, JniError>").unwrap();
+        assert!(is_result);
+        assert!(matches!(ret, ReturnBridge::Value { pointer: false, .. }));
+
+        let (ret, is_result) = ReturnBridge::parse("Result<(), JniError>").unwrap();
+        assert!(is_result);
+        assert!(matches!(ret, ReturnBridge::Void));
     }
 
     // ---- generate_shim tests ----
@@ -1549,6 +1584,51 @@ mod tests {
         let shim = generate_shim(&func, &JniMode::Regular, "nativeDispose").unwrap();
         let s = shim.to_string();
         assert!(!s.contains("__result"), "{s}");
+    }
+
+    #[test]
+    fn test_shim_result_primitive_return() {
+        let func: ItemFn = syn::parse2(quote! {
+            fn nativeGetCount(env: &mut jni::JNIEnv<'_>, clazz: jclass, ptr: jlong) -> Result<jint, JniError> {
+                Ok(0)
+            }
+        })
+        .unwrap();
+        let shim = generate_shim(&func, &JniMode::Regular, "nativeGetCount").unwrap();
+        let s = shim.to_string();
+        assert!(s.contains("-> jni :: sys :: jint"), "{s}");
+        assert!(s.contains("Ok (__ok) => __ok"), "{s}");
+        assert!(s.contains("throw_unless_pending"), "{s}");
+        assert!(s.contains("Default :: default ()"), "{s}");
+    }
+
+    #[test]
+    fn test_shim_result_pointer_return() {
+        let func: ItemFn = syn::parse2(quote! {
+            fn nativeGetName(env: &mut jni::JNIEnv<'_>, clazz: jclass, ptr: jlong) -> Result<jstring, JniError> {
+                Ok(std::ptr::null_mut())
+            }
+        })
+        .unwrap();
+        let shim = generate_shim(&func, &JniMode::Regular, "nativeGetName").unwrap();
+        let s = shim.to_string();
+        assert!(s.contains("-> jni :: sys :: jstring"), "{s}");
+        assert!(s.contains("throw_unless_pending"), "{s}");
+        assert!(s.contains("std :: ptr :: null_mut ()"), "{s}");
+    }
+
+    #[test]
+    fn test_shim_result_void_return() {
+        let func: ItemFn = syn::parse2(quote! {
+            fn nativeApply(env: &mut jni::JNIEnv<'_>, clazz: jclass, ptr: jlong) -> Result<(), JniError> {
+                Ok(())
+            }
+        })
+        .unwrap();
+        let shim = generate_shim(&func, &JniMode::Regular, "nativeApply").unwrap();
+        let s = shim.to_string();
+        assert!(s.contains("throw_unless_pending"), "{s}");
+        assert!(!s.contains("->"), "Result<(), _> shim must return void: {s}");
     }
 
     // ---- return_type_str tests ----

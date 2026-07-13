@@ -11,7 +11,8 @@
 //! `jni::sys` types — the calling convention the JVM actually uses — and
 //! registers the shim (never the user's function) with `RegisterNatives`.
 //! The shim rebuilds a safe `jni::JNIEnv`, converts arguments, calls the
-//! user's function, and converts the return value.
+//! user's function, and converts the return value, turning `Err` values of
+//! `Result`-returning methods into pending Java exceptions.
 //!
 //! String parameters come in two flavors. `&str` / `Option<&str>` extract
 //! the Java string into an owned `String` (one heap allocation per call).
@@ -26,7 +27,7 @@
 //! method is therefore process-fatal, equivalent to the C++
 //! `LOG_ALWAYS_FATAL` convention. The generated code deliberately adds no
 //! `catch_unwind`; write method bodies that report recoverable errors via
-//! `jni_call` or `throw!` instead of panicking.
+//! `Result`, `jni_call`, or `throw!` instead of panicking.
 
 extern crate proc_macro;
 

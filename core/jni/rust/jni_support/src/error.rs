@@ -47,6 +47,19 @@ impl fmt::Display for JniError {
 }
 
 impl std::error::Error for JniError {}
+
+/// Errors surfaced by the `jni` crate map to `java.lang.RuntimeException`.
+///
+/// This makes `Result<T, jni::errors::Error>` usable as a `#[jni_method]`
+/// return type: an `Err` becomes a pending RuntimeException. If the `jni`
+/// error was caused by an already-pending Java exception, the original
+/// exception is preserved (see [`throw_unless_pending`]).
+impl From<jni::errors::Error> for JniError {
+    fn from(err: jni::errors::Error) -> Self {
+        JniError::Runtime(err.to_string())
+    }
+}
+
 impl JniError {
     /// Returns the fully-qualified Java exception class name for this error.
     pub fn exception_class(&self) -> &'static str {
@@ -111,6 +124,23 @@ pub fn jni_call<T: Default>(
     }
 }
 
+/// Throws `err` as a Java exception unless one is already pending.
+///
+/// This is the error path used by the code `#[jni_method]` generates for
+/// `Result`-returning methods: an `Err` crossing the JNI boundary becomes a
+/// pending Java exception, but an exception raised earlier in the method
+/// (e.g. via [`throw!`](crate::throw)) takes precedence and is not replaced.
+///
+/// # Arguments
+/// * `env` - The JNI environment
+/// * `err` - Any error convertible to [`JniError`]
+pub fn throw_unless_pending(env: &mut jni::JNIEnv<'_>, err: impl Into<JniError>) {
+    if env.exception_check().unwrap_or(false) {
+        return;
+    }
+    err.into().throw_on(env);
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -164,5 +194,12 @@ mod tests {
             "IllegalArgumentException: bad"
         );
         assert_eq!(format!("{}", JniError::OutOfMemory), "OutOfMemoryError");
+    }
+
+    #[test]
+    fn test_from_jni_error_maps_to_runtime_exception() {
+        let err: JniError = jni::errors::Error::NullPtr("test ptr").into();
+        assert_eq!(err.exception_class(), "java/lang/RuntimeException");
+        assert!(err.message().contains("test ptr"));
     }
 }
