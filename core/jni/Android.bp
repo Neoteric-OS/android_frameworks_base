@@ -88,7 +88,6 @@ cc_defaults_for_libandroid_runtime {
         "android_text_Hyphenator.cpp",
         "android_util_AssetManager.cpp",
         "android_util_EventLog.cpp",
-        "android_util_Log.cpp",
         "android_util_StringBlock.cpp",
         "android_util_XmlBlock.cpp",
         "android_util_jar_StrictJarFile.cpp",

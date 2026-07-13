@@ -24,6 +24,7 @@
 #![allow(non_snake_case)]
 
 mod android_os_system_clock;
+mod android_util_log;
 
 /// Called from AndroidRuntime.cpp's gRegJNI table.
 ///
@@ -40,5 +41,23 @@ pub unsafe extern "C" fn register_android_os_SystemClock(
     // SAFETY: The caller (AndroidRuntime::startReg) passes a valid JNIEnv.
     let mut env = unsafe { jni::JNIEnv::from_raw(env) }.expect("null JNIEnv");
     android_os_system_clock::register(&mut env);
+    0
+}
+
+/// Called from AndroidRuntime.cpp's gRegJNI table.
+///
+/// Registers `android.util.Log`'s native methods, caches `Log.VERBOSE` for
+/// [`android_util_log::android_util_Log_isVerboseLogEnabled`], and returns 0.
+/// Panics if registration fails, matching the C++ `RegisterMethodsOrDie`
+/// semantics.
+///
+/// # Safety
+///
+/// `env` must be a valid, non-null `JNIEnv` pointer for the current thread.
+#[no_mangle]
+pub unsafe extern "C" fn register_android_util_Log(env: *mut jni::sys::JNIEnv) -> jni::sys::jint {
+    // SAFETY: The caller (AndroidRuntime::startReg) passes a valid JNIEnv.
+    let mut env = unsafe { jni::JNIEnv::from_raw(env) }.expect("null JNIEnv");
+    android_util_log::register(&mut env);
     0
 }

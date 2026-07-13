@@ -60,8 +60,10 @@ rust_defaults {
     crate_root: "src/lib.rs",
     edition: "2021",
     rustlibs: [
+        "libjni_support",
         "libjni",
         "liblibc",
+        "liblog_buffer",
     ],
     proc_macros: ["libjni_macros"],
 }
