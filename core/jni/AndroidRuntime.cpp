@@ -196,7 +196,7 @@ extern int register_android_view_InputEventReceiver(JNIEnv* env);
 extern int register_android_view_InputEventSender(JNIEnv* env);
 extern int register_android_view_InputQueue(JNIEnv* env);
 extern int register_android_view_KeyCharacterMap(JNIEnv *env);
-extern int register_android_view_KeyEvent(JNIEnv* env);
+extern "C" int register_android_view_KeyEvent(JNIEnv* env);
 extern int register_android_view_MotionEvent(JNIEnv* env);
 extern int register_android_view_MotionPredictor(JNIEnv* env);
 extern int register_android_view_PointerIcon(JNIEnv* env);

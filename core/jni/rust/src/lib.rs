@@ -29,7 +29,9 @@ mod android_os_system_properties;
 mod android_os_trace;
 mod android_util_event_log;
 mod android_util_log;
+mod android_view_key_event;
 mod event_log_helper;
+mod input_event_ffi;
 mod libbase_parse;
 mod sysprop_change;
 
@@ -114,4 +116,12 @@ pub extern "C" fn register_android_util_EventLog(env: jni::EnvUnowned<'_>) -> jn
 #[no_mangle]
 pub extern "C" fn register_android_util_Log(env: jni::EnvUnowned<'_>) -> jni::sys::jint {
     register_natives(env, android_util_log::register)
+}
+
+/// Registers `android.view.KeyEvent`'s native methods and caches its class
+/// IDs. Called from the gRegJNI tables of AndroidRuntime.cpp and
+/// HostRuntime.cpp. See `register_natives`.
+#[no_mangle]
+pub extern "C" fn register_android_view_KeyEvent(env: jni::EnvUnowned<'_>) -> jni::sys::jint {
+    register_natives(env, android_view_key_event::register)
 }
