@@ -51,4 +51,19 @@ rust_test_host {
         "libjni",
         "libthiserror",
     ],
+    proc_macros: ["libjni_macros"],
+}
+
+rust_test_host {
+    name: "jni_shim_abi_test",
+    crate_name: "generated_shim_abi",
+    crate_root: "jni_support/tests/generated_shim_abi.rs",
+    edition: "2021",
+    test_suites: ["general-tests"],
+    auto_gen_config: true,
+    rustlibs: [
+        "libjni_support",
+        "libjni",
+    ],
+    proc_macros: ["libjni_macros"],
 }
