@@ -124,52 +124,76 @@ fn param_bridge(ty: &str) -> Option<ParamBridge> {
         "&JNIStr" => ParamBridgeKind::BorrowedString { nullable: false },
         "Option<&JNIStr>" => ParamBridgeKind::BorrowedString { nullable: true },
 
-        "jstring" => ParamBridgeKind::Raw { wrapper: quote! { jni::objects::JString } },
-        "JString" => {
-            ParamBridgeKind::Wrapped { wrapper: quote! { jni::objects::JString }, by_ref: false }
-        }
-        "&JString" => {
-            ParamBridgeKind::Wrapped { wrapper: quote! { jni::objects::JString }, by_ref: true }
-        }
+        "jstring" => ParamBridgeKind::Raw {
+            wrapper: quote! { jni::objects::JString },
+        },
+        "JString" => ParamBridgeKind::Wrapped {
+            wrapper: quote! { jni::objects::JString },
+            by_ref: false,
+        },
+        "&JString" => ParamBridgeKind::Wrapped {
+            wrapper: quote! { jni::objects::JString },
+            by_ref: true,
+        },
 
-        "jbyteArray" => ParamBridgeKind::Raw { wrapper: quote! { jni::objects::JByteArray } },
-        "JByteArray" => {
-            ParamBridgeKind::Wrapped { wrapper: quote! { jni::objects::JByteArray }, by_ref: false }
-        }
-        "&JByteArray" => {
-            ParamBridgeKind::Wrapped { wrapper: quote! { jni::objects::JByteArray }, by_ref: true }
-        }
-        "jintArray" => ParamBridgeKind::Raw { wrapper: quote! { jni::objects::JIntArray } },
-        "JIntArray" => {
-            ParamBridgeKind::Wrapped { wrapper: quote! { jni::objects::JIntArray }, by_ref: false }
-        }
-        "&JIntArray" => {
-            ParamBridgeKind::Wrapped { wrapper: quote! { jni::objects::JIntArray }, by_ref: true }
-        }
-        "jfloatArray" => ParamBridgeKind::Raw { wrapper: quote! { jni::objects::JFloatArray } },
+        "jbyteArray" => ParamBridgeKind::Raw {
+            wrapper: quote! { jni::objects::JByteArray },
+        },
+        "JByteArray" => ParamBridgeKind::Wrapped {
+            wrapper: quote! { jni::objects::JByteArray },
+            by_ref: false,
+        },
+        "&JByteArray" => ParamBridgeKind::Wrapped {
+            wrapper: quote! { jni::objects::JByteArray },
+            by_ref: true,
+        },
+        "jintArray" => ParamBridgeKind::Raw {
+            wrapper: quote! { jni::objects::JIntArray },
+        },
+        "JIntArray" => ParamBridgeKind::Wrapped {
+            wrapper: quote! { jni::objects::JIntArray },
+            by_ref: false,
+        },
+        "&JIntArray" => ParamBridgeKind::Wrapped {
+            wrapper: quote! { jni::objects::JIntArray },
+            by_ref: true,
+        },
+        "jfloatArray" => ParamBridgeKind::Raw {
+            wrapper: quote! { jni::objects::JFloatArray },
+        },
         "JFloatArray" => ParamBridgeKind::Wrapped {
             wrapper: quote! { jni::objects::JFloatArray },
             by_ref: false,
         },
-        "&JFloatArray" => {
-            ParamBridgeKind::Wrapped { wrapper: quote! { jni::objects::JFloatArray }, by_ref: true }
-        }
-        "jlongArray" => ParamBridgeKind::Raw { wrapper: quote! { jni::objects::JLongArray } },
-        "JLongArray" => {
-            ParamBridgeKind::Wrapped { wrapper: quote! { jni::objects::JLongArray }, by_ref: false }
-        }
-        "&JLongArray" => {
-            ParamBridgeKind::Wrapped { wrapper: quote! { jni::objects::JLongArray }, by_ref: true }
-        }
-        "jshortArray" => ParamBridgeKind::Raw { wrapper: quote! { jni::objects::JShortArray } },
+        "&JFloatArray" => ParamBridgeKind::Wrapped {
+            wrapper: quote! { jni::objects::JFloatArray },
+            by_ref: true,
+        },
+        "jlongArray" => ParamBridgeKind::Raw {
+            wrapper: quote! { jni::objects::JLongArray },
+        },
+        "JLongArray" => ParamBridgeKind::Wrapped {
+            wrapper: quote! { jni::objects::JLongArray },
+            by_ref: false,
+        },
+        "&JLongArray" => ParamBridgeKind::Wrapped {
+            wrapper: quote! { jni::objects::JLongArray },
+            by_ref: true,
+        },
+        "jshortArray" => ParamBridgeKind::Raw {
+            wrapper: quote! { jni::objects::JShortArray },
+        },
         "JShortArray" => ParamBridgeKind::Wrapped {
             wrapper: quote! { jni::objects::JShortArray },
             by_ref: false,
         },
-        "&JShortArray" => {
-            ParamBridgeKind::Wrapped { wrapper: quote! { jni::objects::JShortArray }, by_ref: true }
-        }
-        "jdoubleArray" => ParamBridgeKind::Raw { wrapper: quote! { jni::objects::JDoubleArray } },
+        "&JShortArray" => ParamBridgeKind::Wrapped {
+            wrapper: quote! { jni::objects::JShortArray },
+            by_ref: true,
+        },
+        "jdoubleArray" => ParamBridgeKind::Raw {
+            wrapper: quote! { jni::objects::JDoubleArray },
+        },
         "JDoubleArray" => ParamBridgeKind::Wrapped {
             wrapper: quote! { jni::objects::JDoubleArray },
             by_ref: false,
@@ -178,7 +202,9 @@ fn param_bridge(ty: &str) -> Option<ParamBridge> {
             wrapper: quote! { jni::objects::JDoubleArray },
             by_ref: true,
         },
-        "jbooleanArray" => ParamBridgeKind::Raw { wrapper: quote! { jni::objects::JBooleanArray } },
+        "jbooleanArray" => ParamBridgeKind::Raw {
+            wrapper: quote! { jni::objects::JBooleanArray },
+        },
         "JBooleanArray" => ParamBridgeKind::Wrapped {
             wrapper: quote! { jni::objects::JBooleanArray },
             by_ref: false,
@@ -187,22 +213,32 @@ fn param_bridge(ty: &str) -> Option<ParamBridge> {
             wrapper: quote! { jni::objects::JBooleanArray },
             by_ref: true,
         },
-        "jcharArray" => ParamBridgeKind::Raw { wrapper: quote! { jni::objects::JCharArray } },
-        "JCharArray" => {
-            ParamBridgeKind::Wrapped { wrapper: quote! { jni::objects::JCharArray }, by_ref: false }
-        }
-        "&JCharArray" => {
-            ParamBridgeKind::Wrapped { wrapper: quote! { jni::objects::JCharArray }, by_ref: true }
-        }
+        "jcharArray" => ParamBridgeKind::Raw {
+            wrapper: quote! { jni::objects::JCharArray },
+        },
+        "JCharArray" => ParamBridgeKind::Wrapped {
+            wrapper: quote! { jni::objects::JCharArray },
+            by_ref: false,
+        },
+        "&JCharArray" => ParamBridgeKind::Wrapped {
+            wrapper: quote! { jni::objects::JCharArray },
+            by_ref: true,
+        },
 
-        "jobject" => ParamBridgeKind::Raw { wrapper: quote! { jni::objects::JObject } },
-        "JObject" => {
-            ParamBridgeKind::Wrapped { wrapper: quote! { jni::objects::JObject }, by_ref: false }
-        }
-        "&JObject" => {
-            ParamBridgeKind::Wrapped { wrapper: quote! { jni::objects::JObject }, by_ref: true }
-        }
-        "jobjectArray" => ParamBridgeKind::Raw { wrapper: quote! { jni::objects::JObjectArray } },
+        "jobject" => ParamBridgeKind::Raw {
+            wrapper: quote! { jni::objects::JObject },
+        },
+        "JObject" => ParamBridgeKind::Wrapped {
+            wrapper: quote! { jni::objects::JObject },
+            by_ref: false,
+        },
+        "&JObject" => ParamBridgeKind::Wrapped {
+            wrapper: quote! { jni::objects::JObject },
+            by_ref: true,
+        },
+        "jobjectArray" => ParamBridgeKind::Raw {
+            wrapper: quote! { jni::objects::JObjectArray },
+        },
         "JObjectArray" => ParamBridgeKind::Wrapped {
             wrapper: quote! { jni::objects::JObjectArray },
             by_ref: false,
@@ -304,9 +340,10 @@ impl ReturnBridge {
                     .kind;
                 match kind {
                     ParamBridgeKind::Primitive(sys_ty) => ReturnBridge::Primitive { sys_ty },
-                    ParamBridgeKind::Wrapped { wrapper, by_ref: false } => {
-                        ReturnBridge::OwnedWrapper { wrapper }
-                    }
+                    ParamBridgeKind::Wrapped {
+                        wrapper,
+                        by_ref: false,
+                    } => ReturnBridge::OwnedWrapper { wrapper },
                     ParamBridgeKind::Raw { wrapper } => ReturnBridge::RawObject { wrapper },
                     ParamBridgeKind::OwnedString { .. }
                     | ParamBridgeKind::BorrowedString { .. }
@@ -405,7 +442,10 @@ fn validate_leading_params(func: &ItemFn, mode: &JniMode) -> Result<(), String> 
     if let FnArg::Typed(pat_type) = &inputs[0] {
         let ty_str = type_to_string(&pat_type.ty);
         if !is_env_type(&ty_str) {
-            return Err(format!("first parameter must be a JNIEnv type, found '{}'", ty_str));
+            return Err(format!(
+                "first parameter must be a JNIEnv type, found '{}'",
+                ty_str
+            ));
         }
     }
 
@@ -458,11 +498,12 @@ impl JniMethod {
         let jni_attr = find_jni_method_attr(&func.attrs)
             .expect("JniMethod::parse called without jni_method attr");
 
-        let options = parse_jni_method_options(&jni_attr)
-            .map_err(|e| e.to_compile_error())?;
+        let options = parse_jni_method_options(&jni_attr).map_err(|e| e.to_compile_error())?;
         let mode = options.mode;
 
         validate_leading_params(func, &mode)
+            .map_err(|e| syn::Error::new_spanned(func, e).to_compile_error())?;
+        validate_jlong_peer_attrs(func)
             .map_err(|e| syn::Error::new_spanned(func, e).to_compile_error())?;
 
         let java_name = options
@@ -680,7 +721,10 @@ pub fn expand_jni_module(attr: TokenStream, item: TokenStream) -> TokenStream {
 
 /// Finds the `#[jni_method(...)]` attribute on a function.
 fn find_jni_method_attr(attrs: &[Attribute]) -> Option<Attribute> {
-    attrs.iter().find(|a| a.path().is_ident("jni_method")).cloned()
+    attrs
+        .iter()
+        .find(|a| a.path().is_ident("jni_method"))
+        .cloned()
 }
 
 /// Finds the `#[returns = "..."]` attribute on a function.
@@ -688,7 +732,10 @@ fn find_returns_attr(attrs: &[Attribute]) -> Option<String> {
     for attr in attrs {
         if attr.path().is_ident("returns") {
             if let Meta::NameValue(MetaNameValue {
-                value: syn::Expr::Lit(syn::ExprLit { lit: Lit::Str(s), .. }),
+                value:
+                    syn::Expr::Lit(syn::ExprLit {
+                        lit: Lit::Str(s), ..
+                    }),
                 ..
             }) = &attr.meta
             {
@@ -741,7 +788,11 @@ fn parse_jni_method_options(attr: &Attribute) -> syn::Result<JniMethodOptions> {
             }
             Meta::NameValue(MetaNameValue {
                 path,
-                value: syn::Expr::Lit(syn::ExprLit { lit: Lit::Str(value), .. }),
+                value:
+                    syn::Expr::Lit(syn::ExprLit {
+                        lit: Lit::Str(value),
+                        ..
+                    }),
                 ..
             }) if path.is_ident("name") => {
                 if java_name.is_some() {
@@ -750,7 +801,10 @@ fn parse_jni_method_options(attr: &Attribute) -> syn::Result<JniMethodOptions> {
                 java_name = Some(value.value());
             }
             Meta::NameValue(MetaNameValue { path, .. }) if path.is_ident("name") => {
-                return Err(syn::Error::new_spanned(path, "jni_method `name` must be a string"));
+                return Err(syn::Error::new_spanned(
+                    path,
+                    "jni_method `name` must be a string",
+                ));
             }
             other => {
                 return Err(syn::Error::new_spanned(
@@ -800,12 +854,19 @@ struct ObjectClassMappings {
 }
 
 /// The four Java classes `jni_sig!` treats as core; user code cannot remap them.
-const CORE_JAVA_CLASSES: [&str; 4] =
-    ["java.lang.Object", "java.lang.Class", "java.lang.String", "java.lang.Throwable"];
+const CORE_JAVA_CLASSES: [&str; 4] = [
+    "java.lang.Object",
+    "java.lang.Class",
+    "java.lang.String",
+    "java.lang.Throwable",
+];
 
 impl ObjectClassMappings {
     fn new(fn_prefix: &str) -> Self {
-        ObjectClassMappings { fn_prefix: fn_prefix.to_string(), entries: Vec::new() }
+        ObjectClassMappings {
+            fn_prefix: fn_prefix.to_string(),
+            entries: Vec::new(),
+        }
     }
 
     /// The `jni_sig!` token for an object type of the `#[class]`/`#[returns]`
@@ -823,7 +884,11 @@ impl ObjectClassMappings {
 
         // A default-package class has no dot; `jni_sig!` spells it with a leading
         // one (e.g. `.Foo`). Store the dot-safe literal for the `type_map`.
-        let class_literal = if dotted.contains('.') { dotted } else { format!(".{}", dotted) };
+        let class_literal = if dotted.contains('.') {
+            dotted
+        } else {
+            format!(".{}", dotted)
+        };
 
         if let Some((alias, _)) = self.entries.iter().find(|(_, c)| *c == class_literal) {
             return quote! { #alias };
@@ -890,10 +955,12 @@ fn param_sig_token(
     // bridges to a string, not an object), so only object inners short-circuit
     // here; the `#[class = "..."]` still applies to the inner object type.
     if let Some(inner) = strip_option(ty) {
-        if matches!(
-            param_bridge(&inner).map(|b| b.kind),
-            Some(ParamBridgeKind::Wrapped { .. }) | Some(ParamBridgeKind::Raw { .. })
-        ) {
+        if is_typed_object_array_name(&inner)
+            || matches!(
+                param_bridge(&inner).map(|b| b.kind),
+                Some(ParamBridgeKind::Wrapped { .. }) | Some(ParamBridgeKind::Raw { .. })
+            )
+        {
             return param_sig_token(&inner, class_attr, module_package, objects);
         }
     }
@@ -923,7 +990,10 @@ fn param_sig_token(
 
         "JObject" | "&JObject" | "jobject" => {
             let class = class_attr.ok_or_else(|| {
-                format!("JObject parameter requires #[class = \"...\"] annotation, got type '{}'", ty)
+                format!(
+                    "JObject parameter requires #[class = \"...\"] annotation, got type '{}'",
+                    ty
+                )
             })?;
             objects.object_token(class, module_package)
         }
@@ -931,6 +1001,17 @@ fn param_sig_token(
             let class = class_attr.ok_or_else(|| {
                 format!(
                     "JObjectArray parameter requires #[class = \"...\"] annotation, got type '{}'",
+                    ty
+                )
+            })?;
+            let elem = objects.object_token(class, module_package);
+            quote! { [ #elem ] }
+        }
+
+        _ if is_typed_object_array_name(ty) => {
+            let class = class_attr.ok_or_else(|| {
+                format!(
+                    "typed JObjectArray parameter requires #[class = \"...\"] annotation, got type '{}'",
                     ty
                 )
             })?;
@@ -1002,9 +1083,16 @@ fn derive_critical_signature(func: &ItemFn) -> Result<String, String> {
     let mut descriptor = String::from("(");
     for arg in &func.sig.inputs {
         if let FnArg::Typed(pat_type) = arg {
+            if find_jlong_peer_attr(pat_type).is_some() {
+                descriptor.push('J');
+                continue;
+            }
             let ty = type_to_string(&pat_type.ty);
             let ch = sig::primitive_sig(&ty).ok_or_else(|| {
-                format!("@CriticalNative parameter type '{}' must be a primitive", ty)
+                format!(
+                    "@CriticalNative parameter type '{}' must be a primitive",
+                    ty
+                )
             })?;
             descriptor.push_str(ch);
         }
@@ -1035,8 +1123,14 @@ fn validate_critical_native(func: &ItemFn) -> Result<(), String> {
 
     for arg in &inputs {
         if let FnArg::Typed(pat_type) = arg {
+            if find_jlong_peer_attr(pat_type).is_some() {
+                continue;
+            }
             let ty = type_to_string(&pat_type.ty);
-            if matches!(ty.as_str(), "&str" | "Option<&str>" | "&JNIStr" | "Option<&JNIStr>") {
+            if matches!(
+                ty.as_str(),
+                "&str" | "Option<&str>" | "&JNIStr" | "Option<&JNIStr>"
+            ) {
                 return Err(format!(
                     "@CriticalNative method '{}' cannot use '{}' \
                      (no JNIEnv available for string conversion)",
@@ -1089,6 +1183,7 @@ fn bridge_user_param(
     index: usize,
     lifetime: &TokenStream,
     class_attr: Option<&str>,
+    is_critical: bool,
 ) -> Result<BridgedParam, String> {
     let pat = &pat_type.pat;
     // An owned wrapper parameter may carry the lifetime its type needs
@@ -1098,6 +1193,63 @@ fn bridge_user_param(
     let ty = strip_lifetime_arg(&type_to_string(&pat_type.ty)).to_string();
     let raw_ident = format_ident!("__arg{}", index);
     let npe_msg = format!("{} must not be null", quote! { #pat });
+
+    if let Some(kind) = find_jlong_peer_attr(pat_type) {
+        let syn::Pat::Ident(pat_ident) = pat_type.pat.as_ref() else {
+            return Err("jlong peer parameters require an identifier pattern".to_string());
+        };
+        let call_ident = &pat_ident.ident;
+        let target = jlong_peer_target(&pat_type.ty, kind)?;
+        let peer_ident = format_ident!("__arg{}_peer", index);
+        let constructor = match kind {
+            JLongPeerKind::Shared => quote! {
+                jni_support::ForeignPeer::from_handle(
+                    jni_support::JLongHandle::<#target>::from_jlong(#raw_ident))
+            },
+            JLongPeerKind::PinnedMut => quote! {
+                jni_support::ForeignPeerMut::from_handle(
+                    jni_support::JLongHandle::<#target>::from_jlong(#raw_ident))
+            },
+        };
+        let binding = match kind {
+            JLongPeerKind::Shared => quote! { let #peer_ident },
+            JLongPeerKind::PinnedMut => quote! { let mut #peer_ident },
+        };
+        let initialize = if is_critical {
+            quote! {
+                // SAFETY: the Java native-peer field is created and retired by
+                // this registered JNI implementation, remains live for the call,
+                // and its Java/native contract forbids overlapping mutable access.
+                #binding = unsafe { #constructor }
+                    .expect(#npe_msg);
+            }
+        } else {
+            quote! {
+                // SAFETY: the Java native-peer field is created and retired by
+                // this registered JNI implementation, remains live for the call,
+                // and its Java/native contract forbids overlapping mutable access.
+                #binding = unsafe { #constructor }
+                    .ok_or(jni_support::JniError::NullPointer(#npe_msg))?;
+            }
+        };
+        // Bind the converted argument by identifier rather than reproducing
+        // the user's pattern. In particular, `mut event: Pin<&mut T>` needs
+        // mutability in the user function but not in this pass-through local;
+        // copying `mut` here would trigger `unused_mut` under `-D warnings`.
+        let borrow = match kind {
+            JLongPeerKind::Shared => quote! { let #call_ident: &#target = #peer_ident.get(); },
+            JLongPeerKind::PinnedMut => {
+                quote! {
+                    let #call_ident: ::core::pin::Pin<&mut #target> = #peer_ident.pin();
+                }
+            }
+        };
+        return Ok(BridgedParam {
+            shim_param: quote! { #raw_ident: jni::sys::jlong },
+            prelude: Some(quote! { #initialize #borrow }),
+            call_arg: quote! { #call_ident },
+        });
+    }
 
     // A project-defined wrapper produced by `bind_java_type!`. The Java class
     // comes from `#[class = "..."]`; the JVM therefore guarantees the runtime
@@ -1113,12 +1265,23 @@ fn bridge_user_param(
         )
     });
     if class_attr.is_some() && param_bridge(&ty).is_none() && !known_nullable_wrapper {
-        let custom = custom_wrapper_type(&pat_type.ty).ok_or_else(|| {
-            format!("unsupported #[class] wrapper parameter type '{}'", ty)
-        })?;
+        let custom = custom_wrapper_type(&pat_type.ty)
+            .ok_or_else(|| format!("unsupported #[class] wrapper parameter type '{}'", ty))?;
         let wrapper = custom.wrapper;
+        let is_typed_array = is_typed_object_array_type(wrapper);
         let converted_ident = format_ident!("__arg{}_typed", index);
-        let convert = quote! { unsafe { #wrapper::from_raw(env, #raw_ident.as_raw()) } };
+        let convert = if is_typed_array {
+            quote! {
+                unsafe {
+                    <#wrapper>::from_raw(
+                        env,
+                        #raw_ident.as_raw() as jni::sys::jobjectArray,
+                    )
+                }
+            }
+        } else {
+            quote! { unsafe { #wrapper::from_raw(env, #raw_ident.as_raw()) } }
+        };
         let (prelude, call_arg) = match (custom.nullable, custom.by_ref) {
             (false, true) => (
                 quote! {
@@ -1165,8 +1328,13 @@ fn bridge_user_param(
                 quote! { #converted_ident },
             ),
         };
+        let shim_wrapper = if is_typed_array {
+            quote! { jni::objects::JObjectArray<#lifetime> }
+        } else {
+            quote! { jni::objects::JObject<#lifetime> }
+        };
         return Ok(BridgedParam {
-            shim_param: quote! { #raw_ident: jni::objects::JObject<#lifetime> },
+            shim_param: quote! { #raw_ident: #shim_wrapper },
             prelude: Some(prelude),
             call_arg,
         });
@@ -1285,12 +1453,18 @@ fn bridge_user_param(
                 call_arg: quote! { #pat },
             }
         }
-        ParamBridgeKind::Wrapped { wrapper, by_ref: false } => BridgedParam {
+        ParamBridgeKind::Wrapped {
+            wrapper,
+            by_ref: false,
+        } => BridgedParam {
             shim_param: quote! { #raw_ident: #wrapper<#lifetime> },
             prelude: None,
             call_arg: quote! { #raw_ident },
         },
-        ParamBridgeKind::Wrapped { wrapper, by_ref: true } => BridgedParam {
+        ParamBridgeKind::Wrapped {
+            wrapper,
+            by_ref: true,
+        } => BridgedParam {
             shim_param: quote! { #raw_ident: #wrapper<#lifetime> },
             prelude: Some(quote! {
                 if #raw_ident.is_null() {
@@ -1337,13 +1511,31 @@ fn custom_wrapper_type(ty: &Type) -> Option<CustomWrapperType<'_>> {
                 custom.nullable = true;
                 Some(custom)
             } else {
-                Some(CustomWrapperType { wrapper: ty, by_ref: false, nullable: false })
+                Some(CustomWrapperType {
+                    wrapper: ty,
+                    by_ref: false,
+                    nullable: false,
+                })
             }
         }
         Type::Group(group) => custom_wrapper_type(&group.elem),
         Type::Paren(paren) => custom_wrapper_type(&paren.elem),
         _ => None,
     }
+}
+
+fn is_typed_object_array_type(ty: &Type) -> bool {
+    let Type::Path(path) = ty else { return false };
+    let Some(segment) = path.path.segments.last() else {
+        return false;
+    };
+    segment.ident == "JObjectArray"
+        && matches!(segment.arguments, syn::PathArguments::AngleBracketed(_))
+}
+
+fn is_typed_object_array_name(ty: &str) -> bool {
+    let ty = ty.strip_prefix('&').unwrap_or(ty);
+    ty.starts_with("JObjectArray<") && ty.ends_with('>')
 }
 
 /// The shim's `this`/`class` parameter type and the argument passed to the user
@@ -1359,12 +1551,30 @@ fn this_binding(arg: &FnArg, lifetime: &TokenStream) -> Result<(TokenStream, Tok
     };
     let ty = type_to_string(&pat_type.ty);
     Ok(match ty.as_str() {
-        "jclass" => (quote! { jni::objects::JClass<#lifetime> }, quote! { __this.as_raw() }),
-        "JClass" => (quote! { jni::objects::JClass<#lifetime> }, quote! { __this }),
-        "&JClass" => (quote! { jni::objects::JClass<#lifetime> }, quote! { &__this }),
-        "jobject" => (quote! { jni::objects::JObject<#lifetime> }, quote! { __this.as_raw() }),
-        "JObject" => (quote! { jni::objects::JObject<#lifetime> }, quote! { __this }),
-        "&JObject" => (quote! { jni::objects::JObject<#lifetime> }, quote! { &__this }),
+        "jclass" => (
+            quote! { jni::objects::JClass<#lifetime> },
+            quote! { __this.as_raw() },
+        ),
+        "JClass" => (
+            quote! { jni::objects::JClass<#lifetime> },
+            quote! { __this },
+        ),
+        "&JClass" => (
+            quote! { jni::objects::JClass<#lifetime> },
+            quote! { &__this },
+        ),
+        "jobject" => (
+            quote! { jni::objects::JObject<#lifetime> },
+            quote! { __this.as_raw() },
+        ),
+        "JObject" => (
+            quote! { jni::objects::JObject<#lifetime> },
+            quote! { __this },
+        ),
+        "&JObject" => (
+            quote! { jni::objects::JObject<#lifetime> },
+            quote! { &__this },
+        ),
         other => {
             return Err(format!(
                 "second parameter must be a jobject/jclass type, found '{}'",
@@ -1480,15 +1690,24 @@ fn generate_native_method(
     for (index, arg) in inputs[2..].iter().enumerate() {
         if let FnArg::Typed(pat_type) = arg {
             let class = find_class_attr_on_pat(pat_type);
-            let bridged = bridge_user_param(pat_type, index, &lifetime, class.as_deref())?;
+            let bridged = bridge_user_param(pat_type, index, &lifetime, class.as_deref(), false)?;
             impl_params.push(bridged.shim_param);
             if let Some(prelude) = bridged.prelude {
                 preludes.push(prelude);
             }
             call_args.push(bridged.call_arg);
 
-            let ty = type_to_string(&pat_type.ty);
-            sig_tokens.push(param_sig_token(&ty, class.as_deref(), module_package, &mut objects)?);
+            if find_jlong_peer_attr(pat_type).is_some() {
+                sig_tokens.push(quote! { jlong });
+            } else {
+                let ty = type_to_string(&pat_type.ty);
+                sig_tokens.push(param_sig_token(
+                    &ty,
+                    class.as_deref(),
+                    module_package,
+                    &mut objects,
+                )?);
+            }
         }
     }
 
@@ -1520,7 +1739,11 @@ fn generate_native_method(
         #[allow(non_snake_case, clippy::too_many_arguments, clippy::undocumented_unsafe_blocks)]
     };
     let shim_doc = shim_doc_attr(java_name, user_fn_name, func.sig.unsafety.is_some(), false);
-    let static_lit = if is_static { quote! { true } } else { quote! { false } };
+    let static_lit = if is_static {
+        quote! { true }
+    } else {
+        quote! { false }
+    };
 
     // `JObject`-typed aliases + the `type_map` binding them to their Java class,
     // so `native_method!` derives each object descriptor while keeping the
@@ -1597,11 +1820,15 @@ fn generate_critical_method(
     let jni_sig = derive_critical_signature(func)?;
 
     let mut shim_params: Vec<TokenStream> = Vec::new();
+    let mut preludes: Vec<TokenStream> = Vec::new();
     let mut call_args: Vec<TokenStream> = Vec::new();
     for (index, arg) in func.sig.inputs.iter().enumerate() {
         if let FnArg::Typed(pat_type) = arg {
-            let bridged = bridge_user_param(pat_type, index, &lifetime, None)?;
+            let bridged = bridge_user_param(pat_type, index, &lifetime, None, true)?;
             shim_params.push(bridged.shim_param);
+            if let Some(prelude) = bridged.prelude {
+                preludes.push(prelude);
+            }
             call_args.push(bridged.call_arg);
         }
     }
@@ -1615,8 +1842,8 @@ fn generate_critical_method(
         call
     };
     let body = match &ret {
-        ReturnBridge::Void => quote! { #call; },
-        _ => quote! { #call },
+        ReturnBridge::Void => quote! { #(#preludes)* #call; },
+        _ => quote! { #(#preludes)* #call },
     };
 
     let lint_allows = quote! {
@@ -1677,7 +1904,10 @@ fn find_class_attr_on_pat(pat_type: &PatType) -> Option<String> {
     for attr in &pat_type.attrs {
         if attr.path().is_ident("class") {
             if let Meta::NameValue(MetaNameValue {
-                value: syn::Expr::Lit(syn::ExprLit { lit: Lit::Str(s), .. }),
+                value:
+                    syn::Expr::Lit(syn::ExprLit {
+                        lit: Lit::Str(s), ..
+                    }),
                 ..
             }) = &attr.meta
             {
@@ -1686,6 +1916,92 @@ fn find_class_attr_on_pat(pat_type: &PatType) -> Option<String> {
         }
     }
     None
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+enum JLongPeerKind {
+    Shared,
+    PinnedMut,
+}
+
+fn find_jlong_peer_attr(pat_type: &PatType) -> Option<JLongPeerKind> {
+    pat_type.attrs.iter().find_map(|attr| {
+        if attr.path().is_ident("jlong_ref") {
+            Some(JLongPeerKind::Shared)
+        } else if attr.path().is_ident("jlong_mut") {
+            Some(JLongPeerKind::PinnedMut)
+        } else {
+            None
+        }
+    })
+}
+
+fn validate_jlong_peer_attrs(func: &ItemFn) -> Result<(), String> {
+    let mut peer_count = 0;
+    let mut mutable_peer_count = 0;
+    for arg in &func.sig.inputs {
+        let FnArg::Typed(pat_type) = arg else {
+            continue;
+        };
+        let count = pat_type
+            .attrs
+            .iter()
+            .filter(|attr| attr.path().is_ident("jlong_ref") || attr.path().is_ident("jlong_mut"))
+            .count();
+        if count > 1 {
+            return Err("a parameter accepts only one of #[jlong_ref] or #[jlong_mut]".to_string());
+        }
+        if let Some(kind) = find_jlong_peer_attr(pat_type) {
+            peer_count += 1;
+            if kind == JLongPeerKind::PinnedMut {
+                mutable_peer_count += 1;
+            }
+            jlong_peer_target(&pat_type.ty, kind)?;
+        }
+    }
+    if mutable_peer_count > 0 && peer_count > 1 {
+        return Err(
+            "a method with #[jlong_mut] cannot declare another native-peer parameter; use typed handles and handle aliasing explicitly"
+                .to_string(),
+        );
+    }
+    Ok(())
+}
+
+fn jlong_peer_target(ty: &Type, kind: JLongPeerKind) -> Result<&Type, String> {
+    match kind {
+        JLongPeerKind::Shared => match ty {
+            Type::Reference(reference) if reference.mutability.is_none() => Ok(&reference.elem),
+            _ => Err("#[jlong_ref] requires a parameter of type &T".to_string()),
+        },
+        JLongPeerKind::PinnedMut => {
+            let Type::Path(path) = ty else {
+                return Err("#[jlong_mut] requires Pin<&mut T>".to_string());
+            };
+            let Some(segment) = path
+                .path
+                .segments
+                .last()
+                .filter(|segment| segment.ident == "Pin")
+            else {
+                return Err("#[jlong_mut] requires Pin<&mut T>".to_string());
+            };
+            let syn::PathArguments::AngleBracketed(arguments) = &segment.arguments else {
+                return Err("#[jlong_mut] requires Pin<&mut T>".to_string());
+            };
+            let Some(syn::GenericArgument::Type(Type::Reference(reference))) = arguments
+                .args
+                .iter()
+                .find(|argument| matches!(argument, syn::GenericArgument::Type(_)))
+            else {
+                return Err("#[jlong_mut] requires Pin<&mut T>".to_string());
+            };
+            if reference.mutability.is_none() {
+                return Err("#[jlong_mut] requires Pin<&mut T>".to_string());
+            }
+            Ok(&reference.elem)
+        }
+    }
 }
 
 /// Converts a `syn::Type` to the small JNI type language this macro accepts.
@@ -1699,7 +2015,11 @@ fn find_class_attr_on_pat(pat_type: &PatType) -> Option<String> {
 fn type_to_string(ty: &Type) -> String {
     match ty {
         Type::Reference(reference) => {
-            let mutability = if reference.mutability.is_some() { "mut " } else { "" };
+            let mutability = if reference.mutability.is_some() {
+                "mut "
+            } else {
+                ""
+            };
             format!("&{}{}", mutability, type_to_string(&reference.elem))
         }
         Type::Path(path) if path.qself.is_none() => {
@@ -1765,10 +2085,14 @@ fn strip_jni_attrs(func: &ItemFn) -> TokenStream {
             && !a.path().is_ident("class")
     });
 
-    // Remove class attributes from parameters
+    // Remove parameter-only JNI bridge attributes.
     for arg in &mut clean_func.sig.inputs {
         if let FnArg::Typed(pat_type) = arg {
-            pat_type.attrs.retain(|a| !a.path().is_ident("class"));
+            pat_type.attrs.retain(|a| {
+                !a.path().is_ident("class")
+                    && !a.path().is_ident("jlong_ref")
+                    && !a.path().is_ident("jlong_mut")
+            });
         }
     }
 
@@ -1803,14 +2127,18 @@ mod tests {
         let func = parse_fn(func);
         let name = func.sig.ident.to_string();
         let method_const = format_ident!("__NATIVE_METHOD_{}", func.sig.ident);
-        generate_native_method(&func, &name, pkg, returns, &method_const).unwrap().to_string()
+        generate_native_method(&func, &name, pkg, returns, &method_const)
+            .unwrap()
+            .to_string()
     }
 
     fn gen_critical(func: TokenStream) -> String {
         let func = parse_fn(func);
         let name = func.sig.ident.to_string();
         let method_const = format_ident!("__NATIVE_METHOD_{}", func.sig.ident);
-        generate_critical_method(&func, &name, &method_const).unwrap().to_string()
+        generate_critical_method(&func, &name, &method_const)
+            .unwrap()
+            .to_string()
     }
 
     fn gen_critical_err(func: TokenStream) -> String {
@@ -1831,11 +2159,22 @@ mod tests {
             let attr = syn::parse2::<ItemFn>(tokens).unwrap().attrs[0].clone();
             parse_jni_method_options(&attr).unwrap()
         };
-        assert_eq!(options(quote! { #[jni_method(critical)] fn t() {} }).mode, JniMode::Critical);
-        assert_eq!(options(quote! { #[jni_method(fast)] fn t() {} }).mode, JniMode::Fast);
-        assert_eq!(options(quote! { #[jni_method] fn t() {} }).mode, JniMode::Regular);
         assert_eq!(
-            options(quote! { #[jni_method(name = "native_name")] fn t() {} }).java_name.as_deref(),
+            options(quote! { #[jni_method(critical)] fn t() {} }).mode,
+            JniMode::Critical
+        );
+        assert_eq!(
+            options(quote! { #[jni_method(fast)] fn t() {} }).mode,
+            JniMode::Fast
+        );
+        assert_eq!(
+            options(quote! { #[jni_method] fn t() {} }).mode,
+            JniMode::Regular
+        );
+        assert_eq!(
+            options(quote! { #[jni_method(name = "native_name")] fn t() {} })
+                .java_name
+                .as_deref(),
             Some("native_name")
         );
     }
@@ -1850,8 +2189,7 @@ mod tests {
         assert!(error(quote! { #[jni_method(fast, critical)] fn t() {} }).contains("at most one"));
         assert!(error(quote! { #[jni_method(name = 42)] fn t() {} }).contains("must be a string"));
         assert!(
-            error(quote! { #[jni_method(name = "a", name = "b")] fn t() {} })
-                .contains("duplicate")
+            error(quote! { #[jni_method(name = "a", name = "b")] fn t() {} }).contains("duplicate")
         );
     }
 
@@ -1871,9 +2209,18 @@ mod tests {
 
     #[test]
     fn param_bridge_classifies_each_kind() {
-        assert!(matches!(param_bridge("jint").unwrap().kind, ParamBridgeKind::Primitive(_)));
-        assert!(matches!(param_bridge("i64").unwrap().kind, ParamBridgeKind::Primitive(_)));
-        assert!(matches!(param_bridge("bool").unwrap().kind, ParamBridgeKind::Primitive(_)));
+        assert!(matches!(
+            param_bridge("jint").unwrap().kind,
+            ParamBridgeKind::Primitive(_)
+        ));
+        assert!(matches!(
+            param_bridge("i64").unwrap().kind,
+            ParamBridgeKind::Primitive(_)
+        ));
+        assert!(matches!(
+            param_bridge("bool").unwrap().kind,
+            ParamBridgeKind::Primitive(_)
+        ));
         assert!(matches!(
             param_bridge("&str").unwrap().kind,
             ParamBridgeKind::OwnedString { nullable: false }
@@ -1898,7 +2245,10 @@ mod tests {
             param_bridge("&JByteArray").unwrap().kind,
             ParamBridgeKind::Wrapped { by_ref: true, .. }
         ));
-        assert!(matches!(param_bridge("jstring").unwrap().kind, ParamBridgeKind::Raw { .. }));
+        assert!(matches!(
+            param_bridge("jstring").unwrap().kind,
+            ParamBridgeKind::Raw { .. }
+        ));
     }
 
     #[test]
@@ -1923,9 +2273,104 @@ mod tests {
                 #[class = "android/view/MotionEvent$PointerCoords"] coords: &JPointerCoords,
             ) {}
         });
-        assert!(generated.contains("JPointerCoords :: from_raw"), "{generated}");
-        assert!(generated.contains("let __arg0_typed : JPointerCoords"), "{generated}");
+        assert!(
+            generated.contains("JPointerCoords :: from_raw"),
+            "{generated}"
+        );
+        assert!(
+            generated.contains("let __arg0_typed : JPointerCoords"),
+            "{generated}"
+        );
         assert!(generated.contains("coords must not be null"), "{generated}");
+    }
+
+    #[test]
+    fn class_attribute_bridges_typed_object_array() {
+        let generated = gen_regular(quote! {
+            fn f(
+                env: &mut jni::Env<'_>,
+                clazz: jclass,
+                #[class = "android/view/MotionEvent$PointerCoords"]
+                coords: Option<&JObjectArray<JPointerCoords>>,
+            ) {}
+        });
+        let compact = generated.replace(' ', "");
+        assert!(generated.contains("JObjectArray < 'local >"), "{generated}");
+        assert!(
+            generated.contains("< JObjectArray < JPointerCoords > > :: from_raw"),
+            "{generated}"
+        );
+        assert!(
+            compact.contains("sig=([__JniClass_f_0])->void"),
+            "{generated}"
+        );
+    }
+
+    #[test]
+    fn jlong_ref_bridges_to_a_typed_borrow() {
+        let generated = gen_regular(quote! {
+            fn f(
+                env: &mut jni::Env<'_>,
+                clazz: jclass,
+                #[jlong_ref] event: &MotionEvent,
+            ) -> jint { 0 }
+        });
+        let compact = generated.replace(' ', "");
+        assert!(
+            generated.contains("JLongHandle :: < MotionEvent > :: from_jlong"),
+            "{generated}"
+        );
+        assert!(
+            generated.contains("ForeignPeer :: from_handle"),
+            "{generated}"
+        );
+        assert!(
+            generated.contains("let event : & MotionEvent"),
+            "{generated}"
+        );
+        assert!(compact.contains("sig=(jlong)->jint"), "{generated}");
+    }
+
+    #[test]
+    fn jlong_mut_bridges_critical_methods_to_a_pinned_borrow() {
+        let generated = gen_critical(quote! {
+            fn f(#[jlong_mut] mut event: Pin<&mut MotionEvent>) {}
+        });
+        let compact = generated.replace(' ', "");
+        assert!(
+            generated.contains("ForeignPeerMut :: from_handle"),
+            "{generated}"
+        );
+        assert!(
+            generated.contains("Pin < & mut MotionEvent >"),
+            "{generated}"
+        );
+        assert!(compact.contains("jni::jni_str!(\"(J)V\")"), "{generated}");
+        assert!(
+            !generated.contains("let mut event"),
+            "shim local must not copy user mutability: {generated}"
+        );
+    }
+
+    #[test]
+    fn jlong_peer_attributes_reject_mismatched_types() {
+        let error = |tokens| {
+            let func = parse_fn(tokens);
+            validate_jlong_peer_attrs(&func).unwrap_err()
+        };
+        assert!(error(quote! { fn f(#[jlong_ref] event: i64) {} }).contains("&T"));
+        assert!(error(quote! { fn f(#[jlong_mut] event: &mut MotionEvent) {} }).contains("Pin"));
+        assert!(error(quote! {
+            fn f(#[jlong_ref] #[jlong_mut] event: &MotionEvent) {}
+        })
+        .contains("only one"));
+        assert!(error(quote! {
+            fn f(
+                #[jlong_mut] dest: Pin<&mut MotionEvent>,
+                #[jlong_ref] source: &MotionEvent,
+            ) {}
+        })
+        .contains("cannot declare another"));
     }
 
     #[test]
@@ -1950,12 +2395,27 @@ mod tests {
 
         let (ret, is_result) = ReturnBridge::parse("jint").unwrap();
         assert!(matches!(ret, ReturnBridge::Primitive { .. }) && !is_result);
-        assert_eq!(ret.output_tokens(&lt).to_string(), quote! { -> jni::sys::jint }.to_string());
+        assert_eq!(
+            ret.output_tokens(&lt).to_string(),
+            quote! { -> jni::sys::jint }.to_string()
+        );
 
-        assert!(matches!(ReturnBridge::parse("bool").unwrap().0, ReturnBridge::Primitive { .. }));
-        assert!(matches!(ReturnBridge::parse("String").unwrap().0, ReturnBridge::StringToJString));
-        assert!(matches!(ReturnBridge::parse("JObject").unwrap().0, ReturnBridge::OwnedWrapper { .. }));
-        assert!(matches!(ReturnBridge::parse("jstring").unwrap().0, ReturnBridge::RawObject { .. }));
+        assert!(matches!(
+            ReturnBridge::parse("bool").unwrap().0,
+            ReturnBridge::Primitive { .. }
+        ));
+        assert!(matches!(
+            ReturnBridge::parse("String").unwrap().0,
+            ReturnBridge::StringToJString
+        ));
+        assert!(matches!(
+            ReturnBridge::parse("JObject").unwrap().0,
+            ReturnBridge::OwnedWrapper { .. }
+        ));
+        assert!(matches!(
+            ReturnBridge::parse("jstring").unwrap().0,
+            ReturnBridge::RawObject { .. }
+        ));
 
         let (ret, is_result) = ReturnBridge::parse("Result<jint, JniError>").unwrap();
         assert!(is_result && matches!(ret, ReturnBridge::Primitive { .. }));
@@ -1972,7 +2432,10 @@ mod tests {
 
     fn ptoken(ty: &str, class: Option<&str>, pkg: Option<&str>) -> String {
         let mut objects = ObjectClassMappings::new("t");
-        param_sig_token(ty, class, pkg, &mut objects).unwrap().to_string().replace(' ', "")
+        param_sig_token(ty, class, pkg, &mut objects)
+            .unwrap()
+            .to_string()
+            .replace(' ', "")
     }
 
     #[test]
@@ -1996,7 +2459,15 @@ mod tests {
 
     #[test]
     fn param_sig_token_strings_are_jstring() {
-        for ty in ["&str", "Option<&str>", "&JNIStr", "Option<&JNIStr>", "JString", "&JString", "jstring"] {
+        for ty in [
+            "&str",
+            "Option<&str>",
+            "&JNIStr",
+            "Option<&JNIStr>",
+            "JString",
+            "&JString",
+            "jstring",
+        ] {
             assert_eq!(ptoken(ty, None, None), "JString", "{ty}");
         }
     }
@@ -2017,7 +2488,10 @@ mod tests {
 
     #[test]
     fn strip_option_unwraps_only_option() {
-        assert_eq!(strip_option("Option<&JIntArray>").as_deref(), Some("&JIntArray"));
+        assert_eq!(
+            strip_option("Option<&JIntArray>").as_deref(),
+            Some("&JIntArray")
+        );
         assert_eq!(strip_option("Option<JObject>").as_deref(), Some("JObject"));
         assert_eq!(strip_option("Option<&str>").as_deref(), Some("&str"));
         assert_eq!(strip_option("&JIntArray"), None);
@@ -2031,7 +2505,10 @@ mod tests {
         // `[jint]` (i.e. `[I`). The `#[class]` still applies to the inner
         // object for a generic `Option<&JObject>`.
         assert_eq!(ptoken("Option<&JIntArray>", None, None), "[jint]");
-        assert_eq!(ptoken("Option<&JIntArray>", None, None), ptoken("&JIntArray", None, None));
+        assert_eq!(
+            ptoken("Option<&JIntArray>", None, None),
+            ptoken("&JIntArray", None, None)
+        );
         assert_eq!(ptoken("Option<&JFloatArray>", None, None), "[jfloat]");
         // A string option is NOT an object option; it keeps the JString token.
         assert_eq!(ptoken("Option<&str>", None, None), "JString");
@@ -2039,9 +2516,13 @@ mod tests {
         // `Option<&JObject>` takes its class from `#[class = "..."]`, like
         // `&JObject`.
         let mut objects = ObjectClassMappings::new("f");
-        let tok =
-            param_sig_token("Option<&JObject>", Some("java/util/Collection"), None, &mut objects)
-                .unwrap();
+        let tok = param_sig_token(
+            "Option<&JObject>",
+            Some("java/util/Collection"),
+            None,
+            &mut objects,
+        )
+        .unwrap();
         assert!(tok.to_string().contains("__JniClass_f_0"), "{tok}");
     }
 
@@ -2055,7 +2536,10 @@ mod tests {
         assert!(s.contains("__arg0 : jni :: objects :: JIntArray"), "{s}");
         assert!(s.contains("is_null"), "null -> None branch missing: {s}");
         assert!(s.contains("None") && s.contains("Some"), "{s}");
-        assert!(!s.contains("must not be null"), "nullable must not null-check: {s}");
+        assert!(
+            !s.contains("must not be null"),
+            "nullable must not null-check: {s}"
+        );
         // Same descriptor token as the non-optional form.
         assert!(s.replace(' ', "").contains("sig=([jint])->void"), "{s}");
     }
@@ -2080,10 +2564,15 @@ mod tests {
     fn param_sig_token_object_array_wraps_a_core_element_literally() {
         // java.lang.Object is a core class -> literal element, no alias.
         let mut objects = ObjectClassMappings::new("f");
-        let tok = param_sig_token("&JObjectArray", Some("java/lang/Object"), None, &mut objects)
-            .unwrap()
-            .to_string()
-            .replace(' ', "");
+        let tok = param_sig_token(
+            "&JObjectArray",
+            Some("java/lang/Object"),
+            None,
+            &mut objects,
+        )
+        .unwrap()
+        .to_string()
+        .replace(' ', "");
         assert_eq!(tok, "[\"java.lang.Object\"]");
         assert!(objects.type_map_tokens().is_empty());
     }
@@ -2107,7 +2596,10 @@ mod tests {
 
     fn rtoken(ty: &str) -> String {
         let mut objects = ObjectClassMappings::new("t");
-        return_sig_token(ty, None, None, &mut objects).unwrap().to_string().replace(' ', "")
+        return_sig_token(ty, None, None, &mut objects)
+            .unwrap()
+            .to_string()
+            .replace(' ', "")
     }
 
     #[test]
@@ -2145,7 +2637,10 @@ mod tests {
     #[test]
     fn object_mappings_core_class_is_literal() {
         let mut objects = ObjectClassMappings::new("t");
-        let tok = objects.object_token("java/lang/Object", None).to_string().replace(' ', "");
+        let tok = objects
+            .object_token("java/lang/Object", None)
+            .to_string()
+            .replace(' ', "");
         assert_eq!(tok, "\"java.lang.Object\"");
         assert!(objects.type_map_tokens().is_empty());
         assert!(objects.type_alias_items().is_empty());
@@ -2154,10 +2649,15 @@ mod tests {
     #[test]
     fn object_mappings_noncore_class_binds_a_jobject_alias() {
         let mut objects = ObjectClassMappings::new("readEvents");
-        let tok = objects.object_token("java/util/Collection", None).to_string();
+        let tok = objects
+            .object_token("java/util/Collection", None)
+            .to_string();
         assert!(tok.contains("__JniClass_readEvents_0"), "{tok}");
         let type_map = objects.type_map_tokens().to_string().replace(' ', "");
-        assert!(type_map.contains("__JniClass_readEvents_0=>\"java.util.Collection\""), "{type_map}");
+        assert!(
+            type_map.contains("__JniClass_readEvents_0=>\"java.util.Collection\""),
+            "{type_map}"
+        );
         let alias = objects.type_alias_items()[0].to_string().replace(' ', "");
         assert!(
             alias.contains("type__JniClass_readEvents_0<'local>=jni::objects::JObject<'local>"),
@@ -2175,7 +2675,10 @@ mod tests {
         // A relative name is resolved against the module package, then dotted.
         objects.object_token("MotionEvent$PointerCoords", Some("android/view"));
         let type_map = objects.type_map_tokens().to_string().replace(' ', "");
-        assert!(type_map.contains("\"android.view.MotionEvent$PointerCoords\""), "{type_map}");
+        assert!(
+            type_map.contains("\"android.view.MotionEvent$PointerCoords\""),
+            "{type_map}"
+        );
     }
 
     #[test]
@@ -2189,20 +2692,29 @@ mod tests {
     #[test]
     fn derive_critical_signature_is_primitive_only() {
         let sig = |tokens| derive_critical_signature(&parse_fn(tokens));
-        assert_eq!(sig(quote! { fn t(ptr: jlong) -> jint { 0 } }).unwrap(), "(J)I");
+        assert_eq!(
+            sig(quote! { fn t(ptr: jlong) -> jint { 0 } }).unwrap(),
+            "(J)I"
+        );
         assert_eq!(sig(quote! { fn t(a: jint, b: jlong) {} }).unwrap(), "(IJ)V");
         assert_eq!(sig(quote! { fn t() -> jlong { 0 } }).unwrap(), "()J");
         // A non-primitive parameter has no critical descriptor.
-        assert!(sig(quote! { fn t(x: jobject) -> jint { 0 } }).unwrap_err().contains("primitive"));
+        assert!(sig(quote! { fn t(x: jobject) -> jint { 0 } })
+            .unwrap_err()
+            .contains("primitive"));
     }
 
     #[test]
     fn regular_method_emits_inner_impl_and_native_method_const() {
-        let s =
-            gen_regular(quote! { fn nativeGetValue(env: &mut jni::Env<'_>, clazz: jclass, ptr: jlong) -> jint { 0 } });
+        let s = gen_regular(
+            quote! { fn nativeGetValue(env: &mut jni::Env<'_>, clazz: jclass, ptr: jlong) -> jint { 0 } },
+        );
         // The inner impl fn: raw params in, `Result` out — no `extern "system"`.
         assert!(s.contains("fn __jni_impl_nativeGetValue"), "{s}");
-        assert!(!s.contains("extern \"system\""), "the inner fn is not extern: {s}");
+        assert!(
+            !s.contains("extern \"system\""),
+            "the inner fn is not extern: {s}"
+        );
         assert!(s.contains("__arg0 : jni :: sys :: jlong"), "{s}");
         assert!(s.contains("jni_support :: JniError"), "{s}");
         // The native_method! invocation carries the signature tokens + policy.
@@ -2226,7 +2738,10 @@ mod tests {
     #[test]
     fn regular_method_carries_lint_allows() {
         let s = gen_regular(quote! { fn f(env: &mut jni::Env<'_>, clazz: jclass) {} });
-        assert!(s.contains("non_snake_case") && s.contains("undocumented_unsafe_blocks"), "{s}");
+        assert!(
+            s.contains("non_snake_case") && s.contains("undocumented_unsafe_blocks"),
+            "{s}"
+        );
         assert!(s.contains("non_upper_case_globals"), "{s}");
     }
 
@@ -2246,22 +2761,36 @@ mod tests {
             quote! { unsafe fn f(env: &mut jni::Env<'_>, clazz: jclass, ptr: jlong) -> jint { 0 } },
         );
         // The user call is wrapped in `unsafe { .. }`.
-        assert!(s.replace(' ', "").contains("unsafe{f(env,__this.as_raw(),__arg0)}"), "{s}");
+        assert!(
+            s.replace(' ', "")
+                .contains("unsafe{f(env,__this.as_raw(),__arg0)}"),
+            "{s}"
+        );
         // The generated doc points at the user fn's own safety contract.
-        assert!(s.contains("Callers must additionally uphold the safety preconditions of `f`"), "{s}");
+        assert!(
+            s.contains("Callers must additionally uphold the safety preconditions of `f`"),
+            "{s}"
+        );
     }
 
     #[test]
     fn safe_native_does_not_wrap_the_call() {
-        let s =
-            gen_regular(quote! { fn f(env: &mut jni::Env<'_>, clazz: jclass, ptr: jlong) -> jint { 0 } });
-        assert!(!s.replace(' ', "").contains("unsafe{f("), "safe native must not wrap its call: {s}");
+        let s = gen_regular(
+            quote! { fn f(env: &mut jni::Env<'_>, clazz: jclass, ptr: jlong) -> jint { 0 } },
+        );
+        assert!(
+            !s.replace(' ', "").contains("unsafe{f("),
+            "safe native must not wrap its call: {s}"
+        );
     }
 
     #[test]
     fn unsafe_critical_wraps_call_and_carries_doc() {
         let s = gen_critical(quote! { unsafe fn nativeGetId(ptr: jlong) -> jint { 0 } });
-        assert!(s.replace(' ', "").contains("unsafe{nativeGetId(__arg0)}"), "{s}");
+        assert!(
+            s.replace(' ', "").contains("unsafe{nativeGetId(__arg0)}"),
+            "{s}"
+        );
         assert!(s.contains("@CriticalNative shim for `nativeGetId`"), "{s}");
         assert!(s.contains("Callers must additionally uphold"), "{s}");
     }
@@ -2278,7 +2807,10 @@ mod tests {
             }
         });
         assert!(s.replace(' ', "").contains("sig=(jint)->JString"), "{s}");
-        assert!(!s.contains("from_raw"), "owned wrapper return passes through, no from_raw: {s}");
+        assert!(
+            !s.contains("from_raw"),
+            "owned wrapper return passes through, no from_raw: {s}"
+        );
     }
 
     #[test]
@@ -2325,19 +2857,29 @@ mod tests {
         assert!(s.contains("NullPointer"), "{s}");
         assert!(s.contains("tag must not be null"), "{s}");
         // `&str` + `i32` describe (Ljava/lang/String;I) — token form `(JString, jint)`.
-        assert!(s.replace(' ', "").contains("sig=(JString,jint)->jboolean"), "{s}");
+        assert!(
+            s.replace(' ', "").contains("sig=(JString,jint)->jboolean"),
+            "{s}"
+        );
     }
 
     #[test]
     fn option_str_param_is_nullable_without_a_null_check() {
-        let s = gen_regular(quote! { fn f(env: &mut jni::Env<'_>, clazz: jclass, tag: Option<&str>) {} });
+        let s = gen_regular(
+            quote! { fn f(env: &mut jni::Env<'_>, clazz: jclass, tag: Option<&str>) {} },
+        );
         assert!(s.contains("as_deref"), "{s}");
-        assert!(!s.contains("must not be null"), "nullable param must not null-check: {s}");
+        assert!(
+            !s.contains("must not be null"),
+            "nullable param must not null-check: {s}"
+        );
     }
 
     #[test]
     fn borrowed_str_param_uses_jni_str_without_allocating() {
-        let s = gen_regular(quote! { fn f(env: &mut jni::Env<'_>, clazz: jclass, msg: &JNIStr) -> jint { 0 } });
+        let s = gen_regular(
+            quote! { fn f(env: &mut jni::Env<'_>, clazz: jclass, msg: &JNIStr) -> jint { 0 } },
+        );
         assert!(s.contains("__arg0 : jni :: objects :: JString"), "{s}");
         assert!(s.contains("mutf8_chars"), "{s}");
         assert!(s.contains("jni :: strings :: JNIStr"), "{s}");
@@ -2385,8 +2927,14 @@ mod tests {
         let compact = s.replace(' ', "");
         // A JObject-typed alias is defined and bound to the class via type_map,
         // and the signature references that alias.
-        assert!(compact.contains("type__JniClass_f_0<'local>=jni::objects::JObject<'local>"), "{s}");
-        assert!(compact.contains("type_map={__JniClass_f_0=>\"java.util.Collection\"}"), "{s}");
+        assert!(
+            compact.contains("type__JniClass_f_0<'local>=jni::objects::JObject<'local>"),
+            "{s}"
+        );
+        assert!(
+            compact.contains("type_map={__JniClass_f_0=>\"java.util.Collection\"}"),
+            "{s}"
+        );
         assert!(compact.contains("sig=(__JniClass_f_0)->void"), "{s}");
     }
 
@@ -2396,25 +2944,44 @@ mod tests {
         assert!(s.contains("extern \"system\" fn __jni_nativeGetId"), "{s}");
         assert!(s.contains("cfg (target_os = \"android\")"), "{s}");
         // The android variant, before the host cfg, takes only the primitive.
-        let android = s.split("cfg (not (target_os = \"android\"))").next().unwrap();
-        assert!(!android.contains("JNIEnv"), "android critical shim takes no JNIEnv: {s}");
+        let android = s
+            .split("cfg (not (target_os = \"android\"))")
+            .next()
+            .unwrap();
+        assert!(
+            !android.contains("JNIEnv"),
+            "android critical shim takes no JNIEnv: {s}"
+        );
         // The host variant discards the ignored (JNIEnv*, jclass) prefix.
-        assert!(s.contains("_critical_env : * mut jni :: sys :: JNIEnv"), "{s}");
+        assert!(
+            s.contains("_critical_env : * mut jni :: sys :: JNIEnv"),
+            "{s}"
+        );
         assert!(s.contains("_critical_class : jni :: sys :: jclass"), "{s}");
         // Critical keeps the hand-rolled from_raw_parts path with its descriptor.
         assert!(s.contains("from_raw_parts"), "{s}");
         assert!(s.contains("(J)I"), "{s}");
-        assert!(s.contains("__jni_nativeGetId as * mut core :: ffi :: c_void"), "{s}");
+        assert!(
+            s.contains("__jni_nativeGetId as * mut core :: ffi :: c_void"),
+            "{s}"
+        );
     }
 
     #[test]
     fn critical_rejects_types_that_need_an_env() {
-        assert!(gen_critical_err(quote! { fn t(tag: &str) -> jint { 0 } }).contains("@CriticalNative"));
-        assert!(gen_critical_err(quote! { fn t(tag: &JNIStr) -> jint { 0 } }).contains("@CriticalNative"));
         assert!(
-            gen_critical_err(quote! { fn t(x: jint) -> String { String::new() } }).contains("@CriticalNative")
+            gen_critical_err(quote! { fn t(tag: &str) -> jint { 0 } }).contains("@CriticalNative")
         );
-        let result_err = gen_critical_err(quote! { fn t(x: jint) -> Result<jint, JniError> { Ok(0) } });
+        assert!(
+            gen_critical_err(quote! { fn t(tag: &JNIStr) -> jint { 0 } })
+                .contains("@CriticalNative")
+        );
+        assert!(
+            gen_critical_err(quote! { fn t(x: jint) -> String { String::new() } })
+                .contains("@CriticalNative")
+        );
+        let result_err =
+            gen_critical_err(quote! { fn t(x: jint) -> Result<jint, JniError> { Ok(0) } });
         assert!(result_err.contains("cannot return Result"), "{result_err}");
     }
 
@@ -2438,15 +3005,22 @@ mod tests {
     #[test]
     fn validate_leading_params_enforces_env_and_receiver() {
         let check = |func: TokenStream, mode| validate_leading_params(&parse_fn(func), &mode);
-        assert!(check(quote! { fn t(env: &mut jni::Env<'_>) {} }, JniMode::Regular)
-            .unwrap_err()
-            .contains("at least two parameters"));
-        assert!(check(quote! { fn t(x: jint, clazz: jclass) {} }, JniMode::Regular)
-            .unwrap_err()
-            .contains("first parameter must be a JNIEnv"));
-        assert!(check(quote! { fn t(env: &mut jni::Env<'_>, x: jint) {} }, JniMode::Regular)
-            .unwrap_err()
-            .contains("second parameter must be a jobject/jclass"));
+        assert!(
+            check(quote! { fn t(env: &mut jni::Env<'_>) {} }, JniMode::Regular)
+                .unwrap_err()
+                .contains("at least two parameters")
+        );
+        assert!(
+            check(quote! { fn t(x: jint, clazz: jclass) {} }, JniMode::Regular)
+                .unwrap_err()
+                .contains("first parameter must be a JNIEnv")
+        );
+        assert!(check(
+            quote! { fn t(env: &mut jni::Env<'_>, x: jint) {} },
+            JniMode::Regular
+        )
+        .unwrap_err()
+        .contains("second parameter must be a jobject/jclass"));
         assert!(check(
             quote! { fn t(env: &mut jni::Env<'_>, clazz: jclass, x: jint) {} },
             JniMode::Regular
@@ -2540,12 +3114,21 @@ mod tests {
         )
         .to_string();
         // Java names are verbatim / from `name = "..."` — never camelized.
-        assert!(out.contains("name = \"println_native\"") && !out.contains("printlnNative"), "{out}");
-        assert!(out.contains("name = \"logger_entry_max_payload_native\""), "{out}");
+        assert!(
+            out.contains("name = \"println_native\"") && !out.contains("printlnNative"),
+            "{out}"
+        );
+        assert!(
+            out.contains("name = \"logger_entry_max_payload_native\""),
+            "{out}"
+        );
         // Registration is by const, and the module imports the error policy.
         assert!(out.contains("__NATIVE_METHOD_max_payload"), "{out}");
         assert!(out.contains("fn = __jni_impl_max_payload"), "{out}");
-        assert!(out.contains("use jni_support :: ThrowJniError as __JniErrorPolicy"), "{out}");
+        assert!(
+            out.contains("use jni_support :: ThrowJniError as __JniErrorPolicy"),
+            "{out}"
+        );
     }
 
     #[test]
