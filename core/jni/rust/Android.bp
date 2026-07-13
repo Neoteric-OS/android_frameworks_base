@@ -54,6 +54,33 @@ rust_test_host {
     proc_macros: ["libjni_macros"],
 }
 
+rust_defaults {
+    name: "libandroid_runtime_rs_defaults",
+    crate_name: "android_runtime",
+    crate_root: "src/lib.rs",
+    edition: "2021",
+    rustlibs: [
+        "libjni",
+        "liblibc",
+    ],
+    proc_macros: ["libjni_macros"],
+}
+
+// Rust implementations of libandroid_runtime's JNI methods, linked into
+// libandroid_runtime via whole_static_libs.
+rust_ffi_static {
+    name: "libandroid_runtime_rs",
+    defaults: ["libandroid_runtime_rs_defaults"],
+    host_supported: true,
+}
+
+rust_test_host {
+    name: "android_runtime_rs_test",
+    defaults: ["libandroid_runtime_rs_defaults"],
+    test_suites: ["general-tests"],
+    auto_gen_config: true,
+}
+
 rust_test_host {
     name: "jni_shim_abi_test",
     crate_name: "generated_shim_abi",
