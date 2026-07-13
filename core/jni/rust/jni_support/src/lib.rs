@@ -5,6 +5,7 @@
 //!
 //! - [`JniError`] — Typed error enum mapping to Java exceptions
 //! - [`jni_call`] — Wrapper that catches errors and throws Java exceptions
+//! - [`NativeHandle`] — Safe jlong ↔ Box<T> conversions
 //!
 //! A panic that reaches a JNI boundary aborts the process. Android platform
 //! binaries are built with `panic = "abort"`, and even in unwinding builds a
@@ -15,7 +16,9 @@
 //! and reserve panics for genuinely fatal conditions.
 
 pub mod error;
+pub mod native_handle;
 pub mod throw;
 
 pub use error::{jni_call, JniError};
+pub use native_handle::{JLong, NativeHandle};
 pub use throw::JavaException;
