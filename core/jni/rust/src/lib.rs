@@ -24,6 +24,7 @@
 #![allow(non_snake_case)]
 
 mod android_os_system_clock;
+mod android_os_trace;
 mod android_util_log;
 
 /// Shared body of every `register_*` entry point: bootstraps this crate's
@@ -51,6 +52,12 @@ fn register_natives(
 #[no_mangle]
 pub extern "C" fn register_android_os_SystemClock(env: jni::EnvUnowned<'_>) -> jni::sys::jint {
     register_natives(env, android_os_system_clock::register)
+}
+
+/// Registers `android.os.Trace`'s native methods. See `register_natives`.
+#[no_mangle]
+pub extern "C" fn register_android_os_Trace(env: jni::EnvUnowned<'_>) -> jni::sys::jint {
+    register_natives(env, android_os_trace::register)
 }
 
 /// Registers `android.util.Log`'s native methods. See `register_natives`.
