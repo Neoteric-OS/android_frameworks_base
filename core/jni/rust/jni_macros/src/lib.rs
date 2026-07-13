@@ -13,6 +13,13 @@
 //! The shim rebuilds a safe `jni::JNIEnv`, converts arguments, calls the
 //! user's function, and converts the return value.
 //!
+//! String parameters come in two flavors. `&str` / `Option<&str>` extract
+//! the Java string into an owned `String` (one heap allocation per call).
+//! `&JavaStr` / `Option<&JavaStr>` (`jni::strings::JavaStr`) borrow the
+//! string via `GetStringUTFChars` with zero copies, released when the method
+//! returns; the contents are Modified UTF-8, exposed as `&CStr` (via deref)
+//! or decoded to `Cow<str>`. Prefer the borrowed form on hot paths.
+//!
 //! Panics do not unwind into the JVM: Android platform binaries are built
 //! with `panic = "abort"`, and even in unwinding builds a panic crossing the
 //! generated `extern "system"` shim aborts the process. A panic in a native
@@ -111,6 +118,11 @@ pub fn jni_module(attr: TokenStream, item: TokenStream) -> TokenStream {
 /// - `#[jni_method]` — Regular JNI method
 /// - `#[jni_method(fast)]` — @FastNative method
 /// - `#[jni_method(critical)]` — @CriticalNative method
+///
+/// # Additional attributes
+///
+/// - `#[class = "..."]` on parameters for JObject/JObjectArray class specification
+/// - `#[returns = "..."]` on the function for object return types
 #[proc_macro_attribute]
 pub fn jni_method(_attr: TokenStream, item: TokenStream) -> TokenStream {
     // Identity transform — consumed by jni_module

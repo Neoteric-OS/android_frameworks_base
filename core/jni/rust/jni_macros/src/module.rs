@@ -5,8 +5,8 @@
 //! and return types are raw `jni::sys` types — the exact ABI the JVM uses when
 //! invoking a registered native — plus a `register()` function that registers
 //! the shims with the JVM. The user's function keeps its Rust-friendly
-//! signature (`&mut JNIEnv`, ...) and is called by the shim after argument
-//! conversion.
+//! signature (`&mut JNIEnv`, `&str`, `bool`, ...) and is called by the shim
+//! after argument conversion.
 
 use proc_macro2::TokenStream;
 use quote::{format_ident, quote};
@@ -58,6 +58,19 @@ struct ParamBridge {
 enum ParamBridgeKind {
     /// The declared type is ABI-identical to the raw type; pass it through.
     Value,
+    /// `bool` from `jboolean` (`raw != 0`).
+    Bool,
+    /// `&str` / `Option<&str>` from `jstring`: extracted into an owned
+    /// `String` (one heap allocation per call). Non-nullable throws
+    /// NullPointerException on a null jstring.
+    OwnedString { nullable: bool },
+    /// `&JavaStr` / `Option<&JavaStr>` from `jstring`: borrowed directly from
+    /// the JVM via GetStringUTFChars (zero copies; released on return).
+    /// Non-nullable throws NullPointerException on a null jstring.
+    BorrowedString { nullable: bool },
+    /// A `jni::objects` wrapper built with `from_raw`, passed by value or
+    /// by reference (e.g., `JString`, `&JByteArray`, `JObject`).
+    Wrapped { wrapper: TokenStream, by_ref: bool },
 }
 
 /// Maps a user parameter type (textual form) to its bridging strategy.
@@ -66,6 +79,9 @@ enum ParamBridgeKind {
 /// reports those as `Unknown JNI type` first.
 fn param_bridge(ty: &str) -> Option<ParamBridge> {
     let value = |raw: TokenStream| Some(ParamBridge { raw_ty: raw, kind: ParamBridgeKind::Value });
+    let wrapped = |raw: TokenStream, wrapper: TokenStream, by_ref: bool| {
+        Some(ParamBridge { raw_ty: raw, kind: ParamBridgeKind::Wrapped { wrapper, by_ref } })
+    };
 
     match ty {
         "jint" | "i32" => value(quote! { jni::sys::jint }),
@@ -77,19 +93,103 @@ fn param_bridge(ty: &str) -> Option<ParamBridge> {
         "jchar" | "u16" => value(quote! { jni::sys::jchar }),
         "jshort" | "i16" => value(quote! { jni::sys::jshort }),
 
+        "bool" => {
+            Some(ParamBridge { raw_ty: quote! { jni::sys::jboolean }, kind: ParamBridgeKind::Bool })
+        }
+
+        "&str" => Some(ParamBridge {
+            raw_ty: quote! { jni::sys::jstring },
+            kind: ParamBridgeKind::OwnedString { nullable: false },
+        }),
+        "Option<&str>" => Some(ParamBridge {
+            raw_ty: quote! { jni::sys::jstring },
+            kind: ParamBridgeKind::OwnedString { nullable: true },
+        }),
+
+        "&JavaStr" => Some(ParamBridge {
+            raw_ty: quote! { jni::sys::jstring },
+            kind: ParamBridgeKind::BorrowedString { nullable: false },
+        }),
+        "Option<&JavaStr>" => Some(ParamBridge {
+            raw_ty: quote! { jni::sys::jstring },
+            kind: ParamBridgeKind::BorrowedString { nullable: true },
+        }),
+
         "jstring" => value(quote! { jni::sys::jstring }),
+        "JString" => wrapped(quote! { jni::sys::jstring }, quote! { jni::objects::JString }, false),
+        "&JString" => wrapped(quote! { jni::sys::jstring }, quote! { jni::objects::JString }, true),
 
         "jbyteArray" => value(quote! { jni::sys::jbyteArray }),
+        "JByteArray" => {
+            wrapped(quote! { jni::sys::jbyteArray }, quote! { jni::objects::JByteArray }, false)
+        }
+        "&JByteArray" => {
+            wrapped(quote! { jni::sys::jbyteArray }, quote! { jni::objects::JByteArray }, true)
+        }
         "jintArray" => value(quote! { jni::sys::jintArray }),
+        "JIntArray" => {
+            wrapped(quote! { jni::sys::jintArray }, quote! { jni::objects::JIntArray }, false)
+        }
+        "&JIntArray" => {
+            wrapped(quote! { jni::sys::jintArray }, quote! { jni::objects::JIntArray }, true)
+        }
         "jfloatArray" => value(quote! { jni::sys::jfloatArray }),
+        "JFloatArray" => {
+            wrapped(quote! { jni::sys::jfloatArray }, quote! { jni::objects::JFloatArray }, false)
+        }
+        "&JFloatArray" => {
+            wrapped(quote! { jni::sys::jfloatArray }, quote! { jni::objects::JFloatArray }, true)
+        }
         "jlongArray" => value(quote! { jni::sys::jlongArray }),
+        "JLongArray" => {
+            wrapped(quote! { jni::sys::jlongArray }, quote! { jni::objects::JLongArray }, false)
+        }
+        "&JLongArray" => {
+            wrapped(quote! { jni::sys::jlongArray }, quote! { jni::objects::JLongArray }, true)
+        }
         "jshortArray" => value(quote! { jni::sys::jshortArray }),
+        "JShortArray" => {
+            wrapped(quote! { jni::sys::jshortArray }, quote! { jni::objects::JShortArray }, false)
+        }
+        "&JShortArray" => {
+            wrapped(quote! { jni::sys::jshortArray }, quote! { jni::objects::JShortArray }, true)
+        }
         "jdoubleArray" => value(quote! { jni::sys::jdoubleArray }),
+        "JDoubleArray" => {
+            wrapped(quote! { jni::sys::jdoubleArray }, quote! { jni::objects::JDoubleArray }, false)
+        }
+        "&JDoubleArray" => {
+            wrapped(quote! { jni::sys::jdoubleArray }, quote! { jni::objects::JDoubleArray }, true)
+        }
         "jbooleanArray" => value(quote! { jni::sys::jbooleanArray }),
+        "JBooleanArray" => wrapped(
+            quote! { jni::sys::jbooleanArray },
+            quote! { jni::objects::JBooleanArray },
+            false,
+        ),
+        "&JBooleanArray" => wrapped(
+            quote! { jni::sys::jbooleanArray },
+            quote! { jni::objects::JBooleanArray },
+            true,
+        ),
         "jcharArray" => value(quote! { jni::sys::jcharArray }),
+        "JCharArray" => {
+            wrapped(quote! { jni::sys::jcharArray }, quote! { jni::objects::JCharArray }, false)
+        }
+        "&JCharArray" => {
+            wrapped(quote! { jni::sys::jcharArray }, quote! { jni::objects::JCharArray }, true)
+        }
 
         "jobject" => value(quote! { jni::sys::jobject }),
+        "JObject" => wrapped(quote! { jni::sys::jobject }, quote! { jni::objects::JObject }, false),
+        "&JObject" => wrapped(quote! { jni::sys::jobject }, quote! { jni::objects::JObject }, true),
         "jobjectArray" => value(quote! { jni::sys::jobjectArray }),
+        "JObjectArray" => {
+            wrapped(quote! { jni::sys::jobjectArray }, quote! { jni::objects::JObjectArray }, false)
+        }
+        "&JObjectArray" => {
+            wrapped(quote! { jni::sys::jobjectArray }, quote! { jni::objects::JObjectArray }, true)
+        }
 
         _ => None,
     }
@@ -100,7 +200,16 @@ enum ReturnBridge {
     /// No return value (`()` / no declared return).
     Void,
     /// The declared type is ABI-identical to the raw type; pass it through.
-    Value { raw_ty: TokenStream },
+    /// `pointer` records whether the raw type is a pointer (for zero values).
+    Value { raw_ty: TokenStream, pointer: bool },
+    /// `bool` → `jboolean`.
+    Bool,
+    /// `String` → `jstring` via `env.new_string`.
+    StringToJstring,
+    /// An owned `jni::objects` wrapper → raw pointer via `.into_raw()`.
+    WrappedValue { raw_ty: TokenStream },
+    /// A borrowed `jni::objects` wrapper → raw pointer via `.as_raw()`.
+    WrappedRef { raw_ty: TokenStream },
 }
 
 impl ReturnBridge {
@@ -109,10 +218,24 @@ impl ReturnBridge {
         if ty == "()" || ty.is_empty() {
             return Ok(ReturnBridge::Void);
         }
+        if ty == "bool" {
+            return Ok(ReturnBridge::Bool);
+        }
+        if ty == "String" {
+            return Ok(ReturnBridge::StringToJstring);
+        }
 
         let bridge = param_bridge(ty).ok_or_else(|| format!("Unknown JNI type: '{}'", ty))?;
+        let pointer = is_pointer_raw_type(ty);
         let ret = match bridge.kind {
-            ParamBridgeKind::Value => ReturnBridge::Value { raw_ty: bridge.raw_ty },
+            ParamBridgeKind::Value => ReturnBridge::Value { raw_ty: bridge.raw_ty, pointer },
+            ParamBridgeKind::Wrapped { by_ref: false, .. } => {
+                ReturnBridge::WrappedValue { raw_ty: bridge.raw_ty }
+            }
+            ParamBridgeKind::Wrapped { by_ref: true, .. } => {
+                ReturnBridge::WrappedRef { raw_ty: bridge.raw_ty }
+            }
+            _ => return Err(format!("Unsupported JNI return type: '{}'", ty)),
         };
         Ok(ret)
     }
@@ -121,16 +244,81 @@ impl ReturnBridge {
     fn output_tokens(&self) -> TokenStream {
         match self {
             ReturnBridge::Void => quote! {},
-            ReturnBridge::Value { raw_ty } => quote! { -> #raw_ty },
+            ReturnBridge::Value { raw_ty, .. }
+            | ReturnBridge::WrappedValue { raw_ty }
+            | ReturnBridge::WrappedRef { raw_ty } => quote! { -> #raw_ty },
+            ReturnBridge::Bool => quote! { -> jni::sys::jboolean },
+            ReturnBridge::StringToJstring => quote! { -> jni::sys::jstring },
         }
+    }
+
+    /// True if the shim returns a raw pointer type.
+    fn is_pointer(&self) -> bool {
+        match self {
+            ReturnBridge::Void | ReturnBridge::Bool => false,
+            ReturnBridge::Value { pointer, .. } => *pointer,
+            ReturnBridge::StringToJstring
+            | ReturnBridge::WrappedValue { .. }
+            | ReturnBridge::WrappedRef { .. } => true,
+        }
+    }
+
+    /// The JNI zero value for this return type, as an expression.
+    /// Empty for void (a block ending in a statement already yields `()`).
+    fn zero_expr(&self) -> TokenStream {
+        if self.is_pointer() {
+            quote! { std::ptr::null_mut() }
+        } else if matches!(self, ReturnBridge::Void) {
+            quote! {}
+        } else {
+            quote! { Default::default() }
+        }
+    }
+
+    /// A `return <zero value>` expression usable from failure paths.
+    fn zero_return_expr(&self) -> TokenStream {
+        let zero = self.zero_expr();
+        quote! { return #zero }
     }
 
     /// Converts the user's return value (bound to `value`) to the raw type.
     fn convert_expr(&self, value: &syn::Ident) -> TokenStream {
         match self {
             ReturnBridge::Void | ReturnBridge::Value { .. } => quote! { #value },
+            ReturnBridge::Bool => quote! { #value as jni::sys::jboolean },
+            ReturnBridge::StringToJstring => quote! {
+                match env.new_string(&#value) {
+                    Ok(s) => s.into_raw(),
+                    Err(_) => std::ptr::null_mut(),
+                }
+            },
+            ReturnBridge::WrappedValue { .. } => quote! { #value.into_raw() },
+            ReturnBridge::WrappedRef { .. } => quote! { #value.as_raw() },
         }
     }
+}
+
+/// True if the given user type maps to a raw pointer JNI type.
+fn is_pointer_raw_type(ty: &str) -> bool {
+    !matches!(
+        ty,
+        "jint"
+            | "i32"
+            | "jlong"
+            | "i64"
+            | "jfloat"
+            | "f32"
+            | "jdouble"
+            | "f64"
+            | "jboolean"
+            | "u8"
+            | "jbyte"
+            | "i8"
+            | "jchar"
+            | "u16"
+            | "jshort"
+            | "i16"
+    )
 }
 
 /// Returns the number of leading env/this parameters to skip for signature derivation.
@@ -240,8 +428,9 @@ impl JniMethod {
 
         let java_name = parse_java_name(&jni_attr)
             .unwrap_or_else(|| derive_java_name(&func.sig.ident.to_string()));
+        let returns_attr = find_returns_attr(&func.attrs);
 
-        let jni_sig = derive_method_signature(func, &mode, module_package)
+        let jni_sig = derive_method_signature(func, &mode, module_package, returns_attr.as_deref())
             .map_err(|e| syn::Error::new_spanned(func, e).to_compile_error())?;
 
         let shim_fn = generate_shim(func, &mode, &java_name)
@@ -327,34 +516,36 @@ fn generate_register_fn(class_path: &str, methods: &[JniMethod]) -> TokenStream 
 ///
 /// ```text
 /// // Input:
-/// #[jni_module("android/view/MotionEvent")]
-/// mod motion_event {
+/// #[jni_module("android/util/Log")]
+/// mod log {
 ///     #[jni_method]
-///     fn nativeGetId(env: &mut JNIEnv, clazz: jclass, ptr: jlong) -> jint {
+///     fn println_native(env: &mut JNIEnv, clazz: jclass, tag: &str, level: i32) -> i32 {
 ///         0
 ///     }
 /// }
 ///
 /// // Output:
-/// mod motion_event {
-///     unsafe extern "system" fn __jni_nativeGetId(
+/// mod log {
+///     unsafe extern "system" fn __jni_println_native(
 ///         env: *mut jni::sys::JNIEnv,
 ///         this: jni::sys::jobject,
-///         __arg0: jni::sys::jlong,
+///         __arg0: jni::sys::jstring,
+///         __arg1: jni::sys::jint,
 ///     ) -> jni::sys::jint {
 ///         let mut env = unsafe { jni::JNIEnv::from_raw(env) }.expect(...);
-///         let __result = nativeGetId(&mut env, this, __arg0);
+///         // ... jstring extraction, null check ...
+///         let __result = println_native(&mut env, this, tag, __arg1);
 ///         __result
 ///     }
-///     fn nativeGetId(env: &mut JNIEnv, clazz: jclass, ptr: jlong) -> jint {
+///     fn println_native(env: &mut JNIEnv, clazz: jclass, tag: &str, level: i32) -> i32 {
 ///         0
 ///     }
 ///
 ///     pub fn register(env: &mut jni::JNIEnv<'_>) { // generated
-///         let class = env.find_class("android/view/MotionEvent").expect(...);
+///         let class = env.find_class("android/util/Log").expect(...);
 ///         let methods = [
-///             NativeMethod { name: "nativeGetId", sig: "(J)I",
-///                            fn_ptr: __jni_nativeGetId as *mut c_void },
+///             NativeMethod { name: "println_native", sig: "(Ljava/lang/String;I)I",
+///                            fn_ptr: __jni_println_native as *mut c_void },
 ///         ];
 ///         env.register_native_methods(&class, &methods).expect(...);
 ///     }
@@ -430,6 +621,22 @@ fn find_jni_method_attr(attrs: &[Attribute]) -> Option<Attribute> {
     attrs.iter().find(|a| a.path().is_ident("jni_method")).cloned()
 }
 
+/// Finds the `#[returns = "..."]` attribute on a function.
+fn find_returns_attr(attrs: &[Attribute]) -> Option<String> {
+    for attr in attrs {
+        if attr.path().is_ident("returns") {
+            if let Meta::NameValue(MetaNameValue {
+                value: syn::Expr::Lit(syn::ExprLit { lit: Lit::Str(s), .. }),
+                ..
+            }) = &attr.meta
+            {
+                return Some(s.value());
+            }
+        }
+    }
+    None
+}
+
 /// Parses the contents of a `#[jni_method(...)]` attribute as a comma-separated
 /// list of `Meta` items (e.g., `critical`, `fast`, `name = "foo"`).
 ///
@@ -494,6 +701,7 @@ fn derive_method_signature(
     func: &ItemFn,
     mode: &JniMode,
     module_package: Option<&str>,
+    returns_attr: Option<&str>,
 ) -> Result<String, String> {
     let mut params: Vec<(&str, Option<&str>)> = Vec::new();
 
@@ -501,24 +709,26 @@ fn derive_method_signature(
     let skip = env_this_skip_count(mode);
 
     // We need to hold the type strings so we can reference them
-    let type_strings: Vec<String> = inputs[skip..]
+    let type_strings: Vec<(String, Option<String>)> = inputs[skip..]
         .iter()
         .map(|arg| {
             if let FnArg::Typed(pat_type) = arg {
-                type_to_string(&pat_type.ty)
+                let ty = type_to_string(&pat_type.ty);
+                let class = find_class_attr_on_pat(pat_type);
+                (ty, class)
             } else {
-                "()".to_string()
+                ("()".to_string(), None)
             }
         })
         .collect();
 
-    for ty in &type_strings {
-        params.push((ty.as_str(), None));
+    for (ty, class) in &type_strings {
+        params.push((ty.as_str(), class.as_deref()));
     }
 
     let return_type = return_type_str(&func.sig.output);
 
-    sig::build_signature(&params, &return_type, None, module_package)
+    sig::build_signature(&params, &return_type, returns_attr, module_package)
 }
 
 /// Validates that a `@CriticalNative` method doesn't use types requiring JNIEnv.
@@ -579,17 +789,132 @@ struct BridgedParam {
 
 /// Generates the shim parameter, conversion statements, and call argument for
 /// one user parameter. `index` positions the raw parameter name (`__arg0`,
-/// `__arg1`, ...).
-fn bridge_user_param(pat_type: &PatType, index: usize) -> Result<BridgedParam, String> {
+/// `__arg1`, ...); `ret` supplies the zero value for failure paths.
+fn bridge_user_param(
+    pat_type: &PatType,
+    index: usize,
+    ret: &ReturnBridge,
+) -> Result<BridgedParam, String> {
+    let pat = &pat_type.pat;
     let ty = type_to_string(&pat_type.ty);
     let raw_ident = format_ident!("__arg{}", index);
     let bridge = param_bridge(&ty).ok_or_else(|| format!("Unknown JNI type: '{}'", ty))?;
     let raw_ty = &bridge.raw_ty;
     let shim_param = quote! { #raw_ident: #raw_ty };
+    let zero_return = ret.zero_return_expr();
 
     Ok(match bridge.kind {
         ParamBridgeKind::Value => {
             BridgedParam { shim_param, prelude: None, call_arg: quote! { #raw_ident } }
+        }
+        ParamBridgeKind::Bool => BridgedParam {
+            shim_param,
+            prelude: Some(quote! { let #pat: bool = #raw_ident != 0; }),
+            call_arg: quote! { #pat },
+        },
+        ParamBridgeKind::OwnedString { nullable: false } => {
+            let string_ident = format_ident!("__arg{}_string", index);
+            let jstr_ident = format_ident!("__arg{}_jstring", index);
+            let npe_msg = format!("{} must not be null", quote! { #pat });
+            BridgedParam {
+                shim_param,
+                prelude: Some(quote! {
+                    if #raw_ident.is_null() {
+                        let _ = env.throw_new("java/lang/NullPointerException", #npe_msg);
+                        #zero_return;
+                    }
+                    let #jstr_ident = unsafe { jni::objects::JString::from_raw(#raw_ident) };
+                    let #string_ident: String =
+                        match unsafe { env.get_string_unchecked(&#jstr_ident) } {
+                            Ok(s) => s.into(),
+                            Err(_) => #zero_return,
+                        };
+                    let #pat: &str = &#string_ident;
+                }),
+                call_arg: quote! { #pat },
+            }
+        }
+        ParamBridgeKind::OwnedString { nullable: true } => {
+            let string_ident = format_ident!("__arg{}_string", index);
+            let jstr_ident = format_ident!("__arg{}_jstring", index);
+            let javastr_ident = format_ident!("__arg{}_javastr", index);
+            BridgedParam {
+                shim_param,
+                prelude: Some(quote! {
+                    let #string_ident: Option<String> = if #raw_ident.is_null() {
+                        None
+                    } else {
+                        let #jstr_ident = unsafe { jni::objects::JString::from_raw(#raw_ident) };
+                        let #javastr_ident =
+                            match unsafe { env.get_string_unchecked(&#jstr_ident) } {
+                                Ok(s) => s,
+                                Err(_) => #zero_return,
+                            };
+                        Some(#javastr_ident.into())
+                    };
+                    let #pat: Option<&str> = #string_ident.as_deref();
+                }),
+                call_arg: quote! { #pat },
+            }
+        }
+        ParamBridgeKind::BorrowedString { nullable: false } => {
+            let jstr_ident = format_ident!("__arg{}_jstring", index);
+            let javastr_ident = format_ident!("__arg{}_javastr", index);
+            let npe_msg = format!("{} must not be null", quote! { #pat });
+            BridgedParam {
+                shim_param,
+                prelude: Some(quote! {
+                    if #raw_ident.is_null() {
+                        let _ = env.throw_new("java/lang/NullPointerException", #npe_msg);
+                        #zero_return;
+                    }
+                    let #jstr_ident = unsafe { jni::objects::JString::from_raw(#raw_ident) };
+                    let #javastr_ident =
+                        match unsafe { env.get_string_unchecked(&#jstr_ident) } {
+                            Ok(s) => s,
+                            Err(_) => #zero_return,
+                        };
+                    let #pat: &jni::strings::JavaStr = &#javastr_ident;
+                }),
+                call_arg: quote! { #pat },
+            }
+        }
+        ParamBridgeKind::BorrowedString { nullable: true } => {
+            let jstr_ident = format_ident!("__arg{}_jstring", index);
+            let javastr_ident = format_ident!("__arg{}_javastr", index);
+            BridgedParam {
+                shim_param,
+                prelude: Some(quote! {
+                    let #jstr_ident = unsafe { jni::objects::JString::from_raw(#raw_ident) };
+                    let #javastr_ident = if #raw_ident.is_null() {
+                        None
+                    } else {
+                        match unsafe { env.get_string_unchecked(&#jstr_ident) } {
+                            Ok(s) => Some(s),
+                            Err(_) => #zero_return,
+                        }
+                    };
+                    let #pat: Option<&jni::strings::JavaStr> = #javastr_ident.as_ref();
+                }),
+                call_arg: quote! { #pat },
+            }
+        }
+        ParamBridgeKind::Wrapped { wrapper, by_ref: false } => BridgedParam {
+            shim_param,
+            prelude: Some(quote! {
+                let #pat = unsafe { #wrapper::from_raw(#raw_ident) };
+            }),
+            call_arg: quote! { #pat },
+        },
+        ParamBridgeKind::Wrapped { wrapper, by_ref: true } => {
+            let obj_ident = format_ident!("__arg{}_obj", index);
+            BridgedParam {
+                shim_param,
+                prelude: Some(quote! {
+                    let #obj_ident = unsafe { #wrapper::from_raw(#raw_ident) };
+                }),
+                call_arg: quote! { &#obj_ident },
+            }
         }
     })
 }
@@ -621,22 +946,23 @@ fn this_call_arg(arg: &FnArg) -> Result<TokenStream, String> {
 /// The shim's signature uses only raw `jni::sys` types, matching the calling
 /// convention ART uses to invoke natives: regular and fast natives receive
 /// `(*mut JNIEnv, jobject, <args>...)`, critical natives receive only the
-/// arguments. The shim rebuilds a safe `jni::JNIEnv`, passes each argument
-/// to the user's function, and returns its result.
+/// arguments. The shim rebuilds a safe `jni::JNIEnv`, converts each argument
+/// to the user's declared type, calls the user's function, and converts the
+/// return value back.
 ///
 /// # Example
 ///
-/// Given `fn nativeGetId(env: &mut JNIEnv, clazz: jclass, ptr: jlong) -> jint { ... }`,
+/// Given `fn isTouchEvent(env: &mut JNIEnv, clazz: jclass, ptr: jlong) -> bool { ... }`,
 /// generates:
 /// ```text
-/// unsafe extern "system" fn __jni_nativeGetId(
+/// unsafe extern "system" fn __jni_isTouchEvent(
 ///     env: *mut jni::sys::JNIEnv,
 ///     this: jni::sys::jobject,
 ///     __arg0: jni::sys::jlong,
-/// ) -> jni::sys::jint {
+/// ) -> jni::sys::jboolean {
 ///     let mut env = unsafe { jni::JNIEnv::from_raw(env) }.expect(...);
-///     let __result = nativeGetId(&mut env, this, __arg0);
-///     __result
+///     let __result = isTouchEvent(&mut env, this, __arg0);
+///     __result as jni::sys::jboolean
 /// }
 /// ```
 ///
@@ -673,7 +999,7 @@ fn generate_shim(func: &ItemFn, mode: &JniMode, java_name: &str) -> Result<Token
 
     for (index, arg) in inputs[skip..].iter().enumerate() {
         if let FnArg::Typed(pat_type) = arg {
-            let bridged = bridge_user_param(pat_type, index)?;
+            let bridged = bridge_user_param(pat_type, index, &ret)?;
             shim_params.push(bridged.shim_param);
             if let Some(prelude) = bridged.prelude {
                 preludes.push(prelude);
@@ -747,6 +1073,22 @@ fn is_this_type(ty: &str) -> bool {
         || ty == "&JObject"
 }
 
+/// Finds a `#[class = "..."]` attribute on a function parameter.
+fn find_class_attr_on_pat(pat_type: &PatType) -> Option<String> {
+    for attr in &pat_type.attrs {
+        if attr.path().is_ident("class") {
+            if let Meta::NameValue(MetaNameValue {
+                value: syn::Expr::Lit(syn::ExprLit { lit: Lit::Str(s), .. }),
+                ..
+            }) = &attr.meta
+            {
+                return Some(s.value());
+            }
+        }
+    }
+    None
+}
+
 /// Converts a syn Type to a simplified string representation.
 fn type_to_string(ty: &Type) -> String {
     use quote::ToTokens;
@@ -764,23 +1106,36 @@ fn type_to_string(ty: &Type) -> String {
 
 /// Strips JNI-specific attributes from a function, leaving the pure Rust function.
 ///
-/// Removes `#[jni_method]` attributes from the function.
+/// Removes `#[jni_method]`, `#[returns = "..."]`, and `#[class = "..."]` attributes
+/// from the function and its parameters.
 ///
 /// # Example
 ///
 /// ```text
 /// // Input:
-/// #[jni_method]
-/// fn nativeGetId(env: &mut JNIEnv, clazz: jclass, ptr: jlong) -> jint { ... }
+/// #[jni_method(fast)]
+/// #[returns = "android.view.KeyEvent"]
+/// fn obtain(env: &mut JNIEnv, clazz: jclass, #[class = "KeyEvent"] event: JObject) -> JObject { ... }
 ///
 /// // Output:
-/// fn nativeGetId(env: &mut JNIEnv, clazz: jclass, ptr: jlong) -> jint { ... }
+/// fn obtain(env: &mut JNIEnv, clazz: jclass, event: JObject) -> JObject { ... }
 /// ```
 fn strip_jni_attrs(func: &ItemFn) -> TokenStream {
     let mut clean_func = func.clone();
 
-    // Remove jni_method attributes from the function
-    clean_func.attrs.retain(|a| !a.path().is_ident("jni_method"));
+    // Remove jni_method, returns, and class attributes from the function
+    clean_func.attrs.retain(|a| {
+        !a.path().is_ident("jni_method")
+            && !a.path().is_ident("returns")
+            && !a.path().is_ident("class")
+    });
+
+    // Remove class attributes from parameters
+    for arg in &mut clean_func.sig.inputs {
+        if let FnArg::Typed(pat_type) = arg {
+            pat_type.attrs.retain(|a| !a.path().is_ident("class"));
+        }
+    }
 
     quote! { #clean_func }
 }
@@ -847,6 +1202,33 @@ mod tests {
     }
 
     #[test]
+    fn test_param_bridge_bool() {
+        let bridge = param_bridge("bool").unwrap();
+        assert!(matches!(bridge.kind, ParamBridgeKind::Bool));
+        assert_eq!(bridge.raw_ty.to_string(), quote! { jni::sys::jboolean }.to_string());
+    }
+
+    #[test]
+    fn test_param_bridge_str_ref() {
+        let bridge = param_bridge("&str").unwrap();
+        assert!(matches!(bridge.kind, ParamBridgeKind::OwnedString { nullable: false }));
+    }
+
+    #[test]
+    fn test_param_bridge_option_str_ref() {
+        let bridge = param_bridge("Option<&str>").unwrap();
+        assert!(matches!(bridge.kind, ParamBridgeKind::OwnedString { nullable: true }));
+    }
+
+    #[test]
+    fn test_param_bridge_wrapper_objects() {
+        let bridge = param_bridge("JString").unwrap();
+        assert!(matches!(bridge.kind, ParamBridgeKind::Wrapped { by_ref: false, .. }));
+        let bridge = param_bridge("&JByteArray").unwrap();
+        assert!(matches!(bridge.kind, ParamBridgeKind::Wrapped { by_ref: true, .. }));
+    }
+
+    #[test]
     fn test_param_bridge_unknown() {
         assert!(param_bridge("FooBar").is_none());
         assert!(param_bridge("String").is_none());
@@ -864,8 +1246,15 @@ mod tests {
     #[test]
     fn test_return_bridge_primitive() {
         let ret = ReturnBridge::parse("jint").unwrap();
-        assert!(matches!(ret, ReturnBridge::Value { .. }));
+        assert!(matches!(ret, ReturnBridge::Value { pointer: false, .. }));
         assert_eq!(ret.output_tokens().to_string(), quote! { -> jni::sys::jint }.to_string());
+    }
+
+    #[test]
+    fn test_return_bridge_pointer() {
+        let ret = ReturnBridge::parse("jstring").unwrap();
+        assert!(ret.is_pointer());
+        assert_eq!(ret.zero_expr().to_string(), quote! { std::ptr::null_mut() }.to_string());
     }
 
     // ---- generate_shim tests ----
@@ -933,6 +1322,35 @@ mod tests {
     }
 
     #[test]
+    fn test_shim_bool_return() {
+        let func: ItemFn = syn::parse2(quote! {
+            fn nativeIsTouchEvent(env: &mut jni::JNIEnv<'_>, clazz: jclass, ptr: jlong) -> bool {
+                true
+            }
+        })
+        .unwrap();
+        let shim = generate_shim(&func, &JniMode::Regular, "nativeIsTouchEvent").unwrap();
+        let s = shim.to_string();
+        assert!(s.contains("__jni_nativeIsTouchEvent"), "{s}");
+        assert!(s.contains("-> jni :: sys :: jboolean"), "{s}");
+        assert!(s.contains("as jni :: sys :: jboolean"), "{s}");
+    }
+
+    #[test]
+    fn test_shim_critical_bool_param_and_return() {
+        let func: ItemFn = syn::parse2(quote! {
+            fn nativeCopy(dest: jlong, keep_history: bool) -> bool {
+                true
+            }
+        })
+        .unwrap();
+        let shim = generate_shim(&func, &JniMode::Critical, "nativeCopy").unwrap();
+        let s = shim.to_string();
+        assert!(s.contains("__arg1 : jni :: sys :: jboolean"), "{s}");
+        assert!(s.contains("!= 0"), "{s}");
+    }
+
+    #[test]
     fn test_shim_critical_str_error() {
         let func: ItemFn = syn::parse2(quote! {
             fn test(tag: &str) -> jint {
@@ -971,6 +1389,154 @@ mod tests {
         let msg = result.unwrap_err();
         assert!(msg.contains("@CriticalNative"), "{msg}");
         assert!(msg.contains("cannot return Result"), "{msg}");
+    }
+
+    #[test]
+    fn test_shim_str_param() {
+        let func: ItemFn = syn::parse2(quote! {
+            fn isLoggable(env: &mut jni::JNIEnv<'_>, clazz: jclass, tag: &str, level: i32) -> bool {
+                true
+            }
+        })
+        .unwrap();
+        let shim = generate_shim(&func, &JniMode::Regular, "isLoggable").unwrap();
+        let s = shim.to_string();
+        assert!(s.contains("__jni_isLoggable"), "{s}");
+        assert!(s.contains("__arg0 : jni :: sys :: jstring"), "{s}");
+        assert!(s.contains("NullPointerException"), "{s}");
+        assert!(s.contains("tag must not be null"), "{s}");
+        assert!(s.contains("get_string_unchecked"), "{s}");
+    }
+
+    #[test]
+    fn test_shim_option_str_param() {
+        let func: ItemFn = syn::parse2(quote! {
+            fn test(env: &mut jni::JNIEnv<'_>, clazz: jclass, tag: Option<&str>) {
+            }
+        })
+        .unwrap();
+        let shim = generate_shim(&func, &JniMode::Regular, "test").unwrap();
+        let s = shim.to_string();
+        assert!(s.contains("None"), "{s}");
+        assert!(s.contains("Some"), "{s}");
+        assert!(s.contains("as_deref"), "{s}");
+        assert!(!s.contains("NullPointerException"), "nullable must not throw NPE: {s}");
+    }
+
+    #[test]
+    fn test_param_bridge_java_str() {
+        let bridge = param_bridge("&JavaStr").unwrap();
+        assert!(matches!(bridge.kind, ParamBridgeKind::BorrowedString { nullable: false }));
+        assert_eq!(bridge.raw_ty.to_string(), quote! { jni::sys::jstring }.to_string());
+        let bridge = param_bridge("Option<&JavaStr>").unwrap();
+        assert!(matches!(bridge.kind, ParamBridgeKind::BorrowedString { nullable: true }));
+    }
+
+    #[test]
+    fn test_shim_java_str_param_borrows_without_allocating() {
+        let func: ItemFn = syn::parse2(quote! {
+            fn println_native(env: &mut jni::JNIEnv<'_>, clazz: jclass, msg: &JavaStr) -> jint {
+                0
+            }
+        })
+        .unwrap();
+        let shim = generate_shim(&func, &JniMode::Regular, "println_native").unwrap();
+        let s = shim.to_string();
+        assert!(s.contains("__arg0 : jni :: sys :: jstring"), "{s}");
+        assert!(s.contains("get_string_unchecked"), "{s}");
+        assert!(s.contains("jni :: strings :: JavaStr"), "{s}");
+        assert!(s.contains("NullPointerException"), "{s}");
+        assert!(s.contains("msg must not be null"), "{s}");
+        // No owned-String extraction: the JavaStr is passed by reference.
+        assert!(!s.contains(": String"), "{s}");
+        assert!(!s.contains("into ()"), "{s}");
+    }
+
+    #[test]
+    fn test_shim_option_java_str_param() {
+        let func: ItemFn = syn::parse2(quote! {
+            fn isLoggable(
+                env: &mut jni::JNIEnv<'_>,
+                clazz: jclass,
+                tag: Option<&JavaStr>,
+            ) -> bool {
+                true
+            }
+        })
+        .unwrap();
+        let shim = generate_shim(&func, &JniMode::Regular, "isLoggable").unwrap();
+        let s = shim.to_string();
+        assert!(s.contains("None"), "{s}");
+        assert!(s.contains("Some"), "{s}");
+        assert!(s.contains("Option < & jni :: strings :: JavaStr >"), "{s}");
+        assert!(s.contains("as_ref"), "{s}");
+        assert!(!s.contains("NullPointerException"), "nullable must not throw NPE: {s}");
+        assert!(!s.contains("as_deref"), "borrowed conversion must not build Strings: {s}");
+    }
+
+    #[test]
+    fn test_shim_critical_java_str_error() {
+        let func: ItemFn = syn::parse2(quote! {
+            fn test(tag: &JavaStr) -> jint {
+                0
+            }
+        })
+        .unwrap();
+        let result = generate_shim(&func, &JniMode::Critical, "test");
+        assert!(result.is_err());
+        let msg = result.unwrap_err();
+        assert!(msg.contains("@CriticalNative"), "{msg}");
+        assert!(msg.contains("&JavaStr"), "{msg}");
+    }
+
+    #[test]
+    fn test_expand_jni_module_java_str_signature() {
+        let attr = quote! { "android/util/Log" };
+        let item = quote! {
+            pub mod log {
+                #[jni_method]
+                fn println_native(
+                    env: &mut jni::JNIEnv<'_>,
+                    clazz: jclass,
+                    msg: &JavaStr,
+                ) -> jint {
+                    0
+                }
+            }
+        };
+        let output = expand_jni_module(attr, item);
+        let s = output.to_string();
+        assert!(s.contains("(Ljava/lang/String;)I"), "{s}");
+    }
+
+    #[test]
+    fn test_shim_str_param_with_pointer_return_uses_null_zero() {
+        // A &str failure path in a jstring-returning method must return null,
+        // not Default::default() (raw pointers do not implement Default).
+        let func: ItemFn = syn::parse2(quote! {
+            fn test(env: &mut jni::JNIEnv<'_>, clazz: jclass, tag: &str) -> jstring {
+                std::ptr::null_mut()
+            }
+        })
+        .unwrap();
+        let shim = generate_shim(&func, &JniMode::Regular, "test").unwrap();
+        let s = shim.to_string();
+        assert!(s.contains("return std :: ptr :: null_mut ()"), "{s}");
+    }
+
+    #[test]
+    fn test_shim_string_return() {
+        let func: ItemFn = syn::parse2(quote! {
+            fn test(env: &mut jni::JNIEnv<'_>, clazz: jclass, code: jint) -> String {
+                String::new()
+            }
+        })
+        .unwrap();
+        let shim = generate_shim(&func, &JniMode::Regular, "test").unwrap();
+        let s = shim.to_string();
+        assert!(s.contains("new_string"), "{s}");
+        assert!(s.contains("into_raw"), "{s}");
+        assert!(s.contains("null_mut"), "{s}");
     }
 
     #[test]
@@ -1196,6 +1762,45 @@ mod tests {
 
         assert!(s.contains("\"logger_entry_max_payload_native\""), "{s}");
         assert!(s.contains("__jni_max_payload as * mut core :: ffi :: c_void"), "{s}");
+    }
+
+    #[test]
+    fn test_expand_jni_module_overloads_share_a_registered_name() {
+        // android.os.SystemProperties overloads native names (native_get
+        // exists as (String,String)->String and (J)->String); RegisterNatives
+        // distinguishes them by signature, so two methods may register under
+        // one name as long as their Rust names — which key the shims — differ.
+        let attr = quote! { "android/os/SystemProperties" };
+        let item = quote! {
+            pub mod system_properties {
+                #[jni_method(fast, name = "native_get")]
+                fn native_get_string(
+                    env: &mut jni::JNIEnv<'_>,
+                    clazz: jclass,
+                    key: &JavaStr,
+                    def: jstring,
+                ) -> jstring {
+                    def
+                }
+
+                #[jni_method(fast, name = "native_get")]
+                fn native_get_string_handle(
+                    env: &mut jni::JNIEnv<'_>,
+                    clazz: jclass,
+                    handle: i64,
+                ) -> jstring {
+                    std::ptr::null_mut()
+                }
+            }
+        };
+        let output = expand_jni_module(attr, item);
+        let s = output.to_string();
+
+        assert_eq!(s.matches("\"native_get\"").count(), 2, "{s}");
+        assert!(s.contains("(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;"), "{s}");
+        assert!(s.contains("\"(J)Ljava/lang/String;\""), "{s}");
+        assert!(s.contains("__jni_native_get_string as * mut core :: ffi :: c_void"), "{s}");
+        assert!(s.contains("__jni_native_get_string_handle as * mut core :: ffi :: c_void"), "{s}");
     }
 
     #[test]
