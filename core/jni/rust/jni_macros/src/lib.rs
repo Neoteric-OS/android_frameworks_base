@@ -80,7 +80,12 @@ pub fn java_class(attr: TokenStream, item: TokenStream) -> TokenStream {
 /// ```ignore
 /// #[jni_module("android/os/SystemClock")]
 /// mod system_clock {
-///     #[jni_method]
+///     #[jni_method(critical)]
+///     fn elapsedRealtime() -> jlong {
+///         ffi::elapsedRealtime()
+///     }
+///
+///     #[jni_method(fast)]
 ///     fn currentNetworkTimeClock(env: &mut JNIEnv, _this: JClass) -> jlong {
 ///         // ...
 ///     }
@@ -100,6 +105,12 @@ pub fn jni_module(attr: TokenStream, item: TokenStream) -> TokenStream {
 /// The registered Java method name is the Rust function name, verbatim.
 /// Use `#[jni_method(name = "...")]` when the Java name is not a legal or
 /// desirable Rust identifier (e.g. it collides with another item).
+///
+/// # Modes
+///
+/// - `#[jni_method]` — Regular JNI method
+/// - `#[jni_method(fast)]` — @FastNative method
+/// - `#[jni_method(critical)]` — @CriticalNative method
 #[proc_macro_attribute]
 pub fn jni_method(_attr: TokenStream, item: TokenStream) -> TokenStream {
     // Identity transform — consumed by jni_module
