@@ -115,6 +115,11 @@ cc_defaults_for_libandroid_runtime {
         "android.content.res.flags-aconfig-cc-host-ro",
         "libziparchive_for_incfs",
         "libguiflags",
+        // cxx-generated C++ bridge code for libandroid_runtime_rs and its
+        // Rust deps; Soong does not propagate a rust_library's static_libs
+        // through a rust_ffi_static into its cc consumer, so they are linked
+        // here explicitly.
+        "libtracing_perfetto_rust_bridge",
     ],
 
     // JNI methods implemented in Rust; must be whole_static_libs so their
@@ -197,7 +202,6 @@ cc_defaults_for_libandroid_runtime {
                 "android_os_ServiceManagerNative.cpp",
                 "android_os_SharedMemory.cpp",
                 "android_os_storage_StorageManager.cpp",
-                "android_os_Trace.cpp",
                 "android_os_UEventObserver.cpp",
                 "android_os_incremental_IncrementalManager.cpp",
                 "android_net_LocalSocketImpl.cpp",
