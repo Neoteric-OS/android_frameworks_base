@@ -42,10 +42,6 @@ extern ScopedLocalRef<jobject> android_view_MotionEvent_obtainFromNative(
  * Returns NULL if the event is NULL or if it is uninitialized. */
 extern MotionEvent* android_view_MotionEvent_getNativePtr(JNIEnv* env, jobject eventObj);
 
-/* Recycles a DVM MotionEvent object.
- * Returns non-zero on error. */
-extern status_t android_view_MotionEvent_recycle(JNIEnv* env, jobject eventObj);
-
 } // namespace android
 
 #endif // _ANDROID_VIEW_MOTIONEVENT_H

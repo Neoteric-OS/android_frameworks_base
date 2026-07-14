@@ -97,7 +97,7 @@ extern int register_android_util_jar_StrictJarFile(JNIEnv* env);
 extern int register_android_view_KeyCharacterMap(JNIEnv* env);
 extern "C" int register_android_view_KeyEvent(JNIEnv* env);
 extern int register_android_view_InputDevice(JNIEnv* env);
-extern int register_android_view_MotionEvent(JNIEnv* env);
+extern "C" int register_android_view_MotionEvent(JNIEnv* env);
 extern int register_android_view_Surface(JNIEnv* env);
 extern int register_android_view_ThreadedRenderer(JNIEnv* env);
 extern int register_android_graphics_HardwareBufferRenderer(JNIEnv* env);
