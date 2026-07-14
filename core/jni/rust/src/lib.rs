@@ -31,10 +31,19 @@ mod android_util_event_log;
 mod android_util_log;
 mod android_view_key_event;
 mod event_log_helper;
+mod input_event_ffi;
+// The MotionEvent bridge lands ahead of its JNI conversion (the
+// android.view.MotionEvent natives), which will be its first non-test
+// consumer; until then its items are only used by its own tests.
+#[allow(dead_code)]
 mod event_wire_format;
 mod input_event_compat;
-mod input_event_ffi;
 mod libbase_parse;
+mod motion_event_ffi;
+// Un-gated like input_event_compat, and additionally dead-code-allowed under
+// soong until the MotionEvent JNI conversion consumes it.
+#[allow(dead_code)]
+mod motion_event_compat;
 mod sysprop_change;
 
 /// Called from AndroidRuntime.cpp's gRegJNI table.

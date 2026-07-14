@@ -90,6 +90,24 @@ genrule {
     out: ["input_event_ffi.rs.cpp"],
 }
 
+// Generate the C++ side of the cxx bridge declared in
+// src/motion_event_ffi.rs.
+genrule {
+    name: "libandroid_runtime_rs_bridge_motion_event_header",
+    tools: ["cxxbridge"],
+    cmd: "$(location cxxbridge) $(in) --header > $(out)",
+    srcs: ["src/motion_event_ffi.rs"],
+    out: ["motion_event_ffi.rs.h"],
+}
+
+genrule {
+    name: "libandroid_runtime_rs_bridge_motion_event_code",
+    tools: ["cxxbridge"],
+    cmd: "$(location cxxbridge) $(in) > $(out)",
+    srcs: ["src/motion_event_ffi.rs"],
+    out: ["motion_event_ffi.rs.cpp"],
+}
+
 // The C++ half of android_runtime's cxx bridges: the generated bridge code
 // plus the handwritten libutils/libinput glue it declares.
 cc_library_static {
@@ -97,6 +115,8 @@ cc_library_static {
     host_supported: true,
     srcs: [
         "ffi/input_event.cpp",
+        "ffi/motion_event.cpp",
+        "ffi/motion_event_parcel.cpp",
         "ffi/sysprop_change.cpp",
     ],
     // input_event_compat.h declares the #[repr(C)] bundles that cross the
@@ -107,10 +127,12 @@ cc_library_static {
         "cxx-bridge-header",
         "libandroid_runtime_rs_bridge_header",
         "libandroid_runtime_rs_bridge_input_event_header",
+        "libandroid_runtime_rs_bridge_motion_event_header",
     ],
     generated_sources: [
         "libandroid_runtime_rs_bridge_code",
         "libandroid_runtime_rs_bridge_input_event_code",
+        "libandroid_runtime_rs_bridge_motion_event_code",
     ],
     shared_libs: ["libutils"],
     // libinput, linked the same way libandroid_runtime links it: shared on
@@ -153,6 +175,24 @@ rust_defaults {
     // implementation (on device they come from bionic's libc); see
     // src/android_os_system_properties.rs.
     shared_libs: ["libbase"],
+    // The input-event bridge calls android::MotionEvent/KeyEvent (libinput);
+    // linkage matches libandroid_runtime's: shared on device, static on host.
+    // Needed here (not only on the bridge) because cc_library_static deps do
+    // not propagate into the rust_test link. Host uses the shared libinput:
+    // the static archive carries UBSan-minimal instrumentation whose runtime
+    // rust_test links don't provide, while the .so is self-contained (and
+    // brings libbinder/libui-types along).
+    target: {
+        android: {
+            shared_libs: ["libinput"],
+        },
+        host: {
+            shared_libs: [
+                "libbinder",
+                "libinput",
+            ],
+        },
+    },
 }
 
 // Rust implementations of libandroid_runtime's JNI methods, linked into
