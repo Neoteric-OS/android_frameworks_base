@@ -88,6 +88,30 @@
       },
       "revId": "0a04079fa7ea470313a29b8d16fdb356478b7d5d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0c0ee103_0138a5fc",
+        "filename": "core/java/android/provider/AlarmClock.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1396490
+      },
+      "writtenOn": "2026-07-14T21:45:21Z",
+      "side": 1,
+      "message": "This change was moved to https://googleplex-android-review.git.corp.google.com/c/platform/frameworks/base/+/40082458 and that has ACTION_DISMISS_ALARM, please take a look",
+      "parentUuid": "b48585c5_f9d2e42f",
+      "range": {
+        "startLine": 27,
+        "startChar": 3,
+        "endLine": 27,
+        "endChar": 22
+      },
+      "revId": "0a04079fa7ea470313a29b8d16fdb356478b7d5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
