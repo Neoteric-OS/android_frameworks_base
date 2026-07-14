@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a1de6d0f_2424e34b",
+        "filename": "core/jni/rust/jni_support/src/error.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2026-07-14T12:53:18Z",
+      "side": 1,
+      "message": "Do we need both JniError and JavaException? They seem to encode ~the same values.",
+      "revId": "38f66ba70daf17a3c4de0fc72bca93b7b309ed50",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
