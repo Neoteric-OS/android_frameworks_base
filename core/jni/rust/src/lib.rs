@@ -38,6 +38,7 @@ fn register_natives(
     mut env: jni::EnvUnowned<'_>,
     register: fn(&mut jni::Env<'_>),
 ) -> jni::sys::jint {
+    init_logging();
     // The closure never returns `Err`; a failed registration panics inside
     // `register`, and `with_env_no_catch` propagates that panic to abort.
     let _ = env.with_env_no_catch(|env| {
@@ -52,6 +53,22 @@ fn register_natives(
 #[no_mangle]
 pub extern "C" fn register_android_os_SystemClock(env: jni::EnvUnowned<'_>) -> jni::sys::jint {
     register_natives(env, android_os_system_clock::register)
+}
+
+/// Installs the process-wide `log` backend for this crate's diagnostics, once.
+///
+/// Called from `register_natives`, which runs on every registration entry
+/// during the zygote's `startReg` — before any app code, and long before any
+/// diagnostic fires at runtime. libandroid_runtime is mapped into every app
+/// process, so its Rust routes through the `log` facade like the rest of the
+/// platform rather than calling liblog directly. No fixed tag is set, so each
+/// diagnostic's `target` becomes its logcat tag, giving each call site its own
+/// tag.
+fn init_logging() {
+    static INIT: std::sync::Once = std::sync::Once::new();
+    INIT.call_once(|| {
+        logger::init(logger::Config::default().with_max_level(log::LevelFilter::Info));
+    });
 }
 
 /// Registers `android.os.Trace`'s native methods. See `register_natives`.
