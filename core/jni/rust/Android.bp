@@ -65,6 +65,8 @@ rust_defaults {
         "libjni",
         "liblibc",
         "liblog_buffer",
+        "liblog_rust",
+        "liblogger",
         "libtracing_perfetto_rust",
     ],
     proc_macros: ["libjni_macros"],

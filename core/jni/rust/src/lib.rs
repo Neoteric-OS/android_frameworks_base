@@ -39,10 +39,26 @@ mod android_util_log;
 pub unsafe extern "C" fn register_android_os_SystemClock(
     env: *mut jni::sys::JNIEnv,
 ) -> jni::sys::jint {
+    init_logging();
     // SAFETY: The caller (AndroidRuntime::startReg) passes a valid JNIEnv.
     let mut env = unsafe { jni::JNIEnv::from_raw(env) }.expect("null JNIEnv");
     android_os_system_clock::register(&mut env);
     0
+}
+
+/// Installs the process-wide `log` backend for this crate's diagnostics, once.
+///
+/// Called from the first registration entry, which runs during the zygote's
+/// `startReg` — before any app code, and long before any diagnostic fires at
+/// runtime. libandroid_runtime is mapped into every app process, so its Rust
+/// routes through the `log` facade like the rest of the platform rather than
+/// calling liblog directly. No fixed tag is set, so each diagnostic's `target`
+/// becomes its logcat tag, preserving the per-site tags the C++ used.
+fn init_logging() {
+    static INIT: std::sync::Once = std::sync::Once::new();
+    INIT.call_once(|| {
+        logger::init(logger::Config::default().with_max_level(log::LevelFilter::Info));
+    });
 }
 
 /// Called from AndroidRuntime.cpp's gRegJNI table.
