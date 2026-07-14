@@ -13,10 +13,10 @@
 // limitations under the License.
 
 //! Layout-compatible mirrors of libinput's `android::PointerCoords` and
-//! `android::PointerProperties` (input/Input.h), plus a Rust port of the
-//! packed-axis storage they use.
+//! `android::PointerProperties` (input/Input.h), plus a Rust implementation
+//! of the packed-axis storage they use.
 //!
-//! Unlike [`crate::input_event_compat::KeyEventData`], these are not new
+//! Unlike [`crate::input_event_ffi::KeyEventData`], these are not new
 //! bundle types: they replicate the real C++ structs field for field so that
 //! values can cross the cxx bridge by value and by slice
 //! ([`crate::motion_event_ffi`] declares them as trivial `ExternType`s, and
@@ -163,9 +163,8 @@ pub enum SetAxisValueError {
 /// the `static_assert`s in `ffi/motion_event.cpp`; `align(8)` mirrors the
 /// `__attribute__((aligned(8)))` on the C++ `bits` field, which fixes the
 /// alignment at 8 even on 32-bit targets. Entries of `values` at or beyond
-/// `bits.count_ones()` are meaningless (the C++ leaves them uninitialized);
-/// [`PointerCoords::cleared`] zeroes them only so that the Rust value starts
-/// fully initialized.
+/// `bits.count_ones()` are meaningless; [`PointerCoords::cleared`] zeroes
+/// them only so that the Rust value starts fully initialized.
 #[repr(C, align(8))]
 #[derive(Clone, Copy, Debug)]
 pub struct PointerCoords {
@@ -180,16 +179,14 @@ pub struct PointerCoords {
 }
 
 impl PointerCoords {
-    /// A coordinate set holding no axes, with every byte zeroed. Matches the
-    /// C++ zero-initialization (`PointerCoords out{};`) the JNI uses before
-    /// filling in axes.
+    /// A coordinate set holding no axes, with every byte zeroed. The JNI
+    /// uses this before filling in axes.
     pub const fn cleared() -> Self {
         PointerCoords { bits: 0, values: [0.0; MAX_AXES], is_resampled: false, empty: [0; 7] }
     }
 
-    /// Forgets all stored axes and the resampled flag, like the C++
-    /// `clear()`: `values` is left untouched, it is meaningless once no bit
-    /// refers to it.
+    /// Forgets all stored axes and the resampled flag; `values` is left
+    /// untouched, it is meaningless once no bit refers to it.
     // Part of the C++ mirror surface; currently exercised only by the tests.
     #[allow(dead_code)]
     pub fn clear(&mut self) {
@@ -268,8 +265,7 @@ impl PointerCoords {
     /// ascending order (the order the Java side packs values in). `values`
     /// must hold at least `BitSet64(bits).count()` elements — a shortfall is a
     /// caller bug the function asserts against. Stores that fail (more than
-    /// [`MAX_AXES`] axes in total) are silently dropped, exactly like the
-    /// unchecked `setAxisValue` calls in the C++ JNI.
+    /// [`MAX_AXES`] axes in total) are silently dropped.
     pub fn set_packed_axes(&mut self, bits: u64, values: &[f32]) {
         assert!(
             values.len() >= BitSet64(bits).count() as usize,
@@ -285,10 +281,10 @@ impl PointerCoords {
     /// Writes the values of the axes marked in `axes` into `out_values` in
     /// ascending axis order — packing order — and returns the matching Java
     /// `mPackedAxisBits` presence word (Java mirrors [`BitSet64`]'s MSB-first
-    /// layout). Absent axes read as `0.0`, like the C++ `getAxisValue`.
-    /// `out_values` must hold at least `axes.count()` elements — a shortfall
-    /// would leave the returned presence word describing more values than were
-    /// written, so it is a caller bug the function asserts against.
+    /// layout). Absent axes read as `0.0`. `out_values` must hold at least
+    /// `axes.count()` elements — a shortfall would leave the returned
+    /// presence word describing more values than were written, so it is a
+    /// caller bug the function asserts against.
     pub fn export_packed_axes(&self, axes: BitSet64, out_values: &mut [f32]) -> u64 {
         assert!(
             out_values.len() >= axes.count() as usize,
@@ -305,7 +301,7 @@ impl PointerCoords {
 
 /// The capacity a Java `PointerCoords.mPackedAxisValues` array must be grown
 /// to for `min_size` packed values: the first power-of-two size, starting at
-/// 8, that fits (the growth policy of the old `obtainPackedAxisValuesArray`).
+/// 8, that fits.
 pub fn packed_axis_values_capacity(min_size: u32) -> u32 {
     min_size.max(8).next_power_of_two()
 }
