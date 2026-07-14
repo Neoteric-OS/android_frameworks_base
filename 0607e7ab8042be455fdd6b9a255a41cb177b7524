@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6747c2a2_3771f5d0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1380243
+      },
+      "writtenOn": "2026-07-14T17:16:11Z",
+      "side": 1,
+      "message": "What advantage do these macros provide over the `jni::bind_java_type` macro?",
+      "revId": "0607e7ab8042be455fdd6b9a255a41cb177b7524",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
