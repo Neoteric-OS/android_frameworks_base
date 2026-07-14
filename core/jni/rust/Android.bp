@@ -54,20 +54,6 @@ rust_test_host {
     proc_macros: ["libjni_platform_macros"],
 }
 
-rust_test_host {
-    name: "jni_shim_abi_test",
-    crate_name: "generated_shim_abi",
-    crate_root: "jni_support/tests/generated_shim_abi.rs",
-    edition: "2021",
-    test_suites: ["general-tests"],
-    auto_gen_config: true,
-    rustlibs: [
-        "libjni_support",
-        "libjni_next",
-    ],
-    proc_macros: ["libjni_platform_macros"],
-}
-
 // Generate the C++ side of the cxx bridge declared in
 // src/sysprop_change.rs.
 genrule {
@@ -104,6 +90,24 @@ genrule {
     out: ["input_event_ffi.rs.cpp"],
 }
 
+// Generate the C++ side of the cxx bridge declared in
+// src/motion_event_ffi.rs.
+genrule {
+    name: "libandroid_runtime_rs_bridge_motion_event_header",
+    tools: ["cxxbridge"],
+    cmd: "$(location cxxbridge) $(in) --header > $(out)",
+    srcs: ["src/motion_event_ffi.rs"],
+    out: ["motion_event_ffi.rs.h"],
+}
+
+genrule {
+    name: "libandroid_runtime_rs_bridge_motion_event_code",
+    tools: ["cxxbridge"],
+    cmd: "$(location cxxbridge) $(in) > $(out)",
+    srcs: ["src/motion_event_ffi.rs"],
+    out: ["motion_event_ffi.rs.cpp"],
+}
+
 // The C++ half of android_runtime's cxx bridges: the generated bridge code
 // plus the handwritten libutils/libinput glue it declares.
 cc_library_static {
@@ -111,6 +115,8 @@ cc_library_static {
     host_supported: true,
     srcs: [
         "ffi/input_event.cpp",
+        "ffi/motion_event.cpp",
+        "ffi/motion_event_parcel.cpp",
         "ffi/sysprop_change.cpp",
     ],
     // ffi/ carries the handwritten C++ headers the generated bridge code
@@ -120,6 +126,7 @@ cc_library_static {
         "cxx-bridge-header",
         "libandroid_runtime_rs_bridge_header",
         "libandroid_runtime_rs_bridge_input_event_header",
+        "libandroid_runtime_rs_bridge_motion_event_header",
     ],
     // The permanent android_view_KeyEvent.cpp facade includes the generated
     // input_event_ffi.rs.h for the shared KeyEventData struct, so re-export
@@ -131,6 +138,7 @@ cc_library_static {
     generated_sources: [
         "libandroid_runtime_rs_bridge_code",
         "libandroid_runtime_rs_bridge_input_event_code",
+        "libandroid_runtime_rs_bridge_motion_event_code",
     ],
     shared_libs: ["libutils"],
     // libinput, linked the same way libandroid_runtime links it: shared on
@@ -162,11 +170,25 @@ rust_defaults {
         "liblog_rust",
         "liblogger",
         "librustutils",
+        "libthiserror",
         "libtracing_perfetto_rust",
     ],
     proc_macros: ["libjni_platform_macros"],
+    // The crate's own cxx bridge (src/sysprop_change.rs). libandroid_runtime
+    // must also list it in static_libs, since Soong does not propagate it
+    // through rust_ffi_static; see core/jni/Android.bp.
     static_libs: ["libandroid_runtime_rs_bridge"],
+    // Host builds resolve __system_property_* from libbase's fallback
+    // implementation (on device they come from bionic's libc); see
+    // src/android_os_system_properties.rs.
     shared_libs: ["libbase"],
+    // The input-event bridge calls android::MotionEvent/KeyEvent (libinput);
+    // linkage matches libandroid_runtime's: shared on device, static on host.
+    // Needed here (not only on the bridge) because cc_library_static deps do
+    // not propagate into the rust_test link. Host uses the shared libinput:
+    // the static archive carries UBSan-minimal instrumentation whose runtime
+    // rust_test links don't provide, while the .so is self-contained (and
+    // brings libbinder/libui-types along).
     target: {
         android: {
             shared_libs: ["libinput"],
@@ -180,6 +202,8 @@ rust_defaults {
     },
 }
 
+// Rust implementations of libandroid_runtime's JNI methods, linked into
+// libandroid_runtime via whole_static_libs.
 rust_ffi_static {
     name: "libandroid_runtime_rs",
     defaults: ["libandroid_runtime_rs_defaults"],
@@ -191,4 +215,18 @@ rust_test_host {
     defaults: ["libandroid_runtime_rs_defaults"],
     test_suites: ["general-tests"],
     auto_gen_config: true,
+}
+
+rust_test_host {
+    name: "jni_shim_abi_test",
+    crate_name: "generated_shim_abi",
+    crate_root: "jni_support/tests/generated_shim_abi.rs",
+    edition: "2021",
+    test_suites: ["general-tests"],
+    auto_gen_config: true,
+    rustlibs: [
+        "libjni_support",
+        "libjni_next",
+    ],
+    proc_macros: ["libjni_platform_macros"],
 }
