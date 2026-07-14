@@ -64,6 +64,30 @@
       },
       "revId": "0a04079fa7ea470313a29b8d16fdb356478b7d5d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b48585c5_f9d2e42f",
+        "filename": "core/java/android/provider/AlarmClock.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 3236026
+      },
+      "writtenOn": "2026-07-14T11:47:47Z",
+      "side": 1,
+      "message": "ACTION_SNOOZE_ALARM were added, how about ACTION_DISMISS_ALARM?\n\nb/253608916#comment27",
+      "parentUuid": "fbe4f49d_e9e63dbc",
+      "range": {
+        "startLine": 27,
+        "startChar": 3,
+        "endLine": 27,
+        "endChar": 22
+      },
+      "revId": "0a04079fa7ea470313a29b8d16fdb356478b7d5d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
