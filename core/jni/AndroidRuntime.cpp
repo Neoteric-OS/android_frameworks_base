@@ -214,7 +214,7 @@ extern int register_com_android_internal_content_om_OverlayConfig(JNIEnv *env);
 extern int register_com_android_internal_content_om_OverlayManagerImpl(JNIEnv* env);
 extern int register_com_android_internal_net_NetworkUtilsInternal(JNIEnv* env);
 extern int register_com_android_internal_os_ApplicationSharedMemory(JNIEnv *env);
-extern int register_com_android_internal_os_ClassLoaderFactory(JNIEnv* env);
+extern "C" int register_com_android_internal_os_ClassLoaderFactory(JNIEnv* env);
 extern int register_com_android_internal_os_DebugStore(JNIEnv* env);
 extern int register_com_android_internal_os_FuseAppLoop(JNIEnv* env);
 extern int register_com_android_internal_os_KernelAllocationStats(JNIEnv* env);

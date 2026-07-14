@@ -32,6 +32,8 @@ mod android_util_log;
 mod android_view_key_event;
 #[cfg(not(test))]
 mod android_view_motion_event;
+#[cfg(target_os = "android")]
+mod com_android_internal_os_ClassLoaderFactory;
 mod event_log_helper;
 mod input_event_ffi;
 mod libbase_parse;
@@ -137,4 +139,16 @@ pub extern "C" fn register_android_view_KeyEvent(env: jni::EnvUnowned<'_>) -> jn
 #[no_mangle]
 pub extern "C" fn register_android_view_MotionEvent(env: jni::EnvUnowned<'_>) -> jni::sys::jint {
     register_natives(env, android_view_motion_event::register)
+}
+
+/// Registers `com.android.internal.os.ClassLoaderFactory`'s native method.
+/// Device-only: the host runtime does not register ClassLoaderFactory, and
+/// libnativeloader — which this native forwards to — is not linked into the
+/// host build. See `register_natives`.
+#[cfg(target_os = "android")]
+#[no_mangle]
+pub extern "C" fn register_com_android_internal_os_ClassLoaderFactory(
+    env: jni::EnvUnowned<'_>,
+) -> jni::sys::jint {
+    register_natives(env, com_android_internal_os_ClassLoaderFactory::register)
 }
