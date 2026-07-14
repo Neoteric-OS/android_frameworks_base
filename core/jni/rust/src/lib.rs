@@ -30,9 +30,13 @@ mod android_os_trace;
 mod android_util_event_log;
 mod android_util_log;
 mod android_view_key_event;
+#[cfg(not(test))]
+mod android_view_motion_event;
 mod event_log_helper;
 mod input_event_ffi;
 mod libbase_parse;
+mod motion_event_compat;
+mod motion_event_ffi;
 mod sysprop_change;
 
 /// Shared body of every `register_*` entry point: bootstraps this crate's
@@ -124,4 +128,13 @@ pub extern "C" fn register_android_util_Log(env: jni::EnvUnowned<'_>) -> jni::sy
 #[no_mangle]
 pub extern "C" fn register_android_view_KeyEvent(env: jni::EnvUnowned<'_>) -> jni::sys::jint {
     register_natives(env, android_view_key_event::register)
+}
+
+/// Registers `android.view.MotionEvent`'s native methods and caches its class
+/// IDs. Called from the gRegJNI tables of AndroidRuntime.cpp and
+/// HostRuntime.cpp. See `register_natives`.
+#[cfg(not(test))]
+#[no_mangle]
+pub extern "C" fn register_android_view_MotionEvent(env: jni::EnvUnowned<'_>) -> jni::sys::jint {
+    register_natives(env, android_view_motion_event::register)
 }

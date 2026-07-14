@@ -38,7 +38,6 @@
 #include <nativehelper/JNIHelp.h>
 #include "android_os_MessageQueue.h"
 #include "android_view_InputChannel.h"
-#include "android_view_KeyEvent.h"
 
 #include "android-base/stringprintf.h"
 #include "nativebridge/native_bridge.h"
