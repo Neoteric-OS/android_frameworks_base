@@ -34,6 +34,24 @@
       "parentUuid": "012a246d_1ac85378",
       "revId": "b90d65a41c446bf518a3ed9e7cfef964af648410",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ee19b3d_4e8407dc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3368412
+      },
+      "writtenOn": "2026-07-15T10:23:01Z",
+      "side": 1,
+      "message": "I opened an issue https://issuetracker.google.com/issues/535086834",
+      "parentUuid": "9583fdf7_ed1affc4",
+      "revId": "b90d65a41c446bf518a3ed9e7cfef964af648410",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
