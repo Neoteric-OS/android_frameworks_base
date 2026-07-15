@@ -34,6 +34,11 @@ impl JavaClass {
     pub fn path(&self) -> &str {
         &self.path
     }
+
+    /// Package prefix: "android/view/MotionEvent" → Some("android/view"), "Simple" → None
+    pub fn package(&self) -> Option<&str> {
+        self.path.rfind('/').map(|pos| &self.path[..pos])
+    }
 }
 
 #[cfg(test)]
@@ -71,4 +76,27 @@ mod tests {
         assert!(err.to_string().contains("jni_module"));
     }
 
+    #[test]
+    fn test_package_with_slashes() {
+        let java_class = JavaClass::parse(quote! { "android/view/MotionEvent" }, "test").unwrap();
+        assert_eq!(java_class.package(), Some("android/view"));
+    }
+
+    #[test]
+    fn test_package_with_dots() {
+        let java_class = JavaClass::parse(quote! { "android.view.MotionEvent" }, "test").unwrap();
+        assert_eq!(java_class.package(), Some("android/view"));
+    }
+
+    #[test]
+    fn test_package_deep() {
+        let java_class = JavaClass::parse(quote! { "android/os/SystemClock" }, "test").unwrap();
+        assert_eq!(java_class.package(), Some("android/os"));
+    }
+
+    #[test]
+    fn test_package_simple_name() {
+        let java_class = JavaClass::parse(quote! { "Simple" }, "test").unwrap();
+        assert_eq!(java_class.package(), None);
+    }
 }

@@ -42,10 +42,6 @@ extern crate proc_macro;
 
 pub(crate) mod class;
 pub(crate) mod module;
-// `sig::resolve_class` has no consumer until object/array parameter conversions
-// arrive; allow it to sit unused until then. (`primitive_sig` is used here for
-// the `@CriticalNative` descriptor.)
-#[allow(dead_code)]
 pub(crate) mod sig;
 
 use proc_macro::TokenStream;
