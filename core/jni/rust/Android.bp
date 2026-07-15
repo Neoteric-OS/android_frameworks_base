@@ -145,6 +145,8 @@ cc_library_static {
     // device, static on host.
     target: {
         android: {
+            srcs: ["ffi/activity_thread.cpp"],
+            header_libs: ["bionic_libc_platform_headers"],
             shared_libs: ["libinput"],
         },
         host: {

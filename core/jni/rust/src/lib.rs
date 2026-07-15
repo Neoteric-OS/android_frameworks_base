@@ -23,6 +23,11 @@
 // JNI registration entry points and native methods use Java-style names.
 #![allow(non_snake_case)]
 
+// Device-only: forwards to bionic's mallopt/android_mallopt, which are
+// bionic-specific and not present in the host build, so the host build never
+// sees this module.
+#[cfg(target_os = "android")]
+mod android_app_ActivityThread;
 mod android_app_admin_security_log;
 mod android_os_system_clock;
 mod android_os_system_properties;
@@ -30,8 +35,15 @@ mod android_os_trace;
 mod android_util_event_log;
 mod android_util_log;
 mod android_view_key_event;
+// The MotionEvent JNI needs symbols that exist only inside libandroid_runtime
+// itself (parcelForJavaObject behind the bridge's parcel shims, hwui's
+// AMatrix_getContents), which the host test binary does not link, so unlike
+// its siblings it is also compiled out of the test harness.
 #[cfg(not(test))]
 mod android_view_motion_event;
+// Device-only: forwards to libnativeloader (CreateClassLoaderNamespace), which
+// is linked into the runtime only on Android, so the host build never sees this
+// module.
 #[cfg(target_os = "android")]
 mod com_android_internal_os_ClassLoaderFactory;
 mod event_log_helper;
@@ -151,4 +163,15 @@ pub extern "C" fn register_com_android_internal_os_ClassLoaderFactory(
     env: jni::EnvUnowned<'_>,
 ) -> jni::sys::jint {
     register_natives(env, com_android_internal_os_ClassLoaderFactory::register)
+}
+
+/// Registers `android.app.ActivityThread`'s native methods. Device-only: the
+/// bionic `mallopt`/`android_mallopt` calls it forwards to are not present in
+/// the host build. See `register_natives`.
+#[cfg(target_os = "android")]
+#[no_mangle]
+pub extern "C" fn register_android_app_ActivityThread(
+    env: jni::EnvUnowned<'_>,
+) -> jni::sys::jint {
+    register_natives(env, android_app_ActivityThread::register)
 }
