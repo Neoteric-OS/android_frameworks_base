@@ -6,6 +6,9 @@
 //! - [`JniError`] — Typed error enum mapping to Java exceptions
 //! - [`ThrowJniError`] — [`ErrorPolicy`](jni::errors::ErrorPolicy) the generated
 //!   shims use to turn a `Result` `Err` into the matching pending exception
+//! - [`JLongHandle`] — Typed pointer bits carried by a Java `long`
+//! - [`ForeignPeer`]/[`ForeignPeerMut`] — Lifetime-bound native borrows
+//! - [`BoxPeer`] — Rust-owned `Box<T>` handles
 //! - [`BoundedUtfChars`] — Allocation-free, truncating copy of a Java string
 //!
 //! A panic that reaches a JNI boundary aborts the process. Android platform
@@ -19,6 +22,8 @@
 
 pub mod bounded_utf_chars;
 pub mod error;
+pub mod native_ptr;
 
 pub use bounded_utf_chars::BoundedUtfChars;
 pub use error::{JniError, ThrowJniError};
+pub use native_ptr::{BoxPeer, ForeignPeer, ForeignPeerMut, JLongHandle};
