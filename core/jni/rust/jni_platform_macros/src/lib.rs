@@ -42,10 +42,9 @@ extern crate proc_macro;
 
 pub(crate) mod class;
 pub(crate) mod module;
-// The signature helpers have no consumer at this layer: `primitive_sig` is
-// first used by the `@CriticalNative` descriptor and `resolve_class` by object
-// parameter conversions, both of which arrive in later layers. Allow them to
-// sit unused until then.
+// `sig::resolve_class` has no consumer until object/array parameter conversions
+// arrive; allow it to sit unused until then. (`primitive_sig` is used here for
+// the `@CriticalNative` descriptor.)
 #[allow(dead_code)]
 pub(crate) mod sig;
 
