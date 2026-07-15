@@ -6,8 +6,8 @@
 //! Regular and `@FastNative` methods go through jni-rs's `native_method!` macro.
 //! For each, this macro generates a private inner impl fn whose parameters are
 //! the raw `jni::sys`/`jni::objects` values the JVM passes and whose body does
-//! the Rust-friendly bridging (primitives, including `bool`) before and after
-//! calling the user's function. `native_method!` wraps that
+//! the Rust-friendly bridging (`&str`, `&JNIStr`, `bool`, arrays, `Result`, …)
+//! before and after calling the user's function. `native_method!` wraps that
 //! inner fn in the `extern "system"` shim the JVM calls (upgrading `EnvUnowned`
 //! to `&mut Env`, catching panics, and resolving an `Err` to the matching
 //! pending Java exception via `jni_support::ThrowJniError`), and — the reason
@@ -24,7 +24,7 @@
 use proc_macro2::TokenStream;
 use quote::{format_ident, quote};
 use syn::{
-    parse2, punctuated::Punctuated, Attribute, FnArg, Item, ItemFn, ItemMod, Lit, Meta, MetaList,
+    parse2, punctuated::Punctuated, Attribute, FnArg, Item, ItemFn, ItemMod, Lit, Meta,
     MetaNameValue, PatType, ReturnType, Token, Type,
 };
 
@@ -60,6 +60,13 @@ enum JniMode {
     Critical,
 }
 
+/// Validated options from one `#[jni_method(...)]` attribute.
+#[derive(Debug)]
+struct JniMethodOptions {
+    mode: JniMode,
+    java_name: Option<String>,
+}
+
 /// How one user parameter is bridged from the value the JVM passes to the type
 /// the user's function declares.
 struct ParamBridge {
@@ -69,14 +76,31 @@ struct ParamBridge {
 
 /// Conversion strategies for [`ParamBridge`].
 ///
-/// Every shim parameter is an FFI-safe `jni::sys` primitive, passed through
-/// unchanged.
+/// The shim parameter is either an FFI-safe `jni::sys` primitive or, for object
+/// arguments, the `jni::objects` wrapper itself — a `#[repr(transparent)]` value
+/// the JVM's reference is captured into directly across the boundary, so no
+/// `from_raw` is needed.
 enum ParamBridgeKind {
     /// ABI-identical primitive (`jint`, `jlong`, …); passed through unchanged.
     /// Holds the `jni::sys` type of the shim parameter. `bool` maps here too:
     /// jni-sys 0.4 aliases `jboolean = bool`, so it is the same shim type and
     /// needs no conversion.
     Primitive(TokenStream),
+    /// `&str` / `Option<&str>` from a `JString`: extracted into an owned
+    /// `String` (one heap allocation per call). Non-nullable throws
+    /// NullPointerException on a null reference.
+    OwnedString { nullable: bool },
+    /// `&JNIStr` / `Option<&JNIStr>` borrowed from a `JString` via
+    /// `GetStringUTFChars` (zero copies; released on return). The bytes are
+    /// Modified UTF-8. Non-nullable throws NullPointerException on a null
+    /// reference.
+    BorrowedString { nullable: bool },
+    /// A `jni::objects` wrapper (`JByteArray`, `JObject`, …) passed to the user
+    /// function by value or by reference. Holds the wrapper path.
+    Wrapped { wrapper: TokenStream, by_ref: bool },
+    /// The user declared a raw `jni::sys` object handle; the wrapper shim
+    /// parameter is unwrapped with `.as_raw()`. Holds the wrapper path.
+    Raw { wrapper: TokenStream },
 }
 
 /// Maps a user parameter type (textual form) to its bridging strategy.
@@ -94,26 +118,149 @@ fn param_bridge(ty: &str) -> Option<ParamBridge> {
         "jchar" | "u16" => ParamBridgeKind::Primitive(quote! { jni::sys::jchar }),
         "jshort" | "i16" => ParamBridgeKind::Primitive(quote! { jni::sys::jshort }),
 
+        "&str" => ParamBridgeKind::OwnedString { nullable: false },
+        "Option<&str>" => ParamBridgeKind::OwnedString { nullable: true },
+
+        "&JNIStr" => ParamBridgeKind::BorrowedString { nullable: false },
+        "Option<&JNIStr>" => ParamBridgeKind::BorrowedString { nullable: true },
+
+        "jstring" => ParamBridgeKind::Raw { wrapper: quote! { jni::objects::JString } },
+        "JString" => {
+            ParamBridgeKind::Wrapped { wrapper: quote! { jni::objects::JString }, by_ref: false }
+        }
+        "&JString" => {
+            ParamBridgeKind::Wrapped { wrapper: quote! { jni::objects::JString }, by_ref: true }
+        }
+
+        "jbyteArray" => ParamBridgeKind::Raw { wrapper: quote! { jni::objects::JByteArray } },
+        "JByteArray" => {
+            ParamBridgeKind::Wrapped { wrapper: quote! { jni::objects::JByteArray }, by_ref: false }
+        }
+        "&JByteArray" => {
+            ParamBridgeKind::Wrapped { wrapper: quote! { jni::objects::JByteArray }, by_ref: true }
+        }
+        "jintArray" => ParamBridgeKind::Raw { wrapper: quote! { jni::objects::JIntArray } },
+        "JIntArray" => {
+            ParamBridgeKind::Wrapped { wrapper: quote! { jni::objects::JIntArray }, by_ref: false }
+        }
+        "&JIntArray" => {
+            ParamBridgeKind::Wrapped { wrapper: quote! { jni::objects::JIntArray }, by_ref: true }
+        }
+        "jfloatArray" => ParamBridgeKind::Raw { wrapper: quote! { jni::objects::JFloatArray } },
+        "JFloatArray" => ParamBridgeKind::Wrapped {
+            wrapper: quote! { jni::objects::JFloatArray },
+            by_ref: false,
+        },
+        "&JFloatArray" => {
+            ParamBridgeKind::Wrapped { wrapper: quote! { jni::objects::JFloatArray }, by_ref: true }
+        }
+        "jlongArray" => ParamBridgeKind::Raw { wrapper: quote! { jni::objects::JLongArray } },
+        "JLongArray" => {
+            ParamBridgeKind::Wrapped { wrapper: quote! { jni::objects::JLongArray }, by_ref: false }
+        }
+        "&JLongArray" => {
+            ParamBridgeKind::Wrapped { wrapper: quote! { jni::objects::JLongArray }, by_ref: true }
+        }
+        "jshortArray" => ParamBridgeKind::Raw { wrapper: quote! { jni::objects::JShortArray } },
+        "JShortArray" => ParamBridgeKind::Wrapped {
+            wrapper: quote! { jni::objects::JShortArray },
+            by_ref: false,
+        },
+        "&JShortArray" => {
+            ParamBridgeKind::Wrapped { wrapper: quote! { jni::objects::JShortArray }, by_ref: true }
+        }
+        "jdoubleArray" => ParamBridgeKind::Raw { wrapper: quote! { jni::objects::JDoubleArray } },
+        "JDoubleArray" => ParamBridgeKind::Wrapped {
+            wrapper: quote! { jni::objects::JDoubleArray },
+            by_ref: false,
+        },
+        "&JDoubleArray" => ParamBridgeKind::Wrapped {
+            wrapper: quote! { jni::objects::JDoubleArray },
+            by_ref: true,
+        },
+        "jbooleanArray" => ParamBridgeKind::Raw { wrapper: quote! { jni::objects::JBooleanArray } },
+        "JBooleanArray" => ParamBridgeKind::Wrapped {
+            wrapper: quote! { jni::objects::JBooleanArray },
+            by_ref: false,
+        },
+        "&JBooleanArray" => ParamBridgeKind::Wrapped {
+            wrapper: quote! { jni::objects::JBooleanArray },
+            by_ref: true,
+        },
+        "jcharArray" => ParamBridgeKind::Raw { wrapper: quote! { jni::objects::JCharArray } },
+        "JCharArray" => {
+            ParamBridgeKind::Wrapped { wrapper: quote! { jni::objects::JCharArray }, by_ref: false }
+        }
+        "&JCharArray" => {
+            ParamBridgeKind::Wrapped { wrapper: quote! { jni::objects::JCharArray }, by_ref: true }
+        }
+
+        "jobject" => ParamBridgeKind::Raw { wrapper: quote! { jni::objects::JObject } },
+        "JObject" => {
+            ParamBridgeKind::Wrapped { wrapper: quote! { jni::objects::JObject }, by_ref: false }
+        }
+        "&JObject" => {
+            ParamBridgeKind::Wrapped { wrapper: quote! { jni::objects::JObject }, by_ref: true }
+        }
+        "jobjectArray" => ParamBridgeKind::Raw { wrapper: quote! { jni::objects::JObjectArray } },
+        "JObjectArray" => ParamBridgeKind::Wrapped {
+            wrapper: quote! { jni::objects::JObjectArray },
+            by_ref: false,
+        },
+        "&JObjectArray" => ParamBridgeKind::Wrapped {
+            wrapper: quote! { jni::objects::JObjectArray },
+            by_ref: true,
+        },
+
         _ => return None,
     };
     Some(ParamBridge { kind })
 }
 
+/// Extracts the inner type `W` from `Option<W>` (e.g. `Option<&JIntArray>` ->
+/// `&JIntArray`), mirroring [`sig::extract_result_inner`]. Returns `None` when
+/// `ty` is not an `Option<...>`.
+///
+/// Used to recognize a nullable object parameter, whose inner object wrapper
+/// determines both the bridge and the JNI descriptor. String options
+/// (`Option<&str>`/`Option<&JNIStr>`) also match here, but their inner types
+/// are not objects, so callers gate on [`param_bridge`] classifying the inner
+/// as `Wrapped`/`Raw`.
+fn strip_option(ty: &str) -> Option<String> {
+    let ty = ty.trim();
+    if !ty.starts_with("Option<") && !ty.starts_with("Option <") {
+        return None;
+    }
+    let start = ty.find('<')? + 1;
+    let end = ty.rfind('>')?;
+    Some(ty[start..end].trim().to_string())
+}
+
 /// How the user's return value is converted to the value the shim returns.
 ///
-/// At this layer every return is an ABI-identical primitive or void, so the
-/// shim returns the value unchanged. `bool` classifies as a primitive: jni-sys
-/// 0.4 aliases `jboolean = bool`.
+/// Object returns become `jni::objects` wrappers (not raw pointers): a wrapper
+/// is `#[repr(transparent)]` so the ABI is unchanged, and it implements
+/// `Default` (a null reference), which [`EnvOutcome::resolve`](jni::EnvOutcome::resolve)
+/// needs for the error/panic path.
 enum ReturnBridge {
     /// No return value (`()` / no declared return).
     Void,
     /// An ABI-identical primitive; passed through. Holds the `jni::sys` type.
     Primitive { sys_ty: TokenStream },
+    /// `String` → `JString` via `Env::new_string`.
+    StringToJString,
+    /// The user returns an owned `jni::objects` wrapper directly.
+    /// Holds the wrapper path.
+    OwnedWrapper { wrapper: TokenStream },
+    /// The user returns a raw `jni::sys` object handle; wrap it back up with
+    /// `from_raw`. Holds the wrapper path.
+    RawObject { wrapper: TokenStream },
 }
 
 /// Drops a trailing lifetime-only generic argument, so an owned object return
-/// written with the lifetime its type requires (`JString<'local>`) classifies
-/// the same as the bare wrapper name [`param_bridge`] recognizes (`JString`).
+/// or parameter written with the lifetime its type requires (`JString<'local>`)
+/// classifies the same as the bare wrapper name [`param_bridge`] recognizes
+/// (`JString`).
 ///
 /// Only a single lifetime argument (`Foo<'x>`) is stripped — anything whose
 /// generic content does not begin with `'` (a real type argument, `[jbyte]`,
@@ -143,12 +290,22 @@ impl ReturnBridge {
         let ty = strip_lifetime_arg(ty);
         let bridge = match ty {
             "()" | "" => ReturnBridge::Void,
+            "String" => ReturnBridge::StringToJString,
             _ => {
                 let kind = param_bridge(ty)
                     .ok_or_else(|| format!("Unknown JNI type: '{}'", ty))?
                     .kind;
                 match kind {
                     ParamBridgeKind::Primitive(sys_ty) => ReturnBridge::Primitive { sys_ty },
+                    ParamBridgeKind::Wrapped { wrapper, by_ref: false } => {
+                        ReturnBridge::OwnedWrapper { wrapper }
+                    }
+                    ParamBridgeKind::Raw { wrapper } => ReturnBridge::RawObject { wrapper },
+                    ParamBridgeKind::OwnedString { .. }
+                    | ParamBridgeKind::BorrowedString { .. }
+                    | ParamBridgeKind::Wrapped { by_ref: true, .. } => {
+                        return Err(format!("Unsupported JNI return type: '{}'", ty))
+                    }
                 }
             }
         };
@@ -161,19 +318,27 @@ impl ReturnBridge {
     }
 
     /// The shim's return type tokens (empty for void), tied to `lifetime`.
-    fn output_tokens(&self, _lifetime: &TokenStream) -> TokenStream {
+    fn output_tokens(&self, lifetime: &TokenStream) -> TokenStream {
         match self {
             ReturnBridge::Void => quote! {},
             ReturnBridge::Primitive { sys_ty } => quote! { -> #sys_ty },
+            ReturnBridge::StringToJString => quote! { -> jni::objects::JString<#lifetime> },
+            ReturnBridge::OwnedWrapper { wrapper } | ReturnBridge::RawObject { wrapper } => {
+                quote! { -> #wrapper<#lifetime> }
+            }
         }
     }
 
     /// The `Ok` type of the `with_env` closure's `Result` (empty tuple for void),
     /// tied to `lifetime`.
-    fn closure_ok_ty(&self, _lifetime: &TokenStream) -> TokenStream {
+    fn closure_ok_ty(&self, lifetime: &TokenStream) -> TokenStream {
         match self {
             ReturnBridge::Void => quote! { () },
             ReturnBridge::Primitive { sys_ty } => quote! { #sys_ty },
+            ReturnBridge::StringToJString => quote! { jni::objects::JString<#lifetime> },
+            ReturnBridge::OwnedWrapper { wrapper } | ReturnBridge::RawObject { wrapper } => {
+                quote! { #wrapper<#lifetime> }
+            }
         }
     }
 
@@ -183,6 +348,17 @@ impl ReturnBridge {
         match self {
             ReturnBridge::Void => quote! { ::core::result::Result::Ok(()) },
             ReturnBridge::Primitive { .. } => quote! { ::core::result::Result::Ok(#value) },
+            ReturnBridge::StringToJString => {
+                quote! { ::core::result::Result::Ok(env.new_string(&#value)?) }
+            }
+            ReturnBridge::OwnedWrapper { .. } => quote! { ::core::result::Result::Ok(#value) },
+            ReturnBridge::RawObject { wrapper } => {
+                // SAFETY: the user returned a raw handle from a JNI call on this
+                // thread's frame; wrapping it ties it to `env`'s local frame.
+                quote! {
+                    ::core::result::Result::Ok(unsafe { #wrapper::from_raw(env, #value) })
+                }
+            }
         }
     }
 }
@@ -271,17 +447,21 @@ impl JniMethod {
     ///
     /// Returns `Err(compile_error TokenStream)` if validation fails (e.g., missing
     /// env/this parameters, unknown types).
-    fn parse(func: &ItemFn) -> Result<Self, TokenStream> {
+    fn parse(func: &ItemFn, module_package: Option<&str>) -> Result<Self, TokenStream> {
         let jni_attr = find_jni_method_attr(&func.attrs)
             .expect("JniMethod::parse called without jni_method attr");
 
-        let mode = parse_jni_mode(&jni_attr);
+        let options = parse_jni_method_options(&jni_attr)
+            .map_err(|e| e.to_compile_error())?;
+        let mode = options.mode;
 
         validate_leading_params(func, &mode)
             .map_err(|e| syn::Error::new_spanned(func, e).to_compile_error())?;
 
-        let java_name = parse_java_name(&jni_attr)
+        let java_name = options
+            .java_name
             .unwrap_or_else(|| derive_java_name(&func.sig.ident.to_string()));
+        let returns_attr = find_returns_attr(&func.attrs);
 
         let method_const = format_ident!("__NATIVE_METHOD_{}", func.sig.ident);
         let is_critical = mode == JniMode::Critical;
@@ -289,7 +469,13 @@ impl JniMethod {
         let generated_items = if is_critical {
             generate_critical_method(func, &java_name, &method_const)
         } else {
-            generate_native_method(func, &java_name, &method_const)
+            generate_native_method(
+                func,
+                &java_name,
+                module_package,
+                returns_attr.as_deref(),
+                &method_const,
+            )
         }
         .map_err(|e| syn::Error::new_spanned(func, e).to_compile_error())?;
 
@@ -420,6 +606,7 @@ pub fn expand_jni_module(attr: TokenStream, item: TokenStream) -> TokenStream {
         Err(e) => return e.to_compile_error(),
     };
 
+    let module_package = java_class.package();
     let mod_name = &input.ident;
     let vis = &input.vis;
 
@@ -438,7 +625,7 @@ pub fn expand_jni_module(attr: TokenStream, item: TokenStream) -> TokenStream {
         match item {
             Item::Fn(func) => {
                 if find_jni_method_attr(&func.attrs).is_some() {
-                    match JniMethod::parse(func) {
+                    match JniMethod::parse(func, module_package) {
                         Ok(method) => {
                             output_items.push(method.generated_items.clone());
                             output_items.push(method.cleaned_fn.clone());
@@ -489,52 +676,85 @@ fn find_jni_method_attr(attrs: &[Attribute]) -> Option<Attribute> {
     attrs.iter().find(|a| a.path().is_ident("jni_method")).cloned()
 }
 
-/// Parses the contents of a `#[jni_method(...)]` attribute as a comma-separated
-/// list of `Meta` items (e.g., `critical`, `fast`, `name = "foo"`).
-///
-/// Returns an empty list for bare `#[jni_method]`.
-fn parse_jni_method_args(attr: &Attribute) -> Vec<Meta> {
-    if let Meta::List(MetaList { tokens, .. }) = &attr.meta {
-        if let Ok(args) = syn::parse::Parser::parse2(
-            Punctuated::<Meta, Token![,]>::parse_terminated,
-            tokens.clone(),
-        ) {
-            return args.into_iter().collect();
-        }
-    }
-    Vec::new()
-}
-
-/// Parses the JNI mode from `#[jni_method(critical)]` or `#[jni_method(fast)]`.
-fn parse_jni_mode(attr: &Attribute) -> JniMode {
-    for meta in parse_jni_method_args(attr) {
-        if let Meta::Path(path) = &meta {
-            if path.is_ident("critical") {
-                return JniMode::Critical;
-            }
-            if path.is_ident("fast") {
-                return JniMode::Fast;
-            }
-        }
-    }
-    JniMode::Regular
-}
-
-/// Parses an explicit Java method name from `#[jni_method(name = "foo")]`.
-fn parse_java_name(attr: &Attribute) -> Option<String> {
-    for meta in parse_jni_method_args(attr) {
-        if let Meta::NameValue(MetaNameValue {
-            path,
-            value: syn::Expr::Lit(syn::ExprLit { lit: Lit::Str(s), .. }),
-            ..
-        }) = &meta
-        {
-            if path.is_ident("name") {
+/// Finds the `#[returns = "..."]` attribute on a function.
+fn find_returns_attr(attrs: &[Attribute]) -> Option<String> {
+    for attr in attrs {
+        if attr.path().is_ident("returns") {
+            if let Meta::NameValue(MetaNameValue {
+                value: syn::Expr::Lit(syn::ExprLit { lit: Lit::Str(s), .. }),
+                ..
+            }) = &attr.meta
+            {
                 return Some(s.value());
             }
         }
     }
     None
+}
+
+/// Parses and validates one `#[jni_method(...)]` attribute.
+///
+/// Unknown, malformed, duplicate, and contradictory options are errors. In
+/// particular, silently treating a misspelled `critical` as a regular native
+/// would generate the wrong ABI for a Java `@CriticalNative` declaration.
+fn parse_jni_method_options(attr: &Attribute) -> syn::Result<JniMethodOptions> {
+    let args = match &attr.meta {
+        Meta::Path(_) => Punctuated::new(),
+        Meta::List(list) => syn::parse::Parser::parse2(
+            Punctuated::<Meta, Token![,]>::parse_terminated,
+            list.tokens.clone(),
+        )?,
+        Meta::NameValue(_) => {
+            return Err(syn::Error::new_spanned(
+                attr,
+                "jni_method must be bare or use parenthesized options",
+            ));
+        }
+    };
+
+    let mut mode = JniMode::Regular;
+    let mut saw_mode = false;
+    let mut java_name = None;
+
+    for meta in args {
+        match meta {
+            Meta::Path(path) if path.is_ident("critical") || path.is_ident("fast") => {
+                if saw_mode {
+                    return Err(syn::Error::new_spanned(
+                        path,
+                        "jni_method accepts at most one of `fast` or `critical`",
+                    ));
+                }
+                mode = if path.is_ident("critical") {
+                    JniMode::Critical
+                } else {
+                    JniMode::Fast
+                };
+                saw_mode = true;
+            }
+            Meta::NameValue(MetaNameValue {
+                path,
+                value: syn::Expr::Lit(syn::ExprLit { lit: Lit::Str(value), .. }),
+                ..
+            }) if path.is_ident("name") => {
+                if java_name.is_some() {
+                    return Err(syn::Error::new_spanned(path, "duplicate jni_method `name`"));
+                }
+                java_name = Some(value.value());
+            }
+            Meta::NameValue(MetaNameValue { path, .. }) if path.is_ident("name") => {
+                return Err(syn::Error::new_spanned(path, "jni_method `name` must be a string"));
+            }
+            other => {
+                return Err(syn::Error::new_spanned(
+                    other,
+                    "unknown jni_method option; expected `fast`, `critical`, or `name = \"...\"`",
+                ));
+            }
+        }
+    }
+
+    Ok(JniMethodOptions { mode, java_name })
 }
 
 /// Derives the Java method name from a Rust function name.
@@ -548,14 +768,129 @@ fn derive_java_name(fn_name: &str) -> String {
     fn_name.to_string()
 }
 
+/// Collects the object classes a method's signature references so
+/// `native_method!` derives the right JNI descriptor for a generic `JObject`
+/// parameter.
+///
+/// The friendly surface pairs a generic `JObject`/`jobject`/`JObjectArray` with
+/// a `#[class = "..."]`, decoupling the Rust wrapper type (`JObject`) from the
+/// Java descriptor. But `native_method!` derives the wrapper type *from* the
+/// class: a well-known class such as `java.util.Collection` would resolve to a
+/// specific wrapper (`JCollection`), not `JObject`, and fail to type-check
+/// against the inner impl fn's `JObject` parameter.
+///
+/// To keep the wrapper `JObject` while still emitting the right descriptor, each
+/// non-core class is bound — via a `native_method!` `type_map` entry — to a
+/// fresh, `JObject`-typed alias defined by [`Self::type_alias_items`]. The four
+/// core classes (which cannot be remapped) are emitted as their dotted literal;
+/// only `java.lang.Object` is meaningful with a generic `JObject` parameter, and
+/// it already resolves to `JObject`.
+struct ObjectClassMappings {
+    /// The method name, used to make alias identifiers unique across the module.
+    fn_prefix: String,
+    /// Allocated `(alias ident, dotted java class)` pairs, deduplicated by class.
+    entries: Vec<(proc_macro2::Ident, String)>,
+}
+
+/// The four Java classes `jni_sig!` treats as core; user code cannot remap them.
+const CORE_JAVA_CLASSES: [&str; 4] =
+    ["java.lang.Object", "java.lang.Class", "java.lang.String", "java.lang.Throwable"];
+
+impl ObjectClassMappings {
+    fn new(fn_prefix: &str) -> Self {
+        ObjectClassMappings { fn_prefix: fn_prefix.to_string(), entries: Vec::new() }
+    }
+
+    /// The `jni_sig!` token for an object type of the `#[class]`/`#[returns]`
+    /// class `class`, resolved against `module_package`.
+    fn object_token(&mut self, class: &str, module_package: Option<&str>) -> TokenStream {
+        let slash = sig::resolve_class(class, module_package);
+        let dotted = slash.replace('/', ".");
+
+        if CORE_JAVA_CLASSES.contains(&dotted.as_str()) {
+            // `java.lang.Object` -> JObject (what a generic JObject param wants);
+            // the other three cannot be remapped, so they stay literal.
+            let lit = syn::LitStr::new(&dotted, proc_macro2::Span::call_site());
+            return quote! { #lit };
+        }
+
+        // A default-package class has no dot; `jni_sig!` spells it with a leading
+        // one (e.g. `.Foo`). Store the dot-safe literal for the `type_map`.
+        let class_literal = if dotted.contains('.') { dotted } else { format!(".{}", dotted) };
+
+        if let Some((alias, _)) = self.entries.iter().find(|(_, c)| *c == class_literal) {
+            return quote! { #alias };
+        }
+        let alias = format_ident!("__JniClass_{}_{}", self.fn_prefix, self.entries.len());
+        self.entries.push((alias.clone(), class_literal));
+        quote! { #alias }
+    }
+
+    /// The `type_map = { ... }` block binding each allocated alias to its class,
+    /// or empty tokens if no non-core object classes were referenced.
+    fn type_map_tokens(&self) -> TokenStream {
+        if self.entries.is_empty() {
+            return quote! {};
+        }
+        let pairs = self.entries.iter().map(|(alias, dotted)| {
+            let lit = syn::LitStr::new(dotted, proc_macro2::Span::call_site());
+            quote! { #alias => #lit }
+        });
+        quote! { type_map = { #(#pairs),* }, }
+    }
+
+    /// The `type <alias><'local> = JObject<'local>;` definitions the `type_map`
+    /// aliases refer to, placed at module scope alongside the method's items.
+    fn type_alias_items(&self) -> Vec<TokenStream> {
+        self.entries
+            .iter()
+            .map(|(alias, _)| {
+                quote! {
+                    #[allow(non_camel_case_types)]
+                    type #alias<'local> = jni::objects::JObject<'local>;
+                }
+            })
+            .collect()
+    }
+}
+
 /// The `jni_sig!` type token that `native_method!` uses to derive the JNI
 /// descriptor and the wrapper parameter type for one user parameter.
 ///
 /// Every arm agrees with the corresponding [`param_bridge`] classification: the
 /// Rust type `native_method!` derives from this token is exactly the type
 /// [`bridge_user_param`] declares for the matching inner-impl-fn parameter, so
-/// `native_method!` type-checks the two against each other.
-fn param_sig_token(ty: &str) -> Result<TokenStream, String> {
+/// `native_method!` type-checks the two against each other. That cross-check —
+/// not a hand-maintained second table — is what keeps the fn pointer and its
+/// registered signature in agreement.
+///
+/// Object and object-array parameters take their class from the `#[class =
+/// "..."]` attribute; see [`ObjectClassMappings`] for how the class becomes a
+/// token that still yields a `JObject` wrapper.
+fn param_sig_token(
+    ty: &str,
+    class_attr: Option<&str>,
+    module_package: Option<&str>,
+    objects: &mut ObjectClassMappings,
+) -> Result<TokenStream, String> {
+    // An owned wrapper parameter keeps the lifetime its type needs
+    // (`JString<'local>`); strip it so its descriptor matches the bare wrapper.
+    let ty = strip_lifetime_arg(ty);
+
+    // A nullable object parameter (`Option<&W>`/`Option<W>`) carries the SAME
+    // JNI descriptor as its inner object, so emit the inner's token. String
+    // options keep the `JString` arm below (their inner `&str`/`&JNIStr`
+    // bridges to a string, not an object), so only object inners short-circuit
+    // here; the `#[class = "..."]` still applies to the inner object type.
+    if let Some(inner) = strip_option(ty) {
+        if matches!(
+            param_bridge(&inner).map(|b| b.kind),
+            Some(ParamBridgeKind::Wrapped { .. }) | Some(ParamBridgeKind::Raw { .. })
+        ) {
+            return param_sig_token(&inner, class_attr, module_package, objects);
+        }
+    }
+
     let token = match ty {
         "jint" | "i32" => quote! { jint },
         "jlong" | "i64" => quote! { jlong },
@@ -566,22 +901,80 @@ fn param_sig_token(ty: &str) -> Result<TokenStream, String> {
         "jshort" | "i16" => quote! { jshort },
         "jboolean" | "bool" => quote! { jboolean },
 
-        _ => return Err(format!("Unknown JNI type: '{}'", ty)),
+        // Every string flavour describes a java.lang.String argument.
+        "&str" | "Option<&str>" | "&JNIStr" | "Option<&JNIStr>" | "JString" | "&JString"
+        | "jstring" => quote! { JString },
+
+        "JByteArray" | "&JByteArray" | "jbyteArray" => quote! { [jbyte] },
+        "JIntArray" | "&JIntArray" | "jintArray" => quote! { [jint] },
+        "JFloatArray" | "&JFloatArray" | "jfloatArray" => quote! { [jfloat] },
+        "JLongArray" | "&JLongArray" | "jlongArray" => quote! { [jlong] },
+        "JShortArray" | "&JShortArray" | "jshortArray" => quote! { [jshort] },
+        "JDoubleArray" | "&JDoubleArray" | "jdoubleArray" => quote! { [jdouble] },
+        "JBooleanArray" | "&JBooleanArray" | "jbooleanArray" => quote! { [jboolean] },
+        "JCharArray" | "&JCharArray" | "jcharArray" => quote! { [jchar] },
+
+        "JObject" | "&JObject" | "jobject" => {
+            let class = class_attr.ok_or_else(|| {
+                format!("JObject parameter requires #[class = \"...\"] annotation, got type '{}'", ty)
+            })?;
+            objects.object_token(class, module_package)
+        }
+        "JObjectArray" | "&JObjectArray" | "jobjectArray" => {
+            let class = class_attr.ok_or_else(|| {
+                format!(
+                    "JObjectArray parameter requires #[class = \"...\"] annotation, got type '{}'",
+                    ty
+                )
+            })?;
+            let elem = objects.object_token(class, module_package);
+            quote! { [ #elem ] }
+        }
+
+        _ => {
+            let class = class_attr.ok_or_else(|| format!("Unknown JNI type: '{}'", ty))?;
+            objects.object_token(class, module_package)
+        }
     };
     Ok(token)
 }
 
 /// The `jni_sig!` return-type token for a user return type.
 ///
-/// Primitives and `bool` defer to [`param_sig_token`]; `void` is the empty
-/// return.
-fn return_sig_token(ty: &str) -> Result<TokenStream, String> {
+/// Object returns take their class from the `#[returns = "..."]` attribute.
+/// Primitives and typed arrays defer to [`param_sig_token`].
+fn return_sig_token(
+    ty: &str,
+    returns_attr: Option<&str>,
+    module_package: Option<&str>,
+    objects: &mut ObjectClassMappings,
+) -> Result<TokenStream, String> {
     // An owned wrapper return keeps the lifetime its type needs
     // (`JString<'local>`); strip it so its descriptor matches the bare wrapper.
     let ty = strip_lifetime_arg(ty);
     let token = match ty {
         "()" | "" | "void" => quote! { void },
-        _ => param_sig_token(ty)?,
+        // `String` is the friendly return form; the wrapper type
+        // `bridge_user_param`/`ReturnBridge` produces is `JString`. `bool` is a
+        // primitive and defers to `param_sig_token` via the fallback below.
+        "String" | "JString" | "&JString" | "jstring" => quote! { JString },
+
+        "JObject" | "&JObject" | "jobject" => {
+            let class = returns_attr.ok_or_else(|| {
+                "JObject return type requires #[returns = \"...\"] annotation".to_string()
+            })?;
+            objects.object_token(class, module_package)
+        }
+        "JObjectArray" | "&JObjectArray" | "jobjectArray" => {
+            let class = returns_attr.ok_or_else(|| {
+                "JObjectArray return type requires #[returns = \"...\"] annotation".to_string()
+            })?;
+            let elem = objects.object_token(class, module_package);
+            quote! { [ #elem ] }
+        }
+
+        // Primitives and typed primitive arrays need no class attribute.
+        _ => param_sig_token(ty, None, module_package, objects)?,
     };
     Ok(token)
 }
@@ -663,25 +1056,274 @@ struct BridgedParam {
     call_arg: TokenStream,
 }
 
-/// Generates the shim parameter and call argument for one user parameter.
-/// `index` positions the shim parameter name (`__arg0`, `__arg1`, ...). At this
-/// layer every parameter is an ABI-identical primitive, passed through unchanged.
+/// Generates the shim parameter, conversion statements, and call argument for
+/// one user parameter. `index` positions the shim parameter name (`__arg0`,
+/// `__arg1`, ...); `lifetime` is the shim's `'local` for object wrapper types.
+///
+/// Conversions run inside the `with_env` closure and report failure by
+/// returning `Err(JniError)` (a null non-nullable reference becomes a
+/// NullPointerException; a failed string read propagates via `?`); the shim's
+/// `.resolve::<ThrowJniError>()` turns that into the pending exception.
 fn bridge_user_param(
     pat_type: &PatType,
     index: usize,
-    _lifetime: &TokenStream,
+    lifetime: &TokenStream,
+    class_attr: Option<&str>,
 ) -> Result<BridgedParam, String> {
-    let ty = type_to_string(&pat_type.ty);
+    let pat = &pat_type.pat;
+    // An owned wrapper parameter may carry the lifetime its type needs
+    // (`JString<'local>`, tying it to the shim's frame so the user can hand it
+    // straight back as the return); strip it so it classifies the same as a
+    // bare-lifetime `JString` parameter.
+    let ty = strip_lifetime_arg(&type_to_string(&pat_type.ty)).to_string();
     let raw_ident = format_ident!("__arg{}", index);
-    let bridge = param_bridge(&ty).ok_or_else(|| format!("Unknown JNI type: '{}'", ty))?;
+    let npe_msg = format!("{} must not be null", quote! { #pat });
 
+    // A project-defined wrapper produced by `bind_java_type!`. The Java class
+    // comes from `#[class = "..."]`; the JVM therefore guarantees the runtime
+    // reference has that type, and the generated shim performs the single
+    // audited `Reference::from_raw` conversion before calling the user body.
+    // A borrowed wrapper is non-null; use `Option<&Wrapper>` when Java null is
+    // part of the contract. Owned wrapper values retain the JNI crate's normal
+    // nullable-wrapper semantics.
+    let known_nullable_wrapper = strip_option(&ty).is_some_and(|inner| {
+        matches!(
+            param_bridge(&inner).map(|bridge| bridge.kind),
+            Some(ParamBridgeKind::Wrapped { .. }) | Some(ParamBridgeKind::Raw { .. })
+        )
+    });
+    if class_attr.is_some() && param_bridge(&ty).is_none() && !known_nullable_wrapper {
+        let custom = custom_wrapper_type(&pat_type.ty).ok_or_else(|| {
+            format!("unsupported #[class] wrapper parameter type '{}'", ty)
+        })?;
+        let wrapper = custom.wrapper;
+        let converted_ident = format_ident!("__arg{}_typed", index);
+        let convert = quote! { unsafe { #wrapper::from_raw(env, #raw_ident.as_raw()) } };
+        let (prelude, call_arg) = match (custom.nullable, custom.by_ref) {
+            (false, true) => (
+                quote! {
+                    if #raw_ident.is_null() {
+                        return ::core::result::Result::Err(
+                            jni_support::JniError::NullPointer(#npe_msg));
+                    }
+                    // SAFETY: the registered JNI descriptor names the class in
+                    // `#[class]`, so a non-null argument is that class or a subclass.
+                    let #converted_ident: #wrapper = #convert;
+                },
+                quote! { &#converted_ident },
+            ),
+            (false, false) => (
+                quote! {
+                    // SAFETY: the registered JNI descriptor names the class in
+                    // `#[class]`; owned JNI wrappers may also represent null.
+                    let #converted_ident: #wrapper = #convert;
+                },
+                quote! { #converted_ident },
+            ),
+            (true, true) => (
+                quote! {
+                    let #converted_ident: Option<#wrapper> = if #raw_ident.is_null() {
+                        None
+                    } else {
+                        // SAFETY: the registered JNI descriptor names the class
+                        // in `#[class]`.
+                        Some(#convert)
+                    };
+                },
+                quote! { #converted_ident.as_ref() },
+            ),
+            (true, false) => (
+                quote! {
+                    let #converted_ident: Option<#wrapper> = if #raw_ident.is_null() {
+                        None
+                    } else {
+                        // SAFETY: the registered JNI descriptor names the class
+                        // in `#[class]`.
+                        Some(#convert)
+                    };
+                },
+                quote! { #converted_ident },
+            ),
+        };
+        return Ok(BridgedParam {
+            shim_param: quote! { #raw_ident: jni::objects::JObject<#lifetime> },
+            prelude: Some(prelude),
+            call_arg,
+        });
+    }
+
+    // A nullable object parameter: `Option<&W>` or `Option<W>` where `W` is an
+    // object wrapper (`JObject`, a typed array, `JString`, ...). The shim still
+    // captures the JVM's reference in the bare wrapper; the prelude maps a null
+    // reference to `None` rather than throwing NullPointerException. String
+    // options (`Option<&str>`/`Option<&JNIStr>`) fall through to the match
+    // below, because `param_bridge` classifies their inner types as
+    // owned/borrowed strings, not `Wrapped`/`Raw` objects.
+    if let Some(inner) = strip_option(&ty) {
+        if let Some(ParamBridge { kind }) = param_bridge(&inner) {
+            match kind {
+                ParamBridgeKind::Wrapped { wrapper, by_ref } => {
+                    let prelude = if by_ref {
+                        quote! {
+                            let #pat: Option<&#wrapper> =
+                                if #raw_ident.is_null() { None } else { Some(&#raw_ident) };
+                        }
+                    } else {
+                        quote! {
+                            let #pat: Option<#wrapper> =
+                                if #raw_ident.is_null() { None } else { Some(#raw_ident) };
+                        }
+                    };
+                    return Ok(BridgedParam {
+                        shim_param: quote! { #raw_ident: #wrapper<#lifetime> },
+                        prelude: Some(prelude),
+                        call_arg: quote! { #pat },
+                    });
+                }
+                ParamBridgeKind::Raw { wrapper } => {
+                    return Ok(BridgedParam {
+                        shim_param: quote! { #raw_ident: #wrapper<#lifetime> },
+                        prelude: Some(quote! {
+                            let #pat =
+                                if #raw_ident.is_null() { None } else { Some(#raw_ident.as_raw()) };
+                        }),
+                        call_arg: quote! { #pat },
+                    });
+                }
+                // A non-object inner (`&str`, `&JNIStr`, a primitive, `bool`)
+                // is not a nullable-object parameter; fall through to the match
+                // below, which handles `Option<&str>`/`Option<&JNIStr>`.
+                _ => {}
+            }
+        }
+    }
+
+    let bridge = param_bridge(&ty).ok_or_else(|| format!("Unknown JNI type: '{}'", ty))?;
     Ok(match bridge.kind {
         ParamBridgeKind::Primitive(sys_ty) => BridgedParam {
             shim_param: quote! { #raw_ident: #sys_ty },
             prelude: None,
             call_arg: quote! { #raw_ident },
         },
+        ParamBridgeKind::OwnedString { nullable: false } => {
+            let string_ident = format_ident!("__arg{}_string", index);
+            BridgedParam {
+                shim_param: quote! { #raw_ident: jni::objects::JString<#lifetime> },
+                prelude: Some(quote! {
+                    if #raw_ident.is_null() {
+                        return ::core::result::Result::Err(
+                            jni_support::JniError::NullPointer(#npe_msg));
+                    }
+                    let #string_ident: String = #raw_ident.try_to_string(env)?;
+                    let #pat: &str = &#string_ident;
+                }),
+                call_arg: quote! { #pat },
+            }
+        }
+        ParamBridgeKind::OwnedString { nullable: true } => {
+            let string_ident = format_ident!("__arg{}_string", index);
+            BridgedParam {
+                shim_param: quote! { #raw_ident: jni::objects::JString<#lifetime> },
+                prelude: Some(quote! {
+                    let #string_ident: Option<String> = if #raw_ident.is_null() {
+                        None
+                    } else {
+                        Some(#raw_ident.try_to_string(env)?)
+                    };
+                    let #pat: Option<&str> = #string_ident.as_deref();
+                }),
+                call_arg: quote! { #pat },
+            }
+        }
+        ParamBridgeKind::BorrowedString { nullable: false } => {
+            let chars_ident = format_ident!("__arg{}_chars", index);
+            BridgedParam {
+                shim_param: quote! { #raw_ident: jni::objects::JString<#lifetime> },
+                prelude: Some(quote! {
+                    if #raw_ident.is_null() {
+                        return ::core::result::Result::Err(
+                            jni_support::JniError::NullPointer(#npe_msg));
+                    }
+                    let #chars_ident = #raw_ident.mutf8_chars(env)?;
+                    let #pat: &jni::strings::JNIStr = &#chars_ident;
+                }),
+                call_arg: quote! { #pat },
+            }
+        }
+        ParamBridgeKind::BorrowedString { nullable: true } => {
+            let chars_ident = format_ident!("__arg{}_chars", index);
+            BridgedParam {
+                shim_param: quote! { #raw_ident: jni::objects::JString<#lifetime> },
+                prelude: Some(quote! {
+                    let #chars_ident = if #raw_ident.is_null() {
+                        None
+                    } else {
+                        Some(#raw_ident.mutf8_chars(env)?)
+                    };
+                    let #pat: Option<&jni::strings::JNIStr> = #chars_ident.as_deref();
+                }),
+                call_arg: quote! { #pat },
+            }
+        }
+        ParamBridgeKind::Wrapped { wrapper, by_ref: false } => BridgedParam {
+            shim_param: quote! { #raw_ident: #wrapper<#lifetime> },
+            prelude: None,
+            call_arg: quote! { #raw_ident },
+        },
+        ParamBridgeKind::Wrapped { wrapper, by_ref: true } => BridgedParam {
+            shim_param: quote! { #raw_ident: #wrapper<#lifetime> },
+            prelude: Some(quote! {
+                if #raw_ident.is_null() {
+                    return ::core::result::Result::Err(
+                        jni_support::JniError::NullPointer(#npe_msg));
+                }
+            }),
+            call_arg: quote! { &#raw_ident },
+        },
+        ParamBridgeKind::Raw { wrapper } => BridgedParam {
+            shim_param: quote! { #raw_ident: #wrapper<#lifetime> },
+            prelude: None,
+            call_arg: quote! { #raw_ident.as_raw() },
+        },
     })
+}
+
+struct CustomWrapperType<'a> {
+    wrapper: &'a Type,
+    by_ref: bool,
+    nullable: bool,
+}
+
+/// Extracts a project-defined wrapper from `Wrapper`, `&Wrapper`,
+/// `Option<Wrapper>`, or `Option<&Wrapper>` syntax.
+fn custom_wrapper_type(ty: &Type) -> Option<CustomWrapperType<'_>> {
+    match ty {
+        Type::Reference(reference) => Some(CustomWrapperType {
+            wrapper: &reference.elem,
+            by_ref: true,
+            nullable: false,
+        }),
+        Type::Path(path) if path.qself.is_none() => {
+            let segment = path.path.segments.last()?;
+            if segment.ident == "Option" {
+                let syn::PathArguments::AngleBracketed(args) = &segment.arguments else {
+                    return None;
+                };
+                let inner = args.args.iter().find_map(|arg| match arg {
+                    syn::GenericArgument::Type(ty) => Some(ty),
+                    _ => None,
+                })?;
+                let mut custom = custom_wrapper_type(inner)?;
+                custom.nullable = true;
+                Some(custom)
+            } else {
+                Some(CustomWrapperType { wrapper: ty, by_ref: false, nullable: false })
+            }
+        }
+        Type::Group(group) => custom_wrapper_type(&group.elem),
+        Type::Paren(paren) => custom_wrapper_type(&paren.elem),
+        _ => None,
+    }
 }
 
 /// The shim's `this`/`class` parameter type and the argument passed to the user
@@ -782,6 +1424,8 @@ fn shim_doc_attr(
 fn generate_native_method(
     func: &ItemFn,
     java_name: &str,
+    module_package: Option<&str>,
+    returns_attr: Option<&str>,
     method_const: &proc_macro2::Ident,
 ) -> Result<TokenStream, String> {
     let user_fn_name = &func.sig.ident;
@@ -789,10 +1433,13 @@ fn generate_native_method(
     let inputs: Vec<&FnArg> = func.sig.inputs.iter().collect();
     let lifetime = quote! { 'local };
 
+    // Object classes referenced by the signature; see `ObjectClassMappings`.
+    let mut objects = ObjectClassMappings::new(&user_fn_name.to_string());
+
     let return_type = return_type_str(&func.sig.output);
     let ret = ReturnBridge::parse(&return_type)?;
     let ok_ty = ret.closure_ok_ty(&lifetime);
-    let ret_token = return_sig_token(&return_type)?;
+    let ret_token = return_sig_token(&return_type, returns_attr, module_package, &mut objects)?;
 
     // Receiver (2nd parameter): a `jclass`-family type registers as a static
     // native (JClass), a `jobject`-family type as an instance native (JObject).
@@ -804,15 +1451,16 @@ fn generate_native_method(
     let is_static = matches!(receiver_ty.as_str(), "jclass" | "JClass" | "&JClass");
     let (this_shim_ty, this_arg) = this_binding(inputs[1], &lifetime)?;
 
-    // Bridge each user parameter after env/this into an inner-fn parameter, a
-    // call argument, and the matching signature token.
+    // Bridge each user parameter after env/this into an inner-fn parameter, an
+    // optional conversion, a call argument, and the matching signature token.
     let mut impl_params: Vec<TokenStream> = Vec::new();
     let mut sig_tokens: Vec<TokenStream> = Vec::new();
     let mut preludes: Vec<TokenStream> = Vec::new();
     let mut call_args: Vec<TokenStream> = Vec::new();
     for (index, arg) in inputs[2..].iter().enumerate() {
         if let FnArg::Typed(pat_type) = arg {
-            let bridged = bridge_user_param(pat_type, index, &lifetime)?;
+            let class = find_class_attr_on_pat(pat_type);
+            let bridged = bridge_user_param(pat_type, index, &lifetime, class.as_deref())?;
             impl_params.push(bridged.shim_param);
             if let Some(prelude) = bridged.prelude {
                 preludes.push(prelude);
@@ -820,7 +1468,7 @@ fn generate_native_method(
             call_args.push(bridged.call_arg);
 
             let ty = type_to_string(&pat_type.ty);
-            sig_tokens.push(param_sig_token(&ty)?);
+            sig_tokens.push(param_sig_token(&ty, class.as_deref(), module_package, &mut objects)?);
         }
     }
 
@@ -846,10 +1494,29 @@ fn generate_native_method(
     let shim_doc = shim_doc_attr(java_name, user_fn_name, func.sig.unsafety.is_some(), false);
     let static_lit = if is_static { quote! { true } } else { quote! { false } };
 
-    // `abi_check = UnsafeNever` matches these object-free primitive shims: the
-    // only check thereby forgone is static-vs-instance, which is instead derived
+    // `JObject`-typed aliases + the `type_map` binding them to their Java class,
+    // so `native_method!` derives each object descriptor while keeping the
+    // wrapper type `JObject`.
+    let type_aliases = objects.type_alias_items();
+    let type_map = objects.type_map_tokens();
+
+    // `#type_map` must precede `sig` in the `native_method!` invocation below:
+    // an object-array element of a non-core `#[class]` type is resolved through
+    // its `type_map` alias while `sig` is parsed, so the mapping has to be in
+    // scope first (nativeInitialize/nativeAddBatch rely on this).
+    //
+    // `abi_check = UnsafeNever` is REQUIRED here, not a legacy default — do not
+    // "upgrade" it to `Always`. Any checked setting makes `native_method!` emit
+    // a runtime assertion that each `#[class]` object's `Reference::class_name()`
+    // equals its declared Java class; but the `type_map` binds every such object
+    // to a `JObject` alias whose `class_name()` is `java/lang/Object`, so the
+    // assertion would fail and abort on the first call to any method taking a
+    // `#[class]` object (readEvents, nativeInitialize, ...). The only check
+    // thereby forgone is static-vs-instance, which is instead derived
     // structurally (`jclass` receiver => static, `jobject` => instance `this`).
     Ok(quote! {
+        #(#type_aliases)*
+
         #shim_doc
         #lint_allows
         fn #impl_ident<#lifetime>(
@@ -862,6 +1529,7 @@ fn generate_native_method(
 
         #[allow(non_upper_case_globals, clippy::undocumented_unsafe_blocks)]
         const #method_const: jni::NativeMethod<'static> = jni::native_method! {
+            #type_map
             name = #java_name,
             sig = ( #(#sig_tokens),* ) -> #ret_token,
             fn = #impl_ident,
@@ -904,7 +1572,7 @@ fn generate_critical_method(
     let mut call_args: Vec<TokenStream> = Vec::new();
     for (index, arg) in func.sig.inputs.iter().enumerate() {
         if let FnArg::Typed(pat_type) = arg {
-            let bridged = bridge_user_param(pat_type, index, &lifetime)?;
+            let bridged = bridge_user_param(pat_type, index, &lifetime, None)?;
             shim_params.push(bridged.shim_param);
             call_args.push(bridged.call_arg);
         }
@@ -974,6 +1642,22 @@ fn is_this_type(ty: &str) -> bool {
         || ty == "jobject"
         || ty == "&JClass"
         || ty == "&JObject"
+}
+
+/// Finds a `#[class = "..."]` attribute on a function parameter.
+fn find_class_attr_on_pat(pat_type: &PatType) -> Option<String> {
+    for attr in &pat_type.attrs {
+        if attr.path().is_ident("class") {
+            if let Meta::NameValue(MetaNameValue {
+                value: syn::Expr::Lit(syn::ExprLit { lit: Lit::Str(s), .. }),
+                ..
+            }) = &attr.meta
+            {
+                return Some(s.value());
+            }
+        }
+    }
+    None
 }
 
 /// Converts a `syn::Type` to the small JNI type language this macro accepts.
@@ -1084,10 +1768,14 @@ mod tests {
 
     /// Expands a regular/fast method to a string of the emitted tokens.
     fn gen_regular(func: TokenStream) -> String {
+        gen_regular_full(func, None, None)
+    }
+
+    fn gen_regular_full(func: TokenStream, pkg: Option<&str>, returns: Option<&str>) -> String {
         let func = parse_fn(func);
         let name = func.sig.ident.to_string();
         let method_const = format_ident!("__NATIVE_METHOD_{}", func.sig.ident);
-        generate_native_method(&func, &name, &method_const).unwrap().to_string()
+        generate_native_method(&func, &name, pkg, returns, &method_const).unwrap().to_string()
     }
 
     fn gen_critical(func: TokenStream) -> String {
@@ -1134,6 +1822,21 @@ mod tests {
     }
 
     #[test]
+    fn owned_jstring_return_derives_the_string_descriptor() {
+        // A native returning the owned `JString` wrapper (with the lifetime its
+        // type requires) classifies as OwnedWrapper: the shim returns the
+        // wrapper directly (no `from_raw`) and derives `Ljava/lang/String;`,
+        // the same descriptor as a raw `-> jstring`.
+        let s = gen_regular(quote! {
+            fn f<'local>(env: &mut jni::Env<'local>, clazz: jclass, code: jint) -> JString<'local> {
+                JString::null()
+            }
+        });
+        assert!(s.replace(' ', "").contains("sig=(jint)->JString"), "{s}");
+        assert!(!s.contains("from_raw"), "owned wrapper return passes through, no from_raw: {s}");
+    }
+
+    #[test]
     fn strip_lifetime_arg_strips_only_a_lone_lifetime() {
         // A lone lifetime argument is dropped so the bare wrapper name classifies.
         assert_eq!(strip_lifetime_arg("JString<'local>"), "JString");
@@ -1147,20 +1850,131 @@ mod tests {
     }
 
     #[test]
+    fn owned_wrapper_param_lifetime_classifies_as_bare_wrapper() {
+        // A parameter written with the lifetime its wrapper needs to be handed
+        // back as the return (`JString<'local>`) bridges identically to a bare
+        // `JString`: same shim parameter, same `JString` descriptor, and it is
+        // not rejected as an unknown type.
+        let s = gen_regular(quote! {
+            fn passthrough<'local>(
+                env: &mut jni::Env<'local>,
+                clazz: jclass,
+                def: JString<'local>,
+            ) -> JString<'local> {
+                def
+            }
+        });
+        assert!(s.contains("__arg0 : jni :: objects :: JString"), "{s}");
+        assert!(s.replace(' ', "").contains("sig=(JString)->JString"), "{s}");
+    }
+
+    #[test]
     fn derive_java_name_is_verbatim() {
         assert_eq!(derive_java_name("println_native"), "println_native");
         assert_eq!(derive_java_name("elapsedRealtime"), "elapsedRealtime");
     }
 
     #[test]
-    fn parse_jni_mode_recognizes_each_mode() {
-        let mode = |tokens| {
+    fn parse_jni_method_options_recognizes_each_mode() {
+        let options = |tokens| {
             let attr = syn::parse2::<ItemFn>(tokens).unwrap().attrs[0].clone();
-            parse_jni_mode(&attr)
+            parse_jni_method_options(&attr).unwrap()
         };
-        assert_eq!(mode(quote! { #[jni_method(critical)] fn t() {} }), JniMode::Critical);
-        assert_eq!(mode(quote! { #[jni_method(fast)] fn t() {} }), JniMode::Fast);
-        assert_eq!(mode(quote! { #[jni_method] fn t() {} }), JniMode::Regular);
+        assert_eq!(options(quote! { #[jni_method(critical)] fn t() {} }).mode, JniMode::Critical);
+        assert_eq!(options(quote! { #[jni_method(fast)] fn t() {} }).mode, JniMode::Fast);
+        assert_eq!(options(quote! { #[jni_method] fn t() {} }).mode, JniMode::Regular);
+        assert_eq!(
+            options(quote! { #[jni_method(name = "native_name")] fn t() {} }).java_name.as_deref(),
+            Some("native_name")
+        );
+    }
+
+    #[test]
+    fn parse_jni_method_options_rejects_invalid_options() {
+        let error = |tokens| {
+            let attr = syn::parse2::<ItemFn>(tokens).unwrap().attrs[0].clone();
+            parse_jni_method_options(&attr).unwrap_err().to_string()
+        };
+        assert!(error(quote! { #[jni_method(critcal)] fn t() {} }).contains("unknown"));
+        assert!(error(quote! { #[jni_method(fast, critical)] fn t() {} }).contains("at most one"));
+        assert!(error(quote! { #[jni_method(name = 42)] fn t() {} }).contains("must be a string"));
+        assert!(
+            error(quote! { #[jni_method(name = "a", name = "b")] fn t() {} })
+                .contains("duplicate")
+        );
+    }
+
+    #[test]
+    fn type_normalization_is_structural() {
+        let ty: Type = syn::parse2(quote! { &mut jni::Env<'local> }).unwrap();
+        assert_eq!(type_to_string(&ty), "&mut Env");
+        assert!(is_env_type(&type_to_string(&ty)));
+
+        let ty: Type = syn::parse2(quote! { Option<&jni::objects::JString<'local>> }).unwrap();
+        assert_eq!(type_to_string(&ty), "Option<&JString>");
+
+        let ty: Type = syn::parse2(quote! { &mut MyEnvironment }).unwrap();
+        assert_eq!(type_to_string(&ty), "&mut MyEnvironment");
+        assert!(!is_env_type(&type_to_string(&ty)));
+    }
+
+    #[test]
+    fn param_bridge_classifies_each_kind() {
+        assert!(matches!(param_bridge("jint").unwrap().kind, ParamBridgeKind::Primitive(_)));
+        assert!(matches!(param_bridge("i64").unwrap().kind, ParamBridgeKind::Primitive(_)));
+        assert!(matches!(param_bridge("bool").unwrap().kind, ParamBridgeKind::Primitive(_)));
+        assert!(matches!(
+            param_bridge("&str").unwrap().kind,
+            ParamBridgeKind::OwnedString { nullable: false }
+        ));
+        assert!(matches!(
+            param_bridge("Option<&str>").unwrap().kind,
+            ParamBridgeKind::OwnedString { nullable: true }
+        ));
+        assert!(matches!(
+            param_bridge("&JNIStr").unwrap().kind,
+            ParamBridgeKind::BorrowedString { nullable: false }
+        ));
+        assert!(matches!(
+            param_bridge("Option<&JNIStr>").unwrap().kind,
+            ParamBridgeKind::BorrowedString { nullable: true }
+        ));
+        assert!(matches!(
+            param_bridge("JString").unwrap().kind,
+            ParamBridgeKind::Wrapped { by_ref: false, .. }
+        ));
+        assert!(matches!(
+            param_bridge("&JByteArray").unwrap().kind,
+            ParamBridgeKind::Wrapped { by_ref: true, .. }
+        ));
+        assert!(matches!(param_bridge("jstring").unwrap().kind, ParamBridgeKind::Raw { .. }));
+    }
+
+    #[test]
+    fn borrowed_wrappers_are_checked_for_null() {
+        let generated = gen_regular(quote! {
+            fn f(
+                env: &mut jni::Env<'_>,
+                clazz: jclass,
+                values: &JIntArray,
+            ) {}
+        });
+        assert!(generated.contains("values must not be null"), "{generated}");
+        assert!(generated.contains("is_null"), "{generated}");
+    }
+
+    #[test]
+    fn class_attribute_bridges_custom_wrapper() {
+        let generated = gen_regular(quote! {
+            fn f(
+                env: &mut jni::Env<'_>,
+                clazz: jclass,
+                #[class = "android/view/MotionEvent$PointerCoords"] coords: &JPointerCoords,
+            ) {}
+        });
+        assert!(generated.contains("JPointerCoords :: from_raw"), "{generated}");
+        assert!(generated.contains("let __arg0_typed : JPointerCoords"), "{generated}");
+        assert!(generated.contains("coords must not be null"), "{generated}");
     }
 
     #[test]
@@ -1173,6 +1987,206 @@ mod tests {
     fn param_bridge_no_longer_maps_u8() {
         // jni-sys 0.4's `jboolean` is `bool`; a bare `u8` denotes no JNI type.
         assert!(param_bridge("u8").is_none());
+    }
+
+    // ---- param_sig_token / return_sig_token / ObjectClassMappings ----
+    //
+    // Each token is what `native_method!` uses to derive the JNI descriptor; the
+    // Rust type it derives from the token must equal the type `bridge_user_param`
+    // declares, which is what makes the fn pointer and its signature agree.
+
+    fn ptoken(ty: &str, class: Option<&str>, pkg: Option<&str>) -> String {
+        let mut objects = ObjectClassMappings::new("t");
+        param_sig_token(ty, class, pkg, &mut objects).unwrap().to_string().replace(' ', "")
+    }
+
+    #[test]
+    fn param_sig_token_primitives() {
+        assert_eq!(ptoken("jint", None, None), "jint");
+        assert_eq!(ptoken("i32", None, None), "jint");
+        assert_eq!(ptoken("jlong", None, None), "jlong");
+        assert_eq!(ptoken("i64", None, None), "jlong");
+        assert_eq!(ptoken("jfloat", None, None), "jfloat");
+        assert_eq!(ptoken("jdouble", None, None), "jdouble");
+        assert_eq!(ptoken("jbyte", None, None), "jbyte");
+        assert_eq!(ptoken("jchar", None, None), "jchar");
+        assert_eq!(ptoken("jshort", None, None), "jshort");
+    }
+
+    #[test]
+    fn param_sig_token_bool_is_jboolean() {
+        assert_eq!(ptoken("bool", None, None), "jboolean");
+        assert_eq!(ptoken("jboolean", None, None), "jboolean");
+    }
+
+    #[test]
+    fn param_sig_token_strings_are_jstring() {
+        for ty in ["&str", "Option<&str>", "&JNIStr", "Option<&JNIStr>", "JString", "&JString", "jstring"] {
+            assert_eq!(ptoken(ty, None, None), "JString", "{ty}");
+        }
+    }
+
+    #[test]
+    fn param_sig_token_typed_primitive_arrays() {
+        assert_eq!(ptoken("JByteArray", None, None), "[jbyte]");
+        assert_eq!(ptoken("&JByteArray", None, None), "[jbyte]");
+        assert_eq!(ptoken("jbyteArray", None, None), "[jbyte]");
+        assert_eq!(ptoken("JIntArray", None, None), "[jint]");
+        assert_eq!(ptoken("JFloatArray", None, None), "[jfloat]");
+        assert_eq!(ptoken("JLongArray", None, None), "[jlong]");
+        assert_eq!(ptoken("JShortArray", None, None), "[jshort]");
+        assert_eq!(ptoken("JDoubleArray", None, None), "[jdouble]");
+        assert_eq!(ptoken("JBooleanArray", None, None), "[jboolean]");
+        assert_eq!(ptoken("JCharArray", None, None), "[jchar]");
+    }
+
+    #[test]
+    fn strip_option_unwraps_only_option() {
+        assert_eq!(strip_option("Option<&JIntArray>").as_deref(), Some("&JIntArray"));
+        assert_eq!(strip_option("Option<JObject>").as_deref(), Some("JObject"));
+        assert_eq!(strip_option("Option<&str>").as_deref(), Some("&str"));
+        assert_eq!(strip_option("&JIntArray"), None);
+        assert_eq!(strip_option("jint"), None);
+    }
+
+    #[test]
+    fn option_object_param_shares_inner_descriptor() {
+        // A nullable object parameter derives the SAME JNI descriptor as the
+        // non-optional wrapper: `Option<&JIntArray>` and `&JIntArray` are both
+        // `[jint]` (i.e. `[I`). The `#[class]` still applies to the inner
+        // object for a generic `Option<&JObject>`.
+        assert_eq!(ptoken("Option<&JIntArray>", None, None), "[jint]");
+        assert_eq!(ptoken("Option<&JIntArray>", None, None), ptoken("&JIntArray", None, None));
+        assert_eq!(ptoken("Option<&JFloatArray>", None, None), "[jfloat]");
+        // A string option is NOT an object option; it keeps the JString token.
+        assert_eq!(ptoken("Option<&str>", None, None), "JString");
+        assert_eq!(ptoken("Option<&JNIStr>", None, None), "JString");
+        // `Option<&JObject>` takes its class from `#[class = "..."]`, like
+        // `&JObject`.
+        let mut objects = ObjectClassMappings::new("f");
+        let tok =
+            param_sig_token("Option<&JObject>", Some("java/util/Collection"), None, &mut objects)
+                .unwrap();
+        assert!(tok.to_string().contains("__JniClass_f_0"), "{tok}");
+    }
+
+    #[test]
+    fn option_object_param_binds_null_to_none() {
+        // The shim keeps the bare wrapper parameter (same as `&JIntArray`) and
+        // maps a null reference to `None` without a NullPointerException.
+        let s = gen_regular(quote! {
+            fn f(env: &mut jni::Env<'_>, clazz: jclass, tags: Option<&JIntArray>) {}
+        });
+        assert!(s.contains("__arg0 : jni :: objects :: JIntArray"), "{s}");
+        assert!(s.contains("is_null"), "null -> None branch missing: {s}");
+        assert!(s.contains("None") && s.contains("Some"), "{s}");
+        assert!(!s.contains("must not be null"), "nullable must not null-check: {s}");
+        // Same descriptor token as the non-optional form.
+        assert!(s.replace(' ', "").contains("sig=([jint])->void"), "{s}");
+    }
+
+    #[test]
+    fn param_sig_token_object_records_a_class_mapping() {
+        // A non-core class becomes a fresh JObject-typed alias plus a type_map
+        // entry, so native_method! derives the descriptor while the wrapper
+        // stays JObject (matching the friendly `&JObject` surface).
+        let mut objects = ObjectClassMappings::new("f");
+        let tok =
+            param_sig_token("&JObject", Some("java/util/Collection"), None, &mut objects).unwrap();
+        assert!(tok.to_string().contains("__JniClass_f_0"), "{tok}");
+        assert!(objects
+            .type_map_tokens()
+            .to_string()
+            .replace(' ', "")
+            .contains("__JniClass_f_0=>\"java.util.Collection\""));
+    }
+
+    #[test]
+    fn param_sig_token_object_array_wraps_a_core_element_literally() {
+        // java.lang.Object is a core class -> literal element, no alias.
+        let mut objects = ObjectClassMappings::new("f");
+        let tok = param_sig_token("&JObjectArray", Some("java/lang/Object"), None, &mut objects)
+            .unwrap()
+            .to_string()
+            .replace(' ', "");
+        assert_eq!(tok, "[\"java.lang.Object\"]");
+        assert!(objects.type_map_tokens().is_empty());
+    }
+
+    #[test]
+    fn param_sig_token_object_without_class_is_err() {
+        let mut objects = ObjectClassMappings::new("f");
+        assert!(param_sig_token("JObject", None, None, &mut objects)
+            .unwrap_err()
+            .contains("#[class = \"...\"]"));
+        assert!(param_sig_token("JObjectArray", None, None, &mut objects).is_err());
+    }
+
+    #[test]
+    fn param_sig_token_unknown_type_is_err() {
+        let mut objects = ObjectClassMappings::new("f");
+        assert!(param_sig_token("FooBar", None, None, &mut objects)
+            .unwrap_err()
+            .contains("Unknown JNI type"));
+    }
+
+    #[test]
+    fn return_sig_token_object_uses_returns_attr() {
+        // java.lang.String is core -> emitted literally (not via an alias).
+        let mut objects = ObjectClassMappings::new("f");
+        let tok = return_sig_token("JObject", Some("java/lang/String"), None, &mut objects)
+            .unwrap()
+            .to_string()
+            .replace(' ', "");
+        assert_eq!(tok, "\"java.lang.String\"");
+        let mut missing = ObjectClassMappings::new("f");
+        assert!(return_sig_token("JObject", None, None, &mut missing)
+            .unwrap_err()
+            .contains("#[returns"));
+    }
+
+    #[test]
+    fn object_mappings_core_class_is_literal() {
+        let mut objects = ObjectClassMappings::new("t");
+        let tok = objects.object_token("java/lang/Object", None).to_string().replace(' ', "");
+        assert_eq!(tok, "\"java.lang.Object\"");
+        assert!(objects.type_map_tokens().is_empty());
+        assert!(objects.type_alias_items().is_empty());
+    }
+
+    #[test]
+    fn object_mappings_noncore_class_binds_a_jobject_alias() {
+        let mut objects = ObjectClassMappings::new("readEvents");
+        let tok = objects.object_token("java/util/Collection", None).to_string();
+        assert!(tok.contains("__JniClass_readEvents_0"), "{tok}");
+        let type_map = objects.type_map_tokens().to_string().replace(' ', "");
+        assert!(type_map.contains("__JniClass_readEvents_0=>\"java.util.Collection\""), "{type_map}");
+        let alias = objects.type_alias_items()[0].to_string().replace(' ', "");
+        assert!(
+            alias.contains("type__JniClass_readEvents_0<'local>=jni::objects::JObject<'local>"),
+            "{alias}"
+        );
+    }
+
+    #[test]
+    fn object_mappings_dedupe_and_relative_resolution() {
+        let mut objects = ObjectClassMappings::new("t");
+        let a = objects.object_token("android/os/Parcel", None).to_string();
+        let b = objects.object_token("android/os/Parcel", None).to_string();
+        assert_eq!(a, b, "the same class must reuse one alias");
+        assert_eq!(objects.entries.len(), 1);
+        // A relative name is resolved against the module package, then dotted.
+        objects.object_token("MotionEvent$PointerCoords", Some("android/view"));
+        let type_map = objects.type_map_tokens().to_string().replace(' ', "");
+        assert!(type_map.contains("\"android.view.MotionEvent$PointerCoords\""), "{type_map}");
+    }
+
+    #[test]
+    fn object_mappings_default_package_uses_leading_dot() {
+        let mut objects = ObjectClassMappings::new("t");
+        objects.object_token("Foo", None);
+        let type_map = objects.type_map_tokens().to_string().replace(' ', "");
+        assert!(type_map.contains("\".Foo\""), "{type_map}");
     }
 
     #[test]
@@ -1220,10 +2234,67 @@ mod tests {
     }
 
     #[test]
+    fn owned_str_param_extracts_and_null_checks() {
+        let s = gen_regular(quote! {
+            fn isLoggable(env: &mut jni::Env<'_>, clazz: jclass, tag: &str, level: i32) -> bool {
+                true
+            }
+        });
+        assert!(s.contains("__arg0 : jni :: objects :: JString"), "{s}");
+        assert!(s.contains("try_to_string"), "{s}");
+        assert!(s.contains("NullPointer"), "{s}");
+        assert!(s.contains("tag must not be null"), "{s}");
+        // `&str` + `i32` describe (Ljava/lang/String;I) — token form `(JString, jint)`.
+        assert!(s.replace(' ', "").contains("sig=(JString,jint)->jboolean"), "{s}");
+    }
+
+    #[test]
+    fn option_str_param_is_nullable_without_a_null_check() {
+        let s = gen_regular(quote! { fn f(env: &mut jni::Env<'_>, clazz: jclass, tag: Option<&str>) {} });
+        assert!(s.contains("as_deref"), "{s}");
+        assert!(!s.contains("must not be null"), "nullable param must not null-check: {s}");
+    }
+
+    #[test]
+    fn borrowed_str_param_uses_jni_str_without_allocating() {
+        let s = gen_regular(quote! { fn f(env: &mut jni::Env<'_>, clazz: jclass, msg: &JNIStr) -> jint { 0 } });
+        assert!(s.contains("__arg0 : jni :: objects :: JString"), "{s}");
+        assert!(s.contains("mutf8_chars"), "{s}");
+        assert!(s.contains("jni :: strings :: JNIStr"), "{s}");
+        // Borrowed: no owned `String` extraction.
+        assert!(!s.contains("try_to_string"), "{s}");
+    }
+
+    #[test]
+    fn string_return_builds_a_jstring() {
+        let s = gen_regular(quote! {
+            fn f(env: &mut jni::Env<'_>, clazz: jclass, code: jint) -> String { String::new() }
+        });
+        assert!(s.contains("new_string"), "{s}");
+        // Return descriptor Ljava/lang/String; — token form `-> JString`.
+        assert!(s.replace(' ', "").contains("->JString"), "{s}");
+    }
+
+    #[test]
     fn void_method_has_no_result_binding() {
         let s = gen_regular(quote! { fn f(env: &mut jni::Env<'_>, clazz: jclass, ptr: jlong) {} });
         assert!(!s.contains("__result"), "{s}");
         assert!(s.replace(' ', "").contains("->void"), "{s}");
+    }
+
+    #[test]
+    fn object_param_binds_class_via_type_map_alias() {
+        let s = gen_regular(quote! {
+            fn f(env: &mut jni::Env<'_>, clazz: jclass, #[class = "java/util/Collection"] out: &JObject) {}
+        });
+        // The inner impl fn still takes a generic JObject.
+        assert!(s.contains("__arg0 : jni :: objects :: JObject"), "{s}");
+        let compact = s.replace(' ', "");
+        // A JObject-typed alias is defined and bound to the class via type_map,
+        // and the signature references that alias.
+        assert!(compact.contains("type__JniClass_f_0<'local>=jni::objects::JObject<'local>"), "{s}");
+        assert!(compact.contains("type_map={__JniClass_f_0=>\"java.util.Collection\"}"), "{s}");
+        assert!(compact.contains("sig=(__JniClass_f_0)->void"), "{s}");
     }
 
     #[test]
@@ -1373,4 +2444,40 @@ mod tests {
         assert!(out.contains("use jni_support :: ThrowJniError as __JniErrorPolicy"), "{out}");
     }
 
+    #[test]
+    fn expand_derives_signature_tokens_and_shares_overloaded_names() {
+        // SystemProperties overloads native_get by signature; two Rust methods
+        // register under one Java name. The DERIVED descriptors are checked in
+        // `generated_shim_abi.rs`; here we pin the signature tokens the two
+        // native_method! invocations carry.
+        let out = expand_jni_module(
+            quote! { "android/os/SystemProperties" },
+            quote! {
+                pub mod system_properties {
+                    #[jni_method(fast, name = "native_get")]
+                    fn native_get_string(
+                        env: &mut jni::Env<'_>,
+                        clazz: jclass,
+                        key: &JNIStr,
+                        def: jstring,
+                    ) -> jstring {
+                        def
+                    }
+                    #[jni_method(fast, name = "native_get")]
+                    fn native_get_string_handle(
+                        env: &mut jni::Env<'_>,
+                        clazz: jclass,
+                        handle: i64,
+                    ) -> jstring {
+                        std::ptr::null_mut()
+                    }
+                }
+            },
+        )
+        .to_string();
+        assert_eq!(out.matches("\"native_get\"").count(), 2, "{out}");
+        let compact = out.replace(' ', "");
+        assert!(compact.contains("sig=(JString,JString)->JString"), "{out}");
+        assert!(compact.contains("sig=(jlong)->JString"), "{out}");
+    }
 }
