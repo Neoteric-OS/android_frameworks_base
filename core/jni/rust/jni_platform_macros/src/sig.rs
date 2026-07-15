@@ -4,7 +4,8 @@
 //! `native_method!` (from the Rust parameter types), but still builds the
 //! primitive-only descriptor for `@CriticalNative` methods here, via
 //! [`primitive_sig`], and resolves object class names for the signature tokens
-//! it hands to `native_method!` via [`resolve_class`].
+//! it hands to `native_method!` via [`resolve_class`]. [`extract_result_inner`]
+//! unwraps `Result<T, _>` return types for the return-value bridging.
 
 /// Returns the JNI signature character for a primitive JNI type, or `None` if
 /// `ty` is not a primitive the macros accept.
@@ -44,6 +45,47 @@ pub fn resolve_class(class: &str, module_package: Option<&str>) -> String {
         }
     } else {
         normalized
+    }
+}
+
+/// Extracts the inner type `T` from `Result<T, ...>`.
+///
+/// Handles common patterns like:
+/// - `Result<jint, JniError>`
+/// - `Result<JString, JniError>`
+/// - `Result<(), JniError>`
+pub(crate) fn extract_result_inner(ty: &str) -> Option<String> {
+    let ty = ty.trim();
+    if !ty.starts_with("Result<") && !ty.starts_with("Result <") {
+        return None;
+    }
+
+    // Find the opening '<' and matching '>'
+    let start = ty.find('<')? + 1;
+    let end = ty.rfind('>')?;
+    let inner = &ty[start..end];
+
+    // Split on ',' to get the Ok type (first part)
+    // Need to handle nested generics, so count angle brackets
+    let mut depth = 0;
+    let mut split_pos = None;
+    for (i, ch) in inner.char_indices() {
+        match ch {
+            '<' => depth += 1,
+            '>' => depth -= 1,
+            ',' if depth == 0 => {
+                split_pos = Some(i);
+                break;
+            }
+            _ => {}
+        }
+    }
+
+    if let Some(pos) = split_pos {
+        Some(inner[..pos].trim().to_string())
+    } else {
+        // No comma found — might be just `Result<T>`
+        Some(inner.trim().to_string())
     }
 }
 
@@ -122,5 +164,31 @@ mod tests {
         assert_eq!(resolve_class("KeyEvent", Some("android/view")), "android/view/KeyEvent");
         assert_eq!(resolve_class("SystemClock", Some("android/os")), "android/os/SystemClock");
         assert_eq!(resolve_class("Log", Some("android/util")), "android/util/Log");
+    }
+
+    // ---- extract_result_inner tests ----
+
+    #[test]
+    fn test_extract_result_inner_primitives() {
+        assert_eq!(extract_result_inner("Result<jint, JniError>"), Some("jint".to_string()));
+        assert_eq!(extract_result_inner("Result<jlong, JniError>"), Some("jlong".to_string()));
+    }
+
+    #[test]
+    fn test_extract_result_inner_unit() {
+        assert_eq!(extract_result_inner("Result<(), JniError>"), Some("()".to_string()));
+    }
+
+    #[test]
+    fn test_extract_result_inner_object() {
+        assert_eq!(extract_result_inner("Result<JString, JniError>"), Some("JString".to_string()));
+        assert_eq!(extract_result_inner("Result<JObject, JniError>"), Some("JObject".to_string()));
+    }
+
+    #[test]
+    fn test_extract_result_inner_not_result() {
+        assert_eq!(extract_result_inner("jint"), None);
+        assert_eq!(extract_result_inner("JString"), None);
+        assert_eq!(extract_result_inner("()"), None);
     }
 }
