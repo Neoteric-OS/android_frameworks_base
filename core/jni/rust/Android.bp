@@ -27,3 +27,29 @@ rust_test_host {
         "libsyn",
     ],
 }
+
+rust_library {
+    name: "libjni_support",
+    crate_name: "jni_support",
+    crate_root: "jni_support/src/lib.rs",
+    edition: "2021",
+    host_supported: true,
+    rustlibs: [
+        "libjni_next",
+        "libthiserror",
+    ],
+}
+
+rust_test_host {
+    name: "jni_support_test",
+    crate_name: "jni_support",
+    crate_root: "jni_support/src/lib.rs",
+    edition: "2021",
+    test_suites: ["general-tests"],
+    auto_gen_config: true,
+    rustlibs: [
+        "libjni_next",
+        "libthiserror",
+    ],
+    proc_macros: ["libjni_platform_macros"],
+}
