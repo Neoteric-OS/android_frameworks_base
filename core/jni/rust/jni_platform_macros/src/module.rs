@@ -3,18 +3,23 @@
 //! Processes a module block, collecting `#[jni_method]` functions, and emits a
 //! `register()` function that registers each as a native method with the JVM.
 //!
-//! Each method goes through jni-rs's `native_method!` macro. For each, this
-//! macro generates a private inner impl fn whose parameters are the raw
-//! `jni::sys` values the JVM passes and whose body does the Rust-friendly
-//! bridging (primitives, including `bool`) before and after calling the user's
-//! function. `native_method!` wraps that inner fn in the `extern "system"` shim
-//! the JVM calls (upgrading `EnvUnowned` to `&mut Env`, catching panics, and
-//! resolving an `Err` to the matching pending Java exception via
-//! `jni_support::ThrowJniError`), and — the reason for routing through it —
-//! DERIVES the JNI signature from the signature tokens and TYPE-CHECKS the inner
-//! fn's parameter and return types against it. The registered fn pointer and the
-//! JNI descriptor it is registered under are therefore produced together and
-//! cannot silently diverge.
+//! Regular and `@FastNative` methods go through jni-rs's `native_method!` macro.
+//! For each, this macro generates a private inner impl fn whose parameters are
+//! the raw `jni::sys`/`jni::objects` values the JVM passes and whose body does
+//! the Rust-friendly bridging (primitives, including `bool`) before and after
+//! calling the user's function. `native_method!` wraps that
+//! inner fn in the `extern "system"` shim the JVM calls (upgrading `EnvUnowned`
+//! to `&mut Env`, catching panics, and resolving an `Err` to the matching
+//! pending Java exception via `jni_support::ThrowJniError`), and — the reason
+//! for routing through it — DERIVES the JNI signature from the signature tokens
+//! and TYPE-CHECKS the inner fn's parameter and return types against it. The
+//! registered fn pointer and the JNI descriptor it is registered under are
+//! therefore produced together and cannot silently diverge.
+//!
+//! `@CriticalNative` methods cannot be expressed with `native_method!` (their
+//! ABI drops the `JNIEnv`/`jclass` prefix), so they keep a hand-rolled,
+//! primitive-only `extern "system"` shim and a `NativeMethod::from_raw_parts`
+//! descriptor built from [`sig::primitive_sig`].
 
 use proc_macro2::TokenStream;
 use quote::{format_ident, quote};
@@ -24,6 +29,7 @@ use syn::{
 };
 
 use crate::class::JavaClass;
+use crate::sig;
 
 /// A fully processed JNI method: the module-level items it contributes plus the
 /// `const NativeMethod` that `register()` collects.
@@ -32,11 +38,26 @@ use crate::class::JavaClass;
 struct JniMethod {
     /// Identifier of the module-level `const NativeMethod` describing this method.
     method_const: proc_macro2::Ident,
-    /// The generated items placed at module scope: the inner impl fn plus the
-    /// `native_method!`-built `const NativeMethod`.
+    /// Whether this is an `@CriticalNative` method. Regular/fast methods pull
+    /// `jni_support::ThrowJniError` into module scope; critical ones do not.
+    is_critical: bool,
+    /// The generated items placed at module scope: for regular/fast, the inner
+    /// impl fn plus the `native_method!`-built `const NativeMethod`; for
+    /// critical, the hand-rolled shim plus its `from_raw_parts` const.
     generated_items: TokenStream,
     /// The cleaned user function with JNI attributes stripped.
     cleaned_fn: TokenStream,
+}
+
+/// JNI method calling convention.
+#[derive(Clone, Debug, PartialEq)]
+enum JniMode {
+    /// Regular JNI method (receives JNIEnv, jobject/jclass)
+    Regular,
+    /// @FastNative — receives JNIEnv, jobject/jclass but with reduced overhead
+    Fast,
+    /// @CriticalNative — no JNIEnv, no jobject; only primitives
+    Critical,
 }
 
 /// How one user parameter is bridged from the value the JVM passes to the type
@@ -138,6 +159,14 @@ impl ReturnBridge {
         matches!(self, ReturnBridge::Void)
     }
 
+    /// The shim's return type tokens (empty for void), tied to `lifetime`.
+    fn output_tokens(&self, _lifetime: &TokenStream) -> TokenStream {
+        match self {
+            ReturnBridge::Void => quote! {},
+            ReturnBridge::Primitive { sys_ty } => quote! { -> #sys_ty },
+        }
+    }
+
     /// The `Ok` type of the `with_env` closure's `Result` (empty tuple for void),
     /// tied to `lifetime`.
     fn closure_ok_ty(&self, _lifetime: &TokenStream) -> TokenStream {
@@ -157,27 +186,35 @@ impl ReturnBridge {
     }
 }
 
-/// Validates that a JNI method has the required leading parameters (JNIEnv +
-/// jobject/jclass). Should be called once during initial processing.
+/// Validates that a non-critical JNI method has the required leading parameters
+/// (JNIEnv + jobject/jclass). Should be called once during initial processing.
 ///
 /// # Examples
 ///
 /// ```text
-/// // Ok — valid method with JNIEnv + jclass:
+/// // Ok — valid regular method with JNIEnv + jclass:
 /// fn test(env: &mut JNIEnv, clazz: jclass, x: jint) {}  → Ok(())
 ///
+/// // Ok — critical mode skips validation:
+/// fn test(x: jlong) -> jint { 0 }  (mode=Critical)      → Ok(())
+///
 /// // Err — too few params:
-/// fn test(env: &mut JNIEnv) {}                           → Err("...at least two parameters...")
+/// fn test(env: &mut JNIEnv) {}  (mode=Regular)           → Err("...at least two parameters...")
 ///
 /// // Err — wrong first param:
-/// fn test(x: jint, clazz: jclass) {}                     → Err("...first parameter must be a JNIEnv...")
+/// fn test(x: jint, clazz: jclass) {}  (mode=Regular)     → Err("...first parameter must be a JNIEnv...")
 /// ```
-fn validate_leading_params(func: &ItemFn) -> Result<(), String> {
+fn validate_leading_params(func: &ItemFn, mode: &JniMode) -> Result<(), String> {
+    if *mode == JniMode::Critical {
+        return Ok(());
+    }
+
     let inputs: Vec<&FnArg> = func.sig.inputs.iter().collect();
 
     if inputs.len() < 2 {
         return Err(
-            "JNI methods must have at least two parameters (JNIEnv, jobject/jclass)".to_string()
+            "non-critical JNI methods must have at least two parameters (JNIEnv, jobject/jclass)"
+                .to_string(),
         );
     }
 
@@ -213,8 +250,9 @@ impl JniMethod {
     /// Parses a `#[jni_method]`-annotated function into a fully processed `JniMethod`.
     ///
     /// Validates parameters, generates the method's module-level items (inner
-    /// impl fn + `const NativeMethod`), and strips JNI attributes from the user
-    /// function.
+    /// impl fn + `const NativeMethod` for regular/fast; hand-rolled shim +
+    /// `const NativeMethod` for critical), and strips JNI attributes from the
+    /// user function.
     ///
     /// # Example
     ///
@@ -236,20 +274,32 @@ impl JniMethod {
         let jni_attr = find_jni_method_attr(&func.attrs)
             .expect("JniMethod::parse called without jni_method attr");
 
-        validate_leading_params(func)
+        let mode = parse_jni_mode(&jni_attr);
+
+        validate_leading_params(func, &mode)
             .map_err(|e| syn::Error::new_spanned(func, e).to_compile_error())?;
 
         let java_name = parse_java_name(&jni_attr)
             .unwrap_or_else(|| derive_java_name(&func.sig.ident.to_string()));
 
         let method_const = format_ident!("__NATIVE_METHOD_{}", func.sig.ident);
+        let is_critical = mode == JniMode::Critical;
 
-        let generated_items = generate_native_method(func, &java_name, &method_const)
-            .map_err(|e| syn::Error::new_spanned(func, e).to_compile_error())?;
+        let generated_items = if is_critical {
+            generate_critical_method(func, &java_name, &method_const)
+        } else {
+            generate_native_method(func, &java_name, &method_const)
+        }
+        .map_err(|e| syn::Error::new_spanned(func, e).to_compile_error())?;
 
         let cleaned = strip_jni_attrs(func);
 
-        Ok(JniMethod { method_const, generated_items, cleaned_fn: quote! { #cleaned } })
+        Ok(JniMethod {
+            method_const,
+            is_critical,
+            generated_items,
+            cleaned_fn: quote! { #cleaned },
+        })
     }
 }
 
@@ -293,9 +343,10 @@ fn generate_register_fn(class_path: &str, methods: &[JniMethod]) -> TokenStream 
                 #(#consts),*
             ];
             // SAFETY: every entry is a `NativeMethod` produced together with its
-            // fn pointer by `native_method!`, which type-checks the pointer
-            // against its own derived JNI signature, so a pointer can never be
-            // registered under a mismatched signature.
+            // fn pointer — by `native_method!`, which type-checks the pointer
+            // against its own derived JNI signature, or (for @CriticalNative) by
+            // `from_raw_parts` over a primitive-only shim matching its descriptor
+            // — so a pointer can never be registered under a mismatched signature.
             unsafe { env.register_native_methods(&class, &methods) }
                 .expect("Failed to register native methods");
         }
@@ -410,10 +461,10 @@ pub fn expand_jni_module(attr: TokenStream, item: TokenStream) -> TokenStream {
     let register_fn = generate_register_fn(java_class.path(), &jni_methods);
 
     // `native_method!` names the error policy by bare identifier, so pull
-    // `ThrowJniError` into module scope under a mangled alias. Skip the import
-    // for a module with no methods so it doesn't trip `unused_imports` under
-    // `-D warnings`.
-    let policy_import = if !jni_methods.is_empty() {
+    // `ThrowJniError` into module scope under a mangled alias. Only regular/fast
+    // methods route through `native_method!`; skip the import for critical-only
+    // modules so it doesn't trip `unused_imports` under `-D warnings`.
+    let policy_import = if jni_methods.iter().any(|m| !m.is_critical) {
         quote! {
             use jni_support::ThrowJniError as __JniErrorPolicy;
         }
@@ -438,7 +489,7 @@ fn find_jni_method_attr(attrs: &[Attribute]) -> Option<Attribute> {
 }
 
 /// Parses the contents of a `#[jni_method(...)]` attribute as a comma-separated
-/// list of `Meta` items (e.g., `name = "foo"`).
+/// list of `Meta` items (e.g., `critical`, `fast`, `name = "foo"`).
 ///
 /// Returns an empty list for bare `#[jni_method]`.
 fn parse_jni_method_args(attr: &Attribute) -> Vec<Meta> {
@@ -451,6 +502,21 @@ fn parse_jni_method_args(attr: &Attribute) -> Vec<Meta> {
         }
     }
     Vec::new()
+}
+
+/// Parses the JNI mode from `#[jni_method(critical)]` or `#[jni_method(fast)]`.
+fn parse_jni_mode(attr: &Attribute) -> JniMode {
+    for meta in parse_jni_method_args(attr) {
+        if let Meta::Path(path) = &meta {
+            if path.is_ident("critical") {
+                return JniMode::Critical;
+            }
+            if path.is_ident("fast") {
+                return JniMode::Fast;
+            }
+        }
+    }
+    JniMode::Regular
 }
 
 /// Parses an explicit Java method name from `#[jni_method(name = "foo")]`.
@@ -517,6 +583,72 @@ fn return_sig_token(ty: &str) -> Result<TokenStream, String> {
         _ => param_sig_token(ty)?,
     };
     Ok(token)
+}
+
+/// Builds the primitive-only JNI descriptor for an `@CriticalNative` method.
+///
+/// Critical natives take and return only primitives (already enforced by
+/// [`validate_critical_native`] for strings/`Result`); any non-primitive here is
+/// rejected. `native_method!` cannot express the critical ABI, so this is the
+/// one signature the macro still derives by hand — over the narrow, safe
+/// primitive alphabet of [`sig::primitive_sig`].
+fn derive_critical_signature(func: &ItemFn) -> Result<String, String> {
+    let mut descriptor = String::from("(");
+    for arg in &func.sig.inputs {
+        if let FnArg::Typed(pat_type) = arg {
+            let ty = type_to_string(&pat_type.ty);
+            let ch = sig::primitive_sig(&ty).ok_or_else(|| {
+                format!("@CriticalNative parameter type '{}' must be a primitive", ty)
+            })?;
+            descriptor.push_str(ch);
+        }
+    }
+    descriptor.push(')');
+
+    let ret = return_type_str(&func.sig.output);
+    let ch = sig::primitive_sig(&ret)
+        .ok_or_else(|| format!("@CriticalNative return type '{}' must be a primitive", ret))?;
+    descriptor.push_str(ch);
+
+    Ok(descriptor)
+}
+
+/// Validates that a `@CriticalNative` method doesn't use types requiring JNIEnv.
+///
+/// # Examples
+///
+/// ```text
+/// fn test(x: jlong) -> jint { 0 }  → Ok(())
+/// fn test(tag: &str) -> jint { 0 } → Err("@CriticalNative method 'test' cannot use '&str'...")
+/// fn test(x: jint) -> String { … } → Err("@CriticalNative method 'test' cannot return String...")
+/// ```
+fn validate_critical_native(func: &ItemFn) -> Result<(), String> {
+    let fn_name = &func.sig.ident;
+    let inputs: Vec<&FnArg> = func.sig.inputs.iter().collect();
+
+    for arg in &inputs {
+        if let FnArg::Typed(pat_type) = arg {
+            let ty = type_to_string(&pat_type.ty);
+            if matches!(ty.as_str(), "&str" | "Option<&str>" | "&JNIStr" | "Option<&JNIStr>") {
+                return Err(format!(
+                    "@CriticalNative method '{}' cannot use '{}' \
+                     (no JNIEnv available for string conversion)",
+                    fn_name, ty
+                ));
+            }
+        }
+    }
+
+    let ret = return_type_str(&func.sig.output);
+    if ret == "String" {
+        return Err(format!(
+            "@CriticalNative method '{}' cannot return String \
+             (no JNIEnv available for string conversion)",
+            fn_name
+        ));
+    }
+
+    Ok(())
 }
 
 /// The generated code for bridging one shim parameter to the user's declared type.
@@ -743,6 +875,95 @@ fn generate_native_method(
     })
 }
 
+/// Generates the module items for an `@CriticalNative` method: the hand-rolled
+/// `extern "system"` shim and a `from_raw_parts` `const NativeMethod`.
+///
+/// ART invokes `@CriticalNative` methods without the `JNIEnv`/`jclass` prefix,
+/// over primitives only — an ABI `native_method!` cannot express — so the shim
+/// is a bare `extern "system"` function with no `Env`. Host JVMs (Ravenwood's
+/// OpenJDK, layoutlib's Studio JVM) ignore the annotation and always pass the
+/// prefix, so a cfg'd host variant accepts and discards the two leading
+/// arguments — the Rust equivalent of core_jni_helpers.h's
+/// `CRITICAL_JNI_PARAMS_COMMA`.
+///
+/// Returns `Err` if the function uses types that require a `JNIEnv` (`&str`,
+/// `String`, `Result`) or a non-primitive parameter/return.
+fn generate_critical_method(
+    func: &ItemFn,
+    java_name: &str,
+    method_const: &proc_macro2::Ident,
+) -> Result<TokenStream, String> {
+    validate_critical_native(func)?;
+
+    let user_fn_name = &func.sig.ident;
+    let shim_name = format_ident!("__jni_{}", user_fn_name);
+    let lifetime = quote! { 'local };
+
+    let ret = ReturnBridge::parse(&return_type_str(&func.sig.output))?;
+    let output = ret.output_tokens(&lifetime);
+    let jni_sig = derive_critical_signature(func)?;
+
+    let mut shim_params: Vec<TokenStream> = Vec::new();
+    let mut call_args: Vec<TokenStream> = Vec::new();
+    for (index, arg) in func.sig.inputs.iter().enumerate() {
+        if let FnArg::Typed(pat_type) = arg {
+            let bridged = bridge_user_param(pat_type, index, &lifetime)?;
+            shim_params.push(bridged.shim_param);
+            call_args.push(bridged.call_arg);
+        }
+    }
+
+    let call = quote! { #user_fn_name(#(#call_args),*) };
+    // An `unsafe fn` native's call must live in an `unsafe` block; the user
+    // opted into the obligation by marking the fn `unsafe`.
+    let call = if func.sig.unsafety.is_some() {
+        quote! { unsafe { #call } }
+    } else {
+        call
+    };
+    let body = match &ret {
+        ReturnBridge::Void => quote! { #call; },
+        _ => quote! { #call },
+    };
+
+    let lint_allows = quote! {
+        #[allow(non_snake_case, clippy::too_many_arguments, clippy::undocumented_unsafe_blocks)]
+    };
+    let shim_doc = shim_doc_attr(java_name, user_fn_name, func.sig.unsafety.is_some(), true);
+
+    Ok(quote! {
+        #[cfg(target_os = "android")]
+        #shim_doc
+        #lint_allows
+        extern "system" fn #shim_name(#(#shim_params),*) #output {
+            #body
+        }
+        #[cfg(not(target_os = "android"))]
+        #shim_doc
+        #lint_allows
+        extern "system" fn #shim_name(
+            _critical_env: *mut jni::sys::JNIEnv,
+            _critical_class: jni::sys::jclass,
+            #(#shim_params),*
+        ) #output {
+            #body
+        }
+
+        #[allow(non_upper_case_globals, clippy::undocumented_unsafe_blocks)]
+        const #method_const: jni::NativeMethod<'static> = unsafe {
+            // SAFETY: `#shim_name` is a bare `extern "system"` fn whose
+            // primitive-only parameters and return type match this
+            // hand-derived descriptor; @CriticalNative registers with the same
+            // (name, sig, fn-ptr) triple as any other native.
+            jni::NativeMethod::from_raw_parts(
+                jni::jni_str!(#java_name),
+                jni::jni_str!(#jni_sig),
+                #shim_name as *mut core::ffi::c_void,
+            )
+        };
+    })
+}
+
 /// Checks if a structurally normalized type represents a JNI environment parameter.
 fn is_env_type(ty: &str) -> bool {
     matches!(ty, "&mut Env" | "&mut JNIEnv" | "Env" | "JNIEnv")
@@ -872,6 +1093,13 @@ mod tests {
         generate_native_method(&func, &name, &method_const).unwrap().to_string()
     }
 
+    fn gen_critical(func: TokenStream) -> String {
+        let func = parse_fn(func);
+        let name = func.sig.ident.to_string();
+        let method_const = format_ident!("__NATIVE_METHOD_{}", func.sig.ident);
+        generate_critical_method(&func, &name, &method_const).unwrap().to_string()
+    }
+
     #[test]
     fn regular_method_carries_shim_doc() {
         let s = gen_regular(quote! { fn nativeGetValue(env: &mut jni::Env<'_>, clazz: jclass) {} });
@@ -908,6 +1136,14 @@ mod tests {
     }
 
     #[test]
+    fn unsafe_critical_wraps_call_and_carries_doc() {
+        let s = gen_critical(quote! { unsafe fn nativeGetId(ptr: jlong) -> jint { 0 } });
+        assert!(s.replace(' ', "").contains("unsafe{nativeGetId(__arg0)}"), "{s}");
+        assert!(s.contains("@CriticalNative shim for `nativeGetId`"), "{s}");
+        assert!(s.contains("Callers must additionally uphold"), "{s}");
+    }
+
+    #[test]
     fn strip_lifetime_arg_strips_only_a_lone_lifetime() {
         // A lone lifetime argument is dropped so the bare wrapper name classifies.
         assert_eq!(strip_lifetime_arg("JString<'local>"), "JString");
@@ -927,6 +1163,17 @@ mod tests {
     }
 
     #[test]
+    fn parse_jni_mode_recognizes_each_mode() {
+        let mode = |tokens| {
+            let attr = syn::parse2::<ItemFn>(tokens).unwrap().attrs[0].clone();
+            parse_jni_mode(&attr)
+        };
+        assert_eq!(mode(quote! { #[jni_method(critical)] fn t() {} }), JniMode::Critical);
+        assert_eq!(mode(quote! { #[jni_method(fast)] fn t() {} }), JniMode::Fast);
+        assert_eq!(mode(quote! { #[jni_method] fn t() {} }), JniMode::Regular);
+    }
+
+    #[test]
     fn param_bridge_rejects_unsupported_types() {
         assert!(param_bridge("FooBar").is_none());
         assert!(param_bridge("String").is_none());
@@ -936,6 +1183,16 @@ mod tests {
     fn param_bridge_no_longer_maps_u8() {
         // jni-sys 0.4's `jboolean` is `bool`; a bare `u8` denotes no JNI type.
         assert!(param_bridge("u8").is_none());
+    }
+
+    #[test]
+    fn derive_critical_signature_is_primitive_only() {
+        let sig = |tokens| derive_critical_signature(&parse_fn(tokens));
+        assert_eq!(sig(quote! { fn t(ptr: jlong) -> jint { 0 } }).unwrap(), "(J)I");
+        assert_eq!(sig(quote! { fn t(a: jint, b: jlong) {} }).unwrap(), "(IJ)V");
+        assert_eq!(sig(quote! { fn t() -> jlong { 0 } }).unwrap(), "()J");
+        // A non-primitive parameter has no critical descriptor.
+        assert!(sig(quote! { fn t(x: jobject) -> jint { 0 } }).unwrap_err().contains("primitive"));
     }
 
     #[test]
@@ -981,6 +1238,23 @@ mod tests {
     }
 
     #[test]
+    fn critical_method_is_cfg_paired_and_registers_a_descriptor() {
+        let s = gen_critical(quote! { fn nativeGetId(ptr: jlong) -> jint { 0 } });
+        assert!(s.contains("extern \"system\" fn __jni_nativeGetId"), "{s}");
+        assert!(s.contains("cfg (target_os = \"android\")"), "{s}");
+        // The android variant, before the host cfg, takes only the primitive.
+        let android = s.split("cfg (not (target_os = \"android\"))").next().unwrap();
+        assert!(!android.contains("JNIEnv"), "android critical shim takes no JNIEnv: {s}");
+        // The host variant discards the ignored (JNIEnv*, jclass) prefix.
+        assert!(s.contains("_critical_env : * mut jni :: sys :: JNIEnv"), "{s}");
+        assert!(s.contains("_critical_class : jni :: sys :: jclass"), "{s}");
+        // Critical keeps the hand-rolled from_raw_parts path with its descriptor.
+        assert!(s.contains("from_raw_parts"), "{s}");
+        assert!(s.contains("(J)I"), "{s}");
+        assert!(s.contains("__jni_nativeGetId as * mut core :: ffi :: c_void"), "{s}");
+    }
+
+    #[test]
     fn this_binding_maps_receiver_type() {
         let lt = lifetime();
         let this = |func: TokenStream| {
@@ -998,6 +1272,27 @@ mod tests {
     }
 
     #[test]
+    fn validate_leading_params_enforces_env_and_receiver() {
+        let check = |func: TokenStream, mode| validate_leading_params(&parse_fn(func), &mode);
+        assert!(check(quote! { fn t(env: &mut jni::Env<'_>) {} }, JniMode::Regular)
+            .unwrap_err()
+            .contains("at least two parameters"));
+        assert!(check(quote! { fn t(x: jint, clazz: jclass) {} }, JniMode::Regular)
+            .unwrap_err()
+            .contains("first parameter must be a JNIEnv"));
+        assert!(check(quote! { fn t(env: &mut jni::Env<'_>, x: jint) {} }, JniMode::Regular)
+            .unwrap_err()
+            .contains("second parameter must be a jobject/jclass"));
+        assert!(check(
+            quote! { fn t(env: &mut jni::Env<'_>, clazz: jclass, x: jint) {} },
+            JniMode::Regular
+        )
+        .is_ok());
+        // Critical methods take no env/receiver.
+        assert!(check(quote! { fn t(x: jlong) -> jint { 0 } }, JniMode::Critical).is_ok());
+    }
+
+    #[test]
     fn return_type_str_stringifies_the_output() {
         let out = |func: TokenStream| return_type_str(&parse_fn(func).sig.output);
         assert_eq!(out(quote! { fn t() {} }), "()");
@@ -1006,9 +1301,89 @@ mod tests {
     }
 
     #[test]
+    fn register_fn_collects_the_method_consts() {
+        let methods = vec![
+            JniMethod {
+                method_const: format_ident!("__NATIVE_METHOD_nativeGetId"),
+                is_critical: true,
+                generated_items: quote! {},
+                cleaned_fn: quote! {},
+            },
+            JniMethod {
+                method_const: format_ident!("__NATIVE_METHOD_nativeGetName"),
+                is_critical: false,
+                generated_items: quote! {},
+                cleaned_fn: quote! {},
+            },
+        ];
+        let s = generate_register_fn("android/view/MotionEvent", &methods).to_string();
+        assert!(s.contains("pub fn register"));
+        assert!(s.contains("find_class"));
+        assert!(s.contains("android/view/MotionEvent"));
+        assert!(s.contains("register_native_methods"));
+        assert!(s.contains("__NATIVE_METHOD_nativeGetId"), "{s}");
+        assert!(s.contains("__NATIVE_METHOD_nativeGetName"), "{s}");
+        assert!(!s.contains(":: init"));
+    }
+
+    #[test]
     fn register_fn_is_a_noop_for_an_empty_module() {
         let s = generate_register_fn("android/os/SystemClock", &[]).to_string();
         assert!(s.contains("pub fn register") && s.contains("_env"));
         assert!(!s.contains("find_class") && !s.contains("register_native_methods"));
+    }
+
+    #[test]
+    fn expand_passes_non_method_items_through_and_skips_policy_for_critical_only() {
+        let out = expand_jni_module(
+            quote! { "android/view/MotionEvent" },
+            quote! {
+                pub mod motion_event {
+                    pub struct SomeHelper {
+                        pub x: i32,
+                    }
+                    #[jni_method(critical)]
+                    fn nativeGetId(ptr: jlong) -> jint {
+                        0
+                    }
+                }
+            },
+        )
+        .to_string();
+        assert!(out.contains("SomeHelper") && out.contains("pub x : i32"));
+        assert!(out.contains("pub fn register") && out.contains("__jni_nativeGetId"));
+        // A critical-only module routes nothing through native_method!, so it
+        // must not import the error policy (unused_imports would be an error).
+        assert!(!out.contains("__JniErrorPolicy"), "{out}");
+    }
+
+    #[test]
+    fn expand_registers_verbatim_and_overridden_names() {
+        let out = expand_jni_module(
+            quote! { "android/util/Log" },
+            quote! {
+                pub mod log {
+                    #[jni_method]
+                    fn println_native(env: &mut jni::Env<'_>, clazz: jclass, priority: jint) -> jint {
+                        0
+                    }
+                    #[jni_method(fast, name = "logger_entry_max_payload_native")]
+                    fn max_payload(env: &mut jni::Env<'_>, clazz: jclass) -> jint {
+                        0
+                    }
+                }
+            },
+        )
+        .to_string();
+        // Java names are verbatim / from `name = "..."` — never camelized.
+        assert!(
+            out.contains("name = \"println_native\"") && !out.contains("printlnNative"),
+            "{out}"
+        );
+        assert!(out.contains("name = \"logger_entry_max_payload_native\""), "{out}");
+        // Registration is by const, and the module imports the error policy.
+        assert!(out.contains("__NATIVE_METHOD_max_payload"), "{out}");
+        assert!(out.contains("fn = __jni_impl_max_payload"), "{out}");
+        assert!(out.contains("use jni_support :: ThrowJniError as __JniErrorPolicy"), "{out}");
     }
 }
