@@ -1,7 +1,10 @@
-//! JNI type-name helpers.
+//! JNI type-name helpers for the `#[jni_module]` macro.
 //!
-//! [`primitive_sig`] maps a primitive Rust/JNI type name to its JNI signature
-//! character, and [`resolve_class`] normalizes and qualifies a Java class name.
+//! `#[jni_module]` derives regular/fast method signatures through jni-rs's
+//! `native_method!` (from the Rust parameter types), but still builds the
+//! primitive-only descriptor for `@CriticalNative` methods here, via
+//! [`primitive_sig`], and resolves object class names for the signature tokens
+//! it hands to `native_method!` via [`resolve_class`].
 
 /// Returns the JNI signature character for a primitive JNI type, or `None` if
 /// `ty` is not a primitive the macros accept.
