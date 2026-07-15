@@ -238,29 +238,6 @@ fn strip_option(ty: &str) -> Option<String> {
     Some(ty[start..end].trim().to_string())
 }
 
-/// How the user's return value is converted to the value the shim returns.
-///
-/// Object returns become `jni::objects` wrappers (not raw pointers): a wrapper
-/// is `#[repr(transparent)]` so the ABI is unchanged, and it implements
-/// `Default` (a null reference), which [`EnvOutcome::resolve`](jni::EnvOutcome::resolve)
-/// needs for the error/panic path.
-enum ReturnBridge {
-    /// No return value (`()` / no declared return).
-    Void,
-    /// An ABI-identical primitive; passed through. Holds the `jni::sys` type.
-    Primitive { sys_ty: TokenStream },
-    /// `bool` → `jboolean`.
-    Bool,
-    /// `String` → `JString` via `Env::new_string`.
-    StringToJString,
-    /// The user returns an owned `jni::objects` wrapper directly.
-    /// Holds the wrapper path.
-    OwnedWrapper { wrapper: TokenStream },
-    /// The user returns a raw `jni::sys` object handle; wrap it back up with
-    /// `from_raw`. Holds the wrapper path.
-    RawObject { wrapper: TokenStream },
-}
-
 /// Drops a trailing lifetime-only generic argument, so an owned object return
 /// or parameter written with the lifetime its type requires (`JString<'local>`)
 /// classifies the same as the bare wrapper name [`param_bridge`] recognizes
@@ -286,9 +263,39 @@ fn strip_lifetime_arg(ty: &str) -> &str {
     ty
 }
 
+/// How the user's return value is converted to the value the shim returns.
+///
+/// Object returns become `jni::objects` wrappers (not raw pointers): a wrapper
+/// is `#[repr(transparent)]` so the ABI is unchanged, and it implements
+/// `Default` (a null reference), which [`EnvOutcome::resolve`](jni::EnvOutcome::resolve)
+/// needs for the error/panic path.
+enum ReturnBridge {
+    /// No return value (`()` / no declared return).
+    Void,
+    /// An ABI-identical primitive; passed through. Holds the `jni::sys` type.
+    Primitive { sys_ty: TokenStream },
+    /// `bool` → `jboolean`.
+    Bool,
+    /// `String` → `JString` via `Env::new_string`.
+    StringToJString,
+    /// The user returns an owned `jni::objects` wrapper directly.
+    /// Holds the wrapper path.
+    OwnedWrapper { wrapper: TokenStream },
+    /// The user returns a raw `jni::sys` object handle; wrap it back up with
+    /// `from_raw`. Holds the wrapper path.
+    RawObject { wrapper: TokenStream },
+}
+
 impl ReturnBridge {
-    /// Classifies a user return type (textual form).
-    fn parse(ty: &str) -> Result<Self, String> {
+    /// Classifies a user return type (textual form). `Result<T, E>` is
+    /// unwrapped to `T`; the second tuple element reports whether the
+    /// original type was a `Result`.
+    fn parse(ty: &str) -> Result<(Self, bool), String> {
+        if let Some(inner) = sig::extract_result_inner(ty) {
+            let (bridge, _) = Self::parse(&inner)?;
+            return Ok((bridge, true));
+        }
+
         // An owned wrapper return carries the lifetime its type needs
         // (`JString<'local>`); strip it so it classifies as the bare wrapper.
         let ty = strip_lifetime_arg(ty);
@@ -315,7 +322,7 @@ impl ReturnBridge {
                 }
             }
         };
-        Ok(bridge)
+        Ok((bridge, false))
     }
 
     /// True for a `()` / absent return.
@@ -951,14 +958,19 @@ fn param_sig_token(
 
 /// The `jni_sig!` return-type token for a user return type.
 ///
-/// Object returns take their class from the `#[returns = "..."]` attribute.
-/// Primitives and typed arrays defer to [`param_sig_token`].
+/// `Result<T, _>` is unwrapped to `T`; object returns take their class from the
+/// `#[returns = "..."]` attribute. Primitives and typed arrays defer to
+/// [`param_sig_token`].
 fn return_sig_token(
     ty: &str,
     returns_attr: Option<&str>,
     module_package: Option<&str>,
     objects: &mut ObjectClassMappings,
 ) -> Result<TokenStream, String> {
+    if let Some(inner) = sig::extract_result_inner(ty) {
+        return return_sig_token(&inner, returns_attr, module_package, objects);
+    }
+
     // An owned wrapper return keeps the lifetime its type needs
     // (`JString<'local>`); strip it so its descriptor matches the bare wrapper.
     let ty = strip_lifetime_arg(ty);
@@ -1025,6 +1037,7 @@ fn derive_critical_signature(func: &ItemFn) -> Result<String, String> {
 /// fn test(x: jlong) -> jint { 0 }  → Ok(())
 /// fn test(tag: &str) -> jint { 0 } → Err("@CriticalNative method 'test' cannot use '&str'...")
 /// fn test(x: jint) -> String { … } → Err("@CriticalNative method 'test' cannot return String...")
+/// fn test(x: jint) -> Result<jint, E> { … } → Err("...cannot return Result...")
 /// ```
 fn validate_critical_native(func: &ItemFn) -> Result<(), String> {
     let fn_name = &func.sig.ident;
@@ -1048,6 +1061,13 @@ fn validate_critical_native(func: &ItemFn) -> Result<(), String> {
         return Err(format!(
             "@CriticalNative method '{}' cannot return String \
              (no JNIEnv available for string conversion)",
+            fn_name
+        ));
+    }
+    if sig::extract_result_inner(&ret).is_some() {
+        return Err(format!(
+            "@CriticalNative method '{}' cannot return Result \
+             (no JNIEnv available to throw the error as a Java exception)",
             fn_name
         ));
     }
@@ -1454,7 +1474,7 @@ fn generate_native_method(
     let mut objects = ObjectClassMappings::new(&user_fn_name.to_string());
 
     let return_type = return_type_str(&func.sig.output);
-    let ret = ReturnBridge::parse(&return_type)?;
+    let (ret, is_result) = ReturnBridge::parse(&return_type)?;
     let ok_ty = ret.closure_ok_ty(&lifetime);
     let ret_token = return_sig_token(&return_type, returns_attr, module_package, &mut objects)?;
 
@@ -1498,11 +1518,19 @@ fn generate_native_method(
         call
     };
     let body = if ret.is_void() {
-        quote! { #(#preludes)* #call; ::core::result::Result::Ok(()) }
+        if is_result {
+            quote! { #(#preludes)* #call?; ::core::result::Result::Ok(()) }
+        } else {
+            quote! { #(#preludes)* #call; ::core::result::Result::Ok(()) }
+        }
     } else {
         let result_ident = format_ident!("__result");
         let convert = ret.convert_ok(&result_ident);
-        quote! { #(#preludes)* let #result_ident = #call; #convert }
+        if is_result {
+            quote! { #(#preludes)* let #result_ident = #call?; #convert }
+        } else {
+            quote! { #(#preludes)* let #result_ident = #call; #convert }
+        }
     };
 
     let lint_allows = quote! {
@@ -1581,7 +1609,7 @@ fn generate_critical_method(
     let shim_name = format_ident!("__jni_{}", user_fn_name);
     let lifetime = quote! { 'local };
 
-    let ret = ReturnBridge::parse(&return_type_str(&func.sig.output))?;
+    let (ret, _is_result) = ReturnBridge::parse(&return_type_str(&func.sig.output))?;
     let output = ret.output_tokens(&lifetime);
     let jni_sig = derive_critical_signature(func)?;
 
@@ -1802,87 +1830,10 @@ mod tests {
         generate_critical_method(&func, &name, &method_const).unwrap().to_string()
     }
 
-    #[test]
-    fn regular_method_carries_shim_doc() {
-        let s = gen_regular(quote! { fn nativeGetValue(env: &mut jni::Env<'_>, clazz: jclass) {} });
-        // A `#[doc]` records the shim's preconditions alongside the lint allows.
-        assert!(s.contains("# [doc ="), "{s}");
-        assert!(s.contains("JNI shim for `nativeGetValue`"), "{s}");
-        // A safe native's doc says nothing about extra caller obligations.
-        assert!(!s.contains("Callers must additionally uphold"), "{s}");
-    }
-
-    #[test]
-    fn unsafe_native_wraps_call_and_notes_user_safety() {
-        let s = gen_regular(
-            quote! { unsafe fn f(env: &mut jni::Env<'_>, clazz: jclass, ptr: jlong) -> jint { 0 } },
-        );
-        // The user call is wrapped in `unsafe { .. }`.
-        assert!(s.replace(' ', "").contains("unsafe{f(env,__this.as_raw(),__arg0)}"), "{s}");
-        // The generated doc points at the user fn's own safety contract.
-        assert!(s.contains("Callers must additionally uphold the safety preconditions of `f`"), "{s}");
-    }
-
-    #[test]
-    fn safe_native_does_not_wrap_the_call() {
-        let s =
-            gen_regular(quote! { fn f(env: &mut jni::Env<'_>, clazz: jclass, ptr: jlong) -> jint { 0 } });
-        assert!(!s.replace(' ', "").contains("unsafe{f("), "safe native must not wrap its call: {s}");
-    }
-
-    #[test]
-    fn unsafe_critical_wraps_call_and_carries_doc() {
-        let s = gen_critical(quote! { unsafe fn nativeGetId(ptr: jlong) -> jint { 0 } });
-        assert!(s.replace(' ', "").contains("unsafe{nativeGetId(__arg0)}"), "{s}");
-        assert!(s.contains("@CriticalNative shim for `nativeGetId`"), "{s}");
-        assert!(s.contains("Callers must additionally uphold"), "{s}");
-    }
-
-    #[test]
-    fn owned_jstring_return_derives_the_string_descriptor() {
-        // A native returning the owned `JString` wrapper (with the lifetime its
-        // type requires) classifies as OwnedWrapper: the shim returns the
-        // wrapper directly (no `from_raw`) and derives `Ljava/lang/String;`,
-        // the same descriptor as a raw `-> jstring`.
-        let s = gen_regular(quote! {
-            fn f<'local>(env: &mut jni::Env<'local>, clazz: jclass, code: jint) -> JString<'local> {
-                JString::null()
-            }
-        });
-        assert!(s.replace(' ', "").contains("sig=(jint)->JString"), "{s}");
-        assert!(!s.contains("from_raw"), "owned wrapper return passes through, no from_raw: {s}");
-    }
-
-    #[test]
-    fn strip_lifetime_arg_strips_only_a_lone_lifetime() {
-        // A lone lifetime argument is dropped so the bare wrapper name classifies.
-        assert_eq!(strip_lifetime_arg("JString<'local>"), "JString");
-        assert_eq!(strip_lifetime_arg("JObjectArray<'a>"), "JObjectArray");
-        // Anything else is returned unchanged: a real type argument, a
-        // lifetime-plus-type list, or a bare name.
-        assert_eq!(strip_lifetime_arg("Foo<Bar>"), "Foo<Bar>");
-        assert_eq!(strip_lifetime_arg("Foo<'a, Bar>"), "Foo<'a, Bar>");
-        assert_eq!(strip_lifetime_arg("jstring"), "jstring");
-        assert_eq!(strip_lifetime_arg("[jbyte]"), "[jbyte]");
-    }
-
-    #[test]
-    fn owned_wrapper_param_lifetime_classifies_as_bare_wrapper() {
-        // A parameter written with the lifetime its wrapper needs to be handed
-        // back as the return (`JString<'local>`) bridges identically to a bare
-        // `JString`: same shim parameter, same `JString` descriptor, and it is
-        // not rejected as an unknown type.
-        let s = gen_regular(quote! {
-            fn passthrough<'local>(
-                env: &mut jni::Env<'local>,
-                clazz: jclass,
-                def: JString<'local>,
-            ) -> JString<'local> {
-                def
-            }
-        });
-        assert!(s.contains("__arg0 : jni :: objects :: JString"), "{s}");
-        assert!(s.replace(' ', "").contains("sig=(JString)->JString"), "{s}");
+    fn gen_critical_err(func: TokenStream) -> String {
+        let func = parse_fn(func);
+        let method_const = format_ident!("__NATIVE_METHOD_t");
+        generate_critical_method(&func, "t", &method_const).unwrap_err()
     }
 
     #[test]
@@ -2004,6 +1955,30 @@ mod tests {
     fn param_bridge_no_longer_maps_u8() {
         // jni-sys 0.4's `jboolean` is `bool`; a bare `u8` denotes no JNI type.
         assert!(param_bridge("u8").is_none());
+    }
+
+    #[test]
+    fn return_bridge_classifies_and_unwraps_result() {
+        let lt = lifetime();
+
+        let (ret, is_result) = ReturnBridge::parse("()").unwrap();
+        assert!(ret.is_void() && !is_result);
+        assert!(ret.output_tokens(&lt).is_empty());
+
+        let (ret, is_result) = ReturnBridge::parse("jint").unwrap();
+        assert!(matches!(ret, ReturnBridge::Primitive { .. }) && !is_result);
+        assert_eq!(ret.output_tokens(&lt).to_string(), quote! { -> jni::sys::jint }.to_string());
+
+        assert!(matches!(ReturnBridge::parse("bool").unwrap().0, ReturnBridge::Bool));
+        assert!(matches!(ReturnBridge::parse("String").unwrap().0, ReturnBridge::StringToJString));
+        assert!(matches!(ReturnBridge::parse("JObject").unwrap().0, ReturnBridge::OwnedWrapper { .. }));
+        assert!(matches!(ReturnBridge::parse("jstring").unwrap().0, ReturnBridge::RawObject { .. }));
+
+        let (ret, is_result) = ReturnBridge::parse("Result<jint, JniError>").unwrap();
+        assert!(is_result && matches!(ret, ReturnBridge::Primitive { .. }));
+
+        let (ret, is_result) = ReturnBridge::parse("Result<(), JniError>").unwrap();
+        assert!(is_result && ret.is_void());
     }
 
     // ---- param_sig_token / return_sig_token / ObjectClassMappings ----
@@ -2147,6 +2122,28 @@ mod tests {
             .contains("Unknown JNI type"));
     }
 
+    fn rtoken(ty: &str) -> String {
+        let mut objects = ObjectClassMappings::new("t");
+        return_sig_token(ty, None, None, &mut objects).unwrap().to_string().replace(' ', "")
+    }
+
+    #[test]
+    fn return_sig_token_covers_each_shape() {
+        assert_eq!(rtoken("()"), "void");
+        assert_eq!(rtoken(""), "void");
+        assert_eq!(rtoken("void"), "void");
+        assert_eq!(rtoken("jint"), "jint");
+        assert_eq!(rtoken("bool"), "jboolean");
+        assert_eq!(rtoken("String"), "JString");
+        assert_eq!(rtoken("jstring"), "JString");
+        assert_eq!(rtoken("JString"), "JString");
+        assert_eq!(rtoken("JByteArray"), "[jbyte]");
+        // Result<T, _> unwraps to T.
+        assert_eq!(rtoken("Result<jint, JniError>"), "jint");
+        assert_eq!(rtoken("Result<(), JniError>"), "void");
+        assert_eq!(rtoken("Result<JString, JniError>"), "JString");
+    }
+
     #[test]
     fn return_sig_token_object_uses_returns_attr() {
         // java.lang.String is core -> emitted literally (not via an alias).
@@ -2251,6 +2248,89 @@ mod tests {
     }
 
     #[test]
+    fn regular_method_carries_shim_doc() {
+        let s = gen_regular(quote! { fn nativeGetValue(env: &mut jni::Env<'_>, clazz: jclass) {} });
+        // A `#[doc]` records the shim's preconditions alongside the lint allows.
+        assert!(s.contains("# [doc ="), "{s}");
+        assert!(s.contains("JNI shim for `nativeGetValue`"), "{s}");
+        // A safe native's doc says nothing about extra caller obligations.
+        assert!(!s.contains("Callers must additionally uphold"), "{s}");
+    }
+
+    #[test]
+    fn unsafe_native_wraps_call_and_notes_user_safety() {
+        let s = gen_regular(
+            quote! { unsafe fn f(env: &mut jni::Env<'_>, clazz: jclass, ptr: jlong) -> jint { 0 } },
+        );
+        // The user call is wrapped in `unsafe { .. }`.
+        assert!(s.replace(' ', "").contains("unsafe{f(env,__this.as_raw(),__arg0)}"), "{s}");
+        // The generated doc points at the user fn's own safety contract.
+        assert!(s.contains("Callers must additionally uphold the safety preconditions of `f`"), "{s}");
+    }
+
+    #[test]
+    fn safe_native_does_not_wrap_the_call() {
+        let s =
+            gen_regular(quote! { fn f(env: &mut jni::Env<'_>, clazz: jclass, ptr: jlong) -> jint { 0 } });
+        assert!(!s.replace(' ', "").contains("unsafe{f("), "safe native must not wrap its call: {s}");
+    }
+
+    #[test]
+    fn unsafe_critical_wraps_call_and_carries_doc() {
+        let s = gen_critical(quote! { unsafe fn nativeGetId(ptr: jlong) -> jint { 0 } });
+        assert!(s.replace(' ', "").contains("unsafe{nativeGetId(__arg0)}"), "{s}");
+        assert!(s.contains("@CriticalNative shim for `nativeGetId`"), "{s}");
+        assert!(s.contains("Callers must additionally uphold"), "{s}");
+    }
+
+    #[test]
+    fn owned_jstring_return_derives_the_string_descriptor() {
+        // A native returning the owned `JString` wrapper (with the lifetime its
+        // type requires) classifies as OwnedWrapper: the shim returns the
+        // wrapper directly (no `from_raw`) and derives `Ljava/lang/String;`,
+        // the same descriptor as a raw `-> jstring`.
+        let s = gen_regular(quote! {
+            fn f<'local>(env: &mut jni::Env<'local>, clazz: jclass, code: jint) -> JString<'local> {
+                JString::null()
+            }
+        });
+        assert!(s.replace(' ', "").contains("sig=(jint)->JString"), "{s}");
+        assert!(!s.contains("from_raw"), "owned wrapper return passes through, no from_raw: {s}");
+    }
+
+    #[test]
+    fn strip_lifetime_arg_strips_only_a_lone_lifetime() {
+        // A lone lifetime argument is dropped so the bare wrapper name classifies.
+        assert_eq!(strip_lifetime_arg("JString<'local>"), "JString");
+        assert_eq!(strip_lifetime_arg("JObjectArray<'a>"), "JObjectArray");
+        // Anything else is returned unchanged: a real type argument, a
+        // lifetime-plus-type list, or a bare name.
+        assert_eq!(strip_lifetime_arg("Foo<Bar>"), "Foo<Bar>");
+        assert_eq!(strip_lifetime_arg("Foo<'a, Bar>"), "Foo<'a, Bar>");
+        assert_eq!(strip_lifetime_arg("jstring"), "jstring");
+        assert_eq!(strip_lifetime_arg("[jbyte]"), "[jbyte]");
+    }
+
+    #[test]
+    fn owned_wrapper_param_lifetime_classifies_as_bare_wrapper() {
+        // A parameter written with the lifetime its wrapper needs to be handed
+        // back as the return (`JString<'local>`) bridges identically to a bare
+        // `JString`: same shim parameter, same `JString` descriptor, and it is
+        // not rejected as an unknown type.
+        let s = gen_regular(quote! {
+            fn passthrough<'local>(
+                env: &mut jni::Env<'local>,
+                clazz: jclass,
+                def: JString<'local>,
+            ) -> JString<'local> {
+                def
+            }
+        });
+        assert!(s.contains("__arg0 : jni :: objects :: JString"), "{s}");
+        assert!(s.replace(' ', "").contains("sig=(JString)->JString"), "{s}");
+    }
+
+    #[test]
     fn owned_str_param_extracts_and_null_checks() {
         let s = gen_regular(quote! {
             fn isLoggable(env: &mut jni::Env<'_>, clazz: jclass, tag: &str, level: i32) -> bool {
@@ -2293,6 +2373,19 @@ mod tests {
     }
 
     #[test]
+    fn result_return_unwraps_with_question_mark() {
+        let s = gen_regular(quote! {
+            fn f(env: &mut jni::Env<'_>, clazz: jclass, ptr: jlong) -> Result<jint, JniError> {
+                Ok(0)
+            }
+        });
+        assert!(s.contains("error_policy = __JniErrorPolicy"), "{s}");
+        assert!(s.replace(' ', "").contains("sig=(jlong)->jint"), "{s}");
+        // The user function is `?`-propagated inside the inner impl fn.
+        assert!(s.contains("?"), "{s}");
+    }
+
+    #[test]
     fn void_method_has_no_result_binding() {
         let s = gen_regular(quote! { fn f(env: &mut jni::Env<'_>, clazz: jclass, ptr: jlong) {} });
         assert!(!s.contains("__result"), "{s}");
@@ -2329,6 +2422,17 @@ mod tests {
         assert!(s.contains("from_raw_parts"), "{s}");
         assert!(s.contains("(J)I"), "{s}");
         assert!(s.contains("__jni_nativeGetId as * mut core :: ffi :: c_void"), "{s}");
+    }
+
+    #[test]
+    fn critical_rejects_types_that_need_an_env() {
+        assert!(gen_critical_err(quote! { fn t(tag: &str) -> jint { 0 } }).contains("@CriticalNative"));
+        assert!(gen_critical_err(quote! { fn t(tag: &JNIStr) -> jint { 0 } }).contains("@CriticalNative"));
+        assert!(
+            gen_critical_err(quote! { fn t(x: jint) -> String { String::new() } }).contains("@CriticalNative")
+        );
+        let result_err = gen_critical_err(quote! { fn t(x: jint) -> Result<jint, JniError> { Ok(0) } });
+        assert!(result_err.contains("cannot return Result"), "{result_err}");
     }
 
     #[test]
