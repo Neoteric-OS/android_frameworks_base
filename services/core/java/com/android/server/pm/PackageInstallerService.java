@@ -1175,7 +1175,12 @@ public class PackageInstallerService extends IPackageInstaller.Stub implements
             if (session == null || !isCallingUidOwner(session)) {
                 throw new SecurityException("Caller has no access to session " + sessionId);
             }
-            session.abandon();
+            final long ident = Binder.clearCallingIdentity();
+            try {
+                session.abandon();
+            } finally {
+                Binder.restoreCallingIdentity(ident);
+            }
         }
     }
 
@@ -1884,7 +1889,7 @@ public class PackageInstallerService extends IPackageInstaller.Stub implements
 
     private boolean isCallingUidOwner(PackageInstallerSession session) {
         final int callingUid = Binder.getCallingUid();
-        if (callingUid == Process.ROOT_UID) {
+        if (PackageManagerServiceUtils.isRootOrShell(callingUid)) {
             return true;
         } else {
             return (session != null) && (callingUid == session.getInstallerUid());

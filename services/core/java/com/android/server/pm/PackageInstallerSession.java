@@ -2126,7 +2126,7 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
      */
     private void assertCallerIsOwnerRootOrVerifier() {
         final int callingUid = Binder.getCallingUid();
-        if (callingUid == Process.ROOT_UID || callingUid == mInstallerUid) {
+        if (PackageManagerServiceUtils.isRootOrShell(callingUid) || callingUid == mInstallerUid) {
             return;
         }
         if (isSealed() && mContext.checkCallingOrSelfPermission(
@@ -2143,7 +2143,7 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
      */
     private void assertCallerIsOwnerOrRoot() {
         final int callingUid = Binder.getCallingUid();
-        if (callingUid != Process.ROOT_UID && callingUid != mInstallerUid) {
+        if (!PackageManagerServiceUtils.isRootOrShell(callingUid) && callingUid != mInstallerUid) {
             throw new SecurityException("Session does not belong to uid " + callingUid);
         }
     }
@@ -2154,7 +2154,7 @@ public class PackageInstallerSession extends IPackageInstallerSession.Stub {
      */
     private void assertCallerIsOwnerOrRootOrSystem() {
         final int callingUid = Binder.getCallingUid();
-        if (callingUid != Process.ROOT_UID && callingUid != mInstallerUid
+        if (!PackageManagerServiceUtils.isRootOrShell(callingUid) && callingUid != mInstallerUid
                 && callingUid != Process.SYSTEM_UID) {
             throw new SecurityException("Session does not belong to uid " + callingUid);
         }
