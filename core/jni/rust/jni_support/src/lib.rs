@@ -6,6 +6,7 @@
 //! - [`JniError`] — Typed error enum mapping to Java exceptions
 //! - [`ThrowJniError`] — [`ErrorPolicy`](jni::errors::ErrorPolicy) the generated
 //!   shims use to turn a `Result` `Err` into the matching pending exception
+//! - [`BoundedUtfChars`] — Allocation-free, truncating copy of a Java string
 //!
 //! A panic that reaches a JNI boundary aborts the process. Android platform
 //! binaries are built with `panic = "abort"`, and even in unwinding builds a
@@ -16,6 +17,8 @@
 //! returns for recoverable errors, and reserve panics for genuinely fatal
 //! conditions.
 
+pub mod bounded_utf_chars;
 pub mod error;
 
+pub use bounded_utf_chars::BoundedUtfChars;
 pub use error::{JniError, ThrowJniError};
