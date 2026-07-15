@@ -36,7 +36,7 @@
 //! method runs its body inside `native_method!`'s `with_env`, which catches the
 //! panic and raises it as a Java `RuntimeException`, whereas a `@CriticalNative`
 //! shim has no wrapper and aborts even when unwinding. Either way, prefer a
-//! `Result` return (or `jni_call`) for recoverable errors over panicking.
+//! `Result` return for recoverable errors over panicking.
 
 extern crate proc_macro;
 
