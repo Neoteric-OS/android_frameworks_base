@@ -1,0 +1,29 @@
+package {
+    default_applicable_licenses: ["frameworks_base_core_jni_license"],
+}
+
+rust_proc_macro {
+    name: "libjni_platform_macros",
+    crate_name: "jni_platform_macros",
+    crate_root: "jni_platform_macros/src/lib.rs",
+    edition: "2021",
+    rustlibs: [
+        "libproc_macro2",
+        "libquote",
+        "libsyn",
+    ],
+}
+
+rust_test_host {
+    name: "jni_platform_macros_test",
+    crate_name: "jni_platform_macros",
+    crate_root: "jni_platform_macros/src/lib.rs",
+    edition: "2021",
+    test_suites: ["general-tests"],
+    auto_gen_config: true,
+    rustlibs: [
+        "libproc_macro2",
+        "libquote",
+        "libsyn",
+    ],
+}
