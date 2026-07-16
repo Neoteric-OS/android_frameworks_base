@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7dd57522_a6c0dea8",
+        "filename": "services/core/java/com/android/server/display/ExternalDisplayPolicy.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 4973828
+      },
+      "writtenOn": "2026-07-16T16:30:59Z",
+      "side": 0,
+      "message": "The aim for the change was to fix automotive use cases where external displays should be auto-enabled on user builds and the original ENABLE_ON_CONNECT sysprop check was gated behind Build.IS_ENG || Build.IS_USERDEBUG, making it ineffective in production. \n\nI agree the existing logic should be preserved. Can we go with the following approach:                                                                                              \n   \n  private boolean shouldAutoEnable(LogicalDisplay logicalDisplay) {                                                                                                                                                \n      if (SystemProperties.getBoolean(ENABLE_ON_CONNECT, false)) return true;                                                                                                                                      \n                                                                                                                                                                                                                   \n      // If using the new connection dialog, don\u0027t auto enable so the dialog                                                                                                                                       \n      // has a reason to show                                                                                                                                                                                      \n      if (mFlags.isUpdatedDisplayConnectionDialogEnabled()) return false;                                                                                                                                          \n                                                                                                                                                                                                                   \n      if (mLogicalDisplayMapper.isEnabledInLayoutLocked(logicalDisplay)) return true;                                                                                                                              \n                                                                                                                                                                                                                   \n      return mFlags.isDisplayContentModeManagementEnabled()                                                                                                                                                        \n              \u0026\u0026 logicalDisplay.canHostTasksLocked();                                                                                                                                                              \n  } \n  \n This preserves the dialog and content mode management paths.",
+      "parentUuid": "9e13751d_d68e2c0b",
+      "revId": "45034f0663f960d9ee5fb0a101a4732b71f6e2f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "43c9fa54_f3546ccb",
         "filename": "services/core/java/com/android/server/display/LogicalDisplayMapper.java",
         "patchSetId": 4
