@@ -5622,6 +5622,7 @@ public class AudioService extends IAudioService.Stub
             boolean updateAudioMode = false;
             int existingMsgPolicy = SENDMSG_QUEUE;
             int delay = CHECK_MODE_FOR_UID_PERIOD_MS;
+            int previousModeOwnerUid = getModeOwnerUid();
             for (SetModeDeathHandler h : mSetModeDeathHandlers) {
                 boolean wasActive = h.isActive();
                 if (playbackConfigs != null) {
@@ -5658,7 +5659,8 @@ public class AudioService extends IAudioService.Stub
             if (updateAudioMode) {
                 postUpdateAudioMode(existingMsgPolicy, AudioSystem.MODE_CURRENT,
                         android.os.Process.myPid(), mContext.getPackageName(),
-                        false /*signal*/, delay, false /* force */);
+                        false /*signal*/, delay,
+                        previousModeOwnerUid != getModeOwnerUid() /* force */);
             }
         }
     }
@@ -12025,12 +12027,15 @@ public class AudioService extends IAudioService.Stub
                         if (mSetModeDeathHandlers.indexOf(h) < 0) {
                             break;
                         }
+                        int previousModeOwnerUid = getModeOwnerUid();
                         boolean wasActive = h.isActive();
                         h.setPlaybackActive(isPlaybackActiveForUid(h.getUid()));
                         h.setRecordingActive(isRecordingActiveForUid(h.getUid()));
                         if (wasActive != h.isActive()) {
                             onUpdateAudioMode(AudioSystem.MODE_CURRENT, android.os.Process.myPid(),
-                                    mContext.getPackageName(), false /*force*/, false /*signal*/);
+                                    mContext.getPackageName(),
+                                    previousModeOwnerUid != getModeOwnerUid() /*force*/,
+                                    false /*signal*/);
                         }
                     }
                     break;
