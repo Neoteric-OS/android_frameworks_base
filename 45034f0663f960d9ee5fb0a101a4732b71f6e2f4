@@ -56,6 +56,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7884280c_6324c3a9",
+        "filename": "services/core/java/com/android/server/display/ExternalDisplayPolicy.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 4973828
+      },
+      "writtenOn": "2026-07-17T18:36:16Z",
+      "side": 0,
+      "message": "Actually, I did not remove it, Piotr. If you look at the original change itself (https://android-review.googlesource.com/c/platform/frameworks/base/+/4090033), the function does not contain isUpdatedDisplayConnectionDialogEnabled(). It already has the following implementation:\n\n    private boolean shouldAutoEnable(LogicalDisplay logicalDisplay) {\n        return ((Build.IS_ENG || Build.IS_USERDEBUG)\n                \u0026\u0026 SystemProperties.getBoolean(ENABLE_ON_CONNECT, false))\n                || mLogicalDisplayMapper.isEnabledInLayoutLocked(logicalDisplay);\n    }\n    \nSo this behavior comes directly from the original upstream change and was not removed as part of my modifications.\n\nCould you please suggest how you would like us to handle this here? Should we keep it aligned with the upstream implementation, or would you prefer that we introduce an additional check for isUpdatedDisplayConnectionDialogEnabled() in our branch?",
+      "parentUuid": "54c15e27_c4d366d8",
+      "revId": "45034f0663f960d9ee5fb0a101a4732b71f6e2f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "43c9fa54_f3546ccb",
         "filename": "services/core/java/com/android/server/display/LogicalDisplayMapper.java",
         "patchSetId": 4
