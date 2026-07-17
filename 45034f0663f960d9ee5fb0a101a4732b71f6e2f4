@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "54c15e27_c4d366d8",
+        "filename": "services/core/java/com/android/server/display/ExternalDisplayPolicy.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2026-07-17T13:18:23Z",
+      "side": 0,
+      "message": "I understand why we\u0027re removing the build check, but I\u0027m not sure why `isUpdatedDisplayConnectionDialogEnabled()` is also being removed",
+      "parentUuid": "7dd57522_a6c0dea8",
+      "revId": "45034f0663f960d9ee5fb0a101a4732b71f6e2f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "43c9fa54_f3546ccb",
         "filename": "services/core/java/com/android/server/display/LogicalDisplayMapper.java",
         "patchSetId": 4
