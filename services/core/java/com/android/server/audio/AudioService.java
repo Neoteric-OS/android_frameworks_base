@@ -401,6 +401,9 @@ public class AudioService extends IAudioService.Stub
         }
     }
 
+    /*debbug
+    */ 
+
     /*package*/ boolean isPlatformVoice() {
         return mPlatformType == AudioSystem.PLATFORM_VOICE;
     }
@@ -412,6 +415,8 @@ public class AudioService extends IAudioService.Stub
     /*package*/ boolean isPlatformAutomotive() {
         return mPlatformType == AudioSystem.PLATFORM_AUTOMOTIVE;
     }
+
+    //DEBUG
 
     /** The controller for the volume UI. */
     private final VolumeController mVolumeController = new VolumeController();
