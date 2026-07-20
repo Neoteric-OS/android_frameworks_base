@@ -74,6 +74,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "398c5ce5_f49a1e15",
+        "filename": "services/core/java/com/android/server/display/ExternalDisplayPolicy.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2026-07-20T19:21:55Z",
+      "side": 0,
+      "message": "It looks like this code is present in the branch, that\u0027s why it shows up as being removed here. I understand that you want to replace `(Build.IS_ENG || Build.IS_USERDEBUG)` with `mLogicalDisplayMapper.isEnabledInLayoutLocked(logicalDisplay)` so I suggest doing that only and leaving the rest unchanged, unless there\u0027s a clear reason to remove it. E.g. if the first check returns false, and `isUpdatedDisplayConnectionDialogEnabled()` also returns false, we will get the incorrect result",
+      "parentUuid": "7884280c_6324c3a9",
+      "revId": "45034f0663f960d9ee5fb0a101a4732b71f6e2f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "43c9fa54_f3546ccb",
         "filename": "services/core/java/com/android/server/display/LogicalDisplayMapper.java",
         "patchSetId": 4
