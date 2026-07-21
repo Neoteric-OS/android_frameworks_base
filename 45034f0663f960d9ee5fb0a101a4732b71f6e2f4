@@ -90,6 +90,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "03a80b0d_c159fcea",
+        "filename": "services/core/java/com/android/server/display/ExternalDisplayPolicy.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 4973828
+      },
+      "writtenOn": "2026-07-21T05:43:15Z",
+      "side": 0,
+      "message": "Thanks for the clarification, Piotr!\nThe only changes from the original are:\n1) Removed Build.IS_ENG || Build.IS_USERDEBUG gate so the sysprop works on user builds\n2) Added isEnabledInLayoutLocked as a standalone check for statically configured displays",
+      "parentUuid": "398c5ce5_f49a1e15",
+      "revId": "45034f0663f960d9ee5fb0a101a4732b71f6e2f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "43c9fa54_f3546ccb",
