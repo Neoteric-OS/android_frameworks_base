@@ -2730,6 +2730,9 @@ public class AudioDeviceBroker {
         if (device == null && communnicationDeviceLeAudioCompatOn()) {
             device = mDeviceInventory.getDeviceOfType(AudioSystem.DEVICE_OUT_BLE_HEADSET);
         }
+        if (device == null && isBluetoothScoRequested()) {
+            device = mBtHelper.getHeadsetAudioDevice();
+        }
         return device;
     }
 
