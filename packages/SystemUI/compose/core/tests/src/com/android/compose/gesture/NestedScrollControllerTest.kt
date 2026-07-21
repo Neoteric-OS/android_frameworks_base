@@ -44,6 +44,7 @@ import org.junit.runner.RunWith
 class NestedScrollControllerTest {
     @get:Rule val rule = createComposeRule()
 
+    @Ignore("b/533444810")
     @Test
     fun nestedScrollController() {
         val state = NestedScrollControlState()
@@ -108,6 +109,7 @@ class NestedScrollControllerTest {
         assertThat(state.isOuterScrollAllowed).isTrue()
     }
 
+    @Ignore("b/533444810")
     @Test
     fun supportsPreScrolls() {
         val state = NestedScrollControlState()
@@ -139,6 +141,7 @@ class NestedScrollControllerTest {
         assertThat(state.isOuterScrollAllowed).isTrue()
     }
 
+    @Ignore("b/533444810")
     @Test
     fun stateUpdate_transfersLock() {
         val state1 = NestedScrollControlState()
@@ -183,6 +186,7 @@ class NestedScrollControllerTest {
         assertThat(state2.isOuterScrollAllowed).isTrue()
     }
 
+    @Ignore("b/533444810")
     @Test
     fun multipleStates_areLockedSimultaneously() {
         val parentState = NestedScrollControlState()

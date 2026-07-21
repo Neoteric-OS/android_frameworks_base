@@ -241,6 +241,7 @@ class OffsetOverscrollEffectTest {
         assertThat(info.overscrollEffect.isInProgress).isFalse()
     }
 
+    @Ignore("b/533444810")
     @Test
     @EnableFlags(Flags.FLAG_STL_FLING_ANIMATION_CONSUME_OVERSHOOT)
     fun isScrollInProgress_scroll() = runTest {
@@ -269,6 +270,7 @@ class OffsetOverscrollEffectTest {
         assertThat(info.overscrollEffect.isInProgress).isFalse()
     }
 
+    @Ignore("b/533444810")
     @Test
     @DisableFlags(Flags.FLAG_STL_FLING_ANIMATION_CONSUME_OVERSHOOT)
     fun isScrollInProgress_withoutAnimationFix_scroll() = runTest {

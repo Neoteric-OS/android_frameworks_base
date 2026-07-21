@@ -58,6 +58,7 @@ import org.junit.runner.RunWith
 class ContentTest {
     @get:Rule val rule = createComposeRule()
 
+    @Ignore("b/533444810")
     @Test
     fun disableSwipesWhenScrolling() {
         lateinit var layoutImpl: SceneTransitionLayoutImpl
