@@ -4056,6 +4056,14 @@ public class AudioService extends IAudioService.Stub
                         getVssForStreamOrDefault(streamType).getMaxIndex(), streamType);
             }
 
+            if (streamTypeAlias == AudioSystem.STREAM_MUSIC) {
+                if (DEBUG_VOL) {
+                    Log.d(TAG, "adjustSreamVolume: setA2dpSinkAvrcpAbsoluteVolume index="
+                            + newIndex + "stream=" + streamType);
+                }
+                mDeviceBroker.setA2dpSinkAvrcpAbsoluteVolume(newIndex / 10);
+            }
+
             // Check if volume update should be send to Hearing Aid.
             // Only modify the hearing aid attenuation when the stream to modify matches
             // the one expected by the hearing aid.

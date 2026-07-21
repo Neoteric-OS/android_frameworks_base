@@ -108,6 +108,9 @@ public class BtHelper {
     private @Nullable BluetoothA2dp mA2dp = null;
 
     @GuardedBy("BtHelper.this")
+    private @Nullable Object mAvrcpController = null;
+
+    @GuardedBy("BtHelper.this")
     private @Nullable BluetoothCodecConfig mA2dpCodecConfig;
 
     @GuardedBy("BtHelper.this")
@@ -249,6 +252,25 @@ public class BtHelper {
                     mBluetoothProfileServiceListener, BluetoothProfile.LE_AUDIO);
             adapter.getProfileProxy(mDeviceBroker.getContext(),
                     mBluetoothProfileServiceListener, BluetoothProfile.LE_AUDIO_BROADCAST);
+            adapter.getProfileProxy(mDeviceBroker.getContext(),
+                    mBluetoothProfileServiceListener, BluetoothProfile.AVRCP_CONTROLLER);
+        }
+    }
+
+    /*package*/ synchronized void setA2dpSinkAvrcpAbsoluteVolume(int index) {
+        if (mAvrcpController == null) {
+            return;
+        }
+        if (AudioService.DEBUG_VOL) {
+            Log.i(TAG, "setA2dpSinkAvrcpAbsoluteVolume index=" + index);
+        }
+        AudioService.sVolumeLogger.enqueue(new AudioServiceEvents.VolumeEvent(
+                AudioServiceEvents.VolumeEvent.VOL_SET_AVRCP_VOL, index));
+        try {
+            java.lang.reflect.Method method = mAvrcpController.getClass().getMethod("setAvrcpAbsoluteVolume", int.class);
+            method.invoke(mAvrcpController, index);
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to call setA2dpSinkAvrcpAbsoluteVolume", e);
         }
     }
 
@@ -593,6 +615,9 @@ public class BtHelper {
                 "BT profile " + BluetoothProfile.getProfileName(profile)
                 + " disconnected").printLog(TAG));
         switch (profile) {
+            case BluetoothProfile.AVRCP_CONTROLLER:
+                mAvrcpController = null;
+                break;
             case BluetoothProfile.HEADSET:
                 mBluetoothHeadset = null;
                 break;
@@ -666,6 +691,9 @@ public class BtHelper {
             return;
         }
         switch (profile) {
+            case BluetoothProfile.AVRCP_CONTROLLER:
+                mAvrcpController = proxy;
+                break;
             case BluetoothProfile.HEADSET:
                 onHeadsetProfileConnected((BluetoothHeadset) proxy);
                 return;
@@ -997,6 +1025,7 @@ public class BtHelper {
                         case BluetoothProfile.LE_AUDIO:
                         case BluetoothProfile.A2DP_SINK:
                         case BluetoothProfile.LE_AUDIO_BROADCAST:
+                        case BluetoothProfile.AVRCP_CONTROLLER:
                             AudioService.sDeviceLogger.enqueue(new EventLogger.StringEvent(
                                     "BT profile service: connecting "
                                     + BluetoothProfile.getProfileName(profile)
@@ -1017,6 +1046,7 @@ public class BtHelper {
                         case BluetoothProfile.LE_AUDIO:
                         case BluetoothProfile.A2DP_SINK:
                         case BluetoothProfile.LE_AUDIO_BROADCAST:
+                        case BluetoothProfile.AVRCP_CONTROLLER:
                             AudioService.sDeviceLogger.enqueue(new EventLogger.StringEvent(
                                     "BT profile service: disconnecting "
                                         + BluetoothProfile.getProfileName(profile)

@@ -1744,6 +1744,12 @@ public class AudioDeviceBroker {
         sendLMsg(MSG_IL_BT_HEARING_AID_TIMEOUT, SENDMSG_QUEUE, address, delayMs);
     }
 
+    /*package*/ synchronized void setA2dpSinkAvrcpAbsoluteVolume(int index) {
+        synchronized (mDeviceStateLock) {
+            mBtHelper.setA2dpSinkAvrcpAbsoluteVolume(index);
+        }
+    }
+
     /*package*/ void setAvrcpAbsoluteVolumeSupported(boolean supported) {
         synchronized (mDeviceStateLock) {
             mBtHelper.setAvrcpAbsoluteVolumeSupported(supported);
