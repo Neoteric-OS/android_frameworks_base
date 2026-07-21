@@ -16,6 +16,24 @@
       "message": "What advantage do these macros provide over the `jni::bind_java_type` macro?",
       "revId": "0607e7ab8042be455fdd6b9a255a41cb177b7524",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "90a574f9_ce24d1a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2026-07-21T15:48:49Z",
+      "side": 1,
+      "message": "`bind_java_type` didn\u0027t exist when I started writing these -- I\u0027ve only just uploaded them, but I actually wrote most of the macros a few months ago. The bindings are relatively new.\n\nThat being said, `bind_java_type` doesn\u0027t support fast / critical native functions -- these are Android-specific additions to JNI that make a significant performance difference but change the shape of the native signature. I\u0027ve got a rework of this patch set to drop the type binding but keep the method registration so we can use this Android-ism. Just cleaning up the CLs, will upload them in the next day or so.\n\nThe actual conversions are a bit more questionable -- they\u0027re mostly proof of concept to show that this work. I\u0027d like to get at least a couple checked in to show that this works, but right now everyone defaults to writing C++ for JNI code and I\u0027d like to make it easier for that to be Rust so getting some examples + build files for it checked in is the primary goal here.",
+      "parentUuid": "6747c2a2_3771f5d0",
+      "revId": "0607e7ab8042be455fdd6b9a255a41cb177b7524",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
