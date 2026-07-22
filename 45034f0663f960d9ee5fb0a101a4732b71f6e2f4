@@ -110,6 +110,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "78360ff0_ff226e75",
+        "filename": "services/core/java/com/android/server/display/ExternalDisplayPolicy.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1962150
+      },
+      "writtenOn": "2026-07-22T08:24:53Z",
+      "side": 0,
+      "message": "@pbdr@google.com I believe we discussed this case, could you please chime-in and verify this change?\n\nIf I remember correctly, `ENABLE_ON_CONNECT` is a development feature intended to be used for testing-only, to simplify some of the automated workflows.\n\nIn production, bypassing user consent dialog (without prior explicit configuration/confirmation) is a user privacy violation.\n\n`LogicalDisplayMapper.isEnabledInLayoutLocked(logicalDisplay)` does not violate user\u0027s privacy because it is checking precise address of the external display, meaning the vendor is pre-configuring the system to work with a specific display(s).",
+      "range": {
+        "startLine": 288,
+        "startChar": 13,
+        "endLine": 288,
+        "endChar": 48
+      },
+      "revId": "45034f0663f960d9ee5fb0a101a4732b71f6e2f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "43c9fa54_f3546ccb",
         "filename": "services/core/java/com/android/server/display/LogicalDisplayMapper.java",
         "patchSetId": 4
