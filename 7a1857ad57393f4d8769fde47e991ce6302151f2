@@ -124,6 +124,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "efa4b93d_eae3908b",
+        "filename": "core/jni/rust/src/android_os_trace.rs",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1006497
+      },
+      "writtenOn": "2026-07-22T16:58:14Z",
+      "side": 1,
+      "message": "This comes from the FFI-side but uses the JNI-crate generated code, which uses `UnownedEnv::with_env` to convert safely.",
+      "parentUuid": "276afded_aa0ea4bf",
+      "revId": "7a1857ad57393f4d8769fde47e991ce6302151f2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ba6500f1_4d8b1e0c",
