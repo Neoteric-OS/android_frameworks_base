@@ -205,6 +205,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "400f91f4_e3d93761",
+        "filename": "services/core/java/com/android/server/display/ExternalDisplayPolicy.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 4973828
+      },
+      "writtenOn": "2026-07-22T14:09:36Z",
+      "side": 0,
+      "message": "Apologies for the confusion in our earlier response to clarify, it is us at Qualcomm setting this as part of our automotive platform for Linux Android display, not the end OEM.\n\nRegarding ExternalDisplayController.kt — you are absolutely right that it already handles auto-enabling external displays in AAOS and it is working. But it is not about the display not getting enabled. The issue we are seeing is that external displays have no layers on the external displays after booting up.\n\nThe root cause is the disable → re-enable cycle itself. When shouldAutoEnable returns false on user builds, handleExternalDisplayConnectedLocked explicitly disables the display via setEnabledLocked(false) before firing EVENT_DISPLAY_CONNECTED. ExternalDisplayController.kt then picks it up and calls enable(). This disable → re-enable cycle triggers a re-initialization sequence in our display stack which results in external displays having no layers.",
+      "parentUuid": "e5ae45cb_900cc538",
+      "range": {
+        "startLine": 288,
+        "startChar": 13,
+        "endLine": 288,
+        "endChar": 48
+      },
+      "revId": "45034f0663f960d9ee5fb0a101a4732b71f6e2f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "43c9fa54_f3546ccb",
         "filename": "services/core/java/com/android/server/display/LogicalDisplayMapper.java",
         "patchSetId": 4
