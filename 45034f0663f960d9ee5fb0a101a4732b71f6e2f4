@@ -157,6 +157,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b93399e3_9aebd840",
+        "filename": "services/core/java/com/android/server/display/ExternalDisplayPolicy.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 4973828
+      },
+      "writtenOn": "2026-07-22T13:22:45Z",
+      "side": 0,
+      "message": "Hi @pbdr@google.com, \n\nThank you for the clarification! We agree with the privacy concern for consumer devices.\n\nWe did explore the `isEnabledInLayoutLocked` approach, but it relies on `layout.getByAddress(info.address)`, which requires the display address to be pre-configured in `display_layout_configuration.xml`. In our automotive setup, we support hot-plug DP/HDMI displays from multiple manufacturers where the physical display ID includes an EDID component (edid_model \u003c\u003c 8 | port) that varies per panel and cannot be determined at build time. So unfortunately, this approach doesn\u0027t scale for us.\n\nThe underlying issue we are trying to fix is that external displays have no layers. This happens because `shouldAutoEnable` returns false causing the display to be explicitly disabled via `setEnabledLocked(false)` before `EVENT_DISPLAY_CONNECTED` is fired. This disable → re-enable cycle triggers\na re-initialization sequence which results in the external display having no layers.\n\nFor automotive, the `persist.sys.display.enable_on_connect.external` sysprop would be set by the OEM in the vendor image, not by an end user.\n\nGiven these constraints, would it be acceptable to remove the IS_ENG || IS_USERDEBUG gate, perhaps with an updated comment clarifying that this is intended for automotive production use?",
+      "parentUuid": "cbe84758_1daf930b",
+      "range": {
+        "startLine": 288,
+        "startChar": 13,
+        "endLine": 288,
+        "endChar": 48
+      },
+      "revId": "45034f0663f960d9ee5fb0a101a4732b71f6e2f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "43c9fa54_f3546ccb",
         "filename": "services/core/java/com/android/server/display/LogicalDisplayMapper.java",
         "patchSetId": 4
