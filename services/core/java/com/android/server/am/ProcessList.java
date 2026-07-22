@@ -5217,6 +5217,95 @@ public final class ProcessList {
         mService.mActivityTaskManager.updateAssetConfiguration(targetProcesses, updateFrameworkRes);
     }
 
+    @GuardedBy(anyOf = {"mService", "mProcLock"})
+    void updateApplicationInfoLOSP(@NonNull SparseArray<List<String>> packagesToUpdateByUserId) {
+        final ArrayList<WindowProcessController> allTargetProcesses = new ArrayList<>();
+        final ArraySet<WindowProcessController> addedTargetProcesses = new ArraySet<>();
+        boolean anyUpdateFrameworkRes = false;
+
+        for (int userIndex = 0, userCount = packagesToUpdateByUserId.size();
+                userIndex < userCount; userIndex++) {
+            final int userId = packagesToUpdateByUserId.keyAt(userIndex);
+            final List<String> packagesToUpdate = packagesToUpdateByUserId.valueAt(userIndex);
+            final boolean userUpdateFrameworkRes = packagesToUpdate.contains("android");
+
+            anyUpdateFrameworkRes |= userUpdateFrameworkRes;
+
+            final ArrayMap<String, ApplicationInfo> applicationInfoByPackage = new ArrayMap<>();
+            for (int i = packagesToUpdate.size() - 1; i >= 0; i--) {
+                final String packageName = packagesToUpdate.get(i);
+                final ApplicationInfo ai = mService.getPackageManagerInternal().getApplicationInfo(
+                        packageName, STOCK_PM_FLAGS, Process.SYSTEM_UID, userId);
+                if (ai != null) {
+                    applicationInfoByPackage.put(packageName, ai);
+                }
+            }
+
+            mService.mActivityTaskManager.updateActivityApplicationInfo(userId,
+                    applicationInfoByPackage);
+
+            for (int i = mLruProcesses.size() - 1; i >= 0; i--) {
+                final ProcessRecord app = mLruProcesses.get(i);
+                if (app.getThread() == null) {
+                    continue;
+                }
+
+                if (userId != UserHandle.USER_ALL && app.userId != userId) {
+                    continue;
+                }
+
+                app.getPkgList().forEachPackage(packageName -> {
+                    if (userUpdateFrameworkRes || packagesToUpdate.contains(packageName)) {
+                        try {
+                            final ApplicationInfo ai = applicationInfoByPackage.get(packageName);
+                            if (ai != null) {
+                                if (ai.packageName.equals(app.info.packageName)) {
+                                    app.info = ai;
+                                    app.getWindowProcessController().updateApplicationInfo(ai);
+                                    PlatformCompatCache.getInstance()
+                                            .onApplicationInfoChanged(ai);
+                                }
+
+                                // Service fields rarely matter, but if we're restarting an app's
+                                // service when it has no running activities, we're using these cached
+                                // ones, and they have to be up to date.
+                                if (updateAmsServiceAppinfo()) {
+                                    for (int j = app.mServices.numberOfRunningServices() - 1;
+                                            j >= 0; j--) {
+                                        final ServiceRecord sr =
+                                                app.mServices.getRunningServiceAt(j);
+                                        if (ai.packageName.equals(sr.appInfo.packageName)) {
+                                            sr.appInfo = ai;
+                                            sr.serviceInfo.applicationInfo = ai;
+                                        }
+                                    }
+                                }
+
+                                app.getThread().scheduleApplicationInfoChanged(ai);
+
+                                final WindowProcessController wpc =
+                                        app.getWindowProcessController();
+                                if (addedTargetProcesses.add(wpc)) {
+                                    allTargetProcesses.add(wpc);
+                                }
+                            }
+                        } catch (RemoteException e) {
+                            Slog.w(TAG, String.format(
+                                    "Failed to update %s ApplicationInfo for %s",
+                                    packageName, app));
+                        }
+                    }
+                });
+            }
+        }
+
+        // Important: one call only for the whole logical overlay transaction.
+        // If any user update affected framework resources, this produces one global
+        // configuration change instead of one per user.
+        mService.mActivityTaskManager.updateAssetConfiguration(
+                allTargetProcesses, anyUpdateFrameworkRes);
+    }
+
     @GuardedBy("mService")
     void sendPackageBroadcastLocked(int cmd, String[] packages, int userId) {
         boolean foundProcess = false;

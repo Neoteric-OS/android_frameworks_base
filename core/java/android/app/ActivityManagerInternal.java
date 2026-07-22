@@ -48,6 +48,7 @@ import android.os.instrumentation.IOffsetCallback;
 import android.os.instrumentation.MethodDescriptor;
 import android.util.ArraySet;
 import android.util.Pair;
+import android.util.SparseArray;
 
 import com.android.internal.os.TimeoutRecord;
 
@@ -1369,4 +1370,14 @@ public abstract class ActivityManagerInternal {
      * @hide
      */
     public abstract void addCreatorToken(Intent intent, String creatorPackage);
+
+    /**
+     * Internal system-server only API used when multiple user-scoped package/resource updates
+     * are part of one logical operation. This lets ActivityManager update per-user ApplicationInfo
+     * state while coalescing global framework resource configuration updates.
+     *
+     * @hide
+     */
+    public abstract void scheduleApplicationInfoChangedForUsers(
+            @NonNull SparseArray<List<String>> packageNamesByUserId);
 }

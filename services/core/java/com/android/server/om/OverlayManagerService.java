@@ -1455,6 +1455,8 @@ public final class OverlayManagerService extends SystemService {
         }
         persistSettingsLocked();
         final SparseArray<ArraySet<String>> userTargets = groupTargetsByUserId(updatedTargets);
+        final SparseArray<List<String>> affectedPackagesByUserId = new SparseArray<>();
+        final SparseArray<ArraySet<String>> targetsByUserId = new SparseArray<>();
         for (int i = 0, n = userTargets.size(); i < n; i++) {
             final ArraySet<String> targets = userTargets.valueAt(i);
             final int userId = userTargets.keyAt(i);
@@ -1463,17 +1465,27 @@ public final class OverlayManagerService extends SystemService {
                 // The package manager paths are already up-to-date.
                 continue;
             }
-
-            FgThread.getHandler().post(() -> {
-                // Send configuration changed events for all target packages that have been affected
-                // by overlay state changes.
-                updateActivityManager(affectedPackages, userId);
-
-                // Do not send broadcasts for all affected targets. Overlays targeting the framework
-                // or shared libraries may cause too many broadcasts to be sent at once.
-                broadcastActionOverlayChanged(targets, userId);
-            });
+            affectedPackagesByUserId.put(userId, affectedPackages);
+            targetsByUserId.put(userId, targets);
         }
+        if (affectedPackagesByUserId.size() == 0) {
+            return;
+        }
+
+        FgThread.getHandler().post(() -> {
+
+            // Send configuration changed events for all target packages affected by this logical
+            // overlay state change. This must be batched so framework resource changes only
+            // produce one global configuration update.
+            updateActivityManager(affectedPackagesByUserId);
+
+            // Broadcasts remain user-scoped.
+            for (int i = 0, n = targetsByUserId.size(); i < n; i++) {
+                final int userId = targetsByUserId.keyAt(i);
+                final ArraySet<String> targets = targetsByUserId.valueAt(i);
+                broadcastActionOverlayChanged(targets, userId);
+            }
+        });
     }
 
     @Nullable
@@ -1541,6 +1553,21 @@ public final class OverlayManagerService extends SystemService {
         } catch (RemoteException e) {
             Slog.e(TAG, "updateActivityManager remote exception", e);
         }
+    }
+
+    /**
+     * Tell ActivityManager to reload resources for multiple users as one logical operation.
+     */
+    private void updateActivityManager(
+            @NonNull SparseArray<List<String>> targetPackageNamesByUserId) {
+        final ActivityManagerInternal amInternal =
+                LocalServices.getService(ActivityManagerInternal.class);
+        if (amInternal == null) {
+            Slog.e(TAG, "ActivityManagerInternal unavailable");
+            return;
+        }
+
+        amInternal.scheduleApplicationInfoChangedForUsers(targetPackageNamesByUserId);
     }
 
     @NonNull

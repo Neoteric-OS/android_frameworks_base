@@ -16463,6 +16463,12 @@ public class ActivityManagerService extends IActivityManager.Stub
         }
 
         @Override
+        public void scheduleApplicationInfoChangedForUsers(
+                @NonNull SparseArray<List<String>> packageNamesByUserId) {
+            ActivityManagerService.this.scheduleApplicationInfoChangedForUsers(packageNamesByUserId);
+        }
+
+        @Override
         public List<PendingIntentStats> getPendingIntentStats() {
             return mPendingIntentController.dumpPendingIntentStatsForStatsd();
         }
@@ -18598,6 +18604,46 @@ public class ActivityManagerService extends IActivityManager.Stub
         }
     }
 
+    private void scheduleApplicationInfoChangedForUsers(
+        @NonNull SparseArray<List<String>> packageNamesByUserId) {
+        if (packageNamesByUserId.size() == 0) {
+            return;
+        }
+
+        final long origId = Binder.clearCallingIdentity();
+        try {
+            boolean updateFrameworkRes = false;
+            for (int i = 0, n = packageNamesByUserId.size(); i < n; i++) {
+                final List<String> packageNames = packageNamesByUserId.valueAt(i);
+                if (packageNames.contains("android")) {
+                    updateFrameworkRes = true;
+                    break;
+                }
+            }
+
+            synchronized (mProcLock) {
+                updateApplicationInfoLOSP(packageNamesByUserId, updateFrameworkRes);
+            }
+
+            final AppWidgetManagerInternal widgets = LocalServices.getService(
+                    AppWidgetManagerInternal.class);
+            if (widgets != null) {
+                for (int i = 0, n = packageNamesByUserId.size(); i < n; i++) {
+                    final int userId = packageNamesByUserId.keyAt(i);
+                    final List<String> packageNames = packageNamesByUserId.valueAt(i);
+                    final boolean userUpdateFrameworkRes = packageNames.contains("android");
+
+                    widgets.applyResourceOverlaysToWidgets(
+                            new HashSet<>(packageNames),
+                            userId,
+                            userUpdateFrameworkRes);
+                }
+            }
+        } finally {
+            Binder.restoreCallingIdentity(origId);
+        }
+    }
+
     /**
      * Synchronously update the system ActivityThread, bypassing any deferred threading so any
      * resources and overlaid values are available immediately.
@@ -18618,6 +18664,31 @@ public class ActivityManagerService extends IActivityManager.Stub
         }
 
         mProcessList.updateApplicationInfoLOSP(packagesToUpdate, userId, updateFrameworkRes);
+
+        if (updateFrameworkRes) {
+            // Update system server components that need to know about changed overlays. Because the
+            // overlay is applied in ActivityThread, we need to serialize through its thread too.
+            final Executor executor = ActivityThread.currentActivityThread().getExecutor();
+            final DisplayManagerInternal display =
+                    LocalServices.getService(DisplayManagerInternal.class);
+            if (display != null) {
+                executor.execute(display::onOverlayChanged);
+            }
+            if (mWindowManager != null) {
+                executor.execute(mWindowManager::onOverlayChanged);
+            }
+        }
+    }
+
+    @GuardedBy(anyOf = {"this", "mProcLock"})
+    private void updateApplicationInfoLOSP(
+            @NonNull SparseArray<List<String>> packagesToUpdateByUserId,
+            boolean updateFrameworkRes) {
+        if (updateFrameworkRes) {
+            ParsingPackageUtils.readConfigUseRoundIcon(null);
+        }
+
+        mProcessList.updateApplicationInfoLOSP(packagesToUpdateByUserId);
 
         if (updateFrameworkRes) {
             // Update system server components that need to know about changed overlays. Because the
