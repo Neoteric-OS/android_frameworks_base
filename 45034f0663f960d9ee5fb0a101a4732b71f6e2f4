@@ -133,6 +133,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cbe84758_1daf930b",
+        "filename": "services/core/java/com/android/server/display/ExternalDisplayPolicy.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1647116
+      },
+      "writtenOn": "2026-07-22T11:15:24Z",
+      "side": 0,
+      "message": "Yes, I agree, this was added only for testing or validate compliance with DisplayPort, as their test setup requires the display to auto-connect. We should not remove that here.\n\nI also agree the rest of the CL looks good.",
+      "parentUuid": "78360ff0_ff226e75",
+      "range": {
+        "startLine": 288,
+        "startChar": 13,
+        "endLine": 288,
+        "endChar": 48
+      },
+      "revId": "45034f0663f960d9ee5fb0a101a4732b71f6e2f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "43c9fa54_f3546ccb",
         "filename": "services/core/java/com/android/server/display/LogicalDisplayMapper.java",
         "patchSetId": 4
