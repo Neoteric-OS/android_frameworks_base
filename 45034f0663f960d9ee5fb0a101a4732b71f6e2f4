@@ -229,6 +229,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "badbd1a7_96b88bca",
+        "filename": "services/core/java/com/android/server/display/ExternalDisplayPolicy.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1647116
+      },
+      "writtenOn": "2026-07-22T14:13:19Z",
+      "side": 0,
+      "message": "I see what you mean. First, it is a problem we have identified with some displays already and we have a plan to resolve it by always sending a black image on connection, and only disable the display if the user doesn\u0027t to use it.\n\nAs this won\u0027t be for a while though, I suggest adding a config overlay in the framework, something like `config_external_display_enable_on_connect` which defaults to false and that you can even enable by default on Android Automotive. Once we have the more permanent solution, we can remove the overlay. WDYT?",
+      "parentUuid": "400f91f4_e3d93761",
+      "range": {
+        "startLine": 288,
+        "startChar": 13,
+        "endLine": 288,
+        "endChar": 48
+      },
+      "revId": "45034f0663f960d9ee5fb0a101a4732b71f6e2f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "43c9fa54_f3546ccb",
         "filename": "services/core/java/com/android/server/display/LogicalDisplayMapper.java",
         "patchSetId": 4
