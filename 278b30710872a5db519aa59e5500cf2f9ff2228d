@@ -22,6 +22,30 @@
       },
       "revId": "278b30710872a5db519aa59e5500cf2f9ff2228d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bfa7d01f_4c21de72",
+        "filename": "services/core/java/com/android/server/wm/ActivityTaskSupervisor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1316,
+      "author": {
+        "id": 4973828
+      },
+      "writtenOn": "2026-07-22T09:00:36Z",
+      "side": 1,
+      "message": "Thanks for the feedback. We understand the architectural concern — `canHostTasks()` is derived from `MIRROR_BUILT_IN_DISPLAY`, so writing back to the setting based on a derived value is logically circular.\n\nHowever, to give context on why we added this: `ENABLE_DISPLAY_CONTENT_MODE_MANAGEMENT` was also enabled in Android 16, but simultaneous mirroring + activity launch on external displays worked fine there. In Android 17, looks like `forceEnableMirrorBuiltInDisplaySettingIfNeeded()` is now forcing `MIRROR_BUILT_IN_DISPLAY\u003d1`, which causes `canHostTasks()` to return false on all external displays, blocking activity routing.\n\nCould you help clarify the correct Android 17 mechanism for AAOS to support simultaneous mirroring and activity hosting on external displays? Specifically,should `forceEnableMirrorBuiltInDisplaySettingIfNeeded()` be gated for automotive, or is there a different path we should be using?",
+      "parentUuid": "239eb823_8ac2729c",
+      "range": {
+        "startLine": 1308,
+        "startChar": 16,
+        "endLine": 1316,
+        "endChar": 24
+      },
+      "revId": "278b30710872a5db519aa59e5500cf2f9ff2228d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
