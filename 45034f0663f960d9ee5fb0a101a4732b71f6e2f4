@@ -253,6 +253,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7db72609_4fe75e14",
+        "filename": "services/core/java/com/android/server/display/ExternalDisplayPolicy.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 4973828
+      },
+      "writtenOn": "2026-07-22T14:23:34Z",
+      "side": 0,
+      "message": "Thanks @pbdr@google.com for the context of planned fix. \n\nThe config overlay approach sounds good to us. Should we look at implementing config_external_display_enable_on_connect from our side in the framework, or will this be handled from the AOSP side?\n\nAlso, a couple of quick clarifications before we proceed:\n\u003e 1 ) When this overlay is set to true, should shouldAutoEnable return true and skip the setEnabledLocked(false) call entirely? That is the key part for us the disable → re-enable cycle is what triggers the re-init sequence causing no layers.\n\n\u003e 2 ) Should this work on user builds without any IS_ENG || IS_USERDEBUG condition?",
+      "parentUuid": "badbd1a7_96b88bca",
+      "range": {
+        "startLine": 288,
+        "startChar": 13,
+        "endLine": 288,
+        "endChar": 48
+      },
+      "revId": "45034f0663f960d9ee5fb0a101a4732b71f6e2f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "43c9fa54_f3546ccb",
         "filename": "services/core/java/com/android/server/display/LogicalDisplayMapper.java",
         "patchSetId": 4
