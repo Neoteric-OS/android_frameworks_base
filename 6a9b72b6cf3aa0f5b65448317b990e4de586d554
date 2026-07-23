@@ -42,6 +42,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b3a8f9d_1a102906",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 3435,
+      "author": {
+        "id": 4973828
+      },
+      "writtenOn": "2026-07-23T11:29:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "848c8dba_e85c25fb",
+      "range": {
+        "startLine": 3435,
+        "startChar": 14,
+        "endLine": 3435,
+        "endChar": 25
+      },
+      "revId": "6a9b72b6cf3aa0f5b65448317b990e4de586d554",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "74582a85_551ab0fd",
@@ -79,6 +103,30 @@
           ]
         }
       ],
+      "revId": "6a9b72b6cf3aa0f5b65448317b990e4de586d554",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5dad8c4_3d5fad90",
+        "filename": "services/core/java/com/android/server/display/LogicalDisplayMapper.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1350,
+      "author": {
+        "id": 4973828
+      },
+      "writtenOn": "2026-07-23T11:29:22Z",
+      "side": 1,
+      "message": "Agreed, removed isEnabledInLayoutLocked from the condition. The config overlay is sufficient.",
+      "parentUuid": "74582a85_551ab0fd",
+      "range": {
+        "startLine": 1350,
+        "startChar": 12,
+        "endLine": 1350,
+        "endChar": 35
+      },
       "revId": "6a9b72b6cf3aa0f5b65448317b990e4de586d554",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
