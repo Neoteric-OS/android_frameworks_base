@@ -92,6 +92,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "db83bc33_e03ace67",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 3435,
+      "author": {
+        "id": 4973828
+      },
+      "writtenOn": "2026-07-23T16:28:13Z",
+      "side": 1,
+      "message": "To clarify — \"user noticing\" here means physically noticing a display being plugged in, not the confirmation dialog. From an automotive perspective, the displays expected to be there, so auto-enabling them.",
+      "parentUuid": "54e17c16_65f45e11",
+      "range": {
+        "startLine": 3435,
+        "startChar": 14,
+        "endLine": 3435,
+        "endChar": 25
+      },
+      "revId": "6a9b72b6cf3aa0f5b65448317b990e4de586d554",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "74582a85_551ab0fd",
         "filename": "services/core/java/com/android/server/display/LogicalDisplayMapper.java",
         "patchSetId": 8
@@ -193,6 +217,30 @@
       "side": 1,
       "message": "Please add a simple unit test with the config property mocked to enabled. Please also remove the existing test changes given that we\u0027ve changed the approach",
       "parentUuid": "0fdf6702_f20b6af2",
+      "range": {
+        "startLine": 1350,
+        "startChar": 12,
+        "endLine": 1350,
+        "endChar": 35
+      },
+      "revId": "6a9b72b6cf3aa0f5b65448317b990e4de586d554",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fe320cf0_a7f41ca4",
+        "filename": "services/core/java/com/android/server/display/LogicalDisplayMapper.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1350,
+      "author": {
+        "id": 4973828
+      },
+      "writtenOn": "2026-07-23T16:28:13Z",
+      "side": 1,
+      "message": "Removed the existing test cases. Added new test case - `testExternalDisplayAutoEnabledWithConfigOverlay`",
+      "parentUuid": "4dda004b_b6c92abc",
       "range": {
         "startLine": 1350,
         "startChar": 12,

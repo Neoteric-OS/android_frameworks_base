@@ -36,6 +36,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "883cb59b_9ee101f7",
+        "filename": "services/core/java/com/android/server/display/DisplayManagerService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 6596,
+      "author": {
+        "id": 4973828
+      },
+      "writtenOn": "2026-07-23T16:28:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e016b6e_3556b317",
+      "revId": "de6382592c1a26035cd336040152c2099c248855",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "04a12813_4ae7e79d",
@@ -49,6 +67,24 @@
       "writtenOn": "2026-07-23T15:19:52Z",
       "side": 1,
       "message": "Why is this change necessary?",
+      "revId": "de6382592c1a26035cd336040152c2099c248855",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "25ea5911_6146d3c5",
+        "filename": "services/tests/displayservicetests/src/com/android/server/display/DisplayManagerServiceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 3419,
+      "author": {
+        "id": 4973828
+      },
+      "writtenOn": "2026-07-23T16:28:13Z",
+      "side": 1,
+      "message": "This came when I had cherry-picked the original CL. I guess this test change is independent of the config overlay approach. We can keep this change, what do you suggest?",
+      "parentUuid": "04a12813_4ae7e79d",
       "revId": "de6382592c1a26035cd336040152c2099c248855",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
