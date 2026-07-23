@@ -323,6 +323,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "685d56fc_3ddf2582",
+        "filename": "services/core/java/com/android/server/display/ExternalDisplayPolicy.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1647116
+      },
+      "writtenOn": "2026-07-23T11:17:35Z",
+      "side": 0,
+      "message": "Some minor comments, but the new version LGTM.",
+      "parentUuid": "b07c42e6_3547e095",
+      "range": {
+        "startLine": 288,
+        "startChar": 13,
+        "endLine": 288,
+        "endChar": 48
+      },
+      "revId": "45034f0663f960d9ee5fb0a101a4732b71f6e2f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "43c9fa54_f3546ccb",

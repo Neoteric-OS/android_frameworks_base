@@ -1,0 +1,86 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "848c8dba_e85c25fb",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 3435,
+      "author": {
+        "id": 1647116
+      },
+      "writtenOn": "2026-07-23T11:17:35Z",
+      "side": 1,
+      "message": "nit: Can you add something like. \"This should only be true for devices on which external displays cannot be plugged without the user noticing,\"",
+      "range": {
+        "startLine": 3435,
+        "startChar": 14,
+        "endLine": 3435,
+        "endChar": 25
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "209aef0c_82e4a55f",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "core/res/res/values/config.xml",
+              "range": {
+                "startLine": 3435,
+                "startChar": 0,
+                "endLine": 3436,
+                "endChar": 0
+              },
+              "replacement": "         user interaction. This should only be true for devices without built-in displays. --\u003e\n"
+            }
+          ]
+        }
+      ],
+      "revId": "6a9b72b6cf3aa0f5b65448317b990e4de586d554",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74582a85_551ab0fd",
+        "filename": "services/core/java/com/android/server/display/LogicalDisplayMapper.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1350,
+      "author": {
+        "id": 1647116
+      },
+      "writtenOn": "2026-07-23T11:17:35Z",
+      "side": 1,
+      "message": "As you mentioned this is not practical, do we want to keep this? Wouldn\u0027t the config overlay be sufficient?",
+      "range": {
+        "startLine": 1350,
+        "startChar": 12,
+        "endLine": 1350,
+        "endChar": 35
+      },
+      "fixSuggestions": [
+        {
+          "fixId": "2f9a1fbf_79cfd715",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/display/LogicalDisplayMapper.java",
+              "range": {
+                "startLine": 1350,
+                "startChar": 0,
+                "endLine": 1358,
+                "endChar": 0
+              },
+              "replacement": ""
+            }
+          ]
+        }
+      ],
+      "revId": "6a9b72b6cf3aa0f5b65448317b990e4de586d554",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
