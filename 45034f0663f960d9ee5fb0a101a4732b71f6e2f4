@@ -301,6 +301,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b07c42e6_3547e095",
+        "filename": "services/core/java/com/android/server/display/ExternalDisplayPolicy.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 4973828
+      },
+      "writtenOn": "2026-07-23T05:09:18Z",
+      "side": 0,
+      "message": "I have made the following changes @pbdr@google.com\n\n\u003e 1) Added a new config overlay config_external_display_auto_enable (default: false) in config.xml and symbols.xml. \n\n\u003e 2) Added isExternalDisplayAutoEnableEnabled() to the Injector interface and implemented it in ExternalDisplayPolicyInjector inside DisplayManagerService to read config_external_display_auto_enable from resources.",
+      "parentUuid": "996713f7_4f51dfd9",
+      "range": {
+        "startLine": 288,
+        "startChar": 13,
+        "endLine": 288,
+        "endChar": 48
+      },
+      "revId": "45034f0663f960d9ee5fb0a101a4732b71f6e2f4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "43c9fa54_f3546ccb",
         "filename": "services/core/java/com/android/server/display/LogicalDisplayMapper.java",
         "patchSetId": 4
