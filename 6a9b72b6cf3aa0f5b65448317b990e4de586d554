@@ -129,6 +129,30 @@
       },
       "revId": "6a9b72b6cf3aa0f5b65448317b990e4de586d554",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0fdf6702_f20b6af2",
+        "filename": "services/core/java/com/android/server/display/LogicalDisplayMapper.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1350,
+      "author": {
+        "id": 4973828
+      },
+      "writtenOn": "2026-07-23T11:37:47Z",
+      "side": 1,
+      "message": "I removed it from LogicalDisplayMapper.java and also from the shouldAutoEnable function. But we need to update the atest accordingly then. Can you please suggest the changes to be made in services/tests/displayservicetests/src/com/android/server/display/ExternalDisplayPolicyTest.java",
+      "parentUuid": "d5dad8c4_3d5fad90",
+      "range": {
+        "startLine": 1350,
+        "startChar": 12,
+        "endLine": 1350,
+        "endChar": 35
+      },
+      "revId": "6a9b72b6cf3aa0f5b65448317b990e4de586d554",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
