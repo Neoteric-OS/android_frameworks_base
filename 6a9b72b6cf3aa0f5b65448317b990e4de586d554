@@ -116,6 +116,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9859c75c_7cdf2f86",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 3435,
+      "author": {
+        "id": 1647116
+      },
+      "writtenOn": "2026-07-23T17:29:01Z",
+      "side": 1,
+      "message": "Yes, as Hemant pointed out, the question is: can you add a display the user wouldn\u0027t notice? If no, then you can set this to true.",
+      "parentUuid": "db83bc33_e03ace67",
+      "range": {
+        "startLine": 3435,
+        "startChar": 14,
+        "endLine": 3435,
+        "endChar": 25
+      },
+      "revId": "6a9b72b6cf3aa0f5b65448317b990e4de586d554",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "74582a85_551ab0fd",
         "filename": "services/core/java/com/android/server/display/LogicalDisplayMapper.java",
         "patchSetId": 8
