@@ -68,6 +68,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "54e17c16_65f45e11",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 3435,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2026-07-23T15:19:52Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused by the double negation, is this equivalent to `devices on which external displays must be plugged in with the user noticing`?\n\nIs it referring to the confirmation dialogue? If the user notices the confirmation dialogue, then we don\u0027t need to auto-enable - can you clarify?",
+      "parentUuid": "2b3a8f9d_1a102906",
+      "range": {
+        "startLine": 3435,
+        "startChar": 14,
+        "endLine": 3435,
+        "endChar": 25
+      },
+      "revId": "6a9b72b6cf3aa0f5b65448317b990e4de586d554",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "74582a85_551ab0fd",
         "filename": "services/core/java/com/android/server/display/LogicalDisplayMapper.java",
         "patchSetId": 8
@@ -145,6 +169,30 @@
       "side": 1,
       "message": "I removed it from LogicalDisplayMapper.java and also from the shouldAutoEnable function. But we need to update the atest accordingly then. Can you please suggest the changes to be made in services/tests/displayservicetests/src/com/android/server/display/ExternalDisplayPolicyTest.java",
       "parentUuid": "d5dad8c4_3d5fad90",
+      "range": {
+        "startLine": 1350,
+        "startChar": 12,
+        "endLine": 1350,
+        "endChar": 35
+      },
+      "revId": "6a9b72b6cf3aa0f5b65448317b990e4de586d554",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4dda004b_b6c92abc",
+        "filename": "services/core/java/com/android/server/display/LogicalDisplayMapper.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1350,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2026-07-23T15:19:52Z",
+      "side": 1,
+      "message": "Please add a simple unit test with the config property mocked to enabled. Please also remove the existing test changes given that we\u0027ve changed the approach",
+      "parentUuid": "0fdf6702_f20b6af2",
       "range": {
         "startLine": 1350,
         "startChar": 12,

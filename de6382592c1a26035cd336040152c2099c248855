@@ -1,0 +1,56 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4e016b6e_3556b317",
+        "filename": "services/core/java/com/android/server/display/DisplayManagerService.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 6596,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2026-07-23T15:19:52Z",
+      "side": 1,
+      "message": "`isExternalDisplayAutoEnabled`",
+      "fixSuggestions": [
+        {
+          "fixId": "25e2de27_010579be",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/core/java/com/android/server/display/DisplayManagerService.java",
+              "range": {
+                "startLine": 6596,
+                "startChar": 0,
+                "endLine": 6597,
+                "endChar": 0
+              },
+              "replacement": "        public boolean isExternalDisplayAutoEnabled() {\n"
+            }
+          ]
+        }
+      ],
+      "revId": "de6382592c1a26035cd336040152c2099c248855",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "04a12813_4ae7e79d",
+        "filename": "services/tests/displayservicetests/src/com/android/server/display/DisplayManagerServiceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 3419,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2026-07-23T15:19:52Z",
+      "side": 1,
+      "message": "Why is this change necessary?",
+      "revId": "de6382592c1a26035cd336040152c2099c248855",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
