@@ -1,0 +1,251 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a341c3ea_a8c128b3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1976460
+      },
+      "writtenOn": "2026-07-23T10:03:38Z",
+      "side": 1,
+      "message": "Hi Vuong, please remove the trailing whitespaces and tabs.",
+      "revId": "ac3bc6eaddb099e5361b665dae8f774910a5c420",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b76d535_d39b3222",
+        "filename": "packages/SettingsLib/tests/integ/src/com/android/settingslib/utils/ZoneGetterTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1976460
+      },
+      "writtenOn": "2026-07-23T10:03:38Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Trailing Whitespace: Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 108,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 8
+      },
+      "revId": "ac3bc6eaddb099e5361b665dae8f774910a5c420",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f34a862_ff7543af",
+        "filename": "packages/SettingsLib/tests/integ/src/com/android/settingslib/utils/ZoneGetterTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1976460
+      },
+      "writtenOn": "2026-07-23T10:03:38Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Trailing Whitespace: Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 12
+      },
+      "revId": "ac3bc6eaddb099e5361b665dae8f774910a5c420",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f5020c13_599c6906",
+        "filename": "packages/SettingsLib/tests/integ/src/com/android/settingslib/utils/ZoneGetterTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1976460
+      },
+      "writtenOn": "2026-07-23T10:03:38Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Trailing Whitespace: Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 12
+      },
+      "revId": "ac3bc6eaddb099e5361b665dae8f774910a5c420",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "708fc08a_cabc2991",
+        "filename": "packages/SettingsLib/tests/integ/src/com/android/settingslib/utils/ZoneGetterTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1976460
+      },
+      "writtenOn": "2026-07-23T10:03:38Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Trailing Whitespace: Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 133,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 8
+      },
+      "revId": "ac3bc6eaddb099e5361b665dae8f774910a5c420",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1fe1f945_273f71ef",
+        "filename": "packages/SettingsLib/tests/integ/src/com/android/settingslib/utils/ZoneGetterTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1976460
+      },
+      "writtenOn": "2026-07-23T10:03:38Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Trailing Whitespace: Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 138,
+        "startChar": 0,
+        "endLine": 138,
+        "endChar": 12
+      },
+      "revId": "ac3bc6eaddb099e5361b665dae8f774910a5c420",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff4f0954_ebf26909",
+        "filename": "packages/SettingsLib/tests/integ/src/com/android/settingslib/utils/ZoneGetterTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1976460
+      },
+      "writtenOn": "2026-07-23T10:03:38Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Trailing Whitespace: Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 8
+      },
+      "revId": "ac3bc6eaddb099e5361b665dae8f774910a5c420",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08060025_40cc1951",
+        "filename": "packages/SettingsLib/tests/integ/src/com/android/settingslib/utils/ZoneGetterTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1976460
+      },
+      "writtenOn": "2026-07-23T10:03:38Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Trailing Whitespace: Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 156,
+        "startChar": 0,
+        "endLine": 156,
+        "endChar": 8
+      },
+      "revId": "ac3bc6eaddb099e5361b665dae8f774910a5c420",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97cae96f_7ba9ec5f",
+        "filename": "packages/SettingsLib/tests/integ/src/com/android/settingslib/utils/ZoneGetterTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1976460
+      },
+      "writtenOn": "2026-07-23T10:03:38Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Trailing Whitespace: Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 12
+      },
+      "revId": "ac3bc6eaddb099e5361b665dae8f774910a5c420",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1bb7460c_ab77ce76",
+        "filename": "packages/SettingsLib/tests/integ/src/com/android/settingslib/utils/ZoneGetterTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1976460
+      },
+      "writtenOn": "2026-07-23T10:03:38Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Trailing Whitespace: Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 172,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 12
+      },
+      "revId": "ac3bc6eaddb099e5361b665dae8f774910a5c420",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be8ffe60_03f06a5b",
+        "filename": "packages/SettingsLib/tests/integ/src/com/android/settingslib/utils/ZoneGetterTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1976460
+      },
+      "writtenOn": "2026-07-23T10:03:38Z",
+      "side": 1,
+      "message": "Please fix this WARNING reported by Trailing Whitespace: Please remove the trailing whitespace.",
+      "range": {
+        "startLine": 179,
+        "startChar": 0,
+        "endLine": 179,
+        "endChar": 8
+      },
+      "revId": "ac3bc6eaddb099e5361b665dae8f774910a5c420",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
