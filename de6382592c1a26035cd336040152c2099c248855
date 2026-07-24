@@ -87,6 +87,24 @@
       "parentUuid": "04a12813_4ae7e79d",
       "revId": "de6382592c1a26035cd336040152c2099c248855",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4dce25f9_48ea17ea",
+        "filename": "services/tests/displayservicetests/src/com/android/server/display/DisplayManagerServiceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 3419,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2026-07-24T16:36:09Z",
+      "side": 1,
+      "message": "We\u0027ve diverged from the original CL and are using a completely different approach here, please remove all the cherry-picked changes and only the ones relevant to the new approach. In `ExternalDisplayPolicyTest` I think we just need a new test without renaming the other methods, the CL will be much easier to review that way",
+      "parentUuid": "25ea5911_6146d3c5",
+      "revId": "de6382592c1a26035cd336040152c2099c248855",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
