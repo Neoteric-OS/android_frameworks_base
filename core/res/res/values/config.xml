@@ -3224,6 +3224,10 @@
          mirror the content of the default display. -->
     <bool name="config_localDisplaysMirrorContent">true</bool>
 
+    <!-- When true, external displays are automatically enabled on connect without requiring
+         user interaction. This should only be true for devices without built-in displays. -->
+    <bool name="config_external_display_auto_enable">false</bool>
+
     <!-- When true, udfps vote is ignored. This feature is disabled by default. -->
     <bool name="config_ignoreUdfpsVote">false</bool>
 

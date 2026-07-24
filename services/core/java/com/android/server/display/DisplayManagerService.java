@@ -6035,6 +6035,15 @@ public final class DisplayManagerService extends SystemService {
         public ExternalDisplayStatsService getExternalDisplayStatsService() {
             return mExternalDisplayStatsService;
         }
+
+        /**
+         * @return whether external displays should be auto-enabled on connect via config overlay.
+         */
+        @Override
+        public boolean isExternalDisplayAutoEnabled() {
+            return mContext.getResources().getBoolean(
+                    com.android.internal.R.bool.config_external_display_auto_enable);
+        }
     }
 
     /**
