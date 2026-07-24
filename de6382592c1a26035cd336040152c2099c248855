@@ -105,6 +105,24 @@
       "parentUuid": "25ea5911_6146d3c5",
       "revId": "de6382592c1a26035cd336040152c2099c248855",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4e1dbd6_3bf17bb4",
+        "filename": "services/tests/displayservicetests/src/com/android/server/display/DisplayManagerServiceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 3419,
+      "author": {
+        "id": 4973828
+      },
+      "writtenOn": "2026-07-24T16:48:19Z",
+      "side": 1,
+      "message": "Shall we raise a new CL with the required commit description for the new approach? As this is a cherry picked one and has the same change id. Or shall we continue editing the current one?",
+      "parentUuid": "4dce25f9_48ea17ea",
+      "revId": "de6382592c1a26035cd336040152c2099c248855",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
