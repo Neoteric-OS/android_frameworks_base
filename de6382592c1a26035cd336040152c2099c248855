@@ -123,6 +123,24 @@
       "parentUuid": "4dce25f9_48ea17ea",
       "revId": "de6382592c1a26035cd336040152c2099c248855",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "939aaf54_3e58cbdc",
+        "filename": "services/tests/displayservicetests/src/com/android/server/display/DisplayManagerServiceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 3419,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2026-07-24T16:50:27Z",
+      "side": 1,
+      "message": "A new CL would be preferred to avoid confusion",
+      "parentUuid": "b4e1dbd6_3bf17bb4",
+      "revId": "de6382592c1a26035cd336040152c2099c248855",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
