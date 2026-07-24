@@ -141,6 +141,24 @@
       "parentUuid": "b4e1dbd6_3bf17bb4",
       "revId": "de6382592c1a26035cd336040152c2099c248855",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6bddcfa5_60c9c12b",
+        "filename": "services/tests/displayservicetests/src/com/android/server/display/DisplayManagerServiceTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 3419,
+      "author": {
+        "id": 4973828
+      },
+      "writtenOn": "2026-07-24T17:07:53Z",
+      "side": 1,
+      "message": "Hey @wilczynskip@google.com, @pbdr@google.com, I\u0027ve raised a new CL as we now have a completely different approach. Can you please review the CL - https://android-review.googlesource.com/c/platform/frameworks/base/+/4192283",
+      "parentUuid": "939aaf54_3e58cbdc",
+      "revId": "de6382592c1a26035cd336040152c2099c248855",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
