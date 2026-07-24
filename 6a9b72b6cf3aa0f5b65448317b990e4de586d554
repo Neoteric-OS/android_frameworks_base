@@ -140,6 +140,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a6459394_e8eeb8c8",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 3435,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2026-07-24T16:29:34Z",
+      "side": 1,
+      "message": "If they\u0027re built in and not plugged in, aren\u0027t they internal rather than external displays?",
+      "parentUuid": "9859c75c_7cdf2f86",
+      "range": {
+        "startLine": 3435,
+        "startChar": 14,
+        "endLine": 3435,
+        "endChar": 25
+      },
+      "revId": "6a9b72b6cf3aa0f5b65448317b990e4de586d554",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "74582a85_551ab0fd",
         "filename": "services/core/java/com/android/server/display/LogicalDisplayMapper.java",
         "patchSetId": 8
