@@ -1,0 +1,39 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e2b0491_79f3d82c",
+        "filename": "services/tests/displayservicetests/src/com/android/server/display/ExternalDisplayPolicyTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2026-07-27T16:00:46Z",
+      "side": 1,
+      "message": "Does this compile? I don\u0027t see the method defined. You can use `assertNotAskedToEnableDisplay`",
+      "fixSuggestions": [
+        {
+          "fixId": "46d259e9_bead3680",
+          "description": "prompt_to_edit API",
+          "replacements": [
+            {
+              "path": "services/tests/displayservicetests/src/com/android/server/display/ExternalDisplayPolicyTest.java",
+              "range": {
+                "startLine": 283,
+                "startChar": 0,
+                "endLine": 284,
+                "endChar": 0
+              },
+              "replacement": "        assertNotAskedToEnableDisplay();\n"
+            }
+          ]
+        }
+      ],
+      "revId": "487a7d760eb22bf9c0ad5cd0436e8cf478da77f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
