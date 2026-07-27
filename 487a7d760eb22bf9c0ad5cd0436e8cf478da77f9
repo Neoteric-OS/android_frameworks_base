@@ -34,6 +34,24 @@
       ],
       "revId": "487a7d760eb22bf9c0ad5cd0436e8cf478da77f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c435501_e9659612",
+        "filename": "services/tests/displayservicetests/src/com/android/server/display/ExternalDisplayPolicyTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 4973828
+      },
+      "writtenOn": "2026-07-27T17:18:34Z",
+      "side": 1,
+      "message": "Ahh right! Sorry about that in my local the function was present as I had cherry-picked the original CL. Updated the function.",
+      "parentUuid": "5e2b0491_79f3d82c",
+      "revId": "487a7d760eb22bf9c0ad5cd0436e8cf478da77f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
