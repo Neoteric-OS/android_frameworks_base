@@ -52,6 +52,24 @@
       "parentUuid": "9583fdf7_ed1affc4",
       "revId": "b90d65a41c446bf518a3ed9e7cfef964af648410",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57c02774_d8bc0c7e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3368412
+      },
+      "writtenOn": "2026-07-28T12:52:02Z",
+      "side": 1,
+      "message": "Is there anything else I can do to help move the patch review or the issue forward?",
+      "parentUuid": "1ee19b3d_4e8407dc",
+      "revId": "b90d65a41c446bf518a3ed9e7cfef964af648410",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
