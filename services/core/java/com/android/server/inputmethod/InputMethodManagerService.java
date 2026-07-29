@@ -3842,8 +3842,10 @@ public final class InputMethodManagerService implements IInputMethodManagerImpl.
                         Slog.w(TAG, "If you need to impersonate a foreground user/profile from"
                                 + " a background user, use EditorInfo.targetInputMethodUser with"
                                 + " INTERACT_ACROSS_USERS_FULL permission.");
-                        hideCurrentInputLocked(userData.mImeBindingState.mFocusedWindow,
-                                0 /* flags */, SoftInputShowHideReason.HIDE_INVALID_USER, userId);
+                        hideCurrentInputLocked(
+                            getUserData(mCurrentImeUserId).mImeBindingState.mFocusedWindow,
+                            0 /* flags */, SoftInputShowHideReason.HIDE_INVALID_USER,
+                            mCurrentImeUserId);
                         return InputBindResult.INVALID_USER;
                     }
 
