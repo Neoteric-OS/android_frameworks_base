@@ -63,6 +63,30 @@
       },
       "revId": "b3ae8e579b1284a2a167ff8afe11ba7afa5805a3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ca9afc4_375572f0",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 3436,
+      "author": {
+        "id": 4973828
+      },
+      "writtenOn": "2026-07-29T15:41:46Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "16d6e6ec_510391f9",
+      "range": {
+        "startLine": 3436,
+        "startChar": 16,
+        "endLine": 3436,
+        "endChar": 51
+      },
+      "revId": "b3ae8e579b1284a2a167ff8afe11ba7afa5805a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
