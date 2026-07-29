@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3301c5f9_5253d097",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1894970
+      },
+      "writtenOn": "2026-07-29T05:57:45Z",
+      "side": 1,
+      "message": "ft",
+      "revId": "b3ae8e579b1284a2a167ff8afe11ba7afa5805a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "85e3422a_ce89749f",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 3436,
+      "author": {
+        "id": 1894970
+      },
+      "writtenOn": "2026-07-29T05:57:45Z",
+      "side": 1,
+      "message": "every other property here is camelCase after `config_` - any reason to keep this different?",
+      "range": {
+        "startLine": 3436,
+        "startChar": 16,
+        "endLine": 3436,
+        "endChar": 51
+      },
+      "revId": "b3ae8e579b1284a2a167ff8afe11ba7afa5805a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
