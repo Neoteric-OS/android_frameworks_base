@@ -39,6 +39,30 @@
       },
       "revId": "b3ae8e579b1284a2a167ff8afe11ba7afa5805a3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16d6e6ec_510391f9",
+        "filename": "core/res/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 3436,
+      "author": {
+        "id": 4973828
+      },
+      "writtenOn": "2026-07-29T06:28:06Z",
+      "side": 1,
+      "message": "Hey Niraj,\n\nThere is no specific reason for adding the property name like that. There are other properties in the file for example `config_ethernet_tcp_buffers`.",
+      "parentUuid": "85e3422a_ce89749f",
+      "range": {
+        "startLine": 3436,
+        "startChar": 16,
+        "endLine": 3436,
+        "endChar": 51
+      },
+      "revId": "b3ae8e579b1284a2a167ff8afe11ba7afa5805a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
