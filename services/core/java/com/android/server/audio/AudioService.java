@@ -5423,8 +5423,17 @@ public class AudioService extends IAudioService.Stub
 
         public void release() {
             if (mCb != null) {
-                mCb.unlinkToDeath(this, 0);
-                mCb = null;
+                // MIUI MOD: Audio_BugFixUpstream
+                //mCb.unlinkToDeath(this, 0);
+                //mCb = null;
+                try {
+                    mCb.unlinkToDeath(this, 0);
+                } catch (NoSuchElementException e) {
+                    Log.w(TAG, "unlinkToDeath ignored, death link already gone", e);
+                } finally {
+                    mCb = null;
+                }
+                // END Audio_BugFixUpstream
             }
         }
 
