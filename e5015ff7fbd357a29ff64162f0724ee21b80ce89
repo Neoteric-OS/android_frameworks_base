@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7140a4ae_554a3dd9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1480345
+      },
+      "writtenOn": "2026-07-30T08:52:39Z",
+      "side": 1,
+      "message": "The issue is found when running the cts test module CtsVirtualDevicesAppLaunchTestCases. and it is fixed by the AI tool.",
+      "revId": "e5015ff7fbd357a29ff64162f0724ee21b80ce89",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
