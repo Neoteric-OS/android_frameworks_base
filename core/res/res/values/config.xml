@@ -537,6 +537,10 @@
     <!-- If this is true, the message that USB is only being used for charging will be shown. -->
     <bool name="config_usbChargingMessage">true</bool>
 
+    <!-- If this is true, when USB is connected with no function selected and ADB is disabled,
+         no USB data function is exposed (charging only) instead of defaulting to MTP. -->
+    <bool name="config_usbChargingDefaultToNone">false</bool>
+
     <!-- Set this true only if the device has separate attention and notification lights. -->
     <bool name="config_useAttentionLight">false</bool>
 

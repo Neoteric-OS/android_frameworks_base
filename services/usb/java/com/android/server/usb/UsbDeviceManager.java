@@ -1932,12 +1932,16 @@ public class UsbDeviceManager implements ActivityTaskManagerInternal.ScreenObser
 
         protected long getChargingFunctions() {
             // if ADB is enabled, reset functions to ADB
-            // else enable MTP as usual.
             if (isAdbEnabled()) {
                 return UsbManager.FUNCTION_ADB;
-            } else {
-                return UsbManager.FUNCTION_MTP;
             }
+            // else, if the device opts in via config_usbChargingDefaultToNone, expose no data
+            // function (charging only); otherwise keep the AOSP default of MTP.
+            if (mContext.getResources().getBoolean(
+                    com.android.internal.R.bool.config_usbChargingDefaultToNone)) {
+                return UsbManager.FUNCTION_NONE;
+            }
+            return UsbManager.FUNCTION_MTP;
         }
 
         protected void setSystemProperty(String prop, String val) {
