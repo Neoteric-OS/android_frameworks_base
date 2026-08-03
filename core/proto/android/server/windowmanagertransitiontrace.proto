@@ -57,6 +57,7 @@ message Transition {
   optional int32 flags = 9;
   optional int64 abort_time_ns = 10;
   optional int64 starting_window_remove_time_ns = 11;
+  repeated Target changes = 12;
 }
 
 message Target {
