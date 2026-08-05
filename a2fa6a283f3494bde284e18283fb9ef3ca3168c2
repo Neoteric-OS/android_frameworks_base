@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1333d3c5_3db232cb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1902365
+      },
+      "writtenOn": "2026-08-05T16:45:36Z",
+      "side": 1,
+      "message": "Is there a bug for this? No bug is included in the CL description.\n\nAnd we should have tests for the code change.",
+      "revId": "a2fa6a283f3494bde284e18283fb9ef3ca3168c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
