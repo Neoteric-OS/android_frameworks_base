@@ -8065,6 +8065,25 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
             adminPackage = adminPackages[0];
         }
         mInjector.binderWithCleanCallingIdentity(() -> {
+            // Enforce contract: apps targeting U+ calling wipeData from the primary user
+            // or last full user must receive an IllegalStateException.
+            boolean isSystemUser = userId == UserHandle.USER_SYSTEM;
+            boolean isMainUser = userId == getMainUserId();
+            boolean isPrimaryOrLastFullUser = isSystemUser || isMainUser
+                    || (getUserInfo(userId) != null && getUserInfo(userId).isFull()
+                    && mUserManager.getAliveUsers().stream()
+                    .filter(u -> u.getUserHandle().getIdentifier() != userId)
+                    .noneMatch(UserInfo::isFull));
+
+            if (isPrimaryOrLastFullUser) {
+                int targetSdk = getTargetSdk(adminPackage, userId);
+                if (targetSdk >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                    throw new IllegalStateException(
+                            "Calling wipeData from the primary user or last full user"
+                                    + " is not allowed for apps targeting U+.");
+                }
+            }
+
             // First check whether the admin is allowed to wipe the device/user/profile.
             final String restriction;
             boolean shouldFactoryReset = userId == UserHandle.USER_SYSTEM;
@@ -8084,8 +8103,6 @@ public class DevicePolicyManagerService extends IDevicePolicyManager.Stub {
                         + " restriction is set for user " + userId);
             }
 
-            boolean isSystemUser = userId == UserHandle.USER_SYSTEM;
-            boolean isMainUser = userId == getMainUserId();
             boolean wipeDevice;
             if (factoryReset == null || !mInjector.isChangeEnabled(EXPLICIT_WIPE_BEHAVIOUR,
                     adminPackage,
