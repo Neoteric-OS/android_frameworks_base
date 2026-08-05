@@ -1375,6 +1375,12 @@ public final class DisplayManagerService extends SystemService {
             mLogicalDisplayMapper.forEachLocked(logicalDisplay -> {
                     updateCanHostTasksIfNeededLocked(logicalDisplay,
                             shouldSendDisplayChangeEvent);
+
+                final int displayId = logicalDisplay.getDisplayIdLocked();
+                if (mMirrorBuiltInDisplay && displayId != Display.DEFAULT_DISPLAY
+                        && mDisplayTopologyCoordinator != null) {
+                    mDisplayTopologyCoordinator.onDisplayRemoved(displayId);
+                }
             });
         }
         // setting changed.
