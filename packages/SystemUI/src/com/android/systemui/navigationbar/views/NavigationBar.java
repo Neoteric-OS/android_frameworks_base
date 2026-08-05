@@ -1720,6 +1720,9 @@ public class NavigationBar extends ViewController<NavigationBarView> implements 
 
     /** Sets {@link AutoHideController} to the navigation bar. */
     private void setAutoHideController(AutoHideController autoHideController) {
+        if (mAutoHideController != null) {
+            mAutoHideController.setNavigationBar(null);
+        }
         mAutoHideController = autoHideController;
         if (mAutoHideController != null) {
             mAutoHideController.setNavigationBar(mAutoHideUiElement);
