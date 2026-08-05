@@ -610,6 +610,7 @@ private fun addBatteryComposable(
                     isDarkProvider = { statusBarViewModel.areaDark },
                 )
             }
+            setId(R.id.battery_composable_view)
         }
     phoneStatusBarView.findViewById<ViewGroup>(R.id.system_icons).apply {
         addView(batteryComposeView, -1)

@@ -18,6 +18,13 @@ package com.android.systemui.statusbar.pipeline.shared.ui.binder
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.content.ContentResolver
+import android.database.ContentObserver
+import android.net.Uri
+import android.os.Handler
+import android.os.Looper
+import android.os.UserHandle
+import android.provider.Settings
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
@@ -35,7 +42,11 @@ import com.android.systemui.statusbar.events.shared.model.SystemEventAnimationSt
 import com.android.systemui.statusbar.events.shared.model.SystemEventAnimationState.RunningChipAnim
 import com.android.systemui.statusbar.pipeline.shared.ui.model.VisibilityModel
 import com.android.systemui.statusbar.pipeline.shared.ui.viewmodel.HomeStatusBarViewModel
+import com.android.systemui.statusbar.phone.ui.StatusBarIconController
 import javax.inject.Inject
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 /**
@@ -74,6 +85,7 @@ class HomeStatusBarViewBinderImpl @Inject constructor() : HomeStatusBarViewBinde
         val systemInfoView = view.requireViewById<View>(R.id.status_bar_end_side_content)
         val clockView = view.requireViewById<View>(R.id.clock)
         val notificationIconsArea = view.requireViewById<View>(R.id.notificationIcons)
+        val batteryView = view.findViewById<View>(R.id.battery_composable_view)
 
         // GONE because this shouldn't take space in the layout
         systemInfoView.hideInitially()
@@ -82,6 +94,49 @@ class HomeStatusBarViewBinderImpl @Inject constructor() : HomeStatusBarViewBinde
 
         view.repeatWhenAttached {
             repeatOnLifecycle(Lifecycle.State.CREATED) {
+                val context = view.context
+
+                val batteryVisible = MutableStateFlow<Boolean>(true)
+
+                val iconHideListUri: Uri =
+                    Settings.Secure.getUriFor(StatusBarIconController.ICON_HIDE_LIST)
+
+                val contentObserver =
+                    object : ContentObserver(Handler(Looper.getMainLooper())) {
+                        override fun onChange(selfChange: Boolean, uri: Uri?) {
+                            batteryVisible.update { current ->
+                                when (uri) {
+                                    iconHideListUri -> {
+                                        !StatusBarIconController.getIconHideList(
+                                                context,
+                                                Settings.Secure.getString(
+                                                    context.contentResolver,
+                                                    StatusBarIconController.ICON_HIDE_LIST,
+                                                ),
+                                            )
+                                            .contains("battery")
+                                    }
+                                    else -> current
+                                }
+                            }
+                        }
+                    }
+
+                context.contentResolver.registerContentObserver(
+                    iconHideListUri,
+                    false,
+                    contentObserver,
+                    UserHandle.USER_ALL,
+                )
+                contentObserver.onChange(false, iconHideListUri)
+
+                // Ensure cleanup when lifecycle ends
+                val job = coroutineContext[Job]
+                job?.invokeOnCompletion {
+                    runCatching {
+                        context.contentResolver.unregisterContentObserver(contentObserver)
+                    }
+                }
                 listener?.let { listener ->
                     launch {
                         viewModel.isTransitioningFromLockscreenToOccluded.collect {
@@ -142,6 +197,12 @@ class HomeStatusBarViewBinderImpl @Inject constructor() : HomeStatusBarViewBinde
 
                 if (!ClockModernization.isEnabled) {
                     launch { viewModel.isClockVisible.collect { clockView.adjustVisibility(it) } }
+                }
+
+                launch {
+                    batteryVisible.collect { isVisible ->
+                        batteryView.isVisible = isVisible
+                    }
                 }
 
                 launch {
