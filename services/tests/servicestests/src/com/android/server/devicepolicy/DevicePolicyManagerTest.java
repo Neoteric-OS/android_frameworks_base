@@ -8715,6 +8715,29 @@ public class DevicePolicyManagerTest extends DpmTestBase {
         }
     }
 
+    @Test
+    public void testWipeData_onPrimaryUser_targetingUPlus_throwsIllegalStateException()
+            throws Exception {
+        // 1. Set up permissions and mock the calling admin app targeting U+ (UPSIDE_DOWN_CAKE)
+        mContext.callerPermissions.addAll(OWNER_SETUP_PERMISSIONS);
+        setUpPackageManagerForAdmin(admin1, DpmMockContext.CALLER_SYSTEM_USER_UID,
+                /* enabledSetting= */ null,
+                /* appTargetSdk= */ VERSION_CODES.UPSIDE_DOWN_CAKE);
+        dpm.setActiveAdmin(admin1, /* replace= */ false);
+        assertThat(dpm.setDeviceOwner(admin1, UserHandle.USER_SYSTEM)).isTrue();
+        mContext.callerPermissions.removeAll(OWNER_SETUP_PERMISSIONS);
+        // 2. Mock system user (user 0) as the primary user
+        when(getServices().iactivityManager.getCurrentUser())
+                .thenReturn(new UserInfo(UserHandle.USER_SYSTEM, "user system", 0));
+        when(getServices().userManager.getPrimaryUser())
+                .thenReturn(new UserInfo(UserHandle.USER_SYSTEM, "user system", 0));
+        when(mContext.getResources().getString(R.string.work_profile_deleted_description_dpm_wipe))
+                .thenReturn("Wipe reason string.");
+        // 3. Assert calling wipeData(0) from primary user on U+ app throws
+        // IllegalStateException
+        assertThrows(IllegalStateException.class, () -> dpm.wipeData(0));
+    }
+
     private void setupVpnAuthorization(String userVpnPackage, int userVpnUid) {
         final AppOpsManager.PackageOps vpnOp = new AppOpsManager.PackageOps(userVpnPackage,
                 userVpnUid, List.of(new AppOpsManager.OpEntry(
