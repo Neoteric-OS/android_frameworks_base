@@ -16,6 +16,24 @@
       "message": "Is there a bug for this? No bug is included in the CL description.\n\nAnd we should have tests for the code change.",
       "revId": "a2fa6a283f3494bde284e18283fb9ef3ca3168c2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d171684_e59019aa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4594828
+      },
+      "writtenOn": "2026-08-06T02:21:04Z",
+      "side": 1,
+      "message": "The same null operation was performed in \"com.android.systemui.navigationbar.TaskbarDelegate#destroy\", shouldn\u0027t the two sides be symmetrical?",
+      "parentUuid": "1333d3c5_3db232cb",
+      "revId": "a2fa6a283f3494bde284e18283fb9ef3ca3168c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
