@@ -34,6 +34,24 @@
       "parentUuid": "1333d3c5_3db232cb",
       "revId": "a2fa6a283f3494bde284e18283fb9ef3ca3168c2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "08ea1844_059b9138",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5049360
+      },
+      "writtenOn": "2026-08-06T02:29:56Z",
+      "side": 1,
+      "message": "The same null operation was performed in \"com.android.systemui.navigationbar.TaskbarDelegate#destroy\", shouldn\u0027t the two sides be symmetrical?",
+      "parentUuid": "1333d3c5_3db232cb",
+      "revId": "a2fa6a283f3494bde284e18283fb9ef3ca3168c2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
