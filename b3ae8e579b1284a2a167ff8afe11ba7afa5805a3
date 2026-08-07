@@ -90,6 +90,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2e0cf740_36709ed6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1647116
+      },
+      "writtenOn": "2026-08-07T18:03:48Z",
+      "side": 1,
+      "message": "I merged the change in git_main: https://partner-android.googlesource.com/platform/frameworks/base/+/5b6737bc93a0b718dcd55f3b14ddb7fc0441e17a\n\nThis now can be considered a cherry-pick (adapted as the code changed signidicantly).",
+      "parentUuid": "19cf35f0_89d0d877",
+      "revId": "b3ae8e579b1284a2a167ff8afe11ba7afa5805a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "85e3422a_ce89749f",
         "filename": "core/res/res/values/config.xml",
         "patchSetId": 4
