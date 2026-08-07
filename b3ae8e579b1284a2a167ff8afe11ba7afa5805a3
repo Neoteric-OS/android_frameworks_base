@@ -37,6 +37,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "97217add_676223e9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1647116
+      },
+      "writtenOn": "2026-08-07T13:25:08Z",
+      "side": 1,
+      "message": "I didn\u0027t see the whole code was on the Android 16 QPR2 branch. I don\u0027t think we can edit that branch anymore :/ Let me move the code to the main codebase and see if we can Cherrypick it later.",
+      "revId": "b3ae8e579b1284a2a167ff8afe11ba7afa5805a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "85e3422a_ce89749f",
         "filename": "core/res/res/values/config.xml",
         "patchSetId": 4
