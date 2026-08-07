@@ -54,6 +54,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "37d4f58b_28093c6e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4973828
+      },
+      "writtenOn": "2026-08-07T16:28:50Z",
+      "side": 1,
+      "message": "I think there will be some delta if we try to raise the CL in the mainline. I had attempted that earlier, but I found that some dependent fixes were also missing.\n\nShould we then proceed with the mainline, or can I cherry-pick this change into any Q3 or Q4 branch?",
+      "parentUuid": "97217add_676223e9",
+      "revId": "b3ae8e579b1284a2a167ff8afe11ba7afa5805a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "85e3422a_ce89749f",
         "filename": "core/res/res/values/config.xml",
         "patchSetId": 4
