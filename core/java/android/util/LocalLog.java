@@ -61,9 +61,10 @@ public final class LocalLog {
         }
         final String logLine;
         if (mUseLocalTimestamps) {
-            logLine = LocalDateTime.now() + " - " + msg;
+            logLine = String.format("%s - %s", LocalDateTime.now(), msg);
         } else {
-            logLine = SystemClock.elapsedRealtime() + " / " + Instant.now() + " - " + msg;
+            logLine = String.format(
+                    "%s / %s - %s", SystemClock.elapsedRealtime(), Instant.now(), msg);
         }
         append(logLine);
     }

@@ -102,7 +102,7 @@ public class ClassLoaderFactory {
             String librarySearchPath, String libraryPermittedPath, ClassLoader parent,
             int targetSdkVersion, boolean isNamespaceShared, String classLoaderName) {
         return createClassLoader(dexPath, librarySearchPath, libraryPermittedPath,
-            parent, targetSdkVersion, isNamespaceShared, classLoaderName, null, null);
+            parent, targetSdkVersion, isNamespaceShared, classLoaderName, null);
     }
 
 
@@ -112,15 +112,13 @@ public class ClassLoaderFactory {
     public static ClassLoader createClassLoader(String dexPath,
             String librarySearchPath, String libraryPermittedPath, ClassLoader parent,
             int targetSdkVersion, boolean isNamespaceShared, String classLoaderName,
-            List<ClassLoader> sharedLibraries, List<String> nativeSharedLibraries) {
+            List<ClassLoader> sharedLibraries) {
 
         final ClassLoader classLoader = createClassLoader(dexPath, librarySearchPath, parent,
                 classLoaderName, sharedLibraries);
 
-        String sonameList = "";
-        if (nativeSharedLibraries != null) {
-            sonameList = String.join(":", nativeSharedLibraries);
-        }
+        // TODO(b/142191088) merge 6a5b8b1f6db172b5aaadcec0c3868e54e214b675
+        String sonameList = "ALL";
 
         Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "createClassloaderNamespace");
         String errorMessage = createClassloaderNamespace(classLoader,

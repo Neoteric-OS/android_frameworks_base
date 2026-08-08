@@ -41,7 +41,6 @@ final class GlobalLevelHibernationProto implements ProtoReadWriter<List<GlobalLe
             GlobalLevelState state = data.get(i);
             stream.write(GlobalLevelHibernationStateProto.PACKAGE_NAME, state.packageName);
             stream.write(GlobalLevelHibernationStateProto.HIBERNATED, state.hibernated);
-            stream.write(GlobalLevelHibernationStateProto.SAVED_BYTE, state.savedByte);
             stream.end(token);
         }
     }
@@ -66,10 +65,6 @@ final class GlobalLevelHibernationProto implements ProtoReadWriter<List<GlobalLe
                     case (int) GlobalLevelHibernationStateProto.HIBERNATED:
                         state.hibernated =
                                 stream.readBoolean(GlobalLevelHibernationStateProto.HIBERNATED);
-                        break;
-                    case (int) GlobalLevelHibernationStateProto.SAVED_BYTE:
-                        state.savedByte =
-                                stream.readLong(GlobalLevelHibernationStateProto.SAVED_BYTE);
                         break;
                     default:
                         Slog.w(TAG, "Undefined field in proto: " + stream.getFieldNumber());

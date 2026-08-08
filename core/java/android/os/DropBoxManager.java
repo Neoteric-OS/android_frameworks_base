@@ -19,10 +19,6 @@ package android.os;
 import static android.Manifest.permission.PACKAGE_USAGE_STATS;
 import static android.Manifest.permission.READ_LOGS;
 
-import android.annotation.BytesLong;
-import android.annotation.CurrentTimeMillisLong;
-import android.annotation.IntDef;
-import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
 import android.annotation.SdkConstant;
@@ -40,9 +36,6 @@ import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.nio.charset.StandardCharsets;
 import java.util.zip.GZIPInputStream;
 
 /**
@@ -62,18 +55,13 @@ public class DropBoxManager {
     @UnsupportedAppUsage
     private final IDropBoxManagerService mService;
 
-    /** @hide */
-    @IntDef(flag = true, prefix = { "IS_" }, value = { IS_EMPTY, IS_TEXT, IS_GZIPPED })
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface Flags {}
-
     /** Flag value: Entry's content was deleted to save space. */
     public static final int IS_EMPTY = 1;
 
     /** Flag value: Content is human-readable UTF-8 text (can be combined with IS_GZIPPED). */
     public static final int IS_TEXT = 2;
 
-    /** Flag value: Content can be decompressed with java.util.zip.GZIPOutputStream. */
+    /** Flag value: Content can be decompressed with {@link java.util.zip.GZIPOutputStream}. */
     public static final int IS_GZIPPED = 4;
 
     /** Flag value for serialization only: Value is a byte array, not a file descriptor */
@@ -118,15 +106,15 @@ public class DropBoxManager {
      * {@link #close()} when you are done using it.
      */
     public static class Entry implements Parcelable, Closeable {
-        private final @NonNull String mTag;
-        private final @CurrentTimeMillisLong long mTimeMillis;
+        private final String mTag;
+        private final long mTimeMillis;
 
-        private final @Nullable byte[] mData;
-        private final @Nullable ParcelFileDescriptor mFileDescriptor;
-        private final @Flags int mFlags;
+        private final byte[] mData;
+        private final ParcelFileDescriptor mFileDescriptor;
+        private final int mFlags;
 
         /** Create a new empty Entry with no contents. */
-        public Entry(@NonNull String tag, @CurrentTimeMillisLong long millis) {
+        public Entry(String tag, long millis) {
             if (tag == null) throw new NullPointerException("tag == null");
 
             mTag = tag;
@@ -137,14 +125,13 @@ public class DropBoxManager {
         }
 
         /** Create a new Entry with plain text contents. */
-        public Entry(@NonNull String tag, @CurrentTimeMillisLong long millis,
-                @NonNull String text) {
+        public Entry(String tag, long millis, String text) {
             if (tag == null) throw new NullPointerException("tag == null");
             if (text == null) throw new NullPointerException("text == null");
 
             mTag = tag;
             mTimeMillis = millis;
-            mData = text.getBytes(StandardCharsets.UTF_8);
+            mData = text.getBytes();
             mFileDescriptor = null;
             mFlags = IS_TEXT;
         }
@@ -153,8 +140,7 @@ public class DropBoxManager {
          * Create a new Entry with byte array contents.
          * The data array must not be modified after creating this entry.
          */
-        public Entry(@NonNull String tag, @CurrentTimeMillisLong long millis,
-                @Nullable byte[] data, @Flags int flags) {
+        public Entry(String tag, long millis, byte[] data, int flags) {
             if (tag == null) throw new NullPointerException("tag == null");
             if (((flags & IS_EMPTY) != 0) != (data == null)) {
                 throw new IllegalArgumentException("Bad flags: " + flags);
@@ -171,8 +157,7 @@ public class DropBoxManager {
          * Create a new Entry with streaming data contents.
          * Takes ownership of the ParcelFileDescriptor.
          */
-        public Entry(@NonNull String tag, @CurrentTimeMillisLong long millis,
-                @Nullable ParcelFileDescriptor data, @Flags int flags) {
+        public Entry(String tag, long millis, ParcelFileDescriptor data, int flags) {
             if (tag == null) throw new NullPointerException("tag == null");
             if (((flags & IS_EMPTY) != 0) != (data == null)) {
                 throw new IllegalArgumentException("Bad flags: " + flags);
@@ -189,8 +174,7 @@ public class DropBoxManager {
          * Create a new Entry with the contents read from a file.
          * The file will be read when the entry's contents are requested.
          */
-        public Entry(@NonNull String tag, @CurrentTimeMillisLong long millis,
-                @NonNull File data, @Flags int flags) throws IOException {
+        public Entry(String tag, long millis, File data, int flags) throws IOException {
             if (tag == null) throw new NullPointerException("tag == null");
             if ((flags & IS_EMPTY) != 0) throw new IllegalArgumentException("Bad flags: " + flags);
 
@@ -207,26 +191,19 @@ public class DropBoxManager {
         }
 
         /** @return the tag originally attached to the entry. */
-        public @NonNull String getTag() {
-            return mTag;
-        }
+        public String getTag() { return mTag; }
 
         /** @return time when the entry was originally created. */
-        public @CurrentTimeMillisLong long getTimeMillis() {
-            return mTimeMillis;
-        }
+        public long getTimeMillis() { return mTimeMillis; }
 
         /** @return flags describing the content returned by {@link #getInputStream()}. */
-        public @Flags int getFlags() {
-            // getInputStream() decompresses.
-            return mFlags & ~IS_GZIPPED;
-        }
+        public int getFlags() { return mFlags & ~IS_GZIPPED; }  // getInputStream() decompresses.
 
         /**
          * @param maxBytes of string to return (will truncate at this length).
          * @return the uncompressed text contents of the entry, null if the entry is not text.
          */
-        public @Nullable String getText(@BytesLong int maxBytes) {
+        public String getText(int maxBytes) {
             if ((mFlags & IS_TEXT) == 0) return null;
             if (mData != null) return new String(mData, 0, Math.min(maxBytes, mData.length));
 
@@ -249,7 +226,7 @@ public class DropBoxManager {
         }
 
         /** @return the uncompressed contents of the entry, or null if the contents were lost */
-        public @Nullable InputStream getInputStream() throws IOException {
+        public InputStream getInputStream() throws IOException {
             InputStream is;
             if (mData != null) {
                 is = new ByteArrayInputStream(mData);
@@ -318,8 +295,17 @@ public class DropBoxManager {
      * @param tag describing the type of entry being stored
      * @param data value to store
      */
-    public void addText(@NonNull String tag, @NonNull String data) {
-        addData(tag, data.getBytes(StandardCharsets.UTF_8), IS_TEXT);
+    public void addText(String tag, String data) {
+        try {
+            mService.add(new Entry(tag, 0, data));
+        } catch (RemoteException e) {
+            if (e instanceof TransactionTooLargeException
+                    && mContext.getApplicationInfo().targetSdkVersion < Build.VERSION_CODES.N) {
+                Log.e(TAG, "App sent too much data, so it was ignored", e);
+                return;
+            }
+            throw e.rethrowFromSystemServer();
+        }
     }
 
     /**
@@ -329,10 +315,10 @@ public class DropBoxManager {
      * @param data value to store
      * @param flags describing the data
      */
-    public void addData(@NonNull String tag, @Nullable byte[] data, @Flags int flags) {
+    public void addData(String tag, byte[] data, int flags) {
         if (data == null) throw new NullPointerException("data == null");
         try {
-            mService.addData(tag, data, flags);
+            mService.add(new Entry(tag, 0, data, flags));
         } catch (RemoteException e) {
             if (e instanceof TransactionTooLargeException
                     && mContext.getApplicationInfo().targetSdkVersion < Build.VERSION_CODES.N) {
@@ -352,14 +338,15 @@ public class DropBoxManager {
      * @param flags describing the data
      * @throws IOException if the file can't be opened
      */
-    public void addFile(@NonNull String tag, @NonNull File file, @Flags int flags)
-            throws IOException {
+    public void addFile(String tag, File file, int flags) throws IOException {
         if (file == null) throw new NullPointerException("file == null");
-        try (ParcelFileDescriptor pfd = ParcelFileDescriptor.open(file,
-                ParcelFileDescriptor.MODE_READ_ONLY)) {
-            mService.addFile(tag, pfd, flags);
+        Entry entry = new Entry(tag, 0, file, flags);
+        try {
+            mService.add(entry);
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
+        } finally {
+            entry.close();
         }
     }
 
@@ -390,8 +377,7 @@ public class DropBoxManager {
     @RequiresPermission(allOf = { READ_LOGS, PACKAGE_USAGE_STATS })
     public @Nullable Entry getNextEntry(String tag, long msec) {
         try {
-            return mService.getNextEntryWithAttribution(tag, msec, mContext.getOpPackageName(),
-                    mContext.getAttributionTag());
+            return mService.getNextEntry(tag, msec, mContext.getOpPackageName());
         } catch (SecurityException e) {
             if (mContext.getApplicationInfo().targetSdkVersion >= Build.VERSION_CODES.P) {
                 throw e;

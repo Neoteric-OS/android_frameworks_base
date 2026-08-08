@@ -37,6 +37,7 @@ import java.util.Objects;
  * @hide
  */
 @SystemApi
+@TestApi
 public final class ModemActivityInfo implements Parcelable {
     private static final int TX_POWER_LEVELS = 5;
 

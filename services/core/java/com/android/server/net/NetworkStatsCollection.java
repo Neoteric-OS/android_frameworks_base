@@ -54,8 +54,6 @@ import android.util.proto.ProtoOutputStream;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.ArrayUtils;
-import com.android.internal.util.FastDataInput;
-import com.android.internal.util.FastDataOutput;
 import com.android.internal.util.FileRotator;
 import com.android.internal.util.IndentingPrintWriter;
 
@@ -90,9 +88,6 @@ import java.util.Objects;
 public class NetworkStatsCollection implements FileRotator.Reader, FileRotator.Writer {
     /** File header magic number: "ANET" */
     private static final int FILE_MAGIC = 0x414E4554;
-
-    /** Default buffer size from BufferedInputStream */
-    private static final int BUFFER_SIZE = 8192;
 
     private static final int VERSION_NETWORK_INIT = 1;
 
@@ -440,8 +435,7 @@ public class NetworkStatsCollection implements FileRotator.Reader, FileRotator.W
 
     @Override
     public void read(InputStream in) throws IOException {
-        final FastDataInput dataIn = new FastDataInput(in, BUFFER_SIZE);
-        read(dataIn);
+        read((DataInput) new DataInputStream(in));
     }
 
     private void read(DataInput in) throws IOException {
@@ -480,9 +474,8 @@ public class NetworkStatsCollection implements FileRotator.Reader, FileRotator.W
 
     @Override
     public void write(OutputStream out) throws IOException {
-        final FastDataOutput dataOut = new FastDataOutput(out, BUFFER_SIZE);
-        write(dataOut);
-        dataOut.flush();
+        write((DataOutput) new DataOutputStream(out));
+        out.flush();
     }
 
     private void write(DataOutput out) throws IOException {

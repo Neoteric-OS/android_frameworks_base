@@ -50,7 +50,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class BluetoothEventManager {
     private static final String TAG = "BluetoothEventManager";
-    private static final boolean DEBUG = Log.isLoggable(TAG, Log.DEBUG);
 
     private final LocalBluetoothAdapter mLocalAdapter;
     private final CachedBluetoothDeviceManager mDeviceManager;
@@ -382,9 +381,6 @@ public class BluetoothEventManager {
          *               BluetoothDevice.UNBOND_REASON_*
          */
         private void showUnbondMessage(Context context, String name, int reason) {
-            if (DEBUG) {
-                Log.d(TAG, "showUnbondMessage() name : " + name + ", reason : " + reason);
-            }
             int errorMsg;
 
             switch (reason) {

@@ -19,7 +19,6 @@ package com.android.systemui.media;
 import static com.google.common.truth.Truth.assertThat;
 
 import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyBoolean;
 import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
@@ -75,18 +74,16 @@ public class MediaDataCombineLatestTest extends SysuiTestCase {
 
         mMediaData = new MediaData(USER_ID, true, BG_COLOR, APP, null, ARTIST, TITLE, null,
                 new ArrayList<>(), new ArrayList<>(), PACKAGE, null, null, null, true, null, true,
-                false, KEY, false, false, false, 0L);
+                false, KEY, false, false, false);
         mDeviceData = new MediaDeviceData(true, null, DEVICE_NAME);
     }
 
     @Test
     public void eventNotEmittedWithoutDevice() {
         // WHEN data source emits an event without device data
-        mManager.onMediaDataLoaded(KEY, null, mMediaData, true /* immediately */,
-                false /* isSsReactivated */);
+        mManager.onMediaDataLoaded(KEY, null, mMediaData);
         // THEN an event isn't emitted
-        verify(mListener, never()).onMediaDataLoaded(eq(KEY), any(), any(), anyBoolean(),
-                anyBoolean());
+        verify(mListener, never()).onMediaDataLoaded(eq(KEY), any(), any());
     }
 
     @Test
@@ -94,8 +91,7 @@ public class MediaDataCombineLatestTest extends SysuiTestCase {
         // WHEN device source emits an event without media data
         mManager.onMediaDeviceChanged(KEY, null, mDeviceData);
         // THEN an event isn't emitted
-        verify(mListener, never()).onMediaDataLoaded(eq(KEY), any(), any(), anyBoolean(),
-                anyBoolean());
+        verify(mListener, never()).onMediaDataLoaded(eq(KEY), any(), any());
     }
 
     @Test
@@ -103,95 +99,80 @@ public class MediaDataCombineLatestTest extends SysuiTestCase {
         // GIVEN that a device event has already been received
         mManager.onMediaDeviceChanged(KEY, null, mDeviceData);
         // WHEN media event is received
-        mManager.onMediaDataLoaded(KEY, null, mMediaData, true /* immediately */,
-                false /* isSsReactivated */);
+        mManager.onMediaDataLoaded(KEY, null, mMediaData);
         // THEN the listener receives a combined event
         ArgumentCaptor<MediaData> captor = ArgumentCaptor.forClass(MediaData.class);
-        verify(mListener).onMediaDataLoaded(eq(KEY), any(), captor.capture(), anyBoolean(),
-                anyBoolean());
+        verify(mListener).onMediaDataLoaded(eq(KEY), any(), captor.capture());
         assertThat(captor.getValue().getDevice()).isNotNull();
     }
 
     @Test
     public void emitEventAfterMediaFirst() {
         // GIVEN that media event has already been received
-        mManager.onMediaDataLoaded(KEY, null, mMediaData, true /* immediately */,
-                false /* isSsReactivated */);
+        mManager.onMediaDataLoaded(KEY, null, mMediaData);
         // WHEN device event is received
         mManager.onMediaDeviceChanged(KEY, null, mDeviceData);
         // THEN the listener receives a combined event
         ArgumentCaptor<MediaData> captor = ArgumentCaptor.forClass(MediaData.class);
-        verify(mListener).onMediaDataLoaded(eq(KEY), any(), captor.capture(), anyBoolean(),
-                anyBoolean());
+        verify(mListener).onMediaDataLoaded(eq(KEY), any(), captor.capture());
         assertThat(captor.getValue().getDevice()).isNotNull();
     }
 
     @Test
     public void migrateKeyMediaFirst() {
         // GIVEN that media and device info has already been received
-        mManager.onMediaDataLoaded(OLD_KEY, null, mMediaData, true /* immediately */,
-                false /* isSsReactivated */);
+        mManager.onMediaDataLoaded(OLD_KEY, null, mMediaData);
         mManager.onMediaDeviceChanged(OLD_KEY, null, mDeviceData);
         reset(mListener);
         // WHEN a key migration event is received
-        mManager.onMediaDataLoaded(KEY, OLD_KEY, mMediaData, true /* immediately */,
-                false /* isSsReactivated */);
+        mManager.onMediaDataLoaded(KEY, OLD_KEY, mMediaData);
         // THEN the listener receives a combined event
         ArgumentCaptor<MediaData> captor = ArgumentCaptor.forClass(MediaData.class);
-        verify(mListener).onMediaDataLoaded(eq(KEY), eq(OLD_KEY), captor.capture(), anyBoolean(),
-                anyBoolean());
+        verify(mListener).onMediaDataLoaded(eq(KEY), eq(OLD_KEY), captor.capture());
         assertThat(captor.getValue().getDevice()).isNotNull();
     }
 
     @Test
     public void migrateKeyDeviceFirst() {
         // GIVEN that media and device info has already been received
-        mManager.onMediaDataLoaded(OLD_KEY, null, mMediaData, true /* immediately */,
-                false /* isSsReactivated */);
+        mManager.onMediaDataLoaded(OLD_KEY, null, mMediaData);
         mManager.onMediaDeviceChanged(OLD_KEY, null, mDeviceData);
         reset(mListener);
         // WHEN a key migration event is received
         mManager.onMediaDeviceChanged(KEY, OLD_KEY, mDeviceData);
         // THEN the listener receives a combined event
         ArgumentCaptor<MediaData> captor = ArgumentCaptor.forClass(MediaData.class);
-        verify(mListener).onMediaDataLoaded(eq(KEY), eq(OLD_KEY), captor.capture(), anyBoolean(),
-                anyBoolean());
+        verify(mListener).onMediaDataLoaded(eq(KEY), eq(OLD_KEY), captor.capture());
         assertThat(captor.getValue().getDevice()).isNotNull();
     }
 
     @Test
     public void migrateKeyMediaAfter() {
         // GIVEN that media and device info has already been received
-        mManager.onMediaDataLoaded(OLD_KEY, null, mMediaData, true /* immediately */,
-                false /* isSsReactivated */);
+        mManager.onMediaDataLoaded(OLD_KEY, null, mMediaData);
         mManager.onMediaDeviceChanged(OLD_KEY, null, mDeviceData);
         mManager.onMediaDeviceChanged(KEY, OLD_KEY, mDeviceData);
         reset(mListener);
         // WHEN a second key migration event is received for media
-        mManager.onMediaDataLoaded(KEY, OLD_KEY, mMediaData, true /* immediately */,
-                false /* isSsReactivated */);
+        mManager.onMediaDataLoaded(KEY, OLD_KEY, mMediaData);
         // THEN the key has already been migrated
         ArgumentCaptor<MediaData> captor = ArgumentCaptor.forClass(MediaData.class);
-        verify(mListener).onMediaDataLoaded(eq(KEY), eq(KEY), captor.capture(), anyBoolean(),
-                anyBoolean());
+        verify(mListener).onMediaDataLoaded(eq(KEY), eq(KEY), captor.capture());
         assertThat(captor.getValue().getDevice()).isNotNull();
     }
 
     @Test
     public void migrateKeyDeviceAfter() {
         // GIVEN that media and device info has already been received
-        mManager.onMediaDataLoaded(OLD_KEY, null, mMediaData, true /* immediately */,
-                false /* isSsReactivated */);
+        mManager.onMediaDataLoaded(OLD_KEY, null, mMediaData);
         mManager.onMediaDeviceChanged(OLD_KEY, null, mDeviceData);
-        mManager.onMediaDataLoaded(KEY, OLD_KEY, mMediaData, true /* immediately */,
-                false /* isSsReactivated */);
+        mManager.onMediaDataLoaded(KEY, OLD_KEY, mMediaData);
         reset(mListener);
         // WHEN a second key migration event is received for the device
         mManager.onMediaDeviceChanged(KEY, OLD_KEY, mDeviceData);
         // THEN the key has already be migrated
         ArgumentCaptor<MediaData> captor = ArgumentCaptor.forClass(MediaData.class);
-        verify(mListener).onMediaDataLoaded(eq(KEY), eq(KEY), captor.capture(), anyBoolean(),
-                anyBoolean());
+        verify(mListener).onMediaDataLoaded(eq(KEY), eq(KEY), captor.capture());
         assertThat(captor.getValue().getDevice()).isNotNull();
     }
 
@@ -205,8 +186,7 @@ public class MediaDataCombineLatestTest extends SysuiTestCase {
 
     @Test
     public void mediaDataRemovedAfterMediaEvent() {
-        mManager.onMediaDataLoaded(KEY, null, mMediaData, true /* immediately */,
-                false /* isSsReactivated */);
+        mManager.onMediaDataLoaded(KEY, null, mMediaData);
         mManager.onMediaDataRemoved(KEY);
         verify(mListener).onMediaDataRemoved(eq(KEY));
     }
@@ -221,15 +201,12 @@ public class MediaDataCombineLatestTest extends SysuiTestCase {
     @Test
     public void mediaDataKeyUpdated() {
         // GIVEN that device and media events have already been received
-        mManager.onMediaDataLoaded(KEY, null, mMediaData, true /* immediately */,
-                false /* isSsReactivated */);
+        mManager.onMediaDataLoaded(KEY, null, mMediaData);
         mManager.onMediaDeviceChanged(KEY, null, mDeviceData);
         // WHEN the key is changed
-        mManager.onMediaDataLoaded("NEW_KEY", KEY, mMediaData, true /* immediately */,
-                false /* isSsReactivated */);
+        mManager.onMediaDataLoaded("NEW_KEY", KEY, mMediaData);
         // THEN the listener gets a load event with the correct keys
         ArgumentCaptor<MediaData> captor = ArgumentCaptor.forClass(MediaData.class);
-        verify(mListener).onMediaDataLoaded(
-                eq("NEW_KEY"), any(), captor.capture(), anyBoolean(), anyBoolean());
+        verify(mListener).onMediaDataLoaded(eq("NEW_KEY"), any(), captor.capture());
     }
 }

@@ -16,7 +16,6 @@
 
 package android.widget;
 
-import android.annotation.Nullable;
 import android.app.ActivityManager;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.ComponentName;
@@ -841,7 +840,7 @@ public class ActivityChooserModel extends DataSetObservable {
         }
 
         @Override
-        public boolean equals(@Nullable Object obj) {
+        public boolean equals(Object obj) {
             if (this == obj) {
                 return true;
             }
@@ -910,7 +909,7 @@ public class ActivityChooserModel extends DataSetObservable {
         }
 
         @Override
-        public boolean equals(@Nullable Object obj) {
+        public boolean equals(Object obj) {
             if (this == obj) {
                 return true;
             }

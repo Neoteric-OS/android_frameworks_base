@@ -16,7 +16,6 @@
 
 package android.util;
 
-import android.annotation.Nullable;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Build;
 import android.os.Parcel;
@@ -132,7 +131,7 @@ public class RecurrenceRule implements Parcelable {
     }
 
     @Override
-    public boolean equals(@Nullable Object obj) {
+    public boolean equals(Object obj) {
         if (obj instanceof RecurrenceRule) {
             final RecurrenceRule other = (RecurrenceRule) obj;
             return Objects.equals(start, other.start)

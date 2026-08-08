@@ -35,7 +35,6 @@ import android.graphics.Rect;
 import android.graphics.Region.Op;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.text.Layout;
@@ -49,14 +48,12 @@ import android.util.FloatProperty;
 import android.util.MathUtils;
 import android.view.Gravity;
 import android.view.MotionEvent;
-import android.view.RemotableViewMethod;
 import android.view.SoundEffectConstants;
 import android.view.VelocityTracker;
 import android.view.ViewConfiguration;
 import android.view.ViewStructure;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.inspector.InspectableProperty;
-import android.widget.RemoteViews.RemoteView;
 
 import com.android.internal.R;
 
@@ -87,7 +84,6 @@ import com.android.internal.R;
  * @attr ref android.R.styleable#Switch_thumbTextPadding
  * @attr ref android.R.styleable#Switch_track
  */
-@RemoteView
 public class Switch extends CompoundButton {
     private static final int THUMB_ANIMATION_DURATION = 250;
 
@@ -316,7 +312,7 @@ public class Switch extends CompoundButton {
         refreshDrawableState();
         // Default state is derived from on/off-text, so state has to be updated when on/off-text
         // are updated.
-        setDefaultStateDescription();
+        setDefaultStateDescritption();
         setChecked(isChecked());
     }
 
@@ -445,7 +441,6 @@ public class Switch extends CompoundButton {
      *
      * @attr ref android.R.styleable#Switch_switchPadding
      */
-    @RemotableViewMethod
     public void setSwitchPadding(int pixels) {
         mSwitchPadding = pixels;
         requestLayout();
@@ -471,7 +466,6 @@ public class Switch extends CompoundButton {
      *
      * @attr ref android.R.styleable#Switch_switchMinWidth
      */
-    @RemotableViewMethod
     public void setSwitchMinWidth(int pixels) {
         mSwitchMinWidth = pixels;
         requestLayout();
@@ -497,7 +491,6 @@ public class Switch extends CompoundButton {
      *
      * @attr ref android.R.styleable#Switch_thumbTextPadding
      */
-    @RemotableViewMethod
     public void setThumbTextPadding(int pixels) {
         mThumbTextPadding = pixels;
         requestLayout();
@@ -540,15 +533,8 @@ public class Switch extends CompoundButton {
      *
      * @attr ref android.R.styleable#Switch_track
      */
-    @RemotableViewMethod(asyncImpl = "setTrackResourceAsync")
     public void setTrackResource(@DrawableRes int resId) {
         setTrackDrawable(getContext().getDrawable(resId));
-    }
-
-    /** @hide **/
-    public Runnable setTrackResourceAsync(@DrawableRes int resId) {
-        Drawable drawable = resId == 0 ? null : getContext().getDrawable(resId);
-        return () -> setTrackDrawable(drawable);
     }
 
     /**
@@ -561,23 +547,6 @@ public class Switch extends CompoundButton {
     @InspectableProperty(name = "track")
     public Drawable getTrackDrawable() {
         return mTrackDrawable;
-    }
-
-    /**
-     * Set the drawable used for the track that the switch slides within to the specified Icon.
-     *
-     * @param icon an Icon holding the desired track, or {@code null} to clear
-     *             the track
-     */
-    @RemotableViewMethod(asyncImpl = "setTrackIconAsync")
-    public void setTrackIcon(@Nullable Icon icon) {
-        setTrackDrawable(icon == null ? null : icon.loadDrawable(getContext()));
-    }
-
-    /** @hide **/
-    public Runnable setTrackIconAsync(@Nullable Icon icon) {
-        Drawable track = icon == null ? null : icon.loadDrawable(getContext());
-        return () -> setTrackDrawable(track);
     }
 
     /**
@@ -594,7 +563,6 @@ public class Switch extends CompoundButton {
      * @see #getTrackTintList()
      * @see Drawable#setTintList(ColorStateList)
      */
-    @RemotableViewMethod
     public void setTrackTintList(@Nullable ColorStateList tint) {
         mTrackTintList = tint;
         mHasTrackTint = true;
@@ -639,7 +607,6 @@ public class Switch extends CompoundButton {
      * @see #getTrackTintMode()
      * @see Drawable#setTintBlendMode(BlendMode)
      */
-    @RemotableViewMethod
     public void setTrackTintBlendMode(@Nullable BlendMode blendMode) {
         mTrackBlendMode = blendMode;
         mHasTrackTintMode = true;
@@ -719,15 +686,8 @@ public class Switch extends CompoundButton {
      *
      * @attr ref android.R.styleable#Switch_thumb
      */
-    @RemotableViewMethod(asyncImpl = "setThumbResourceAsync")
     public void setThumbResource(@DrawableRes int resId) {
         setThumbDrawable(getContext().getDrawable(resId));
-    }
-
-    /** @hide **/
-    public Runnable setThumbResourceAsync(@DrawableRes int resId) {
-        Drawable drawable = resId == 0 ? null : getContext().getDrawable(resId);
-        return () -> setThumbDrawable(drawable);
     }
 
     /**
@@ -744,24 +704,6 @@ public class Switch extends CompoundButton {
     }
 
     /**
-     * Set the drawable used for the switch "thumb" - the piece that the user
-     * can physically touch and drag along the track - to the specified Icon.
-     *
-     * @param icon an Icon holding the desired thumb, or {@code null} to clear
-     *             the thumb
-     */
-    @RemotableViewMethod(asyncImpl = "setThumbIconAsync")
-    public void setThumbIcon(@Nullable Icon icon) {
-        setThumbDrawable(icon == null ? null : icon.loadDrawable(getContext()));
-    }
-
-    /** @hide **/
-    public Runnable setThumbIconAsync(@Nullable Icon icon) {
-        Drawable track = icon == null ? null : icon.loadDrawable(getContext());
-        return () -> setThumbDrawable(track);
-    }
-
-    /**
      * Applies a tint to the thumb drawable. Does not modify the current
      * tint mode, which is {@link PorterDuff.Mode#SRC_IN} by default.
      * <p>
@@ -775,7 +717,6 @@ public class Switch extends CompoundButton {
      * @see #getThumbTintList()
      * @see Drawable#setTintList(ColorStateList)
      */
-    @RemotableViewMethod
     public void setThumbTintList(@Nullable ColorStateList tint) {
         mThumbTintList = tint;
         mHasThumbTint = true;
@@ -820,7 +761,6 @@ public class Switch extends CompoundButton {
      * @see #getThumbTintMode()
      * @see Drawable#setTintBlendMode(BlendMode)
      */
-    @RemotableViewMethod
     public void setThumbTintBlendMode(@Nullable BlendMode blendMode) {
         mThumbBlendMode = blendMode;
         mHasThumbTintMode = true;
@@ -882,7 +822,6 @@ public class Switch extends CompoundButton {
      *
      * @attr ref android.R.styleable#Switch_splitTrack
      */
-    @RemotableViewMethod
     public void setSplitTrack(boolean splitTrack) {
         mSplitTrack = splitTrack;
         invalidate();
@@ -913,13 +852,12 @@ public class Switch extends CompoundButton {
      *
      * @attr ref android.R.styleable#Switch_textOn
      */
-    @RemotableViewMethod
     public void setTextOn(CharSequence textOn) {
         mTextOn = textOn;
         requestLayout();
         // Default state is derived from on/off-text, so state has to be updated when on/off-text
         // are updated.
-        setDefaultStateDescription();
+        setDefaultStateDescritption();
     }
 
     /**
@@ -937,13 +875,12 @@ public class Switch extends CompoundButton {
      *
      * @attr ref android.R.styleable#Switch_textOff
      */
-    @RemotableViewMethod
     public void setTextOff(CharSequence textOff) {
         mTextOff = textOff;
         requestLayout();
         // Default state is derived from on/off-text, so state has to be updated when on/off-text
         // are updated.
-        setDefaultStateDescription();
+        setDefaultStateDescritption();
     }
 
     /**
@@ -952,7 +889,6 @@ public class Switch extends CompoundButton {
      * @param showText {@code true} to display on/off text
      * @attr ref android.R.styleable#Switch_showText
      */
-    @RemotableViewMethod
     public void setShowText(boolean showText) {
         if (mShowText != showText) {
             mShowText = showText;

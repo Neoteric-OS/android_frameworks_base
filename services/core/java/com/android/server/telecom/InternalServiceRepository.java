@@ -16,8 +16,6 @@
 
 package com.android.server.telecom;
 
-import static android.os.PowerWhitelistManager.REASON_UNKNOWN;
-
 import android.content.Context;
 import android.os.Binder;
 import android.os.Process;
@@ -40,7 +38,7 @@ public class InternalServiceRepository extends IInternalServiceRetriever.Stub {
         public void exemptAppTemporarilyForEvent(String packageName, long duration, int userHandle,
                 String reason) {
             mDeviceIdleController.addPowerSaveTempWhitelistApp(Process.myUid(), packageName,
-                    duration, userHandle, true /*sync*/, REASON_UNKNOWN, reason);
+                    duration, userHandle, true /*sync*/, reason);
         }
     };
 

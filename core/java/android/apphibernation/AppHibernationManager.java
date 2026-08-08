@@ -33,7 +33,7 @@ import java.util.List;
  */
 @SystemApi
 @SystemService(Context.APP_HIBERNATION_SERVICE)
-public class AppHibernationManager {
+public final class AppHibernationManager {
     private static final String TAG = "AppHibernationManager";
     private final Context mContext;
     private final IAppHibernationService mIAppHibernationService;

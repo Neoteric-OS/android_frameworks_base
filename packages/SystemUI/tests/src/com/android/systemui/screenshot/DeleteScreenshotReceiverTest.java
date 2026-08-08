@@ -16,10 +16,10 @@
 
 package com.android.systemui.screenshot;
 
-import static com.android.systemui.screenshot.ScreenshotController.ACTION_TYPE_DELETE;
-import static com.android.systemui.screenshot.ScreenshotController.EXTRA_ID;
-import static com.android.systemui.screenshot.ScreenshotController.EXTRA_SMART_ACTIONS_ENABLED;
-import static com.android.systemui.screenshot.ScreenshotController.SCREENSHOT_URI_ID;
+import static com.android.systemui.screenshot.GlobalScreenshot.ACTION_TYPE_DELETE;
+import static com.android.systemui.screenshot.GlobalScreenshot.EXTRA_ID;
+import static com.android.systemui.screenshot.GlobalScreenshot.EXTRA_SMART_ACTIONS_ENABLED;
+import static com.android.systemui.screenshot.GlobalScreenshot.SCREENSHOT_URI_ID;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -81,8 +81,7 @@ public class DeleteScreenshotReceiverTest extends SysuiTestCase {
 
         verify(mMockExecutor, never()).execute(any(Runnable.class));
         verify(mMockScreenshotSmartActions, never()).notifyScreenshotAction(
-                any(Context.class), any(String.class), any(String.class), anyBoolean(),
-                any(Intent.class));
+                any(Context.class), any(String.class), any(String.class), anyBoolean());
     }
 
     @Test
@@ -113,8 +112,8 @@ public class DeleteScreenshotReceiverTest extends SysuiTestCase {
         }
 
         // ensure smart actions not called by default
-        verify(mMockScreenshotSmartActions, never()).notifyScreenshotAction(any(Context.class),
-                any(String.class), any(String.class), anyBoolean(), any(Intent.class));
+        verify(mMockScreenshotSmartActions, never()).notifyScreenshotAction(
+                any(Context.class), any(String.class), any(String.class), anyBoolean());
     }
 
     @Test
@@ -129,8 +128,8 @@ public class DeleteScreenshotReceiverTest extends SysuiTestCase {
         mDeleteScreenshotReceiver.onReceive(mContext, intent);
 
         verify(mMockExecutor).execute(any(Runnable.class));
-        verify(mMockScreenshotSmartActions).notifyScreenshotAction(mContext, testId,
-                ACTION_TYPE_DELETE, false, null);
+        verify(mMockScreenshotSmartActions).notifyScreenshotAction(
+                mContext, testId, ACTION_TYPE_DELETE, false);
     }
 
     private static ContentValues getFakeContentValues() {

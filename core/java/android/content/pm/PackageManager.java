@@ -17,7 +17,6 @@
 package android.content.pm;
 
 import android.Manifest;
-import android.annotation.CallbackExecutor;
 import android.annotation.CheckResult;
 import android.annotation.DrawableRes;
 import android.annotation.IntDef;
@@ -49,8 +48,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.pm.dex.ArtManager;
-import android.content.pm.verify.domain.DomainVerificationManager;
-import android.content.res.Configuration;
+import android.content.pm.parsing.PackageInfoWithoutStateUtils;
+import android.content.pm.parsing.ParsingPackage;
+import android.content.pm.parsing.ParsingPackageUtils;
+import android.content.pm.parsing.result.ParseInput;
+import android.content.pm.parsing.result.ParseResult;
+import android.content.pm.parsing.result.ParseTypeImpl;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.graphics.Rect;
@@ -61,9 +64,6 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.os.PersistableBundle;
 import android.os.RemoteException;
 import android.os.UserHandle;
@@ -81,23 +81,18 @@ import android.telephony.ims.SipDelegateManager;
 import android.util.AndroidException;
 import android.util.Log;
 
-import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.ArrayUtils;
 
 import dalvik.system.VMRuntime;
 
+import java.io.File;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.security.cert.Certificate;
-import java.security.cert.CertificateEncodingException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.Executor;
-import java.util.function.Consumer;
 
 /**
  * Class for retrieving various kinds of information related to the application
@@ -130,256 +125,6 @@ public abstract class PackageManager {
     }
 
     /**
-     * &lt;application&gt; level {@link android.content.pm.PackageManager.Property} tag specifying
-     * the XML resource ID containing an application's media capabilities XML file
-     *
-     * For example:
-     * &lt;application&gt;
-     *   &lt;property android:name="android.media.PROPERTY_MEDIA_CAPABILITIES"
-     *     android:resource="@xml/media_capabilities"&gt;
-     * &lt;application&gt;
-     */
-    public static final String PROPERTY_MEDIA_CAPABILITIES =
-            "android.media.PROPERTY_MEDIA_CAPABILITIES";
-
-    /**
-     * A property value set within the manifest.
-     * <p>
-     * The value of a property will only have a single type, as defined by
-     * the property itself.
-     */
-    public static final class Property implements Parcelable {
-        private static final int TYPE_BOOLEAN = 1;
-        private static final int TYPE_FLOAT = 2;
-        private static final int TYPE_INTEGER = 3;
-        private static final int TYPE_RESOURCE = 4;
-        private static final int TYPE_STRING = 5;
-        private final String mName;
-        private final int mType;
-        private final String mClassName;
-        private final String mPackageName;
-        private boolean mBooleanValue;
-        private float mFloatValue;
-        private int mIntegerValue;
-        private String mStringValue;
-
-        /** @hide */
-        @VisibleForTesting
-        public Property(@NonNull String name, int type,
-                @NonNull String packageName, @Nullable String className) {
-            assert name != null;
-            assert type >= TYPE_BOOLEAN && type <= TYPE_STRING;
-            assert packageName != null;
-            this.mName = name;
-            this.mType = type;
-            this.mPackageName = packageName;
-            this.mClassName = className;
-        }
-        /** @hide */
-        public Property(@NonNull String name, boolean value,
-                String packageName, String className) {
-            this(name, TYPE_BOOLEAN, packageName, className);
-            mBooleanValue = value;
-        }
-        /** @hide */
-        public Property(@NonNull String name, float value,
-                String packageName, String className) {
-            this(name, TYPE_FLOAT, packageName, className);
-            mFloatValue = value;
-        }
-        /** @hide */
-        public Property(@NonNull String name, int value, boolean isResource,
-                String packageName, String className) {
-            this(name, isResource ? TYPE_RESOURCE : TYPE_INTEGER, packageName, className);
-            mIntegerValue = value;
-        }
-        /** @hide */
-        public Property(@NonNull String name, String value,
-                String packageName, String className) {
-            this(name, TYPE_STRING, packageName, className);
-            mStringValue = value;
-        }
-
-        /** @hide */
-        @VisibleForTesting
-        public int getType() {
-            return mType;
-        }
-
-        /**
-         * Returns the name of the property.
-         */
-        @NonNull public String getName() {
-            return mName;
-        }
-
-        /**
-         * Returns the name of the package where this this property was defined.
-         */
-        @NonNull public String getPackageName() {
-            return mPackageName;
-        }
-
-        /**
-         * Returns the classname of the component where this property was defined.
-         * <p>If the property was defined within and &lt;application&gt; tag, retutrns
-         * {@code null}
-         */
-        @Nullable public String getClassName() {
-            return mClassName;
-        }
-
-        /**
-         * Returns the boolean value set for the property.
-         * <p>If the property is not of a boolean type, returns {@code false}.
-         */
-        public boolean getBoolean() {
-            return mBooleanValue;
-        }
-
-        /**
-         * Returns {@code true} if the property is a boolean type. Otherwise {@code false}.
-         */
-        public boolean isBoolean() {
-            return mType == TYPE_BOOLEAN;
-        }
-
-        /**
-         * Returns the float value set for the property.
-         * <p>If the property is not of a float type, returns {@code 0.0}.
-         */
-        public float getFloat() {
-            return mFloatValue;
-        }
-
-        /**
-         * Returns {@code true} if the property is a float type. Otherwise {@code false}.
-         */
-        public boolean isFloat() {
-            return mType == TYPE_FLOAT;
-        }
-
-        /**
-         * Returns the integer value set for the property.
-         * <p>If the property is not of an integer type, returns {@code 0}.
-         */
-        public int getInteger() {
-            return mType == TYPE_INTEGER ? mIntegerValue : 0;
-        }
-
-        /**
-         * Returns {@code true} if the property is an integer type. Otherwise {@code false}.
-         */
-        public boolean isInteger() {
-            return mType == TYPE_INTEGER;
-        }
-
-        /**
-         * Returns the a resource id set for the property.
-         * <p>If the property is not of a resource id type, returns {@code 0}.
-         */
-        public int getResourceId() {
-            return mType == TYPE_RESOURCE ? mIntegerValue : 0;
-        }
-
-        /**
-         * Returns {@code true} if the property is a resource id type. Otherwise {@code false}.
-         */
-        public boolean isResourceId() {
-            return mType == TYPE_RESOURCE;
-        }
-
-        /**
-         * Returns the a String value set for the property.
-         * <p>If the property is not a String type, returns {@code null}.
-         */
-        @Nullable public String getString() {
-            return mStringValue;
-        }
-
-        /**
-         * Returns {@code true} if the property is a String type. Otherwise {@code false}.
-         */
-        public boolean isString() {
-            return mType == TYPE_STRING;
-        }
-
-        /**
-         * Adds a mapping from the given key to this property's value in the provided
-         * {@link android.os.Bundle}. If the provided {@link android.os.Bundle} is
-         * {@code null}, creates a new {@link android.os.Bundle}.
-         * @hide
-         */
-        public Bundle toBundle(Bundle outBundle) {
-            final Bundle b = outBundle == null ? new Bundle() : outBundle;
-            if (mType == TYPE_BOOLEAN) {
-                b.putBoolean(mName, mBooleanValue);
-            } else if (mType == TYPE_FLOAT) {
-                b.putFloat(mName, mFloatValue);
-            } else if (mType == TYPE_INTEGER) {
-                b.putInt(mName, mIntegerValue);
-            } else if (mType == TYPE_RESOURCE) {
-                b.putInt(mName, mIntegerValue);
-            } else if (mType == TYPE_STRING) {
-                b.putString(mName, mStringValue);
-            }
-            return b;
-        }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(@NonNull Parcel dest, int flags) {
-            dest.writeString(mName);
-            dest.writeInt(mType);
-            dest.writeString(mPackageName);
-            dest.writeString(mClassName);
-            if (mType == TYPE_BOOLEAN) {
-                dest.writeBoolean(mBooleanValue);
-            } else if (mType == TYPE_FLOAT) {
-                dest.writeFloat(mFloatValue);
-            } else if (mType == TYPE_INTEGER) {
-                dest.writeInt(mIntegerValue);
-            } else if (mType == TYPE_RESOURCE) {
-                dest.writeInt(mIntegerValue);
-            } else if (mType == TYPE_STRING) {
-                dest.writeString(mStringValue);
-            }
-        }
-
-        @NonNull
-        public static final Creator<Property> CREATOR = new Creator<Property>() {
-            @Override
-            public Property createFromParcel(@NonNull Parcel source) {
-                final String name = source.readString();
-                final int type = source.readInt();
-                final String packageName = source.readString();
-                final String className = source.readString();
-                if (type == TYPE_BOOLEAN) {
-                    return new Property(name, source.readBoolean(), packageName, className);
-                } else if (type == TYPE_FLOAT) {
-                    return new Property(name, source.readFloat(), packageName, className);
-                } else if (type == TYPE_INTEGER) {
-                    return new Property(name, source.readInt(), false, packageName, className);
-                } else if (type == TYPE_RESOURCE) {
-                    return new Property(name, source.readInt(), true, packageName, className);
-                } else if (type == TYPE_STRING) {
-                    return new Property(name, source.readString(), packageName, className);
-                }
-                return null;
-            }
-
-            @Override
-            public Property[] newArray(int size) {
-                return new Property[size];
-            }
-        };
-    }
-
-    /**
      * Listener for changes in permissions granted to a UID.
      *
      * @hide
@@ -393,41 +138,6 @@ public abstract class PackageManager {
          */
         public void onPermissionsChanged(int uid);
     }
-
-    /** @hide */
-    public static final int TYPE_UNKNOWN = 0;
-    /** @hide */
-    public static final int TYPE_ACTIVITY = 1;
-    /** @hide */
-    public static final int TYPE_RECEIVER = 2;
-    /** @hide */
-    public static final int TYPE_SERVICE = 3;
-    /** @hide */
-    public static final int TYPE_PROVIDER = 4;
-    /** @hide */
-    public static final int TYPE_APPLICATION = 5;
-    /** @hide */
-    @IntDef(prefix = { "TYPE_" }, value = {
-            TYPE_UNKNOWN,
-            TYPE_ACTIVITY,
-            TYPE_RECEIVER,
-            TYPE_SERVICE,
-            TYPE_PROVIDER,
-    })
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface ComponentType {}
-
-    /** @hide */
-    @IntDef(prefix = { "TYPE_" }, value = {
-            TYPE_UNKNOWN,
-            TYPE_ACTIVITY,
-            TYPE_RECEIVER,
-            TYPE_SERVICE,
-            TYPE_PROVIDER,
-            TYPE_APPLICATION,
-    })
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface PropertyLocation {}
 
     /**
      * As a guiding principle:
@@ -468,7 +178,6 @@ public abstract class PackageManager {
             GET_DISABLED_UNTIL_USED_COMPONENTS,
             GET_UNINSTALLED_PACKAGES,
             MATCH_HIDDEN_UNTIL_INSTALLED_COMPONENTS,
-            GET_ATTRIBUTIONS,
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface PackageInfoFlags {}
@@ -862,21 +571,14 @@ public abstract class PackageManager {
      */
     public static final int MATCH_DIRECT_BOOT_AUTO = 0x10000000;
 
-    /**
-     * {@link PackageInfo} flag: return all attributions declared in the package manifest
-     */
-    public static final int GET_ATTRIBUTIONS = 0x80000000;
-
     /** @hide */
     @Deprecated
     public static final int MATCH_DEBUG_TRIAGED_MISSING = MATCH_DIRECT_BOOT_AUTO;
 
     /**
-     * {@link PackageInfo} flag: include system apps that are in the uninstalled state and have
-     * been set to be hidden until installed via {@link #setSystemAppState}.
+     * Internal {@link PackageInfo} flag used to indicate that a package is a hidden system app.
      * @hide
      */
-    @SystemApi
     public static final int MATCH_HIDDEN_UNTIL_INSTALLED_COMPONENTS =  0x20000000;
 
     /**
@@ -1095,6 +797,7 @@ public abstract class PackageManager {
             INSTALL_ENABLE_ROLLBACK,
             INSTALL_ALLOW_DOWNGRADE,
             INSTALL_STAGED,
+            INSTALL_DRY_RUN,
     })
     @Retention(RetentionPolicy.SOURCE)
     public @interface InstallFlags {}
@@ -1172,12 +875,6 @@ public abstract class PackageManager {
      * permissions should be whitelisted. If {@link #INSTALL_ALL_USERS}
      * is set the restricted permissions will be whitelisted for all users, otherwise
      * only to the owner.
-     *
-     * <p>
-     * <strong>Note: </strong>In retrospect it would have been preferred to use
-     * more inclusive terminology when naming this API. Similar APIs added will
-     * refrain from using the term "whitelist".
-     * </p>
      *
      * @hide
      */
@@ -1279,11 +976,12 @@ public abstract class PackageManager {
     public static final int INSTALL_STAGED = 0x00200000;
 
     /**
-     * Flag parameter for {@link #installPackage} to indicate that check whether given APEX can be
-     * updated should be disabled for this install.
+     * Flag parameter for {@link #installPackage} to indicate that package should only be verified
+     * but not installed.
+     *
      * @hide
      */
-    public static final int INSTALL_DISABLE_ALLOWED_APEX_UPDATE_CHECK = 0x00400000;
+    public static final int INSTALL_DRY_RUN = 0x00800000;
 
     /** @hide */
     @IntDef(flag = true, value = {
@@ -1521,8 +1219,7 @@ public abstract class PackageManager {
 
     /**
      * Installation return code: this is passed in the {@link PackageInstaller#EXTRA_LEGACY_STATUS}
-     * when the package being replaced is a system app and the caller didn't provide the
-     * {@link #DELETE_SYSTEM_APP} flag.
+     * if the new package uses a shared library that is not available.
      *
      * @hide
      */
@@ -1855,12 +1552,12 @@ public abstract class PackageManager {
     public static final int INSTALL_FAILED_ABORTED = -115;
 
     /**
-     * Installation failed return code: install type is incompatible with some other
-     * installation flags supplied for the operation; or other circumstances such as trying
-     * to upgrade a system app via an Incremental or instant app install.
+     * Installation failed return code: instant app installs are incompatible with some
+     * other installation flags supplied for the operation; or other circumstances such
+     * as trying to upgrade a system app via an instant app install.
      * @hide
      */
-    public static final int INSTALL_FAILED_SESSION_INVALID = -116;
+    public static final int INSTALL_FAILED_INSTANT_APP_INVALID = -116;
 
     /**
      * Installation parse return code: this is passed in the
@@ -1937,26 +1634,6 @@ public abstract class PackageManager {
      * @hide
      */
     public static final int INSTALL_PARSE_FAILED_SKIPPED = -125;
-
-    /**
-     * Installation failed return code: this is passed in the
-     * {@link PackageInstaller#EXTRA_LEGACY_STATUS} if the system failed to install the package
-     * because it is attempting to define a permission group that is already defined by some
-     * existing package.
-     *
-     * @hide
-     */
-    public static final int INSTALL_FAILED_DUPLICATE_PERMISSION_GROUP = -126;
-
-    /**
-     * Installation failed return code: this is passed in the
-     * {@link PackageInstaller#EXTRA_LEGACY_STATUS} if the system failed to install the package
-     * because it is attempting to define a permission in a group that does not exists or that is
-     * defined by an packages with an incompatible certificate.
-     *
-     * @hide
-     */
-    public static final int INSTALL_FAILED_BAD_PERMISSION_GROUP = -127;
 
     /** @hide */
     @IntDef(flag = true, prefix = { "DELETE_" }, value = {
@@ -2205,10 +1882,8 @@ public abstract class PackageManager {
      * {@link PackageManager#verifyIntentFilter} to indicate that the calling
      * IntentFilter Verifier confirms that the IntentFilter is verified.
      *
-     * @deprecated Use {@link DomainVerificationManager} APIs.
      * @hide
      */
-    @Deprecated
     @SystemApi
     public static final int INTENT_FILTER_VERIFICATION_SUCCESS = 1;
 
@@ -2217,20 +1892,16 @@ public abstract class PackageManager {
      * {@link PackageManager#verifyIntentFilter} to indicate that the calling
      * IntentFilter Verifier confirms that the IntentFilter is NOT verified.
      *
-     * @deprecated Use {@link DomainVerificationManager} APIs.
      * @hide
      */
-    @Deprecated
     @SystemApi
     public static final int INTENT_FILTER_VERIFICATION_FAILURE = -1;
 
     /**
      * Internal status code to indicate that an IntentFilter verification result is not specified.
      *
-     * @deprecated Use {@link DomainVerificationManager} APIs.
      * @hide
      */
-    @Deprecated
     @SystemApi
     public static final int INTENT_FILTER_DOMAIN_VERIFICATION_STATUS_UNDEFINED = 0;
 
@@ -2240,10 +1911,8 @@ public abstract class PackageManager {
      * will always be prompted the Intent Disambiguation Dialog if there are two
      * or more Intent resolved for the IntentFilter's domain(s).
      *
-     * @deprecated Use {@link DomainVerificationManager} APIs.
      * @hide
      */
-    @Deprecated
     @SystemApi
     public static final int INTENT_FILTER_DOMAIN_VERIFICATION_STATUS_ASK = 1;
 
@@ -2254,10 +1923,8 @@ public abstract class PackageManager {
      * or more resolution of the Intent. The default App for the domain(s)
      * specified in the IntentFilter will also ALWAYS be used.
      *
-     * @deprecated Use {@link DomainVerificationManager} APIs.
      * @hide
      */
-    @Deprecated
     @SystemApi
     public static final int INTENT_FILTER_DOMAIN_VERIFICATION_STATUS_ALWAYS = 2;
 
@@ -2268,10 +1935,8 @@ public abstract class PackageManager {
      * Intent resolved. The default App for the domain(s) specified in the
      * IntentFilter will also NEVER be presented to the User.
      *
-     * @deprecated Use {@link DomainVerificationManager} APIs.
      * @hide
      */
-    @Deprecated
     @SystemApi
     public static final int INTENT_FILTER_DOMAIN_VERIFICATION_STATUS_NEVER = 3;
 
@@ -2284,10 +1949,8 @@ public abstract class PackageManager {
      * more than one candidate app, then a disambiguation is *always* presented
      * even if there is another candidate app with the 'always' state.
      *
-     * @deprecated Use {@link DomainVerificationManager} APIs.
      * @hide
      */
-    @Deprecated
     @SystemApi
     public static final int INTENT_FILTER_DOMAIN_VERIFICATION_STATUS_ALWAYS_ASK = 4;
 
@@ -2647,18 +2310,6 @@ public abstract class PackageManager {
      */
     @SdkConstant(SdkConstantType.FEATURE)
     public static final String FEATURE_SE_OMAPI_SD = "android.hardware.se.omapi.sd";
-
-    /**
-     * Feature for {@link #getSystemAvailableFeatures} and {@link #hasSystemFeature}: The device is
-     * compatible with Android’s security model.
-     *
-     * <p>See sections 2 and 9 in the
-     * <a href="https://source.android.com/compatibility/android-cdd">Android CDD</a> for more
-     * details.
-     */
-    @SdkConstant(SdkConstantType.FEATURE)
-    public static final String FEATURE_SECURITY_MODEL_COMPATIBLE =
-            "android.hardware.security.model.compatible";
 
     /**
      * Feature for {@link #getSystemAvailableFeatures} and
@@ -3452,7 +3103,6 @@ public abstract class PackageManager {
      * {@link #hasSystemFeature}: This device supports HDMI-CEC.
      * @hide
      */
-    @TestApi
     @SdkConstant(SdkConstantType.FEATURE)
     public static final String FEATURE_HDMI_CEC = "android.hardware.hdmi.cec";
 
@@ -3639,12 +3289,7 @@ public abstract class PackageManager {
      * Feature for {@link #getSystemAvailableFeatures} and {@link #hasSystemFeature}: The device has
      * the requisite kernel support to support incremental delivery aka Incremental FileSystem.
      *
-     * feature not present - IncFs is not present on the device.
-     * 1 - IncFs v1, core features, no PerUid support. Optional in R.
-     * 2 - IncFs v2, PerUid support, fs-verity support. Required in S.
-     *
-     * @see IncrementalManager#isFeatureEnabled
-     * @see IncrementalManager#getVersion()
+     * @see IncrementalManager#isEnabled
      * @hide
      */
     @SystemApi
@@ -3798,10 +3443,8 @@ public abstract class PackageManager {
      * Passed to an intent filter verifier and is used to call back to
      * {@link #verifyIntentFilter}
      *
-     * @deprecated Use DomainVerificationManager APIs.
      * @hide
      */
-    @Deprecated
     public static final String EXTRA_INTENT_FILTER_VERIFICATION_ID
             = "android.content.pm.extra.INTENT_FILTER_VERIFICATION_ID";
 
@@ -3811,10 +3454,8 @@ public abstract class PackageManager {
      *
      * Usually this is "https"
      *
-     * @deprecated Use DomainVerificationManager APIs.
      * @hide
      */
-    @Deprecated
     public static final String EXTRA_INTENT_FILTER_VERIFICATION_URI_SCHEME
             = "android.content.pm.extra.INTENT_FILTER_VERIFICATION_URI_SCHEME";
 
@@ -3825,10 +3466,8 @@ public abstract class PackageManager {
      *
      * This is a space delimited list of hosts.
      *
-     * @deprecated Use DomainVerificationManager APIs.
      * @hide
      */
-    @Deprecated
     public static final String EXTRA_INTENT_FILTER_VERIFICATION_HOSTS
             = "android.content.pm.extra.INTENT_FILTER_VERIFICATION_HOSTS";
 
@@ -3838,10 +3477,8 @@ public abstract class PackageManager {
      * from the hosts. Each host response will need to include the package name of APK containing
      * the intent filter.
      *
-     * @deprecated Use DomainVerificationManager APIs.
      * @hide
      */
-    @Deprecated
     public static final String EXTRA_INTENT_FILTER_VERIFICATION_PACKAGE_NAME
             = "android.content.pm.extra.INTENT_FILTER_VERIFICATION_PACKAGE_NAME";
 
@@ -3979,7 +3616,6 @@ public abstract class PackageManager {
      * @hide
      */
     @TestApi
-    @SystemApi
     public static final int FLAG_PERMISSION_REVOKE_WHEN_REQUESTED =  1 << 7;
 
     /**
@@ -4082,17 +3718,6 @@ public abstract class PackageManager {
     public static final int FLAG_PERMISSION_AUTO_REVOKED = 1 << 17;
 
     /**
-     * Permission flag: This location permission is selected as the level of granularity of
-     * location accuracy.
-     * Example: If this flag is set for ACCESS_FINE_LOCATION, FINE location is the selected location
-     *          accuracy for location permissions.
-     *
-     * @hide
-     */
-    @SystemApi
-    public static final int FLAG_PERMISSION_SELECTED_LOCATION_ACCURACY =  1 << 19;
-
-    /**
      * Permission flags: Reserved for use by the permission controller. The platform and any
      * packages besides the permission controller should not assume any definition about these
      * flags.
@@ -4156,27 +3781,13 @@ public abstract class PackageManager {
 
     /**
      * Permission whitelist flag: permissions whitelisted by the system.
-     * Permissions can also be whitelisted by the installer, on upgrade, or on
-     * role grant.
-     *
-     * <p>
-     * <strong>Note: </strong>In retrospect it would have been preferred to use
-     * more inclusive terminology when naming this API. Similar APIs added will
-     * refrain from using the term "whitelist".
-     * </p>
+     * Permissions can also be whitelisted by the installer or on upgrade.
      */
     public static final int FLAG_PERMISSION_WHITELIST_SYSTEM = 1 << 0;
 
     /**
      * Permission whitelist flag: permissions whitelisted by the installer.
-     * Permissions can also be whitelisted by the system, on upgrade, or on role
-     * grant.
-     *
-     * <p>
-     * <strong>Note: </strong>In retrospect it would have been preferred to use
-     * more inclusive terminology when naming this API. Similar APIs added will
-     * refrain from using the term "whitelist".
-     * </p>
+     * Permissions can also be whitelisted by the system or on upgrade.
      */
     public static final int FLAG_PERMISSION_WHITELIST_INSTALLER = 1 << 1;
 
@@ -4184,14 +3795,7 @@ public abstract class PackageManager {
      * Permission whitelist flag: permissions whitelisted by the system
      * when upgrading from an OS version where the permission was not
      * restricted to an OS version where the permission is restricted.
-     * Permissions can also be whitelisted by the installer, the system, or on
-     * role grant.
-     *
-     * <p>
-     * <strong>Note: </strong>In retrospect it would have been preferred to use
-     * more inclusive terminology when naming this API. Similar APIs added will
-     * refrain from using the term "whitelist".
-     * </p>
+     * Permissions can also be whitelisted by the installer or the system.
      */
     public static final int FLAG_PERMISSION_WHITELIST_UPGRADE = 1 << 2;
 
@@ -4324,43 +3928,28 @@ public abstract class PackageManager {
     public @interface SystemAppState {}
 
     /**
-     * Constant for use with {@link #setSystemAppState} to mark a system app as hidden until
-     * installation.
+     * Constant for noting system app state as hidden before installation
      * @hide
      */
-    @SystemApi
     public static final int SYSTEM_APP_STATE_HIDDEN_UNTIL_INSTALLED_HIDDEN = 0;
 
     /**
-     * Constant for use with {@link #setSystemAppState} to mark a system app as not hidden until
-     * installation.
+     * Constant for noting system app state as visible before installation
      * @hide
      */
-    @SystemApi
     public static final int SYSTEM_APP_STATE_HIDDEN_UNTIL_INSTALLED_VISIBLE = 1;
 
     /**
-     * Constant for use with {@link #setSystemAppState} to change a system app's state to installed.
+     * Constant for noting system app state as installed
      * @hide
      */
-    @SystemApi
     public static final int SYSTEM_APP_STATE_INSTALLED = 2;
 
     /**
-     * Constant for use with {@link #setSystemAppState} to change a system app's state to
-     * uninstalled.
+     * Constant for noting system app state as not installed
      * @hide
      */
-    @SystemApi
     public static final int SYSTEM_APP_STATE_UNINSTALLED = 3;
-
-    /**
-     * A manifest property to control app's participation in {@code adb backup}. Should only
-     * be used by system / privileged apps.
-     *
-     * @hide
-     */
-    public static final String PROPERTY_ALLOW_ADB_BACKUP = "android.backup.ALLOW_ADB_BACKUP";
 
     /** {@hide} */
     public int getUserId() {
@@ -4607,7 +4196,6 @@ public abstract class PackageManager {
      * @throws NameNotFoundException if a package with the given name cannot be
      *             found on the system.
      */
-    //@Deprecated
     public abstract PermissionInfo getPermissionInfo(@NonNull String permName,
             @PermissionInfoFlags int flags) throws NameNotFoundException;
 
@@ -4615,17 +4203,16 @@ public abstract class PackageManager {
      * Query for all of the permissions associated with a particular group.
      *
      * @param permissionGroup The fully qualified name (i.e. com.google.permission.LOGIN)
-     *            of the permission group you are interested in. Use {@code null} to
+     *            of the permission group you are interested in. Use null to
      *            find all of the permissions not associated with a group.
      * @param flags Additional option flags to modify the data returned.
      * @return Returns a list of {@link PermissionInfo} containing information
      *         about all of the permissions in the given group.
-     * @throws NameNotFoundException if a group with the given name cannot be
+     * @throws NameNotFoundException if a package with the given name cannot be
      *             found on the system.
      */
-    //@Deprecated
     @NonNull
-    public abstract List<PermissionInfo> queryPermissionsByGroup(@Nullable String permissionGroup,
+    public abstract List<PermissionInfo> queryPermissionsByGroup(@NonNull String permissionGroup,
             @PermissionInfoFlags int flags) throws NameNotFoundException;
 
     /**
@@ -4652,7 +4239,7 @@ public abstract class PackageManager {
      * Retrieve all of the information we know about a particular group of
      * permissions.
      *
-     * @param groupName The fully qualified name (i.e.
+     * @param permName The fully qualified name (i.e.
      *            com.google.permission_group.APPS) of the permission you are
      *            interested in.
      * @param flags Additional option flags to modify the data returned.
@@ -4661,9 +4248,8 @@ public abstract class PackageManager {
      * @throws NameNotFoundException if a package with the given name cannot be
      *             found on the system.
      */
-    //@Deprecated
     @NonNull
-    public abstract PermissionGroupInfo getPermissionGroupInfo(@NonNull String groupName,
+    public abstract PermissionGroupInfo getPermissionGroupInfo(@NonNull String permName,
             @PermissionGroupInfoFlags int flags) throws NameNotFoundException;
 
     /**
@@ -4673,36 +4259,9 @@ public abstract class PackageManager {
      * @return Returns a list of {@link PermissionGroupInfo} containing
      *         information about all of the known permission groups.
      */
-    //@Deprecated
     @NonNull
     public abstract List<PermissionGroupInfo> getAllPermissionGroups(
             @PermissionGroupInfoFlags int flags);
-
-    /**
-     * Get the platform-defined permissions which belong to a particular permission group.
-     *
-     * @param permissionGroupName the permission group whose permissions are desired
-     * @param executor the {@link Executor} on which to invoke the callback
-     * @param callback the callback which will receive a list of the platform-defined permissions in
-     *                 the group, or empty if the group is not a valid platform-defined permission
-     *                 group, or there was an exception
-     */
-    public void getPlatformPermissionsForGroup(@NonNull String permissionGroupName,
-            @NonNull @CallbackExecutor Executor executor,
-            @NonNull Consumer<List<String>> callback) {}
-
-    /**
-     * Get the platform-defined permission group of a particular permission, if the permission is a
-     * platform-defined permission.
-     *
-     * @param permissionName the permission whose group is desired
-     * @param executor the {@link Executor} on which to invoke the callback
-     * @param callback the callback which will receive the name of the permission group this
-     *                 permission belongs to, or {@code null} if it has no group, is not a
-     *                 platform-defined permission, or there was an exception
-     */
-    public void getGroupOfPlatformPermission(@NonNull String permissionName,
-            @NonNull @CallbackExecutor Executor executor, @NonNull Consumer<String> callback) {}
 
     /**
      * Retrieve all of the information we know about a particular
@@ -4811,7 +4370,8 @@ public abstract class PackageManager {
      * @param flags Additional option flags to modify the data returned.
      * @return A {@link ServiceInfo} object containing information about the
      *         service.
-     * @throws NameNotFoundException if the component cannot be found on the system.
+     * @throws NameNotFoundException if a package with the given name cannot be
+     *             found on the system.
      */
     @NonNull
     public abstract ServiceInfo getServiceInfo(@NonNull ComponentName component,
@@ -4955,24 +4515,21 @@ public abstract class PackageManager {
      * @return Whether the permission is restricted by policy.
      */
     @CheckResult
-    //@Deprecated
     public abstract boolean isPermissionRevokedByPolicy(@NonNull String permName,
             @NonNull String packageName);
 
     /**
      * Gets the package name of the component controlling runtime permissions.
      *
-     * @return the package name of the component controlling runtime permissions
+     * @return The package name.
      *
      * @hide
      */
-    @NonNull
-    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
-    @TestApi
+    @SuppressWarnings("HiddenAbstractMethod")
     @UnsupportedAppUsage
-    public String getPermissionControllerPackageName() {
-        throw new RuntimeException("Not implemented. Must override in a subclass.");
-    }
+    @NonNull
+    @TestApi
+    public abstract String getPermissionControllerPackageName();
 
     /**
      * Add a new dynamic permission to the system.  For this to work, your
@@ -5006,7 +4563,6 @@ public abstract class PackageManager {
      *
      * @see #removePermission(String)
      */
-    //@Deprecated
     public abstract boolean addPermission(@NonNull PermissionInfo info);
 
     /**
@@ -5016,7 +4572,6 @@ public abstract class PackageManager {
      * expense of no guarantee the added permission will be retained if
      * the device is rebooted before it is written.
      */
-    //@Deprecated
     public abstract boolean addPermissionAsync(@NonNull PermissionInfo info);
 
     /**
@@ -5032,7 +4587,6 @@ public abstract class PackageManager {
      *
      * @see #addPermission(PermissionInfo)
      */
-    //@Deprecated
     public abstract void removePermission(@NonNull String permName);
 
     /**
@@ -5085,7 +4639,6 @@ public abstract class PackageManager {
      *
      * @hide
      */
-    //@Deprecated
     @SuppressWarnings("HiddenAbstractMethod")
     @SystemApi
     @RequiresPermission(android.Manifest.permission.GRANT_RUNTIME_PERMISSIONS)
@@ -5113,7 +4666,6 @@ public abstract class PackageManager {
      *
      * @hide
      */
-    //@Deprecated
     @SuppressWarnings("HiddenAbstractMethod")
     @SystemApi
     @RequiresPermission(android.Manifest.permission.REVOKE_RUNTIME_PERMISSIONS)
@@ -5142,7 +4694,6 @@ public abstract class PackageManager {
      *
      * @hide
      */
-    //@Deprecated
     @SystemApi
     @RequiresPermission(android.Manifest.permission.REVOKE_RUNTIME_PERMISSIONS)
     public void revokeRuntimePermission(@NonNull String packageName,
@@ -5160,7 +4711,6 @@ public abstract class PackageManager {
      *
      * @hide
      */
-    //@Deprecated
     @SuppressWarnings("HiddenAbstractMethod")
     @SystemApi
     @RequiresPermission(anyOf = {
@@ -5184,7 +4734,6 @@ public abstract class PackageManager {
      *
      * @hide
      */
-    //@Deprecated
     @SuppressWarnings("HiddenAbstractMethod")
     @SystemApi
     @RequiresPermission(anyOf = {
@@ -5207,7 +4756,7 @@ public abstract class PackageManager {
      * allows for the to hold that permission and whitelisting a soft restricted
      * permission allows the app to hold the permission in its full, unrestricted form.
      *
-     * <p><ol>There are four allowlists:
+     * <p><ol>There are three whitelists:
      *
      * <li>one for cases where the system permission policy whitelists a permission
      * This list corresponds to the{@link #FLAG_PERMISSION_WHITELIST_SYSTEM} flag.
@@ -5223,13 +4772,6 @@ public abstract class PackageManager {
      * This list corresponds to the {@link #FLAG_PERMISSION_WHITELIST_INSTALLER} flag.
      * Can be accessed by pre-installed holders of a dedicated permission or the
      * installer on record.
-     * </ol>
-     *
-     * <p>
-     * <strong>Note: </strong>In retrospect it would have been preferred to use
-     * more inclusive terminology when naming this API. Similar APIs added will
-     * refrain from using the term "whitelist".
-     * </p>
      *
      * @param packageName The app for which to get whitelisted permissions.
      * @param whitelistFlag The flag to determine which whitelist to query. Only one flag
@@ -5244,7 +4786,6 @@ public abstract class PackageManager {
      *
      * @throws SecurityException if you try to access a whitelist that you have no access to.
      */
-    //@Deprecated
     @RequiresPermission(value = Manifest.permission.WHITELIST_RESTRICTED_PERMISSIONS,
             conditional = true)
     public @NonNull Set<String> getWhitelistedRestrictedPermissions(
@@ -5263,7 +4804,7 @@ public abstract class PackageManager {
      * allows for the to hold that permission and whitelisting a soft restricted
      * permission allows the app to hold the permission in its full, unrestricted form.
      *
-     * <p><ol>There are four whitelists:
+     * <p><ol>There are three whitelists:
      *
      * <li>one for cases where the system permission policy whitelists a permission
      * This list corresponds to the {@link #FLAG_PERMISSION_WHITELIST_SYSTEM} flag.
@@ -5280,17 +4821,10 @@ public abstract class PackageManager {
      * This list corresponds to the {@link #FLAG_PERMISSION_WHITELIST_INSTALLER} flag.
      * Can be modified by pre-installed holders of a dedicated permission or the installer
      * on record.
-     * </ol>
      *
      * <p>You need to specify the whitelists for which to set the whitelisted permissions
      * which will clear the previous whitelisted permissions and replace them with the
      * provided ones.
-     *
-     * <p>
-     * <strong>Note: </strong>In retrospect it would have been preferred to use
-     * more inclusive terminology when naming this API. Similar APIs added will
-     * refrain from using the term "whitelist".
-     * </p>
      *
      * @param packageName The app for which to get whitelisted permissions.
      * @param permName The whitelisted permission to add.
@@ -5306,7 +4840,6 @@ public abstract class PackageManager {
      *
      * @throws SecurityException if you try to modify a whitelist that you have no access to.
      */
-    //@Deprecated
     @RequiresPermission(value = Manifest.permission.WHITELIST_RESTRICTED_PERMISSIONS,
             conditional = true)
     public boolean addWhitelistedRestrictedPermission(@NonNull String packageName,
@@ -5325,7 +4858,7 @@ public abstract class PackageManager {
      * allows for the to hold that permission and whitelisting a soft restricted
      * permission allows the app to hold the permission in its full, unrestricted form.
      *
-     * <p><ol>There are four whitelists:
+     * <p><ol>There are three whitelists:
      *
      * <li>one for cases where the system permission policy whitelists a permission
      * This list corresponds to the {@link #FLAG_PERMISSION_WHITELIST_SYSTEM} flag.
@@ -5343,23 +4876,9 @@ public abstract class PackageManager {
      * Can be modified by pre-installed holders of a dedicated permission or the installer
      * on record.
      *
-     * <li>one for cases where the system exempts the permission when upgrading
-     * from an OS version in which the permission was not restricted to an OS version
-     * in which the permission is restricted. This list corresponds to the {@link
-     * #FLAG_PERMISSION_WHITELIST_UPGRADE} flag. Can be modified by pre-installed
-     * holders of a dedicated permission. The installer on record can only remove
-     * permissions from this allowlist.
-     * </ol>
-     *
      * <p>You need to specify the whitelists for which to set the whitelisted permissions
      * which will clear the previous whitelisted permissions and replace them with the
      * provided ones.
-     *
-     * <p>
-     * <strong>Note: </strong>In retrospect it would have been preferred to use
-     * more inclusive terminology when naming this API. Similar APIs added will
-     * refrain from using the term "whitelist".
-     * </p>
      *
      * @param packageName The app for which to get whitelisted permissions.
      * @param permName The whitelisted permission to remove.
@@ -5375,7 +4894,6 @@ public abstract class PackageManager {
      *
      * @throws SecurityException if you try to modify a whitelist that you have no access to.
      */
-    //@Deprecated
     @RequiresPermission(value = Manifest.permission.WHITELIST_RESTRICTED_PERMISSIONS,
         conditional = true)
     public boolean removeWhitelistedRestrictedPermission(@NonNull String packageName,
@@ -5393,12 +4911,6 @@ public abstract class PackageManager {
      * un-whitelist the packages it installs, unless auto-revoking permissions from that package
      * would cause breakages beyond having to re-request the permission(s).
      *
-     * <p>
-     * <strong>Note: </strong>In retrospect it would have been preferred to use
-     * more inclusive terminology when naming this API. Similar APIs added will
-     * refrain from using the term "whitelist".
-     * </p>
-     *
      * @param packageName The app for which to set exemption.
      * @param whitelisted Whether the app should be whitelisted.
      *
@@ -5408,7 +4920,6 @@ public abstract class PackageManager {
      *
      * @throws SecurityException if you you have no access to modify this.
      */
-    //@Deprecated
     @RequiresPermission(value = Manifest.permission.WHITELIST_AUTO_REVOKE_PERMISSIONS,
             conditional = true)
     public boolean setAutoRevokeWhitelisted(@NonNull String packageName, boolean whitelisted) {
@@ -5421,13 +4932,6 @@ public abstract class PackageManager {
      *
      * Only the installer on record that installed the given package, or a holder of
      * {@code WHITELIST_AUTO_REVOKE_PERMISSIONS} is allowed to call this.
-     *
-     * <p>
-     * <strong>Note: </strong>In retrospect it would have been preferred to use
-     * more inclusive terminology when naming this API. Similar APIs added will
-     * refrain from using the term "whitelist".
-     * </p>
-     *
      * @param packageName The app for which to set exemption.
      *
      * @return Whether the app is whitelisted.
@@ -5436,7 +4940,6 @@ public abstract class PackageManager {
      *
      * @throws SecurityException if you you have no access to this.
      */
-    //@Deprecated
     @RequiresPermission(value = Manifest.permission.WHITELIST_AUTO_REVOKE_PERMISSIONS,
             conditional = true)
     public boolean isAutoRevokeWhitelisted(@NonNull String packageName) {
@@ -5455,7 +4958,6 @@ public abstract class PackageManager {
      *
      * @hide
      */
-    //@Deprecated
     @SuppressWarnings("HiddenAbstractMethod")
     @UnsupportedAppUsage
     public abstract boolean shouldShowRequestPermissionRationale(@NonNull String permName);
@@ -6786,22 +6288,6 @@ public abstract class PackageManager {
             throws NameNotFoundException;
 
     /**
-     * Retrieve the resources for an application for the provided configuration.
-     *
-     * @param app Information about the desired application.
-     * @param configuration Overridden configuration when loading the Resources
-     *
-     * @return Returns the application's Resources.
-     * @throws NameNotFoundException Thrown if the resources for the given
-     * application could not be loaded (most likely because it was uninstalled).
-     */
-    @NonNull
-    public Resources getResourcesForApplication(@NonNull ApplicationInfo app, @Nullable
-            Configuration configuration) throws NameNotFoundException {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
      * Retrieve the resources associated with an application.  Given the full
      * package name of an application, retrieves the information about it and
      * calls getResources() to return its application's resources.  If the
@@ -6820,31 +6306,10 @@ public abstract class PackageManager {
     public abstract Resources getResourcesForApplication(@NonNull String packageName)
             throws NameNotFoundException;
 
-    /**
-     * Please don't use this function because it is no longer supported.
-     *
-     * @deprecated Instead of using this function, please use
-     *             {@link Context#createContextAsUser(UserHandle, int)} to create the specified user
-     *             context, {@link Context#getPackageManager()} to get PackageManager instance for
-     *             the specified user, and then
-     *             {@link PackageManager#getResourcesForApplication(String)} to get the same
-     *             Resources instance.
-     * @see {@link Context#createContextAsUser(android.os.UserHandle, int)}
-     * @see {@link Context#getPackageManager()}
-     * @see {@link android.content.pm.PackageManager#getResourcesForApplication(java.lang.String)}
-     * TODO(b/170852794): mark maxTargetSdk as {@code Build.VERSION_CODES.S}
-     * @hide
-     */
+    /** @hide */
     @SuppressWarnings("HiddenAbstractMethod")
     @NonNull
-    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170928809,
-            publicAlternatives = "Use {@code Context#createContextAsUser(UserHandle, int)}"
-                    + " to create the relevant user context,"
-                    + " {@link android.content.Context#getPackageManager()} and"
-                    + " {@link android.content.pm.PackageManager#getResourcesForApplication("
-                    + "java.lang.String)}"
-                    + " instead.")
-    @Deprecated
+    @UnsupportedAppUsage
     public abstract Resources getResourcesForApplicationAsUser(@NonNull String packageName,
             @UserIdInt int userId) throws NameNotFoundException;
 
@@ -6860,8 +6325,25 @@ public abstract class PackageManager {
     @Nullable
     public PackageInfo getPackageArchiveInfo(@NonNull String archiveFilePath,
             @PackageInfoFlags int flags) {
-        throw new UnsupportedOperationException(
-                "getPackageArchiveInfo() not implemented in subclass");
+        if ((flags & (PackageManager.MATCH_DIRECT_BOOT_UNAWARE
+                | PackageManager.MATCH_DIRECT_BOOT_AWARE)) == 0) {
+            // Caller expressed no opinion about what encryption
+            // aware/unaware components they want to see, so match both
+            flags |= PackageManager.MATCH_DIRECT_BOOT_AWARE
+                    | PackageManager.MATCH_DIRECT_BOOT_UNAWARE;
+        }
+
+        boolean collectCertificates = (flags & PackageManager.GET_SIGNATURES) != 0
+                || (flags & PackageManager.GET_SIGNING_CERTIFICATES) != 0;
+
+        ParseInput input = ParseTypeImpl.forParsingWithoutPlatformCompat().reset();
+        ParseResult<ParsingPackage> result = ParsingPackageUtils.parseDefault(input,
+                new File(archiveFilePath), 0, collectCertificates);
+        if (result.isError()) {
+            return null;
+        }
+        return PackageInfoWithoutStateUtils.generate(result.getResult(), null, flags, 0, 0, null,
+                new PackageUserState(), UserHandle.getCallingUserId());
     }
 
     /**
@@ -6976,10 +6458,8 @@ public abstract class PackageManager {
      * @throws SecurityException if the caller does not have the
      *            INTENT_FILTER_VERIFICATION_AGENT permission.
      *
-     * @deprecated Use {@link DomainVerificationManager} APIs.
      * @hide
      */
-    @Deprecated
     @SuppressWarnings("HiddenAbstractMethod")
     @SystemApi
     @RequiresPermission(android.Manifest.permission.INTENT_FILTER_VERIFICATION_AGENT)
@@ -7004,10 +6484,8 @@ public abstract class PackageManager {
      *              {@link #INTENT_FILTER_DOMAIN_VERIFICATION_STATUS_NEVER} or
      *              {@link #INTENT_FILTER_DOMAIN_VERIFICATION_STATUS_UNDEFINED}
      *
-     * @deprecated Use {@link DomainVerificationManager} APIs.
      * @hide
      */
-    @Deprecated
     @SuppressWarnings("HiddenAbstractMethod")
     @SystemApi
     @RequiresPermission(Manifest.permission.INTERACT_ACROSS_USERS_FULL)
@@ -7032,18 +6510,8 @@ public abstract class PackageManager {
      *
      * @return true if the status has been set. False otherwise.
      *
-     * @deprecated This API represents a very dangerous behavior where Settings or a system app with
-     * the right permissions can force an application to be verified for all of its declared
-     * domains. This has been removed to prevent unintended usage, and no longer does anything,
-     * always returning false. If a caller truly wishes to grant <i></i>every</i> declared web
-     * domain to an application, use
-     * {@link DomainVerificationManager#setDomainVerificationUserSelection(UUID, Set, boolean)},
-     * passing in all of the domains returned inside
-     * {@link DomainVerificationManager#getDomainVerificationUserState(String)}.
-     *
      * @hide
      */
-    @Deprecated
     @SuppressWarnings("HiddenAbstractMethod")
     @SystemApi
     @RequiresPermission(android.Manifest.permission.SET_PREFERRED_APPLICATIONS)
@@ -7060,10 +6528,8 @@ public abstract class PackageManager {
      *
      * @return a list of IntentFilterVerificationInfo for a specific package.
      *
-     * @deprecated Use {@link DomainVerificationManager} instead.
      * @hide
      */
-    @Deprecated
     @SuppressWarnings("HiddenAbstractMethod")
     @NonNull
     @SystemApi
@@ -7573,17 +7039,6 @@ public abstract class PackageManager {
     public abstract void clearPackagePreferredActivities(@NonNull String packageName);
 
     /**
-     * Same as {@link #addPreferredActivity(IntentFilter, int, ComponentName[], ComponentName)},
-     * but removes all existing entries that match this filter.
-     * @hide
-     */
-    public void addUniquePreferredActivity(@NonNull IntentFilter filter, int match,
-            @Nullable ComponentName[] set, @NonNull ComponentName activity) {
-        throw new UnsupportedOperationException(
-                "addUniquePreferredActivity not implemented in subclass");
-    }
-
-    /**
      * Retrieve all preferred activities, previously added with
      * {@link #addPreferredActivity}, that are
      * currently registered with the system.
@@ -7745,21 +7200,11 @@ public abstract class PackageManager {
             @NonNull UserHandle userHandle);
 
     /**
-     * Sets the state of a system app.
-     *
-     * This method can be used to change a system app's hidden-until-installed state (via
-     * {@link #SYSTEM_APP_STATE_HIDDEN_UNTIL_INSTALLED_HIDDEN} and
-     * {@link #SYSTEM_APP_STATE_HIDDEN_UNTIL_INSTALLED_VISIBLE} or its installation state (via
-     * {@link #SYSTEM_APP_STATE_INSTALLED} and {@link #SYSTEM_APP_STATE_UNINSTALLED}.
-     *
-     * This API may only be called from {@link android.os.Process#SYSTEM_UID} or
-     * {@link android.os.Process#PHONE_UID}.
-     *
+     * Sets system app state
      * @param packageName Package name of the app.
      * @param state State of the app.
      * @hide
      */
-    @SystemApi
     public void setSystemAppState(@NonNull String packageName, @SystemAppState int state) {
         throw new RuntimeException("Not implemented. Must override in a subclass");
     }
@@ -7776,7 +7221,6 @@ public abstract class PackageManager {
      *
      * @hide
      */
-    //@Deprecated
     @SuppressWarnings("HiddenAbstractMethod")
     @SystemApi
     @RequiresPermission(Manifest.permission.OBSERVE_GRANT_REVOKE_PERMISSIONS)
@@ -7790,7 +7234,6 @@ public abstract class PackageManager {
      *
      * @hide
      */
-    //@Deprecated
     @SuppressWarnings("HiddenAbstractMethod")
     @SystemApi
     @RequiresPermission(Manifest.permission.OBSERVE_GRANT_REVOKE_PERMISSIONS)
@@ -8332,7 +7775,6 @@ public abstract class PackageManager {
             case INSTALL_FAILED_BAD_SIGNATURE: return "INSTALL_FAILED_BAD_SIGNATURE";
             case INSTALL_FAILED_WRONG_INSTALLED_VERSION: return "INSTALL_FAILED_WRONG_INSTALLED_VERSION";
             case INSTALL_FAILED_PROCESS_NOT_DEFINED: return "INSTALL_FAILED_PROCESS_NOT_DEFINED";
-            case INSTALL_FAILED_SESSION_INVALID: return "INSTALL_FAILED_SESSION_INVALID";
             default: return Integer.toString(status);
         }
     }
@@ -8696,63 +8138,6 @@ public abstract class PackageManager {
     }
 
     /**
-     * Trust any Installer to provide checksums for the package.
-     * @see #requestChecksums
-     */
-    public static final @NonNull List<Certificate> TRUST_ALL = Collections.singletonList(null);
-
-    /**
-     * Don't trust any Installer to provide checksums for the package.
-     * This effectively disables optimized Installer-enforced checksums.
-     * @see #requestChecksums
-     */
-    public static final @NonNull List<Certificate> TRUST_NONE = Collections.singletonList(null);
-
-    /** Listener that gets notified when checksums are available. */
-    @FunctionalInterface
-    public interface OnChecksumsReadyListener {
-        /**
-         * Called when the checksums are available.
-         *
-         * @param checksums array of checksums.
-         */
-        void onChecksumsReady(@NonNull List<ApkChecksum> checksums);
-    }
-
-    /**
-     * Requesting the checksums for APKs within a package.
-     * The checksums will be returned asynchronously via onChecksumsReadyListener.
-     *
-     * By default returns all readily available checksums:
-     * - enforced by platform,
-     * - enforced by installer.
-     * If caller needs a specific checksum kind, they can specify it as required.
-     *
-     * <b>Caution: Android can not verify installer-provided checksums. Make sure you specify
-     * trusted installers.</b>
-     *
-     * @param packageName whose checksums to return.
-     * @param includeSplits whether to include checksums for non-base splits.
-     * @param required explicitly request the checksum types. May incur significant
-     *                 CPU/memory/disk usage.
-     * @param trustedInstallers for checksums enforced by installer, which installers are to be
-     *                          trusted.
-     *                          {@link #TRUST_ALL} will return checksums from any installer,
-     *                          {@link #TRUST_NONE} disables optimized installer-enforced checksums,
-     *                          otherwise the list has to be non-empty list of certificates.
-     * @param onChecksumsReadyListener called once when the results are available.
-     * @throws CertificateEncodingException if an encoding error occurs for trustedInstallers.
-     * @throws IllegalArgumentException if the list of trusted installer certificates is empty.
-     * @throws NameNotFoundException if a package with the given name cannot be found on the system.
-     */
-    public void requestChecksums(@NonNull String packageName, boolean includeSplits,
-            @Checksum.TypeMask int required, @NonNull List<Certificate> trustedInstallers,
-            @NonNull OnChecksumsReadyListener onChecksumsReadyListener)
-            throws CertificateEncodingException, NameNotFoundException {
-        throw new UnsupportedOperationException("requestChecksums not implemented in subclass");
-    }
-
-    /**
      * @return the default text classifier package name, or null if there's none.
      *
      * @hide
@@ -8784,16 +8169,6 @@ public abstract class PackageManager {
     public String getAttentionServicePackageName() {
         throw new UnsupportedOperationException(
                 "getAttentionServicePackageName not implemented in subclass");
-    }
-
-    /**
-     * @return rotation resolver service's package name, or null if there's none.
-     *
-     * @hide
-     */
-    public String getRotationResolverPackageName() {
-        throw new UnsupportedOperationException(
-                "getRotationResolverPackageName not implemented in subclass");
     }
 
     /**
@@ -8892,12 +8267,6 @@ public abstract class PackageManager {
     }
 
     /**
-     * <p>
-     * <strong>Note: </strong>In retrospect it would have been preferred to use
-     * more inclusive terminology when naming this API. Similar APIs added will
-     * refrain from using the term "whitelist".
-     * </p>
-     *
      * @return whether this package is whitelisted from having its runtime permission be
      *         auto-revoked if unused for an extended period of time.
      */
@@ -8958,87 +8327,6 @@ public abstract class PackageManager {
     }
 
     /**
-     * Returns the property defined in the given package's &lt;appliction&gt; tag.
-     *
-     * @throws NameNotFoundException if either the given package is not installed or if the
-     * given property is not defined within the &lt;application&gt; tag.
-     */
-    @NonNull
-    public Property getProperty(@NonNull String propertyName, @NonNull String packageName)
-            throws NameNotFoundException {
-        throw new UnsupportedOperationException(
-                "getProperty not implemented in subclass");
-    }
-
-    /**
-     * Returns the property defined in the given component declaration.
-     *
-     * @throws NameNotFoundException if either the given component does not exist or if the
-     * given property is not defined within the component declaration.
-     */
-    @NonNull
-    public Property getProperty(@NonNull String propertyName, @NonNull ComponentName component)
-            throws NameNotFoundException {
-        throw new UnsupportedOperationException(
-                "getProperty not implemented in subclass");
-    }
-
-    /**
-     * Returns the property definition for all &lt;application&gt; tags.
-     * <p>If the property is not defined with any &lt;application&gt; tag,
-     * returns and empty list.
-     */
-    @NonNull
-    public List<Property> queryApplicationProperty(@NonNull String propertyName) {
-        throw new UnsupportedOperationException(
-                "qeuryApplicationProperty not implemented in subclass");
-    }
-
-    /**
-     * Returns the property definition for all &lt;activity&gt; and &lt;activity-alias&gt; tags.
-     * <p>If the property is not defined with any &lt;activity&gt; and &lt;activity-alias&gt; tag,
-     * returns and empty list.
-     */
-    @NonNull
-    public List<Property> queryActivityProperty(@NonNull String propertyName) {
-        throw new UnsupportedOperationException(
-                "qeuryActivityProperty not implemented in subclass");
-    }
-
-    /**
-     * Returns the property definition for all &lt;provider&gt; tags.
-     * <p>If the property is not defined with any &lt;provider&gt; tag,
-     * returns and empty list.
-     */
-    @NonNull
-    public List<Property> queryProviderProperty(@NonNull String propertyName) {
-        throw new UnsupportedOperationException(
-                "qeuryProviderProperty not implemented in subclass");
-    }
-
-    /**
-     * Returns the property definition for all &lt;receiver&gt; tags.
-     * <p>If the property is not defined with any &lt;receiver&gt; tag,
-     * returns and empty list.
-     */
-    @NonNull
-    public List<Property> queryReceiverProperty(@NonNull String propertyName) {
-        throw new UnsupportedOperationException(
-                "qeuryReceiverProperty not implemented in subclass");
-    }
-
-    /**
-     * Returns the property definition for all &lt;service&gt; tags.
-     * <p>If the property is not defined with any &lt;service&gt; tag,
-     * returns and empty list.
-     */
-    @NonNull
-    public List<Property> queryServiceProperty(@NonNull String propertyName) {
-        throw new UnsupportedOperationException(
-                "qeuryServiceProperty not implemented in subclass");
-    }
-
-    /**
      * Grants implicit visibility of the package that provides an authority to a querying UID.
      *
      * @throws SecurityException when called by a package other than the contacts provider
@@ -9082,7 +8370,7 @@ public abstract class PackageManager {
         }
 
         @Override
-        public boolean equals(@Nullable Object rval) {
+        public boolean equals(Object rval) {
             if (rval == null) {
                 return false;
             }
@@ -9111,8 +8399,7 @@ public abstract class PackageManager {
     private static final PropertyInvalidatedCache<ApplicationInfoQuery, ApplicationInfo>
             sApplicationInfoCache =
             new PropertyInvalidatedCache<ApplicationInfoQuery, ApplicationInfo>(
-                    16, PermissionManager.CACHE_KEY_PACKAGE_INFO,
-                    "getApplicationInfo") {
+                    16, PermissionManager.CACHE_KEY_PACKAGE_INFO) {
                 @Override
                 protected ApplicationInfo recompute(ApplicationInfoQuery query) {
                     return getApplicationInfoAsUserUncached(
@@ -9185,7 +8472,7 @@ public abstract class PackageManager {
         }
 
         @Override
-        public boolean equals(@Nullable Object rval) {
+        public boolean equals(Object rval) {
             if (rval == null) {
                 return false;
             }
@@ -9213,8 +8500,7 @@ public abstract class PackageManager {
     private static final PropertyInvalidatedCache<PackageInfoQuery, PackageInfo>
             sPackageInfoCache =
             new PropertyInvalidatedCache<PackageInfoQuery, PackageInfo>(
-                    32, PermissionManager.CACHE_KEY_PACKAGE_INFO,
-                    "getPackageInfo") {
+                    32, PermissionManager.CACHE_KEY_PACKAGE_INFO) {
                 @Override
                 protected PackageInfo recompute(PackageInfoQuery query) {
                     return getPackageInfoAsUserUncached(
@@ -9257,51 +8543,5 @@ public abstract class PackageManager {
      * @hide */
     public static void uncorkPackageInfoCache() {
         PropertyInvalidatedCache.uncorkInvalidations(PermissionManager.CACHE_KEY_PACKAGE_INFO);
-    }
-
-    /**
-     * Returns the token to be used by the subsequent calls to holdLock().
-     * @hide
-     */
-    @RequiresPermission(android.Manifest.permission.INJECT_EVENTS)
-    @TestApi
-    public IBinder getHoldLockToken() {
-        try {
-            return ActivityThread.getPackageManager().getHoldLockToken();
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
-        }
-    }
-
-    /**
-     * Holds the PM lock for the specified amount of milliseconds.
-     * Intended for use by the tests that need to imitate lock contention.
-     * The token should be obtained by
-     * {@link android.content.pm.PackageManager#getHoldLockToken()}.
-     * @hide
-     */
-    @TestApi
-    public void holdLock(IBinder token, int durationMs) {
-        try {
-            ActivityThread.getPackageManager().holdLock(token, durationMs);
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
-        }
-    }
-
-    /**
-     * Set a list of apps to keep around as APKs even if no user has currently installed it.
-     * @param packageList List of package names to keep cached.
-     *
-     * @hide
-     */
-    @RequiresPermission(android.Manifest.permission.KEEP_UNINSTALLED_PACKAGES)
-    @TestApi
-    public void setKeepUninstalledPackages(@NonNull List<String> packageList) {
-        try {
-            ActivityThread.getPackageManager().setKeepUninstalledPackages(packageList);
-        } catch (RemoteException e) {
-            throw e.rethrowFromSystemServer();
-        }
     }
 }

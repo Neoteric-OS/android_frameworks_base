@@ -16,11 +16,9 @@
 
 package android.media;
 
-import android.annotation.NonNull;
-import android.app.ActivityThread;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Build;
-import android.text.TextUtils;
+
 
 
 /**
@@ -748,7 +746,7 @@ public class ToneGenerator
      *
      */
     public ToneGenerator(int streamType, int volume) {
-        native_setup(streamType, volume, getCurrentOpPackageName());
+        native_setup(streamType, volume);
     }
 
     /**
@@ -882,8 +880,7 @@ public class ToneGenerator
      */
     public native void release();
 
-    private native void native_setup(
-            int streamType, int volume, @NonNull String opPackageName);
+    private native final void native_setup(int streamType, int volume);
 
     private native final void native_finalize();
 
@@ -897,10 +894,6 @@ public class ToneGenerator
 
     @Override
     protected void finalize() { native_finalize(); }
-
-    private String getCurrentOpPackageName() {
-        return TextUtils.emptyIfNull(ActivityThread.currentOpPackageName());
-    }
 
     @SuppressWarnings("unused")
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)

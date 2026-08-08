@@ -27,12 +27,13 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.logging.UiEvent;
 import com.android.internal.logging.UiEventLogger;
 import com.android.systemui.R;
-import com.android.systemui.dagger.SysUISingleton;
+
+import javax.inject.Singleton;
 
 /**
  * Dialog for media output transferring.
  */
-@SysUISingleton
+@Singleton
 public class MediaOutputDialog extends MediaOutputBaseDialog {
     final UiEventLogger mUiEventLogger;
 

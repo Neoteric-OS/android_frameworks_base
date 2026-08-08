@@ -869,12 +869,8 @@ public class ProvisioningManager {
      * An integer key representing the voice over IMS opt-in provisioning status for the
      * associated subscription. Determines whether the user can see for voice services over
      * IMS.
-     *
-     * <p> The flag will force to show the VoLTE option in settings irrespective of others VoLTE
-     * carrier config which hide the VoLTE option (e.g.
-     * {@link CarrierConfigManager#KEY_HIDE_ENHANCED_4G_LTE_BOOL}).
-     *
-     * <p>Use {@link #PROVISIONING_VALUE_ENABLED} to enable VoIMS provisioning and
+     * <p>
+     * Use {@link #PROVISIONING_VALUE_ENABLED} to enable VoIMS provisioning and
      * {@link #PROVISIONING_VALUE_DISABLED} to disable VoIMS  provisioning.
      * @see #setProvisioningIntValue(int, int)
      * @see #getProvisioningIntValue(int)
@@ -898,7 +894,7 @@ public class ProvisioningManager {
 
             @Override
             public final void onIntConfigChanged(int item, int value) {
-                final long callingIdentity = Binder.clearCallingIdentity();
+                long callingIdentity = Binder.clearCallingIdentity();
                 try {
                     mExecutor.execute(() ->
                             mLocalConfigurationCallback.onProvisioningIntChanged(item, value));
@@ -909,7 +905,7 @@ public class ProvisioningManager {
 
             @Override
             public final void onStringConfigChanged(int item, String value) {
-                final long callingIdentity = Binder.clearCallingIdentity();
+                long callingIdentity = Binder.clearCallingIdentity();
                 try {
                     mExecutor.execute(() ->
                             mLocalConfigurationCallback.onProvisioningStringChanged(item, value));

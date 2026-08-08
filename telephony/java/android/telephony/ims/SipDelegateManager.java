@@ -28,7 +28,6 @@ import android.content.pm.PackageManager;
 import android.os.RemoteException;
 import android.os.ServiceSpecificException;
 import android.telephony.BinderCacheManager;
-import android.telephony.CarrierConfigManager;
 import android.telephony.ims.aidl.IImsRcsController;
 import android.telephony.ims.aidl.SipDelegateConnectionAidlWrapper;
 import android.telephony.ims.stub.DelegateConnectionMessageCallback;

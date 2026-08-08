@@ -27,7 +27,7 @@ package {
 
 java_library_static {
     name: "services.startop",
-    defaults: ["platform_service_defaults"],
+    defaults: ["services_defaults"],
 
     static_libs: [
         // frameworks/base/startop/iorap

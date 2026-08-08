@@ -30,7 +30,6 @@ public interface QSHost {
     void openPanels();
     Context getContext();
     Context getUserContext();
-    int getUserId();
     UiEventLogger getUiEventLogger();
     Collection<QSTile> getTiles();
     void addCallback(Callback callback);

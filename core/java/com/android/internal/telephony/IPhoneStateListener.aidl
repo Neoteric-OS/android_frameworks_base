@@ -43,8 +43,7 @@ oneway interface IPhoneStateListener {
 
     // Uses CellIdentity which is Parcelable here; will convert to CellLocation in client.
     void onCellLocationChanged(in CellIdentity location);
-    void onLegacyCallStateChanged(int state, String incomingNumber);
-    void onCallStateChanged(int state);
+    void onCallStateChanged(int state, String incomingNumber);
     void onDataConnectionStateChanged(int state, int networkType);
     void onDataActivity(int direction);
     void onSignalStrengthsChanged(in SignalStrength signalStrength);

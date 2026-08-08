@@ -19,11 +19,9 @@ package android.print;
 import android.annotation.IntDef;
 import android.annotation.IntRange;
 import android.annotation.NonNull;
-import android.annotation.Nullable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
-
 import com.android.internal.util.Preconditions;
 
 import java.lang.annotation.Retention;
@@ -237,7 +235,7 @@ public final class PrintDocumentInfo implements Parcelable {
     }
 
     @Override
-    public boolean equals(@Nullable Object obj) {
+    public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }

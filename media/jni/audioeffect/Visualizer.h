@@ -20,7 +20,6 @@
 #include <media/AudioEffect.h>
 #include <system/audio_effects/effect_visualizer.h>
 #include <utils/Thread.h>
-#include "android/content/AttributionSourceState.h"
 
 /**
  * The Visualizer class enables application to retrieve part of the currently playing audio for
@@ -66,9 +65,9 @@ public:
     /* Constructor.
      * See AudioEffect constructor for details on parameters.
      */
-     explicit Visualizer(const android::content::AttributionSourceState& attributionSource);
+                        explicit Visualizer(const String16& opPackageName);
 
-     ~Visualizer();
+                        ~Visualizer();
 
     /**
      * Initialize an uninitialized Visualizer.

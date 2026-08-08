@@ -19,7 +19,6 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.RequiresPermission;
 import android.annotation.SystemApi;
-import android.annotation.TestApi;
 import android.app.Activity;
 import android.app.AppOpsManager.Mode;
 import android.content.ComponentName;
@@ -419,7 +418,6 @@ public class CrossProfileApps {
      *
      * @hide
      */
-    @TestApi
     public boolean canConfigureInteractAcrossProfiles(@NonNull String packageName) {
         try {
             return mService.canConfigureInteractAcrossProfiles(packageName);

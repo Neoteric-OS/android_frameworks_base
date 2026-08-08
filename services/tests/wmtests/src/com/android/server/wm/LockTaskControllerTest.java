@@ -50,11 +50,6 @@ import static com.android.dx.mockito.inline.extended.ExtendedMockito.reset;
 import static com.android.dx.mockito.inline.extended.ExtendedMockito.times;
 import static com.android.dx.mockito.inline.extended.ExtendedMockito.verify;
 import static com.android.dx.mockito.inline.extended.ExtendedMockito.when;
-import static com.android.server.wm.LockTaskController.LOCK_TASK_AUTH_ALLOWLISTED;
-import static com.android.server.wm.LockTaskController.LOCK_TASK_AUTH_DONT_LOCK;
-import static com.android.server.wm.LockTaskController.LOCK_TASK_AUTH_LAUNCHABLE;
-import static com.android.server.wm.LockTaskController.LOCK_TASK_AUTH_LAUNCHABLE_PRIV;
-import static com.android.server.wm.LockTaskController.LOCK_TASK_AUTH_PINNABLE;
 import static com.android.server.wm.LockTaskController.STATUS_BAR_MASK_LOCKED;
 import static com.android.server.wm.LockTaskController.STATUS_BAR_MASK_PINNED;
 
@@ -113,7 +108,7 @@ public class LockTaskControllerTest {
     public final DexmakerShareClassLoaderRule mDexmakerShareClassLoaderRule =
             new DexmakerShareClassLoaderRule();
 
-    @Mock private ActivityTaskSupervisor mSupervisor;
+    @Mock private ActivityStackSupervisor mSupervisor;
     @Mock private RootWindowContainer mRootWindowContainer;
     @Mock private IDevicePolicyManager mDevicePolicyManager;
     @Mock private IStatusBarService mStatusBarService;
@@ -122,7 +117,6 @@ public class LockTaskControllerTest {
     @Mock private StatusBarManagerInternal mStatusBarManagerInternal;
     @Mock private TelecomManager mTelecomManager;
     @Mock private RecentTasks mRecentTasks;
-    @Mock private TaskChangeNotificationController mTaskChangeNotificationController;
 
     private LockTaskController mLockTaskController;
     private Context mContext;
@@ -146,7 +140,7 @@ public class LockTaskControllerTest {
         mSupervisor.mRootWindowContainer = mRootWindowContainer;
 
         mLockTaskController = new LockTaskController(mContext, mSupervisor,
-                new ImmediatelyExecuteHandler(), mTaskChangeNotificationController);
+                new ImmediatelyExecuteHandler());
         mLockTaskController.setWindowManager(mWindowManager);
         mLockTaskController.mStatusBarService = mStatusBarService;
         mLockTaskController.mDevicePolicyManager = mDevicePolicyManager;
@@ -175,7 +169,7 @@ public class LockTaskControllerTest {
     @Test
     public void testStartLockTaskMode_once() throws Exception {
         // GIVEN a task record with allowlisted auth
-        Task tr = getTask(LOCK_TASK_AUTH_ALLOWLISTED);
+        Task tr = getTask(Task.LOCK_TASK_AUTH_ALLOWLISTED);
 
         // WHEN calling setLockTaskMode for LOCKED mode without resuming
         mLockTaskController.startLockTaskMode(tr, false, TEST_UID);
@@ -192,8 +186,8 @@ public class LockTaskControllerTest {
     @Test
     public void testStartLockTaskMode_twice() throws Exception {
         // GIVEN two task records with allowlisted auth
-        Task tr1 = getTask(LOCK_TASK_AUTH_ALLOWLISTED);
-        Task tr2 = getTask(LOCK_TASK_AUTH_ALLOWLISTED);
+        Task tr1 = getTask(Task.LOCK_TASK_AUTH_ALLOWLISTED);
+        Task tr2 = getTask(Task.LOCK_TASK_AUTH_ALLOWLISTED);
 
         // WHEN calling setLockTaskMode for LOCKED mode on both tasks
         mLockTaskController.startLockTaskMode(tr1, false, TEST_UID);
@@ -212,7 +206,7 @@ public class LockTaskControllerTest {
     @Test
     public void testStartLockTaskMode_pinningRequest() {
         // GIVEN a task record that is not allowlisted, i.e. with pinned auth
-        Task tr = getTask(LOCK_TASK_AUTH_PINNABLE);
+        Task tr = getTask(Task.LOCK_TASK_AUTH_PINNABLE);
 
         // WHEN calling startLockTaskMode
         mLockTaskController.startLockTaskMode(tr, false, TEST_UID);
@@ -224,7 +218,7 @@ public class LockTaskControllerTest {
     @Test
     public void testStartLockTaskMode_pinnedBySystem() throws Exception {
         // GIVEN a task record with pinned auth
-        Task tr = getTask(LOCK_TASK_AUTH_PINNABLE);
+        Task tr = getTask(Task.LOCK_TASK_AUTH_PINNABLE);
 
         // WHEN the system calls startLockTaskMode
         mLockTaskController.startLockTaskMode(tr, true, SYSTEM_UID);
@@ -243,39 +237,41 @@ public class LockTaskControllerTest {
     @Test
     public void testLockTaskViolation() {
         // GIVEN one task record with allowlisted auth that is in lock task mode
-        Task tr = getTask(LOCK_TASK_AUTH_ALLOWLISTED);
+        Task tr = getTask(Task.LOCK_TASK_AUTH_ALLOWLISTED);
         mLockTaskController.startLockTaskMode(tr, false, TEST_UID);
 
         // THEN it's not a lock task violation to try and launch this task without clearing
         assertFalse(mLockTaskController.isLockTaskModeViolation(tr, false));
 
         // THEN it's a lock task violation to launch another task that is not allowlisted
-        assertTrue(mLockTaskController.isLockTaskModeViolation(getTask(LOCK_TASK_AUTH_PINNABLE)));
+        assertTrue(mLockTaskController.isLockTaskModeViolation(getTask(
+                Task.LOCK_TASK_AUTH_PINNABLE)));
         // THEN it's a lock task violation to launch another task that is disallowed from lock task
-        assertTrue(mLockTaskController.isLockTaskModeViolation(getTask(LOCK_TASK_AUTH_DONT_LOCK)));
+        assertTrue(mLockTaskController.isLockTaskModeViolation(getTask(
+                Task.LOCK_TASK_AUTH_DONT_LOCK)));
 
         // THEN it's no a lock task violation to launch another task that is allowlisted
         assertFalse(mLockTaskController.isLockTaskModeViolation(getTask(
-                LOCK_TASK_AUTH_ALLOWLISTED)));
+                Task.LOCK_TASK_AUTH_ALLOWLISTED)));
         assertFalse(mLockTaskController.isLockTaskModeViolation(getTask(
-                LOCK_TASK_AUTH_LAUNCHABLE)));
+                Task.LOCK_TASK_AUTH_LAUNCHABLE)));
         // THEN it's not a lock task violation to launch another task that is priv launchable
         assertFalse(mLockTaskController.isLockTaskModeViolation(getTask(
-                LOCK_TASK_AUTH_LAUNCHABLE_PRIV)));
+                Task.LOCK_TASK_AUTH_LAUNCHABLE_PRIV)));
     }
 
     @Test
     public void testLockTaskViolation_emergencyCall() {
         // GIVEN one task record with allowlisted auth that is in lock task mode
-        Task tr = getTask(LOCK_TASK_AUTH_ALLOWLISTED);
+        Task tr = getTask(Task.LOCK_TASK_AUTH_ALLOWLISTED);
         mLockTaskController.startLockTaskMode(tr, false, TEST_UID);
 
         // GIVEN tasks necessary for emergency calling
         Task keypad = getTask(new Intent().setComponent(EMERGENCY_DIALER_COMPONENT),
-                LOCK_TASK_AUTH_PINNABLE);
+                Task.LOCK_TASK_AUTH_PINNABLE);
         Task callAction = getTask(new Intent(Intent.ACTION_CALL_EMERGENCY),
-                LOCK_TASK_AUTH_PINNABLE);
-        Task dialer = getTask("com.example.dialer", LOCK_TASK_AUTH_PINNABLE);
+                Task.LOCK_TASK_AUTH_PINNABLE);
+        Task dialer = getTask("com.example.dialer", Task.LOCK_TASK_AUTH_PINNABLE);
         when(mTelecomManager.getSystemDialerPackage())
                 .thenReturn(dialer.intent.getComponent().getPackageName());
 
@@ -299,7 +295,7 @@ public class LockTaskControllerTest {
     @Test
     public void testStopLockTaskMode() throws Exception {
         // GIVEN one task record with allowlisted auth that is in lock task mode
-        Task tr = getTask(LOCK_TASK_AUTH_ALLOWLISTED);
+        Task tr = getTask(Task.LOCK_TASK_AUTH_ALLOWLISTED);
         mLockTaskController.startLockTaskMode(tr, false, TEST_UID);
 
         // WHEN the same caller calls stopLockTaskMode
@@ -316,7 +312,7 @@ public class LockTaskControllerTest {
     @Test(expected = SecurityException.class)
     public void testStopLockTaskMode_differentCaller() {
         // GIVEN one task record with allowlisted auth that is in lock task mode
-        Task tr = getTask(LOCK_TASK_AUTH_ALLOWLISTED);
+        Task tr = getTask(Task.LOCK_TASK_AUTH_ALLOWLISTED);
         mLockTaskController.startLockTaskMode(tr, false, TEST_UID);
 
         // WHEN a different caller calls stopLockTaskMode
@@ -328,7 +324,7 @@ public class LockTaskControllerTest {
     @Test
     public void testStopLockTaskMode_systemCaller() {
         // GIVEN one task record with allowlisted auth that is in lock task mode
-        Task tr = getTask(LOCK_TASK_AUTH_ALLOWLISTED);
+        Task tr = getTask(Task.LOCK_TASK_AUTH_ALLOWLISTED);
         mLockTaskController.startLockTaskMode(tr, false, TEST_UID);
 
         // WHEN system calls stopLockTaskMode
@@ -341,8 +337,8 @@ public class LockTaskControllerTest {
     @Test
     public void testStopLockTaskMode_twoTasks() throws Exception {
         // GIVEN two task records with allowlisted auth that is in lock task mode
-        Task tr1 = getTask(LOCK_TASK_AUTH_ALLOWLISTED);
-        Task tr2 = getTask(LOCK_TASK_AUTH_ALLOWLISTED);
+        Task tr1 = getTask(Task.LOCK_TASK_AUTH_ALLOWLISTED);
+        Task tr2 = getTask(Task.LOCK_TASK_AUTH_ALLOWLISTED);
         mLockTaskController.startLockTaskMode(tr1, false, TEST_UID);
         mLockTaskController.startLockTaskMode(tr2, false, TEST_UID);
 
@@ -362,8 +358,8 @@ public class LockTaskControllerTest {
     @Test
     public void testStopLockTaskMode_rootTask() throws Exception {
         // GIVEN two task records with allowlisted auth that is in lock task mode
-        Task tr1 = getTask(LOCK_TASK_AUTH_ALLOWLISTED);
-        Task tr2 = getTask(LOCK_TASK_AUTH_ALLOWLISTED);
+        Task tr1 = getTask(Task.LOCK_TASK_AUTH_ALLOWLISTED);
+        Task tr2 = getTask(Task.LOCK_TASK_AUTH_ALLOWLISTED);
         mLockTaskController.startLockTaskMode(tr1, false, TEST_UID);
         mLockTaskController.startLockTaskMode(tr2, false, TEST_UID);
 
@@ -383,7 +379,7 @@ public class LockTaskControllerTest {
     @Test
     public void testStopLockTaskMode_pinned() throws Exception {
         // GIVEN one task records that is in pinned mode
-        Task tr = getTask(LOCK_TASK_AUTH_PINNABLE);
+        Task tr = getTask(Task.LOCK_TASK_AUTH_PINNABLE);
         mLockTaskController.startLockTaskMode(tr, true, SYSTEM_UID);
         // GIVEN that the keyguard is required to show after unlocking
         Settings.Secure.putInt(mContext.getContentResolver(),
@@ -410,8 +406,8 @@ public class LockTaskControllerTest {
     @Test
     public void testClearLockedTasks() throws Exception {
         // GIVEN two task records with allowlisted auth that is in lock task mode
-        Task tr1 = getTask(LOCK_TASK_AUTH_ALLOWLISTED);
-        Task tr2 = getTask(LOCK_TASK_AUTH_ALLOWLISTED);
+        Task tr1 = getTask(Task.LOCK_TASK_AUTH_ALLOWLISTED);
+        Task tr2 = getTask(Task.LOCK_TASK_AUTH_ALLOWLISTED);
         mLockTaskController.startLockTaskMode(tr1, false, TEST_UID);
         mLockTaskController.startLockTaskMode(tr2, false, TEST_UID);
 
@@ -438,7 +434,7 @@ public class LockTaskControllerTest {
                 .thenReturn(DevicePolicyManager.PASSWORD_QUALITY_UNSPECIFIED);
 
         // AND there is a task record
-        Task tr1 = getTask(LOCK_TASK_AUTH_ALLOWLISTED);
+        Task tr1 = getTask(Task.LOCK_TASK_AUTH_ALLOWLISTED);
         mLockTaskController.startLockTaskMode(tr1, true, TEST_UID);
 
         // WHEN calling clearLockedTasks on the root task
@@ -458,7 +454,7 @@ public class LockTaskControllerTest {
                 .thenReturn(true);
 
         // AND there is a task record
-        Task tr1 = getTask(LOCK_TASK_AUTH_ALLOWLISTED);
+        Task tr1 = getTask(Task.LOCK_TASK_AUTH_ALLOWLISTED);
         mLockTaskController.startLockTaskMode(tr1, true, TEST_UID);
 
         // WHEN calling clearLockedTasks on the root task
@@ -475,7 +471,7 @@ public class LockTaskControllerTest {
                 Settings.Secure.LOCK_TO_APP_EXIT_LOCKED, 1, mContext.getUserId());
 
         // AND there is a task record
-        Task tr1 = getTask(LOCK_TASK_AUTH_ALLOWLISTED);
+        Task tr1 = getTask(Task.LOCK_TASK_AUTH_ALLOWLISTED);
         mLockTaskController.startLockTaskMode(tr1, true, TEST_UID);
 
         // WHEN calling clearLockedTasks on the root task
@@ -492,7 +488,7 @@ public class LockTaskControllerTest {
                 Settings.Secure.LOCK_TO_APP_EXIT_LOCKED, 0, mContext.getUserId());
 
         // AND there is a task record
-        Task tr1 = getTask(LOCK_TASK_AUTH_ALLOWLISTED);
+        Task tr1 = getTask(Task.LOCK_TASK_AUTH_ALLOWLISTED);
         mLockTaskController.startLockTaskMode(tr1, true, TEST_UID);
 
         // WHEN calling clearLockedTasks on the root task
@@ -578,7 +574,7 @@ public class LockTaskControllerTest {
     @Test
     public void testUpdateLockTaskFeatures() throws Exception {
         // GIVEN a locked task
-        Task tr = getTask(LOCK_TASK_AUTH_ALLOWLISTED);
+        Task tr = getTask(Task.LOCK_TASK_AUTH_ALLOWLISTED);
         mLockTaskController.startLockTaskMode(tr, false, TEST_UID);
 
         // THEN lock task mode should be started with default status bar masks
@@ -620,7 +616,7 @@ public class LockTaskControllerTest {
     @Test
     public void testUpdateLockTaskFeatures_differentUser() throws Exception {
         // GIVEN a locked task
-        Task tr = getTask(LOCK_TASK_AUTH_ALLOWLISTED);
+        Task tr = getTask(Task.LOCK_TASK_AUTH_ALLOWLISTED);
         mLockTaskController.startLockTaskMode(tr, false, TEST_UID);
 
         // THEN lock task mode should be started with default status bar masks
@@ -642,7 +638,7 @@ public class LockTaskControllerTest {
     @Test
     public void testUpdateLockTaskFeatures_keyguard() {
         // GIVEN a locked task
-        Task tr = getTask(LOCK_TASK_AUTH_ALLOWLISTED);
+        Task tr = getTask(Task.LOCK_TASK_AUTH_ALLOWLISTED);
         mLockTaskController.startLockTaskMode(tr, false, TEST_UID);
 
         // THEN keyguard should be disabled
@@ -708,7 +704,7 @@ public class LockTaskControllerTest {
                 TEST_USER_ID, TEST_PACKAGE_NAME, LOCK_TASK_LAUNCH_MODE_DEFAULT));
 
         // Start lock task mode
-        Task tr = getTask(LOCK_TASK_AUTH_ALLOWLISTED);
+        Task tr = getTask(Task.LOCK_TASK_AUTH_ALLOWLISTED);
         mLockTaskController.startLockTaskMode(tr, false, TEST_UID);
 
         // WHEN LOCK_TASK_FEATURE_BLOCK_ACTIVITY_START_IN_TASK is not enabled
@@ -759,16 +755,17 @@ public class LockTaskControllerTest {
     }
 
     /**
-     * @param isAppAware {@code true} if the app has marked if allowlisted in its manifest
+     * @param isAppAware {@code true} if the app has marked if_allowlisted in its manifest
      */
     private Task getTaskForUpdate(String pkg, boolean isAppAware) {
-        final int authIfAllowlisted =
-                isAppAware ? LOCK_TASK_AUTH_LAUNCHABLE : LOCK_TASK_AUTH_ALLOWLISTED;
+        final int authIfAllowlisted = isAppAware
+                ? Task.LOCK_TASK_AUTH_LAUNCHABLE
+                : Task.LOCK_TASK_AUTH_ALLOWLISTED;
         Task tr = getTask(pkg, authIfAllowlisted);
         doAnswer((invocation) -> {
             boolean isAllowlisted =
                     mLockTaskController.isPackageAllowlisted(TEST_USER_ID, pkg);
-            tr.mLockTaskAuth = isAllowlisted ? authIfAllowlisted : LOCK_TASK_AUTH_PINNABLE;
+            tr.mLockTaskAuth = isAllowlisted ? authIfAllowlisted : Task.LOCK_TASK_AUTH_PINNABLE;
             return null;
         }).when(tr).setLockTaskAuth();
         return tr;

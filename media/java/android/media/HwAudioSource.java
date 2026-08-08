@@ -22,8 +22,6 @@ import android.annotation.SystemApi;
 
 import com.android.internal.util.Preconditions;
 
-import java.util.ArrayList;
-
 /**
  * The HwAudioSource represents the audio playback directly from a source audio device.
  * It currently supports {@link HwAudioSource#start()} and {@link HwAudioSource#stop()} only
@@ -60,7 +58,7 @@ public class HwAudioSource extends PlayerBase {
         Preconditions.checkArgument(device.isSource(), "Requires a source device");
         mAudioDeviceInfo = device;
         mAudioAttributes = attributes;
-        baseRegisterPlayer(AudioSystem.AUDIO_SESSION_ALLOCATE);
+        baseRegisterPlayer();
     }
 
     /**
@@ -144,30 +142,8 @@ public class HwAudioSource extends PlayerBase {
                 mAudioDeviceInfo.getPort().activeConfig(),
                 mAudioAttributes);
         if (isPlaying()) {
-            // FIXME: b/174876389 clean up device id reporting
-            baseStart(getDeviceId());
+            baseStart();
         }
-    }
-
-    private int getDeviceId() {
-        ArrayList<AudioPatch> patches = new ArrayList<AudioPatch>();
-        if (AudioManager.listAudioPatches(patches) != AudioManager.SUCCESS) {
-            return 0;
-        }
-
-        for (int i = 0; i < patches.size(); i++) {
-            AudioPatch patch = patches.get(i);
-            AudioPortConfig[] sources = patch.sources();
-            AudioPortConfig[] sinks = patch.sinks();
-            if ((sources != null) && (sources.length > 0)) {
-                for (int c = 0;  c < sources.length; c++) {
-                    if (sources[c].port().id() == mAudioDeviceInfo.getId()) {
-                        return sinks[c].port().id();
-                    }
-                }
-            }
-        }
-        return 0;
     }
 
     /**

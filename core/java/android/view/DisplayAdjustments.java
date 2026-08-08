@@ -151,23 +151,6 @@ public class DisplayAdjustments {
                 : realCutout;
     }
 
-    /**
-     * Returns the adjusted {@link RoundedCorners} if available. Otherwise the original
-     * {@link RoundedCorners} is returned.
-     */
-    @Nullable
-    public RoundedCorners adjustRoundedCorner(@Nullable RoundedCorners realRoundedCorners,
-            @Surface.Rotation int realRotation, int displayWidth, int displayHeight) {
-        final FixedRotationAdjustments rotationAdjustments = mFixedRotationAdjustments;
-        if (realRoundedCorners == null || rotationAdjustments == null
-                || rotationAdjustments.mRotation == realRotation) {
-            return realRoundedCorners;
-        }
-
-        return realRoundedCorners.rotate(
-                rotationAdjustments.mRotation, displayWidth, displayHeight);
-    }
-
     /** Returns the adjusted rotation if available. Otherwise the original rotation is returned. */
     @Surface.Rotation
     public int getRotation(@Surface.Rotation int realRotation) {
@@ -185,7 +168,7 @@ public class DisplayAdjustments {
     }
 
     @Override
-    public boolean equals(@Nullable Object o) {
+    public boolean equals(Object o) {
         if (!(o instanceof DisplayAdjustments)) {
             return false;
         }
@@ -237,7 +220,7 @@ public class DisplayAdjustments {
         }
 
         @Override
-        public boolean equals(@Nullable Object o) {
+        public boolean equals(Object o) {
             if (!(o instanceof FixedRotationAdjustments)) {
                 return false;
             }

@@ -22,16 +22,12 @@ import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
 import android.util.Pair;
-import android.view.View;
-
-import androidx.annotation.Nullable;
 
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.systemui.dagger.qualifiers.Background;
 import com.android.systemui.dagger.qualifiers.Main;
 import com.android.systemui.plugins.ActivityStarter;
-import com.android.systemui.plugins.FalsingManager;
 import com.android.systemui.plugins.qs.DetailAdapter;
 import com.android.systemui.plugins.qs.QSTile;
 import com.android.systemui.plugins.qs.QSTile.State;
@@ -55,7 +51,6 @@ public class UserTile extends QSTileImpl<State> implements UserInfoController.On
             QSHost host,
             @Background Looper backgroundLooper,
             @Main Handler mainHandler,
-            FalsingManager falsingManager,
             MetricsLogger metricsLogger,
             StatusBarStateController statusBarStateController,
             ActivityStarter activityStarter,
@@ -63,8 +58,8 @@ public class UserTile extends QSTileImpl<State> implements UserInfoController.On
             UserSwitcherController userSwitcherController,
             UserInfoController userInfoController
     ) {
-        super(host, backgroundLooper, mainHandler, falsingManager, metricsLogger,
-                statusBarStateController, activityStarter, qsLogger);
+        super(host, backgroundLooper, mainHandler, metricsLogger, statusBarStateController,
+                activityStarter, qsLogger);
         mUserSwitcherController = userSwitcherController;
         mUserInfoController = userInfoController;
         mUserInfoController.observe(getLifecycle(), this);
@@ -81,13 +76,13 @@ public class UserTile extends QSTileImpl<State> implements UserInfoController.On
     }
 
     @Override
-    protected void handleClick(@Nullable View view) {
+    protected void handleClick() {
         showDetail(true);
     }
 
     @Override
     public DetailAdapter getDetailAdapter() {
-        return mUserSwitcherController.mUserDetailAdapter;
+        return mUserSwitcherController.userDetailAdapter;
     }
 
     @Override

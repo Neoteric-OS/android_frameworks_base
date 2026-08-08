@@ -1082,21 +1082,18 @@ public class RingtoneManager {
      * @return true if the ringtone contains haptic channels.
      */
     public boolean hasHapticChannels(int position) {
-        return AudioManager.hasHapticChannels(mContext, getRingtoneUri(position));
+        return hasHapticChannels(getRingtoneUri(position));
     }
 
     /**
      * Returns if the {@link Ringtone} from a given sound URI contains
-     * haptic channels or not. As this function doesn't has a context
-     * to resolve the uri, the result may be wrong if the uri cannot be
-     * resolved correctly.
-     * Use {@link #hasHapticChannels(int)} instead when possible.
+     * haptic channels or not.
      *
      * @param ringtoneUri The {@link Uri} of a sound or ringtone.
      * @return true if the ringtone contains haptic channels.
      */
     public static boolean hasHapticChannels(@NonNull Uri ringtoneUri) {
-        return AudioManager.hasHapticChannels(null, ringtoneUri);
+        return AudioManager.hasHapticChannels(ringtoneUri);
     }
 
     /**

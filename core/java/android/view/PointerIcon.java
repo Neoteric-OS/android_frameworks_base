@@ -17,7 +17,6 @@
 package android.view;
 
 import android.annotation.NonNull;
-import android.annotation.Nullable;
 import android.annotation.XmlRes;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.Context;
@@ -406,7 +405,7 @@ public final class PointerIcon implements Parcelable {
     }
 
     @Override
-    public boolean equals(@Nullable Object other) {
+    public boolean equals(Object other) {
         if (this == other) {
             return true;
         }

@@ -262,8 +262,14 @@ public final class AudioRecordingConfiguration implements Parcelable {
                 final AudioPortConfig[] sources = patch.sources();
                 if ((sources != null) && (sources.length > 0)) {
                     // not supporting multiple sources, so just look at the first source
-                    int devId = sources[0].port().id();
-                    return AudioManager.getDeviceForPortId(devId, AudioManager.GET_DEVICES_INPUTS);
+                    final int devId = sources[0].port().id();
+                    final AudioDeviceInfo[] devices =
+                            AudioManager.getDevicesStatic(AudioManager.GET_DEVICES_INPUTS);
+                    for (int j = 0; j < devices.length; j++) {
+                        if (devices[j].getId() == devId) {
+                            return devices[j];
+                        }
+                    }
                 }
                 // patch handle is unique, there won't be another with the same handle
                 break;

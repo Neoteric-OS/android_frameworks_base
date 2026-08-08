@@ -1048,6 +1048,7 @@ public final class KeyProtection implements ProtectionParameter, UserAuthArgs {
 
         /**
          * Sets whether this key should be protected by a StrongBox security chip.
+         * @hide
          */
         @NonNull
         public Builder setIsStrongBoxBacked(boolean isStrongBoxBacked) {

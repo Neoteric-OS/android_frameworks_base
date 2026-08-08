@@ -770,7 +770,7 @@ public class RecoveryController {
     InternalRecoveryServiceException wrapUnexpectedServiceSpecificException(
             ServiceSpecificException e) {
         if (e.errorCode == ERROR_SERVICE_INTERNAL_ERROR) {
-            return new InternalRecoveryServiceException(e.getMessage(), e);
+            return new InternalRecoveryServiceException(e.getMessage());
         }
 
         // Should never happen. If it does, it's a bug, and we need to update how the method that

@@ -18,7 +18,6 @@ package android.content.pm;
 
 import android.annotation.IntDef;
 import android.annotation.NonNull;
-import android.annotation.TestApi;
 import android.annotation.UserIdInt;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Parcel;
@@ -48,7 +47,6 @@ import java.lang.annotation.RetentionPolicy;
  *
  * @hide
  */
-@TestApi
 public class UserInfo implements Parcelable {
 
     /**
@@ -321,10 +319,6 @@ public class UserInfo implements Parcelable {
         return UserManager.isUserTypeManagedProfile(userType);
     }
 
-    public boolean isCloneProfile() {
-        return UserManager.isUserTypeCloneProfile(userType);
-    }
-
     @UnsupportedAppUsage
     public boolean isEnabled() {
         return (flags & FLAG_DISABLED) != FLAG_DISABLED;
@@ -372,9 +366,8 @@ public class UserInfo implements Parcelable {
      * @return true if this user can be switched to.
      **/
     public boolean supportsSwitchTo() {
-        if (partial || !isEnabled()) {
-            // Don't support switching to disabled or partial users, which includes users with
-            // removal in progress.
+        if (isEphemeral() && !isEnabled()) {
+            // Don't support switching to an ephemeral user with removal in progress.
             return false;
         }
         if (preCreated) {

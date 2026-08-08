@@ -18,38 +18,31 @@ package com.android.server.timedetector;
 
 import android.annotation.IntDef;
 import android.annotation.NonNull;
-import android.annotation.UserIdInt;
-import android.app.time.ExternalTimeSuggestion;
+import android.annotation.Nullable;
 import android.app.timedetector.GnssTimeSuggestion;
 import android.app.timedetector.ManualTimeSuggestion;
 import android.app.timedetector.NetworkTimeSuggestion;
 import android.app.timedetector.TelephonyTimeSuggestion;
 import android.os.TimestampedValue;
-import android.util.IndentingPrintWriter;
 
-import com.android.internal.util.Preconditions;
-import com.android.server.timezonedetector.Dumpable;
-
-import java.lang.annotation.ElementType;
+import java.io.PrintWriter;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
 
 /**
  * The interface for the class that implements the time detection algorithm used by the
  * {@link TimeDetectorService}.
  *
  * <p>Most calls will be handled by a single thread but that is not true for all calls. For example
- * {@link #dump(IndentingPrintWriter, String[])}) may be called on a different thread so
- * implementations must handle thread safety.
+ * {@link #dump(PrintWriter, String[])}) may be called on a different thread so implementations must
+ * handle thread safety.
  *
  * @hide
  */
-public interface TimeDetectorStrategy extends Dumpable {
+public interface TimeDetectorStrategy {
 
-    @IntDef({ ORIGIN_TELEPHONY, ORIGIN_MANUAL, ORIGIN_NETWORK, ORIGIN_GNSS, ORIGIN_EXTERNAL })
+    @IntDef({ ORIGIN_TELEPHONY, ORIGIN_MANUAL, ORIGIN_NETWORK, ORIGIN_GNSS })
     @Retention(RetentionPolicy.SOURCE)
-    @Target({ ElementType.TYPE_USE, ElementType.TYPE_PARAMETER })
     @interface Origin {}
 
     /** Used when a time value originated from a telephony signal. */
@@ -68,10 +61,6 @@ public interface TimeDetectorStrategy extends Dumpable {
     @Origin
     int ORIGIN_GNSS = 4;
 
-    /** Used when a time value originated from an externally specified signal. */
-    @Origin
-    int ORIGIN_EXTERNAL = 5;
-
     /** Processes the suggested time from telephony sources. */
     void suggestTelephonyTime(@NonNull TelephonyTimeSuggestion timeSuggestion);
 
@@ -89,11 +78,14 @@ public interface TimeDetectorStrategy extends Dumpable {
     /** Processes the suggested time from gnss sources. */
     void suggestGnssTime(@NonNull GnssTimeSuggestion timeSuggestion);
 
-    /** Processes the suggested time from external sources. */
-    void suggestExternalTime(@NonNull ExternalTimeSuggestion timeSuggestion);
+    /**
+     * Handles the auto-time configuration changing For example, when the auto-time setting is
+     * toggled on or off.
+     */
+    void handleAutoTimeConfigChanged();
 
-    /** Returns the configuration that controls time detector behaviour for specified user. */
-    ConfigurationInternal getConfigurationInternal(@UserIdInt int userId);
+    /** Dump debug information. */
+    void dump(@NonNull PrintWriter pw, @Nullable String[] args);
 
     // Utility methods below are to be moved to a better home when one becomes more obvious.
 
@@ -120,8 +112,6 @@ public interface TimeDetectorStrategy extends Dumpable {
                 return "telephony";
             case ORIGIN_GNSS:
                 return "gnss";
-            case ORIGIN_EXTERNAL:
-                return "external";
             default:
                 throw new IllegalArgumentException("origin=" + origin);
         }
@@ -129,11 +119,9 @@ public interface TimeDetectorStrategy extends Dumpable {
 
     /**
      * Converts a human readable config string to one of the {@code ORIGIN_} constants.
-     * Throws an {@link IllegalArgumentException} if the value is unrecognized or {@code null}.
+     * Throws an {@link IllegalArgumentException} if the value is unrecognized.
      */
     static @Origin int stringToOrigin(String originString) {
-        Preconditions.checkArgument(originString != null);
-
         switch (originString) {
             case "manual":
                 return ORIGIN_MANUAL;
@@ -143,8 +131,6 @@ public interface TimeDetectorStrategy extends Dumpable {
                 return ORIGIN_TELEPHONY;
             case "gnss":
                 return ORIGIN_GNSS;
-            case "external":
-                return ORIGIN_EXTERNAL;
             default:
                 throw new IllegalArgumentException("originString=" + originString);
         }

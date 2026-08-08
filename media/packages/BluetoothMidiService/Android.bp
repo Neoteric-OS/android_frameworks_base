@@ -38,5 +38,6 @@ android_app {
         "src/**/*.java",
     ],
     platform_apis: true,
+    certificate: "platform",
     manifest: "AndroidManifest.xml",
 }

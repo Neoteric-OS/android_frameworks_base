@@ -54,7 +54,7 @@ public final class ArtUtils {
                 pkgSetting.getPkgState().isUpdatedSystemApp())) {
             return null;
         }
-        File codePath = new File(pkg.getPath());
+        File codePath = new File(pkg.getCodePath());
         if (codePath.isDirectory()) {
             return PackageDexOptimizer.getOatDir(codePath).getAbsolutePath();
         }

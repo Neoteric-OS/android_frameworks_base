@@ -16,8 +16,6 @@
 
 package com.android.server.compat;
 
-import static android.content.pm.PackageManager.MATCH_ANY_USER;
-
 import android.annotation.Nullable;
 import android.app.compat.ChangeIdStateCache;
 import android.app.compat.PackageOverride;
@@ -58,8 +56,6 @@ import java.io.PrintWriter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 
@@ -76,14 +72,12 @@ final class CompatConfig {
     private static final String STATIC_OVERRIDES_PRODUCT_DIR = "/product/etc/appcompat";
     private static final String OVERRIDES_FILE = "compat_framework_overrides.xml";
 
-    private final ReadWriteLock mReadWriteLock = new ReentrantReadWriteLock();
-    @GuardedBy("mReadWriteLock")
+    @GuardedBy("mChanges")
     private final LongSparseArray<CompatChange> mChanges = new LongSparseArray<>();
 
     private final OverrideValidatorImpl mOverrideValidator;
     private final AndroidBuildClassifier mAndroidBuildClassifier;
     private Context mContext;
-    @GuardedBy("mOverridesFile")
     private File mOverridesFile;
 
     @VisibleForTesting
@@ -121,12 +115,9 @@ final class CompatConfig {
      * @param change the change to add
      */
     void addChange(CompatChange change) {
-        mReadWriteLock.writeLock().lock();
-        try {
+        synchronized (mChanges) {
             mChanges.put(change.getId(), change);
             invalidateCache();
-        } finally {
-            mReadWriteLock.writeLock().unlock();
         }
     }
 
@@ -143,16 +134,13 @@ final class CompatConfig {
      */
     long[] getDisabledChanges(ApplicationInfo app) {
         LongArray disabled = new LongArray();
-        mReadWriteLock.readLock().lock();
-        try {
+        synchronized (mChanges) {
             for (int i = 0; i < mChanges.size(); ++i) {
                 CompatChange c = mChanges.valueAt(i);
                 if (!c.isEnabled(app, mAndroidBuildClassifier)) {
                     disabled.add(c.getId());
                 }
             }
-        } finally {
-            mReadWriteLock.readLock().unlock();
         }
         // Note: we don't need to explicitly sort the array, as the behaviour of LongSparseArray
         // (mChanges) ensures it's already sorted.
@@ -166,15 +154,12 @@ final class CompatConfig {
      * @return the change ID, or {@code -1} if no change with that name exists
      */
     long lookupChangeId(String name) {
-        mReadWriteLock.readLock().lock();
-        try {
+        synchronized (mChanges) {
             for (int i = 0; i < mChanges.size(); ++i) {
                 if (TextUtils.equals(mChanges.valueAt(i).getName(), name)) {
                     return mChanges.keyAt(i);
                 }
             }
-        } finally {
-            mReadWriteLock.readLock().unlock();
         }
         return -1;
     }
@@ -188,16 +173,13 @@ final class CompatConfig {
      * change ID is not known, as unknown changes are enabled by default.
      */
     boolean isChangeEnabled(long changeId, ApplicationInfo app) {
-        mReadWriteLock.readLock().lock();
-        try {
+        synchronized (mChanges) {
             CompatChange c = mChanges.get(changeId);
             if (c == null) {
                 // we know nothing about this change: default behaviour is enabled.
                 return true;
             }
             return c.isEnabled(app, mAndroidBuildClassifier);
-        } finally {
-            mReadWriteLock.readLock().unlock();
         }
     }
 
@@ -210,16 +192,13 @@ final class CompatConfig {
      * {@code true} if the change ID is not known, as unknown changes are enabled by default.
      */
     boolean willChangeBeEnabled(long changeId, String packageName) {
-        mReadWriteLock.readLock().lock();
-        try {
+        synchronized (mChanges) {
             CompatChange c = mChanges.get(changeId);
             if (c == null) {
                 // we know nothing about this change: default behaviour is enabled.
                 return true;
             }
             return c.willBeEnabled(packageName);
-        } finally {
-            mReadWriteLock.readLock().unlock();
         }
     }
 
@@ -270,8 +249,7 @@ final class CompatConfig {
                 mOverrideValidator.getOverrideAllowedState(changeId, packageName);
         allowedState.enforce(changeId, packageName);
         Long versionCode = getVersionCodeOrNull(packageName);
-        mReadWriteLock.writeLock().lock();
-        try {
+        synchronized (mChanges) {
             CompatChange c = mChanges.get(changeId);
             if (c == null) {
                 alreadyKnown = false;
@@ -280,20 +258,15 @@ final class CompatConfig {
             }
             c.addPackageOverride(packageName, overrides, allowedState, versionCode);
             invalidateCache();
-        } finally {
-            mReadWriteLock.writeLock().unlock();
         }
         return alreadyKnown;
     }
 
     /** Checks whether the change is known to the compat config. */
     boolean isKnownChangeId(long changeId) {
-        mReadWriteLock.readLock().lock();
-        try {
+        synchronized (mChanges) {
             CompatChange c = mChanges.get(changeId);
             return c != null;
-        } finally {
-            mReadWriteLock.readLock().unlock();
         }
     }
 
@@ -302,15 +275,12 @@ final class CompatConfig {
      * target SDK gated).
      */
     int maxTargetSdkForChangeIdOptIn(long changeId) {
-        mReadWriteLock.readLock().lock();
-        try {
+        synchronized (mChanges) {
             CompatChange c = mChanges.get(changeId);
             if (c != null && c.getEnableSinceTargetSdk() != -1) {
                 return c.getEnableSinceTargetSdk() - 1;
             }
             return -1;
-        } finally {
-            mReadWriteLock.readLock().unlock();
         }
     }
 
@@ -318,12 +288,9 @@ final class CompatConfig {
      * Returns whether the change is marked as logging only.
      */
     boolean isLoggingOnly(long changeId) {
-        mReadWriteLock.readLock().lock();
-        try {
+        synchronized (mChanges) {
             CompatChange c = mChanges.get(changeId);
             return c != null && c.getLoggingOnly();
-        } finally {
-            mReadWriteLock.readLock().unlock();
         }
     }
 
@@ -331,12 +298,9 @@ final class CompatConfig {
      * Returns whether the change is marked as disabled.
      */
     boolean isDisabled(long changeId) {
-        mReadWriteLock.readLock().lock();
-        try {
+        synchronized (mChanges) {
             CompatChange c = mChanges.get(changeId);
             return c != null && c.getDisabled();
-        } finally {
-            mReadWriteLock.readLock().unlock();
         }
     }
 
@@ -344,12 +308,9 @@ final class CompatConfig {
      * Returns whether the change is overridable.
      */
     boolean isOverridable(long changeId) {
-        mReadWriteLock.readLock().lock();
-        try {
+        synchronized (mChanges) {
             CompatChange c = mChanges.get(changeId);
             return c != null && c.getOverridable();
-        } finally {
-            mReadWriteLock.readLock().unlock();
         }
     }
 
@@ -376,14 +337,11 @@ final class CompatConfig {
      */
     private boolean removeOverrideUnsafe(long changeId, String packageName) {
         Long versionCode = getVersionCodeOrNull(packageName);
-        mReadWriteLock.writeLock().lock();
-        try {
+        synchronized (mChanges) {
             CompatChange c = mChanges.get(changeId);
             if (c != null) {
                 return removeOverrideUnsafe(c, packageName, versionCode);
             }
-        } finally {
-            mReadWriteLock.writeLock().unlock();
         }
         return false;
     }
@@ -416,17 +374,14 @@ final class CompatConfig {
      */
     void removePackageOverrides(String packageName) {
         Long versionCode = getVersionCodeOrNull(packageName);
-        mReadWriteLock.writeLock().lock();
-        try {
+        synchronized (mChanges) {
             for (int i = 0; i < mChanges.size(); ++i) {
                 CompatChange change = mChanges.valueAt(i);
                 removeOverrideUnsafe(change, packageName, versionCode);
             }
-        } finally {
-            mReadWriteLock.writeLock().unlock();
+            saveOverrides();
+            invalidateCache();
         }
-        saveOverrides();
-        invalidateCache();
     }
 
     /**
@@ -451,8 +406,7 @@ final class CompatConfig {
     private long[] getAllowedChangesSinceTargetSdkForPackage(String packageName,
             int targetSdkVersion) {
         LongArray allowed = new LongArray();
-        mReadWriteLock.readLock().lock();
-        try {
+        synchronized (mChanges) {
             for (int i = 0; i < mChanges.size(); ++i) {
                 CompatChange change = mChanges.valueAt(i);
                 if (change.getEnableSinceTargetSdk() != targetSdkVersion) {
@@ -465,8 +419,6 @@ final class CompatConfig {
                     allowed.add(change.getId());
                 }
             }
-        } finally {
-            mReadWriteLock.readLock().unlock();
         }
         return allowed.toArray();
     }
@@ -507,8 +459,7 @@ final class CompatConfig {
 
     boolean registerListener(long changeId, CompatChange.ChangeListener listener) {
         boolean alreadyKnown = true;
-        mReadWriteLock.writeLock().lock();
-        try {
+        synchronized (mChanges) {
             CompatChange c = mChanges.get(changeId);
             if (c == null) {
                 alreadyKnown = false;
@@ -516,8 +467,6 @@ final class CompatConfig {
                 addChange(c);
             }
             c.registerListener(listener);
-        } finally {
-            mReadWriteLock.writeLock().unlock();
         }
         return alreadyKnown;
     }
@@ -537,11 +486,8 @@ final class CompatConfig {
 
     @VisibleForTesting
     void clearChanges() {
-        mReadWriteLock.writeLock().lock();
-        try {
+        synchronized (mChanges) {
             mChanges.clear();
-        } finally {
-            mReadWriteLock.writeLock().unlock();
         }
     }
 
@@ -551,8 +497,7 @@ final class CompatConfig {
      * @param pw {@link PrintWriter} instance to which the information will be dumped
      */
     void dumpConfig(PrintWriter pw) {
-        mReadWriteLock.readLock().lock();
-        try {
+        synchronized (mChanges) {
             if (mChanges.size() == 0) {
                 pw.println("No compat overrides.");
                 return;
@@ -561,8 +506,6 @@ final class CompatConfig {
                 CompatChange c = mChanges.valueAt(i);
                 pw.println(c.toString());
             }
-        } finally {
-            mReadWriteLock.readLock().unlock();
         }
     }
 
@@ -574,8 +517,7 @@ final class CompatConfig {
     CompatibilityChangeConfig getAppConfig(ApplicationInfo applicationInfo) {
         Set<Long> enabled = new HashSet<>();
         Set<Long> disabled = new HashSet<>();
-        mReadWriteLock.readLock().lock();
-        try {
+        synchronized (mChanges) {
             for (int i = 0; i < mChanges.size(); ++i) {
                 CompatChange c = mChanges.valueAt(i);
                 if (c.isEnabled(applicationInfo, mAndroidBuildClassifier)) {
@@ -584,8 +526,6 @@ final class CompatConfig {
                     disabled.add(c.getId());
                 }
             }
-        } finally {
-            mReadWriteLock.readLock().unlock();
         }
         return new CompatibilityChangeConfig(new ChangeConfig(enabled, disabled));
     }
@@ -596,16 +536,13 @@ final class CompatConfig {
      * @return an array of {@link CompatibilityChangeInfo} with the current changes
      */
     CompatibilityChangeInfo[] dumpChanges() {
-        mReadWriteLock.readLock().lock();
-        try {
+        synchronized (mChanges) {
             CompatibilityChangeInfo[] changeInfos = new CompatibilityChangeInfo[mChanges.size()];
             for (int i = 0; i < mChanges.size(); ++i) {
                 CompatChange change = mChanges.valueAt(i);
                 changeInfos[i] = new CompatibilityChangeInfo(change);
             }
             return changeInfos;
-        } finally {
-            mReadWriteLock.readLock().unlock();
         }
     }
 
@@ -641,13 +578,10 @@ final class CompatConfig {
     @VisibleForTesting
     void initOverrides(File dynamicOverridesFile, File staticOverridesFile) {
         // Clear overrides from all changes before loading.
-        mReadWriteLock.writeLock().lock();
-        try {
+        synchronized (mChanges) {
             for (int i = 0; i < mChanges.size(); ++i) {
                 mChanges.valueAt(i).clearOverrides();
             }
-        } finally {
-            mReadWriteLock.writeLock().unlock();
         }
 
         loadOverrides(staticOverridesFile);
@@ -669,10 +603,6 @@ final class CompatConfig {
 
         try (InputStream in = new BufferedInputStream(new FileInputStream(overridesFile))) {
             Overrides overrides = com.android.server.compat.overrides.XmlParser.read(in);
-            if (overrides == null) {
-                Slog.w(TAG, "Parsing " + overridesFile.getPath() + " failed");
-                return;
-            }
             for (ChangeOverrides changeOverrides : overrides.getChangeOverrides()) {
                 long changeId = changeOverrides.getChangeId();
                 CompatChange compatChange = mChanges.get(changeId);
@@ -696,21 +626,7 @@ final class CompatConfig {
         if (mOverridesFile == null) {
             return;
         }
-        synchronized (mOverridesFile) {
-            Overrides overrides = new Overrides();
-            mReadWriteLock.readLock().lock();
-            try {
-                List<ChangeOverrides> changeOverridesList = overrides.getChangeOverrides();
-                for (int idx = 0; idx < mChanges.size(); ++idx) {
-                    CompatChange c = mChanges.valueAt(idx);
-                    ChangeOverrides changeOverrides = c.saveOverrides();
-                    if (changeOverrides != null) {
-                        changeOverridesList.add(changeOverrides);
-                    }
-                }
-            } finally {
-                mReadWriteLock.readLock().unlock();
-            }
+        synchronized (mChanges) {
             // Create the file if it doesn't already exist
             try {
                 mOverridesFile.createNewFile();
@@ -720,6 +636,15 @@ final class CompatConfig {
             }
             try (PrintWriter out = new PrintWriter(mOverridesFile)) {
                 XmlWriter writer = new XmlWriter(out);
+                Overrides overrides = new Overrides();
+                List<ChangeOverrides> changeOverridesList = overrides.getChangeOverrides();
+                for (int idx = 0; idx < mChanges.size(); ++idx) {
+                    CompatChange c = mChanges.valueAt(idx);
+                    ChangeOverrides changeOverrides = c.saveOverrides();
+                    if (changeOverrides != null) {
+                        changeOverridesList.add(changeOverrides);
+                    }
+                }
                 XmlWriter.write(writer, overrides);
             } catch (IOException e) {
                 Slog.e(TAG, e.toString());
@@ -740,9 +665,8 @@ final class CompatConfig {
      */
     void recheckOverrides(String packageName) {
         Long versionCode = getVersionCodeOrNull(packageName);
-        boolean shouldInvalidateCache = false;
-        mReadWriteLock.readLock().lock();
-        try {
+        synchronized (mChanges) {
+            boolean shouldInvalidateCache = false;
             for (int idx = 0; idx < mChanges.size(); ++idx) {
                 CompatChange c = mChanges.valueAt(idx);
                 if (!c.hasPackageOverride(packageName)) {
@@ -753,11 +677,9 @@ final class CompatConfig {
                                 packageName);
                 shouldInvalidateCache |= c.recheckOverride(packageName, allowedState, versionCode);
             }
-        } finally {
-            mReadWriteLock.readLock().unlock();
-        }
-        if (shouldInvalidateCache) {
-            invalidateCache();
+            if (shouldInvalidateCache) {
+                invalidateCache();
+            }
         }
     }
 
@@ -765,7 +687,7 @@ final class CompatConfig {
     private Long getVersionCodeOrNull(String packageName) {
         try {
             ApplicationInfo applicationInfo = mContext.getPackageManager().getApplicationInfo(
-                    packageName, MATCH_ANY_USER);
+                    packageName, 0);
             return applicationInfo.longVersionCode;
         } catch (PackageManager.NameNotFoundException e) {
             return null;

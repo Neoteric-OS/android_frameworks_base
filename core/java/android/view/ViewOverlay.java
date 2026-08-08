@@ -250,11 +250,11 @@ public class ViewOverlay {
              * This means that we need to insert reorder barriers manually though, so that children
              * of the OverlayViewGroup can cast shadows and Z reorder with each other.
              */
-            canvas.enableZ();
+            canvas.insertReorderBarrier();
 
             super.dispatchDraw(canvas);
 
-            canvas.disableZ();
+            canvas.insertInorderBarrier();
             final int numDrawables = (mDrawables == null) ? 0 : mDrawables.size();
             for (int i = 0; i < numDrawables; ++i) {
                 mDrawables.get(i).draw(canvas);

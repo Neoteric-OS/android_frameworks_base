@@ -190,7 +190,7 @@ public class DiskInfo implements Parcelable {
     }
 
     @Override
-    public boolean equals(@Nullable Object o) {
+    public boolean equals(Object o) {
         if (o instanceof DiskInfo) {
             return Objects.equals(id, ((DiskInfo) o).id);
         } else {

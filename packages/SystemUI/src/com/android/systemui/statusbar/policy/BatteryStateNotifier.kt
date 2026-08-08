@@ -56,8 +56,7 @@ class BatteryStateNotifier @Inject constructor(
 
             val intent = Intent(Intent.ACTION_VIEW,
                     Uri.parse(context.getString(R.string.config_batteryStateUnknownUrl)))
-            val pi = PendingIntent.getActivity(context, 0, intent,
-                    PendingIntent.FLAG_IMMUTABLE)
+            val pi = PendingIntent.getActivity(context, 0, intent, 0)
 
             val builder = Notification.Builder(context, channel.id)
                     .setAutoCancel(false)

@@ -17,12 +17,13 @@
 package android.app;
 
 import android.app.ActivityManager.RunningTaskInfo;
+import android.app.ActivityManager.TaskSnapshot;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.ComponentName;
 import android.os.Binder;
 import android.os.Build;
+import android.os.IBinder;
 import android.os.RemoteException;
-import android.window.TaskSnapshot;
 
 /**
  * Classes interested in observing only a subset of changes using ITaskStackListener can extend
@@ -43,7 +44,7 @@ public abstract class TaskStackListener extends ITaskStackListener.Stub {
 
     @Override
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
-    public void onActivityPinned(String packageName, int userId, int taskId, int rootTaskId)
+    public void onActivityPinned(String packageName, int userId, int taskId, int stackId)
             throws RemoteException {
     }
 
@@ -66,7 +67,7 @@ public abstract class TaskStackListener extends ITaskStackListener.Stub {
 
     @Override
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
-    public void onActivityDismissingDockedTask() throws RemoteException {
+    public void onActivityDismissingDockedStack() throws RemoteException {
     }
 
     @Override
@@ -155,15 +156,29 @@ public abstract class TaskStackListener extends ITaskStackListener.Stub {
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
     public void onTaskSnapshotChanged(int taskId, TaskSnapshot snapshot) throws RemoteException {
         if (Binder.getCallingPid() != android.os.Process.myPid()
-                && snapshot != null && snapshot.getHardwareBuffer() != null) {
+                && snapshot != null && snapshot.getSnapshot() != null) {
             // Preemptively clear any reference to the buffer
-            snapshot.getHardwareBuffer().close();
+            snapshot.getSnapshot().destroy();
         }
+    }
+
+    @Override
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.R, trackingBug = 170729553)
+    public void onSizeCompatModeActivityChanged(int displayId, IBinder activityToken)
+            throws RemoteException {
     }
 
     @Override
     public void onBackPressedOnTaskRoot(RunningTaskInfo taskInfo)
             throws RemoteException {
+    }
+
+    @Override
+    public void onSingleTaskDisplayDrawn(int displayId) throws RemoteException {
+    }
+
+    @Override
+    public void onSingleTaskDisplayEmpty(int displayId) throws RemoteException {
     }
 
     @Override
@@ -188,13 +203,5 @@ public abstract class TaskStackListener extends ITaskStackListener.Stub {
 
     @Override
     public void onActivityRotation(int displayId) {
-    }
-
-    @Override
-    public void onTaskMovedToBack(RunningTaskInfo taskInfo) {
-    }
-
-    @Override
-    public void onLockTaskModeChanged(int mode) {
     }
 }

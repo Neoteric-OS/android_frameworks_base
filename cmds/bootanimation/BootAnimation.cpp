@@ -34,7 +34,6 @@
 #include <cutils/atomic.h>
 #include <cutils/properties.h>
 
-#include <android/imagedecoder.h>
 #include <androidfw/AssetManager.h>
 #include <binder/IPCThreadState.h>
 #include <utils/Errors.h>
@@ -43,7 +42,7 @@
 
 #include <android-base/properties.h>
 
-#include <ui/DisplayMode.h>
+#include <ui/DisplayConfig.h>
 #include <ui/PixelFormat.h>
 #include <ui/Rect.h>
 #include <ui/Region.h>
@@ -52,6 +51,14 @@
 #include <gui/DisplayEventReceiver.h>
 #include <gui/Surface.h>
 #include <gui/SurfaceComposerClient.h>
+
+// TODO: Fix Skia.
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+#include <SkBitmap.h>
+#include <SkImage.h>
+#include <SkStream.h>
+#pragma GCC diagnostic pop
 
 #include <GLES/gl.h>
 #include <GLES/glext.h>
@@ -64,8 +71,6 @@
 #define STRTO(x) STR(x)
 
 namespace android {
-
-using ui::DisplayMode;
 
 static const char OEM_BOOTANIMATION_FILE[] = "/oem/media/bootanimation.zip";
 static const char PRODUCT_BOOTANIMATION_DARK_FILE[] = "/product/media/bootanimation-dark.zip";
@@ -112,8 +117,8 @@ static constexpr size_t TEXT_POS_LEN_MAX = 16;
 // ---------------------------------------------------------------------------
 
 BootAnimation::BootAnimation(sp<Callbacks> callbacks)
-        : Thread(false), mLooper(new Looper(false)), mClockEnabled(true), mTimeIsAccurate(false),
-        mTimeFormat12Hour(false), mTimeCheckThread(nullptr), mCallbacks(callbacks) {
+        : Thread(false), mClockEnabled(true), mTimeIsAccurate(false), mTimeFormat12Hour(false),
+        mTimeCheckThread(nullptr), mCallbacks(callbacks), mLooper(new Looper(false)) {
     mSession = new SurfaceComposerClient();
 
     std::string powerCtl = android::base::GetProperty("sys.powerctl", "");
@@ -163,51 +168,22 @@ void BootAnimation::binderDied(const wp<IBinder>&) {
     requestExit();
 }
 
-static void* decodeImage(const void* encodedData, size_t dataLength, AndroidBitmapInfo* outInfo) {
-    AImageDecoder* decoder = nullptr;
-    AImageDecoder_createFromBuffer(encodedData, dataLength, &decoder);
-    if (!decoder) {
-        return nullptr;
-    }
-
-    const AImageDecoderHeaderInfo* info = AImageDecoder_getHeaderInfo(decoder);
-    outInfo->width = AImageDecoderHeaderInfo_getWidth(info);
-    outInfo->height = AImageDecoderHeaderInfo_getHeight(info);
-    outInfo->format = AImageDecoderHeaderInfo_getAndroidBitmapFormat(info);
-    outInfo->stride = AImageDecoder_getMinimumStride(decoder);
-    outInfo->flags = 0;
-
-    const size_t size = outInfo->stride * outInfo->height;
-    void* pixels = malloc(size);
-    int result = AImageDecoder_decodeImage(decoder, pixels, outInfo->stride, size);
-    AImageDecoder_delete(decoder);
-
-    if (result != ANDROID_IMAGE_DECODER_SUCCESS) {
-        free(pixels);
-        return nullptr;
-    }
-    return pixels;
-}
-
 status_t BootAnimation::initTexture(Texture* texture, AssetManager& assets,
         const char* name) {
     Asset* asset = assets.open(name, Asset::ACCESS_BUFFER);
     if (asset == nullptr)
         return NO_INIT;
-
-    AndroidBitmapInfo bitmapInfo;
-    void* pixels = decodeImage(asset->getBuffer(false), asset->getLength(), &bitmapInfo);
-    auto pixelDeleter = std::unique_ptr<void, decltype(free)*>{ pixels, free };
-
+    SkBitmap bitmap;
+    sk_sp<SkData> data = SkData::MakeWithoutCopy(asset->getBuffer(false),
+            asset->getLength());
+    sk_sp<SkImage> image = SkImage::MakeFromEncoded(data);
+    image->asLegacyBitmap(&bitmap, SkImage::kRO_LegacyBitmapMode);
     asset->close();
     delete asset;
 
-    if (!pixels) {
-        return NO_INIT;
-    }
-
-    const int w = bitmapInfo.width;
-    const int h = bitmapInfo.height;
+    const int w = bitmap.width();
+    const int h = bitmap.height();
+    const void* p = bitmap.getPixels();
 
     GLint crop[4] = { 0, h, w, -h };
     texture->w = w;
@@ -216,22 +192,22 @@ status_t BootAnimation::initTexture(Texture* texture, AssetManager& assets,
     glGenTextures(1, &texture->name);
     glBindTexture(GL_TEXTURE_2D, texture->name);
 
-    switch (bitmapInfo.format) {
-        case ANDROID_BITMAP_FORMAT_A_8:
+    switch (bitmap.colorType()) {
+        case kAlpha_8_SkColorType:
             glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, w, h, 0, GL_ALPHA,
-                    GL_UNSIGNED_BYTE, pixels);
+                    GL_UNSIGNED_BYTE, p);
             break;
-        case ANDROID_BITMAP_FORMAT_RGBA_4444:
+        case kARGB_4444_SkColorType:
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA,
-                    GL_UNSIGNED_SHORT_4_4_4_4, pixels);
+                    GL_UNSIGNED_SHORT_4_4_4_4, p);
             break;
-        case ANDROID_BITMAP_FORMAT_RGBA_8888:
+        case kN32_SkColorType:
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA,
-                    GL_UNSIGNED_BYTE, pixels);
+                    GL_UNSIGNED_BYTE, p);
             break;
-        case ANDROID_BITMAP_FORMAT_RGB_565:
+        case kRGB_565_SkColorType:
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB,
-                    GL_UNSIGNED_SHORT_5_6_5, pixels);
+                    GL_UNSIGNED_SHORT_5_6_5, p);
             break;
         default:
             break;
@@ -247,21 +223,20 @@ status_t BootAnimation::initTexture(Texture* texture, AssetManager& assets,
 }
 
 status_t BootAnimation::initTexture(FileMap* map, int* width, int* height) {
-    AndroidBitmapInfo bitmapInfo;
-    void* pixels = decodeImage(map->getDataPtr(), map->getDataLength(), &bitmapInfo);
-    auto pixelDeleter = std::unique_ptr<void, decltype(free)*>{ pixels, free };
+    SkBitmap bitmap;
+    sk_sp<SkData> data = SkData::MakeWithoutCopy(map->getDataPtr(),
+            map->getDataLength());
+    sk_sp<SkImage> image = SkImage::MakeFromEncoded(data);
+    image->asLegacyBitmap(&bitmap, SkImage::kRO_LegacyBitmapMode);
 
     // FileMap memory is never released until application exit.
     // Release it now as the texture is already loaded and the memory used for
     // the packed resource can be released.
     delete map;
 
-    if (!pixels) {
-        return NO_INIT;
-    }
-
-    const int w = bitmapInfo.width;
-    const int h = bitmapInfo.height;
+    const int w = bitmap.width();
+    const int h = bitmap.height();
+    const void* p = bitmap.getPixels();
 
     GLint crop[4] = { 0, h, w, -h };
     int tw = 1 << (31 - __builtin_clz(w));
@@ -269,28 +244,28 @@ status_t BootAnimation::initTexture(FileMap* map, int* width, int* height) {
     if (tw < w) tw <<= 1;
     if (th < h) th <<= 1;
 
-    switch (bitmapInfo.format) {
-        case ANDROID_BITMAP_FORMAT_RGBA_8888:
+    switch (bitmap.colorType()) {
+        case kN32_SkColorType:
             if (!mUseNpotTextures && (tw != w || th != h)) {
                 glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tw, th, 0, GL_RGBA,
                         GL_UNSIGNED_BYTE, nullptr);
                 glTexSubImage2D(GL_TEXTURE_2D, 0,
-                        0, 0, w, h, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+                        0, 0, w, h, GL_RGBA, GL_UNSIGNED_BYTE, p);
             } else {
                 glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA,
-                        GL_UNSIGNED_BYTE, pixels);
+                        GL_UNSIGNED_BYTE, p);
             }
             break;
 
-        case ANDROID_BITMAP_FORMAT_RGB_565:
+        case kRGB_565_SkColorType:
             if (!mUseNpotTextures && (tw != w || th != h)) {
                 glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tw, th, 0, GL_RGB,
                         GL_UNSIGNED_SHORT_5_6_5, nullptr);
                 glTexSubImage2D(GL_TEXTURE_2D, 0,
-                        0, 0, w, h, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, pixels);
+                        0, 0, w, h, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, p);
             } else {
                 glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB,
-                        GL_UNSIGNED_SHORT_5_6_5, pixels);
+                        GL_UNSIGNED_SHORT_5_6_5, p);
             }
             break;
         default:
@@ -347,14 +322,14 @@ public:
                         continue;
                     }
 
-                    DisplayMode displayMode;
-                    const status_t error = SurfaceComposerClient::getActiveDisplayMode(
-                        mBootAnimation->mDisplayToken, &displayMode);
+                    DisplayConfig displayConfig;
+                    const status_t error = SurfaceComposerClient::getActiveDisplayConfig(
+                        mBootAnimation->mDisplayToken, &displayConfig);
                     if (error != NO_ERROR) {
-                        SLOGE("Can't get active display mode.");
+                        SLOGE("Can't get active display configuration.");
                     }
-                    mBootAnimation->resizeSurface(displayMode.resolution.getWidth(),
-                        displayMode.resolution.getHeight());
+                    mBootAnimation->resizeSurface(displayConfig.resolution.getWidth(),
+                        displayConfig.resolution.getHeight());
                 }
             }
         } while (numEvents > 0);
@@ -403,15 +378,15 @@ status_t BootAnimation::readyToRun() {
     if (mDisplayToken == nullptr)
         return NAME_NOT_FOUND;
 
-    DisplayMode displayMode;
+    DisplayConfig displayConfig;
     const status_t error =
-            SurfaceComposerClient::getActiveDisplayMode(mDisplayToken, &displayMode);
+            SurfaceComposerClient::getActiveDisplayConfig(mDisplayToken, &displayConfig);
     if (error != NO_ERROR)
         return error;
 
     mMaxWidth = android::base::GetIntProperty("ro.surface_flinger.max_graphics_width", 0);
     mMaxHeight = android::base::GetIntProperty("ro.surface_flinger.max_graphics_height", 0);
-    ui::Size resolution = displayMode.resolution;
+    ui::Size resolution = displayConfig.resolution;
     resolution = limitSurfaceSize(resolution.width, resolution.height);
     // create the native surface
     sp<SurfaceControl> control = session()->createSurface(String8("BootAnimation"),
@@ -422,7 +397,7 @@ status_t BootAnimation::readyToRun() {
     // this guest property specifies multi-display IDs to show the boot animation
     // multiple ids can be set with comma (,) as separator, for example:
     // setprop persist.boot.animation.displays 19260422155234049,19261083906282754
-    Vector<PhysicalDisplayId> physicalDisplayIds;
+    Vector<uint64_t> physicalDisplayIds;
     char displayValue[PROPERTY_VALUE_MAX] = "";
     property_get(DISPLAYS_PROP_NAME, displayValue, "");
     bool isValid = displayValue[0] != '\0';
@@ -440,7 +415,7 @@ status_t BootAnimation::readyToRun() {
     }
     if (isValid) {
         std::istringstream stream(displayValue);
-        for (PhysicalDisplayId id; stream >> id.value; ) {
+        for (PhysicalDisplayId id; stream >> id; ) {
             physicalDisplayIds.add(id);
             if (stream.peek() == ',')
                 stream.ignore();

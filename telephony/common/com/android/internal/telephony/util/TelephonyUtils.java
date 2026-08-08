@@ -99,7 +99,7 @@ public final class TelephonyUtils {
      */
     public static void runWithCleanCallingIdentity(
             @NonNull Runnable action) {
-        final long callingIdentity = Binder.clearCallingIdentity();
+        long callingIdentity = Binder.clearCallingIdentity();
         try {
             action.run();
         } finally {
@@ -118,7 +118,7 @@ public final class TelephonyUtils {
      */
     public static <T> T runWithCleanCallingIdentity(
             @NonNull Supplier<T> action) {
-        final long callingIdentity = Binder.clearCallingIdentity();
+        long callingIdentity = Binder.clearCallingIdentity();
         try {
             return action.get();
         } finally {

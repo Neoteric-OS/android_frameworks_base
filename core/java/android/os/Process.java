@@ -34,9 +34,12 @@ import dalvik.system.VMRuntime;
 
 import libcore.io.IoUtils;
 
+import java.io.BufferedReader;
 import java.io.FileDescriptor;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Map;
+import java.util.StringTokenizer;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -227,12 +230,6 @@ public class Process {
     public static final int FSVERITY_CERT_UID = 1075;
 
     /**
-     * GID that gives access to USB OTG (unreliable) volumes on /mnt/media_rw/<vol name>
-     * @hide
-     */
-    public static final int EXTERNAL_STORAGE_GID = 1077;
-
-    /**
      * GID that gives write access to app-private data directories on external
      * storage (used on devices without sdcardfs only).
      * @hide
@@ -245,12 +242,6 @@ public class Process {
      * @hide
      */
     public static final int EXT_OBB_RW_GID = 1079;
-
-    /**
-     * Defines the UID/GID for the Uwb service process.
-     * @hide
-     */
-    public static final int UWB_UID = 1083;
 
     /**
      * GID that corresponds to the INTERNET permission.
@@ -409,12 +400,6 @@ public class Process {
      * {@link java.lang.Thread} class.
      */
     public static final int THREAD_PRIORITY_VIDEO = -10;
-
-    /**
-     * Priority we boost main thread and RT of top app to.
-     * @hide
-     */
-    public static final int THREAD_PRIORITY_TOP_APP_BOOST = -10;
 
     /**
      * Standard priority of audio threads.  Applications can not normally
@@ -996,16 +981,6 @@ public class Process {
             throws IllegalArgumentException, SecurityException;
 
     /**
-     *
-     * Create a new process group in the cgroup uid/pid hierarchy
-     *
-     * @return <0 in case of error
-     *
-     * @hide
-     */
-    public static final native int createProcessGroup(int uid, int pid);
-
-    /**
      * On some devices, the foreground process may have one or more CPU
      * cores exclusively reserved for it. This method can be used to
      * retrieve which cores that are (if any), so the calling process
@@ -1356,16 +1331,33 @@ public class Process {
      */
     public static void waitForProcessDeath(int pid, int timeout)
             throws InterruptedException, TimeoutException {
-        boolean fallback = supportsPidFd();
-        if (!fallback) {
-            FileDescriptor pidfd = null;
+        FileDescriptor pidfd = null;
+        if (sPidFdSupported == PIDFD_UNKNOWN) {
+            int fd = -1;
             try {
-                final int fd = nativePidFdOpen(pid, 0);
+                fd = nativePidFdOpen(pid, 0);
+                sPidFdSupported = PIDFD_SUPPORTED;
+            } catch (ErrnoException e) {
+                sPidFdSupported = e.errno != OsConstants.ENOSYS
+                    ? PIDFD_SUPPORTED : PIDFD_UNSUPPORTED;
+            } finally {
                 if (fd >= 0) {
                     pidfd = new FileDescriptor();
                     pidfd.setInt$(fd);
-                } else {
-                    fallback = true;
+                }
+            }
+        }
+        boolean fallback = sPidFdSupported == PIDFD_UNSUPPORTED;
+        if (!fallback) {
+            try {
+                if (pidfd == null) {
+                    int fd = nativePidFdOpen(pid, 0);
+                    if (fd >= 0) {
+                        pidfd = new FileDescriptor();
+                        pidfd.setInt$(fd);
+                    } else {
+                        fallback = true;
+                    }
                 }
                 if (pidfd != null) {
                     StructPollfd[] fds = new StructPollfd[] {
@@ -1414,59 +1406,44 @@ public class Process {
         throw new TimeoutException();
     }
 
+    private static native int nativePidFdOpen(int pid, int flags) throws ErrnoException;
+
     /**
-     * Determine whether the system supports pidfd APIs
+     * Checks if a process corresponding to a specific pid owns any file locks.
+     * @param pid The process ID for which we want to know the existence of file locks.
+     * @return true If the process holds any file locks, false otherwise.
+     * @throws IOException if /proc/locks can't be accessed.
      *
-     * @return Returns true if the system supports pidfd APIs
      * @hide
      */
-    public static boolean supportsPidFd() {
-        if (sPidFdSupported == PIDFD_UNKNOWN) {
-            int fd = -1;
-            try {
-                fd = nativePidFdOpen(myPid(), 0);
-                sPidFdSupported = PIDFD_SUPPORTED;
-            } catch (ErrnoException e) {
-                sPidFdSupported = e.errno != OsConstants.ENOSYS
-                        ? PIDFD_SUPPORTED : PIDFD_UNSUPPORTED;
-            } finally {
-                if (fd >= 0) {
-                    final FileDescriptor f = new FileDescriptor();
-                    f.setInt$(fd);
-                    IoUtils.closeQuietly(f);
+    public static boolean hasFileLocks(int pid) throws Exception {
+        BufferedReader br = null;
+
+        try {
+            br = new BufferedReader(new FileReader("/proc/locks"));
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                StringTokenizer st = new StringTokenizer(line);
+
+                for (int i = 0; i < 5 && st.hasMoreTokens(); i++) {
+                    String str = st.nextToken();
+                    try {
+                        if (i == 4 && Integer.parseInt(str) == pid) {
+                            return true;
+                        }
+                    } catch (NumberFormatException nfe) {
+                        throw new Exception("Exception parsing /proc/locks at \" "
+                                + line +  " \", token #" + i);
+                    }
                 }
             }
-        }
-        return sPidFdSupported == PIDFD_SUPPORTED;
-    }
 
-    /**
-     * Open process file descriptor for given pid.
-     *
-     * @param pid The process ID to open for
-     * @param flags Reserved, unused now, must be 0
-     * @return The process file descriptor for given pid
-     * @throws IOException if it can't be opened
-     *
-     * @hide
-     */
-    public static @Nullable FileDescriptor openPidFd(int pid, int flags) throws IOException {
-        if (!supportsPidFd()) {
-            return null;
-        }
-        if (flags != 0) {
-            throw new IllegalArgumentException();
-        }
-        try {
-            FileDescriptor pidfd = new FileDescriptor();
-            pidfd.setInt$(nativePidFdOpen(pid, flags));
-            return pidfd;
-        } catch (ErrnoException e) {
-            IOException ex = new IOException();
-            ex.initCause(e);
-            throw ex;
+            return false;
+        } finally {
+            if (br != null) {
+                br.close();
+            }
         }
     }
-
-    private static native int nativePidFdOpen(int pid, int flags) throws ErrnoException;
 }

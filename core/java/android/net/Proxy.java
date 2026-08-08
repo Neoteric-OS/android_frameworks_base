@@ -60,7 +60,6 @@ public final class Proxy {
      * {@link ConnectivityManager#getDefaultProxy()} or
      * {@link ConnectivityManager#getLinkProperties(Network)}.{@link LinkProperties#getHttpProxy()}
      * to get the proxy for the Network(s) they are using.
-     * @removed
      */
     @Deprecated
     public static final String EXTRA_PROXY_INFO = "android.intent.extra.PROXY_INFO";

@@ -121,7 +121,7 @@ public class ImsRcsManager {
             public void onCapabilitiesStatusChanged(int config) {
                 if (mOnAvailabilityChangedListener == null) return;
 
-                final long callingIdentity = Binder.clearCallingIdentity();
+                long callingIdentity = Binder.clearCallingIdentity();
                 try {
                     mExecutor.execute(() ->
                             mOnAvailabilityChangedListener.onAvailabilityChanged(config));
@@ -307,10 +307,8 @@ public class ImsRcsManager {
                     }
                 }
             });
-        } catch (ServiceSpecificException | RemoteException e) {
-            Log.w(TAG, "Get registration state error: " + e);
-            executor.execute(() -> stateCallback.accept(
-                    RegistrationManager.REGISTRATION_STATE_NOT_REGISTERED));
+        } catch (RemoteException e) {
+            throw e.rethrowAsRuntimeException();
         }
     }
 
@@ -358,10 +356,8 @@ public class ImsRcsManager {
                             }
                         }
                     });
-        } catch (ServiceSpecificException | RemoteException e) {
-            Log.w(TAG, "Get registration transport type error: " + e);
-            executor.execute(() -> transportTypeCallback.accept(
-                    AccessNetworkConstants.TRANSPORT_TYPE_INVALID));
+        } catch (RemoteException e) {
+            throw e.rethrowAsRuntimeException();
         }
     }
 

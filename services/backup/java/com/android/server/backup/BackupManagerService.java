@@ -19,13 +19,11 @@ package com.android.server.backup;
 import static java.util.Collections.emptySet;
 
 import android.Manifest;
-import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.UserIdInt;
 import android.app.ActivityManager;
 import android.app.admin.DevicePolicyManager;
 import android.app.backup.BackupManager;
-import android.app.backup.BackupManager.OperationType;
 import android.app.backup.IBackupManager;
 import android.app.backup.IBackupManagerMonitor;
 import android.app.backup.IBackupObserver;
@@ -478,7 +476,7 @@ public class BackupManagerService extends IBackupManager.Stub {
                 if (getUserManager().isUserUnlocked(userId)) {
                     // Clear calling identity as initialization enforces the system identity but we
                     // can be coming from shell.
-                    final long oldId = Binder.clearCallingIdentity();
+                    long oldId = Binder.clearCallingIdentity();
                     try {
                         startServiceForUser(userId);
                     } finally {
@@ -1352,9 +1350,8 @@ public class BackupManagerService extends IBackupManager.Stub {
 
     @Override
     public int requestBackup(String[] packages, IBackupObserver observer,
-            IBackupManagerMonitor monitor, int flags)
-            throws RemoteException {
-        return requestBackup(binderGetCallingUserId(), packages,
+            IBackupManagerMonitor monitor, int flags) throws RemoteException {
+        return requestBackupForUser(binderGetCallingUserId(), packages,
                 observer, monitor, flags);
     }
 
@@ -1413,8 +1410,8 @@ public class BackupManagerService extends IBackupManager.Stub {
             return null;
         }
         int callingUserId = Binder.getCallingUserHandle().getIdentifier();
+        long oldId = Binder.clearCallingIdentity();
         final int[] userIds;
-        final long oldId = Binder.clearCallingIdentity();
         try {
             userIds = getUserManager().getProfileIds(callingUserId, false);
         } finally {
@@ -1611,13 +1608,13 @@ public class BackupManagerService extends IBackupManager.Stub {
         }
 
         @Override
-        public void onUserUnlocking(@NonNull TargetUser user) {
-            sInstance.onUnlockUser(user.getUserIdentifier());
+        public void onUnlockUser(int userId) {
+            sInstance.onUnlockUser(userId);
         }
 
         @Override
-        public void onUserStopping(@NonNull TargetUser user) {
-            sInstance.onStopUser(user.getUserIdentifier());
+        public void onStopUser(int userId) {
+            sInstance.onStopUser(userId);
         }
 
         @VisibleForTesting

@@ -16,7 +16,6 @@
 
 package android.util;
 
-import android.annotation.Nullable;
 import android.compat.annotation.UnsupportedAppUsage;
 
 import com.android.internal.util.ArrayUtils;
@@ -646,7 +645,7 @@ public final class ArrayMap<K, V> implements Map<K, V> {
             e.fillInStackTrace();
             Log.w(TAG, "New hash " + hash
                     + " is before end of array hash " + mHashes[index-1]
-                    + " at index " + index + (DEBUG ? " key " + key : ""), e);
+                    + " at index " + index + " key " + key, e);
             put(key, value);
             return;
         }
@@ -827,7 +826,7 @@ public final class ArrayMap<K, V> implements Map<K, V> {
      * equal, the method returns false, otherwise it returns true.
      */
     @Override
-    public boolean equals(@Nullable Object object) {
+    public boolean equals(Object object) {
         if (this == object) {
             return true;
         }
