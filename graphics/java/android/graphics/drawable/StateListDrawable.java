@@ -95,6 +95,7 @@ public class StateListDrawable extends DrawableContainer {
         return true;
     }
 
+    /** @hide */
     @Override
     public boolean hasFocusStateSpecified() {
         return mStateListState.hasFocusStateSpecified();

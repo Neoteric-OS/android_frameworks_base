@@ -104,10 +104,7 @@ public final class NetworkStateSnapshot implements Parcelable {
         return mSubscriberId;
     }
 
-    /**
-     * Get the legacy type of the network associated with this snapshot.
-     * @return the legacy network type. See {@code ConnectivityManager#TYPE_*}.
-     */
+    /** Get the legacy type of the network associated with this snapshot. */
     public int getLegacyType() {
         return mLegacyType;
     }

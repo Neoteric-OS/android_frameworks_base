@@ -16,21 +16,23 @@
 
 package com.android.internal.infra;
 
+import static com.android.internal.util.ConcurrentUtils.DIRECT_EXECUTOR;
+
 import android.annotation.CallSuper;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.os.Handler;
-import android.os.Looper;
+import android.os.Message;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.RemoteException;
-import android.util.EventLog;
+import android.util.ExceptionUtils;
 import android.util.Log;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.internal.util.Preconditions;
+import com.android.internal.util.function.pooled.PooledLambda;
 
-import java.lang.reflect.Constructor;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
@@ -73,16 +75,14 @@ public class AndroidFuture<T> extends CompletableFuture<T> implements Parcelable
 
     private static final boolean DEBUG = false;
     private static final String LOG_TAG = AndroidFuture.class.getSimpleName();
-    private static final Executor DIRECT_EXECUTOR = Runnable::run;
     private static final StackTraceElement[] EMPTY_STACK_TRACE = new StackTraceElement[0];
-    private static @Nullable Handler sMainHandler;
 
     private final @NonNull Object mLock = new Object();
     @GuardedBy("mLock")
     private @Nullable BiConsumer<? super T, ? super Throwable> mListener;
     @GuardedBy("mLock")
     private @Nullable Executor mListenerExecutor = DIRECT_EXECUTOR;
-    private @NonNull Handler mTimeoutHandler = getMainHandler();
+    private @NonNull Handler mTimeoutHandler = Handler.getMain();
     private final @Nullable IAndroidFuture mRemoteOrigin;
 
     public AndroidFuture() {
@@ -96,7 +96,7 @@ public class AndroidFuture<T> extends CompletableFuture<T> implements Parcelable
             // Done
             if (in.readBoolean()) {
                 // Failed
-                completeExceptionally(readThrowable(in));
+                completeExceptionally(unparcelException(in));
             } else {
                 // Success
                 complete((T) in.readValue(null));
@@ -106,15 +106,6 @@ public class AndroidFuture<T> extends CompletableFuture<T> implements Parcelable
             // Not done
             mRemoteOrigin = IAndroidFuture.Stub.asInterface(in.readStrongBinder());
         }
-    }
-
-    @NonNull
-    private static Handler getMainHandler() {
-        // This isn't thread-safe but we are okay with it.
-        if (sMainHandler == null) {
-            sMainHandler = new Handler(Looper.getMainLooper());
-        }
-        return sMainHandler;
     }
 
     /**
@@ -245,7 +236,9 @@ public class AndroidFuture<T> extends CompletableFuture<T> implements Parcelable
         if (mListenerExecutor == DIRECT_EXECUTOR) {
             callListener(listener, res, err);
         } else {
-            mListenerExecutor.execute(() -> callListener(listener, res, err));
+            mListenerExecutor.execute(PooledLambda
+                    .obtainRunnable(AndroidFuture::callListener, listener, res, err)
+                    .recycleOnUse());
         }
     }
 
@@ -267,8 +260,7 @@ public class AndroidFuture<T> extends CompletableFuture<T> implements Parcelable
                 } else {
                     // listener exception-case threw
                     // give up on listener but preserve the original exception when throwing up
-                    t.addSuppressed(err);
-                    throw t;
+                    throw ExceptionUtils.appendCause(t, err);
                 }
             }
         } catch (Throwable t2) {
@@ -280,7 +272,9 @@ public class AndroidFuture<T> extends CompletableFuture<T> implements Parcelable
     /** @inheritDoc */
     //@Override //TODO uncomment once java 9 APIs are exposed to frameworks
     public AndroidFuture<T> orTimeout(long timeout, @NonNull TimeUnit unit) {
-        mTimeoutHandler.postDelayed(this::triggerTimeout, this, unit.toMillis(timeout));
+        Message msg = PooledLambda.obtainMessage(AndroidFuture::triggerTimeout, this);
+        msg.obj = this;
+        mTimeoutHandler.sendMessageDelayed(msg, unit.toMillis(timeout));
         return this;
     }
 
@@ -513,7 +507,7 @@ public class AndroidFuture<T> extends CompletableFuture<T> implements Parcelable
                 result = get();
             } catch (Throwable t) {
                 dest.writeBoolean(true);
-                writeThrowable(dest, unwrapExecutionException(t));
+                parcelException(dest, unwrapExecutionException(t));
                 return;
             }
             dest.writeBoolean(false);
@@ -551,75 +545,45 @@ public class AndroidFuture<T> extends CompletableFuture<T> implements Parcelable
      * Alternative to {@link Parcel#writeException} that stores the stack trace, in a
      * way consistent with the binder IPC exception propagation behavior.
      */
-    private static void writeThrowable(@NonNull Parcel parcel, @Nullable Throwable throwable) {
-        boolean hasThrowable = throwable != null;
-        parcel.writeBoolean(hasThrowable);
-        if (!hasThrowable) {
+    private static void parcelException(Parcel p, @Nullable Throwable t) {
+        p.writeBoolean(t == null);
+        if (t == null) {
             return;
         }
 
-        boolean isFrameworkParcelable = throwable instanceof Parcelable
-                && throwable.getClass().getClassLoader() == Parcelable.class.getClassLoader();
-        parcel.writeBoolean(isFrameworkParcelable);
-        if (isFrameworkParcelable) {
-            parcel.writeParcelable((Parcelable) throwable,
-                    Parcelable.PARCELABLE_WRITE_RETURN_VALUE);
-            return;
-        }
-
-        parcel.writeString(throwable.getClass().getName());
-        parcel.writeString(throwable.getMessage());
-        StackTraceElement[] stackTrace = throwable.getStackTrace();
-        StringBuilder stackTraceBuilder = new StringBuilder();
-        int truncatedStackTraceLength = Math.min(stackTrace != null ? stackTrace.length : 0, 5);
-        for (int i = 0; i < truncatedStackTraceLength; i++) {
-            if (i > 0) {
-                stackTraceBuilder.append('\n');
-            }
-            stackTraceBuilder.append("\tat ").append(stackTrace[i]);
-        }
-        parcel.writeString(stackTraceBuilder.toString());
-        writeThrowable(parcel, throwable.getCause());
+        p.writeInt(Parcel.getExceptionCode(t));
+        p.writeString(t.getClass().getName());
+        p.writeString(t.getMessage());
+        p.writeStackTrace(t);
+        parcelException(p, t.getCause());
     }
 
     /**
-     * @see #writeThrowable
+     * @see #parcelException
      */
-    private static @Nullable Throwable readThrowable(@NonNull Parcel parcel) {
-        final boolean hasThrowable = parcel.readBoolean();
-        if (!hasThrowable) {
+    private static @Nullable Throwable unparcelException(Parcel p) {
+        if (p.readBoolean()) {
             return null;
         }
 
-        boolean isFrameworkParcelable = parcel.readBoolean();
-        if (isFrameworkParcelable) {
-            return parcel.readParcelable(Parcelable.class.getClassLoader());
+        int exCode = p.readInt();
+        String cls = p.readString();
+        String msg = p.readString();
+        String stackTrace = p.readInt() > 0 ? p.readString() : "\t<stack trace unavailable>";
+        msg += "\n" + stackTrace;
+
+        Exception ex = p.createExceptionOrNull(exCode, msg);
+        if (ex == null) {
+            ex = new RuntimeException(cls + ": " + msg);
+        }
+        ex.setStackTrace(EMPTY_STACK_TRACE);
+
+        Throwable cause = unparcelException(p);
+        if (cause != null) {
+            ex.initCause(ex);
         }
 
-        String className = parcel.readString();
-        String message = parcel.readString();
-        String stackTrace = parcel.readString();
-        String messageWithStackTrace = message + '\n' + stackTrace;
-        Throwable throwable;
-        try {
-            Class<?> clazz = Class.forName(className, true, Parcelable.class.getClassLoader());
-            if (Throwable.class.isAssignableFrom(clazz)) {
-                Constructor<?> constructor = clazz.getConstructor(String.class);
-                throwable = (Throwable) constructor.newInstance(messageWithStackTrace);
-            } else {
-                android.util.EventLog.writeEvent(0x534e4554, "186530450", -1, "");
-                throwable = new RuntimeException(className + ": " + messageWithStackTrace);
-            }
-        } catch (Throwable t) {
-            throwable = new RuntimeException(className + ": " + messageWithStackTrace);
-            throwable.addSuppressed(t);
-        }
-        throwable.setStackTrace(EMPTY_STACK_TRACE);
-        Throwable cause = readThrowable(parcel);
-        if (cause != null) {
-            throwable.initCause(cause);
-        }
-        return throwable;
+        return ex;
     }
 
     @Override

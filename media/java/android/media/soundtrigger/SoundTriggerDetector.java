@@ -36,7 +36,7 @@ import android.os.ParcelUuid;
 import android.os.RemoteException;
 import android.util.Slog;
 
-import com.android.internal.app.ISoundTriggerSession;
+import com.android.internal.app.ISoundTriggerService;
 
 import java.io.PrintWriter;
 import java.lang.annotation.Retention;
@@ -65,7 +65,7 @@ public final class SoundTriggerDetector {
 
     private final Object mLock = new Object();
 
-    private final ISoundTriggerSession mSoundTriggerSession;
+    private final ISoundTriggerService mSoundTriggerService;
     private final UUID mSoundModelId;
     private final Callback mCallback;
     private final Handler mHandler;
@@ -79,8 +79,7 @@ public final class SoundTriggerDetector {
                 RECOGNITION_FLAG_CAPTURE_TRIGGER_AUDIO,
                 RECOGNITION_FLAG_ALLOW_MULTIPLE_TRIGGERS,
                 RECOGNITION_FLAG_ENABLE_AUDIO_ECHO_CANCELLATION,
-                RECOGNITION_FLAG_ENABLE_AUDIO_NOISE_SUPPRESSION,
-                RECOGNITION_FLAG_RUN_IN_BATTERY_SAVER,
+                    RECOGNITION_FLAG_ENABLE_AUDIO_NOISE_SUPPRESSION,
             })
     public @interface RecognitionFlags {}
 
@@ -132,14 +131,6 @@ public final class SoundTriggerDetector {
      * applied.
      */
     public static final int RECOGNITION_FLAG_ENABLE_AUDIO_NOISE_SUPPRESSION = 0x8;
-
-    /**
-     * Recognition flag for {@link #startRecognition(int)} that indicates whether the recognition
-     * should continue after battery saver mode is enabled.
-     * When this flag is specified, the caller will be checked for
-     * {@link android.Manifest.permission#SOUND_TRIGGER_RUN_IN_BATTERY_SAVER} permission granted.
-     */
-    public static final int RECOGNITION_FLAG_RUN_IN_BATTERY_SAVER = 0x10;
 
     /**
      * Additional payload for {@link Callback#onDetected}.
@@ -276,9 +267,9 @@ public final class SoundTriggerDetector {
      * This class should be constructed by the {@link SoundTriggerManager}.
      * @hide
      */
-    SoundTriggerDetector(ISoundTriggerSession soundTriggerSession, UUID soundModelId,
+    SoundTriggerDetector(ISoundTriggerService soundTriggerService, UUID soundModelId,
             @NonNull Callback callback, @Nullable Handler handler) {
-        mSoundTriggerSession = soundTriggerSession;
+        mSoundTriggerService = soundTriggerService;
         mSoundModelId = soundModelId;
         mCallback = callback;
         if (handler == null) {
@@ -305,8 +296,6 @@ public final class SoundTriggerDetector {
         boolean allowMultipleTriggers =
                 (recognitionFlags & RECOGNITION_FLAG_ALLOW_MULTIPLE_TRIGGERS) != 0;
 
-        boolean runInBatterySaver = (recognitionFlags & RECOGNITION_FLAG_RUN_IN_BATTERY_SAVER) != 0;
-
         int audioCapabilities = 0;
         if ((recognitionFlags & RECOGNITION_FLAG_ENABLE_AUDIO_ECHO_CANCELLATION) != 0) {
             audioCapabilities |= SoundTrigger.ModuleProperties.AUDIO_CAPABILITY_ECHO_CANCELLATION;
@@ -317,10 +306,9 @@ public final class SoundTriggerDetector {
 
         int status;
         try {
-            status = mSoundTriggerSession.startRecognition(new ParcelUuid(mSoundModelId),
+            status = mSoundTriggerService.startRecognition(new ParcelUuid(mSoundModelId),
                     mRecognitionCallback, new RecognitionConfig(captureTriggerAudio,
-                            allowMultipleTriggers, null, null, audioCapabilities),
-                    runInBatterySaver);
+                        allowMultipleTriggers, null, null, audioCapabilities));
         } catch (RemoteException e) {
             return false;
         }
@@ -334,7 +322,7 @@ public final class SoundTriggerDetector {
     public boolean stopRecognition() {
         int status = STATUS_OK;
         try {
-            status = mSoundTriggerSession.stopRecognition(new ParcelUuid(mSoundModelId),
+            status = mSoundTriggerService.stopRecognition(new ParcelUuid(mSoundModelId),
                     mRecognitionCallback);
         } catch (RemoteException e) {
             return false;

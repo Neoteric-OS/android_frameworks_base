@@ -150,9 +150,7 @@ final class RoutingControlAction extends HdmiCecFeatureAction {
         }
         switch (timeoutState) {
             case STATE_WAIT_FOR_ROUTING_INFORMATION:
-                HdmiDeviceInfo device =
-                        localDevice().mService.getHdmiCecNetwork().getDeviceInfoByPath(
-                                mCurrentRoutingPath);
+                HdmiDeviceInfo device = tv().getDeviceInfoByPath(mCurrentRoutingPath);
                 if (device != null && mQueryDevicePowerStatus) {
                     int deviceLogicalAddress = device.getLogicalAddress();
                     queryDevicePowerStatus(deviceLogicalAddress, new SendMessageCallback() {

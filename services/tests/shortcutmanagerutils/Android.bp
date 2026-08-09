@@ -31,9 +31,5 @@ java_library {
         "android.test.runner.stubs",
     ],
 
-    static_libs: [
-        "compatibility-device-util-axt",
-    ],
-
     sdk_version: "test_current",
 }

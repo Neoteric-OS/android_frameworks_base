@@ -31,7 +31,6 @@ license {
 
 android_app {
     name: "ExtShared",
-    defaults: ["platform_app_defaults"],
     srcs: ["src/**/*.java"],
     sdk_version: "current",
     certificate: "platform",

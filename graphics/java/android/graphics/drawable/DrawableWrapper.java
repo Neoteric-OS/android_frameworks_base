@@ -346,6 +346,7 @@ public abstract class DrawableWrapper extends Drawable implements Drawable.Callb
         return mDrawable != null && mDrawable.isStateful();
     }
 
+    /** @hide */
     @Override
     public boolean hasFocusStateSpecified() {
         return mDrawable != null && mDrawable.hasFocusStateSpecified();

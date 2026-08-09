@@ -40,14 +40,14 @@ android_library {
     name: "SystemUISharedLib",
     srcs: [
         "src/**/*.java",
-        "src/**/*.kt",
-        "src/**/*.aidl",
-        ":wm_shell-aidls",
+        "src/**/I*.aidl",
     ],
 
     static_libs: [
         "PluginCoreLib",
     ],
+
+
     java_version: "1.8",
     min_sdk_version: "26",
 }

@@ -193,10 +193,6 @@ public class SipDelegateAidlWrapper implements DelegateStateCallback, DelegateMe
         return mDelegateBinder;
     }
 
-    public ISipDelegateStateCallback getStateCallbackBinder() {
-        return mStateBinder;
-    }
-
     private void notifyLocalMessageFailedToBeReceived(SipMessage m, int reason) {
         String transactionId = m.getViaBranchParameter();
         SipDelegate d = mDelegate;

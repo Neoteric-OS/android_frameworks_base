@@ -45,7 +45,6 @@ import java.io.File;
 import java.util.Comparator;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.UUID;
 
 /**
  * Information about a storage volume that may be mounted. A volume may be a
@@ -402,7 +401,6 @@ public class VolumeInfo implements Parcelable {
         }
 
         String description = null;
-        UUID uuid = null;
         String derivedFsUuid = fsUuid;
         long maxFileSize = 0;
 
@@ -412,10 +410,7 @@ public class VolumeInfo implements Parcelable {
             final VolumeInfo privateVol = storage.findPrivateForEmulated(this);
             if (privateVol != null) {
                 description = storage.getBestVolumeDescription(privateVol);
-                uuid = StorageManager.convert(privateVol.fsUuid);
                 derivedFsUuid = privateVol.fsUuid;
-            } else {
-                uuid = StorageManager.UUID_DEFAULT;
             }
 
             if (isPrimaryEmulatedForUser(userId)) {
@@ -444,7 +439,7 @@ public class VolumeInfo implements Parcelable {
 
         return new StorageVolume(id, userPath, internalPath, description, isPrimary(), removable,
                 emulated, allowMassStorage, maxFileSize, new UserHandle(userId),
-                uuid, derivedFsUuid, envState);
+                derivedFsUuid, envState);
     }
 
     @UnsupportedAppUsage
@@ -541,7 +536,7 @@ public class VolumeInfo implements Parcelable {
     }
 
     @Override
-    public boolean equals(@Nullable Object o) {
+    public boolean equals(Object o) {
         if (o instanceof VolumeInfo) {
             return Objects.equals(id, ((VolumeInfo) o).id);
         } else {

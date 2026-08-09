@@ -168,7 +168,7 @@ interface IPlatformCompat {
      * @param packageName the package name of the app whose changes will be overridden
      * @throws SecurityException if overriding changes is not permitted
      */
-    void putOverridesOnReleaseBuilds(in CompatibilityOverrideConfig overrides, in String packageName);
+    void setOverridesOnReleaseBuilds(in CompatibilityOverrideConfig overrides, in String packageName);
 
     /**
      * Adds overrides to compatibility changes.
@@ -200,10 +200,9 @@ interface IPlatformCompat {
      *
      * @param changeId    the ID of the change that was overridden
      * @param packageName the app package name that was overridden
-     * @return {@code true} if an override existed
      * @throws SecurityException if overriding changes is not permitted
      */
-    boolean clearOverrideForTest(long changeId, String packageName);
+    void clearOverrideForTest(long changeId, String packageName);
 
     /**
      * Restores the default behaviour for compatibility changes on release builds.

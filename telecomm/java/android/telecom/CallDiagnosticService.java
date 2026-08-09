@@ -19,23 +19,17 @@ package android.telecom;
 import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.SdkConstant;
-import android.annotation.SuppressLint;
 import android.annotation.SystemApi;
 import android.app.Service;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.HandlerExecutor;
 import android.os.IBinder;
 import android.os.RemoteException;
-
-import android.telephony.CallQuality;
 import android.util.ArrayMap;
 
 import com.android.internal.telecom.ICallDiagnosticService;
 import com.android.internal.telecom.ICallDiagnosticServiceAdapter;
 
 import java.util.Map;
-import java.util.concurrent.Executor;
 
 /**
  * The platform supports a single OEM provided {@link CallDiagnosticService}, as defined by the
@@ -57,11 +51,6 @@ import java.util.concurrent.Executor;
  * </service>
  * }
  * </pre>
- * <p>
- * <h2>Threading Model</h2>
- * By default, all incoming IPC from Telecom in this service and in the {@link CallDiagnostics}
- * instances will take place on the main thread.  You can override {@link #getExecutor()} in your
- * implementation to provide your own {@link Executor}.
  * @hide
  */
 @SystemApi
@@ -94,7 +83,7 @@ public abstract class CallDiagnosticService extends Service {
 
         @Override
         public void updateCallAudioState(CallAudioState callAudioState) throws RemoteException {
-            getExecutor().execute(() -> onCallAudioStateChanged(callAudioState));
+            onCallAudioStateChanged(callAudioState);
         }
 
         @Override
@@ -107,43 +96,29 @@ public abstract class CallDiagnosticService extends Service {
                 throws RemoteException {
             handleBluetoothCallQualityReport(qualityReport);
         }
-
-        @Override
-        public void notifyCallDisconnected(@NonNull String callId,
-                @NonNull DisconnectCause disconnectCause) throws RemoteException {
-            handleCallDisconnected(callId, disconnectCause);
-        }
-
-        @Override
-        public void callQualityChanged(String callId, CallQuality callQuality)
-                throws RemoteException {
-            handleCallQualityChanged(callId, callQuality);
-        }
     }
 
     /**
-     * Listens to events raised by a {@link CallDiagnostics}.
+     * Listens to events raised by a {@link DiagnosticCall}.
      */
-    private CallDiagnostics.Listener mDiagnosticCallListener =
-            new CallDiagnostics.Listener() {
+    private android.telecom.DiagnosticCall.Listener mDiagnosticCallListener =
+            new android.telecom.DiagnosticCall.Listener() {
 
                 @Override
-                public void onSendDeviceToDeviceMessage(CallDiagnostics callDiagnostics,
-                        @CallDiagnostics.MessageType int message, int value) {
-                    handleSendDeviceToDeviceMessage(callDiagnostics, message, value);
+                public void onSendDeviceToDeviceMessage(DiagnosticCall diagnosticCall,
+                        @DiagnosticCall.MessageType int message, int value) {
+                    handleSendDeviceToDeviceMessage(diagnosticCall, message, value);
                 }
 
                 @Override
-                public void onDisplayDiagnosticMessage(CallDiagnostics callDiagnostics,
-                        int messageId,
+                public void onDisplayDiagnosticMessage(DiagnosticCall diagnosticCall, int messageId,
                         CharSequence message) {
-                    handleDisplayDiagnosticMessage(callDiagnostics, messageId, message);
+                    handleDisplayDiagnosticMessage(diagnosticCall, messageId, message);
                 }
 
                 @Override
-                public void onClearDiagnosticMessage(CallDiagnostics callDiagnostics,
-                        int messageId) {
-                    handleClearDiagnosticMessage(callDiagnostics, messageId);
+                public void onClearDiagnosticMessage(DiagnosticCall diagnosticCall, int messageId) {
+                    handleClearDiagnosticMessage(diagnosticCall, messageId);
                 }
             };
 
@@ -157,19 +132,9 @@ public abstract class CallDiagnosticService extends Service {
      * Map which tracks the Telecom calls received from the Telecom stack.
      */
     private final Map<String, Call.Details> mCallByTelecomCallId = new ArrayMap<>();
-    private final Map<String, CallDiagnostics> mDiagnosticCallByTelecomCallId = new ArrayMap<>();
-    private final Object mLock = new Object();
+    private final Map<String, DiagnosticCall> mDiagnosticCallByTelecomCallId = new ArrayMap<>();
     private ICallDiagnosticServiceAdapter mAdapter;
 
-    /**
-     * Handles binding to the {@link CallDiagnosticService}.
-     *
-     * @param intent The Intent that was used to bind to this service,
-     * as given to {@link android.content.Context#bindService
-     * Context.bindService}.  Note that any extras that were included with
-     * the Intent at that point will <em>not</em> be seen here.
-     * @return
-     */
     @Nullable
     @Override
     public IBinder onBind(@NonNull Intent intent) {
@@ -178,57 +143,32 @@ public abstract class CallDiagnosticService extends Service {
     }
 
     /**
-     * Returns the {@link Executor} to use for incoming IPS from Telecom into your service
-     * implementation.
-     * <p>
-     * Override this method in your {@link CallDiagnosticService} implementation to provide the
-     * executor you want to use for incoming IPC.
-     *
-     * @return the {@link Executor} to use for incoming IPC from Telecom to
-     * {@link CallDiagnosticService} and {@link CallDiagnostics}.
-     */
-    @SuppressLint("OnNameExpected")
-    @NonNull public Executor getExecutor() {
-        return new HandlerExecutor(Handler.createAsync(getMainLooper()));
-    }
-
-    /**
      * Telecom calls this method on the {@link CallDiagnosticService} with details about a new call
      * which was added to Telecom.
      * <p>
-     * The {@link CallDiagnosticService} returns an implementation of {@link CallDiagnostics} to be
+     * The {@link CallDiagnosticService} returns an implementation of {@link DiagnosticCall} to be
      * used for the lifespan of this call.
-     * <p>
-     * Calls to this method will use the {@link CallDiagnosticService}'s {@link Executor}; see
-     * {@link CallDiagnosticService#getExecutor()} for more information.
      *
      * @param call The details of the new call.
-     * @return An instance of {@link CallDiagnostics} which the {@link CallDiagnosticService}
+     * @return An instance of {@link DiagnosticCall} which the {@link CallDiagnosticService}
      * provides to be used for the lifespan of the call.
-     * @throws IllegalArgumentException if a {@code null} {@link CallDiagnostics} is returned.
+     * @throws IllegalArgumentException if a {@code null} {@link DiagnosticCall} is returned.
      */
-    public abstract @NonNull CallDiagnostics onInitializeCallDiagnostics(@NonNull
+    public abstract @NonNull DiagnosticCall onInitializeDiagnosticCall(@NonNull
             android.telecom.Call.Details call);
 
     /**
-     * Telecom calls this method when a previous created {@link CallDiagnostics} is no longer
-     * needed.  This happens when Telecom is no longer tracking the call in question.
-     * <p>
-     * Calls to this method will use the {@link CallDiagnosticService}'s {@link Executor}; see
-     * {@link CallDiagnosticService#getExecutor()} for more information.
-     *
+     * Telecom calls this method when a previous created {@link DiagnosticCall} is no longer needed.
+     * This happens when Telecom is no longer tracking the call in question.
      * @param call The diagnostic call which is no longer tracked by Telecom.
      */
-    public abstract void onRemoveCallDiagnostics(@NonNull CallDiagnostics call);
+    public abstract void onRemoveDiagnosticCall(@NonNull DiagnosticCall call);
 
     /**
      * Telecom calls this method when the audio routing or available audio route information
      * changes.
      * <p>
      * Audio state is common to all calls.
-     * <p>
-     * Calls to this method will use the {@link CallDiagnosticService}'s {@link Executor}; see
-     * {@link CallDiagnosticService#getExecutor()} for more information.
      *
      * @param audioState The new audio state.
      */
@@ -238,10 +178,6 @@ public abstract class CallDiagnosticService extends Service {
     /**
      * Telecom calls this method when a {@link BluetoothCallQualityReport} is received from the
      * bluetooth stack.
-     * <p>
-     * Calls to this method will use the {@link CallDiagnosticService}'s {@link Executor}; see
-     * {@link CallDiagnosticService#getExecutor()} for more information.
-     *
      * @param qualityReport the {@link BluetoothCallQualityReport}.
      */
     public abstract void onBluetoothCallQualityReportReceived(
@@ -263,44 +199,31 @@ public abstract class CallDiagnosticService extends Service {
         String telecomCallId = parcelableCall.getId();
         Log.i(this, "handleCallAdded: callId=%s - added", telecomCallId);
         Call.Details newCallDetails = Call.Details.createFromParcelableCall(parcelableCall);
-        synchronized (mLock) {
-            mCallByTelecomCallId.put(telecomCallId, newCallDetails);
-        }
+        mCallByTelecomCallId.put(telecomCallId, newCallDetails);
 
-        getExecutor().execute(() -> {
-            CallDiagnostics callDiagnostics = onInitializeCallDiagnostics(newCallDetails);
-            if (callDiagnostics == null) {
-                throw new IllegalArgumentException(
-                        "A valid DiagnosticCall instance was not provided.");
-            }
-            synchronized (mLock) {
-                callDiagnostics.setListener(mDiagnosticCallListener);
-                callDiagnostics.setCallId(telecomCallId);
-                mDiagnosticCallByTelecomCallId.put(telecomCallId, callDiagnostics);
-            }
-        });
+        DiagnosticCall diagnosticCall = onInitializeDiagnosticCall(newCallDetails);
+        if (diagnosticCall == null) {
+            throw new IllegalArgumentException("A valid DiagnosticCall instance was not provided.");
+        }
+        diagnosticCall.setListener(mDiagnosticCallListener);
+        diagnosticCall.setCallId(telecomCallId);
+        mDiagnosticCallByTelecomCallId.put(telecomCallId, diagnosticCall);
     }
 
     /**
      * Handles an update to {@link Call.Details} notified by Telecom.
-     * Caches the call details and notifies the {@link CallDiagnostics} of the change via
-     * {@link CallDiagnostics#onCallDetailsChanged(Call.Details)}.
+     * Caches the call details and notifies the {@link DiagnosticCall} of the change via
+     * {@link DiagnosticCall#onCallDetailsChanged(Call.Details)}.
      * @param parcelableCall the new parceled call details from Telecom.
      */
     private void handleCallUpdated(@NonNull ParcelableCall parcelableCall) {
         String telecomCallId = parcelableCall.getId();
         Log.i(this, "handleCallUpdated: callId=%s - updated", telecomCallId);
         Call.Details newCallDetails = Call.Details.createFromParcelableCall(parcelableCall);
-        CallDiagnostics callDiagnostics;
-        synchronized (mLock) {
-            callDiagnostics = mDiagnosticCallByTelecomCallId.get(telecomCallId);
-            if (callDiagnostics == null) {
-                // Possible to get a call update after a call is removed.
-                return;
-            }
-            mCallByTelecomCallId.put(telecomCallId, newCallDetails);
-        }
-        getExecutor().execute(() -> callDiagnostics.handleCallUpdated(newCallDetails));
+
+        DiagnosticCall diagnosticCall = mDiagnosticCallByTelecomCallId.get(telecomCallId);
+        mCallByTelecomCallId.put(telecomCallId, newCallDetails);
+        diagnosticCall.handleCallUpdated(newCallDetails);
     }
 
     /**
@@ -310,71 +233,27 @@ public abstract class CallDiagnosticService extends Service {
     private void handleCallRemoved(@NonNull String telecomCallId) {
         Log.i(this, "handleCallRemoved: callId=%s - removed", telecomCallId);
 
-        CallDiagnostics callDiagnostics;
-        synchronized (mLock) {
-            if (mCallByTelecomCallId.containsKey(telecomCallId)) {
-                mCallByTelecomCallId.remove(telecomCallId);
-            }
-
-            if (mDiagnosticCallByTelecomCallId.containsKey(telecomCallId)) {
-                callDiagnostics = mDiagnosticCallByTelecomCallId.remove(telecomCallId);
-            } else {
-                callDiagnostics = null;
-            }
+        if (mCallByTelecomCallId.containsKey(telecomCallId)) {
+            mCallByTelecomCallId.remove(telecomCallId);
         }
-
-        // Inform the service of the removed call.
-        if (callDiagnostics != null) {
-            getExecutor().execute(() -> onRemoveCallDiagnostics(callDiagnostics));
+        if (mDiagnosticCallByTelecomCallId.containsKey(telecomCallId)) {
+            DiagnosticCall call = mDiagnosticCallByTelecomCallId.remove(telecomCallId);
+            // Inform the service of the removed call.
+            onRemoveDiagnosticCall(call);
         }
     }
 
     /**
      * Handles an incoming device to device message received from Telecom.  Notifies the
-     * {@link CallDiagnostics} via {@link CallDiagnostics#onReceiveDeviceToDeviceMessage(int, int)}.
+     * {@link DiagnosticCall} via {@link DiagnosticCall#onReceiveDeviceToDeviceMessage(int, int)}.
      * @param callId
      * @param message
      * @param value
      */
     private void handleReceivedD2DMessage(@NonNull String callId, int message, int value) {
         Log.i(this, "handleReceivedD2DMessage: callId=%s, msg=%d/%d", callId, message, value);
-        CallDiagnostics callDiagnostics;
-        synchronized (mLock) {
-            callDiagnostics = mDiagnosticCallByTelecomCallId.get(callId);
-        }
-        if (callDiagnostics != null) {
-            getExecutor().execute(
-                    () -> callDiagnostics.onReceiveDeviceToDeviceMessage(message, value));
-        }
-    }
-
-    /**
-     * Handles a request from the Telecom framework to get a disconnect message from the
-     * {@link CallDiagnosticService}.
-     * @param callId The ID of the call.
-     * @param disconnectCause The telecom disconnect cause.
-     */
-    private void handleCallDisconnected(@NonNull String callId,
-            @NonNull DisconnectCause disconnectCause) {
-        Log.i(this, "handleCallDisconnected: call=%s; cause=%s", callId, disconnectCause);
-        CallDiagnostics callDiagnostics;
-        synchronized (mLock) {
-            callDiagnostics = mDiagnosticCallByTelecomCallId.get(callId);
-        }
-        CharSequence message;
-        if (disconnectCause.getImsReasonInfo() != null) {
-            message = callDiagnostics.onCallDisconnected(disconnectCause.getImsReasonInfo());
-        } else {
-            message = callDiagnostics.onCallDisconnected(
-                    disconnectCause.getTelephonyDisconnectCause(),
-                    disconnectCause.getTelephonyPreciseDisconnectCause());
-        }
-        try {
-            mAdapter.overrideDisconnectMessage(callId, message);
-        } catch (RemoteException e) {
-            Log.w(this, "handleCallDisconnected: call=%s; cause=%s; %s",
-                    callId, disconnectCause, e);
-        }
+        DiagnosticCall diagnosticCall = mDiagnosticCallByTelecomCallId.get(callId);
+        diagnosticCall.onReceiveDeviceToDeviceMessage(message, value);
     }
 
     /**
@@ -386,36 +265,19 @@ public abstract class CallDiagnosticService extends Service {
     private void handleBluetoothCallQualityReport(@NonNull BluetoothCallQualityReport
             qualityReport) {
         Log.i(this, "handleBluetoothCallQualityReport; report=%s", qualityReport);
-        getExecutor().execute(() -> onBluetoothCallQualityReportReceived(qualityReport));
+        onBluetoothCallQualityReportReceived(qualityReport);
     }
 
     /**
-     * Handles a change reported by Telecom to the call quality for a call.
-     * @param callId the call ID the change applies to.
-     * @param callQuality The new call quality.
-     */
-    private void handleCallQualityChanged(@NonNull String callId,
-            @NonNull CallQuality callQuality) {
-        Log.i(this, "handleCallQualityChanged; call=%s, cq=%s", callId, callQuality);
-        CallDiagnostics callDiagnostics;
-        synchronized(mLock) {
-            callDiagnostics = mDiagnosticCallByTelecomCallId.get(callId);
-        }
-        if (callDiagnostics != null) {
-            callDiagnostics.onCallQualityReceived(callQuality);
-        }
-    }
-
-    /**
-     * Handles a request from a {@link CallDiagnostics} to send a device to device message (received
-     * via {@link CallDiagnostics#sendDeviceToDeviceMessage(int, int)}.
-     * @param callDiagnostics
+     * Handles a request from a {@link DiagnosticCall} to send a device to device message (received
+     * via {@link DiagnosticCall#sendDeviceToDeviceMessage(int, int)}.
+     * @param diagnosticCall
      * @param message
      * @param value
      */
-    private void handleSendDeviceToDeviceMessage(@NonNull CallDiagnostics callDiagnostics,
+    private void handleSendDeviceToDeviceMessage(@NonNull DiagnosticCall diagnosticCall,
             int message, int value) {
-        String callId = callDiagnostics.getCallId();
+        String callId = diagnosticCall.getCallId();
         try {
             mAdapter.sendDeviceToDeviceMessage(callId, message, value);
             Log.i(this, "handleSendDeviceToDeviceMessage: call=%s; msg=%d/%d", callId, message,
@@ -427,15 +289,15 @@ public abstract class CallDiagnosticService extends Service {
     }
 
     /**
-     * Handles a request from a {@link CallDiagnostics} to display an in-call diagnostic message.
-     * Originates from {@link CallDiagnostics#displayDiagnosticMessage(int, CharSequence)}.
-     * @param callDiagnostics
+     * Handles a request from a {@link DiagnosticCall} to display an in-call diagnostic message.
+     * Originates from {@link DiagnosticCall#displayDiagnosticMessage(int, CharSequence)}.
+     * @param diagnosticCall
      * @param messageId
      * @param message
      */
-    private void handleDisplayDiagnosticMessage(CallDiagnostics callDiagnostics, int messageId,
+    private void handleDisplayDiagnosticMessage(DiagnosticCall diagnosticCall, int messageId,
             CharSequence message) {
-        String callId = callDiagnostics.getCallId();
+        String callId = diagnosticCall.getCallId();
         try {
             mAdapter.displayDiagnosticMessage(callId, messageId, message);
             Log.i(this, "handleDisplayDiagnosticMessage: call=%s; msg=%d/%s", callId, messageId,
@@ -447,14 +309,14 @@ public abstract class CallDiagnosticService extends Service {
     }
 
     /**
-     * Handles a request from a {@link CallDiagnostics} to clear a previously shown diagnostic
+     * Handles a request from a {@link DiagnosticCall} to clear a previously shown diagnostic
      * message.
-     * Originates from {@link CallDiagnostics#clearDiagnosticMessage(int)}.
-     * @param callDiagnostics
+     * Originates from {@link DiagnosticCall#clearDiagnosticMessage(int)}.
+     * @param diagnosticCall
      * @param messageId
      */
-    private void handleClearDiagnosticMessage(CallDiagnostics callDiagnostics, int messageId) {
-        String callId = callDiagnostics.getCallId();
+    private void handleClearDiagnosticMessage(DiagnosticCall diagnosticCall, int messageId) {
+        String callId = diagnosticCall.getCallId();
         try {
             mAdapter.clearDiagnosticMessage(callId, messageId);
             Log.i(this, "handleClearDiagnosticMessage: call=%s; msg=%d", callId, messageId);

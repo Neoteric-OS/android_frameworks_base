@@ -32,15 +32,10 @@ import javax.inject.Inject
  * with the view instance and keeping the media view states up to date.
  */
 class MediaViewController @Inject constructor(
-    private val context: Context,
+    context: Context,
     private val configurationController: ConfigurationController,
     private val mediaHostStatesManager: MediaHostStatesManager
 ) {
-
-    /** Indicating the media view controller is for a player or recommendation. */
-    enum class TYPE {
-        PLAYER, RECOMMENDATION
-    }
 
     companion object {
         @JvmField
@@ -58,7 +53,6 @@ class MediaViewController @Inject constructor(
     private var animationDuration: Long = 0
     private var animateNextStateChange: Boolean = false
     private val measurement = MeasurementOutput(0, 0)
-    private var type: TYPE = TYPE.PLAYER
 
     /**
      * A map containing all viewStates for all locations of this mediaState
@@ -70,10 +64,11 @@ class MediaViewController @Inject constructor(
      * finished
      */
     @MediaLocation
-    var currentEndLocation: Int = -1
+    private var currentEndLocation: Int = -1
 
     /**
-     * The starting location of the view where it starts for all animations and transitions
+     * The ending location of the view where it ends when all animations and transitions have
+     * finished
      */
     @MediaLocation
     private var currentStartLocation: Int = -1
@@ -185,12 +180,9 @@ class MediaViewController @Inject constructor(
     var isGutsVisible = false
         private set
 
-    /**
-     * Whether the settings button in the guts should be visible
-     */
-    var shouldHideGutsSettings = false
-
     init {
+        collapsedLayout.load(context, R.xml.media_collapsed)
+        expandedLayout.load(context, R.xml.media_expanded)
         mediaHostStatesManager.addController(this)
         layoutController.sizeChangedListener = { width: Int, height: Int ->
             currentWidth = width
@@ -257,33 +249,16 @@ class MediaViewController @Inject constructor(
      * [TransitionViewState].
      */
     private fun setGutsViewState(viewState: TransitionViewState) {
-        if (type == TYPE.PLAYER) {
-            PlayerViewHolder.controlsIds.forEach { id ->
-                viewState.widgetStates.get(id)?.let { state ->
-                    // Make sure to use the unmodified state if guts are not visible.
-                    state.alpha = if (isGutsVisible) 0f else state.alpha
-                    state.gone = if (isGutsVisible) true else state.gone
-                }
-            }
-            PlayerViewHolder.gutsIds.forEach { id ->
-                viewState.widgetStates.get(id)?.alpha = if (isGutsVisible) 1f else 0f
-                viewState.widgetStates.get(id)?.gone = !isGutsVisible
-            }
-        } else {
-            RecommendationViewHolder.controlsIds.forEach { id ->
-                viewState.widgetStates.get(id)?.let { state ->
-                    // Make sure to use the unmodified state if guts are not visible.
-                    state.alpha = if (isGutsVisible) 0f else state.alpha
-                    state.gone = if (isGutsVisible) true else state.gone
-                }
-            }
-            RecommendationViewHolder.gutsIds.forEach { id ->
-                viewState.widgetStates.get(id)?.alpha = if (isGutsVisible) 1f else 0f
-                viewState.widgetStates.get(id)?.gone = !isGutsVisible
+        PlayerViewHolder.controlsIds.forEach { id ->
+            viewState.widgetStates.get(id)?.let { state ->
+                // Make sure to use the unmodified state if guts are not visible
+                state.alpha = if (isGutsVisible) 0f else state.alpha
+                state.gone = if (isGutsVisible) true else state.gone
             }
         }
-        if (shouldHideGutsSettings) {
-            viewState.widgetStates.get(R.id.settings)?.gone = true
+        PlayerViewHolder.gutsIds.forEach { id ->
+            viewState.widgetStates.get(id)?.alpha = if (isGutsVisible) 1f else 0f
+            viewState.widgetStates.get(id)?.gone = !isGutsVisible
         }
     }
 
@@ -338,11 +313,7 @@ class MediaViewController @Inject constructor(
         return result
     }
 
-    private fun getKey(
-        state: MediaHostState,
-        guts: Boolean,
-        result: CacheKey
-    ): CacheKey {
+    private fun getKey(state: MediaHostState, guts: Boolean, result: CacheKey): CacheKey {
         result.apply {
             heightMeasureSpec = state.measurementInput?.heightMeasureSpec ?: 0
             widthMeasureSpec = state.measurementInput?.widthMeasureSpec ?: 0
@@ -356,8 +327,7 @@ class MediaViewController @Inject constructor(
      * Attach a view to this controller. This may perform measurements if it's not available yet
      * and should therefore be done carefully.
      */
-    fun attach(transitionLayout: TransitionLayout, type: TYPE) {
-        updateMediaViewControllerType(type)
+    fun attach(transitionLayout: TransitionLayout) {
         this.transitionLayout = transitionLayout
         layoutController.attach(transitionLayout)
         if (currentEndLocation == -1) {
@@ -456,7 +426,7 @@ class MediaViewController @Inject constructor(
         viewState: TransitionViewState?,
         location: Int,
         outState: TransitionViewState
-    ): TransitionViewState? {
+    ) : TransitionViewState? {
         val result = viewState?.copy(outState) ?: return null
         val overrideSize = mediaHostStatesManager.carouselSizes[location]
         overrideSize?.let {
@@ -466,18 +436,6 @@ class MediaViewController @Inject constructor(
             result.width = Math.max(it.measuredWidth, result.width)
         }
         return result
-    }
-
-    private fun updateMediaViewControllerType(type: TYPE) {
-        this.type = type
-        if (type == TYPE.PLAYER) {
-            collapsedLayout.load(context, R.xml.media_collapsed)
-            expandedLayout.load(context, R.xml.media_expanded)
-        } else {
-            collapsedLayout.load(context, R.xml.media_recommendation_collapsed)
-            expandedLayout.load(context, R.xml.media_recommendation_expanded)
-        }
-        refreshState()
     }
 
     /**

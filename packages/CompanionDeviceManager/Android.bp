@@ -33,7 +33,6 @@ license {
 
 android_app {
     name: "CompanionDeviceManager",
-    defaults: ["platform_app_defaults"],
     srcs: ["src/**/*.java"],
 
     platform_apis: true,

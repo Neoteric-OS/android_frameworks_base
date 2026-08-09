@@ -26,19 +26,13 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.Display;
 
-import com.android.systemui.dagger.qualifiers.Main;
-import com.android.systemui.doze.dagger.DozeScope;
-import com.android.systemui.doze.dagger.WrappedService;
 import com.android.systemui.statusbar.phone.DozeParameters;
 import com.android.systemui.util.wakelock.SettableWakeLock;
 import com.android.systemui.util.wakelock.WakeLock;
 
-import javax.inject.Inject;
-
 /**
  * Controls the screen when dozing.
  */
-@DozeScope
 public class DozeScreenState implements DozeMachine.Part {
 
     private static final boolean DEBUG = DozeService.DEBUG;
@@ -65,9 +59,8 @@ public class DozeScreenState implements DozeMachine.Part {
     private int mPendingScreenState = Display.STATE_UNKNOWN;
     private SettableWakeLock mWakeLock;
 
-    @Inject
-    public DozeScreenState(@WrappedService DozeMachine.Service service, @Main Handler handler,
-            DozeHost host, DozeParameters parameters, WakeLock wakeLock) {
+    public DozeScreenState(DozeMachine.Service service, Handler handler, DozeHost host,
+            DozeParameters parameters, WakeLock wakeLock) {
         mDozeService = service;
         mHandler = handler;
         mParameters = parameters;

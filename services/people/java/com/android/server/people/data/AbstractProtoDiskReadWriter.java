@@ -85,10 +85,8 @@ abstract class AbstractProtoDiskReadWriter<T> {
     }
 
     @WorkerThread
-    void delete(@NonNull String fileName) {
-        synchronized (this) {
-            mScheduledFileDataMap.remove(fileName);
-        }
+    synchronized void delete(@NonNull String fileName) {
+        mScheduledFileDataMap.remove(fileName);
         final File file = getFile(fileName);
         if (!file.exists()) {
             return;
@@ -135,6 +133,28 @@ abstract class AbstractProtoDiskReadWriter<T> {
             Slog.w(TAG, "Found multiple files with the same name: " + Arrays.toString(files));
         }
         return parseFile(files[0]);
+    }
+
+    /**
+     * Reads all files in directory and returns a map with file names as keys and parsed file
+     * contents as values.
+     */
+    @WorkerThread
+    @Nullable
+    Map<String, T> readAll() {
+        File[] files = mRootDir.listFiles(File::isFile);
+        if (files == null) {
+            return null;
+        }
+
+        Map<String, T> results = new ArrayMap<>();
+        for (File file : files) {
+            T result = parseFile(file);
+            if (result != null) {
+                results.put(file.getName(), result);
+            }
+        }
+        return results;
     }
 
     /**

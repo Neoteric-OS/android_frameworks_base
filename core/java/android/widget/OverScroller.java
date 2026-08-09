@@ -232,8 +232,11 @@ public class OverScroller {
      *
      * @return The duration of the scroll in milliseconds.
      *
-     * @hide
+     * @hide Pending removal once nothing depends on it
+     * @deprecated OverScrollers don't necessarily have a fixed duration.
+     *             This function will lie to the best of its ability.
      */
+    @Deprecated
     public final int getDuration() {
         return Math.max(mScrollerX.mDuration, mScrollerY.mDuration);
     }
@@ -246,8 +249,13 @@ public class OverScroller {
      * @see #setFinalX(int)
      * @see #setFinalY(int)
      *
-     * @hide
+     * @hide Pending removal once nothing depends on it
+     * @deprecated OverScrollers don't necessarily have a fixed duration.
+     *             Instead of setting a new final position and extending
+     *             the duration of an existing scroll, use startScroll
+     *             to begin a new animation.
      */
+    @Deprecated
     @UnsupportedAppUsage
     public void extendDuration(int extend) {
         mScrollerX.extendDuration(extend);
@@ -261,8 +269,13 @@ public class OverScroller {
      * @see #extendDuration(int)
      * @see #setFinalY(int)
      *
-     * @hide
+     * @hide Pending removal once nothing depends on it
+     * @deprecated OverScroller's final position may change during an animation.
+     *             Instead of setting a new final position and extending
+     *             the duration of an existing scroll, use startScroll
+     *             to begin a new animation.
      */
+    @Deprecated
     public void setFinalX(int newX) {
         mScrollerX.setFinalPosition(newX);
     }
@@ -274,8 +287,13 @@ public class OverScroller {
      * @see #extendDuration(int)
      * @see #setFinalX(int)
      *
-     * @hide
+     * @hide Pending removal once nothing depends on it
+     * @deprecated OverScroller's final position may change during an animation.
+     *             Instead of setting a new final position and extending
+     *             the duration of an existing scroll, use startScroll
+     *             to begin a new animation.
      */
+    @Deprecated
     public void setFinalY(int newY) {
         mScrollerY.setFinalPosition(newY);
     }
@@ -692,14 +710,13 @@ public class OverScroller {
 
         void setFinalPosition(int position) {
             mFinal = position;
-            mSplineDistance = mFinal - mStart;
             mFinished = false;
         }
 
         void extendDuration(int extend) {
             final long time = AnimationUtils.currentAnimationTimeMillis();
             final int elapsedTime = (int) (time - mStartTime);
-            mDuration = mSplineDuration = elapsedTime + extend;
+            mDuration = elapsedTime + extend;
             mFinished = false;
         }
 

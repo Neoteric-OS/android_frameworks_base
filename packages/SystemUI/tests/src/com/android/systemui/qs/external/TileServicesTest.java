@@ -46,14 +46,12 @@ import com.android.systemui.dump.DumpManager;
 import com.android.systemui.qs.QSTileHost;
 import com.android.systemui.qs.logging.QSLogger;
 import com.android.systemui.qs.tileimpl.QSFactoryImpl;
-import com.android.systemui.settings.UserTracker;
 import com.android.systemui.shared.plugins.PluginManager;
 import com.android.systemui.statusbar.phone.AutoTileManager;
 import com.android.systemui.statusbar.phone.StatusBar;
 import com.android.systemui.statusbar.phone.StatusBarIconController;
 import com.android.systemui.statusbar.policy.BluetoothController;
 import com.android.systemui.tuner.TunerService;
-import com.android.systemui.util.settings.SecureSettings;
 
 import org.junit.After;
 import org.junit.Before;
@@ -94,10 +92,6 @@ public class TileServicesTest extends SysuiTestCase {
     private QSLogger mQSLogger;
     @Mock
     private UiEventLogger mUiEventLogger;
-    @Mock
-    private UserTracker mUserTracker;
-    @Mock
-    private SecureSettings  mSecureSettings;
 
     @Before
     public void setUp() throws Exception {
@@ -116,12 +110,8 @@ public class TileServicesTest extends SysuiTestCase {
                 mock(BroadcastDispatcher.class),
                 Optional.of(mStatusBar),
                 mQSLogger,
-                mUiEventLogger,
-                mUserTracker,
-                mSecureSettings,
-                mock(CustomTileStatePersister.class));
-        mTileService = new TestTileServices(host, Looper.getMainLooper(), mBroadcastDispatcher,
-                mUserTracker);
+                mUiEventLogger);
+        mTileService = new TestTileServices(host, Looper.getMainLooper(), mBroadcastDispatcher);
     }
 
     @After
@@ -196,8 +186,8 @@ public class TileServicesTest extends SysuiTestCase {
 
     private class TestTileServices extends TileServices {
         TestTileServices(QSTileHost host, Looper looper,
-                BroadcastDispatcher broadcastDispatcher, UserTracker userTracker) {
-            super(host, looper, broadcastDispatcher, userTracker);
+                BroadcastDispatcher broadcastDispatcher) {
+            super(host, looper, broadcastDispatcher);
         }
 
         @Override

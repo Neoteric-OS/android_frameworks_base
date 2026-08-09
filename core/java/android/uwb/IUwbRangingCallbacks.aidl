@@ -24,7 +24,7 @@ import android.uwb.SessionHandle;
 /**
  * @hide
  */
-oneway interface IUwbRangingCallbacks {
+interface IUwbRangingCallbacks {
   /**
    * Called when the ranging session has been opened
    *

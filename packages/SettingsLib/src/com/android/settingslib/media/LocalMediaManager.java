@@ -22,13 +22,11 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.media.RoutingSessionInfo;
-import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.settingslib.bluetooth.A2dpProfile;
@@ -51,7 +49,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * LocalMediaManager provide interface to get MediaDevice list and transfer media to MediaDevice.
  */
-@RequiresApi(Build.VERSION_CODES.R)
 public class LocalMediaManager implements BluetoothCallback {
     private static final Comparator<MediaDevice> COMPARATOR = Comparator.naturalOrder();
     private static final String TAG = "LocalMediaManager";
@@ -402,20 +399,6 @@ public class LocalMediaManager implements BluetoothCallback {
      */
     public String getPackageName() {
         return mPackageName;
-    }
-
-    /**
-     * Returns {@code true} if needed to disable media output, otherwise returns {@code false}.
-     */
-    public boolean shouldDisableMediaOutput(String packageName) {
-        return mInfoMediaManager.shouldDisableMediaOutput(packageName);
-    }
-
-    /**
-     * Returns {@code true} if needed to enable volume seekbar, otherwise returns {@code false}.
-     */
-    public boolean shouldEnableVolumeSeekBar(RoutingSessionInfo sessionInfo) {
-        return mInfoMediaManager.shouldEnableVolumeSeekBar(sessionInfo);
     }
 
     @VisibleForTesting

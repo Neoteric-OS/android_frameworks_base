@@ -16,11 +16,11 @@ package com.android.systemui.privacy
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
-import com.android.settingslib.Utils
 import com.android.systemui.R
 
 class OngoingPrivacyChip @JvmOverloads constructor(
@@ -30,28 +30,47 @@ class OngoingPrivacyChip @JvmOverloads constructor(
     defStyleRes: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttrs, defStyleRes) {
 
-    private var iconMargin = 0
-    private var iconSize = 0
-    private var iconColor = 0
-
+    private val iconMarginExpanded = context.resources.getDimensionPixelSize(
+                    R.dimen.ongoing_appops_chip_icon_margin_expanded)
+    private val iconMarginCollapsed = context.resources.getDimensionPixelSize(
+                    R.dimen.ongoing_appops_chip_icon_margin_collapsed)
+    private val iconSize =
+            context.resources.getDimensionPixelSize(R.dimen.ongoing_appops_chip_icon_size)
+    private val iconColor = context.resources.getColor(
+            R.color.status_bar_clock_color, context.theme)
+    private val sidePadding =
+            context.resources.getDimensionPixelSize(R.dimen.ongoing_appops_chip_side_padding)
+    private val backgroundDrawable = context.getDrawable(R.drawable.privacy_chip_bg)
     private lateinit var iconsContainer: LinearLayout
+    private lateinit var back: FrameLayout
+    var expanded = false
+        set(value) {
+            if (value != field) {
+                field = value
+                updateView()
+            }
+        }
 
+    var builder = PrivacyChipBuilder(context, emptyList<PrivacyItem>())
     var privacyList = emptyList<PrivacyItem>()
         set(value) {
             field = value
-            updateView(PrivacyChipBuilder(context, field))
+            builder = PrivacyChipBuilder(context, value)
+            updateView()
         }
 
     override fun onFinishInflate() {
         super.onFinishInflate()
 
+        back = requireViewById(R.id.background)
         iconsContainer = requireViewById(R.id.icons_container)
-
-        updateResources()
     }
 
     // Should only be called if the builder icons or app changed
-    private fun updateView(builder: PrivacyChipBuilder) {
+    private fun updateView() {
+        back.background = if (expanded) backgroundDrawable else null
+        val padding = if (expanded) sidePadding else 0
+        back.setPaddingRelative(padding, 0, padding, 0)
         fun setIcons(chipBuilder: PrivacyChipBuilder, iconsContainer: ViewGroup) {
             iconsContainer.removeAllViews()
             chipBuilder.generateIcons().forEachIndexed { i, it ->
@@ -64,38 +83,28 @@ class OngoingPrivacyChip @JvmOverloads constructor(
                 iconsContainer.addView(image, iconSize, iconSize)
                 if (i != 0) {
                     val lp = image.layoutParams as MarginLayoutParams
-                    lp.marginStart = iconMargin
+                    lp.marginStart = if (expanded) iconMarginExpanded else iconMarginCollapsed
                     image.layoutParams = lp
                 }
             }
         }
 
         if (!privacyList.isEmpty()) {
-            generateContentDescription(builder)
+            generateContentDescription()
             setIcons(builder, iconsContainer)
+            val lp = iconsContainer.layoutParams as FrameLayout.LayoutParams
+            lp.gravity = Gravity.CENTER_VERTICAL or
+                    (if (expanded) Gravity.CENTER_HORIZONTAL else Gravity.END)
+            iconsContainer.layoutParams = lp
         } else {
             iconsContainer.removeAllViews()
         }
         requestLayout()
     }
 
-    private fun generateContentDescription(builder: PrivacyChipBuilder) {
+    private fun generateContentDescription() {
         val typesText = builder.joinTypes()
         contentDescription = context.getString(
                 R.string.ongoing_privacy_chip_content_multiple_apps, typesText)
-    }
-
-    private fun updateResources() {
-        iconMargin = context.resources
-                .getDimensionPixelSize(R.dimen.ongoing_appops_chip_icon_margin)
-        iconSize = context.resources
-                .getDimensionPixelSize(R.dimen.ongoing_appops_chip_icon_size)
-        iconColor =
-                Utils.getColorAttrDefaultColor(context, com.android.internal.R.attr.colorPrimary)
-
-        val padding = context.resources
-                .getDimensionPixelSize(R.dimen.ongoing_appops_chip_side_padding)
-        iconsContainer.setPaddingRelative(padding, 0, padding, 0)
-        iconsContainer.background = context.getDrawable(R.drawable.privacy_chip_bg)
     }
 }

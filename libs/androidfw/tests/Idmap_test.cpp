@@ -27,8 +27,6 @@
 #include "data/overlayable/R.h"
 #include "data/system/R.h"
 
-using ::testing::NotNull;
-
 namespace overlay = com::android::overlay;
 namespace overlayable = com::android::overlayable;
 
@@ -197,11 +195,7 @@ TEST_F(IdmapTest, OverlaidResourceHasSameName) {
 }
 
 TEST_F(IdmapTest, OverlayLoaderInterop) {
-  auto asset = AssetsProvider::CreateAssetFromFile(GetTestDataPath() + "/loader/resources.arsc");
-  ASSERT_THAT(asset, NotNull());
-
-  auto loader_assets = ApkAssets::LoadTable(std::move(asset), EmptyAssetsProvider::Create(),
-      PROPERTY_LOADER);
+  auto loader_assets = ApkAssets::LoadTable("loader/resources.arsc", PROPERTY_LOADER);
   AssetManager2 asset_manager;
   asset_manager.SetApkAssets({overlayable_assets_.get(), loader_assets.get(),
                               overlay_assets_.get()});

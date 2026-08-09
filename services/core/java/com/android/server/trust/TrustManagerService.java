@@ -17,8 +17,6 @@
 package com.android.server.trust;
 
 import android.Manifest;
-import android.annotation.NonNull;
-import android.annotation.Nullable;
 import android.annotation.UserIdInt;
 import android.app.ActivityManager;
 import android.app.AlarmManager;
@@ -74,7 +72,6 @@ import com.android.internal.content.PackageMonitor;
 import com.android.internal.util.DumpUtils;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.server.SystemService;
-import com.android.server.SystemService.TargetUser;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -382,7 +379,7 @@ public class TrustManagerService extends SystemService {
     }
 
     private void updateTrustAll() {
-        List<UserInfo> userInfos = mUserManager.getAliveUsers();
+        List<UserInfo> userInfos = mUserManager.getUsers(true /* excludeDying */);
         for (UserInfo userInfo : userInfos) {
             updateTrust(userInfo.id, 0);
         }
@@ -488,7 +485,7 @@ public class TrustManagerService extends SystemService {
 
         List<UserInfo> userInfos;
         if (userIdOrAll == UserHandle.USER_ALL) {
-            userInfos = mUserManager.getAliveUsers();
+            userInfos = mUserManager.getUsers(true /* excludeDying */);
         } else {
             userInfos = new ArrayList<>();
             userInfos.add(mUserManager.getUserInfo(userIdOrAll));
@@ -647,7 +644,7 @@ public class TrustManagerService extends SystemService {
         }
         List<UserInfo> userInfos;
         if (userId == UserHandle.USER_ALL) {
-            userInfos = mUserManager.getAliveUsers();
+            userInfos = mUserManager.getUsers(true /* excludeDying */);
         } else {
             userInfos = new ArrayList<>();
             userInfos.add(mUserManager.getUserInfo(userId));
@@ -1057,28 +1054,28 @@ public class TrustManagerService extends SystemService {
     // User lifecycle
 
     @Override
-    public void onUserStarting(@NonNull TargetUser user) {
-        mHandler.obtainMessage(MSG_START_USER, user.getUserIdentifier(), 0, null).sendToTarget();
+    public void onStartUser(int userId) {
+        mHandler.obtainMessage(MSG_START_USER, userId, 0, null).sendToTarget();
     }
 
     @Override
-    public void onUserStopped(@NonNull TargetUser user) {
-        mHandler.obtainMessage(MSG_CLEANUP_USER, user.getUserIdentifier(), 0, null).sendToTarget();
+    public void onCleanupUser(int userId) {
+        mHandler.obtainMessage(MSG_CLEANUP_USER, userId, 0, null).sendToTarget();
     }
 
     @Override
-    public void onUserSwitching(@Nullable TargetUser from, @NonNull TargetUser to) {
-        mHandler.obtainMessage(MSG_SWITCH_USER, to.getUserIdentifier(), 0, null).sendToTarget();
+    public void onSwitchUser(int userId) {
+        mHandler.obtainMessage(MSG_SWITCH_USER, userId, 0, null).sendToTarget();
     }
 
     @Override
-    public void onUserUnlocking(@NonNull TargetUser user) {
-        mHandler.obtainMessage(MSG_UNLOCK_USER, user.getUserIdentifier(), 0, null).sendToTarget();
+    public void onUnlockUser(int userId) {
+        mHandler.obtainMessage(MSG_UNLOCK_USER, userId, 0, null).sendToTarget();
     }
 
     @Override
-    public void onUserStopping(@NonNull TargetUser user) {
-        mHandler.obtainMessage(MSG_STOP_USER, user.getUserIdentifier(), 0, null).sendToTarget();
+    public void onStopUser(@UserIdInt int userId) {
+        mHandler.obtainMessage(MSG_STOP_USER, userId, 0, null).sendToTarget();
     }
 
     // Plumbing
@@ -1135,7 +1132,7 @@ public class TrustManagerService extends SystemService {
             userId = ActivityManager.handleIncomingUser(getCallingPid(), getCallingUid(), userId,
                     false /* allowAll */, true /* requireFull */, "isDeviceLocked", null);
 
-            final long token = Binder.clearCallingIdentity();
+            long token = Binder.clearCallingIdentity();
             try {
                 if (!mLockPatternUtils.isSeparateProfileChallengeEnabled(userId)) {
                     userId = resolveProfileParent(userId);
@@ -1151,7 +1148,7 @@ public class TrustManagerService extends SystemService {
             userId = ActivityManager.handleIncomingUser(getCallingPid(), getCallingUid(), userId,
                     false /* allowAll */, true /* requireFull */, "isDeviceSecure", null);
 
-            final long token = Binder.clearCallingIdentity();
+            long token = Binder.clearCallingIdentity();
             try {
                 if (!mLockPatternUtils.isSeparateProfileChallengeEnabled(userId)) {
                     userId = resolveProfileParent(userId);
@@ -1168,7 +1165,7 @@ public class TrustManagerService extends SystemService {
         }
 
         private void enforceListenerPermission() {
-            mContext.enforceCallingOrSelfPermission(Manifest.permission.TRUST_LISTENER,
+            mContext.enforceCallingPermission(Manifest.permission.TRUST_LISTENER,
                     "register trust listener");
         }
 
@@ -1183,7 +1180,7 @@ public class TrustManagerService extends SystemService {
                 fout.println("disabled because the third-party apps can't run yet.");
                 return;
             }
-            final List<UserInfo> userInfos = mUserManager.getAliveUsers();
+            final List<UserInfo> userInfos = mUserManager.getUsers(true /* excludeDying */);
             mHandler.runWithScissors(new Runnable() {
                 @Override
                 public void run() {
@@ -1339,7 +1336,7 @@ public class TrustManagerService extends SystemService {
     }
 
     private int resolveProfileParent(int userId) {
-        final long identity = Binder.clearCallingIdentity();
+        long identity = Binder.clearCallingIdentity();
         try {
             UserInfo parent = mUserManager.getProfileParent(userId);
             if (parent != null) {

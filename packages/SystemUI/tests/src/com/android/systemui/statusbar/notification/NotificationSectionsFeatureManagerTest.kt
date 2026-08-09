@@ -18,6 +18,7 @@ package com.android.systemui.statusbar.notification
 
 import android.provider.DeviceConfig
 import android.provider.Settings
+import android.provider.Settings.Secure.NOTIFICATION_NEW_INTERRUPTION_MODEL
 import android.testing.AndroidTestingRunner
 
 import androidx.test.filters.SmallTest
@@ -42,18 +43,19 @@ class NotificationSectionsFeatureManagerTest : SysuiTestCase() {
 
     @Before
     public fun setup() {
+        Settings.Secure.putInt(mContext.getContentResolver(),
+        NOTIFICATION_NEW_INTERRUPTION_MODEL, 1)
         manager = NotificationSectionsFeatureManager(proxyFake, mContext)
         manager!!.clearCache()
-        originalQsMediaPlayer = Settings.Global.getInt(context.getContentResolver(),
-                Settings.Global.SHOW_MEDIA_ON_QUICK_SETTINGS, 1)
-        Settings.Global.putInt(context.getContentResolver(),
-                Settings.Global.SHOW_MEDIA_ON_QUICK_SETTINGS, 0)
+        originalQsMediaPlayer = Settings.System.getInt(context.getContentResolver(),
+                "qs_media_player", 1)
+        Settings.Global.putInt(context.getContentResolver(), "qs_media_player", 0)
     }
 
     @After
     public fun teardown() {
-        Settings.Global.putInt(context.getContentResolver(),
-                Settings.Global.SHOW_MEDIA_ON_QUICK_SETTINGS, originalQsMediaPlayer)
+        Settings.Global.putInt(context.getContentResolver(), "qs_media_player",
+                originalQsMediaPlayer)
     }
 
     @Test
@@ -62,8 +64,8 @@ class NotificationSectionsFeatureManagerTest : SysuiTestCase() {
                 DeviceConfig.NAMESPACE_SYSTEMUI, NOTIFICATIONS_USE_PEOPLE_FILTERING, "false", false)
 
         assertFalse("People filtering should be disabled", manager!!.isFilteringEnabled())
-        assertTrue("Expecting 2 buckets when people filtering is disabled",
-                manager!!.getNumberOfBuckets() == 2)
+        assertTrue("Expecting 5 buckets when people filtering is disabled",
+                manager!!.getNumberOfBuckets() == 5)
     }
 
     @Test
@@ -72,7 +74,7 @@ class NotificationSectionsFeatureManagerTest : SysuiTestCase() {
                 DeviceConfig.NAMESPACE_SYSTEMUI, NOTIFICATIONS_USE_PEOPLE_FILTERING, "true", false)
 
         assertTrue("People filtering should be enabled", manager!!.isFilteringEnabled())
-        assertTrue("Expecting 5 buckets when people filtering is enabled",
-                manager!!.getNumberOfBuckets() == 5)
+        assertTrue("Expecting 6 buckets when people filtering is enabled",
+                manager!!.getNumberOfBuckets() == 6)
     }
 }

@@ -33,8 +33,7 @@
         android:directBootAware="true"
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher_android">
-        <receiver android:name="com.android.carrierdefaultapp.CarrierDefaultBroadcastReceiver"
-            android:exported="true">
+        <receiver android:name="com.android.carrierdefaultapp.CarrierDefaultBroadcastReceiver">
             <intent-filter>
                 <action android:name="com.android.internal.telephony.CARRIER_SIGNAL_REDIRECTED" />
                 <action android:name="com.android.internal.telephony.CARRIER_SIGNAL_RESET" />
@@ -59,8 +58,7 @@
         <activity-alias
             android:name="com.android.carrierdefaultapp.URLHandlerActivity"
             android:targetActivity="com.android.carrierdefaultapp.CaptivePortalLoginActivity"
-            android:enabled="false"
-            android:exported="true">
+            android:enabled="false" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT"/>

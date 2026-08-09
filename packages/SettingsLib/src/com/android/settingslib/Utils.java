@@ -1,7 +1,6 @@
 package com.android.settingslib;
 
 import android.annotation.ColorInt;
-import android.annotation.Nullable;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -23,10 +22,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.LocationManager;
 import android.media.AudioManager;
-import android.net.NetworkCapabilities;
 import android.net.TetheringManager;
-import android.net.vcn.VcnTransportInfo;
-import android.net.wifi.WifiInfo;
 import android.os.BatteryManager;
 import android.os.SystemProperties;
 import android.os.UserHandle;
@@ -204,23 +200,18 @@ public class Utils {
             statusString = res.getString(R.string.battery_info_status_full);
         } else {
             if (status == BatteryManager.BATTERY_STATUS_CHARGING) {
-                if (batteryStatus.isPluggedInWired()) {
-                    switch (batteryStatus.getChargingSpeed(context)) {
-                        case BatteryStatus.CHARGING_FAST:
-                            statusString = res.getString(
-                                    R.string.battery_info_status_charging_fast);
-                            break;
-                        case BatteryStatus.CHARGING_SLOWLY:
-                            statusString = res.getString(
-                                    R.string.battery_info_status_charging_slow);
-                            break;
-                        default:
-                            statusString = res.getString(R.string.battery_info_status_charging);
-                            break;
-                    }
-                } else {
-                    statusString = res.getString(R.string.battery_info_status_charging_wireless);
+                switch (batteryStatus.getChargingSpeed(context)) {
+                    case BatteryStatus.CHARGING_FAST:
+                        statusString = res.getString(R.string.battery_info_status_charging_fast);
+                        break;
+                    case BatteryStatus.CHARGING_SLOWLY:
+                        statusString = res.getString(R.string.battery_info_status_charging_slow);
+                        break;
+                    default:
+                        statusString = res.getString(R.string.battery_info_status_charging);
+                        break;
                 }
+
             } else if (status == BatteryManager.BATTERY_STATUS_DISCHARGING) {
                 statusString = res.getString(R.string.battery_info_status_discharging);
             } else if (status == BatteryManager.BATTERY_STATUS_NOT_CHARGING) {
@@ -571,22 +562,5 @@ public class Utils {
         drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         drawable.draw(canvas);
         return roundedBitmap;
-    }
-
-    /**
-     * Returns the WifiInfo for the underlying WiFi network of the VCN network, returns null if the
-     * input NetworkCapabilities is not for a VCN network with underlying WiFi network.
-     *
-     * @param networkCapabilities NetworkCapabilities of the network.
-     */
-    @Nullable
-    public static WifiInfo tryGetWifiInfoForVcn(NetworkCapabilities networkCapabilities) {
-        if (networkCapabilities.getTransportInfo() == null
-                || !(networkCapabilities.getTransportInfo() instanceof VcnTransportInfo)) {
-            return null;
-        }
-        VcnTransportInfo vcnTransportInfo =
-                (VcnTransportInfo) networkCapabilities.getTransportInfo();
-        return vcnTransportInfo.getWifiInfo();
     }
 }

@@ -16,7 +16,6 @@
 
 package android.uwb;
 
-import android.content.AttributionSource;
 import android.os.PersistableBundle;
 import android.uwb.IUwbAdapterStateCallbacks;
 import android.uwb.IUwbRangingCallbacks;
@@ -78,13 +77,11 @@ interface IUwbAdapter {
    * If the provided sessionHandle is already open for the calling client, then
    * #onRangingOpenFailed must be called and the new session must not be opened.
    *
-   * @param attributionSource AttributionSource to use for permission enforcement.
    * @param sessionHandle the session handle to open ranging for
    * @param rangingCallbacks the callbacks used to deliver ranging information
    * @param parameters the configuration to use for ranging
    */
-  void openRanging(in AttributionSource attributionSource,
-                   in SessionHandle sessionHandle,
+  void openRanging(in SessionHandle sessionHandle,
                    in IUwbRangingCallbacks rangingCallbacks,
                    in PersistableBundle parameters);
 

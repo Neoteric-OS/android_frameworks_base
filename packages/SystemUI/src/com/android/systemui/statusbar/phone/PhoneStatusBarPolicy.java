@@ -50,7 +50,6 @@ import com.android.systemui.dagger.qualifiers.UiBackground;
 import com.android.systemui.privacy.PrivacyItem;
 import com.android.systemui.privacy.PrivacyItemController;
 import com.android.systemui.privacy.PrivacyType;
-import com.android.systemui.privacy.logging.PrivacyLogger;
 import com.android.systemui.qs.tiles.DndTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
 import com.android.systemui.screenrecord.RecordingController;
@@ -107,8 +106,7 @@ public class PhoneStatusBarPolicy
     private final String mSlotBluetooth;
     private final String mSlotTty;
     private final String mSlotZen;
-    private final String mSlotMute;
-    private final String mSlotVibrate;
+    private final String mSlotVolume;
     private final String mSlotAlarmClock;
     private final String mSlotManagedProfile;
     private final String mSlotRotate;
@@ -147,11 +145,9 @@ public class PhoneStatusBarPolicy
     private final SensorPrivacyController mSensorPrivacyController;
     private final RecordingController mRecordingController;
     private final RingerModeTracker mRingerModeTracker;
-    private final PrivacyLogger mPrivacyLogger;
 
     private boolean mZenVisible;
-    private boolean mVibrateVisible;
-    private boolean mMuteVisible;
+    private boolean mVolumeVisible;
     private boolean mCurrentUserSetup;
 
     private boolean mManagedProfileIconVisible = false;
@@ -176,8 +172,7 @@ public class PhoneStatusBarPolicy
             @Nullable TelecomManager telecomManager, @DisplayId int displayId,
             @Main SharedPreferences sharedPreferences, DateFormatUtil dateFormatUtil,
             RingerModeTracker ringerModeTracker,
-            PrivacyItemController privacyItemController,
-            PrivacyLogger privacyLogger) {
+            PrivacyItemController privacyItemController) {
         mIconController = iconController;
         mCommandQueue = commandQueue;
         mBroadcastDispatcher = broadcastDispatcher;
@@ -202,15 +197,13 @@ public class PhoneStatusBarPolicy
         mUiBgExecutor = uiBgExecutor;
         mTelecomManager = telecomManager;
         mRingerModeTracker = ringerModeTracker;
-        mPrivacyLogger = privacyLogger;
 
         mSlotCast = resources.getString(com.android.internal.R.string.status_bar_cast);
         mSlotHotspot = resources.getString(com.android.internal.R.string.status_bar_hotspot);
         mSlotBluetooth = resources.getString(com.android.internal.R.string.status_bar_bluetooth);
         mSlotTty = resources.getString(com.android.internal.R.string.status_bar_tty);
         mSlotZen = resources.getString(com.android.internal.R.string.status_bar_zen);
-        mSlotMute = resources.getString(com.android.internal.R.string.status_bar_mute);
-        mSlotVibrate = resources.getString(com.android.internal.R.string.status_bar_volume);
+        mSlotVolume = resources.getString(com.android.internal.R.string.status_bar_volume);
         mSlotAlarmClock = resources.getString(com.android.internal.R.string.status_bar_alarm_clock);
         mSlotManagedProfile = resources.getString(
                 com.android.internal.R.string.status_bar_managed_profile);
@@ -267,14 +260,9 @@ public class PhoneStatusBarPolicy
         mIconController.setIcon(mSlotZen, R.drawable.stat_sys_dnd, null);
         mIconController.setIconVisibility(mSlotZen, false);
 
-        // vibrate
-        mIconController.setIcon(mSlotVibrate, R.drawable.stat_sys_ringer_vibrate,
-                mResources.getString(R.string.accessibility_ringer_vibrate));
-        mIconController.setIconVisibility(mSlotVibrate, false);
-        // mute
-        mIconController.setIcon(mSlotMute, R.drawable.stat_sys_ringer_silent,
-                mResources.getString(R.string.accessibility_ringer_silent));
-        mIconController.setIconVisibility(mSlotMute, false);
+        // volume
+        mIconController.setIcon(mSlotVolume, R.drawable.stat_sys_ringer_vibrate, null);
+        mIconController.setIconVisibility(mSlotVolume, false);
         updateVolumeZen();
 
         // cast
@@ -380,8 +368,9 @@ public class PhoneStatusBarPolicy
         int zenIconId = 0;
         String zenDescription = null;
 
-        boolean vibrateVisible = false;
-        boolean muteVisible = false;
+        boolean volumeVisible = false;
+        int volumeIconId = 0;
+        String volumeDescription = null;
         int zen = mZenController.getZen();
 
         if (DndTile.isVisible(mSharedPreferences) || DndTile.isCombinedIcon(mSharedPreferences)) {
@@ -403,9 +392,13 @@ public class PhoneStatusBarPolicy
                     mRingerModeTracker.getRingerModeInternal().getValue();
             if (ringerModeInternal != null) {
                 if (ringerModeInternal == AudioManager.RINGER_MODE_VIBRATE) {
-                    vibrateVisible = true;
+                    volumeVisible = true;
+                    volumeIconId = R.drawable.stat_sys_ringer_vibrate;
+                    volumeDescription = mResources.getString(R.string.accessibility_ringer_vibrate);
                 } else if (ringerModeInternal == AudioManager.RINGER_MODE_SILENT) {
-                    muteVisible = true;
+                    volumeVisible = true;
+                    volumeIconId = R.drawable.stat_sys_ringer_silent;
+                    volumeDescription = mResources.getString(R.string.accessibility_ringer_silent);
                 }
             }
         }
@@ -418,16 +411,13 @@ public class PhoneStatusBarPolicy
             mZenVisible = zenVisible;
         }
 
-        if (vibrateVisible != mVibrateVisible) {
-            mIconController.setIconVisibility(mSlotVibrate, vibrateVisible);
-            mVibrateVisible = vibrateVisible;
+        if (volumeVisible) {
+            mIconController.setIcon(mSlotVolume, volumeIconId, volumeDescription);
         }
-
-        if (muteVisible != mMuteVisible) {
-            mIconController.setIconVisibility(mSlotMute, muteVisible);
-            mMuteVisible = muteVisible;
+        if (volumeVisible != mVolumeVisible) {
+            mIconController.setIconVisibility(mSlotVolume, volumeVisible);
+            mVolumeVisible = volumeVisible;
         }
-
         updateAlarm();
     }
 
@@ -660,11 +650,13 @@ public class PhoneStatusBarPolicy
         boolean showLocation = false;
         for (PrivacyItem item : items) {
             if (item == null /* b/124234367 */) {
-                Log.e(TAG, "updatePrivacyItems - null item found");
-                StringWriter out = new StringWriter();
-                mPrivacyItemController.dump(null, new PrintWriter(out), null);
-                // Throw so we can look into this
-                throw new NullPointerException(out.toString());
+                if (DEBUG) {
+                    Log.e(TAG, "updatePrivacyItems - null item found");
+                    StringWriter out = new StringWriter();
+                    mPrivacyItemController.dump(null, new PrintWriter(out), null);
+                    Log.e(TAG, out.toString());
+                }
+                continue;
             }
             switch (item.getPrivacyType()) {
                 case TYPE_CAMERA:
@@ -679,22 +671,16 @@ public class PhoneStatusBarPolicy
             }
         }
 
-        // Disabling for now, but keeping the log
-        /*
         mIconController.setIconVisibility(mSlotCamera, showCamera);
         mIconController.setIconVisibility(mSlotMicrophone, showMicrophone);
-        if (mPrivacyItemController.getLocationAvailable()) {
+        if (mPrivacyItemController.getAllIndicatorsAvailable()) {
             mIconController.setIconVisibility(mSlotLocation, showLocation);
         }
-         */
-        mPrivacyLogger.logStatusBarIconsVisible(showCamera, showMicrophone,  showLocation);
     }
 
     @Override
     public void onLocationActiveChanged(boolean active) {
-        if (!mPrivacyItemController.getLocationAvailable()) {
-            updateLocationFromController();
-        }
+        if (!mPrivacyItemController.getAllIndicatorsAvailable()) updateLocationFromController();
     }
 
     // Updates the status view based on the current state of location requests.

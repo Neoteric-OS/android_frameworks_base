@@ -36,11 +36,11 @@ import android.util.SparseArray;
 import android.util.SparseBooleanArray;
 import android.util.SparseIntArray;
 
-import com.android.internal.annotations.GuardedBy;
 import com.android.internal.util.ArrayUtils;
 
 import dalvik.annotation.optimization.CriticalNative;
 import dalvik.annotation.optimization.FastNative;
+import dalvik.system.VMRuntime;
 
 import libcore.util.SneakyThrow;
 
@@ -228,31 +228,9 @@ public final class Parcel {
      */
     private static boolean sParcelExceptionStackTrace;
 
-    private static final Object sPoolSync = new Object();
-
-    /** Next item in the linked list pool, if any */
-    @GuardedBy("sPoolSync")
-    private Parcel mPoolNext;
-
-    /** Head of a linked list pool of {@link Parcel} objects */
-    @GuardedBy("sPoolSync")
-    private static Parcel sOwnedPool;
-    /** Head of a linked list pool of {@link Parcel} objects */
-    @GuardedBy("sPoolSync")
-    private static Parcel sHolderPool;
-
-    /** Total size of pool with head at {@link #sOwnedPool} */
-    @GuardedBy("sPoolSync")
-    private static int sOwnedPoolSize = 0;
-    /** Total size of pool with head at {@link #sHolderPool} */
-    @GuardedBy("sPoolSync")
-    private static int sHolderPoolSize = 0;
-
-    /**
-     * We're willing to pool up to 32 objects, which is sized to accommodate
-     * both a data and reply Parcel for the maximum of 16 Binder threads.
-     */
-    private static final int POOL_SIZE = 32;
+    private static final int POOL_SIZE = 6;
+    private static final Parcel[] sOwnedPool = new Parcel[POOL_SIZE];
+    private static final Parcel[] sHolderPool = new Parcel[POOL_SIZE];
 
     // Keep in sync with frameworks/native/include/private/binder/ParcelValTypes.h.
     private static final int VAL_NULL = -1;
@@ -285,10 +263,6 @@ public final class Parcel {
     private static final int VAL_SIZE = 26;
     private static final int VAL_SIZEF = 27;
     private static final int VAL_DOUBLEARRAY = 28;
-    private static final int VAL_CHAR = 29;
-    private static final int VAL_SHORTARRAY = 30;
-    private static final int VAL_CHARARRAY = 31;
-    private static final int VAL_FLOATARRAY = 32;
 
     // The initial int32 in a Binder call's reply Parcel header:
     // Keep these in sync with libbinder's binder/Status.h.
@@ -321,7 +295,7 @@ public final class Parcel {
     @CriticalNative
     private static native int nativeDataCapacity(long nativePtr);
     @FastNative
-    private static native void nativeSetDataSize(long nativePtr, int size);
+    private static native long nativeSetDataSize(long nativePtr, int size);
     @CriticalNative
     private static native void nativeSetDataPosition(long nativePtr, int pos);
     @FastNative
@@ -334,15 +308,14 @@ public final class Parcel {
 
     private static native void nativeWriteByteArray(long nativePtr, byte[] b, int offset, int len);
     private static native void nativeWriteBlob(long nativePtr, byte[] b, int offset, int len);
-    @CriticalNative
-    private static native int nativeWriteInt(long nativePtr, int val);
-    @CriticalNative
-    private static native int nativeWriteLong(long nativePtr, long val);
-    @CriticalNative
-    private static native int nativeWriteFloat(long nativePtr, float val);
-    @CriticalNative
-    private static native int nativeWriteDouble(long nativePtr, double val);
-    private static native void nativeSignalExceptionForError(int error);
+    @FastNative
+    private static native void nativeWriteInt(long nativePtr, int val);
+    @FastNative
+    private static native void nativeWriteLong(long nativePtr, long val);
+    @FastNative
+    private static native void nativeWriteFloat(long nativePtr, float val);
+    @FastNative
+    private static native void nativeWriteDouble(long nativePtr, double val);
     @FastNative
     private static native void nativeWriteString8(long nativePtr, String val);
     @FastNative
@@ -350,7 +323,7 @@ public final class Parcel {
     @FastNative
     private static native void nativeWriteStrongBinder(long nativePtr, IBinder val);
     @FastNative
-    private static native void nativeWriteFileDescriptor(long nativePtr, FileDescriptor val);
+    private static native long nativeWriteFileDescriptor(long nativePtr, FileDescriptor val);
 
     private static native byte[] nativeCreateByteArray(long nativePtr);
     private static native boolean nativeReadByteArray(long nativePtr, byte[] dest, int destLen);
@@ -373,14 +346,14 @@ public final class Parcel {
     private static native FileDescriptor nativeReadFileDescriptor(long nativePtr);
 
     private static native long nativeCreate();
-    private static native void nativeFreeBuffer(long nativePtr);
+    private static native long nativeFreeBuffer(long nativePtr);
     private static native void nativeDestroy(long nativePtr);
 
     private static native byte[] nativeMarshall(long nativePtr);
-    private static native void nativeUnmarshall(
+    private static native long nativeUnmarshall(
             long nativePtr, byte[] data, int offset, int length);
     private static native int nativeCompareData(long thisNativePtr, long otherNativePtr);
-    private static native void nativeAppendFrom(
+    private static native long nativeAppendFrom(
             long thisNativePtr, long otherNativePtr, int offset, int length);
     @CriticalNative
     private static native boolean nativeHasFileDescriptors(long nativePtr);
@@ -456,42 +429,22 @@ public final class Parcel {
      */
     @NonNull
     public static Parcel obtain() {
-        Parcel res = null;
-        synchronized (sPoolSync) {
-            if (sOwnedPool != null) {
-                res = sOwnedPool;
-                sOwnedPool = res.mPoolNext;
-                res.mPoolNext = null;
-                sOwnedPoolSize--;
+        final Parcel[] pool = sOwnedPool;
+        synchronized (pool) {
+            Parcel p;
+            for (int i=0; i<POOL_SIZE; i++) {
+                p = pool[i];
+                if (p != null) {
+                    pool[i] = null;
+                    if (DEBUG_RECYCLE) {
+                        p.mStack = new RuntimeException();
+                    }
+                    p.mReadWriteHelper = ReadWriteHelper.DEFAULT;
+                    return p;
+                }
             }
         }
-
-        // When no cache found above, create from scratch; otherwise prepare the
-        // cached object to be used
-        if (res == null) {
-            res = new Parcel(0);
-        } else {
-            if (DEBUG_RECYCLE) {
-                res.mStack = new RuntimeException();
-            }
-            res.mReadWriteHelper = ReadWriteHelper.DEFAULT;
-        }
-        return res;
-    }
-
-    /**
-     * Retrieve a new Parcel object from the pool for use with a specific binder.
-     *
-     * Associate this parcel with a binder object. This marks the parcel as being prepared for a
-     * transaction on this specific binder object. Based on this, the format of the wire binder
-     * protocol may change. For future compatibility, it is recommended to use this for all
-     * Parcels.
-     */
-    @NonNull
-    public static Parcel obtain(@NonNull IBinder binder) {
-        Parcel parcel = Parcel.obtain();
-        parcel.markForBinder(binder);
-        return parcel;
+        return new Parcel(0);
     }
 
     /**
@@ -502,21 +455,19 @@ public final class Parcel {
         if (DEBUG_RECYCLE) mStack = null;
         freeBuffer();
 
+        final Parcel[] pool;
         if (mOwnsNativeParcelObject) {
-            synchronized (sPoolSync) {
-                if (sOwnedPoolSize < POOL_SIZE) {
-                    mPoolNext = sOwnedPool;
-                    sOwnedPool = this;
-                    sOwnedPoolSize++;
-                }
-            }
+            pool = sOwnedPool;
         } else {
             mNativePtr = 0;
-            synchronized (sPoolSync) {
-                if (sHolderPoolSize < POOL_SIZE) {
-                    mPoolNext = sHolderPool;
-                    sHolderPool = this;
-                    sHolderPoolSize++;
+            pool = sHolderPool;
+        }
+
+        synchronized (pool) {
+            for (int i=0; i<POOL_SIZE; i++) {
+                if (pool[i] == null) {
+                    pool[i] = this;
+                    return;
                 }
             }
         }
@@ -568,9 +519,16 @@ public final class Parcel {
     }
 
     /**
+     * Associate this parcel with a binder object. This marks the parcel as being prepared for a
+     * transaction on this specific binder object. Based on this, the format of the wire binder
+     * protocol may change. This should be called before any data is written to the parcel. If this
+     * is called multiple times, this will only be marked for the last binder. For future
+     * compatibility, it is recommended to call this on all parcels which are being sent over
+     * binder.
+     *
      * @hide
      */
-    private void markForBinder(@NonNull IBinder binder) {
+    public void markForBinder(@NonNull IBinder binder) {
         nativeMarkForBinder(mNativePtr, binder);
     }
 
@@ -615,7 +573,7 @@ public final class Parcel {
      * @param size The new number of bytes in the Parcel.
      */
     public final void setDataSize(int size) {
-        nativeSetDataSize(mNativePtr, size);
+        updateNativeSize(nativeSetDataSize(mNativePtr, size));
     }
 
     /**
@@ -667,11 +625,11 @@ public final class Parcel {
      * Set the bytes in data to be the raw bytes of this Parcel.
      */
     public final void unmarshall(@NonNull byte[] data, int offset, int length) {
-        nativeUnmarshall(mNativePtr, data, offset, length);
+        updateNativeSize(nativeUnmarshall(mNativePtr, data, offset, length));
     }
 
     public final void appendFrom(Parcel parcel, int offset, int length) {
-        nativeAppendFrom(mNativePtr, parcel.mNativePtr, offset, length);
+        updateNativeSize(nativeAppendFrom(mNativePtr, parcel.mNativePtr, offset, length));
     }
 
     /** @hide */
@@ -783,20 +741,13 @@ public final class Parcel {
 
     /**
      * Store or read an IBinder interface token in the parcel at the current
-     * {@link #dataPosition}. This is used to validate that the marshalled
-     * transaction is intended for the target interface. This is typically written
-     * at the beginning of transactions as a header.
+     * {@link #dataPosition}.  This is used to validate that the marshalled
+     * transaction is intended for the target interface.
      */
     public final void writeInterfaceToken(@NonNull String interfaceName) {
         nativeWriteInterfaceToken(mNativePtr, interfaceName);
     }
 
-    /**
-     * Read the header written by writeInterfaceToken and verify it matches
-     * the interface name in question. If the wrong interface type is present,
-     * {@link SecurityException} is thrown. When used over binder, this exception
-     * should propagate to the caller.
-     */
     public final void enforceInterface(@NonNull String interfaceName) {
         nativeEnforceInterface(mNativePtr, interfaceName);
     }
@@ -885,20 +836,12 @@ public final class Parcel {
         nativeWriteBlob(mNativePtr, b, offset, len);
     }
 
-    // The OK status from system/core/libutils/include/utils/Errors.h .
-    // We shall pass all other error codes back to native for throwing exceptions. The error
-    // check is done in Java to allow using @CriticalNative calls for the success path.
-    private static final int OK = 0;
-
     /**
      * Write an integer value into the parcel at the current dataPosition(),
      * growing dataCapacity() if needed.
      */
     public final void writeInt(int val) {
-        int err = nativeWriteInt(mNativePtr, val);
-        if (err != OK) {
-            nativeSignalExceptionForError(err);
-        }
+        nativeWriteInt(mNativePtr, val);
     }
 
     /**
@@ -906,10 +849,7 @@ public final class Parcel {
      * growing dataCapacity() if needed.
      */
     public final void writeLong(long val) {
-        int err = nativeWriteLong(mNativePtr, val);
-        if (err != OK) {
-            nativeSignalExceptionForError(err);
-        }
+        nativeWriteLong(mNativePtr, val);
     }
 
     /**
@@ -917,10 +857,7 @@ public final class Parcel {
      * dataPosition(), growing dataCapacity() if needed.
      */
     public final void writeFloat(float val) {
-        int err = nativeWriteFloat(mNativePtr, val);
-        if (err != OK) {
-            nativeSignalExceptionForError(err);
-        }
+        nativeWriteFloat(mNativePtr, val);
     }
 
     /**
@@ -928,10 +865,7 @@ public final class Parcel {
      * current dataPosition(), growing dataCapacity() if needed.
      */
     public final void writeDouble(double val) {
-        int err = nativeWriteDouble(mNativePtr, val);
-        if (err != OK) {
-            nativeSignalExceptionForError(err);
-        }
+        nativeWriteDouble(mNativePtr, val);
     }
 
     /**
@@ -1021,7 +955,24 @@ public final class Parcel {
      * if {@link Parcelable#PARCELABLE_WRITE_RETURN_VALUE} is set.</p>
      */
     public final void writeFileDescriptor(@NonNull FileDescriptor val) {
-        nativeWriteFileDescriptor(mNativePtr, val);
+        updateNativeSize(nativeWriteFileDescriptor(mNativePtr, val));
+    }
+
+    private void updateNativeSize(long newNativeSize) {
+        if (mOwnsNativeParcelObject) {
+            if (newNativeSize > Integer.MAX_VALUE) {
+                newNativeSize = Integer.MAX_VALUE;
+            }
+            if (newNativeSize != mNativeSize) {
+                int delta = (int) (newNativeSize - mNativeSize);
+                if (delta > 0) {
+                    VMRuntime.getRuntime().registerNativeAllocation(delta);
+                } else {
+                    VMRuntime.getRuntime().registerNativeFree(-delta);
+                }
+                mNativeSize = newNativeSize;
+            }
+        }
     }
 
     /**
@@ -1352,46 +1303,6 @@ public final class Parcel {
         if (N == val.length) {
             for (int i=0; i<N; i++) {
                 val[i] = readInt() != 0;
-            }
-        } else {
-            throw new RuntimeException("bad array lengths");
-        }
-    }
-
-    /** @hide */
-    public void writeShortArray(@Nullable short[] val) {
-        if (val != null) {
-            int n = val.length;
-            writeInt(n);
-            for (int i = 0; i < n; i++) {
-                writeInt(val[i]);
-            }
-        } else {
-            writeInt(-1);
-        }
-    }
-
-    /** @hide */
-    @Nullable
-    public short[] createShortArray() {
-        int n = readInt();
-        if (n >= 0 && n <= (dataAvail() >> 2)) {
-            short[] val = new short[n];
-            for (int i = 0; i < n; i++) {
-                val[i] = (short) readInt();
-            }
-            return val;
-        } else {
-            return null;
-        }
-    }
-
-    /** @hide */
-    public void readShortArray(@NonNull short[] val) {
-        int n = readInt();
-        if (n == val.length) {
-            for (int i = 0; i < n; i++) {
-                val[i] = (short) readInt();
             }
         } else {
             throw new RuntimeException("bad array lengths");
@@ -2063,14 +1974,6 @@ public final class Parcel {
             return VAL_SIZE;
         } else if (v instanceof double[]) {
             return VAL_DOUBLEARRAY;
-        } else if (v instanceof Character) {
-            return VAL_CHAR;
-        } else if (v instanceof short[]) {
-            return VAL_SHORTARRAY;
-        } else if (v instanceof char[]) {
-            return VAL_CHARARRAY;
-        } else  if (v instanceof float[]) {
-            return VAL_FLOATARRAY;
         } else {
             Class<?> clazz = v.getClass();
             if (clazz.isArray() && clazz.getComponentType() == Object.class) {
@@ -2172,18 +2075,6 @@ public final class Parcel {
                 break;
             case VAL_DOUBLEARRAY:
                 writeDoubleArray((double[]) v);
-                break;
-            case VAL_CHAR:
-                writeInt((Character) v);
-                break;
-            case VAL_SHORTARRAY:
-                writeShortArray((short[]) v);
-                break;
-            case VAL_CHARARRAY:
-                writeCharArray((char[]) v);
-                break;
-            case VAL_FLOATARRAY:
-                writeFloatArray((float[]) v);
                 break;
             case VAL_OBJECTARRAY:
                 writeArray((Object[]) v);
@@ -2288,13 +2179,13 @@ public final class Parcel {
      * A map used by {@link #readSquashed} to cache parcelables. It's a map from
      * an absolute position in a Parcel to the parcelable stored at the position.
      */
-    private SparseArray<Parcelable> mReadSquashableParcelables;
+    private ArrayMap<Integer, Parcelable> mReadSquashableParcelables;
 
     private void ensureReadSquashableParcelables() {
         if (mReadSquashableParcelables != null) {
             return;
         }
-        mReadSquashableParcelables = new SparseArray<>();
+        mReadSquashableParcelables = new ArrayMap<>();
     }
 
     /**
@@ -2390,13 +2281,9 @@ public final class Parcel {
 
         final Parcelable p = mReadSquashableParcelables.get(firstAbsolutePos);
         if (p == null) {
-            final StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < mReadSquashableParcelables.size(); i++) {
-                sb.append(mReadSquashableParcelables.keyAt(i)).append(' ');
-            }
             Slog.wtfStack(TAG, "Map doesn't contain offset "
                     + firstAbsolutePos
-                    + " : contains=" + sb.toString());
+                    + " : contains=" + new ArrayList<>(mReadSquashableParcelables.keySet()));
         }
         return (T) p;
     }
@@ -2869,20 +2756,7 @@ public final class Parcel {
      */
     public final void readList(@NonNull List outVal, @Nullable ClassLoader loader) {
         int N = readInt();
-        readListInternal(outVal, N, loader, /* clazz */ null);
-    }
-
-    /**
-     * Same as {@link #readList(List, ClassLoader)} but accepts {@code clazz} parameter as
-     * the type required for each item. If the item to be deserialized is not an instance
-     * of that class or any of its children class
-     * a {@link BadParcelableException} will be thrown.
-     */
-    public <T> void readList(@NonNull List<? super T> outVal,
-            @Nullable ClassLoader loader, @NonNull Class<T> clazz) {
-        Objects.requireNonNull(clazz);
-        int n = readInt();
-        readListInternal(outVal, n, loader, clazz);
+        readListInternal(outVal, N, loader);
     }
 
     /**
@@ -3081,7 +2955,7 @@ public final class Parcel {
             return null;
         }
         ArrayList l = new ArrayList(N);
-        readListInternal(l, N, loader, /* clazz */ null);
+        readListInternal(l, N, loader);
         return l;
     }
 
@@ -3481,29 +3355,20 @@ public final class Parcel {
      */
     @Nullable
     public final Object readValue(@Nullable ClassLoader loader) {
-        return readValue(loader, /* clazz */ null);
-    }
-
-
-    /**
-     * @param clazz The type of the object expected or {@code null} for performing no checks.
-     */
-    @Nullable
-    private <T> T readValue(@Nullable ClassLoader loader, @Nullable Class<T> clazz) {
         int type = readInt();
-        final T object;
+        final Object object;
         if (isLengthPrefixed(type)) {
             int length = readInt();
             int start = dataPosition();
-            object = readValue(type, loader, clazz);
+            object = readValue(type, loader);
             int actual = dataPosition() - start;
             if (actual != length) {
-                Slog.wtfStack(TAG,
+                Log.w(TAG,
                         "Unparcelling of " + object + " of type " + Parcel.valueTypeToString(type)
                                 + "  consumed " + actual + " bytes, but " + length + " expected.");
             }
         } else {
-            object = readValue(type, loader, clazz);
+            object = readValue(type, loader);
         }
         return object;
     }
@@ -3540,7 +3405,7 @@ public final class Parcel {
             setDataPosition(MathUtils.addOrThrow(dataPosition(), length));
             return new LazyValue(this, start, length, type, loader);
         } else {
-            return readValue(type, loader, /* clazz */ null);
+            return readValue(type, loader);
         }
     }
 
@@ -3573,17 +3438,14 @@ public final class Parcel {
             Parcel source = mSource;
             if (source != null) {
                 synchronized (source) {
-                    // Check mSource != null guarantees callers won't ever see different objects.
-                    if (mSource != null) {
-                        int restore = source.dataPosition();
-                        try {
-                            source.setDataPosition(mPosition);
-                            mObject = source.readValue(mLoader);
-                        } finally {
-                            source.setDataPosition(restore);
-                        }
-                        mSource = null;
+                    int restore = source.dataPosition();
+                    try {
+                        source.setDataPosition(mPosition);
+                        mObject = source.readValue(mLoader);
+                    } finally {
+                        source.setDataPosition(restore);
                     }
+                    mSource = null;
                 }
             }
             return mObject;
@@ -3675,175 +3537,114 @@ public final class Parcel {
     /**
      * Reads a value from the parcel of type {@code type}. Does NOT read the int representing the
      * type first.
-     * @param clazz The type of the object expected or {@code null} for performing no checks.
      */
-    @SuppressWarnings("unchecked")
     @Nullable
-    private <T> T readValue(int type, @Nullable ClassLoader loader, @Nullable Class<T> clazz) {
-        final Object object;
+    private Object readValue(int type, @Nullable ClassLoader loader) {
         switch (type) {
-            case VAL_NULL:
-                object = null;
-                break;
+        case VAL_NULL:
+            return null;
 
-            case VAL_STRING:
-                object = readString();
-                break;
+        case VAL_STRING:
+            return readString();
 
-            case VAL_INTEGER:
-                object = readInt();
-                break;
+        case VAL_INTEGER:
+            return readInt();
 
-            case VAL_MAP:
-                object = readHashMap(loader);
-                break;
+        case VAL_MAP:
+            return readHashMap(loader);
 
-            case VAL_PARCELABLE:
-                object = readParcelableInternal(loader, clazz);
-                break;
+        case VAL_PARCELABLE:
+            return readParcelable(loader);
 
-            case VAL_SHORT:
-                object = (short) readInt();
-                break;
+        case VAL_SHORT:
+            return (short) readInt();
 
-            case VAL_LONG:
-                object = readLong();
-                break;
+        case VAL_LONG:
+            return readLong();
 
-            case VAL_FLOAT:
-                object = readFloat();
-                break;
+        case VAL_FLOAT:
+            return readFloat();
 
-            case VAL_DOUBLE:
-                object = readDouble();
-                break;
+        case VAL_DOUBLE:
+            return readDouble();
 
-            case VAL_BOOLEAN:
-                object = readInt() == 1;
-                break;
+        case VAL_BOOLEAN:
+            return readInt() == 1;
 
-            case VAL_CHARSEQUENCE:
-                object = readCharSequence();
-                break;
+        case VAL_CHARSEQUENCE:
+            return readCharSequence();
 
-            case VAL_LIST:
-                object = readArrayList(loader);
-                break;
+        case VAL_LIST:
+            return readArrayList(loader);
 
-            case VAL_BOOLEANARRAY:
-                object = createBooleanArray();
-                break;
+        case VAL_BOOLEANARRAY:
+            return createBooleanArray();
 
-            case VAL_BYTEARRAY:
-                object = createByteArray();
-                break;
+        case VAL_BYTEARRAY:
+            return createByteArray();
 
-            case VAL_STRINGARRAY:
-                object = readStringArray();
-                break;
+        case VAL_STRINGARRAY:
+            return readStringArray();
 
-            case VAL_CHARSEQUENCEARRAY:
-                object = readCharSequenceArray();
-                break;
+        case VAL_CHARSEQUENCEARRAY:
+            return readCharSequenceArray();
 
-            case VAL_IBINDER:
-                object = readStrongBinder();
-                break;
+        case VAL_IBINDER:
+            return readStrongBinder();
 
-            case VAL_OBJECTARRAY:
-                object = readArray(loader);
-                break;
+        case VAL_OBJECTARRAY:
+            return readArray(loader);
 
-            case VAL_INTARRAY:
-                object = createIntArray();
-                break;
+        case VAL_INTARRAY:
+            return createIntArray();
 
-            case VAL_LONGARRAY:
-                object = createLongArray();
-                break;
+        case VAL_LONGARRAY:
+            return createLongArray();
 
-            case VAL_BYTE:
-                object = readByte();
-                break;
+        case VAL_BYTE:
+            return readByte();
 
-            case VAL_SERIALIZABLE:
-                object = readSerializable(loader);
-                break;
+        case VAL_SERIALIZABLE:
+            return readSerializable(loader);
 
-            case VAL_PARCELABLEARRAY:
-                object = readParcelableArray(loader);
-                break;
+        case VAL_PARCELABLEARRAY:
+            return readParcelableArray(loader);
 
-            case VAL_SPARSEARRAY:
-                object = readSparseArray(loader);
-                break;
+        case VAL_SPARSEARRAY:
+            return readSparseArray(loader);
 
-            case VAL_SPARSEBOOLEANARRAY:
-                object = readSparseBooleanArray();
-                break;
+        case VAL_SPARSEBOOLEANARRAY:
+            return readSparseBooleanArray();
 
-            case VAL_BUNDLE:
-                object = readBundle(loader); // loading will be deferred
-                break;
+        case VAL_BUNDLE:
+            return readBundle(loader); // loading will be deferred
 
-            case VAL_PERSISTABLEBUNDLE:
-                object = readPersistableBundle(loader);
-                break;
+        case VAL_PERSISTABLEBUNDLE:
+            return readPersistableBundle(loader);
 
-            case VAL_SIZE:
-                object = readSize();
-                break;
+        case VAL_SIZE:
+            return readSize();
 
-            case VAL_SIZEF:
-                object = readSizeF();
-                break;
+        case VAL_SIZEF:
+            return readSizeF();
 
-            case VAL_DOUBLEARRAY:
-                object = createDoubleArray();
-                break;
+        case VAL_DOUBLEARRAY:
+            return createDoubleArray();
 
-            case VAL_CHAR:
-                object = (char) readInt();
-                break;
-
-            case VAL_SHORTARRAY:
-                object = createShortArray();
-                break;
-
-            case VAL_CHARARRAY:
-                object = createCharArray();
-                break;
-
-            case VAL_FLOATARRAY:
-                object = createFloatArray();
-                break;
-
-            default:
-                int off = dataPosition() - 4;
-                throw new BadParcelableException(
-                    "Parcel " + this + ": Unmarshalling unknown type code " + type
-                            + " at offset " + off);
+        default:
+            int off = dataPosition() - 4;
+            throw new RuntimeException(
+                "Parcel " + this + ": Unmarshalling unknown type code " + type + " at offset " + off);
         }
-        if (clazz != null && !clazz.isInstance(object)) {
-            throw new BadParcelableException("Unparcelled object " + object
-                    + " is not an instance of required class " + clazz.getName()
-                    + " provided in the parameter");
-        }
-        return (T) object;
     }
 
     private boolean isLengthPrefixed(int type) {
-        // In general, we want custom types and containers of custom types to be length-prefixed,
-        // this allows clients (eg. Bundle) to skip their content during deserialization. The
-        // exception to this is Bundle, since Bundle is already length-prefixed and already copies
-        // the correspondent section of the parcel internally.
         switch (type) {
-            case VAL_MAP:
             case VAL_PARCELABLE:
+            case VAL_PARCELABLEARRAY:
             case VAL_LIST:
             case VAL_SPARSEARRAY:
-            case VAL_PARCELABLEARRAY:
-            case VAL_OBJECTARRAY:
+            case VAL_BUNDLE:
             case VAL_SERIALIZABLE:
                 return true;
             default:
@@ -3862,42 +3663,17 @@ public final class Parcel {
      * @throws BadParcelableException Throws BadParcelableException if there
      * was an error trying to instantiate the Parcelable.
      */
-    @Nullable
-    public final <T extends Parcelable> T readParcelable(@Nullable ClassLoader loader) {
-        return readParcelableInternal(loader, /* clazz */ null);
-    }
-
-    /**
-     * Same as {@link #readParcelable(ClassLoader)} but accepts {@code clazz} parameter as the type
-     * required for each item. If the item to be deserialized is not an instance of that class or
-     * any of its children classes a {@link BadParcelableException} will be thrown.
-     */
-    @Nullable
-    public <T extends Parcelable> T readParcelable(@Nullable ClassLoader loader,
-            @NonNull Class<T> clazz) {
-        Objects.requireNonNull(clazz);
-        return readParcelableInternal(loader, clazz);
-    }
-
-    /**
-     *
-     * @param clazz The type of the parcelable expected or {@code null} for performing no checks.
-     */
     @SuppressWarnings("unchecked")
     @Nullable
-    private <T> T readParcelableInternal(@Nullable ClassLoader loader, @Nullable Class<T> clazz) {
-        if (clazz != null && !Parcelable.class.isAssignableFrom(clazz)) {
-            throw new BadParcelableException("About to unparcel a parcelable object "
-                    + " but class required " + clazz.getName() + " is not Parcelable");
-        }
-        Parcelable.Creator<?> creator = readParcelableCreatorInternal(loader, clazz);
+    public final <T extends Parcelable> T readParcelable(@Nullable ClassLoader loader) {
+        Parcelable.Creator<?> creator = readParcelableCreator(loader);
         if (creator == null) {
             return null;
         }
         if (creator instanceof Parcelable.ClassLoaderCreator<?>) {
-            Parcelable.ClassLoaderCreator<?> classLoaderCreator =
-                    (Parcelable.ClassLoaderCreator<?>) creator;
-            return (T) classLoaderCreator.createFromParcel(this, loader);
+          Parcelable.ClassLoaderCreator<?> classLoaderCreator =
+              (Parcelable.ClassLoaderCreator<?>) creator;
+          return (T) classLoaderCreator.createFromParcel(this, loader);
         }
         return (T) creator.createFromParcel(this);
     }
@@ -3931,28 +3707,6 @@ public final class Parcel {
      */
     @Nullable
     public final Parcelable.Creator<?> readParcelableCreator(@Nullable ClassLoader loader) {
-        return readParcelableCreatorInternal(loader, /* clazz */ null);
-    }
-
-    /**
-     * Same as {@link #readParcelableCreator(ClassLoader)} but accepts {@code clazz} parameter
-     * as the required type. If the item to be deserialized is not an instance of that class
-     * or any of its children classes a {@link BadParcelableException} will be thrown.
-     */
-    @Nullable
-    public <T> Parcelable.Creator<T> readParcelableCreator(
-            @Nullable ClassLoader loader, @NonNull Class<T> clazz) {
-        Objects.requireNonNull(clazz);
-        return readParcelableCreatorInternal(loader, clazz);
-    }
-
-    /**
-     * @param clazz The type of the parcelable expected or {@code null} for performing no checks.
-     */
-    @SuppressWarnings("unchecked")
-    @Nullable
-    private <T> Parcelable.Creator<T> readParcelableCreatorInternal(
-            @Nullable ClassLoader loader, @Nullable Class<T> clazz) {
         String name = readString();
         if (name == null) {
             return null;
@@ -3968,15 +3722,7 @@ public final class Parcel {
             creator = map.get(name);
         }
         if (creator != null) {
-            if (clazz != null) {
-                Class<?> parcelableClass = creator.getClass().getEnclosingClass();
-                if (!clazz.isAssignableFrom(parcelableClass)) {
-                    throw new BadParcelableException("Parcelable creator " + name + " is not "
-                            + "a subclass of required class " + clazz.getName()
-                            + " provided in the parameter");
-                }
-            }
-            return (Parcelable.Creator<T>) creator;
+            return creator;
         }
 
         try {
@@ -3992,14 +3738,6 @@ public final class Parcel {
                 throw new BadParcelableException("Parcelable protocol requires subclassing "
                         + "from Parcelable on class " + name);
             }
-            if (clazz != null) {
-                if (!clazz.isAssignableFrom(parcelableClass)) {
-                    throw new BadParcelableException("Parcelable creator " + name + " is not "
-                            + "a subclass of required class " + clazz.getName()
-                            + " provided in the parameter");
-                }
-            }
-
             Field f = parcelableClass.getField("CREATOR");
             if ((f.getModifiers() & Modifier.STATIC) == 0) {
                 throw new BadParcelableException("Parcelable protocol requires "
@@ -4037,7 +3775,7 @@ public final class Parcel {
             map.put(name, creator);
         }
 
-        return (Parcelable.Creator<T>) creator;
+        return creator;
     }
 
     /**
@@ -4137,27 +3875,22 @@ public final class Parcel {
 
     /** @hide */
     static protected final Parcel obtain(long obj) {
-        Parcel res = null;
-        synchronized (sPoolSync) {
-            if (sHolderPool != null) {
-                res = sHolderPool;
-                sHolderPool = res.mPoolNext;
-                res.mPoolNext = null;
-                sHolderPoolSize--;
+        final Parcel[] pool = sHolderPool;
+        synchronized (pool) {
+            Parcel p;
+            for (int i=0; i<POOL_SIZE; i++) {
+                p = pool[i];
+                if (p != null) {
+                    pool[i] = null;
+                    if (DEBUG_RECYCLE) {
+                        p.mStack = new RuntimeException();
+                    }
+                    p.init(obj);
+                    return p;
+                }
             }
         }
-
-        // When no cache found above, create from scratch; otherwise prepare the
-        // cached object to be used
-        if (res == null) {
-            res = new Parcel(obj);
-        } else {
-            if (DEBUG_RECYCLE) {
-                res.mStack = new RuntimeException();
-            }
-            res.init(obj);
-        }
-        return res;
+        return new Parcel(obj);
     }
 
     private Parcel(long nativePtr) {
@@ -4181,7 +3914,7 @@ public final class Parcel {
     private void freeBuffer() {
         resetSqaushingState();
         if (mOwnsNativeParcelObject) {
-            nativeFreeBuffer(mNativePtr);
+            updateNativeSize(nativeFreeBuffer(mNativePtr));
         }
         mReadWriteHelper = ReadWriteHelper.DEFAULT;
     }
@@ -4191,6 +3924,7 @@ public final class Parcel {
         if (mNativePtr != 0) {
             if (mOwnsNativeParcelObject) {
                 nativeDestroy(mNativePtr);
+                updateNativeSize(0);
             }
             mNativePtr = 0;
         }
@@ -4287,21 +4021,13 @@ public final class Parcel {
         return result;
     }
 
-    private void readListInternal(@NonNull List outVal, int n,
+    private void readListInternal(@NonNull List outVal, int N,
             @Nullable ClassLoader loader) {
-        readListInternal(outVal, n, loader, null);
-    }
-
-    /**
-     * @param clazz The type of the object expected or {@code null} for performing no checks.
-     */
-    private <T> void readListInternal(@NonNull List<? super T> outVal, int n,
-            @Nullable ClassLoader loader, @Nullable Class<T> clazz) {
-        while (n > 0) {
-            T value = readValue(loader, clazz);
+        while (N > 0) {
+            Object value = readValue(loader);
             //Log.d(TAG, "Unmarshalling value=" + value);
             outVal.add(value);
-            n--;
+            N--;
         }
     }
 
@@ -4380,10 +4106,6 @@ public final class Parcel {
             case VAL_SIZE: return "VAL_SIZE";
             case VAL_SIZEF: return "VAL_SIZEF";
             case VAL_DOUBLEARRAY: return "VAL_DOUBLEARRAY";
-            case VAL_CHAR: return "VAL_CHAR";
-            case VAL_SHORTARRAY: return "VAL_SHORTARRAY";
-            case VAL_CHARARRAY: return "VAL_CHARARRAY";
-            case VAL_FLOATARRAY: return "VAL_FLOATARRAY";
             case VAL_OBJECTARRAY: return "VAL_OBJECTARRAY";
             case VAL_SERIALIZABLE: return "VAL_SERIALIZABLE";
             default: return "UNKNOWN(" + type + ")";

@@ -1,3 +1,6 @@
 set noparent
 
-include platform/packages/modules/Wifi:/WIFI_OWNERS
+dysu@google.com
+etancohen@google.com
+rpius@google.com
+satk@google.com

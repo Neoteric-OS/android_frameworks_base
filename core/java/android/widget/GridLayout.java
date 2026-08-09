@@ -31,7 +31,6 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 import android.annotation.IntDef;
-import android.annotation.Nullable;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -46,7 +45,6 @@ import android.util.LogPrinter;
 import android.util.Pair;
 import android.util.Printer;
 import android.view.Gravity;
-import android.view.RemotableViewMethod;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inspector.InspectableProperty;
@@ -413,7 +411,6 @@ public class GridLayout extends ViewGroup {
      *
      * @attr ref android.R.styleable#GridLayout_rowCount
      */
-    @RemotableViewMethod
     public void setRowCount(int rowCount) {
         mVerticalAxis.setCount(rowCount);
         invalidateStructure();
@@ -448,7 +445,6 @@ public class GridLayout extends ViewGroup {
      *
      * @attr ref android.R.styleable#GridLayout_columnCount
      */
-    @RemotableViewMethod
     public void setColumnCount(int columnCount) {
         mHorizontalAxis.setCount(columnCount);
         invalidateStructure();
@@ -537,7 +533,6 @@ public class GridLayout extends ViewGroup {
      *
      * @attr ref android.R.styleable#GridLayout_alignmentMode
      */
-    @RemotableViewMethod
     public void setAlignmentMode(@AlignmentMode int alignmentMode) {
         this.mAlignmentMode = alignmentMode;
         requestLayout();
@@ -2227,7 +2222,7 @@ public class GridLayout extends ViewGroup {
         }
 
         @Override
-        public boolean equals(@Nullable Object o) {
+        public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
 
@@ -2502,7 +2497,7 @@ public class GridLayout extends ViewGroup {
          *         {@code Interval}, {@code false} otherwise.
          */
         @Override
-        public boolean equals(@Nullable Object that) {
+        public boolean equals(Object that) {
             if (this == that) {
                 return true;
             }
@@ -2615,7 +2610,7 @@ public class GridLayout extends ViewGroup {
          *         {@code Spec}; {@code false} otherwise
          */
         @Override
-        public boolean equals(@Nullable Object that) {
+        public boolean equals(Object that) {
             if (this == that) {
                 return true;
             }

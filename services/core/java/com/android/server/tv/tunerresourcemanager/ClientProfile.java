@@ -50,8 +50,6 @@ public final class ClientProfile {
      */
     private final int mProcessId;
 
-    private boolean mIsForeground;
-
     /**
      * All the clients that share the same resource would be under the same group id.
      *
@@ -65,9 +63,9 @@ public final class ClientProfile {
     private int mNiceValue;
 
     /**
-     * List of the frontend handles that are used by the current client.
+     * List of the frontend ids that are used by the current client.
      */
-    private Set<Integer> mUsingFrontendHandles = new HashSet<>();
+    private Set<Integer> mUsingFrontendIds = new HashSet<>();
 
     /**
      * List of the client ids that share frontend with the current client.
@@ -75,19 +73,14 @@ public final class ClientProfile {
     private Set<Integer> mShareFeClientIds = new HashSet<>();
 
     /**
-     * List of the Lnb handles that are used by the current client.
+     * List of the Lnb ids that are used by the current client.
      */
-    private Set<Integer> mUsingLnbHandles = new HashSet<>();
+    private Set<Integer> mUsingLnbIds = new HashSet<>();
 
     /**
      * List of the Cas system ids that are used by the current client.
      */
     private int mUsingCasSystemId = INVALID_RESOURCE_ID;
-
-    /**
-     * CiCam id that is used by the client.
-     */
-    private int mUsingCiCamId = INVALID_RESOURCE_ID;
 
     /**
      * Optional arbitrary priority value given by the client.
@@ -120,20 +113,6 @@ public final class ClientProfile {
         return mProcessId;
     }
 
-    /**
-     * Set the current isForeground status.
-     */
-    public void setForeground(boolean isForeground) {
-        mIsForeground = isForeground;
-    }
-
-    /**
-     * Get the previous recorded isForeground status.
-     */
-    public boolean isForeground() {
-        return mIsForeground;
-    }
-
     public int getGroupId() {
         return mGroupId;
     }
@@ -147,9 +126,6 @@ public final class ClientProfile {
     }
 
     public void setPriority(int priority) {
-        if (priority < 0) {
-            return;
-        }
         mPriority = priority;
     }
 
@@ -160,10 +136,10 @@ public final class ClientProfile {
     /**
      * Set when the client starts to use a frontend.
      *
-     * @param frontendHandle being used.
+     * @param frontendId being used.
      */
-    public void useFrontend(int frontendHandle) {
-        mUsingFrontendHandles.add(frontendHandle);
+    public void useFrontend(int frontendId) {
+        mUsingFrontendIds.add(frontendId);
     }
 
     /**
@@ -184,8 +160,8 @@ public final class ClientProfile {
         mShareFeClientIds.remove(clientId);
     }
 
-    public Set<Integer> getInUseFrontendHandles() {
-        return mUsingFrontendHandles;
+    public Set<Integer> getInUseFrontendIds() {
+        return mUsingFrontendIds;
     }
 
     public Set<Integer> getShareFeClientIds() {
@@ -196,30 +172,30 @@ public final class ClientProfile {
      * Called when the client released a frontend.
      */
     public void releaseFrontend() {
-        mUsingFrontendHandles.clear();
+        mUsingFrontendIds.clear();
         mShareFeClientIds.clear();
     }
 
     /**
      * Set when the client starts to use an Lnb.
      *
-     * @param lnbHandle being used.
+     * @param lnbId being used.
      */
-    public void useLnb(int lnbHandle) {
-        mUsingLnbHandles.add(lnbHandle);
+    public void useLnb(int lnbId) {
+        mUsingLnbIds.add(lnbId);
     }
 
-    public Set<Integer> getInUseLnbHandles() {
-        return mUsingLnbHandles;
+    public Set<Integer> getInUseLnbIds() {
+        return mUsingLnbIds;
     }
 
     /**
      * Called when the client released an lnb.
      *
-     * @param lnbHandle being released.
+     * @param lnbId being released.
      */
-    public void releaseLnb(int lnbHandle) {
-        mUsingLnbHandles.remove(lnbHandle);
+    public void releaseLnb(int lnbId) {
+        mUsingLnbIds.remove(lnbId);
     }
 
     /**
@@ -243,34 +219,13 @@ public final class ClientProfile {
     }
 
     /**
-     * Set when the client starts to connect to a CiCam.
-     *
-     * @param ciCamId ciCam being used.
-     */
-    public void useCiCam(int ciCamId) {
-        mUsingCiCamId = ciCamId;
-    }
-
-    public int getInUseCiCamId() {
-        return mUsingCiCamId;
-    }
-
-    /**
-     * Called when the client disconnect to a CiCam.
-     */
-    public void releaseCiCam() {
-        mUsingCiCamId = INVALID_RESOURCE_ID;
-    }
-
-    /**
      * Called to reclaim all the resources being used by the current client.
      */
     public void reclaimAllResources() {
-        mUsingFrontendHandles.clear();
+        mUsingFrontendIds.clear();
         mShareFeClientIds.clear();
-        mUsingLnbHandles.clear();
+        mUsingLnbIds.clear();
         mUsingCasSystemId = INVALID_RESOURCE_ID;
-        mUsingCiCamId = INVALID_RESOURCE_ID;
     }
 
     @Override

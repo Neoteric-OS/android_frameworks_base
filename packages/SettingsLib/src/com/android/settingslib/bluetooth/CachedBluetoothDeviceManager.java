@@ -139,14 +139,14 @@ public class CachedBluetoothDeviceManager {
      */
     public synchronized String getSubDeviceSummary(CachedBluetoothDevice device) {
         final Set<CachedBluetoothDevice> memberDevices = device.getMemberDevice();
-        // TODO: check the CSIP group size instead of the real member device set size, and adjust
-        // the size restriction.
-        if (memberDevices.size() == 1) {
+        if (memberDevices != null) {
             for (CachedBluetoothDevice memberDevice : memberDevices) {
-                if (memberDevice.isConnected()) {
-                    return memberDevice.getConnectionSummary();
+                if (!memberDevice.isConnected()) {
+                    return null;
                 }
             }
+
+            return device.getConnectionSummary();
         }
         CachedBluetoothDevice subDevice = device.getSubDevice();
         if (subDevice != null && subDevice.isConnected()) {

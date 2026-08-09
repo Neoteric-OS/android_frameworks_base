@@ -16,7 +16,6 @@
 
 package android.bluetooth;
 
-import android.annotation.Nullable;
 import android.annotation.TestApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Build;
@@ -73,7 +72,7 @@ public final class BluetoothClass implements Parcelable {
     }
 
     @Override
-    public boolean equals(@Nullable Object o) {
+    public boolean equals(Object o) {
         if (o instanceof BluetoothClass) {
             return mClass == ((BluetoothClass) o).mClass;
         }

@@ -889,7 +889,7 @@ public class NsdService extends INsdManager.Stub {
 
         @Override
         public String toString() {
-            StringBuilder sb = new StringBuilder();
+            StringBuffer sb = new StringBuffer();
             sb.append("mChannel ").append(mChannel).append("\n");
             sb.append("mMessenger ").append(mMessenger).append("\n");
             sb.append("mResolvedService ").append(mResolvedService).append("\n");

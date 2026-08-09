@@ -24,21 +24,21 @@ package {
 }
 
 filegroup {
-    name: "stable-media-aidl-srcs",
+    name: "stable-mediasession2-aidl-srcs",
     srcs: ["stable/**/*.aidl"],
     path: "stable",
 }
 
 filegroup {
-    name: "private-media-aidl-srcs",
+    name: "private-mediasession2-aidl-srcs",
     srcs: ["private/**/I*.aidl"],
     path: "private",
 }
 
 filegroup {
-    name: "media-aidl-srcs",
+    name: "mediasession2-aidl-srcs",
     srcs: [
-        ":private-media-aidl-srcs",
-        ":stable-media-aidl-srcs",
+        ":private-mediasession2-aidl-srcs",
+        ":stable-mediasession2-aidl-srcs",
     ],
 }

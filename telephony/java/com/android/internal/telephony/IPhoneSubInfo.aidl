@@ -216,6 +216,5 @@ interface IPhoneSubInfo {
      * @param data authentication challenge data
      * @return challenge response
      */
-    String getIccSimChallengeResponse(int subId, int appType, int authType, String data,
-            String callingPackage, String callingFeatureId);
+    String getIccSimChallengeResponse(int subId, int appType, int authType, String data);
 }

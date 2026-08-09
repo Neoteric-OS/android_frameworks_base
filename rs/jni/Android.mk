@@ -8,6 +8,7 @@ LOCAL_SHARED_LIBRARIES := \
     libandroid \
     libandroid_runtime \
     libandroidfw \
+    libnativehelper \
     libRS \
     libcutils \
     libhwui \

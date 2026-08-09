@@ -22,8 +22,6 @@ import android.system.keystore2.Authorization;
 import android.system.keystore2.Domain;
 import android.system.keystore2.KeyDescriptor;
 
-import com.android.internal.annotations.VisibleForTesting;
-
 import java.security.Key;
 
 /**
@@ -48,11 +46,7 @@ public class AndroidKeyStoreKey implements Key {
     // We do not include this member in comparisons.
     private final KeyStoreSecurityLevel mSecurityLevel;
 
-    /**
-     * @hide
-     */
-    @VisibleForTesting
-    public AndroidKeyStoreKey(@NonNull KeyDescriptor descriptor,
+    AndroidKeyStoreKey(@NonNull KeyDescriptor descriptor,
             long keyId,
             @NonNull Authorization[] authorizations,
             @NonNull String algorithm,

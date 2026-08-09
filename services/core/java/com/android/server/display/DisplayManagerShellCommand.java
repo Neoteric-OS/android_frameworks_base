@@ -16,11 +16,13 @@
 
 package com.android.server.display;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.hardware.display.DisplayManager;
+import android.os.Binder;
 import android.os.ShellCommand;
-import android.view.Display;
+import android.os.UserHandle;
+import android.provider.Settings;
 
 import java.io.PrintWriter;
 
@@ -109,8 +111,17 @@ class DisplayManagerShellCommand extends ShellCommand {
         }
 
         final Context context = mService.getContext();
-        final DisplayManager dm = context.getSystemService(DisplayManager.class);
-        dm.setBrightness(Display.DEFAULT_DISPLAY, brightness);
+        context.enforceCallingOrSelfPermission(
+                Manifest.permission.CONTROL_DISPLAY_BRIGHTNESS,
+                "Permission required to set the display's brightness");
+        final long token = Binder.clearCallingIdentity();
+        try {
+            Settings.System.putFloatForUser(context.getContentResolver(),
+                    Settings.System.SCREEN_BRIGHTNESS_FLOAT, brightness,
+                    UserHandle.USER_CURRENT);
+        } finally {
+            Binder.restoreCallingIdentity(token);
+        }
         return 0;
     }
 

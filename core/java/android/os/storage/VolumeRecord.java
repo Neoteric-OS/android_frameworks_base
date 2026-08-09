@@ -16,7 +16,6 @@
 
 package android.os.storage;
 
-import android.annotation.Nullable;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.Context;
 import android.os.Build;
@@ -116,7 +115,7 @@ public class VolumeRecord implements Parcelable {
         }
 
         return new StorageVolume(id, userPath, internalPath, description, primary, removable,
-                emulated, allowMassStorage, maxFileSize, user, null /* uuid */, fsUuid, envState);
+                emulated, allowMassStorage, maxFileSize, user, fsUuid, envState);
     }
 
     public void dump(IndentingPrintWriter pw) {
@@ -151,7 +150,7 @@ public class VolumeRecord implements Parcelable {
     }
 
     @Override
-    public boolean equals(@Nullable Object o) {
+    public boolean equals(Object o) {
         if (o instanceof VolumeRecord) {
             return Objects.equals(fsUuid, ((VolumeRecord) o).fsUuid);
         } else {

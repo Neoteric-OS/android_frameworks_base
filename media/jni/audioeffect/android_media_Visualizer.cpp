@@ -29,12 +29,7 @@
 
 #include <nativehelper/ScopedUtfChars.h>
 
-#include <android/content/AttributionSourceState.h>
-#include <android_os_Parcel.h>
-
 using namespace android;
-
-using content::AttributionSourceState;
 
 #define VISUALIZER_SUCCESS                      0
 #define VISUALIZER_ERROR                       (-1)
@@ -390,15 +385,15 @@ static void android_media_visualizer_effect_callback(int32_t event,
 
 static jint
 android_media_visualizer_native_setup(JNIEnv *env, jobject thiz, jobject weak_this,
-        jint sessionId, jintArray jId, jobject jAttributionSource)
+        jint sessionId, jintArray jId, jstring opPackageName)
 {
     ALOGV("android_media_visualizer_native_setup");
     VisualizerJniStorage* lpJniStorage = NULL;
     int lStatus = VISUALIZER_ERROR_NO_MEMORY;
     sp<Visualizer> lpVisualizer;
     jint* nId = NULL;
-    AttributionSourceState attributionSource;
-    Parcel* parcel = nullptr;
+
+    ScopedUtfChars opPackageNameStr(env, opPackageName);
 
     setVisualizer(env, thiz, 0);
 
@@ -425,9 +420,7 @@ android_media_visualizer_native_setup(JNIEnv *env, jobject thiz, jobject weak_th
     }
 
     // create the native Visualizer object
-    parcel = parcelForJavaObject(env, jAttributionSource);
-    attributionSource.readFromParcel(parcel);
-    lpVisualizer = sp<Visualizer>::make(attributionSource);
+    lpVisualizer = new Visualizer(String16(opPackageNameStr.c_str()));
     if (lpVisualizer == 0) {
         ALOGE("Error creating Visualizer");
         goto setup_failure;
@@ -743,7 +736,7 @@ android_media_setPeriodicCapture(JNIEnv *env, jobject thiz, jint rate, jboolean 
 // Dalvik VM type signatures
 static const JNINativeMethod gMethods[] = {
     {"native_init",            "()V",     (void *)android_media_visualizer_native_init},
-    {"native_setup",           "(Ljava/lang/Object;I[ILandroid/os/Parcel;)I",
+    {"native_setup",           "(Ljava/lang/Object;I[ILjava/lang/String;)I",
                                           (void *)android_media_visualizer_native_setup},
     {"native_finalize",          "()V",   (void *)android_media_visualizer_native_finalize},
     {"native_release",           "()V",   (void *)android_media_visualizer_native_release},

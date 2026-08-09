@@ -20,10 +20,6 @@ import android.compat.annotation.UnsupportedAppUsage;
 import android.os.Build;
 
 /**
- * API for sending log output to the {@link Log#LOG_ID_SYSTEM} buffer.
- *
- * <p>Should be used by system components. Use {@code adb logcat --buffer=system} to fetch the logs.
- *
  * @hide
  */
 public final class Slog {
@@ -139,3 +135,4 @@ public final class Slog {
         return Log.println_native(Log.LOG_ID_SYSTEM, priority, tag, msg);
     }
 }
+

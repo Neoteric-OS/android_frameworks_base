@@ -16,7 +16,6 @@
 
 package com.android.systemui.controls.management
 
-import android.app.ActivityOptions
 import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
@@ -33,8 +32,7 @@ import com.android.systemui.broadcast.BroadcastDispatcher
 import com.android.systemui.controls.CustomIconCache
 import com.android.systemui.controls.controller.ControlsControllerImpl
 import com.android.systemui.controls.controller.StructureInfo
-import com.android.systemui.controls.ui.ControlsActivity
-import com.android.systemui.controls.ui.ControlsUiController
+import com.android.systemui.globalactions.GlobalActionsComponent
 import com.android.systemui.settings.CurrentUserTracker
 import com.android.systemui.util.LifecycleActivity
 import javax.inject.Inject
@@ -44,9 +42,9 @@ import javax.inject.Inject
  */
 class ControlsEditingActivity @Inject constructor(
     private val controller: ControlsControllerImpl,
-    private val broadcastDispatcher: BroadcastDispatcher,
-    private val customIconCache: CustomIconCache,
-    private val uiController: ControlsUiController
+    broadcastDispatcher: BroadcastDispatcher,
+    private val globalActionsComponent: GlobalActionsComponent,
+    private val customIconCache: CustomIconCache
 ) : LifecycleActivity() {
 
     companion object {
@@ -102,6 +100,7 @@ class ControlsEditingActivity @Inject constructor(
     }
 
     override fun onBackPressed() {
+        globalActionsComponent.handleShowGlobalActionsMenu()
         animateExitAndFinish()
     }
 
@@ -140,17 +139,14 @@ class ControlsEditingActivity @Inject constructor(
     }
 
     private fun bindButtons() {
+        val rootView = requireViewById<ViewGroup>(R.id.controls_management_root)
         saveButton = requireViewById<Button>(R.id.done).apply {
             isEnabled = false
             setText(R.string.save)
             setOnClickListener {
                 saveFavorites()
-                startActivity(
-                    Intent(applicationContext, ControlsActivity::class.java),
-                    ActivityOptions
-                        .makeSceneTransitionAnimation(this@ControlsEditingActivity).toBundle()
-                )
                 animateExitAndFinish()
+                globalActionsComponent.handleShowGlobalActionsMenu()
             }
         }
     }

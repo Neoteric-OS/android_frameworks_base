@@ -19,34 +19,24 @@ package com.android.systemui.doze;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Handler;
-import android.os.PowerManager;
 import android.os.SystemProperties;
 import android.os.Trace;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.view.Display;
 
-import com.android.systemui.doze.dagger.BrightnessSensor;
-import com.android.systemui.doze.dagger.DozeScope;
-import com.android.systemui.doze.dagger.WrappedService;
-import com.android.systemui.keyguard.WakefulnessLifecycle;
-import com.android.systemui.statusbar.phone.DozeParameters;
-import com.android.systemui.util.sensors.AsyncSensorManager;
-
-import java.io.PrintWriter;
-import java.util.Optional;
-
-import javax.inject.Inject;
+import com.android.internal.annotations.VisibleForTesting;
+import com.android.systemui.broadcast.BroadcastDispatcher;
 
 /**
  * Controls the screen brightness when dozing.
  */
-@DozeScope
 public class DozeScreenBrightness extends BroadcastReceiver implements DozeMachine.Part,
         SensorEventListener {
     private static final boolean DEBUG_AOD_BRIGHTNESS = SystemProperties
@@ -60,12 +50,11 @@ public class DozeScreenBrightness extends BroadcastReceiver implements DozeMachi
     private final DozeHost mDozeHost;
     private final Handler mHandler;
     private final SensorManager mSensorManager;
-    private final Optional<Sensor> mLightSensorOptional;
-    private final WakefulnessLifecycle mWakefulnessLifecycle;
-    private final DozeParameters mDozeParameters;
+    private final Sensor mLightSensor;
+    private final BroadcastDispatcher mBroadcastDispatcher;
     private final int[] mSensorToBrightness;
     private final int[] mSensorToScrimOpacity;
-    private final int mScreenBrightnessDim;
+    private final boolean mDebuggable;
 
     private boolean mRegistered;
     private int mDefaultDozeBrightness;
@@ -81,26 +70,40 @@ public class DozeScreenBrightness extends BroadcastReceiver implements DozeMachi
      */
     private int mDebugBrightnessBucket = -1;
 
-    @Inject
-    public DozeScreenBrightness(Context context, @WrappedService DozeMachine.Service service,
-            AsyncSensorManager sensorManager,
-            @BrightnessSensor Optional<Sensor> lightSensorOptional, DozeHost host, Handler handler,
-            AlwaysOnDisplayPolicy alwaysOnDisplayPolicy,
-            WakefulnessLifecycle wakefulnessLifecycle,
-            DozeParameters dozeParameters) {
+    @VisibleForTesting
+    public DozeScreenBrightness(Context context, DozeMachine.Service service,
+            SensorManager sensorManager, Sensor lightSensor,
+            BroadcastDispatcher broadcastDispatcher, DozeHost host,
+            Handler handler, int defaultDozeBrightness, int[] sensorToBrightness,
+            int[] sensorToScrimOpacity, boolean debuggable) {
         mContext = context;
         mDozeService = service;
         mSensorManager = sensorManager;
-        mLightSensorOptional = lightSensorOptional;
-        mWakefulnessLifecycle = wakefulnessLifecycle;
-        mDozeParameters = dozeParameters;
+        mLightSensor = lightSensor;
+        mBroadcastDispatcher = broadcastDispatcher;
         mDozeHost = host;
         mHandler = handler;
+        mDebuggable = debuggable;
 
-        mDefaultDozeBrightness = alwaysOnDisplayPolicy.defaultDozeBrightness;
-        mScreenBrightnessDim = alwaysOnDisplayPolicy.dimBrightness;
-        mSensorToBrightness = alwaysOnDisplayPolicy.screenBrightnessArray;
-        mSensorToScrimOpacity = alwaysOnDisplayPolicy.dimmingScrimArray;
+        mDefaultDozeBrightness = defaultDozeBrightness;
+        mSensorToBrightness = sensorToBrightness;
+        mSensorToScrimOpacity = sensorToScrimOpacity;
+
+        if (mDebuggable) {
+            IntentFilter filter = new IntentFilter();
+            filter.addAction(ACTION_AOD_BRIGHTNESS);
+            mBroadcastDispatcher.registerReceiverWithHandler(this, filter, handler, UserHandle.ALL);
+        }
+    }
+
+    public DozeScreenBrightness(Context context, DozeMachine.Service service,
+            SensorManager sensorManager, Sensor lightSensor,
+            BroadcastDispatcher broadcastDispatcher, DozeHost host, Handler handler,
+            AlwaysOnDisplayPolicy policy) {
+        this(context, service, sensorManager, lightSensor, broadcastDispatcher, host, handler,
+                context.getResources().getInteger(
+                        com.android.internal.R.integer.config_screenBrightnessDoze),
+                policy.screenBrightnessArray, policy.dimmingScrimArray, DEBUG_AOD_BRIGHTNESS);
     }
 
     @Override
@@ -131,6 +134,9 @@ public class DozeScreenBrightness extends BroadcastReceiver implements DozeMachi
 
     private void onDestroy() {
         setLightSensorEnabled(false);
+        if (mDebuggable) {
+            mBroadcastDispatcher.unregisterReceiver(this);
+        }
     }
 
     @Override
@@ -157,7 +163,7 @@ public class DozeScreenBrightness extends BroadcastReceiver implements DozeMachi
             }
 
             int scrimOpacity = -1;
-            if (!mLightSensorOptional.isPresent()) {
+            if (mLightSensor == null) {
                 // No light sensor, scrims are always transparent.
                 scrimOpacity = 0;
             } else if (brightnessReady) {
@@ -189,9 +195,7 @@ public class DozeScreenBrightness extends BroadcastReceiver implements DozeMachi
     }
 
     private void resetBrightnessToDefault() {
-        mDozeService.setDozeScreenBrightness(
-                clampToDimBrightnessForScreenOff(
-                        clampToUserSetting(mDefaultDozeBrightness)));
+        mDozeService.setDozeScreenBrightness(clampToUserSetting(mDefaultDozeBrightness));
         mDozeHost.setAodDimmingScrim(0f);
     }
     //TODO: brightnessfloat change usages to float.
@@ -202,25 +206,10 @@ public class DozeScreenBrightness extends BroadcastReceiver implements DozeMachi
         return Math.min(brightness, userSetting);
     }
 
-    /**
-     * Clamp the brightness to the dim brightness value used by PowerManagerService just before the
-     * device times out and goes to sleep, if we are sleeping from a timeout. This ensures that we
-     * don't raise the brightness back to the user setting before playing the screen off animation.
-     */
-    private int clampToDimBrightnessForScreenOff(int brightness) {
-        if (mDozeParameters.shouldControlUnlockedScreenOff()
-                && mWakefulnessLifecycle.getLastSleepReason()
-                == PowerManager.GO_TO_SLEEP_REASON_TIMEOUT) {
-            return Math.min(mScreenBrightnessDim, brightness);
-        } else {
-            return brightness;
-        }
-    }
-
     private void setLightSensorEnabled(boolean enabled) {
-        if (enabled && !mRegistered && mLightSensorOptional.isPresent()) {
+        if (enabled && !mRegistered && mLightSensor != null) {
             // Wait until we get an event from the sensor until indicating ready.
-            mRegistered = mSensorManager.registerListener(this, mLightSensorOptional.get(),
+            mRegistered = mSensorManager.registerListener(this, mLightSensor,
                     SensorManager.SENSOR_DELAY_NORMAL, mHandler);
             mLastSensorValue = -1;
         } else if (!enabled && mRegistered) {
@@ -249,10 +238,5 @@ public class DozeScreenBrightness extends BroadcastReceiver implements DozeMachi
     public void onReceive(Context context, Intent intent) {
         mDebugBrightnessBucket = intent.getIntExtra(BRIGHTNESS_BUCKET, -1);
         updateBrightnessAndReady(false /* force */);
-    }
-
-    /** Dump current state */
-    public void dump(PrintWriter pw) {
-        pw.println("DozeScreenBrightnessSensorRegistered=" + mRegistered);
     }
 }

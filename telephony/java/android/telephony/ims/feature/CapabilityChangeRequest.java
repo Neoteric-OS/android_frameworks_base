@@ -41,7 +41,6 @@ public final class CapabilityChangeRequest implements Parcelable {
      * defined as
      * {@link ImsRegistrationImplBase#REGISTRATION_TECH_LTE} or
      * {@link ImsRegistrationImplBase#REGISTRATION_TECH_IWLAN}
-     * {@link ImsRegistrationImplBase#REGISTRATION_TECH_CROSS_SIM}
      */
     public static class CapabilityPair {
         private final int mCapability;
@@ -87,9 +86,8 @@ public final class CapabilityChangeRequest implements Parcelable {
 
         /**
          * @return the stored radio technology, defined as
-         * {@link ImsRegistrationImplBase#REGISTRATION_TECH_LTE},
-         * {@link ImsRegistrationImplBase#REGISTRATION_TECH_IWLAN} or
-         * {@link ImsRegistrationImplBase#REGISTRATION_TECH_CROSS_SIM}
+         * {@link ImsRegistrationImplBase#REGISTRATION_TECH_LTE} or
+         * {@link ImsRegistrationImplBase#REGISTRATION_TECH_IWLAN}
          */
         public @ImsRegistrationImplBase.ImsRegistrationTech int getRadioTech() {
             return radioTech;

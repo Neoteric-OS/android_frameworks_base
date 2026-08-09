@@ -16,7 +16,6 @@
 
 package com.android.server;
 
-import android.annotation.RequiresPermission;
 import android.content.Context;
 import android.database.ContentObserver;
 import android.os.Handler;
@@ -107,7 +106,6 @@ class BluetoothAirplaneModeListener {
     }
 
     @VisibleForTesting
-    @RequiresPermission(android.Manifest.permission.BLUETOOTH_PRIVILEGED)
     void handleAirplaneModeChange() {
         if (shouldSkipAirplaneModeChange()) {
             Log.i(TAG, "Ignore airplane mode change");

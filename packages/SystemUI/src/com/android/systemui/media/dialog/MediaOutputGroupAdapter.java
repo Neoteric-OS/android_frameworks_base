@@ -68,7 +68,7 @@ public class MediaOutputGroupAdapter extends MediaOutputBaseAdapter {
         final int size = mGroupMediaDevices.size();
         if (newPosition < size) {
             viewHolder.onBind(mGroupMediaDevices.get(newPosition), false /* topMargin */,
-                    newPosition == (size - 1) /* bottomMargin */, position);
+                    newPosition == (size - 1) /* bottomMargin */);
             return;
         }
         if (DEBUG) {
@@ -94,8 +94,8 @@ public class MediaOutputGroupAdapter extends MediaOutputBaseAdapter {
         }
 
         @Override
-        void onBind(MediaDevice device, boolean topMargin, boolean bottomMargin, int position) {
-            super.onBind(device, topMargin, bottomMargin, position);
+        void onBind(MediaDevice device, boolean topMargin, boolean bottomMargin) {
+            super.onBind(device, topMargin, bottomMargin);
             mDivider.setVisibility(View.GONE);
             mAddIcon.setVisibility(View.GONE);
             mBottomDivider.setVisibility(View.GONE);

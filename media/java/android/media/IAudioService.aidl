@@ -17,7 +17,6 @@
 package android.media;
 
 import android.bluetooth.BluetoothDevice;
-import android.content.ComponentName;
 import android.media.AudioAttributes;
 import android.media.AudioDeviceAttributes;
 import android.media.AudioFocusInfo;
@@ -25,7 +24,6 @@ import android.media.AudioPlaybackConfiguration;
 import android.media.AudioRecordingConfiguration;
 import android.media.AudioRoutesInfo;
 import android.media.IAudioFocusDispatcher;
-import android.media.IAudioModeDispatcher;
 import android.media.IAudioRoutesObserver;
 import android.media.IAudioServerStateDispatcher;
 import android.media.ICapturePresetDevicesRoleDispatcher;
@@ -44,7 +42,6 @@ import android.media.audiopolicy.AudioVolumeGroup;
 import android.media.audiopolicy.IAudioPolicyCallback;
 import android.media.projection.IMediaProjection;
 import android.net.Uri;
-import android.os.UserHandle;
 import android.view.KeyEvent;
 
 /**
@@ -64,7 +61,7 @@ interface IAudioService {
 
     oneway void playerAttributes(in int piid, in AudioAttributes attr);
 
-    oneway void playerEvent(in int piid, in int event, in int deviceId);
+    oneway void playerEvent(in int piid, in int event);
 
     oneway void releasePlayer(in int piid);
 
@@ -73,8 +70,6 @@ interface IAudioService {
     oneway void recorderEvent(in int riid, in int event);
 
     oneway void releaseRecorder(in int riid);
-
-    oneway void playerSessionId(in int piid, in int sessionId);
 
     // Java-only methods below.
 
@@ -158,18 +153,6 @@ interface IAudioService {
     oneway void unloadSoundEffects();
 
     oneway void reloadAudioSettings();
-
-    Map getSurroundFormats();
-
-    List getReportedSurroundFormats();
-
-    boolean setSurroundFormatEnabled(int audioFormat, boolean enabled);
-
-    boolean isSurroundFormatEnabled(int audioFormat);
-
-    boolean setEncodedSurroundMode(int mode);
-
-    int getEncodedSurroundMode(int targetSdkVersion);
 
     oneway void avrcpSupportsAbsoluteVolume(String address, boolean support);
 
@@ -344,57 +327,18 @@ interface IAudioService {
     oneway void unregisterCapturePresetDevicesRoleDispatcher(
             ICapturePresetDevicesRoleDispatcher dispatcher);
 
-    oneway void adjustStreamVolumeForUid(int streamType, int direction, int flags,
-            in String packageName, int uid, int pid, in UserHandle userHandle,
-            int targetSdkVersion);
+    boolean setDeviceForCommunication(IBinder cb, int portId);
 
-    oneway void adjustSuggestedStreamVolumeForUid(int streamType, int direction, int flags,
-            in String packageName, int uid, int pid, in UserHandle userHandle,
-            int targetSdkVersion);
-
-    oneway void setStreamVolumeForUid(int streamType, int direction, int flags,
-            in String packageName, int uid, int pid, in UserHandle userHandle,
-            int targetSdkVersion);
-
-    boolean isMusicActive(in boolean remotely);
-
-    int getDevicesForStream(in int streamType);
-
-    int[] getAvailableCommunicationDeviceIds();
-
-    boolean setCommunicationDevice(IBinder cb, int portId);
-
-    int getCommunicationDevice();
+    int getDeviceForCommunication();
 
     void registerCommunicationDeviceDispatcher(ICommunicationDeviceDispatcher dispatcher);
 
     oneway void unregisterCommunicationDeviceDispatcher(
             ICommunicationDeviceDispatcher dispatcher);
 
-    boolean areNavigationRepeatSoundEffectsEnabled();
-
-    oneway void setNavigationRepeatSoundEffectsEnabled(boolean enabled);
-
-    boolean isHomeSoundEffectEnabled();
-
-    oneway void setHomeSoundEffectEnabled(boolean enabled);
-
     boolean setAdditionalOutputDeviceDelay(in AudioDeviceAttributes device, long delayMillis);
 
     long getAdditionalOutputDeviceDelay(in AudioDeviceAttributes device);
 
     long getMaxAdditionalOutputDeviceDelay(in AudioDeviceAttributes device);
-
-    int requestAudioFocusForTest(in AudioAttributes aa, int durationHint, IBinder cb,
-            in IAudioFocusDispatcher fd, in String clientId, in String callingPackageName,
-            int uid, int sdk);
-
-    int abandonAudioFocusForTest(in IAudioFocusDispatcher fd, in String clientId,
-            in AudioAttributes aa, in String callingPackageName);
-
-    long getFadeOutDurationOnFocusLossMillis(in AudioAttributes aa);
-
-    void registerModeDispatcher(IAudioModeDispatcher dispatcher);
-
-    oneway void unregisterModeDispatcher(IAudioModeDispatcher dispatcher);
 }

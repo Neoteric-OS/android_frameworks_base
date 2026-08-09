@@ -17,7 +17,6 @@
 package com.android.server.locksettings;
 
 import static android.content.Context.USER_SERVICE;
-import static android.text.TextUtils.formatSimple;
 
 import static com.android.internal.annotations.VisibleForTesting.Visibility.PACKAGE;
 import static com.android.internal.widget.LockPatternUtils.USER_FRP;
@@ -508,7 +507,7 @@ class LockSettingsStorage {
     public Map<Integer, List<Long>> listSyntheticPasswordHandlesForAllUsers(String stateName) {
         Map<Integer, List<Long>> result = new ArrayMap<>();
         final UserManager um = UserManager.get(mContext);
-        for (UserInfo user : um.getUsers()) {
+        for (UserInfo user : um.getUsers(false)) {
             result.put(user.id, listSyntheticPasswordHandlesForUser(stateName, user.id));
         }
         return result;
@@ -551,7 +550,7 @@ class LockSettingsStorage {
     protected String getSynthenticPasswordStateFilePathForUser(int userId, long handle,
             String name) {
         final File baseDir = getSyntheticPasswordDirectoryForUser(userId);
-        final String baseName = formatSimple("%016x.%s", handle, name);
+        final String baseName = String.format("%016x.%s", handle, name);
         return new File(baseDir, baseName).getAbsolutePath();
     }
 
@@ -770,15 +769,14 @@ class LockSettingsStorage {
 
     public void dump(IndentingPrintWriter pw) {
         final UserManager um = UserManager.get(mContext);
-        for (UserInfo user : um.getUsers()) {
+        for (UserInfo user : um.getUsers(false)) {
             File userPath = getSyntheticPasswordDirectoryForUser(user.id);
             pw.println(String.format("User %d [%s]:", user.id, userPath.getAbsolutePath()));
             pw.increaseIndent();
             File[] files = userPath.listFiles();
             if (files != null) {
-                Arrays.sort(files);
                 for (File file : files) {
-                    pw.println(String.format("%6d %s %s", file.length(),
+                    pw.println(String.format("%4d %s %s", file.length(),
                             LockSettingsService.timestampToString(file.lastModified()),
                             file.getName()));
                 }
@@ -800,7 +798,7 @@ class LockSettingsStorage {
 
         public DatabaseHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
-            setWriteAheadLoggingEnabled(false);
+            setWriteAheadLoggingEnabled(true);
             // Memory optimization - close idle connections after 30s of inactivity
             setIdleConnectionTimeout(IDLE_CONNECTION_TIMEOUT_MS);
         }

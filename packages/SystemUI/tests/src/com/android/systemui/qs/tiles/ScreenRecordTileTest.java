@@ -19,7 +19,6 @@ package com.android.systemui.qs.tiles;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
-import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -34,7 +33,6 @@ import androidx.test.filters.SmallTest;
 import com.android.internal.logging.MetricsLogger;
 import com.android.systemui.R;
 import com.android.systemui.SysuiTestCase;
-import com.android.systemui.classifier.FalsingManagerFake;
 import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
 import com.android.systemui.qs.QSTileHost;
@@ -83,7 +81,6 @@ public class ScreenRecordTileTest extends SysuiTestCase {
                 mHost,
                 mTestableLooper.getLooper(),
                 new Handler(mTestableLooper.getLooper()),
-                new FalsingManagerFake(),
                 mMetricsLogger,
                 mStatusBarStateController,
                 mActivityStarter,
@@ -91,9 +88,6 @@ public class ScreenRecordTileTest extends SysuiTestCase {
                 mController,
                 mKeyguardDismissUtil
         );
-
-        mTile.initialize();
-        mTestableLooper.processAllMessages();
     }
 
     // Test that the tile is inactive and labeled correctly when the controller is neither starting
@@ -110,7 +104,7 @@ public class ScreenRecordTileTest extends SysuiTestCase {
         assertTrue(mTile.getState().secondaryLabel.toString().equals(
                 mContext.getString(R.string.quick_settings_screen_record_start)));
 
-        mTile.handleClick(null /* view */);
+        mTile.handleClick();
         mTestableLooper.processAllMessages();
         verify(mController, times(1)).getPromptIntent();
     }
@@ -134,7 +128,7 @@ public class ScreenRecordTileTest extends SysuiTestCase {
         when(mController.isStarting()).thenReturn(true);
         when(mController.isRecording()).thenReturn(false);
 
-        mTile.handleClick(null /* view */);
+        mTile.handleClick();
 
         verify(mController, times(1)).cancelCountdown();
     }
@@ -159,7 +153,7 @@ public class ScreenRecordTileTest extends SysuiTestCase {
         when(mController.isStarting()).thenReturn(false);
         when(mController.isRecording()).thenReturn(true);
 
-        mTile.handleClick(null /* view */);
+        mTile.handleClick();
 
         verify(mController, times(1)).stopRecording();
     }
@@ -170,38 +164,5 @@ public class ScreenRecordTileTest extends SysuiTestCase {
         mTestableLooper.processAllMessages();
 
         assertTrue(mTile.getState().contentDescription.toString().contains(mTile.getState().label));
-    }
-
-    @Test
-    public void testForceExpandIcon_notRecordingNotStarting() {
-        when(mController.isStarting()).thenReturn(false);
-        when(mController.isRecording()).thenReturn(false);
-
-        mTile.refreshState();
-        mTestableLooper.processAllMessages();
-
-        assertTrue(mTile.getState().forceExpandIcon);
-    }
-
-    @Test
-    public void testForceExpandIcon_recordingNotStarting() {
-        when(mController.isStarting()).thenReturn(false);
-        when(mController.isRecording()).thenReturn(true);
-
-        mTile.refreshState();
-        mTestableLooper.processAllMessages();
-
-        assertFalse(mTile.getState().forceExpandIcon);
-    }
-
-    @Test
-    public void testForceExpandIcon_startingNotRecording() {
-        when(mController.isStarting()).thenReturn(true);
-        when(mController.isRecording()).thenReturn(false);
-
-        mTile.refreshState();
-        mTestableLooper.processAllMessages();
-
-        assertFalse(mTile.getState().forceExpandIcon);
     }
 }

@@ -30,8 +30,5 @@ java_sdk_library {
     dex_preopt: {
         enabled: false,
     },
-    static_libs: [
-        "android-support-annotations",
-    ],
     dist_group: "android",
 }

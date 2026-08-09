@@ -11,7 +11,7 @@ import com.android.systemui.util.animation.UniqueObjectHostView
 import java.util.Objects
 import javax.inject.Inject
 
-class MediaHost constructor(
+class MediaHost @Inject constructor(
     private val state: MediaHostStateHolder,
     private val mediaHierarchyManager: MediaHierarchyManager,
     private val mediaDataManager: MediaDataManager,
@@ -23,13 +23,6 @@ class MediaHost constructor(
     private var visibleChangedListeners: ArraySet<(Boolean) -> Unit> = ArraySet()
 
     private val tmpLocationOnScreen: IntArray = intArrayOf(0, 0)
-
-    private var inited: Boolean = false
-
-    /**
-     * Are we listening to media data changes?
-     */
-    private var listeningToMediaData = false
 
     /**
      * Get the current bounds on the screen. This makes sure the state is fresh and up to date
@@ -56,43 +49,17 @@ class MediaHost constructor(
         }
 
     private val listener = object : MediaDataManager.Listener {
-        override fun onMediaDataLoaded(
-            key: String,
-            oldKey: String?,
-            data: MediaData,
-            immediately: Boolean,
-            isSsReactivated: Boolean
-        ) {
-            if (immediately) {
-                updateViewVisibility()
-            }
-        }
-
-        override fun onSmartspaceMediaDataLoaded(
-            key: String,
-            data: SmartspaceMediaData,
-            shouldPrioritize: Boolean
-        ) {
+        override fun onMediaDataLoaded(key: String, oldKey: String?, data: MediaData) {
             updateViewVisibility()
         }
 
         override fun onMediaDataRemoved(key: String) {
             updateViewVisibility()
         }
-
-        override fun onSmartspaceMediaDataRemoved(key: String, immediately: Boolean) {
-            if (immediately) {
-                updateViewVisibility()
-            }
-        }
     }
 
     fun addVisibilityChangeListener(listener: (Boolean) -> Unit) {
         visibleChangedListeners.add(listener)
-    }
-
-    fun removeVisibilityChangeListener(listener: (Boolean) -> Unit) {
-        visibleChangedListeners.remove(listener)
     }
 
     /**
@@ -104,24 +71,20 @@ class MediaHost constructor(
      *                 transitions.
      */
     fun init(@MediaLocation location: Int) {
-        if (inited) {
-            return
-        }
-        inited = true
-
         this.location = location
         hostView = mediaHierarchyManager.register(this)
-        // Listen by default, as the host might not be attached by our clients, until
-        // they get a visibility change. We still want to stay up to date in that case!
-        setListeningToMediaData(true)
         hostView.addOnAttachStateChangeListener(object : OnAttachStateChangeListener {
             override fun onViewAttachedToWindow(v: View?) {
-                setListeningToMediaData(true)
+                // we should listen to the combined state change, since otherwise there might
+                // be a delay until the views and the controllers are initialized, leaving us
+                // with either a blank view or the controllers not yet initialized and the
+                // measuring wrong
+                mediaDataManager.addListener(listener)
                 updateViewVisibility()
             }
 
             override fun onViewDetachedFromWindow(v: View?) {
-                setListeningToMediaData(false)
+                mediaDataManager.removeListener(listener)
             }
         })
 
@@ -148,19 +111,8 @@ class MediaHost constructor(
         updateViewVisibility()
     }
 
-    private fun setListeningToMediaData(listen: Boolean) {
-        if (listen != listeningToMediaData) {
-            listeningToMediaData = listen
-            if (listen) {
-                mediaDataManager.addListener(listener)
-            } else {
-                mediaDataManager.removeListener(listener)
-            }
-        }
-    }
-
     private fun updateViewVisibility() {
-        state.visible = if (showsOnlyActiveMedia) {
+        visible = if (showsOnlyActiveMedia) {
             mediaDataManager.hasActiveMedia()
         } else {
             mediaDataManager.hasAnyMedia()
@@ -299,20 +251,15 @@ class MediaHost constructor(
  */
 interface MediaHostState {
 
-    companion object {
-        const val EXPANDED: Float = 1.0f
-        const val COLLAPSED: Float = 0.0f
-    }
-
     /**
-     * The last measurement input that this state was measured with. Infers width and height of
+     * The last measurement input that this state was measured with. Infers with and height of
      * the players.
      */
     var measurementInput: MeasurementInput?
 
     /**
-     * The expansion of the player, [COLLAPSED] for fully collapsed (up to 3 actions),
-     * [EXPANDED] for fully expanded (up to 5 actions).
+     * The expansion of the player, 0 for fully collapsed (up to 3 actions), 1 for fully expanded
+     * (up to 5 actions.)
      */
     var expansion: Float
 
@@ -324,7 +271,7 @@ interface MediaHostState {
     /**
      * If the view should be VISIBLE or GONE.
      */
-    val visible: Boolean
+    var visible: Boolean
 
     /**
      * Does this host need any falsing protection?

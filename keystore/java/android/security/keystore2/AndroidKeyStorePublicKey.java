@@ -23,7 +23,7 @@ import android.system.keystore2.KeyDescriptor;
 import android.system.keystore2.KeyMetadata;
 
 import java.security.PublicKey;
-import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * {@link PublicKey} backed by Android Keystore.
@@ -62,8 +62,8 @@ public abstract class AndroidKeyStorePublicKey extends AndroidKeyStoreKey implem
         int result = 1;
 
         result = prime * result + super.hashCode();
-        result = prime * result + Arrays.hashCode(mCertificate);
-        result = prime * result + Arrays.hashCode(mCertificateChain);
+        result = prime * result + ((mCertificate == null) ? 0 : mCertificate.hashCode());
+        result = prime * result + ((mCertificateChain == null) ? 0 : mCertificateChain.hashCode());
 
         return result;
     }
@@ -83,7 +83,7 @@ public abstract class AndroidKeyStorePublicKey extends AndroidKeyStoreKey implem
          */
         final AndroidKeyStorePublicKey other = (AndroidKeyStorePublicKey) obj;
 
-        return Arrays.equals(mCertificate, other.mCertificate) && Arrays.equals(mCertificateChain,
+        return Objects.equals(mCertificate, other.mCertificate) && Objects.equals(mCertificateChain,
                 other.mCertificateChain);
     }
 }

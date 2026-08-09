@@ -140,15 +140,6 @@ public final class WhitelistHelper {
         return mWhitelistedPackages == null ? null : mWhitelistedPackages.get(packageName);
     }
 
-    /**
-     * Returns a set of all packages that are either entirely allowlisted or have components that
-     * are allowlisted.
-     */
-    @Nullable
-    public ArraySet<String> getWhitelistedPackages() {
-        return mWhitelistedPackages == null ? null : new ArraySet<>(mWhitelistedPackages.keySet());
-    }
-
     @Override
     public String toString() {
         return "WhitelistHelper[" + mWhitelistedPackages + ']';
