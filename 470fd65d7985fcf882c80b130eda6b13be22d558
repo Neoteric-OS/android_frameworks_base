@@ -34,6 +34,24 @@
       "parentUuid": "c71c2359_4c939f28",
       "revId": "470fd65d7985fcf882c80b130eda6b13be22d558",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f646251e_af54142c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2063047
+      },
+      "writtenOn": "2026-08-10T17:04:38Z",
+      "side": 1,
+      "message": "Hi Evan, \n\nI understood your concern. My concern is there when I click on reset apps button from setting then only should be reset those apps whatever present in device. Then why all package is resetting i.e. overlay and RRO packages are also resetting. I could not understand this thing. \n\nIn this issue we observed that whatever packages are in \"UID_STATE_CACHED\". Those package are not having permission that\u0027s why taking so much time for resetting or might be not resetting. In log, almost all packages are RRO and overlay package are in \"UID_STATE_CACHED\". That\u0027s why I am suspecting these packages are the problem.\n\nI checked your optimize code my side whatever you suggesting fix. This fix is not working. Still I am able to reproduce the issue with your fix. \n\n\nThanks \u0026 Regards,\nShailendra",
+      "parentUuid": "c4d73cfc_2a66fd0a",
+      "revId": "470fd65d7985fcf882c80b130eda6b13be22d558",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
