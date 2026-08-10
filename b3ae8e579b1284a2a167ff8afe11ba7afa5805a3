@@ -160,6 +160,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eefb1f91_3dd76336",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4973828
+      },
+      "writtenOn": "2026-08-10T15:51:47Z",
+      "side": 1,
+      "message": "Thanks, Pierre. I\u0027ve resolved the comments and the CL is ready. I can see the Submit button, but I don\u0027t have the necessary permissions to merge it. Could you please help submit it?",
+      "parentUuid": "9e624aae_6316d782",
+      "revId": "b3ae8e579b1284a2a167ff8afe11ba7afa5805a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "85e3422a_ce89749f",
