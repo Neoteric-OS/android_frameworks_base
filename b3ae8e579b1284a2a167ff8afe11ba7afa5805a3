@@ -126,6 +126,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5568e9d4_b79dbf24",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4973828
+      },
+      "writtenOn": "2026-08-10T15:06:52Z",
+      "side": 1,
+      "message": "Yes, we do need this change for Android 16 QPR2. That\u0027s actually the reason we originally raised this CL, as the issue is present on the Android 16 QPR2 branch and is impacting our use case there. Can we go ahead and merge this CL?",
+      "parentUuid": "9fbf2099_e015a64c",
+      "revId": "b3ae8e579b1284a2a167ff8afe11ba7afa5805a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "85e3422a_ce89749f",
         "filename": "core/res/res/values/config.xml",
         "patchSetId": 4
