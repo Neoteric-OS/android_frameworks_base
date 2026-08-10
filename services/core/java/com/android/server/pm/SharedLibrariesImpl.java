@@ -377,14 +377,16 @@ public final class SharedLibrariesImpl implements SharedLibrariesRead, Watchable
         for (int i = 0; i < packageCount; i++) {
             final VersionedPackage pkgToDelete = packagesToDelete.get(i);
             // Delete the package synchronously (will fail of the lib used for any user).
-            if (mDeletePackageHelper.deletePackageX(pkgToDelete.getPackageName(),
+            mDeletePackageHelper.deletePackageX(pkgToDelete.getPackageName(),
                     pkgToDelete.getLongVersionCode(), UserHandle.USER_SYSTEM,
                     PackageManager.DELETE_ALL_USERS,
-                    true /*removedBySystem*/) == PackageManager.DELETE_SUCCEEDED) {
-                if (volume.getUsableSpace() >= neededSpace) {
-                    return true;
-                }
-            }
+                    true /*removedBySystem*/);
+        }
+
+        // Check the available space only after attempting to delete every eligible
+        // library, rather than returning as soon as a single delete satisfies neededSpace.
+        if (volume.getUsableSpace() >= neededSpace) {
+            return true;
         }
 
         return false;
