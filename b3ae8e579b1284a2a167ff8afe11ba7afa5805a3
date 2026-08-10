@@ -144,6 +144,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9e624aae_6316d782",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1647116
+      },
+      "writtenOn": "2026-08-10T15:36:21Z",
+      "side": 1,
+      "message": "If you can merge the CL, please go ahead. There is an equivalent one on the latest version of Android, so it will keep working. Although we might need to CP something similar into Android 17.",
+      "parentUuid": "5568e9d4_b79dbf24",
+      "revId": "b3ae8e579b1284a2a167ff8afe11ba7afa5805a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "85e3422a_ce89749f",
         "filename": "core/res/res/values/config.xml",
         "patchSetId": 4
