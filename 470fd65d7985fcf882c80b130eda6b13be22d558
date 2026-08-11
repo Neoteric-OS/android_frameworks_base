@@ -52,6 +52,24 @@
       "parentUuid": "c4d73cfc_2a66fd0a",
       "revId": "470fd65d7985fcf882c80b130eda6b13be22d558",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93bc0945_f3b91e37",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1395785
+      },
+      "writtenOn": "2026-08-11T16:05:26Z",
+      "side": 1,
+      "message": "The problem I see with this approach is that we are now conflating transient process lifecycle with persisted security state. Resetting an app\u0027s access shouldn\u0027t depend on how whether right now it\u0027s in the foreground or background.\n\nIs something in your build using such a heavy operation for something that should only be applied to a few foreground/visible apps?",
+      "parentUuid": "f646251e_af54142c",
+      "revId": "470fd65d7985fcf882c80b130eda6b13be22d558",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
