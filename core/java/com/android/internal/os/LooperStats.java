@@ -22,11 +22,11 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
-import android.util.SparseArray;
 
 import com.android.internal.annotations.GuardedBy;
 
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ThreadLocalRandom;
@@ -43,8 +43,7 @@ public class LooperStats implements Looper.Observer {
     private static final boolean DISABLED_SCREEN_STATE_TRACKING_VALUE = false;
     public static final boolean DEFAULT_IGNORE_BATTERY_STATUS = false;
 
-    @GuardedBy("mLock")
-    private final SparseArray<Entry> mEntries = new SparseArray<>(512);
+    private final ConcurrentHashMap<Integer, Entry> mEntries = new ConcurrentHashMap<>(512);
     private final Object mLock = new Object();
     private final Entry mOverflowEntry = new Entry("OVERFLOW");
     private final Entry mHashCollisionEntry = new Entry("HASH_COLLISION");
@@ -156,15 +155,10 @@ public class LooperStats implements Looper.Observer {
 
     /** Returns an array of {@link ExportedEntry entries} with the aggregated statistics. */
     public List<ExportedEntry> getEntries() {
-        final ArrayList<ExportedEntry> exportedEntries;
-        synchronized (mLock) {
-            final int size = mEntries.size();
-            exportedEntries = new ArrayList<>(size);
-            for (int i = 0; i < size; i++) {
-                Entry entry = mEntries.valueAt(i);
-                synchronized (entry) {
-                    exportedEntries.add(new ExportedEntry(entry));
-                }
+        final ArrayList<ExportedEntry> exportedEntries = new ArrayList<>(mEntries.size());
+        for (Entry entry : mEntries.values()) {
+            synchronized (entry) {
+                exportedEntries.add(new ExportedEntry(entry));
             }
         }
         // Add the overflow and collision entries only if they have any data.
@@ -246,16 +240,19 @@ public class LooperStats implements Looper.Observer {
                 ? mDeviceState.isScreenInteractive()
                 : DISABLED_SCREEN_STATE_TRACKING_VALUE;
         final int id = Entry.idFor(msg, isInteractive);
-        Entry entry;
-        synchronized (mLock) {
-            entry = mEntries.get(id);
-            if (entry == null) {
-                if (!allowCreateNew) {
-                    return null;
-                } else if (mEntries.size() >= mEntriesSizeCap) {
-                    // If over the size cap track totals under OVERFLOW entry.
-                    return mOverflowEntry;
-                } else {
+        
+        Entry entry = mEntries.get(id);
+        if (entry == null) {
+            if (!allowCreateNew) {
+                return null;
+            }
+            synchronized (mLock) {
+                entry = mEntries.get(id);
+                if (entry == null) {
+                    if (mEntries.size() >= mEntriesSizeCap) {
+                        // If over the size cap track totals under OVERFLOW entry.
+                        return mOverflowEntry;
+                    }
                     entry = new Entry(msg, isInteractive);
                     mEntries.put(id, entry);
                 }
