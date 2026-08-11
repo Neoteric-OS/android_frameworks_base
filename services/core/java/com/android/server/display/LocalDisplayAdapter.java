@@ -40,6 +40,7 @@ import android.os.SystemProperties;
 import android.os.Trace;
 import android.util.DisplayUtils;
 import android.util.LongSparseArray;
+import android.util.Log;
 import android.util.Slog;
 import android.util.SparseArray;
 import android.util.Spline;
@@ -903,8 +904,24 @@ final class LocalDisplayAdapter extends DisplayAdapter {
                 mInfo.brightnessMaximum = getDisplayDeviceConfig().getBrightnessMaximum();
                 mInfo.brightnessDefault = getDisplayDeviceConfig().getBrightnessDefault();
                 mInfo.brightnessDim = getDisplayDeviceConfig().getBrightnessDim();
+
+                // Fallback: if hdrSdrRatio still NaN (brightness hasn't changed yet),
+                // compute from vendor XML spline config
+                if (Float.isNaN(mCurrentHdrSdrRatio)
+                        && getDisplayDeviceConfig().hasSdrToHdrRatioSpline()) {
+                    float sdrNits = mInfo.brightnessDefault > 0 ? mInfo.brightnessDefault : 100.0f;
+                    float hdrNits = getDisplayDeviceConfig().getHdrBrightnessFromSdr(
+                            sdrNits, Float.MAX_VALUE);
+                    if (!Float.isNaN(hdrNits) && sdrNits > 0) {
+                        mCurrentHdrSdrRatio = Math.max(1.0f, hdrNits / sdrNits);
+                    }
+                }
+
                 mInfo.hdrSdrRatio = mCurrentHdrSdrRatio;
+                Log.i(TAG, "construct mInfo physicalId = " + mPhysicalDisplayId + " mInfo.hdrSdrRatio = " + mInfo.hdrSdrRatio + " mCurrentHdrSdrRatio = " + mCurrentHdrSdrRatio);
+
             }
+                Log.i(TAG, "[HDR_SDR_LOG] physicalId = " + mPhysicalDisplayId + " mInfo.hdrSdrRatio = " + mInfo.hdrSdrRatio + " mCurrentHdrSdrRatio = " + mCurrentHdrSdrRatio);
             return mInfo;
         }
 
