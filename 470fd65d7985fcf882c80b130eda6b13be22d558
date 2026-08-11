@@ -70,6 +70,24 @@
       "parentUuid": "f646251e_af54142c",
       "revId": "470fd65d7985fcf882c80b130eda6b13be22d558",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4b81caea_f46ad0c2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1395785
+      },
+      "writtenOn": "2026-08-11T17:07:38Z",
+      "side": 1,
+      "message": "I\u0027ve explored another option at https://android-review.git.corp.google.com/c/platform/frameworks/base/+/4225418, simply trying to skip when there has been no state modified.",
+      "parentUuid": "93bc0945_f3b91e37",
+      "revId": "470fd65d7985fcf882c80b130eda6b13be22d558",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
