@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b31695f1_6f8e6e62",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1808293
+      },
+      "writtenOn": "2026-08-11T03:10:07Z",
+      "side": 1,
+      "message": "remove myself as not in sysui team any more",
+      "revId": "e9ebb5402411fed1fc9b47340b949d81dc365cdc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
