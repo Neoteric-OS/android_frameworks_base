@@ -1256,19 +1256,20 @@ public class AppOpsService extends IAppOpsService.Stub {
             knownUids.put(uid, true);
         }
         UidState uidState = getUidStateLocked(uid, true);
-        Ops ops = uidState.pkgOps.get(packageName);
-        if (ops == null) {
-            ops = new Ops(packageName, uidState);
-            uidState.pkgOps.put(packageName.intern(), ops);
-        }
-
         SparseIntArray packageModes =
                 mAppOpsCheckingService.getNonDefaultPackageModes(packageName, userId);
-        for (int k = 0; k < packageModes.size(); k++) {
-            int code = packageModes.keyAt(k);
+        if (packageModes != null && packageModes.size() > 0) {
+            Ops ops = uidState.pkgOps.get(packageName);
+            if (ops == null) {
+                ops = new Ops(packageName, uidState);
+                uidState.pkgOps.put(packageName.intern(), ops);
+            }
+            for (int k = 0; k < packageModes.size(); k++) {
+                int code = packageModes.keyAt(k);
 
-            if (ops.indexOfKey(code) < 0) {
-                ops.put(code, new Op(uidState, packageName, code, uid));
+                if (ops.indexOfKey(code) < 0) {
+                    ops.put(code, new Op(uidState, packageName, code, uid));
+                }
             }
         }
 
@@ -2595,6 +2596,9 @@ public class AppOpsService extends IAppOpsService.Stub {
                         continue;
                     }
                     Ops pkgOps = ent.getValue();
+                    if (pkgOps == null || pkgOps.size() == 0) {
+                        continue;
+                    }
                     for (int j=pkgOps.size()-1; j>=0; j--) {
                         Op curOp = pkgOps.valueAt(j);
                         if (shouldDeferResetOpToDpm(curOp.op)) {
