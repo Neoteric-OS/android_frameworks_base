@@ -88,6 +88,24 @@
       "parentUuid": "93bc0945_f3b91e37",
       "revId": "470fd65d7985fcf882c80b130eda6b13be22d558",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b1c5c0e_2eaaa908",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2063047
+      },
+      "writtenOn": "2026-08-12T17:58:18Z",
+      "side": 1,
+      "message": "Hi Evan, \n\nI checked this change https://android-review.git.corp.google.com/c/platform/frameworks/base/+/4225418, still issue has been persist. Even when I perform resetAllModes with integrated this change. I observed anr in system_server and Anr in \"Input dispatching timed out (36cc02a com.android.car.settings/com.ford.car.settings.common.FordSettingsActivities$SoundSettingsActivity is not responding. Waited 5000ms for MotionEvent(deviceId\u003d2, eventTime\u003d324254452000ns, source\u003dTOUCHSCREEN, displayId\u003d0,action\u003dDOWN, actionButton\u003d0x00000000, flags\u003d0x0, metaState\u003d0x00000000, buttonState\u003d0x00000000, classification\u003dNONE, xPrecision\u003d1.0, yPrecision\u003d1.0, xCursorPosition\u003dnan, yCursorPosition\u003dnan, pointers\u003d[0: (476.0, 567.0)]), policyFlags\u003d0x62000000).\"\n\nThis change not works for us.",
+      "parentUuid": "4b81caea_f46ad0c2",
+      "revId": "470fd65d7985fcf882c80b130eda6b13be22d558",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
