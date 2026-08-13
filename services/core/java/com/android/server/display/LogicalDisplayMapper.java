@@ -983,6 +983,11 @@ class LogicalDisplayMapper implements DisplayDeviceRepository.Listener {
                 } else {
                     if (hasBasicInfoChanged) {
                         logicalDisplayEventMask |= LOGICAL_DISPLAY_EVENT_BASIC_CHANGED;
+                    } else {
+                        display.getNonOverrideDisplayInfoLocked(mTempDisplayInfo);
+                        if(!mTempNonOverrideDisplayInfo.equals(mTempDisplayInfo,true)) {
+                            logicalDisplayEventMask |= LOGICAL_DISPLAY_EVENT_BASIC_CHANGED;
+                        }
                     }
                     logicalDisplayEventMask
                             |= updateAndGetMaskForDisplayPropertyChanges(newDisplayInfo);
