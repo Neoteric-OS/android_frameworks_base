@@ -297,9 +297,17 @@ public final class ImsReasonInfo implements Parcelable {
     public static final int CODE_SIP_TRANSACTION_DOES_NOT_EXIST = 343;
     // 5xx responses
     /**
-     * SIP response 501 : Server Internal Error
+     * SIP response 500 : Server Internal Error
      */
     public static final int CODE_SIP_SERVER_INTERNAL_ERROR = 351;
+        /**
+     * SIP response 501 : Server Not Implemented
+     */
+    public static final int CODE_SIP_SERVER_NOT_IMPLEMENTED = 355;
+        /**
+     * SIP response 502 : Server Bad Gateway
+     */
+    public static final int CODE_SIP_SERVER_BAD_GATEWAY = 356;
     /**
      * SIP response 503 : Service Unavailable
      */
