@@ -1,5 +1,23 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38784a73_cff99ca0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5081175
+      },
+      "writtenOn": "2026-08-15T14:58:58Z",
+      "side": 1,
+      "message": "Currently clang-r596125",
+      "revId": "3bd992dcfe205127c6e5ef01a2f762c5e9d02b09",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
