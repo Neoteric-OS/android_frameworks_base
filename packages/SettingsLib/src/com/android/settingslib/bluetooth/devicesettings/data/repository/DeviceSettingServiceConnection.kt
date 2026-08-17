@@ -214,7 +214,7 @@ class DeviceSettingServiceConnection(
                 },
                 options,
             )
-        } catch (e: RemoteException) {
+        } catch (e: Exception) {
             Log.i(TAG, "Fail to get config", e)
             continuation.resume(null)
         }
