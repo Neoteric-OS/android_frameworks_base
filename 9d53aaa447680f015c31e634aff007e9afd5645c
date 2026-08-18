@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "837fd5a2_5a60518e",
+        "filename": "services/core/java/com/android/server/display/LogicalDisplayMapper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 1936915
+      },
+      "writtenOn": "2026-08-18T14:24:15Z",
+      "side": 1,
+      "message": "This already checks if the override info has changed, I don\u0027t see why we need the extra check",
+      "revId": "9d53aaa447680f015c31e634aff007e9afd5645c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
