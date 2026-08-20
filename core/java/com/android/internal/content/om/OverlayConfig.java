@@ -534,6 +534,13 @@ public class OverlayConfig {
      */
     @NonNull
     public String[] createImmutableFrameworkIdmapsInZygote() {
+        // When system_server is not yet ready, using 'pm' runs in the wrong domain (shell).
+        // We should drop it and wait for system_server to be ready.
+        if (android.os.Process.myUid() == android.os.Process.SHELL_UID) {
+            android.util.Slog.w(TAG, "Skipping idmap2 execution for shell UID during early boot.");
+            return new String[0];
+        }
+
         final String targetPath = AssetManager.FRAMEWORK_APK_PATH;
         final ArrayList<String> idmapPaths = new ArrayList<>();
         final ArrayList<IdmapInvocation> idmapInvocations =
