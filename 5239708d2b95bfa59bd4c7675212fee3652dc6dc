@@ -16,6 +16,23 @@
       "message": "Hi Reviewers, could you kindly review this CL?",
       "revId": "5239708d2b95bfa59bd4c7675212fee3652dc6dc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b11ae25_042b6f25",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4173587
+      },
+      "writtenOn": "2026-08-24T06:24:37Z",
+      "side": 1,
+      "message": "Hi @Anna Bauza,\n\nGently bumping this CL. Could you please take a look when you have a chance? \n\nThanks!",
+      "revId": "5239708d2b95bfa59bd4c7675212fee3652dc6dc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
