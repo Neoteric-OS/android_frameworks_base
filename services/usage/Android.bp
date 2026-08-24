@@ -7,6 +7,18 @@ package {
     default_applicable_licenses: ["frameworks_base_license"],
 }
 
+aconfig_declarations {
+    name: "usage_flags",
+    package: "com.android.server.usage.flags",
+    container: "system",
+    srcs: ["**/usage_flags.aconfig"],
+}
+
+java_aconfig_library {
+    name: "usage_flags_lib",
+    aconfig_declarations: "usage_flags",
+}
+
 filegroup {
     name: "services.usage-sources",
     srcs: ["java/**/*.java"],
@@ -21,5 +33,8 @@ java_library_static {
     libs: [
         "services.core",
         "service-art.stubs.system_server",
+    ],
+    static_libs: [
+        "usage_flags_lib",
     ],
 }

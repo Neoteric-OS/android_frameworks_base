@@ -1,0 +1,10 @@
+package: "com.android.server.usage.flags"
+container: "system"
+
+flag {
+    name: "include_system_app_code_paths"
+    namespace: "storage"
+    description: "Include code paths for system pre-installed apps when querying storage stats, "
+            "so that Settings can display the correct APK size for all apps."
+    bug: "552144422"
+}

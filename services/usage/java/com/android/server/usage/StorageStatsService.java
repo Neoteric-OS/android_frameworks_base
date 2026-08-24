@@ -31,7 +31,6 @@ import android.annotation.Nullable;
 import android.annotation.UserIdInt;
 import android.app.AppOpsManager;
 import android.app.usage.ExternalStorageStats;
-import android.app.usage.Flags;
 import android.app.usage.IStorageStatsManager;
 import android.app.usage.StorageStats;
 import android.app.usage.UsageStatsManagerInternal;
@@ -446,9 +445,11 @@ public class StorageStatsService extends IStorageStatsManager.Stub {
             final long[] ceDataInodes = new long[1];
             String[] codePaths = new String[0];
 
-            if (appInfo.isSystemApp() && !appInfo.isUpdatedSystemApp()) {
-                // We don't count code baked into system image
-            } else {
+            if (com.android.server.usage.flags.Flags.includeSystemAppCodePaths()
+                    && appInfo.getCodePath() != null) {
+                codePaths = ArrayUtils.appendElement(String.class, codePaths,
+                    appInfo.getCodePath());
+            } else if (!appInfo.isSystemApp() || appInfo.isUpdatedSystemApp()) {
                 if (appInfo.getCodePath() != null) {
                     codePaths = ArrayUtils.appendElement(String.class, codePaths,
                         appInfo.getCodePath());
@@ -524,23 +525,24 @@ public class StorageStatsService extends IStorageStatsManager.Stub {
                     final ApplicationInfo appInfo =
                             mPackage.getApplicationInfoAsUser(packageNames[i],
                             PackageManager.MATCH_UNINSTALLED_PACKAGES, userId);
-                    if (appInfo.isSystemApp() && !appInfo.isUpdatedSystemApp()) {
-                        // We don't count code baked into system image
-                    } else {
+                    if (com.android.server.usage.flags.Flags.includeSystemAppCodePaths()
+                            && appInfo.getCodePath() != null) {
+                        codePaths = ArrayUtils.appendElement(String.class, codePaths,
+                                appInfo.getCodePath());
+                    } else if (!appInfo.isSystemApp() || appInfo.isUpdatedSystemApp()) {
                         if (appInfo.getCodePath() != null) {
                             codePaths = ArrayUtils.appendElement(String.class, codePaths,
                                     appInfo.getCodePath());
                         }
-                        if (Flags.getAppBytesByDataTypeApi()) {
-                            computeAppStatsByDataTypes(
-                                    stats, appInfo.sourceDir, packageNames[i]);
-                        }
+                    }
+                    if (Flags.getAppBytesByDataTypeApi()) {
+                        computeAppStatsByDataTypes(
+                                stats, appInfo.sourceDir, packageNames[i]);
                     }
                 } catch (NameNotFoundException e) {
                     throw new ParcelableException(e);
                 }
             }
-        }
 
         try {
             final int pccId = isCallForPccUid ? UserHandle.getAppId(uid) : Process.INVALID_UID;
@@ -1074,6 +1076,10 @@ public class StorageStatsService extends IStorageStatsManager.Stub {
         stats.apkSize += getFileBytesInDir(srcDir, ".apk");
         stats.dmSize += getFileBytesInDir(srcDir, ".dm");
         stats.libSize += getDirBytes(new File(sourceDirName + "/lib/"));
+
+        if (!android.app.usage.Flags.getAppArtManagedBytes()) {
+            computeAppArtStats(stats, packageName);
+        }
     }
 
     private void computeAppArtStats(PackageStats stats, String packageName) {
