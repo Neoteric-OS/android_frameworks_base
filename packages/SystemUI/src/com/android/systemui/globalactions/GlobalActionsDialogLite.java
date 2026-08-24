@@ -455,6 +455,9 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
         if (mShowSilentToggle) {
             mRingerModeTracker.getRingerMode().removeObservers(this);
         }
+        // Remove all pending messages and callbacks to prevent memory leaks and
+        // lingering handler tasks after destruction.
+        mHandler.removeCallbacksAndMessages(null);
     }
 
     protected Context getContext() {
@@ -2179,8 +2182,11 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
         }
     };
 
-    private static final int MESSAGE_DISMISS = 0;
-    private static final int MESSAGE_REFRESH = 1;
+    // Offset custom handler message identifiers to positive values to avoid
+    // collisions with anonymous Runnable callbacks enqueued via Handler.post(),
+    // which default to what = 0 in Android Handler.
+    private static final int MESSAGE_DISMISS = 1000;
+    private static final int MESSAGE_REFRESH = 1001;
     private static final int DIALOG_DISMISS_DELAY = 300; // ms
     private static final int DIALOG_PRESS_DELAY = 850; // ms
 

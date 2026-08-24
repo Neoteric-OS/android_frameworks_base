@@ -87,6 +87,7 @@ import com.android.systemui.util.settings.FakeSettings;
 import com.android.systemui.util.settings.GlobalSettings;
 import com.android.systemui.util.settings.SecureSettings;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -205,6 +206,18 @@ public class GlobalActionsDialogLiteTest extends SysuiTestCase {
         backdropColors.setMainColor(Color.BLACK);
         when(mColorExtractor.getNeutralColors()).thenReturn(backdropColors);
         when(mSelectedUserInteractor.getSelectedUserId()).thenReturn(0);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        // Destroy the dialog instance and clear residual looper messages to
+        // guarantee test isolation across repeated executions.
+        if (mGlobalActionsDialogLite != null) {
+            mGlobalActionsDialogLite.destroy();
+        }
+        if (mTestableLooper != null) {
+            mTestableLooper.processAllMessages();
+        }
     }
 
     @Test
