@@ -257,8 +257,8 @@ public class AudioDeviceBroker {
      */
     /*package*/ void setWaitingForDeviceRestore(boolean waiting) {
         Slog.i(TAG, "setWaitingForDeviceRestore " + waiting);
-        synchronized (mDeviceStateLock) {
-            if (!waiting) {
+        if (!waiting) {
+            synchronized (mDeviceStateLock) {
                 // only allow to end the wait
                 //  - if there are no more server died messages in flight
                 if (mAudioService.isHandlingAudioServerDeath()) {
@@ -270,8 +270,8 @@ public class AudioDeviceBroker {
                     return;
                 }
             }
-            mWaitingForDeviceRestore.set(waiting);
         }
+        mWaitingForDeviceRestore.set(waiting);
     }
 
     /**
