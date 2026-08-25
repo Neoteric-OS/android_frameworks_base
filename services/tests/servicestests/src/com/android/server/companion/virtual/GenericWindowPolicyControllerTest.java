@@ -956,6 +956,22 @@ public class GenericWindowPolicyControllerTest {
         assertThat(gwpc.getCustomHomeComponent()).isEqualTo(NONBLOCKED_COMPONENT);
     }
 
+    @Test
+    public void onSecureSurfaceShown_invokesCallback() {
+        GenericWindowPolicyController gwpc = createGwpc();
+        gwpc.onSecureSurfaceShown(DISPLAY_ID);
+
+        verify(mActivityListener, timeout(TIMEOUT_MILLIS)).onSecureSurfaceShown(DISPLAY_ID);
+    }
+
+    @Test
+    public void onSecureSurfaceHidden_invokesCallback() {
+        GenericWindowPolicyController gwpc = createGwpc();
+        gwpc.onSecureSurfaceHidden(DISPLAY_ID);
+
+        verify(mActivityListener, timeout(TIMEOUT_MILLIS)).onSecureSurfaceHidden(DISPLAY_ID);
+    }
+
     private GenericWindowPolicyController createGwpc() {
         var gwpc = new GenericWindowPolicyController(
                 AttributionSource.myAttributionSource(),

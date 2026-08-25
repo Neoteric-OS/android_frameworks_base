@@ -397,6 +397,24 @@ final class VirtualDeviceImpl extends IVirtualDevice.Stub implements IBinder.Dea
             }
         }
 
+        @Override
+        public void onSecureSurfaceShown(int displayId) {
+            try {
+                mActivityListener.onSecureSurfaceShown(displayId);
+            } catch (RemoteException e) {
+                Slog.w(TAG, "Unable to call mActivityListener for display: " + displayId, e);
+            }
+        }
+
+        @Override
+        public void onSecureSurfaceHidden(int displayId) {
+            try {
+                mActivityListener.onSecureSurfaceHidden(displayId);
+            } catch (RemoteException e) {
+                Slog.w(TAG, "Unable to call mActivityListener for display: " + displayId, e);
+            }
+        }
+
         /**
          * Intercepts intent when matching any of the IntentFilter of any interceptor. Returns true
          * if the intent matches any filter notifying the DisplayPolicyController to abort the
