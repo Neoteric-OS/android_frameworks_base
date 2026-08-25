@@ -4,3 +4,6 @@ set noparent
 include /services/core/java/com/android/server/biometrics/OWNERS
 beverlyt@google.com
 include /packages/SystemUI/TEST_OWNERS
+
+# Re-wire build approvers through set noparent barrier
+per-file Android.bp,Android.mk,CleanSpec.mk,BUILD,BUILD.bazel,*.bp,*.bzl,cargo_embargo.json = mdb/android-build-approvers

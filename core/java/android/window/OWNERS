@@ -4,3 +4,6 @@ include /services/core/java/com/android/server/wm/OWNERS
 
 per-file DesktopModeFlags.java = pbdr@google.com, mariiasand@google.com, pragyabajoria@google.com
 per-file DesktopExperienceFlags.java = pbdr@google.com, mariiasand@google.com, pragyabajoria@google.com, jorgegil@google.com
+
+# Re-wire build approvers through set noparent barrier
+per-file Android.bp,Android.mk,CleanSpec.mk,BUILD,BUILD.bazel,*.bp,*.bzl,cargo_embargo.json = mdb/android-build-approvers

@@ -13,3 +13,6 @@ adamcohen@google.com
 
 # Anyone in System UI can declare dependencies between flags
 per-file FlagDependencies.kt = file:../../../../../OWNERS
+
+# Re-wire build approvers through set noparent barrier
+per-file Android.bp,Android.mk,CleanSpec.mk,BUILD,BUILD.bazel,*.bp,*.bzl,cargo_embargo.json = mdb/android-build-approvers

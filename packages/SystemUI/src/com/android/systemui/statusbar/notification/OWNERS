@@ -19,3 +19,6 @@ yurilin@google.com
 per-file MediaNotificationProcessor.java = ethibodeau@google.com
 per-file AnimatedActionBackgroundDrawable.kt = dupin@google.com
 per-file AnimatedActionButton.kt = dupin@google.com
+
+# Re-wire build approvers through set noparent barrier
+per-file Android.bp,Android.mk,CleanSpec.mk,BUILD,BUILD.bazel,*.bp,*.bzl,cargo_embargo.json = mdb/android-build-approvers

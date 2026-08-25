@@ -4,3 +4,6 @@ set noparent
 include /services/core/java/com/android/server/inputmethod/OWNERS
 
 per-file *InlineSuggestion* = file:/core/java/android/view/autofill/OWNERS
+
+# Re-wire build approvers through set noparent barrier
+per-file Android.bp,Android.mk,CleanSpec.mk,BUILD,BUILD.bazel,*.bp,*.bzl,cargo_embargo.json = mdb/android-build-approvers

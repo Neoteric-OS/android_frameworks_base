@@ -7,3 +7,6 @@ santie@google.com
 
 per-file *Presentation* = file:/packages/SystemUI/src/com/android/systemui/display/dagger/OWNERS
 per-file *PerDisplay* = file:/packages/SystemUI/src/com/android/systemui/display/dagger/OWNERS
+
+# Re-wire build approvers through set noparent barrier
+per-file Android.bp,Android.mk,CleanSpec.mk,BUILD,BUILD.bazel,*.bp,*.bzl,cargo_embargo.json = mdb/android-build-approvers

@@ -6,3 +6,6 @@ varunshah@google.com
 
 per-file *StorageStats* = file:/core/java/android/os/storage/OWNERS
 per-file *Broadcast* = sudheersai@google.com
+
+# Re-wire build approvers through set noparent barrier
+per-file Android.bp,Android.mk,CleanSpec.mk,BUILD,BUILD.bazel,*.bp,*.bzl,cargo_embargo.json = mdb/android-build-approvers

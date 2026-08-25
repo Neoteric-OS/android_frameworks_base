@@ -12,3 +12,6 @@ jasonsfchang@google.com
 lbill@google.com
 mingjuwu@google.com
 
+
+# Re-wire build approvers through set noparent barrier
+per-file Android.bp,Android.mk,CleanSpec.mk,BUILD,BUILD.bazel,*.bp,*.bzl,cargo_embargo.json = mdb/android-build-approvers
