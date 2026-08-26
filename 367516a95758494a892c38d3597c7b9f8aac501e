@@ -105,6 +105,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2b88976_431102e8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4634357
+      },
+      "writtenOn": "2026-08-26T11:41:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff365c4d_864a1d12",
+      "revId": "367516a95758494a892c38d3597c7b9f8aac501e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aa1bb49a_22d3622c",
@@ -140,6 +158,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "82dcb8e8_3d1e35a9",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 15996,
+      "author": {
+        "id": 4634357
+      },
+      "writtenOn": "2026-08-26T11:41:14Z",
+      "side": 1,
+      "message": "Covered in this patch (notifyMatrixTransformChanged() added)\n\nsetPivotX / setPivotY / resetPivot: When rotation/scale is non-default, pivot changes getMatrix(), so we now notify. With an identity matrix the region is unchanged and equals(mPreviousTransparentRegion) drops the no-op.\nsetCameraDistance: With non-zero rotationX/Y this dirties the 3D camera and the AABB, so we notify. With no 3D rotation the matrix is unchanged and equals drops the update.\noffsetLeftAndRight / offsetTopAndBottom: These mutate mLeft/mTop without a layout pass, and getGlobalVisibleRect maps from those fields. They invalidate and trigger a draw, but didLayout is false, so the dirty bit is required. We now notify.\nNot covered (intentional)\n\nsetAnimationMatrix: The animation matrix is a separate channel from the property transform. At draw time native code does concat(animationMatrix) then concat(transformMatrix). View.getMatrix() and gatherTransparentRegion → getGlobalVisibleRect only see the transform matrix, not the animation matrix. Hooking the setter would recompute from the un-transitioned layout bounds (same stale region) and add a gather on every ChangeTransform frame. View.draw() (legacy startAnimation()) and GhostView also write RenderNode.setAnimationMatrix and bypass the View setter. Covering this properly means mapRect of getAnimationMatrix() inside gather, which is outside this “sync the hint with property animation” change. The public JavaDoc on View.setAnimationMatrix() also tells app developers to use setRotation / setScaleX / setTranslationX instead.\nsetElevation: This only changes shadowOffset \u003d (int) getZ() in gatherTransparentRegion (a few pixels of shadow outset). It does not move the SurfaceView punch-through hole. The bug is hole desync during bound-changing animation. setTranslationZ already notifies.\nRenderNodeAnimator / ViewPropertyAnimator: These never call the Java setters. ObjectAnimator.ofFloat(view, View.TRANSLATION_X, …) does call View.setTranslationX() and is covered. view.animate() writes renderNode.setTranslationX() from onAnimationUpdate; RenderNodeAnimator updates native properties on RenderThread with no Java per-frame callback. This patch can only sync with UI-thread traversal. Covering ViewPropertyAnimator would need a notify in onAnimationUpdate, as a follow-up.\nThis change notifies every Java setter that updates getMatrix() or mLeft/mTop. RenderThread and animation-matrix paths need a separate follow-up.",
+      "parentUuid": "cde4e8c8_e1e0f8e8",
+      "revId": "367516a95758494a892c38d3597c7b9f8aac501e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e6a8d824_316b2907",
@@ -171,6 +207,24 @@
       "side": 1,
       "message": "Acknowledged",
       "parentUuid": "e6a8d824_316b2907",
+      "revId": "367516a95758494a892c38d3597c7b9f8aac501e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5a3087b_63d3e50e",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 28828,
+      "author": {
+        "id": 4634357
+      },
+      "writtenOn": "2026-08-26T11:41:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0aaa0926_38465a80",
       "revId": "367516a95758494a892c38d3597c7b9f8aac501e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
@@ -257,6 +311,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "681bb74b_8825ef7c",
+        "filename": "core/java/android/view/View.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 28830,
+      "author": {
+        "id": 4634357
+      },
+      "writtenOn": "2026-08-26T11:41:14Z",
+      "side": 1,
+      "message": "Thanks for the review. We agree with the geometry analysis. We are keeping getGlobalVisibleRect() on purpose, and the SurfaceView punch-through path is out of scope for this patch.\n\nAxis-aligned box vs rotated geometry\n\ngetGlobalVisibleRect() → getChildVisibleRect() uses getMatrix().mapRect(), so a non-orthogonal rotation yields an axis-aligned box strictly larger than the view. Region.Op.DIFFERENCE then subtracts that whole box, including the empty corners.\n\nWe still use that box because:\n\nandroid.graphics.Region is a union of axis-aligned rects. A true rotated polygon would have to be rasterized into the Region every animated frame, which is too expensive for this path.\nThe transparent region is only a SurfaceFlinger composition hint, not a clip. A larger box means “mark a bit more as opaque / composite a bit more,” which is safer than leaving the hint at the pre-animation position. With software composition and blending, empty-corner pixels with alpha 0 still show what is below.\nThe old logic used getLocationInWindow() plus untransformed width/height, so even the position was wrong under rotation/translation. The axis-aligned box at least tracks the transform, which is the bug this patch fixes.\nSome HWC paths may skip blending from the hint, so in an extreme case an empty corner could occlude what is below. That is a known precision limit of Region, not a regression from this change. Exact polygon coverage would be a separate change, outside “sync the hint with property animation.”\n\nSurfaceView punch-through\n\nAgreed: the SKIP_DRAW branch of SurfaceView.gatherTransparentRegion() still does UNION with getLocationInWindow() and getWidth()/getHeight(). Translation moves the top-left; rotation/scale do not change the hole’s shape.\n\nThis patch updates the opaque region of regular Views (DIFFERENCE) so a neighboring view’s property animation does not leave a stale opaque rect over a SurfaceView hole. Making the hole follow a SurfaceView’s own rotate/scale is a different path (UNION in SurfaceView.gatherTransparentRegion()) and is a follow-up.",
+      "parentUuid": "c4b35989_45daca9e",
+      "revId": "367516a95758494a892c38d3597c7b9f8aac501e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c241b182_e83b5889",
@@ -292,6 +364,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "79fd75b8_82630043",
+        "filename": "core/java/android/view/ViewRootImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 4194,
+      "author": {
+        "id": 4634357
+      },
+      "writtenOn": "2026-08-26T11:41:14Z",
+      "side": 1,
+      "message": "We are not reusing mTransaction, and we dropped the long-lived mTranslateRegionTransaction field.\n\nWhy we do not reuse mTransaction\nmTransaction is a shared scratch object for the whole performTraversals, not a hint-only transaction.\n\n1.Later in the same traversal we call notifySurfaceCreated/Replaced(mTransaction) and applyTransactionOnDraw(mTransaction) again. Putting the hint on mTransaction first races those surface callbacks on the same object. If we take the immediate apply() path and it does not clear, hint ops can also be stacked with later ops and applied twice.\n2.Earlier in the same traversal mTransaction may already hold unapplied ops (crop, opaque, frame rate, etc.). applyTransactionOnDraw(mTransaction) at transparent-region time would flush those ops at the wrong moment.\n3.A long-lived hint transaction (mTranslateRegionTransaction in the original message) is also unsafe: applyTransactionOnDraw merges/holds the object we pass in. Clearing or mutating that same instance on the next frame races the pending merge.\n\nSo we allocate a short-lived transaction that only contains setTransparentRegionHint and hand it to applyTransactionOnDraw. equals(mPreviousTransparentRegion) means we only allocate when the region actually changes. The commit message now describes this; it no longer mentions mTranslateRegionTransaction.",
+      "parentUuid": "030c215f_b8e6f4d5",
+      "revId": "367516a95758494a892c38d3597c7b9f8aac501e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "29aedf2f_d3c3972a",
@@ -323,6 +413,24 @@
       "side": 1,
       "message": "Acknowledged",
       "parentUuid": "29aedf2f_d3c3972a",
+      "revId": "367516a95758494a892c38d3597c7b9f8aac501e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c4175cd1_f0e96fd9",
+        "filename": "core/java/android/view/ViewRootImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 13520,
+      "author": {
+        "id": 4634357
+      },
+      "writtenOn": "2026-08-26T11:41:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f6290c4_d15c3738",
       "revId": "367516a95758494a892c38d3597c7b9f8aac501e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
