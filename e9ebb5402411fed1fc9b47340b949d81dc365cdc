@@ -16,6 +16,23 @@
       "message": "remove myself as not in sysui team any more",
       "revId": "e9ebb5402411fed1fc9b47340b949d81dc365cdc",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "632ea645_6d48557d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1045544
+      },
+      "writtenOn": "2026-08-26T14:57:44Z",
+      "side": 1,
+      "message": "Hi,\n\n- Is this targeting b/552636363? If so, please add it to the commit message as \"Fix: 552636363\"\n\n- We have an automated test to detect lock inversions now. Do you have a chance to integrate [@SystemServerLock](https://cs.android.com/android/platform/superproject/+/android-latest-release:frameworks/libs/modules-utils/java/com/android/internal/annotations/SystemServerLock.java?q\u003d@systemserverlock) here and run errorprone? Thereafter, errorprone should also be able to figure out lock inversions automatically.\n\n- Could you please remove most of the reviewers? So many reviewers tends to lead to the CL getting ignored due to bystander effect / review fatigue.",
+      "revId": "e9ebb5402411fed1fc9b47340b949d81dc365cdc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
