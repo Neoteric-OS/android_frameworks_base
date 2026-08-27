@@ -15989,6 +15989,20 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
     }
 
     /**
+     * Notifies the {@link ViewRootImpl} that this view's matrix transform (e.g. rotation,
+     * scale, translation) has changed. Used so the root can recompute the transparent region
+     * on the next traversal even when layout is not requested (e.g. during property animations).
+     *
+     * @hide
+     */
+    private void notifyMatrixTransformChanged() {
+        final ViewRootImpl vri = getViewRootImpl();
+        if (vri != null) {
+            vri.matrixTransformChanged();
+        }
+    }
+
+    /**
      * Changes the visibility of this View without triggering any other changes. This should only
      * be used by animation frameworks, such as {@link android.transition.Transition}, where
      * visibility changes should not adjust focus or trigger a new layout. Application developers
@@ -19139,6 +19153,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
         invalidateViewProperty(false, false);
 
         invalidateParentIfNeededAndWasQuickRejected();
+        notifyMatrixTransformChanged();
     }
 
     /**
@@ -19180,6 +19195,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
 
             invalidateParentIfNeededAndWasQuickRejected();
             notifySubtreeAccessibilityStateChangedIfNeeded();
+            notifyMatrixTransformChanged();
         }
     }
 
@@ -19226,6 +19242,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
 
             invalidateParentIfNeededAndWasQuickRejected();
             notifySubtreeAccessibilityStateChangedIfNeeded();
+            notifyMatrixTransformChanged();
         }
     }
 
@@ -19272,6 +19289,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
 
             invalidateParentIfNeededAndWasQuickRejected();
             notifySubtreeAccessibilityStateChangedIfNeeded();
+            notifyMatrixTransformChanged();
         }
     }
 
@@ -19311,6 +19329,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
 
             invalidateParentIfNeededAndWasQuickRejected();
             notifySubtreeAccessibilityStateChangedIfNeeded();
+            notifyMatrixTransformChanged();
         }
     }
 
@@ -19350,6 +19369,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
 
             invalidateParentIfNeededAndWasQuickRejected();
             notifySubtreeAccessibilityStateChangedIfNeeded();
+            notifyMatrixTransformChanged();
         }
     }
 
@@ -19394,6 +19414,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
             invalidateViewProperty(false, true);
 
             invalidateParentIfNeededAndWasQuickRejected();
+            notifyMatrixTransformChanged();
         }
     }
 
@@ -19437,6 +19458,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
             invalidateViewProperty(false, true);
 
             invalidateParentIfNeededAndWasQuickRejected();
+            notifyMatrixTransformChanged();
         }
     }
 
@@ -19459,6 +19481,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
     public void resetPivot() {
         if (mRenderNode.resetPivot()) {
             invalidateViewProperty(false, false);
+            notifyMatrixTransformChanged();
         }
     }
 
@@ -20105,6 +20128,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
 
             invalidateParentIfNeededAndWasQuickRejected();
             notifySubtreeAccessibilityStateChangedIfNeeded();
+            notifyMatrixTransformChanged();
         }
     }
 
@@ -20142,6 +20166,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
 
             invalidateParentIfNeededAndWasQuickRejected();
             notifySubtreeAccessibilityStateChangedIfNeeded();
+            notifyMatrixTransformChanged();
         }
     }
 
@@ -20170,6 +20195,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
             invalidateViewProperty(false, true);
 
             invalidateParentIfNeededAndWasQuickRejected();
+            notifyMatrixTransformChanged();
         }
     }
 
@@ -20649,6 +20675,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
                 invalidateParentIfNeeded();
             }
             notifySubtreeAccessibilityStateChangedIfNeeded();
+            notifyMatrixTransformChanged();
         }
     }
 
@@ -20697,6 +20724,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
                 invalidateParentIfNeeded();
             }
             notifySubtreeAccessibilityStateChangedIfNeeded();
+            notifyMatrixTransformChanged();
         }
     }
 
@@ -28799,16 +28827,20 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
             if ((pflags & PFLAG_SKIP_DRAW) == 0) {
                 // The SKIP_DRAW flag IS NOT set, so this view draws. We need to
                 // remove it from the transparent region.
-                final int[] location = attachInfo.mTransparentLocation;
-                getLocationInWindow(location);
                 // When a view has Z value, then it will be better to leave some area below the view
                 // for drawing shadow. The shadow outset is proportional to the Z value. Note that
                 // the bottom part needs more offset than the left, top and right parts due to the
                 // spot light effects.
                 int shadowOffset = getZ() > 0 ? (int) getZ() : 0;
-                region.op(location[0] - shadowOffset, location[1] - shadowOffset,
-                        location[0] + mRight - mLeft + shadowOffset,
-                        location[1] + mBottom - mTop + (shadowOffset * 3), Region.Op.DIFFERENCE);
+
+                // Use getGlobalVisibleRect to get visible bounds respecting parent clipping.
+                // Reuse mTmpTransparentRect from AttachInfo to avoid per-frame allocation.
+                final Rect rect = attachInfo.mTmpTransparentRect;
+                if (getGlobalVisibleRect(rect)) {
+                    region.op(rect.left - shadowOffset, rect.top - shadowOffset,
+                            rect.right + shadowOffset, rect.bottom + (shadowOffset * 3),
+                            Region.Op.DIFFERENCE);
+                }
             } else {
                 if (mBackground != null && mBackground.getOpacity() != PixelFormat.TRANSPARENT) {
                     // The SKIP_DRAW flag IS set and the background drawable exists, we remove
@@ -32291,6 +32323,12 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
          * calling up the hierarchy.
          */
         final Rect mTmpInvalRect = new Rect();
+
+        /**
+         * Temporary for use in computing the visible bounds for gatherTransparentRegion.
+         * Reused across the view tree traversal to avoid per-frame allocations.
+         */
+        final Rect mTmpTransparentRect = new Rect();
 
         /**
          * Temporary for use in computing hit areas with transformed views
