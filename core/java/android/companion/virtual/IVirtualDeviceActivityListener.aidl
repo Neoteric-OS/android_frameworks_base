@@ -72,6 +72,20 @@ oneway interface IVirtualDeviceActivityListener {
     void onSecureWindowHidden(int displayId);
 
     /**
+     * Called when a secure surface is shown on the device.
+     *
+     * @param displayId The display ID on which the secure surface was shown.
+     */
+    void onSecureSurfaceShown(int displayId);
+
+    /**
+     * Called when a secure surface is no longer shown on the device.
+     *
+     * @param displayId The display ID on which the secure surface was shown.
+     */
+    void onSecureSurfaceHidden(int displayId);
+
+    /**
      * Called when an activity launch is requested on the given display for the given user.
      *
      * @param displayId The display ID on which the activity launch is requested.

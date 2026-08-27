@@ -3406,6 +3406,10 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
             }
 
             mDwpcHelper = new DisplayWindowPolicyControllerHelper(this);
+            final IBinder displayToken = displayManagerInternal.getDisplayToken(mDisplayId);
+            if (displayToken != null) {
+                mWmService.registerSecureSurfaceListener(mDisplayId, displayToken);
+            }
         }
 
         updateBaseDisplayMetrics(mDisplayInfo.logicalWidth, mDisplayInfo.logicalHeight,
@@ -3873,6 +3877,7 @@ class DisplayContent extends RootDisplayArea implements WindowManagerPolicy.Disp
             mRootWindowContainer.mTaskSupervisor
                     .getKeyguardController().onDisplayRemoved(this);
             mWmService.mDisplayWindowSettings.onDisplayRemoved(this);
+            mWmService.unregisterSecureSurfaceListener(mDisplayId);
             getDisplayUiContext().unregisterComponentCallbacks(mSysUiContextConfigCallback);
             removeAllDisplayMirrors(getPendingTransaction());
         } finally {

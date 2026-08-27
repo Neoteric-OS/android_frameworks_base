@@ -24,6 +24,7 @@ import android.graphics.Point;
 import android.hardware.SensorManager;
 import android.hardware.input.HostUsiVersion;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.IntArray;
 import android.util.SparseArray;
@@ -474,6 +475,15 @@ public abstract class DisplayManagerInternal {
      * @return The associated {@link DisplayWindowPolicyController}.
      */
     public abstract DisplayWindowPolicyController getDisplayWindowPolicyController(int displayId);
+
+    /**
+     * Returns the display token for the given display ID.
+     *
+     * @param displayId The id of the display.
+     * @return The display token, or null if not found.
+     */
+    @Nullable
+    public abstract IBinder getDisplayToken(int displayId);
 
     /**
      * Get DisplayPrimaries from SF for a particular display.

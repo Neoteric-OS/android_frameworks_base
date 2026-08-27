@@ -245,6 +245,21 @@ class DisplayWindowPolicyControllerHelper {
         return mDisplayWindowPolicyController.getCustomHomeComponent();
     }
 
+    /**
+     * @see DisplayWindowPolicyController#onSecureSurfaceShown(int)
+     * @see DisplayWindowPolicyController#onSecureSurfaceHidden(int)
+     */
+    public void onSecureSurfaceChanged(int displayId, boolean hasSecureSurface) {
+        if (mDisplayWindowPolicyController == null) {
+            return;
+        }
+        if (hasSecureSurface) {
+            mDisplayWindowPolicyController.onSecureSurfaceShown(displayId);
+        } else {
+            mDisplayWindowPolicyController.onSecureSurfaceHidden(displayId);
+        }
+    }
+
     void dump(String prefix, PrintWriter pw) {
         if (mDisplayWindowPolicyController != null) {
             pw.println();

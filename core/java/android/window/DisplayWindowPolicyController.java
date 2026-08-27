@@ -194,6 +194,20 @@ public abstract class DisplayWindowPolicyController {
         return isWindowingModeSupported(WINDOWING_MODE_PINNED);
     }
 
+    /**
+     * Called when a secure surface is shown on the display.
+     *
+     * @param displayId The id of the display.
+     */
+    public void onSecureSurfaceShown(int displayId) {}
+
+    /**
+     * Called when a secure surface is no longer shown on the display.
+     *
+     * @param displayId The id of the display.
+     */
+    public void onSecureSurfaceHidden(int displayId) {}
+
     /** Dump debug data */
     public void dump(String prefix, final PrintWriter pw) {
         pw.println(prefix + "DisplayWindowPolicyController{" + super.toString() + "}");
