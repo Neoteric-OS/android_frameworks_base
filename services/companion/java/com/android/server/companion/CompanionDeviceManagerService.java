@@ -317,6 +317,12 @@ public class CompanionDeviceManagerService extends SystemService {
             enforceCallerCanManageAssociationsForPackage(getContext(), userId, packageName,
                     "create associations");
 
+            if (mAmInternal != null
+              && mAmInternal.getUidProcessState(getCallingUid())
+                      > ActivityManager.PROCESS_STATE_TOP) {
+              throw new SecurityException("associate() requires the app to be in the foreground");
+            }
+            
             mAssociationRequestsProcessor.processNewAssociationRequest(
                     request, packageName, userId, callback);
         }
