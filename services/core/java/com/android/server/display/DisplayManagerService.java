@@ -6936,6 +6936,11 @@ public final class DisplayManagerService extends SystemService {
         }
 
         @Override
+        public IBinder getDisplayToken(int displayId) {
+            return DisplayManagerService.this.getDisplayToken(displayId);
+        }
+
+        @Override
         public int getDisplayIdToMirror(int displayId) {
             synchronized (mSyncRoot) {
                 final LogicalDisplay display = mLogicalDisplayMapper.getDisplayLocked(displayId);

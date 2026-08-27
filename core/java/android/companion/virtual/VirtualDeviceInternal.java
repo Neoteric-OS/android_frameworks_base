@@ -188,6 +188,34 @@ public class VirtualDeviceInternal {
                 }
 
                 @Override
+                public void onSecureSurfaceShown(int displayId) {
+                    final long token = Binder.clearCallingIdentity();
+                    try {
+                        synchronized (mActivityListenersLock) {
+                            for (int i = 0; i < mActivityListeners.size(); i++) {
+                                mActivityListeners.valueAt(i).onSecureSurfaceShown(displayId);
+                            }
+                        }
+                    } finally {
+                        Binder.restoreCallingIdentity(token);
+                    }
+                }
+
+                @Override
+                public void onSecureSurfaceHidden(int displayId) {
+                    final long token = Binder.clearCallingIdentity();
+                    try {
+                        synchronized (mActivityListenersLock) {
+                            for (int i = 0; i < mActivityListeners.size(); i++) {
+                                mActivityListeners.valueAt(i).onSecureSurfaceHidden(displayId);
+                            }
+                        }
+                    } finally {
+                        Binder.restoreCallingIdentity(token);
+                    }
+                }
+
+                @Override
                 public void onActivityLaunchRequested(int displayId,
                         @NonNull ComponentName componentName, @UserIdInt int userId) {
                     final long token = Binder.clearCallingIdentity();
@@ -695,6 +723,16 @@ public class VirtualDeviceInternal {
         @Override
         public void onSecureWindowHidden(int displayId) {
             mExecutor.execute(() -> mActivityListener.onSecureWindowHidden(displayId));
+        }
+
+        @Override
+        public void onSecureSurfaceShown(int displayId) {
+            mExecutor.execute(() -> mActivityListener.onSecureSurfaceShown(displayId));
+        }
+
+        @Override
+        public void onSecureSurfaceHidden(int displayId) {
+            mExecutor.execute(() -> mActivityListener.onSecureSurfaceHidden(displayId));
         }
 
         @Override

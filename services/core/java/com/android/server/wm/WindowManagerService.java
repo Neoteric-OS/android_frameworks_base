@@ -277,6 +277,7 @@ import android.view.IWindowId;
 import android.view.IWindowManager;
 import android.view.IWindowSession;
 import android.view.IWindowSessionCallback;
+import android.view.SurfaceControlSecureSurfaceListener;
 import android.view.InputApplicationHandle;
 import android.view.InputChannel;
 import android.view.InputDevice;
@@ -1282,6 +1283,57 @@ public class WindowManagerService extends IWindowManager.Stub
     final AppLockController mAppLockController;
 
     private final ScreenRecordingCallbackController mScreenRecordingCallbackController;
+
+    private final SurfaceControlSecureSurfaceListener mSecureSurfaceListener =
+            new SurfaceControlSecureSurfaceListener() {
+                @Override
+                public void onSecureSurfaceChanged(IBinder displayToken, boolean hasSecureSurface) {
+                    synchronized (mGlobalLock) {
+                        final Integer displayId = mDisplayTokenToIdMap.get(displayToken);
+                        if (displayId != null) {
+                            Slog.d(TAG, "mSecureSurfaceListener.onSecureSurfaceChanged: displayId=" + displayId + ", hasSecureSurface=" + hasSecureSurface);
+                            final DisplayContent dc = mRoot.getDisplayContent(displayId);
+                            if (dc != null && dc.mDwpcHelper != null) {
+                                dc.mDwpcHelper.onSecureSurfaceChanged(displayId, hasSecureSurface);
+                            }
+                        }
+                    }
+                }
+            };
+
+    @GuardedBy("mGlobalLock")
+    private final ArrayMap<IBinder, Integer> mDisplayTokenToIdMap = new ArrayMap<>();
+    @GuardedBy("mGlobalLock")
+    private final SparseArray<IBinder> mDisplayIdToTokenMap = new SparseArray<>();
+
+    void registerSecureSurfaceListener(int displayId, @NonNull IBinder displayToken) {
+        boolean shouldRegister = false;
+        synchronized (mGlobalLock) {
+            if (!mDisplayTokenToIdMap.containsKey(displayToken)) {
+                mDisplayTokenToIdMap.put(displayToken, displayId);
+                mDisplayIdToTokenMap.put(displayId, displayToken);
+                shouldRegister = true;
+            }
+        }
+        if (shouldRegister) {
+            Slog.d(TAG, "registerSecureSurfaceListener: Registering SecureSurfaceListener for displayId=" + displayId);
+            mSecureSurfaceListener.register(displayToken);
+        }
+    }
+
+    void unregisterSecureSurfaceListener(int displayId) {
+        final IBinder displayToken;
+        synchronized (mGlobalLock) {
+            displayToken = mDisplayIdToTokenMap.removeReturnOld(displayId);
+            if (displayToken != null) {
+                mDisplayTokenToIdMap.remove(displayToken);
+            }
+        }
+        if (displayToken != null) {
+            Slog.d(TAG, "unregisterSecureSurfaceListener: Unregistering SecureSurfaceListener for displayId=" + displayId);
+            mSecureSurfaceListener.unregister(displayToken);
+        }
+    }
 
     private volatile boolean mDisableSecureWindows = false;
 

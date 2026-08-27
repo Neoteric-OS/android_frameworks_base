@@ -2796,6 +2796,14 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
             // Drop any cached DisplayInfos associated with this display id - the values are now
             // out of date given this display added event.
             mWmService.mPossibleDisplayInfoMapper.removePossibleDisplayInfos(displayId);
+
+            if (mWmService.mDisplayManagerInternal != null) {
+                final IBinder displayToken =
+                        mWmService.mDisplayManagerInternal.getDisplayToken(displayId);
+                if (displayToken != null) {
+                    mWmService.registerSecureSurfaceListener(displayId, displayToken);
+                }
+            }
         }
     }
 

@@ -94,6 +94,12 @@ final class GenericWindowPolicyController extends DisplayWindowPolicyController 
          */
         void onSecureWindowHidden(int displayId);
 
+        /** Called when a secure surface shows on the virtual display. */
+        void onSecureSurfaceShown(int displayId);
+
+        /** Called when a secure surface is no longer shown on the virtual display. */
+        void onSecureSurfaceHidden(int displayId);
+
         /** Returns true when an intent should be intercepted */
         boolean shouldInterceptIntent(@NonNull Intent intent);
 
@@ -516,6 +522,22 @@ final class GenericWindowPolicyController extends DisplayWindowPolicyController 
                     () -> mActivityListener.onSecureWindowShown(displayId, componentName, uid));
         } else if (!isSecureContent(newWindowFlags) && isSecureContent(previousWindowFlags)) {
             mHandler.post(() -> mActivityListener.onSecureWindowHidden(displayId));
+        }
+    }
+
+    @Override
+    public void onSecureSurfaceShown(int displayId) {
+        if (displayId != INVALID_DISPLAY) {
+            Slog.d(TAG, "onSecureSurfaceShown: Posting for displayId=" + displayId);
+            mHandler.post(() -> mActivityListener.onSecureSurfaceShown(displayId));
+        }
+    }
+
+    @Override
+    public void onSecureSurfaceHidden(int displayId) {
+        if (displayId != INVALID_DISPLAY) {
+            Slog.d(TAG, "onSecureSurfaceHidden: Posting for displayId=" + displayId);
+            mHandler.post(() -> mActivityListener.onSecureSurfaceHidden(displayId));
         }
     }
 

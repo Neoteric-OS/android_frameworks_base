@@ -135,6 +135,7 @@ extern int register_android_view_Surface(JNIEnv* env);
 extern int register_android_view_SurfaceControl(JNIEnv* env);
 extern int register_android_view_SurfaceControlActivePictureListener(JNIEnv* env);
 extern int register_android_view_SurfaceControlHdrLayerInfoListener(JNIEnv* env);
+extern int register_android_view_SurfaceControlSecureSurfaceListener(JNIEnv* env);
 extern int register_android_view_SurfaceSession(JNIEnv* env);
 extern int register_android_view_CompositionSamplingListener(JNIEnv* env);
 extern int register_android_view_TextureView(JNIEnv* env);
@@ -1598,6 +1599,7 @@ static const RegJNIRec gRegJNI[] = {
         REG_JNI(register_android_view_SurfaceControl),
         REG_JNI(register_android_view_SurfaceControlActivePictureListener),
         REG_JNI(register_android_view_SurfaceControlHdrLayerInfoListener),
+        REG_JNI(register_android_view_SurfaceControlSecureSurfaceListener),
         REG_JNI(register_android_view_SurfaceSession),
         REG_JNI(register_android_view_InputApplicationHandle),
         // This must be called after register_android_view_SurfaceControl since it has a dependency
