@@ -82,7 +82,13 @@ public class WifiIcons {
         }
     }
 
-    public static final int[] WIFI_4_FULL_ICONS = {
+    // ic_wifi_std_* is the refreshed glyph with the generation digit baked in; levels 3 and 4 draw the same.
+    public static final int[] WIFI_4_FULL_ICONS = newStatusBarIcons()
+            ? new int[] {
+                R.drawable.ic_wifi_std_4_0, R.drawable.ic_wifi_std_4_1, R.drawable.ic_wifi_std_4_2,
+                R.drawable.ic_wifi_std_4_3, R.drawable.ic_wifi_std_4_4
+            }
+            : new int[] {
 // QTI_BEGIN: 2019-05-30: Core: wifi: Resolve issue with Wi-Fi icon in status bar.
             com.android.internal.R.drawable.ic_wifi_4_signal_0,
             com.android.internal.R.drawable.ic_wifi_4_signal_1,
@@ -92,7 +98,13 @@ public class WifiIcons {
     };
 
 // QTI_END: 2019-05-30: Core: wifi: Resolve issue with Wi-Fi icon in status bar.
-    public static final int[] WIFI_4_NO_INTERNET_ICONS = {
+    public static final int[] WIFI_4_NO_INTERNET_ICONS = newStatusBarIcons()
+            ? new int[] {
+                R.drawable.ic_wifi_std_4_0_error, R.drawable.ic_wifi_std_4_1_error,
+                R.drawable.ic_wifi_std_4_2_error, R.drawable.ic_wifi_std_4_3_error,
+                R.drawable.ic_wifi_std_4_4_error
+            }
+            : new int[] {
 // QTI_BEGIN: 2019-05-30: Core: wifi: Resolve issue with Wi-Fi icon in status bar.
             R.drawable.ic_qs_wifi_4_0,
             R.drawable.ic_qs_wifi_4_1,
@@ -102,7 +114,12 @@ public class WifiIcons {
     };
 
 // QTI_END: 2019-05-30: Core: wifi: Resolve issue with Wi-Fi icon in status bar.
-    public static final int[] WIFI_5_FULL_ICONS = {
+    public static final int[] WIFI_5_FULL_ICONS = newStatusBarIcons()
+            ? new int[] {
+                R.drawable.ic_wifi_std_5_0, R.drawable.ic_wifi_std_5_1, R.drawable.ic_wifi_std_5_2,
+                R.drawable.ic_wifi_std_5_3, R.drawable.ic_wifi_std_5_4
+            }
+            : new int[] {
 // QTI_BEGIN: 2019-05-30: Core: wifi: Resolve issue with Wi-Fi icon in status bar.
             com.android.internal.R.drawable.ic_wifi_5_signal_0,
             com.android.internal.R.drawable.ic_wifi_5_signal_1,
@@ -112,7 +129,13 @@ public class WifiIcons {
     };
 
 // QTI_END: 2019-05-30: Core: wifi: Resolve issue with Wi-Fi icon in status bar.
-    public static final int[] WIFI_5_NO_INTERNET_ICONS = {
+    public static final int[] WIFI_5_NO_INTERNET_ICONS = newStatusBarIcons()
+            ? new int[] {
+                R.drawable.ic_wifi_std_5_0_error, R.drawable.ic_wifi_std_5_1_error,
+                R.drawable.ic_wifi_std_5_2_error, R.drawable.ic_wifi_std_5_3_error,
+                R.drawable.ic_wifi_std_5_4_error
+            }
+            : new int[] {
 // QTI_BEGIN: 2019-05-30: Core: wifi: Resolve issue with Wi-Fi icon in status bar.
             R.drawable.ic_qs_wifi_5_0,
             R.drawable.ic_qs_wifi_5_1,
@@ -122,7 +145,12 @@ public class WifiIcons {
     };
 
 // QTI_END: 2019-05-30: Core: wifi: Resolve issue with Wi-Fi icon in status bar.
-    public static final int[] WIFI_6_FULL_ICONS = {
+    public static final int[] WIFI_6_FULL_ICONS = newStatusBarIcons()
+            ? new int[] {
+                R.drawable.ic_wifi_std_6_0, R.drawable.ic_wifi_std_6_1, R.drawable.ic_wifi_std_6_2,
+                R.drawable.ic_wifi_std_6_3, R.drawable.ic_wifi_std_6_4
+            }
+            : new int[] {
 // QTI_BEGIN: 2019-05-30: Core: wifi: Resolve issue with Wi-Fi icon in status bar.
             com.android.internal.R.drawable.ic_wifi_6_signal_0,
             com.android.internal.R.drawable.ic_wifi_6_signal_1,
@@ -132,7 +160,13 @@ public class WifiIcons {
     };
 
 // QTI_END: 2019-05-30: Core: wifi: Resolve issue with Wi-Fi icon in status bar.
-    public static final int[] WIFI_6_NO_INTERNET_ICONS = {
+    public static final int[] WIFI_6_NO_INTERNET_ICONS = newStatusBarIcons()
+            ? new int[] {
+                R.drawable.ic_wifi_std_6_0_error, R.drawable.ic_wifi_std_6_1_error,
+                R.drawable.ic_wifi_std_6_2_error, R.drawable.ic_wifi_std_6_3_error,
+                R.drawable.ic_wifi_std_6_4_error
+            }
+            : new int[] {
 // QTI_BEGIN: 2019-05-30: Core: wifi: Resolve issue with Wi-Fi icon in status bar.
             R.drawable.ic_qs_wifi_6_0,
             R.drawable.ic_qs_wifi_6_1,
@@ -142,7 +176,12 @@ public class WifiIcons {
     };
 
 // QTI_END: 2019-05-30: Core: wifi: Resolve issue with Wi-Fi icon in status bar.
-    public static final int[] WIFI_7_FULL_ICONS = {
+    public static final int[] WIFI_7_FULL_ICONS = newStatusBarIcons()
+            ? new int[] {
+                R.drawable.ic_wifi_std_7_0, R.drawable.ic_wifi_std_7_1, R.drawable.ic_wifi_std_7_2,
+                R.drawable.ic_wifi_std_7_3, R.drawable.ic_wifi_std_7_4
+            }
+            : new int[] {
 // QTI_BEGIN: 2023-02-17: Core: wifi: Display Wi-Fi standard in signal icons for Wi-Fi 7 APs
             com.android.internal.R.drawable.ic_wifi_7_signal_0,
             com.android.internal.R.drawable.ic_wifi_7_signal_1,
@@ -152,7 +191,13 @@ public class WifiIcons {
     };
 
 // QTI_END: 2023-02-17: Core: wifi: Display Wi-Fi standard in signal icons for Wi-Fi 7 APs
-    public static final int[] WIFI_7_NO_INTERNET_ICONS = {
+    public static final int[] WIFI_7_NO_INTERNET_ICONS = newStatusBarIcons()
+            ? new int[] {
+                R.drawable.ic_wifi_std_7_0_error, R.drawable.ic_wifi_std_7_1_error,
+                R.drawable.ic_wifi_std_7_2_error, R.drawable.ic_wifi_std_7_3_error,
+                R.drawable.ic_wifi_std_7_4_error
+            }
+            : new int[] {
 // QTI_BEGIN: 2023-02-17: Core: wifi: Display Wi-Fi standard in signal icons for Wi-Fi 7 APs
             R.drawable.ic_qs_wifi_7_0,
             R.drawable.ic_qs_wifi_7_1,
