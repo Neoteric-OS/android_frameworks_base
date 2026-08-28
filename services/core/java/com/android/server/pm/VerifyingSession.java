@@ -452,7 +452,22 @@ final class VerifyingSession {
 
         if (requiredVerifierPackages.size() == 0) {
             Slog.e(TAG, "No required verifiers");
-            verificationState.passRequiredVerification();
+            if (!mWaitForVerificationToComplete) {
+                verificationState.passRequiredVerification();
+                return;
+            }
+            // Sufficient verifiers have been asked to verify this session, but there is no
+            // required verifier on this build to drive the verification timeout. Without a
+            // pending CHECK_PENDING_VERIFICATION message nothing would ever complete the
+            // verification state if a sufficient verifier never responds, and the install
+            // session would stay pending forever. Act as the required verifier ourselves so
+            // that the standard timeout path applies.
+            verificationState.addRequiredVerifierUid(Process.myUid());
+            final PackageVerificationResponse fallbackResponse = new PackageVerificationResponse(
+                    PackageManager.VERIFICATION_ALLOW_WITHOUT_SUFFICIENT, Process.myUid());
+            startVerificationTimeoutCountdown(verificationId, streaming, fallbackResponse,
+                    verificationTimeout);
+            mWaitForVerificationToComplete = true;
             return;
         }
 
