@@ -410,6 +410,7 @@ android_library {
     use_resource_processor: true,
     enable_ksp: true,
     resource_dirs: [
+        "bcsmartspace/res",
         "res-product",
         "res-keyguard",
         "res",
@@ -1138,4 +1139,36 @@ filegroup {
         "proguard_common.flags",
         "proguard_kotlin.flags",
     ],
+}
+
+// The BC smartspace views, split out so the launcher can link the same UI SystemUI shows.
+android_library {
+    name: "bcsmartspace-google",
+    use_resource_processor: true,
+    srcs: [
+        "src/com/google/android/systemui/smartspace/**/*.java",
+        "src/com/google/android/systemui/smartspace/**/*.kt",
+    ],
+    exclude_srcs: [
+        // Keyguard glue and dagger reach into SystemUI internals a library outside it cannot see.
+        "src/com/google/android/systemui/smartspace/KeyguardMediaViewController.kt",
+        "src/com/google/android/systemui/smartspace/KeyguardSmartspaceStartable.kt",
+        "src/com/google/android/systemui/smartspace/KeyguardZenAlarmViewController.kt",
+        "src/com/google/android/systemui/smartspace/dagger/*.java",
+    ],
+    resource_dirs: ["bcsmartspace/res"],
+    manifest: "bcsmartspace/AndroidManifest.xml",
+    static_libs: [
+        "SystemUIPluginLib",
+        "smartspace-proto-java",
+        "smartspace-proto-lite-java",
+        "SystemUIClocks-CommonLib",
+        "//frameworks/libs/systemui:iconloader_base",
+        "//frameworks/libs/systemui:animationlib",
+        "androidx-constraintlayout_constraintlayout",
+        "androidx.core_core",
+        "androidx.recyclerview_recyclerview",
+        "androidx.viewpager2_viewpager2",
+    ],
+    platform_apis: true,
 }
