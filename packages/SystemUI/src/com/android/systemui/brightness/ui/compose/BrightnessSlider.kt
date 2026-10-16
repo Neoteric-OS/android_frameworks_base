@@ -17,6 +17,7 @@
 package com.android.systemui.brightness.ui.compose
 
 import android.content.Context
+import android.os.Vibrator
 import android.view.MotionEvent
 import android.widget.ImageView
 import androidx.annotation.VisibleForTesting
@@ -109,6 +110,8 @@ import com.android.systemui.lifecycle.rememberViewModel
 import com.android.systemui.qs.ui.compose.borderOnFocus
 import com.android.systemui.res.R
 import com.android.systemui.util.policy.PolicyRestriction
+import com.google.android.msdl.data.model.MSDLToken
+import com.google.android.msdl.domain.MSDLPlayer
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -116,20 +119,21 @@ import com.android.systemui.util.policy.PolicyRestriction
 fun BrightnessSlider(
     gammaValue: Int,
     valueRange: IntRange,
-    autoMode: Boolean,
+    autoMode: Boolean = false,
     iconResProvider: (Float) -> Int,
     imageLoader: suspend (Int, Context) -> Icon.Loaded?,
     restriction: PolicyRestriction,
     onRestrictedClick: (PolicyRestriction.Restricted) -> Unit,
     onDrag: (Int) -> Unit,
     onStop: (Int) -> Unit,
-    onIconClick: suspend () -> Unit,
+    onIconClick: suspend () -> Unit = {},
     overriddenByAppState: Boolean,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     showToast: () -> Unit = {},
     hapticsViewModelFactory: SliderHapticsViewModel.Factory,
     dimensions: BrightnessSliderDimensions = BrightnessSliderDimensions.Default,
+    msdlPlayer: MSDLPlayer? = null,
 ) {
     var value by remember(gammaValue) { mutableIntStateOf(gammaValue) }
     val animatedValue by
@@ -297,6 +301,7 @@ fun BrightnessSlider(
                 onIconClick = onIconClick,
                 colors = colors,
                 dimensions = dimensions,
+                msdlPlayer = msdlPlayer,
             )
         }
     }
@@ -334,8 +339,15 @@ private fun drawAutoBrightnessButton(
     onIconClick: suspend () -> Unit,
     colors: SliderColors = SystemUISliderColors.Defaults,
     dimensions: BrightnessSliderDimensions = BrightnessSliderDimensions.Default,
+    msdlPlayer: MSDLPlayer? = null,
 ) {
+    val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
+    val player =
+        msdlPlayer
+            ?: remember(context) {
+                MSDLPlayer.createPlayer(context.getSystemService(Vibrator::class.java))
+            }
     val backgroundColor by animateColorAsState(
         targetValue = if (autoMode) colors.activeTrackColor else colors.inactiveTrackColor,
         label = "autoBrightnessBg"
@@ -350,7 +362,10 @@ private fun drawAutoBrightnessButton(
     )
 
     FilledIconButton(
-        onClick = { coroutineScope.launch { onIconClick() } },
+        onClick = {
+            player.playToken(if (autoMode) MSDLToken.SWITCH_OFF else MSDLToken.SWITCH_ON)
+            coroutineScope.launch { onIconClick() }
+        },
         modifier = Modifier.size(dimensions.trackHeight), // Match brightness bar height
         shape = RoundedCornerShape(SliderTrackRoundedCorner), // Match brightness bar shape
         colors = IconButtonDefaults.filledIconButtonColors(containerColor = backgroundColor),
