@@ -17,7 +17,13 @@
 package com.android.systemui.statusbar.pipeline.shared.ui.composable
 
 import android.content.Context
+import android.database.ContentObserver
 import android.graphics.Rect
+import android.net.Uri
+import android.os.Handler
+import android.os.Looper
+import android.os.UserHandle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -440,31 +446,75 @@ private fun addStartSideComposable(
 
                     if (ClockModernization.isEnabled) {
                         clockView.visibility = View.GONE
-                        WithAdaptiveTint(
-                            isDarkProvider = { bounds ->
-                                statusBarViewModel.areaDark.isDarkTheme(bounds)
-                            }
-                        ) { tint ->
-                            Clock(
-                                clockViewModel = checkNotNull(clockViewModel),
-                                textColor = tint,
-                                modifier =
-                                    Modifier.padding(end = 2.dp)
-                                        // Keep the clock's space reserved while it's hidden.
-                                        .alpha(if (statusBarViewModel.isComposeClockVisible) 1f else 0f)
-                                        .wrapContentSize()
-                                        .onGloballyPositioned { coordinates ->
-                                            val boundsInWindow = coordinates.boundsInWindow()
-                                            val bounds =
-                                                Rect(
-                                                    boundsInWindow.left.toInt(),
-                                                    boundsInWindow.top.toInt(),
-                                                    boundsInWindow.right.toInt(),
-                                                    boundsInWindow.bottom.toInt(),
-                                                )
-                                            statusBarBoundsViewModel.updateComposeClockBounds(bounds)
-                                        },
+                        var isClockBlockedByTuner by remember {
+                            val hideList =
+                                StatusBarIconController.getIconHideList(
+                                    context,
+                                    Settings.Secure.getString(
+                                        context.contentResolver,
+                                        StatusBarIconController.ICON_HIDE_LIST,
+                                    ),
+                                )
+                            mutableStateOf(hideList.contains("clock"))
+                        }
+                        DisposableEffect(context) {
+                            val uri =
+                                Settings.Secure.getUriFor(StatusBarIconController.ICON_HIDE_LIST)
+                            val observer =
+                                object : ContentObserver(Handler(Looper.getMainLooper())) {
+                                    override fun onChange(selfChange: Boolean, u: Uri?) {
+                                        val hideList =
+                                            StatusBarIconController.getIconHideList(
+                                                context,
+                                                Settings.Secure.getString(
+                                                    context.contentResolver,
+                                                    StatusBarIconController.ICON_HIDE_LIST,
+                                                ),
+                                            )
+                                        isClockBlockedByTuner = hideList.contains("clock")
+                                    }
+                                }
+                            context.contentResolver.registerContentObserver(
+                                uri,
+                                false,
+                                observer,
+                                UserHandle.USER_ALL,
                             )
+                            onDispose { context.contentResolver.unregisterContentObserver(observer) }
+                        }
+
+                        if (!isClockBlockedByTuner) {
+                            WithAdaptiveTint(
+                                isDarkProvider = { bounds ->
+                                    statusBarViewModel.areaDark.isDarkTheme(bounds)
+                                }
+                            ) { tint ->
+                                Clock(
+                                    clockViewModel = checkNotNull(clockViewModel),
+                                    textColor = tint,
+                                    modifier =
+                                        Modifier.padding(end = 2.dp)
+                                            // Keep the clock's space reserved while it's hidden.
+                                            .alpha(if (statusBarViewModel.isComposeClockVisible) 1f else 0f)
+                                            .wrapContentSize()
+                                            .onGloballyPositioned { coordinates ->
+                                                val boundsInWindow = coordinates.boundsInWindow()
+                                                val bounds =
+                                                    Rect(
+                                                        boundsInWindow.left.toInt(),
+                                                        boundsInWindow.top.toInt(),
+                                                        boundsInWindow.right.toInt(),
+                                                        boundsInWindow.bottom.toInt(),
+                                                    )
+                                                statusBarBoundsViewModel.updateComposeClockBounds(bounds)
+                                            },
+                                )
+                            }
+                        } else {
+                            DisposableEffect(Unit) {
+                                statusBarBoundsViewModel.updateComposeClockBounds(Rect())
+                                onDispose {}
+                            }
                         }
                     }
 

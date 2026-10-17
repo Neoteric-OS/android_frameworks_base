@@ -46,6 +46,7 @@ import com.android.systemui.statusbar.phone.ui.StatusBarIconController
 import javax.inject.Inject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -89,7 +90,7 @@ class HomeStatusBarViewBinderImpl @Inject constructor() : HomeStatusBarViewBinde
 
         // GONE because this shouldn't take space in the layout
         systemInfoView.hideInitially()
-        clockView.hideInitially()
+        clockView.hideInitially(state = View.GONE)
         notificationIconsArea.hideInitially()
 
         view.repeatWhenAttached {
@@ -97,6 +98,7 @@ class HomeStatusBarViewBinderImpl @Inject constructor() : HomeStatusBarViewBinde
                 val context = view.context
 
                 val batteryVisible = MutableStateFlow<Boolean>(true)
+                val clockDenyListed = MutableStateFlow<Boolean>(false)
 
                 val iconHideListUri: Uri =
                     Settings.Secure.getUriFor(StatusBarIconController.ICON_HIDE_LIST)
@@ -104,19 +106,22 @@ class HomeStatusBarViewBinderImpl @Inject constructor() : HomeStatusBarViewBinde
                 val contentObserver =
                     object : ContentObserver(Handler(Looper.getMainLooper())) {
                         override fun onChange(selfChange: Boolean, uri: Uri?) {
-                            batteryVisible.update { current ->
-                                when (uri) {
-                                    iconHideListUri -> {
-                                        !StatusBarIconController.getIconHideList(
-                                                context,
-                                                Settings.Secure.getString(
-                                                    context.contentResolver,
-                                                    StatusBarIconController.ICON_HIDE_LIST,
-                                                ),
-                                            )
-                                            .contains("battery")
+                            when (uri) {
+                                iconHideListUri -> {
+                                    val hideList =
+                                        StatusBarIconController.getIconHideList(
+                                            context,
+                                            Settings.Secure.getString(
+                                                context.contentResolver,
+                                                StatusBarIconController.ICON_HIDE_LIST,
+                                            ),
+                                        )
+                                    batteryVisible.update {
+                                        !hideList.contains("battery")
                                     }
-                                    else -> current
+                                    clockDenyListed.update {
+                                        hideList.contains("clock")
+                                    }
                                 }
                             }
                         }
@@ -196,7 +201,22 @@ class HomeStatusBarViewBinderImpl @Inject constructor() : HomeStatusBarViewBinde
                 }
 
                 if (!ClockModernization.isEnabled) {
-                    launch { viewModel.isClockVisible.collect { clockView.adjustVisibility(it) } }
+                    launch {
+                        combine(
+                                viewModel.isClockVisible,
+                                clockDenyListed,
+                            ) { visibilityModel, denyListed ->
+                                if (
+                                    visibilityModel.visibility == View.VISIBLE &&
+                                        !denyListed
+                                ) {
+                                    visibilityModel
+                                } else {
+                                    visibilityModel.copy(visibility = View.GONE)
+                                }
+                            }
+                            .collect { clockView.adjustVisibility(it) }
+                    }
                 }
 
                 launch {
