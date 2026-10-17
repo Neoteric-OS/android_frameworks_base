@@ -718,6 +718,26 @@ public class Utils {
         return !context.getSystemService(TelephonyManager.class).isDataCapable();
     }
 
+    /**
+     * Returns whether the Wi-Fi standard should be displayed in Wi-Fi icons.
+     * Controlled by the "wifi_standard" Tuner setting, falling back to config_show_wifi_standard.
+     */
+    public static boolean isWifiStandardSupported(Context context) {
+        boolean defaultVal = false;
+        try {
+            defaultVal = context.getResources().getBoolean(
+                    R.bool.config_show_wifi_standard);
+        } catch (Resources.NotFoundException e) {
+            // We are likely in a test environment
+        }
+        try {
+            return Settings.Secure.getInt(context.getContentResolver(),
+                    "wifi_standard", defaultVal ? 1 : 0) == 1;
+        } catch (Exception e) {
+            return defaultVal;
+        }
+    }
+
     /** Returns if the automatic storage management feature is turned on or not. */
     public static boolean isStorageManagerEnabled(Context context) {
         boolean isDefaultOn;
