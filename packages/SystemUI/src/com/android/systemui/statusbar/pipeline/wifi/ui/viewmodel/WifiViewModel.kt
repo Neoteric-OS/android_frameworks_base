@@ -17,6 +17,8 @@
 package com.android.systemui.statusbar.pipeline.wifi.ui.viewmodel
 
 import android.content.Context
+import android.database.ContentObserver
+import android.provider.Settings
 import com.android.systemui.dagger.SysUISingleton
 import com.android.systemui.dagger.qualifiers.Background
 import com.android.systemui.log.table.TableLogBuffer
@@ -29,14 +31,17 @@ import com.android.systemui.statusbar.pipeline.wifi.shared.WifiConstants
 import com.android.systemui.statusbar.pipeline.wifi.shared.model.WifiNetworkModel
 import com.android.systemui.statusbar.pipeline.wifi.ui.model.WifiIcon
 import com.android.systemui.statusbar.systemstatusicons.SystemStatusIconsInCompose
+import com.android.systemui.utils.coroutines.flow.conflatedCallbackFlow
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 
 /**
@@ -57,13 +62,42 @@ constructor(
     @Background scope: CoroutineScope,
     wifiConstants: WifiConstants,
 ) : WifiViewModelCommon {
+    private val wifiStandardChangedEvent: Flow<Unit> =
+        conflatedCallbackFlow {
+            val observer =
+                object : ContentObserver(null) {
+                    override fun onChange(selfChange: Boolean) {
+                        trySend(Unit)
+                    }
+                }
+            try {
+                context.contentResolver.registerContentObserver(
+                    Settings.Secure.getUriFor("wifi_standard"),
+                    false,
+                    observer,
+                )
+            } catch (e: Exception) {
+                // Ignore in tests
+            }
+
+            awaitClose {
+                try {
+                    context.contentResolver.unregisterContentObserver(observer)
+                } catch (e: Exception) {
+                    // Ignore in tests
+                }
+            }
+        }
+        .onStart { emit(Unit) }
+
     override val wifiIcon: StateFlow<WifiIcon> =
         combine(
                 interactor.isEnabled,
                 interactor.isDefault,
                 interactor.isForceHidden,
                 interactor.wifiNetwork,
-            ) { isEnabled, isDefault, isForceHidden, wifiNetwork ->
+                wifiStandardChangedEvent,
+            ) { isEnabled, isDefault, isForceHidden, wifiNetwork, _ ->
                 if (!isEnabled || isForceHidden || wifiNetwork is WifiNetworkModel.CarrierMerged) {
                     return@combine WifiIcon.Hidden
                 }

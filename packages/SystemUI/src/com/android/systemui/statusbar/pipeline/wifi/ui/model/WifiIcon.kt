@@ -68,8 +68,8 @@ sealed interface WifiIcon : Diffable<WifiIcon> {
         var mIsWifiStandardDisplaySupported: Boolean? = null
 
         fun initializeConfig(context: Context) {
-            mIsWifiStandardDisplaySupported = context.resources.getBoolean(com.android.
-                                              settingslib.R.bool.config_show_wifi_standard)
+            mIsWifiStandardDisplaySupported =
+                com.android.settingslib.Utils.isWifiStandardSupported(context)
         }
         /**
          * Mapping from a [WifiNetworkModel] to the appropriate [WifiIcon].
@@ -138,10 +138,8 @@ sealed interface WifiIcon : Diffable<WifiIcon> {
             val levelDesc = context.getString(WIFI_CONNECTION_STRENGTH[this.level])
             val wifiStandard = this.wifiStandard
 
-            if (mIsWifiStandardDisplaySupported == null) {
-                initializeConfig(context)
-            }
-            val isWifiStandardDisplaySupported = mIsWifiStandardDisplaySupported ?: false
+            val isWifiStandardDisplaySupported =
+                mIsWifiStandardDisplaySupported ?: com.android.settingslib.Utils.isWifiStandardSupported(context)
 
             return if (!this.showExclamation) {
                 val icon = when (wifiStandard) {

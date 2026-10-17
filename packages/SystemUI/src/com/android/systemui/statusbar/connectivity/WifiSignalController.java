@@ -263,6 +263,10 @@ public class WifiSignalController extends SignalController<WifiState, IconGroup>
 
 
     private void updateIconGroup() {
+        if (!com.android.settingslib.Utils.isWifiStandardSupported(mContext)) {
+            mCurrentState.iconGroup = mDefaultWifiIconGroup;
+            return;
+        }
 	if (mCurrentState.wifiStandard == ScanResult.WIFI_STANDARD_11N) {
             mCurrentState.iconGroup = mWifi4IconGroup;
         } else if (mCurrentState.wifiStandard == ScanResult.WIFI_STANDARD_11AC) {
