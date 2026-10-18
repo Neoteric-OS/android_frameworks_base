@@ -16,6 +16,8 @@
 
 package com.android.systemui.statusbar.pipeline.shared.ui.view
 
+import android.util.TypedValue
+import com.android.systemui.Flags
 import com.android.systemui.res.R
 import com.android.systemui.statusbar.core.NewStatusBarIcons
 
@@ -27,21 +29,36 @@ import com.android.systemui.statusbar.core.NewStatusBarIcons
  * Along with the 3sp of padding that the new icons embed, this total 6sp of space between the
  * most-right icon and the battery.
  *
+ * When [Flags.statusIconsInComposeRefresh] is enabled, icons use 6dp spacing uniformly with no
+ * embedded margins, matching Compose's Arrangement.spacedBy(6.dp).
+ *
  * Useful for the keyguard, home screen, and shade header status bars.
  */
 object SystemStatusIconsLayoutHelper {
-    /** Set the paddingEnd to 3sp for the system icons container */
+    /** Set the paddingEnd for the system icons container */
     @JvmStatic
     fun configurePaddingForNewStatusBarIcons(systemIcons: android.widget.LinearLayout) {
         // Once the flag rolls out, move these values into the layout xml
         /* check if */ NewStatusBarIcons.isUnexpectedlyInLegacyMode()
         systemIcons.apply {
+            val endPadding =
+                if (Flags.statusIconsInComposeRefresh()) {
+                    Math.round(
+                        TypedValue.applyDimension(
+                            TypedValue.COMPLEX_UNIT_DIP,
+                            8f,
+                            resources.displayMetrics,
+                        )
+                    )
+                } else {
+                    context.resources.getDimensionPixelSize(
+                        R.dimen.signal_cluster_battery_padding_new
+                    )
+                }
             setPaddingRelative(
                 /* start = */ paddingStart,
                 /* top = */ paddingTop,
-                /* end = */ context.resources.getDimensionPixelSize(
-                    R.dimen.signal_cluster_battery_padding_new
-                ),
+                /* end = */ endPadding,
                 /* bottom = */ paddingBottom,
             )
         }

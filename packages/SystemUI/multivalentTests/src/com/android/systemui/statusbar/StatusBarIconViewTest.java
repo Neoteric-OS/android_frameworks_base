@@ -40,14 +40,18 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Icon;
 import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.os.UserHandle;
+import android.platform.test.annotations.EnableFlags;
 import android.service.notification.StatusBarNotification;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -56,6 +60,7 @@ import androidx.test.runner.AndroidJUnit4;
 
 import com.android.internal.statusbar.StatusBarIcon;
 import com.android.internal.util.ContrastColorUtil;
+import com.android.systemui.Flags;
 import com.android.systemui.SysuiTestCase;
 import com.android.systemui.res.R;
 import com.android.systemui.statusbar.notification.NotificationContentDescription;
@@ -426,6 +431,94 @@ public class StatusBarIconViewTest extends SysuiTestCase {
         mIconView.set(icon);
 
         assertThat(mIconView.getScaleType()).isEqualTo(ImageView.ScaleType.FIT_CENTER);
+    }
+
+    @Test
+    @EnableFlags(Flags.FLAG_STATUS_ICONS_IN_COMPOSE_REFRESH)
+    public void set_iconThatWantsFixedSpace_statusIconsInComposeRefresh_setsScaleTypeCenter() {
+        mIconView.setScaleType(ImageView.ScaleType.FIT_START);
+        StatusBarIcon icon = new StatusBarIcon(UserHandle.ALL, "mockPackage",
+                Icon.createWithResource(mContext, R.drawable.ic_android), 0, 0, "",
+                StatusBarIcon.Type.SystemIcon, StatusBarIcon.Shape.FIXED_SPACE);
+
+        mIconView.set(icon);
+
+        assertThat(mIconView.getScaleType()).isEqualTo(ImageView.ScaleType.CENTER);
+    }
+
+    @Test
+    @EnableFlags(Flags.FLAG_STATUS_ICONS_IN_COMPOSE_REFRESH)
+    public void onMeasure_iconThatWantsFixedSpace_statusIconsInComposeRefresh_scalesWidthToDrawnWidth() {
+        mIconView.setNotification(null);
+        mIconView.updateIconDimens();
+        Bitmap bitmap = Bitmap.createBitmap(17, 17, Bitmap.Config.ARGB_8888);
+        StatusBarIcon icon = new StatusBarIcon(UserHandle.ALL, "mockPackage",
+                Icon.createWithBitmap(bitmap), 0, 0, "",
+                StatusBarIcon.Type.SystemIcon, StatusBarIcon.Shape.FIXED_SPACE);
+        mIconView.set(icon);
+
+        float expectedScale = mIconView.mSystemIconDesiredHeight / 17f;
+        assertThat(mIconView.getIconScale()).isEqualTo(expectedScale);
+
+        int fixedSpaceWidth = 60;
+        mIconView.measure(
+                View.MeasureSpec.makeMeasureSpec(fixedSpaceWidth, View.MeasureSpec.EXACTLY),
+                View.MeasureSpec.makeMeasureSpec(TEST_STATUS_BAR_HEIGHT, View.MeasureSpec.EXACTLY));
+
+        int expectedWidth = Math.min(fixedSpaceWidth, Math.round(17f * expectedScale));
+        assertThat(mIconView.getMeasuredWidth()).isEqualTo(expectedWidth);
+    }
+
+    @Test
+    @EnableFlags(Flags.FLAG_STATUS_ICONS_IN_COMPOSE_REFRESH)
+    public void onMeasure_systemIcon_statusIconsInComposeRefresh_scalesWidthToDrawnWidth() {
+        mIconView.setNotification(null);
+        mIconView.updateIconDimens();
+        Bitmap bitmap = Bitmap.createBitmap(14, 12, Bitmap.Config.ARGB_8888);
+        StatusBarIcon icon = new StatusBarIcon(UserHandle.ALL, "mockPackage",
+                Icon.createWithBitmap(bitmap), 0, 0, "",
+                StatusBarIcon.Type.SystemIcon, StatusBarIcon.Shape.WRAP_CONTENT);
+        mIconView.set(icon);
+
+        float expectedScale = mIconView.mSystemIconDesiredHeight / 12f;
+        assertThat(mIconView.getIconScale()).isEqualTo(expectedScale);
+
+        mIconView.measure(
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(TEST_STATUS_BAR_HEIGHT, View.MeasureSpec.EXACTLY));
+
+        int expectedWidth = Math.round(14f * expectedScale);
+        assertThat(mIconView.getMeasuredWidth()).isEqualTo(expectedWidth);
+    }
+
+    @Test
+    @EnableFlags(Flags.FLAG_STATUS_ICONS_IN_COMPOSE_REFRESH)
+    public void onMeasure_legacyIconWithPadding_statusIconsInComposeRefresh_shrinkwrapsVisualBounds() {
+        mIconView.setNotification(null);
+        mIconView.updateIconDimens();
+        Bitmap bitmap = Bitmap.createBitmap(24, 24, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        Paint paint = new Paint();
+        paint.setColor(Color.WHITE);
+        // Draw a 16x16 visual glyph inside the 24x24 bitmap (4px padding on left/right/top/bottom)
+        canvas.drawRect(4, 4, 20, 20, paint);
+        StatusBarIcon icon = new StatusBarIcon(UserHandle.ALL, "mockPackage",
+                Icon.createWithBitmap(bitmap), 0, 0, "",
+                StatusBarIcon.Type.SystemIcon, StatusBarIcon.Shape.WRAP_CONTENT);
+        mIconView.set(icon);
+
+        // Visual height is 16, desired height is status_bar_composable_icon_height_sp
+        float expectedScale = mIconView.mSystemIconDesiredHeight / 16f;
+        assertThat(mIconView.getIconScale()).isEqualTo(expectedScale);
+
+        mIconView.measure(
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(TEST_STATUS_BAR_HEIGHT, View.MeasureSpec.EXACTLY));
+
+        // Visual width is 16, shrinkwrapped width is 16 * expectedScale
+        int expectedWidth = Math.round(16f * expectedScale);
+        assertThat(mIconView.getMeasuredWidth()).isEqualTo(expectedWidth);
+        assertThat(mIconView.getCropToPadding()).isFalse();
     }
 
     @Test

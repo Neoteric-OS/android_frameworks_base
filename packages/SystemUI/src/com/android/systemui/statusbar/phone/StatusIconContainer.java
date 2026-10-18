@@ -30,9 +30,11 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 
 import com.android.keyguard.AlphaOptimizedLinearLayout;
+import com.android.systemui.Flags;
 import com.android.systemui.res.R;
 import com.android.systemui.statusbar.StatusIconDisplayable;
 import com.android.systemui.statusbar.notification.stack.AnimationFilter;
@@ -113,7 +115,12 @@ public class StatusIconContainer extends AlphaOptimizedLinearLayout {
         mIconDotFrameWidth = getResources().getDimensionPixelSize(
                 com.android.internal.R.dimen.status_bar_icon_size_sp);
         mDotPadding = getResources().getDimensionPixelSize(R.dimen.overflow_icon_dot_padding);
-        mIconSpacing = getResources().getDimensionPixelSize(R.dimen.status_bar_system_icon_spacing);
+        if (Flags.statusIconsInComposeRefresh()) {
+            mIconSpacing = Math.round(TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP, 8f, getResources().getDisplayMetrics()));
+        } else {
+            mIconSpacing = getResources().getDimensionPixelSize(R.dimen.status_bar_system_icon_spacing);
+        }
         int radius = getResources().getDimensionPixelSize(R.dimen.overflow_dot_radius);
         mStaticDotDiameter = 2 * radius;
         mUnderflowWidth = mIconDotFrameWidth + (MAX_DOTS - 1) * (mStaticDotDiameter + mDotPadding);

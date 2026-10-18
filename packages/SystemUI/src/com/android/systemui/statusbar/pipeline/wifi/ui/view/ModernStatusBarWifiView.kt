@@ -24,6 +24,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.android.keyguard.AlphaOptimizedLinearLayout
+import com.android.systemui.Flags
 import com.android.systemui.res.R
 import com.android.systemui.statusbar.StatusBarIconView
 import com.android.systemui.statusbar.core.NewStatusBarIcons
@@ -82,16 +83,25 @@ class ModernStatusBarWifiView(context: Context, attrs: AttributeSet?) :
             val lp = iconView.layoutParams
             lp.width = ViewGroup.LayoutParams.WRAP_CONTENT
             lp.height =
-                resources.getDimensionPixelSize(R.dimen.status_bar_wifi_signal_height_updated)
+                if (Flags.statusIconsInComposeRefresh()) {
+                    resources.getDimensionPixelSize(R.dimen.status_bar_composable_icon_height_sp)
+                } else {
+                    resources.getDimensionPixelSize(R.dimen.status_bar_wifi_signal_height_updated)
+                }
 
-            // New status bar icons have a single 3sp spacing defined
+            // New status bar icons have a single 3sp spacing defined, but when statusIconsInComposeRefresh
+            // is enabled, icons use 6dp spacing uniformly in StatusIconContainer with no inner container margins
             (requireViewById<AlphaOptimizedLinearLayout>(R.id.wifi_group).layoutParams
                     as MarginLayoutParams)
                 .apply {
                     val margin =
-                        context.resources.getDimensionPixelSize(
-                            R.dimen.status_bar_wifi_signal_horizontal_margin
-                        )
+                        if (Flags.statusIconsInComposeRefresh()) {
+                            0
+                        } else {
+                            context.resources.getDimensionPixelSize(
+                                R.dimen.status_bar_wifi_signal_horizontal_margin
+                            )
+                        }
                     marginStart = margin
                     marginEnd = margin
                 }
