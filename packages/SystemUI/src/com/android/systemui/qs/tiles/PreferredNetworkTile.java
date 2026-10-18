@@ -111,9 +111,13 @@ public class PreferredNetworkTile extends QSTileImpl<State> {
     }
 
     @Override
-    public Intent getLongClickIntent() {
-        if (mSimCount == 0) return null;
+    protected void handleLongClick(@Nullable Expandable expandable) {
+        if (mSimCount == 0) return;
+        super.handleLongClick(expandable);
+    }
 
+    @Override
+    public Intent getLongClickIntent() {
         Intent intent = new Intent(Settings.ACTION_NETWORK_OPERATOR_SETTINGS);
         int dataSub = SubscriptionManager.getDefaultDataSubscriptionId();
         if (dataSub != SubscriptionManager.INVALID_SUBSCRIPTION_ID) {
@@ -138,7 +142,7 @@ public class PreferredNetworkTile extends QSTileImpl<State> {
 
         int subId = SubscriptionManager.getDefaultDataSubscriptionId();
         TelephonyManager tm = mTelephonyManager.createForSubscriptionId(subId);
-        
+
         int current = getCurrentType(tm);
         state.state = current == TYPE_UNKNOWN ? Tile.STATE_UNAVAILABLE : Tile.STATE_ACTIVE;
         switch (current) {
@@ -241,7 +245,7 @@ public class PreferredNetworkTile extends QSTileImpl<State> {
                 return nextType;
             }
         }
-        
+
         return currentType;
     }
 
