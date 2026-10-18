@@ -158,6 +158,12 @@ public class DataSwitchTile extends QSTileImpl<BooleanState> {
     }
 
     @Override
+    protected void handleLongClick(@Nullable Expandable expandable) {
+        if (mSimCount == 0) return;
+        super.handleLongClick(expandable);
+    }
+
+    @Override
     public Intent getLongClickIntent() {
         return new Intent(Settings.ACTION_NETWORK_OPERATOR_SETTINGS);
     }
