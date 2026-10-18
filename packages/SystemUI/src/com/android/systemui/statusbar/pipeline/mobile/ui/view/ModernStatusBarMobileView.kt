@@ -23,6 +23,7 @@ import android.view.LayoutInflater
 import android.widget.FrameLayout
 import android.widget.ImageView
 import com.android.keyguard.AlphaOptimizedLinearLayout
+import com.android.systemui.Flags
 import com.android.systemui.kairos.KairosNetwork
 import com.android.systemui.kairos.buildSpec
 import com.android.systemui.res.R
@@ -64,22 +65,38 @@ class ModernStatusBarMobileView(context: Context, attrs: AttributeSet?) :
         // Margins around the entire container
         requireViewById<AlphaOptimizedLinearLayout>(R.id.mobile_group).apply {
             val lp = layoutParams as MarginLayoutParams
-            lp.marginStart =
-                context.resources.getDimensionPixelSize(
-                    R.dimen.status_bar_mobile_container_margin_start
-                )
-            lp.marginEnd =
-                context.resources.getDimensionPixelSize(
-                    R.dimen.status_bar_mobile_container_margin_end
-                )
+            val marginStart =
+                if (Flags.statusIconsInComposeRefresh()) {
+                    0
+                } else {
+                    context.resources.getDimensionPixelSize(
+                        R.dimen.status_bar_mobile_container_margin_start
+                    )
+                }
+            val marginEnd =
+                if (Flags.statusIconsInComposeRefresh()) {
+                    0
+                } else {
+                    context.resources.getDimensionPixelSize(
+                        R.dimen.status_bar_mobile_container_margin_end
+                    )
+                }
+            lp.marginStart = marginStart
+            lp.marginEnd = marginEnd
         }
 
         // triangle
         requireViewById<ImageView>(R.id.mobile_signal).apply {
             layoutParams.height =
-                context.resources.getDimensionPixelSize(
-                    R.dimen.status_bar_mobile_signal_size_updated
-                )
+                if (Flags.statusIconsInComposeRefresh()) {
+                    context.resources.getDimensionPixelSize(
+                        R.dimen.status_bar_composable_icon_height_sp
+                    )
+                } else {
+                    context.resources.getDimensionPixelSize(
+                        R.dimen.status_bar_mobile_signal_size_updated
+                    )
+                }
         }
 
         // RAT indicator container

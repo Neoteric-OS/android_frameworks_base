@@ -29,6 +29,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorMatrixColorFilter;
@@ -59,6 +60,7 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.statusbar.StatusBarIcon;
 import com.android.internal.statusbar.StatusBarIcon.Shape;
 import com.android.internal.util.ContrastColorUtil;
+import com.android.systemui.Flags;
 import com.android.systemui.res.R;
 import com.android.systemui.scene.shared.flag.SceneContainerFlag;
 import com.android.systemui.statusbar.notification.NotificationContentDescription;
@@ -71,6 +73,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Set;
 
 public class StatusBarIconView extends AnimatedImageView implements StatusIconDisplayable {
     public static final int NO_COLOR = 0;
@@ -86,9 +89,9 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
      * 17dp * (15 / 17) = 15dp, the new height. After the first call to {@link #reloadDimens} all
      * values will be in px.
      */
-    private float mSystemIconDesiredHeight = 15f;
-    private float mSystemIconIntrinsicHeight = 17f;
-    private float mSystemIconDefaultScale = mSystemIconDesiredHeight / mSystemIconIntrinsicHeight;
+    @VisibleForTesting float mSystemIconDesiredHeight = 15f;
+    @VisibleForTesting float mSystemIconIntrinsicHeight = 17f;
+    @VisibleForTesting float mSystemIconDefaultScale = mSystemIconDesiredHeight / mSystemIconIntrinsicHeight;
     private final int ANIMATION_DURATION_FAST = 100;
 
     public static final int STATE_ICON = 0;
@@ -191,6 +194,7 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
             BundleEntry entry) {
         this(context, slot, sbn, false);
         mBundleEntry = entry;
+        maybeUpdateIconScaleDimens();
     }
 
     public StatusBarIconView(Context context, String slot, StatusBarNotification sbn,
@@ -207,19 +211,208 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
         initializeDecorColor();
         reloadDimens();
         maybeUpdateIconScaleDimens();
+    }
 
-        setCropToPadding(true);
+    private static final Set<String> REFRESHED_SYSTEM_DRAWABLES = Set.of(
+            "stat_sys_airplane_mode",
+            "stat_sys_vpn_ic",
+            "stat_sys_data_saver",
+            "stat_sys_connected_display",
+            "stat_sys_branded_vpn",
+            "stat_sys_no_internet_vpn_ic",
+            "stat_sys_data_bluetooth_connected",
+            "stat_sys_no_internet_branded_vpn",
+            "stat_sys_ethernet",
+            "stat_sys_ringer_vibrate",
+            "stat_sys_hotspot",
+            "stat_sys_ringer_silent",
+            "stat_sys_alarm",
+            "stat_sys_dnd",
+            "stat_sys_ethernet_fully"
+    );
+
+    @VisibleForTesting Boolean mIsRefreshedSystemIconForTesting = null;
+    @VisibleForTesting Float mVisualIconHeightForTesting = null;
+    private float mVisualCenterOffsetX = 0f;
+    private float mVisualCenterOffsetY = 0f;
+    private Rect mVisualBounds = null;
+    private Drawable mLastVisualBoundsDrawable = null;
+    private static final int MAX_SAMPLE_SIZE = 48;
+
+    @Nullable
+    private String getResourceEntryName() {
+        if (mIcon != null && mIcon.icon != null && mIcon.icon.getType() == Icon.TYPE_RESOURCE) {
+            int resId = mIcon.icon.getResId();
+            if (resId != 0) {
+                try {
+                    String resPackage = mIcon.icon.getResPackage();
+                    Resources res = (resPackage != null
+                            && !resPackage.equals(mContext.getPackageName())
+                            && !resPackage.equals("android"))
+                            ? mContext.getPackageManager().getResourcesForApplication(resPackage)
+                            : getResources();
+                    return res.getResourceEntryName(resId);
+                } catch (Exception e) {
+                    // Resource not found
+                }
+            }
+        }
+        return null;
+    }
+
+    private boolean isRefreshedSystemIcon() {
+        if (!Flags.statusIconsInComposeRefresh()) {
+            return false;
+        }
+        if (mIsRefreshedSystemIconForTesting != null) {
+            return mIsRefreshedSystemIconForTesting;
+        }
+        String name = getResourceEntryName();
+        return name != null && REFRESHED_SYSTEM_DRAWABLES.contains(name);
+    }
+
+    private void updateVisualBounds(Drawable d) {
+        if (!Flags.statusIconsInComposeRefresh()) {
+            mVisualBounds = null;
+            mLastVisualBoundsDrawable = null;
+            mVisualCenterOffsetX = 0f;
+            mVisualCenterOffsetY = 0f;
+            return;
+        }
+        if (d == null) {
+            mVisualBounds = null;
+            mLastVisualBoundsDrawable = null;
+            mVisualCenterOffsetX = 0f;
+            mVisualCenterOffsetY = 0f;
+            return;
+        }
+        if (isRefreshedSystemIcon()) {
+            mVisualBounds = null;
+            mLastVisualBoundsDrawable = d;
+            mVisualCenterOffsetX = 0f;
+            mVisualCenterOffsetY = 0f;
+            return;
+        }
+        if (d == mLastVisualBoundsDrawable) {
+            return;
+        }
+        mLastVisualBoundsDrawable = d;
+        mVisualBounds = computeVisualBounds(d);
+        if (mVisualBounds != null) {
+            int intrinsicHeight = d.getIntrinsicHeight();
+            int intrinsicWidth = d.getIntrinsicWidth();
+            if (intrinsicHeight > 0) {
+                float visualCenterY = (mVisualBounds.top + mVisualBounds.bottom) / 2.0f;
+                float drawableCenterY = intrinsicHeight / 2.0f;
+                mVisualCenterOffsetY = visualCenterY - drawableCenterY;
+            } else {
+                mVisualCenterOffsetY = 0f;
+            }
+            if (intrinsicWidth > 0) {
+                float visualCenterX = (mVisualBounds.left + mVisualBounds.right) / 2.0f;
+                float drawableCenterX = intrinsicWidth / 2.0f;
+                mVisualCenterOffsetX = visualCenterX - drawableCenterX;
+            } else {
+                mVisualCenterOffsetX = 0f;
+            }
+        } else {
+            mVisualCenterOffsetX = 0f;
+            mVisualCenterOffsetY = 0f;
+        }
+    }
+
+    private static Rect computeVisualBounds(Drawable d) {
+        if (d == null) {
+            return null;
+        }
+        try {
+            int intrinsicWidth = d.getIntrinsicWidth();
+            int intrinsicHeight = d.getIntrinsicHeight();
+            if (intrinsicWidth <= 0 || intrinsicHeight <= 0) {
+                return null;
+            }
+
+            int sampleW = intrinsicWidth;
+            int sampleH = intrinsicHeight;
+            if (sampleW > MAX_SAMPLE_SIZE || sampleH > MAX_SAMPLE_SIZE) {
+                if (sampleW >= sampleH) {
+                    sampleH = Math.max(1, Math.round((float) sampleH * MAX_SAMPLE_SIZE / sampleW));
+                    sampleW = MAX_SAMPLE_SIZE;
+                } else {
+                    sampleW = Math.max(1, Math.round((float) sampleW * MAX_SAMPLE_SIZE / sampleH));
+                    sampleH = MAX_SAMPLE_SIZE;
+                }
+            }
+
+            Bitmap bitmap = Bitmap.createBitmap(sampleW, sampleH, Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            Rect oldBounds = d.copyBounds();
+            d.setBounds(0, 0, sampleW, sampleH);
+            d.draw(canvas);
+            d.setBounds(oldBounds);
+
+            int minX = sampleW, maxX = -1;
+            int minY = sampleH, maxY = -1;
+            int[] pixels = new int[sampleW * sampleH];
+            bitmap.getPixels(pixels, 0, sampleW, 0, 0, sampleW, sampleH);
+            bitmap.recycle();
+
+            for (int y = 0; y < sampleH; y++) {
+                int rowOffset = y * sampleW;
+                for (int x = 0; x < sampleW; x++) {
+                    int alpha = (pixels[rowOffset + x] >>> 24);
+                    if (alpha > 15) {
+                        if (x < minX) minX = x;
+                        if (x > maxX) maxX = x;
+                        if (y < minY) minY = y;
+                        if (y > maxY) maxY = y;
+                    }
+                }
+            }
+
+            if (minY > maxY || minX > maxX) {
+                return null;
+            }
+
+            float scaleX = (float) intrinsicWidth / sampleW;
+            float scaleY = (float) intrinsicHeight / sampleH;
+            return new Rect(
+                    Math.round(minX * scaleX),
+                    Math.round(minY * scaleY),
+                    Math.round((maxX + 1) * scaleX),
+                    Math.round((maxY + 1) * scaleY)
+            );
+        } catch (Throwable t) {
+            return null;
+        }
+    }
+
+    @VisibleForTesting
+    float getVisualIconHeight() {
+        if (mVisualIconHeightForTesting != null) {
+            return mVisualIconHeightForTesting;
+        }
+        if (isRefreshedSystemIcon()) {
+            return getIconHeight();
+        }
+        if (mVisualBounds != null && mVisualBounds.height() > 0) {
+            return (float) mVisualBounds.height();
+        }
+        return 0f;
+    }
+
+    private boolean useNonSystemIconScaling() {
+        return isShownWithNotifications()
+                || (mIcon != null && mIcon.shape == Shape.FIXED_SPACE);
     }
 
     /** Should always be preceded by {@link #reloadDimens()} */
     @VisibleForTesting
     public void maybeUpdateIconScaleDimens() {
+        setCropToPadding(isShownWithNotifications());
         // We scale notification icons (on the left) plus icons on the right that explicitly
         // want FIXED_SPACE.
-        boolean useNonSystemIconScaling = isShownWithNotifications()
-                || (mIcon != null && mIcon.shape == Shape.FIXED_SPACE);
-
-        if (useNonSystemIconScaling) {
+        if (useNonSystemIconScaling()) {
             updateIconScaleForNonSystemIcons();
         } else {
             updateIconScaleForSystemIcons();
@@ -275,19 +468,41 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
         updatePivot();
     }
 
-    // Makes sure that all icons are scaled to the same height (15dp). If we cannot get a height
-    // for the icon, it uses the default SCALE (15f / 17f) which is the old behavior
+    // Makes sure that all icons are scaled to the appropriate visual height:
+    // When statusIconsInComposeRefresh is enabled:
+    // - Refreshed system icons (stat_sys_ringer_vibrate, stat_sys_airplane_mode, etc.) are
+    //   shrinkwrapped without embedded padding and scale to status_bar_composable_icon_height_sp
+    //   (13sp) so their visual glyph is 13sp tall.
+    // - Legacy system icons (e.g. NFC, auto-rotate, rotation lock, headset) have embedded
+    //   whitespace/padding in their drawables (~20-25% padding). Their visual bounds are computed
+    //   dynamically , and scaled to status_bar_composable_icon_height_sp so every icon's visual
+    //   glyph matches the exact 13sp visual height of the refreshed icons.
+    // Otherwise, legacy desired height 15dp scaled by mScaleToFitNewIconSize is used.
     private void updateIconScaleForSystemIcons() {
+        updateVisualBounds(getDrawable());
         float iconScale;
         float iconHeight = getIconHeight();
-        if (iconHeight != 0) {
-            iconScale = mSystemIconDesiredHeight / iconHeight;
-        } else {
-            iconScale = mSystemIconDefaultScale;
-        }
 
-        // scale image to fit new icon size
-        mIconScale = iconScale * mScaleToFitNewIconSize;
+        if (Flags.statusIconsInComposeRefresh()) {
+            float desiredVisualHeight = getResources().getDimension(
+                    R.dimen.status_bar_composable_icon_height_sp);
+            float visualHeight = getVisualIconHeight();
+            if (visualHeight <= 0f) {
+                // If visual height could not be determined dynamically or from known resources
+                // (e.g. in test environments using blank dummy bitmaps), use iconHeight as fallback.
+                visualHeight = iconHeight > 0f ? iconHeight : mSystemIconIntrinsicHeight;
+            }
+            mIconScale = desiredVisualHeight / visualHeight;
+        } else {
+            float desiredHeight = mSystemIconDesiredHeight;
+            if (iconHeight != 0) {
+                iconScale = desiredHeight / iconHeight;
+            } else {
+                iconScale = mSystemIconDefaultScale;
+            }
+            // scale image to fit new icon size
+            mIconScale = iconScale * mScaleToFitNewIconSize;
+        }
     }
 
     private float getIconHeight() {
@@ -458,6 +673,7 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
             setImageDrawable(null);
         }
         setImageDrawable(drawable);
+        updateVisualBounds(drawable);
         mLayoutDirectionForLoadedDrawable = getLayoutDirection();
         return true;
     }
@@ -564,26 +780,33 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-        if (!isShownWithNotifications()) {
+        if (!useNonSystemIconScaling()) {
             // for system icons, calculated measured width from super is for image drawable real
-            // width (17dp). We may scale the image with font scale, so we also need to scale the
-            // measured width so that scaled measured width and image width would be fit.
+            // width. When status icons in compose refresh is enabled, drawables have different
+            // aspect ratios and are shrinkwrapped to remove embedded padding, so measured width
+            // must be scaled by mIconScale to match the drawn canvas size.
             int measuredWidth = getMeasuredWidth();
             int measuredHeight = getMeasuredHeight();
-            setMeasuredDimension((int) (measuredWidth * mScaleToFitNewIconSize), measuredHeight);
+            if (Flags.statusIconsInComposeRefresh()) {
+                setMeasuredDimension(Math.round(measuredWidth * mIconScale), measuredHeight);
+            } else {
+                setMeasuredDimension((int) (measuredWidth * mScaleToFitNewIconSize), measuredHeight);
+            }
         }
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        // In this method, for width/height division computation we intend to discard the
-        // fractional part as the original behavior.
         if (mIconAppearAmount > 0.0f) {
             canvas.save();
-            int px = getWidth() / 2;
-            int py = getHeight() / 2;
+            float px = getWidth() / 2.0f;
+            float py = getHeight() / 2.0f;
             canvas.scale(mIconScale * mIconAppearAmount, mIconScale * mIconAppearAmount,
-                    (float) px, (float) py);
+                    px, py);
+            if (Flags.statusIconsInComposeRefresh()
+                    && (mVisualCenterOffsetX != 0f || mVisualCenterOffsetY != 0f)) {
+                canvas.translate(-mVisualCenterOffsetX, -mVisualCenterOffsetY);
+            }
             super.onDraw(canvas);
             canvas.restore();
         }

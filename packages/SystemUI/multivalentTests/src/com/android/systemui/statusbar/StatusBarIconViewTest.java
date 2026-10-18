@@ -47,7 +47,10 @@ import android.graphics.drawable.Icon;
 import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.os.UserHandle;
+import android.platform.test.annotations.DisableFlags;
+import android.platform.test.annotations.EnableFlags;
 import android.service.notification.StatusBarNotification;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -56,6 +59,7 @@ import androidx.test.runner.AndroidJUnit4;
 
 import com.android.internal.statusbar.StatusBarIcon;
 import com.android.internal.util.ContrastColorUtil;
+import com.android.systemui.Flags;
 import com.android.systemui.SysuiTestCase;
 import com.android.systemui.res.R;
 import com.android.systemui.statusbar.notification.NotificationContentDescription;
@@ -438,6 +442,244 @@ public class StatusBarIconViewTest extends SysuiTestCase {
         mIconView.set(icon);
 
         assertThat(mIconView.getScaleType()).isEqualTo(ImageView.ScaleType.FIT_START);
+    }
+
+    @Test
+    @EnableFlags(Flags.FLAG_STATUS_ICONS_IN_COMPOSE_REFRESH)
+    public void onMeasure_systemIcon_withStatusIconsInComposeRefresh_scalesWidthByIconScale() {
+        mIconView.setNotification(null);
+        mIconView.mScaleToFitNewIconSize = 1.5f;
+        setIconDrawableWithSize(/* width= */ 14, /* height= */ 8);
+        mIconView.maybeUpdateIconScaleDimens();
+
+        float expectedScale = mIconView.getResources().getDimension(
+                R.dimen.status_bar_composable_icon_height_sp) / 8f;
+        assertThat(mIconView.getIconScale()).isEqualTo(expectedScale);
+
+        mIconView.measure(
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(TEST_STATUS_BAR_HEIGHT, View.MeasureSpec.EXACTLY));
+
+        assertThat(mIconView.getMeasuredWidth()).isEqualTo(Math.round(14 * expectedScale));
+    }
+
+    @Test
+    @EnableFlags(Flags.FLAG_STATUS_ICONS_IN_COMPOSE_REFRESH)
+    public void onMeasure_systemIcon_largerShrinkwrapped_scalesDownWidthByIconScale() {
+        mIconView.setNotification(null);
+        mIconView.mScaleToFitNewIconSize = 1.0f;
+        setIconDrawableWithSize(/* width= */ 51, /* height= */ 48);
+        mIconView.maybeUpdateIconScaleDimens();
+
+        float expectedScale = mIconView.getResources().getDimension(
+                R.dimen.status_bar_composable_icon_height_sp) / 48f;
+        assertThat(mIconView.getIconScale()).isEqualTo(expectedScale);
+
+        mIconView.measure(
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(TEST_STATUS_BAR_HEIGHT, View.MeasureSpec.EXACTLY));
+
+        assertThat(mIconView.getMeasuredWidth()).isEqualTo(Math.round(51 * expectedScale));
+    }
+
+    @Test
+    @EnableFlags(Flags.FLAG_STATUS_ICONS_IN_COMPOSE_REFRESH)
+    public void onMeasure_nfcIcon_withStatusIconsInComposeRefresh_scalesDownWithoutClipping() {
+        mIconView.setNotification(null);
+        mIconView.mScaleToFitNewIconSize = 1.0f;
+        setIconDrawableWithSize(/* width= */ 24, /* height= */ 24);
+        mIconView.maybeUpdateIconScaleDimens();
+
+        float expectedScale = mIconView.getResources().getDimension(
+                R.dimen.status_bar_composable_icon_height_sp) / 24f;
+        assertThat(mIconView.getIconScale()).isEqualTo(expectedScale);
+        assertThat(mIconView.getCropToPadding()).isFalse();
+
+        mIconView.measure(
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(TEST_STATUS_BAR_HEIGHT, View.MeasureSpec.EXACTLY));
+
+        assertThat(mIconView.getMeasuredWidth()).isEqualTo(Math.round(24 * expectedScale));
+    }
+
+    @Test
+    @DisableFlags(Flags.FLAG_STATUS_ICONS_IN_COMPOSE_REFRESH)
+    public void onMeasure_systemIcon_withoutStatusIconsInComposeRefresh_usesLegacyScale() {
+        mIconView.setNotification(null);
+        mIconView.mScaleToFitNewIconSize = 1.5f;
+        setIconDrawableWithSize(/* width= */ 17, /* height= */ 17);
+        mIconView.maybeUpdateIconScaleDimens();
+
+        mIconView.measure(
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(TEST_STATUS_BAR_HEIGHT, View.MeasureSpec.EXACTLY));
+
+        assertThat(mIconView.getMeasuredWidth()).isEqualTo((int) (17 * 1.5f));
+    }
+
+    @Test
+    @EnableFlags(Flags.FLAG_STATUS_ICONS_IN_COMPOSE_REFRESH)
+    public void onMeasure_fixedSpaceIcon_doesNotScaleSystemIconWidth() {
+        mIconView.setNotification(null);
+        mIconView.mSystemIconDesiredHeight = 16f;
+        mIconView.mScaleToFitNewIconSize = 1.0f;
+        Bitmap bitmap = Bitmap.createBitmap(14, 8, Bitmap.Config.ARGB_8888);
+        Icon icon = Icon.createWithBitmap(bitmap);
+        StatusBarIcon sbIcon = new StatusBarIcon(UserHandle.ALL, "mockPackage",
+                icon, 0, 0, "", StatusBarIcon.Type.SystemIcon, StatusBarIcon.Shape.FIXED_SPACE);
+        mIconView.set(sbIcon);
+
+        mIconView.measure(
+                View.MeasureSpec.makeMeasureSpec(40, View.MeasureSpec.EXACTLY),
+                View.MeasureSpec.makeMeasureSpec(TEST_STATUS_BAR_HEIGHT, View.MeasureSpec.EXACTLY));
+
+        assertThat(mIconView.getMeasuredWidth()).isEqualTo(40);
+    }
+
+    @Test
+    @EnableFlags(Flags.FLAG_STATUS_ICONS_IN_COMPOSE_REFRESH)
+    public void onMeasure_notificationIcon_doesNotScaleSystemIconWidth() {
+        mIconView.setNotification(getMockSbn());
+        mIconView.mScaleToFitNewIconSize = 1.0f;
+        setIconDrawableWithSize(/* width= */ 14, /* height= */ 8);
+
+        mIconView.measure(
+                View.MeasureSpec.makeMeasureSpec(40, View.MeasureSpec.EXACTLY),
+                View.MeasureSpec.makeMeasureSpec(TEST_STATUS_BAR_HEIGHT, View.MeasureSpec.EXACTLY));
+
+        assertThat(mIconView.getMeasuredWidth()).isEqualTo(40);
+    }
+
+    @Test
+    public void cropToPadding_systemIcon_isFalse() {
+        mIconView.setNotification(null);
+        mIconView.maybeUpdateIconScaleDimens();
+
+        assertThat(mIconView.getCropToPadding()).isFalse();
+    }
+
+    @Test
+    public void cropToPadding_notificationIcon_isTrue() {
+        mIconView.setNotification(getMockSbn());
+        mIconView.maybeUpdateIconScaleDimens();
+
+        assertThat(mIconView.getCropToPadding()).isTrue();
+    }
+
+    @Test
+    @EnableFlags(Flags.FLAG_STATUS_ICONS_IN_COMPOSE_REFRESH)
+    public void updateIconScaleForSystemIcons_statusIconsInComposeRefresh_usesComposableIconHeight() {
+        mIconView.setNotification(null);
+        mIconView.mScaleToFitNewIconSize = 1.5f;
+        float desiredHeight = mIconView.getResources().getDimension(
+                R.dimen.status_bar_composable_icon_height_sp);
+        setIconDrawableWithSize(/* width= */ (int) desiredHeight, /* height= */ (int) desiredHeight);
+        mIconView.maybeUpdateIconScaleDimens();
+
+        // System icon scale should be 1.0f (desiredHeight / desiredHeight) without multiplying mScaleToFitNewIconSize
+        assertThat(mIconView.getIconScale()).isEqualTo(1.0f);
+    }
+
+    @Test
+    @DisableFlags(Flags.FLAG_STATUS_ICONS_IN_COMPOSE_REFRESH)
+    public void updateIconScaleForSystemIcons_withoutStatusIconsInComposeRefresh_multipliesScaleToFitNewIconSize() {
+        mIconView.setNotification(null);
+        mIconView.mSystemIconDesiredHeight = 15f;
+        mIconView.mScaleToFitNewIconSize = 1.5f;
+        setIconDrawableWithSize(/* width= */ 15, /* height= */ 15);
+        mIconView.maybeUpdateIconScaleDimens();
+
+        // (15 / 15) * 1.5f = 1.5f
+        assertThat(mIconView.getIconScale()).isEqualTo(1.5f);
+    }
+
+    @Test
+    @EnableFlags(Flags.FLAG_STATUS_ICONS_IN_COMPOSE_REFRESH)
+    public void updateIconScaleForSystemIcons_refreshedResource_usesComposableIconHeight() {
+        mIconView.setNotification(null);
+        StatusBarIcon icon = new StatusBarIcon(UserHandle.ALL, mContext.getPackageName(),
+                Icon.createWithResource(mContext, R.drawable.stat_sys_airplane_mode), 0, 0, "",
+                StatusBarIcon.Type.SystemIcon);
+        mIconView.set(icon);
+
+        mIconView.mScaleToFitNewIconSize = 2.0f;
+        mIconView.maybeUpdateIconScaleDimens();
+        float expectedScale = mIconView.getResources().getDimension(
+                R.dimen.status_bar_composable_icon_height_sp) / mIconView.getDrawable().getIntrinsicHeight();
+        assertThat(mIconView.getIconScale()).isEqualTo(expectedScale);
+    }
+
+    @Test
+    @EnableFlags(Flags.FLAG_STATUS_ICONS_IN_COMPOSE_REFRESH)
+    public void updateIconScaleForSystemIcons_legacy24dpNfc_scalesToExactVisualHeight() {
+        mIconView.setNotification(null);
+        StatusBarIcon icon = new StatusBarIcon(UserHandle.ALL, mContext.getPackageName(),
+                Icon.createWithResource(mContext, R.drawable.ic_statusbar_nfc), 0, 0, "",
+                StatusBarIcon.Type.SystemIcon);
+        mIconView.set(icon);
+
+        mIconView.mScaleToFitNewIconSize = 1.5f;
+        mIconView.maybeUpdateIconScaleDimens();
+        float targetVisualHeight = mIconView.getResources().getDimension(
+                R.dimen.status_bar_composable_icon_height_sp);
+        float visualHeight = mIconView.getVisualIconHeight();
+        float expectedScale = targetVisualHeight / visualHeight;
+        assertThat(mIconView.getIconScale()).isEqualTo(expectedScale);
+        assertThat(mIconView.getIconScale() * visualHeight).isEqualTo(targetVisualHeight);
+    }
+
+    @Test
+    @EnableFlags(Flags.FLAG_STATUS_ICONS_IN_COMPOSE_REFRESH)
+    public void updateIconScaleForSystemIcons_legacy24dpAutoRotate_scalesToExactVisualHeight() {
+        mIconView.setNotification(null);
+        StatusBarIcon icon = new StatusBarIcon(UserHandle.ALL, mContext.getPackageName(),
+                Icon.createWithResource(mContext, R.drawable.ic_statusbar_auto_rotate), 0, 0, "",
+                StatusBarIcon.Type.SystemIcon);
+        mIconView.set(icon);
+
+        mIconView.mScaleToFitNewIconSize = 1.5f;
+        mIconView.maybeUpdateIconScaleDimens();
+        float targetVisualHeight = mIconView.getResources().getDimension(
+                R.dimen.status_bar_composable_icon_height_sp);
+        float visualHeight = mIconView.getVisualIconHeight();
+        float expectedScale = targetVisualHeight / visualHeight;
+        assertThat(mIconView.getIconScale()).isEqualTo(expectedScale);
+        assertThat(mIconView.getIconScale() * visualHeight).isEqualTo(targetVisualHeight);
+    }
+
+    @Test
+    @EnableFlags(Flags.FLAG_STATUS_ICONS_IN_COMPOSE_REFRESH)
+    public void updateIconScaleForSystemIcons_legacy17dpResource_scalesToExactVisualHeight() {
+        mIconView.setNotification(null);
+        StatusBarIcon icon = new StatusBarIcon(UserHandle.ALL, mContext.getPackageName(),
+                Icon.createWithResource(mContext, R.drawable.stat_sys_rotate_portrait), 0, 0, "",
+                StatusBarIcon.Type.SystemIcon);
+        mIconView.set(icon);
+
+        mIconView.mScaleToFitNewIconSize = 1.5f;
+        mIconView.maybeUpdateIconScaleDimens();
+        float targetVisualHeight = mIconView.getResources().getDimension(
+                R.dimen.status_bar_composable_icon_height_sp);
+        float visualHeight = mIconView.getVisualIconHeight();
+        float expectedScale = targetVisualHeight / visualHeight;
+        assertThat(mIconView.getIconScale()).isEqualTo(expectedScale);
+        assertThat(mIconView.getIconScale() * visualHeight).isEqualTo(targetVisualHeight);
+    }
+
+    @Test
+    @EnableFlags(Flags.FLAG_STATUS_ICONS_IN_COMPOSE_REFRESH)
+    public void updateIconScaleForSystemIcons_withExplicitVisualHeight_scalesToExactVisualHeight() {
+        mIconView.setNotification(null);
+        mIconView.mScaleToFitNewIconSize = 1.5f;
+        setIconDrawableWithSize(/* width= */ 24, /* height= */ 24);
+        mIconView.mVisualIconHeightForTesting = 18.37f;
+        mIconView.maybeUpdateIconScaleDimens();
+
+        float targetVisualHeight = mIconView.getResources().getDimension(
+                R.dimen.status_bar_composable_icon_height_sp);
+        float expectedScale = targetVisualHeight / 18.37f;
+        assertThat(mIconView.getIconScale()).isEqualTo(expectedScale);
+        assertThat(mIconView.getIconScale() * 18.37f).isEqualTo(targetVisualHeight);
     }
 
     private static StatusBarNotification getMockSbn() {
