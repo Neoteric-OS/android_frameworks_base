@@ -22,6 +22,7 @@ import com.android.systemui.volume.data.repository.audioSystemRepository
 import com.android.systemui.volume.domain.interactor.audioModeInteractor
 import com.android.systemui.volume.domain.interactor.audioSharingInteractor
 import com.android.systemui.volume.mediaOutputInteractor
+import com.android.systemui.volume.panel.component.appvolume.domain.interactor.appVolumeInteractor
 
 val Kosmos.audioSlidersInteractor by
     Kosmos.Fixture {
@@ -31,5 +32,6 @@ val Kosmos.audioSlidersInteractor by
             audioModeInteractor,
             audioSystemRepository,
             audioSharingInteractor,
+            appVolumeInteractor,
         )
     }

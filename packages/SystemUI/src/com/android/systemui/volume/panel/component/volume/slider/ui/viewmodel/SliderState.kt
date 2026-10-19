@@ -41,6 +41,9 @@ sealed interface SliderState {
     val disabledMessage: String?
     val isMutable: Boolean
 
+    val isAppVolume: Boolean
+        get() = false
+
     data object Empty : SliderState {
         override val value: Float = 0f
         override val valueRange: ClosedFloatingPointRange<Float> = 0f..1f

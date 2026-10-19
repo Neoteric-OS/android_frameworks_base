@@ -21,6 +21,7 @@ import com.android.settingslib.volume.data.repository.AudioSystemRepository
 import com.android.settingslib.volume.domain.interactor.AudioModeInteractor
 import com.android.settingslib.volume.shared.model.AudioStream
 import com.android.systemui.volume.domain.interactor.AudioSharingInteractor
+import com.android.systemui.volume.panel.component.appvolume.domain.interactor.AppVolumeInteractor
 import com.android.systemui.volume.panel.component.mediaoutput.domain.interactor.MediaOutputInteractor
 import com.android.systemui.volume.panel.component.mediaoutput.shared.model.MediaDeviceSession
 import com.android.systemui.volume.panel.component.mediaoutput.shared.model.isTheSameSession
@@ -30,8 +31,10 @@ import com.android.systemui.volume.panel.shared.model.filterData
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.combineTransform
 import kotlinx.coroutines.flow.stateIn
 
@@ -45,9 +48,10 @@ constructor(
     audioModeInteractor: AudioModeInteractor,
     private val audioSystemRepository: AudioSystemRepository,
     audioSharingInteractor: AudioSharingInteractor,
+    private val appVolumeInteractor: AppVolumeInteractor,
 ) {
 
-    val volumePanelSliders: StateFlow<List<SliderType>> =
+    private val defaultSliders: Flow<List<SliderType>> =
         combineTransform(
                 mediaOutputInteractor.activeMediaDeviceSessions,
                 mediaOutputInteractor.defaultActiveMediaSession.filterData(),
@@ -79,6 +83,19 @@ constructor(
                         addStream(AudioManager.STREAM_ALARM)
                     }
                     emit(viewModels)
+                }
+            }
+
+    val volumePanelSliders: StateFlow<List<SliderType>> =
+        combine(
+                defaultSliders,
+                appVolumeInteractor.isAppVolumeOnly,
+                appVolumeInteractor.activeAppVolumes,
+            ) { defaultList, isAppVolumeOnly, appVolumes ->
+                if (isAppVolumeOnly) {
+                    appVolumes.map { SliderType.App(it.packageName) }
+                } else {
+                    defaultList
                 }
             }
             .stateIn(scope, SharingStarted.Eagerly, emptyList())

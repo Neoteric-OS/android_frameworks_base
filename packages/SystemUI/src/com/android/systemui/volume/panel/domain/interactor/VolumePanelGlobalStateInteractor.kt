@@ -32,7 +32,16 @@ constructor(
     val globalState: StateFlow<VolumePanelGlobalState>
         get() = repository.globalState
 
-    fun setVisible(isVisible: Boolean) {
-        repository.updateVolumePanelState { it.copy(isVisible = isVisible) }
+    fun setVisible(isVisible: Boolean, isAppVolumeOnly: Boolean = false) {
+        repository.updateVolumePanelState {
+            it.copy(
+                isVisible = isVisible,
+                isAppVolumeOnly = if (isVisible) isAppVolumeOnly else false,
+            )
+        }
+    }
+
+    fun setAppVolumeOnly(isAppVolumeOnly: Boolean) {
+        repository.updateVolumePanelState { it.copy(isAppVolumeOnly = isAppVolumeOnly) }
     }
 }

@@ -16,4 +16,7 @@
 
 package com.android.systemui.volume.panel.shared.model
 
-data class VolumePanelGlobalState(val isVisible: Boolean)
+data class VolumePanelGlobalState(
+    val isVisible: Boolean,
+    val isAppVolumeOnly: Boolean = false,
+)

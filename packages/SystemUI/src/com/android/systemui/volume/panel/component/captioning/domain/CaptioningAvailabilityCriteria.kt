@@ -18,6 +18,7 @@ package com.android.systemui.volume.panel.component.captioning.domain
 
 import com.android.internal.logging.UiEventLogger
 import com.android.systemui.accessibility.domain.interactor.CaptioningInteractor
+import com.android.systemui.volume.panel.component.appvolume.domain.interactor.AppVolumeInteractor
 import com.android.systemui.volume.panel.dagger.scope.VolumePanelScope
 import com.android.systemui.volume.panel.domain.ComponentAvailabilityCriteria
 import com.android.systemui.volume.panel.ui.VolumePanelUiEvent
@@ -25,6 +26,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 
@@ -35,17 +37,23 @@ constructor(
     captioningInteractor: CaptioningInteractor,
     @VolumePanelScope private val scope: CoroutineScope,
     private val uiEventLogger: UiEventLogger,
+    private val appVolumeInteractor: AppVolumeInteractor,
 ) : ComponentAvailabilityCriteria {
 
     private val availability =
-        captioningInteractor.isSystemAudioCaptioningUiEnabled
-            .onEach { visible ->
-                uiEventLogger.log(
-                    if (visible) VolumePanelUiEvent.VOLUME_PANEL_LIVE_CAPTION_TOGGLE_SHOWN
-                    else VolumePanelUiEvent.VOLUME_PANEL_LIVE_CAPTION_TOGGLE_GONE
-                )
-            }
-            .stateIn(scope, SharingStarted.WhileSubscribed(), false)
+        combine(
+            captioningInteractor.isSystemAudioCaptioningUiEnabled,
+            appVolumeInteractor.isAppVolumeOnly,
+        ) { isUiEnabled, isAppVolumeOnly ->
+            isUiEnabled && !isAppVolumeOnly
+        }
+        .onEach { visible ->
+            uiEventLogger.log(
+                if (visible) VolumePanelUiEvent.VOLUME_PANEL_LIVE_CAPTION_TOGGLE_SHOWN
+                else VolumePanelUiEvent.VOLUME_PANEL_LIVE_CAPTION_TOGGLE_GONE
+            )
+        }
+        .stateIn(scope, SharingStarted.WhileSubscribed(), false)
 
     override fun isAvailable(): Flow<Boolean> = availability
 }

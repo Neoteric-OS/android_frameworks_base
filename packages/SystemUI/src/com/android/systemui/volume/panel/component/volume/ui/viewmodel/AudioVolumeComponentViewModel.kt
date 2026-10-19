@@ -19,11 +19,13 @@ package com.android.systemui.volume.panel.component.volume.ui.viewmodel
 import com.android.app.tracing.coroutines.launchTraced as launch
 import com.android.settingslib.volume.domain.interactor.AudioModeInteractor
 import com.android.settingslib.volume.shared.model.AudioStream
+import com.android.systemui.volume.panel.component.appvolume.domain.interactor.AppVolumeInteractor
 import com.android.systemui.volume.panel.component.mediaoutput.domain.interactor.MediaDeviceSessionInteractor
 import com.android.systemui.volume.panel.component.mediaoutput.domain.interactor.MediaOutputInteractor
 import com.android.systemui.volume.panel.component.mediaoutput.shared.model.MediaDeviceSession
 import com.android.systemui.volume.panel.component.volume.domain.interactor.AudioSlidersInteractor
 import com.android.systemui.volume.panel.component.volume.domain.model.SliderType
+import com.android.systemui.volume.panel.component.volume.slider.ui.viewmodel.AppVolumeSliderViewModel
 import com.android.systemui.volume.panel.component.volume.slider.ui.viewmodel.AudioSharingStreamSliderViewModel
 import com.android.systemui.volume.panel.component.volume.slider.ui.viewmodel.AudioStreamSliderViewModel
 import com.android.systemui.volume.panel.component.volume.slider.ui.viewmodel.CastVolumeSliderViewModel
@@ -61,6 +63,8 @@ constructor(
     private val streamSliderViewModelFactory: AudioStreamSliderViewModel.Factory,
     private val castVolumeSliderViewModelFactory: CastVolumeSliderViewModel.Factory,
     private val audioSharingStreamSliderViewModelFactory: AudioSharingStreamSliderViewModel.Factory,
+    private val appVolumeSliderViewModelFactory: AppVolumeSliderViewModel.Factory,
+    private val appVolumeInteractor: AppVolumeInteractor,
     audioModeInteractor: AudioModeInteractor,
     streamsInteractor: AudioSlidersInteractor,
 ) {
@@ -109,6 +113,7 @@ constructor(
                                 is SliderType.MediaDeviceCast ->
                                     createSessionViewModel(type.session)
                                 is SliderType.AudioSharingStream -> createAudioSharingViewModel()
+                                is SliderType.App -> createAppVolumeViewModel(type.packageName)
                             }
                         }
                     emit(viewModels)
@@ -121,10 +126,15 @@ constructor(
     }
 
     fun isExpandable(isPortrait: Boolean): Flow<SlidersExpandableViewModel> {
-        return if (isPortrait) {
-            portraitExpandable
-        } else {
-            flowOf(SlidersExpandableViewModel.Fixed)
+        return combine(
+            appVolumeInteractor.isAppVolumeOnly,
+            if (isPortrait) portraitExpandable else flowOf(SlidersExpandableViewModel.Fixed)
+        ) { isAppVolumeOnly, expandable ->
+            if (isAppVolumeOnly) {
+                SlidersExpandableViewModel.Fixed
+            } else {
+                expandable
+            }
         }
     }
 
@@ -149,5 +159,11 @@ constructor(
 
     private fun CoroutineScope.createAudioSharingViewModel(): AudioSharingStreamSliderViewModel {
         return audioSharingStreamSliderViewModelFactory.create(this)
+    }
+
+    private fun CoroutineScope.createAppVolumeViewModel(
+        packageName: String
+    ): AppVolumeSliderViewModel {
+        return appVolumeSliderViewModelFactory.create(packageName, this)
     }
 }

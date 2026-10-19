@@ -18,6 +18,7 @@ package com.android.systemui.volume.panel.component.volume.ui.composable
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.Arrangement
@@ -39,14 +40,19 @@ import androidx.compose.material3.SliderColors
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import androidx.core.graphics.drawable.toBitmap
 import com.android.compose.PlatformSliderColors
 import com.android.systemui.common.shared.colors.SystemUISliderColors
 import com.android.systemui.common.ui.compose.Icon
@@ -127,16 +133,58 @@ fun VolumeSlider(
                             icon =
                                 state.icon?.let { icon ->
                                     {
-                                        Icon(
-                                            icon = icon,
-                                            tint = null,
-                                            modifier =
-                                                Modifier.size(dimensions.iconSize)
-                                                    .testTag(
-                                                        VolumeSlidersMotionTestKeys
-                                                            .ACTIVE_ICON_TAG
-                                                    ),
-                                        )
+                                        if (state.isAppVolume) {
+                                            val density = LocalDensity.current
+                                            val bitmap =
+                                                remember(icon, dimensions.iconSize) {
+                                                    runCatching {
+                                                        val sizePx =
+                                                            with(density) {
+                                                                dimensions.iconSize.roundToPx()
+                                                            }
+                                                        icon.drawable
+                                                            .toBitmap(
+                                                                width = sizePx,
+                                                                height = sizePx,
+                                                            )
+                                                            .asImageBitmap()
+                                                    }.getOrNull()
+                                                }
+                                            if (bitmap != null) {
+                                                Image(
+                                                    bitmap = bitmap,
+                                                    contentDescription = null,
+                                                    modifier =
+                                                        Modifier.size(dimensions.iconSize)
+                                                            .testTag(
+                                                                VolumeSlidersMotionTestKeys
+                                                                    .ACTIVE_ICON_TAG
+                                                            ),
+                                                )
+                                            } else {
+                                                Icon(
+                                                    icon = icon,
+                                                    tint = { Color.Unspecified },
+                                                    modifier =
+                                                        Modifier.size(dimensions.iconSize)
+                                                            .testTag(
+                                                                VolumeSlidersMotionTestKeys
+                                                                    .ACTIVE_ICON_TAG
+                                                            ),
+                                                )
+                                            }
+                                        } else {
+                                            Icon(
+                                                icon = icon,
+                                                tint = null,
+                                                modifier =
+                                                    Modifier.size(dimensions.iconSize)
+                                                        .testTag(
+                                                            VolumeSlidersMotionTestKeys
+                                                                .ACTIVE_ICON_TAG
+                                                        ),
+                                            )
+                                        }
                                     }
                                 },
                         )

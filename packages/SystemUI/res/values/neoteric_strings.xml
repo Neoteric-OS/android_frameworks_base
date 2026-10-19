@@ -178,4 +178,7 @@
 
     <!-- Data disabled icon -->
     <string name="data_disabled_icon_title">Data disabled icon</string>
+
+    <!-- Per app volume -->
+    <string name="volume_panel_app_volume_title">App volume</string>
 </resources>
