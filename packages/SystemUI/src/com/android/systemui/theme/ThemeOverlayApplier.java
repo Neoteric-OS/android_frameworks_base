@@ -204,12 +204,11 @@ public class ThemeOverlayApplier implements Dumpable {
             FabricatedOverlay[] pendingCreation,
             int currentUser,
             Set<UserHandle> managedProfiles,
-            Runnable onComplete
+            Runnable onComplete,
+            boolean isBlackMode
     ) {
 
         mBgExecutor.execute(() -> {
-            boolean isBlackMode = false;
-
             // Disable all overlays that have not been specified in the user setting.
             final Set<String> overlayCategoriesToDisable = new HashSet<>(THEME_CATEGORIES);
             final Set<String> targetPackagesToQuery = overlayCategoriesToDisable.stream()
@@ -232,7 +231,6 @@ public class ThemeOverlayApplier implements Dumpable {
             OverlayManagerTransaction.Builder transaction = getTransactionBuilder();
             HashSet<OverlayIdentifier> identifiersPending = new HashSet<>();
             if (pendingCreation != null) {
-                isBlackMode = pendingCreation.length == 2;
                 for (FabricatedOverlay overlay : pendingCreation) {
                     identifiersPending.add(overlay.getIdentifier());
                     transaction.registerFabricatedOverlay(overlay);
@@ -271,7 +269,6 @@ public class ThemeOverlayApplier implements Dumpable {
         OverlayManagerTransaction.Builder transaction = getTransactionBuilder();
         try {
             transaction.setEnabled(getOverlayID(OVERLAY_BLACK_THEME), isBlackMode, currentUser);
-            transaction.setEnabled(getOverlayID("android:neutral"), !isBlackMode, currentUser);
             mOverlayManager.commit(transaction.build());
             if (onComplete != null) {
                 Log.d(TAG, "Executing onComplete runnable");
