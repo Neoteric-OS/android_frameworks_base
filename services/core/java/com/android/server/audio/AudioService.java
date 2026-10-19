@@ -1873,11 +1873,11 @@ public class AudioService extends IAudioService.Stub
 
     private boolean isMultiFocus() {
         ContentResolver cr = mContext.getContentResolver();
-        boolean multiAudioFocusEnabledDefault =
+        /*boolean multiAudioFocusEnabledDefault =
                 audioFocusDesktop() && mContext.getResources().getBoolean(
-                        com.android.internal.R.bool.config_multi_audio_focus_enabled_default);
-        return Settings.System.getIntForUser(cr, Settings.System.MULTI_AUDIO_FOCUS_ENABLED,
-                multiAudioFocusEnabledDefault ? 1 : 0, cr.getUserId()) != 0;
+                        com.android.internal.R.bool.config_multi_audio_focus_enabled_default);*/
+        return Settings.System.getIntForUser(cr,
+                Settings.System.SHOW_APP_VOLUME, 1, cr.getUserId()) != 0;
     }
 
     private void initVolumeStreamStates() {
