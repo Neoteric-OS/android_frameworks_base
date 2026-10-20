@@ -119,6 +119,7 @@ class EdgeLightView @JvmOverloads constructor(
      */
     fun show() {
         if (animating) return
+        bringToFront()
         if (visibility == GONE) visibility = VISIBLE
         leftView?.startAnimation(expandAnimation)
         rightView?.startAnimation(expandAnimation)
