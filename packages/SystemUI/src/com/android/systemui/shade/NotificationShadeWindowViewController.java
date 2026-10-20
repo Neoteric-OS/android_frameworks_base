@@ -61,6 +61,7 @@ import com.android.systemui.shade.domain.interactor.ShadeAnimationInteractor;
 import com.android.systemui.shade.domain.interactor.ShadeStatusBarComponentsInteractor;
 import com.android.systemui.shared.animation.DisableSubpixelTextTransitionListener;
 import com.android.systemui.statusbar.DragDownHelper;
+import com.android.systemui.statusbar.EdgeLightView;
 import com.android.systemui.statusbar.LockscreenShadeTransitionController;
 import com.android.systemui.statusbar.NotificationInsetsController;
 import com.android.systemui.statusbar.NotificationShadeDepthController;
@@ -181,6 +182,8 @@ public class NotificationShadeWindowViewController implements Dumpable {
             };
     private final SystemClock mClock;
 
+    private final EdgeLightViewController mEdgeLightViewController;
+
     @Inject
     public NotificationShadeWindowViewController(
             @Named("ShadeWindowBlurChoreographer") BlurChoreographer blurChoreographer,
@@ -224,7 +227,8 @@ public class NotificationShadeWindowViewController implements Dumpable {
             @Main CoroutineDispatcher mainDispatcher,
             ShadeStatusBarComponentsInteractor shadeStatusBarComponentsInteractor,
             DozeTouchInteractor dozeTouchInteractor,
-            JavaAdapter javaAdapter) {
+            JavaAdapter javaAdapter,
+            EdgeLightViewController edgeLightViewController) {
         mLockscreenShadeTransitionController = transitionController;
         mFalsingCollector = falsingCollector;
         mStatusBarStateController = statusBarStateController;
@@ -240,6 +244,7 @@ public class NotificationShadeWindowViewController implements Dumpable {
         mService = centralSurfaces;
         mDozeServiceHost = dozeServiceHost;
         mDozeScrimController = dozeScrimController;
+        mEdgeLightViewController = edgeLightViewController;
         mNotificationShadeWindowController = controller;
         mKeyguardUnlockAnimationController = keyguardUnlockAnimationController;
         mAmbientState = ambientState;
@@ -382,6 +387,21 @@ public class NotificationShadeWindowViewController implements Dumpable {
                 mPulsingGestureListener);
         mView.setLayoutInsetsController(mNotificationInsetsController);
         mView.setWindowRootViewKeyEventHandler(mWindowRootViewKeyEventHandler);
+        if (mEdgeLightViewController != null) {
+            View edgeLightView = mView.findViewById(R.id.edge_light_container);
+            if (edgeLightView != null && edgeLightView.getParent() instanceof ViewGroup) {
+                ViewGroup windowRoot = mView.getParent() instanceof ViewGroup
+                        ? (ViewGroup) mView.getParent()
+                        : (ViewGroup) mView.getRootView();
+                if (windowRoot != null && windowRoot != edgeLightView.getParent()) {
+                    ((ViewGroup) edgeLightView.getParent()).removeView(edgeLightView);
+                    windowRoot.addView(edgeLightView);
+                }
+            }
+            if (edgeLightView instanceof EdgeLightView) {
+                mEdgeLightViewController.setEdgeLightView((EdgeLightView) edgeLightView);
+            }
+        }
         mView.setInteractionEventHandler(new NotificationShadeWindowView.InteractionEventHandler() {
             boolean mLastInterceptWasDragDownHelper = false;
 
