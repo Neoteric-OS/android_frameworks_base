@@ -49,11 +49,6 @@ public class KeyboxImitationHooks {
             "1.3.6.1.4.1.11129.2.1.17");
 
     public static KeyEntryResponse onGetKeyEntry(KeyEntryResponse response) {
-        if (!KeyProviderManager.isKeyboxAvailable()) {
-            dlog("Key attestation spoofing is disabled because no keybox is defined to spoof");
-            return response;
-        }
-
         if (response == null || response.metadata == null) return response;
 
         try {
@@ -69,6 +64,12 @@ public class KeyboxImitationHooks {
             }
 
             String keyAlgorithm = certificate.getPublicKey().getAlgorithm();
+
+            if (!KeyProviderManager.isKeyboxAvailable(keyAlgorithm)) {
+                dlog("Key attestation spoofing is disabled because no keybox is defined to spoof");
+                return response;
+            }
+
             response.metadata.certificate = modifyLeafCertificate(certificate, keyAlgorithm);
             response.metadata.certificateChain = KeyboxUtils.getCertificateChain(keyAlgorithm);
         } catch (Exception e) {
@@ -97,7 +98,7 @@ public class KeyboxImitationHooks {
             }
             teeEnforcedVector.add(teeEnforcedEncodable);
         }
-        
+
         PrivateKey privateKey = KeyboxUtils.getPrivateKey(keyAlgorithm);
         X509CertificateHolder providerCertHolder = KeyboxUtils.getCertificateHolder(keyAlgorithm);
 
@@ -110,10 +111,8 @@ public class KeyboxImitationHooks {
                 certificateHolder.getSubjectPublicKeyInfo()
         );
 
-        String sigAlg = KeyProperties.KEY_ALGORITHM_EC.equalsIgnoreCase(keyAlgorithm)
-                ? "SHA256withECDSA"
-                : "SHA256withRSA";
-        ContentSigner contentSigner = new JcaContentSignerBuilder(sigAlg).build(privateKey);
+        ContentSigner contentSigner = new JcaContentSignerBuilder(
+                leafCertificate.getSigAlgName()).build(privateKey);
 
         Context context = ActivityThread.currentApplication();
         if (context == null) {

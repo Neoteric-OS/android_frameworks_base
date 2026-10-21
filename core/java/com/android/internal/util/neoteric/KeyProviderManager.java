@@ -7,6 +7,7 @@ package com.android.internal.util.neoteric;
 import android.app.ActivityThread;
 import android.content.Context;
 import android.provider.Settings;
+import android.security.keystore.KeyProperties;
 import android.util.Log;
 import android.util.Xml;
 
@@ -35,6 +36,10 @@ public final class KeyProviderManager {
 
     public static boolean isKeyboxAvailable() {
         return getProvider().hasKeybox();
+    }
+
+    public static boolean isKeyboxAvailable(String algorithm) {
+        return getProvider().hasKeybox(algorithm);
     }
 
     private static class DefaultKeyboxProvider implements IKeyboxProvider {
@@ -163,13 +168,17 @@ public final class KeyProviderManager {
 
         @Override
         public boolean hasKeybox() {
-            if (!keyboxData.containsKey("EC.PRIV") || !keyboxData.containsKey("RSA.PRIV")) {
-                return false;
+            return hasKeybox("EC") || hasKeybox("RSA");
+        }
+
+        @Override
+        public boolean hasKeybox(String algorithm) {
+            if (KeyProperties.KEY_ALGORITHM_EC.equalsIgnoreCase(algorithm)) {
+                return keyboxData.containsKey("EC.PRIV") && keyboxData.containsKey("EC.CERT_1");
+            } else if (KeyProperties.KEY_ALGORITHM_RSA.equalsIgnoreCase(algorithm)) {
+                return keyboxData.containsKey("RSA.PRIV") && keyboxData.containsKey("RSA.CERT_1");
             }
-            if (!keyboxData.containsKey("EC.CERT_1") || !keyboxData.containsKey("RSA.CERT_1")) {
-                return false;
-            }
-            return true;
+            return false;
         }
 
         @Override
