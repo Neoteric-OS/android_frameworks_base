@@ -36,6 +36,9 @@ import com.android.internal.org.bouncycastle.operator.jcajce.JcaContentSignerBui
 import java.security.PrivateKey;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * @hide
@@ -88,7 +91,7 @@ public class KeyboxImitationHooks {
                 keyAttestationExtension.getExtnValue().getOctets());
         ASN1Encodable[] keyAttestationEncodables = keyAttestationSequence.toArray();
         ASN1Sequence teeEnforcedSequence = (ASN1Sequence) keyAttestationEncodables[7];
-        ASN1EncodableVector teeEnforcedVector = new ASN1EncodableVector();
+        List<ASN1TaggedObject> teeEnforcedList = new ArrayList<>();
 
         for (ASN1Encodable teeEnforcedEncodable : teeEnforcedSequence) {
             ASN1TaggedObject taggedObject = (ASN1TaggedObject) teeEnforcedEncodable;
@@ -96,7 +99,7 @@ public class KeyboxImitationHooks {
             if (tag == 704 || tag == 705 || tag == 706 || tag == 718 || tag == 719) {
                 continue;
             }
-            teeEnforcedVector.add(teeEnforcedEncodable);
+            teeEnforcedList.add(taggedObject);
         }
 
         PrivateKey privateKey = KeyboxUtils.getPrivateKey(keyAlgorithm);
@@ -154,15 +157,22 @@ public class KeyboxImitationHooks {
 
         ASN1Sequence newRootOfTrustSequence = new DERSequence(rootOfTrustEncodables);
         ASN1TaggedObject rootOfTrustTaggedObject = new DERTaggedObject(704, newRootOfTrustSequence);
-        teeEnforcedVector.add(rootOfTrustTaggedObject);
-        teeEnforcedVector.add(new DERTaggedObject(705,
+        teeEnforcedList.add(rootOfTrustTaggedObject);
+        teeEnforcedList.add(new DERTaggedObject(705,
                 new ASN1Integer(getOsVersion())));
-        teeEnforcedVector.add(new DERTaggedObject(706,
+        teeEnforcedList.add(new DERTaggedObject(706,
                 new ASN1Integer(getPatchLevel())));
-        teeEnforcedVector.add(new DERTaggedObject(718,
+        teeEnforcedList.add(new DERTaggedObject(718,
                 new ASN1Integer(getPatchLevelLong())));
-        teeEnforcedVector.add(new DERTaggedObject(719,
+        teeEnforcedList.add(new DERTaggedObject(719,
                 new ASN1Integer(getPatchLevelLong())));
+
+        teeEnforcedList.sort(Comparator.comparingInt(ASN1TaggedObject::getTagNo));
+
+        ASN1EncodableVector teeEnforcedVector = new ASN1EncodableVector();
+        for (ASN1TaggedObject obj : teeEnforcedList) {
+            teeEnforcedVector.add(obj);
+        }
 
         ASN1Sequence newTeeEnforcedSequence = new DERSequence(teeEnforcedVector);
         keyAttestationEncodables[7] = newTeeEnforcedSequence;
