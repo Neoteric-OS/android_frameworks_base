@@ -81,7 +81,7 @@ public class KeyboxUtils {
     }
 
     public static byte[] getCertificateChain(String algorithm) throws Exception {
-        String[] chain = KeyProperties.KEY_ALGORITHM_EC.equals(algorithm)
+        String[] chain = KeyProperties.KEY_ALGORITHM_EC.equalsIgnoreCase(algorithm)
                 ? KeyProviderManager.getProvider().getEcCertificateChain()
                 : KeyProviderManager.getProvider().getRsaCertificateChain();
 
@@ -92,7 +92,7 @@ public class KeyboxUtils {
 
     public static PrivateKey getPrivateKey(String algorithm) throws Exception {
         IKeyboxProvider provider = KeyProviderManager.getProvider();
-        String privateKeyEncoded = KeyProperties.KEY_ALGORITHM_EC.equals(algorithm)
+        String privateKeyEncoded = KeyProperties.KEY_ALGORITHM_EC.equalsIgnoreCase(algorithm)
                 ? provider.getEcPrivateKey()
                 : provider.getRsaPrivateKey();
 
@@ -101,7 +101,7 @@ public class KeyboxUtils {
 
     public static X509CertificateHolder getCertificateHolder(String algorithm) throws Exception {
         IKeyboxProvider provider = KeyProviderManager.getProvider();
-        String cert = KeyProperties.KEY_ALGORITHM_EC.equals(algorithm)
+        String cert = KeyProperties.KEY_ALGORITHM_EC.equalsIgnoreCase(algorithm)
                 ? provider.getEcCertificateChain()[0]
                 : provider.getRsaCertificateChain()[0];
 
