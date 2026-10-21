@@ -184,10 +184,15 @@ public class KeyboxImitationHooks {
 
         certificateBuilder.addExtension(newKeyAttestationExtension);
 
-        for (ASN1ObjectIdentifier extensionOID :
-                certificateHolder.getExtensions().getExtensionOIDs()) {
-            if (KEY_ATTESTATION_OID.getId().equals(extensionOID.getId())) continue;
-            certificateBuilder.addExtension(certificateHolder.getExtension(extensionOID));
+        if (certificateHolder.getExtensions() != null) {
+            for (ASN1ObjectIdentifier extensionOID :
+                    certificateHolder.getExtensions().getExtensionOIDs()) {
+                if (KEY_ATTESTATION_OID.getId().equals(extensionOID.getId())
+                        || Extension.authorityKeyIdentifier.getId().equals(extensionOID.getId())) {
+                    continue;
+                }
+                certificateBuilder.addExtension(certificateHolder.getExtension(extensionOID));
+            }
         }
 
         return certificateBuilder.build(contentSigner).getEncoded();
