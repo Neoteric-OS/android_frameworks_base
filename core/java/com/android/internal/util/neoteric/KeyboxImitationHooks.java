@@ -22,6 +22,7 @@ import com.android.internal.org.bouncycastle.asn1.ASN1Enumerated;
 import com.android.internal.org.bouncycastle.asn1.ASN1Integer;
 import com.android.internal.org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import com.android.internal.org.bouncycastle.asn1.ASN1OctetString;
+import com.android.internal.org.bouncycastle.asn1.ASN1Primitive;
 import com.android.internal.org.bouncycastle.asn1.ASN1Sequence;
 import com.android.internal.org.bouncycastle.asn1.ASN1TaggedObject;
 import com.android.internal.org.bouncycastle.asn1.DEROctetString;
@@ -92,11 +93,21 @@ public class KeyboxImitationHooks {
         ASN1Encodable[] keyAttestationEncodables = keyAttestationSequence.toArray();
         ASN1Sequence teeEnforcedSequence = (ASN1Sequence) keyAttestationEncodables[7];
         List<ASN1TaggedObject> teeEnforcedList = new ArrayList<>();
+        ASN1TaggedObject originalRootOfTrust = null;
+        ASN1TaggedObject originalVendorPatchLevel = null;
 
         for (ASN1Encodable teeEnforcedEncodable : teeEnforcedSequence) {
             ASN1TaggedObject taggedObject = (ASN1TaggedObject) teeEnforcedEncodable;
             int tag = taggedObject.getTagNo();
-            if (tag == 704 || tag == 705 || tag == 706 || tag == 718 || tag == 719) {
+            if (tag == 704) {
+                originalRootOfTrust = taggedObject;
+                continue;
+            }
+            if (tag == 718) {
+                originalVendorPatchLevel = taggedObject;
+                continue;
+            }
+            if (tag == 705 || tag == 706 || tag == 719) {
                 continue;
             }
             teeEnforcedList.add(taggedObject);
@@ -117,42 +128,90 @@ public class KeyboxImitationHooks {
         ContentSigner contentSigner = new JcaContentSignerBuilder(
                 leafCertificate.getSigAlgName()).build(privateKey);
 
-        Context context = ActivityThread.currentApplication();
-        if (context == null) {
-            Log.e(TAG, "Context is null in modifyLeafCertificate");
-            return null;
-        }
-        SecureRandom secureRandom = new SecureRandom();
+        ASN1Encodable origBootKeyEncodable = null;
+        ASN1Encodable origBootHashEncodable = null;
 
-        String key = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.VBOOT_KEY);
-        byte[] verifiedBootKey;
-        if (key == null) {
-            byte[] randomBytes = new byte[32];
-            secureRandom.nextBytes(randomBytes);
-            String encoded = Base64.encodeToString(randomBytes, Base64.NO_WRAP);
-            Settings.Secure.putString(context.getContentResolver(), Settings.Secure.VBOOT_KEY, encoded);
-            verifiedBootKey = randomBytes;
-        } else {
-            verifiedBootKey = Base64.decode(key, Base64.NO_WRAP);
+        if (originalRootOfTrust != null) {
+            try {
+                ASN1Sequence rotSeq = null;
+                try {
+                    rotSeq = ASN1Sequence.getInstance(originalRootOfTrust, true);
+                } catch (Exception e) {
+                    ASN1Primitive prim = originalRootOfTrust.getObject();
+                    if (prim instanceof ASN1Sequence) {
+                        rotSeq = (ASN1Sequence) prim;
+                    }
+                }
+                if (rotSeq != null) {
+                    if (rotSeq.size() > 0) {
+                        origBootKeyEncodable = rotSeq.getObjectAt(0);
+                    }
+                    if (rotSeq.size() > 3) {
+                        origBootHashEncodable = rotSeq.getObjectAt(3);
+                    }
+                }
+            } catch (Exception e) {
+                Log.w(TAG, "Failed to parse original root of trust", e);
+            }
         }
 
-        String hash = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.VBOOT_HASH);
-        byte[] verifiedBootHash;
-        if (hash == null) {
-            byte[] randomBytes = new byte[32];
-            secureRandom.nextBytes(randomBytes);
-            String encoded = Base64.encodeToString(randomBytes, Base64.NO_WRAP);
-            Settings.Secure.putString(context.getContentResolver(), Settings.Secure.VBOOT_HASH, encoded);
-            verifiedBootHash = randomBytes;
+        boolean needNewKey = origBootKeyEncodable == null || isZeroEncodable(origBootKeyEncodable);
+        boolean needNewHash = origBootHashEncodable == null || isZeroEncodable(origBootHashEncodable);
+
+        ASN1Encodable bootKeyEncodable;
+        ASN1Encodable bootHashEncodable;
+
+        if (needNewKey || needNewHash) {
+            Context context = ActivityThread.currentApplication();
+            if (context == null) {
+                Log.e(TAG, "Context is null in modifyLeafCertificate");
+                return null;
+            }
+            SecureRandom secureRandom = new SecureRandom();
+
+            if (needNewKey) {
+                String key = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.VBOOT_KEY);
+                byte[] verifiedBootKey;
+                if (key == null) {
+                    byte[] randomBytes = new byte[32];
+                    secureRandom.nextBytes(randomBytes);
+                    String encoded = Base64.encodeToString(randomBytes, Base64.NO_WRAP);
+                    Settings.Secure.putString(context.getContentResolver(), Settings.Secure.VBOOT_KEY, encoded);
+                    verifiedBootKey = randomBytes;
+                } else {
+                    verifiedBootKey = Base64.decode(key, Base64.NO_WRAP);
+                }
+                bootKeyEncodable = new DEROctetString(verifiedBootKey);
+            } else {
+                bootKeyEncodable = origBootKeyEncodable;
+            }
+
+            if (needNewHash) {
+                String hash = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.VBOOT_HASH);
+                byte[] verifiedBootHash;
+                if (hash == null) {
+                    byte[] randomBytes = new byte[32];
+                    secureRandom.nextBytes(randomBytes);
+                    String encoded = Base64.encodeToString(randomBytes, Base64.NO_WRAP);
+                    Settings.Secure.putString(context.getContentResolver(), Settings.Secure.VBOOT_HASH, encoded);
+                    verifiedBootHash = randomBytes;
+                } else {
+                    verifiedBootHash = Base64.decode(hash, Base64.NO_WRAP);
+                }
+                bootHashEncodable = new DEROctetString(verifiedBootHash);
+            } else {
+                bootHashEncodable = origBootHashEncodable;
+            }
         } else {
-            verifiedBootHash = Base64.decode(hash, Base64.NO_WRAP);
+            bootKeyEncodable = origBootKeyEncodable;
+            bootHashEncodable = origBootHashEncodable;
         }
 
         ASN1Encodable[] rootOfTrustEncodables = {
-                new DEROctetString(verifiedBootKey),
+                bootKeyEncodable,
                 ASN1Boolean.TRUE,
                 new ASN1Enumerated(0),
-                new DEROctetString(verifiedBootHash)
+                bootHashEncodable
         };
 
         ASN1Sequence newRootOfTrustSequence = new DERSequence(rootOfTrustEncodables);
@@ -162,10 +221,23 @@ public class KeyboxImitationHooks {
                 new ASN1Integer(getOsVersion())));
         teeEnforcedList.add(new DERTaggedObject(706,
                 new ASN1Integer(getPatchLevel())));
-        teeEnforcedList.add(new DERTaggedObject(718,
-                new ASN1Integer(getPatchLevelLong())));
+        boolean needNewVendorPatchLevel = true;
+        if (originalVendorPatchLevel != null) {
+            try {
+                needNewVendorPatchLevel = isZeroEncodable(originalVendorPatchLevel.getObject());
+            } catch (Exception e) {
+                Log.w(TAG, "Failed to parse original vendor patch level", e);
+            }
+        }
+
+        if (!needNewVendorPatchLevel) {
+            teeEnforcedList.add(originalVendorPatchLevel);
+        } else {
+            teeEnforcedList.add(new DERTaggedObject(718,
+                    new ASN1Integer(getPatchLevelLong())));
+        }
         teeEnforcedList.add(new DERTaggedObject(719,
-                new ASN1Integer(getPatchLevelLong())));
+                new ASN1Integer(getPatchLevel())));
 
         teeEnforcedList.sort(Comparator.comparingInt(ASN1TaggedObject::getTagNo));
 
@@ -233,6 +305,32 @@ public class KeyboxImitationHooks {
             Log.e(TAG, "Invalid patch level: " + patchLevel, e);
             return 202404;
         }
+    }
+
+    private static boolean isAllZeros(byte[] bytes) {
+        if (bytes == null || bytes.length == 0) {
+            return true;
+        }
+        for (byte b : bytes) {
+            if (b != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean isZeroEncodable(ASN1Encodable encodable) {
+        if (encodable == null) {
+            return true;
+        }
+        ASN1Primitive primitive = encodable.toASN1Primitive();
+        if (primitive instanceof ASN1OctetString) {
+            return isAllZeros(((ASN1OctetString) primitive).getOctets());
+        }
+        if (primitive instanceof ASN1Integer) {
+            return ((ASN1Integer) primitive).getValue().signum() == 0;
+        }
+        return false;
     }
 
     private static void dlog(String msg) {
