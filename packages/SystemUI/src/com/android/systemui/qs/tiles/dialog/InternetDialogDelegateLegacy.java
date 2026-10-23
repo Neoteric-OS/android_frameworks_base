@@ -172,7 +172,6 @@ public class InternetDialogDelegateLegacy implements
     private final InternetDetailsContentController mInternetDetailsContentController;
     private TextView mInternetDialogTitle;
     private TextView mInternetDialogSubTitle;
-    private View mDivider;
     private ProgressBar mProgressBar;
     private LinearLayout mConnectedWifListLayout;
     private LinearLayout mMobileNetworkLayout;
@@ -403,7 +402,6 @@ public class InternetDialogDelegateLegacy implements
                 mLifecycleOwner, (internetContent) -> updateDialogUI(internetContent));
         mInternetDialogTitle = mDialogView.requireViewById(R.id.internet_dialog_title);
         mInternetDialogSubTitle = mDialogView.requireViewById(R.id.internet_dialog_subtitle);
-        mDivider = mDialogView.requireViewById(R.id.divider);
         mProgressBar = mDialogView.requireViewById(R.id.wifi_searching_progress);
         mEthernetLayout = mDialogView.requireViewById(R.id.ethernet_layout);
         mMobileNetworkLayout = mDialogView.requireViewById(R.id.mobile_network_layout);
@@ -1164,7 +1162,6 @@ public class InternetDialogDelegateLegacy implements
         mIsProgressBarVisible = visible;
         mProgressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
         mProgressBar.setIndeterminate(visible);
-        mDivider.setVisibility(visible ? View.GONE : View.VISIBLE);
         mInternetDialogSubTitle.setText(getSubtitleText());
     }
 

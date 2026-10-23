@@ -60,13 +60,6 @@
         android:layout_marginBottom="@dimen/internet_dialog_network_layout_margin"
         android:orientation="vertical">
 
-        <View
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:background="@color/materialColorSurfaceContainerHigh"/>
-
         <ProgressBar
             android:id="@+id/wifi_searching_progress"
             android:layout_width="match_parent"
