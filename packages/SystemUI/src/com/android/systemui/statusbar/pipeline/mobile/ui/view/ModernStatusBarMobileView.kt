@@ -65,14 +65,6 @@ class ModernStatusBarMobileView(context: Context, attrs: AttributeSet?) :
         // Margins around the entire container
         requireViewById<AlphaOptimizedLinearLayout>(R.id.mobile_group).apply {
             val lp = layoutParams as MarginLayoutParams
-            val marginStart =
-                if (Flags.statusIconsInComposeRefresh()) {
-                    0
-                } else {
-                    context.resources.getDimensionPixelSize(
-                        R.dimen.status_bar_mobile_container_margin_start
-                    )
-                }
             val marginEnd =
                 if (Flags.statusIconsInComposeRefresh()) {
                     0
@@ -81,7 +73,10 @@ class ModernStatusBarMobileView(context: Context, attrs: AttributeSet?) :
                         R.dimen.status_bar_mobile_container_margin_end
                     )
                 }
-            lp.marginStart = marginStart
+            lp.marginStart =
+                context.resources.getDimensionPixelSize(
+                    R.dimen.status_bar_mobile_container_margin_start
+                )
             lp.marginEnd = marginEnd
         }
 
