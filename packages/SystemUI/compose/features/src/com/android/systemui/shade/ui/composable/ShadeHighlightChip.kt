@@ -153,7 +153,9 @@ fun ShadeHighlightChip(
             modifier =
                 modifier
                     .align(Alignment.CenterStart)
-                    .clip(CircleShape)
+                    .thenIf(backgroundColor != Color.Unspecified) {
+                        Modifier.clip(CircleShape)
+                    }
                     .indication(
                         interactionSource = interactionSource,
                         indication = ripple(color = rippleColor),
