@@ -28,6 +28,7 @@ import android.os.Build;
 import android.os.Binder;
 import android.os.Environment;
 import android.os.Process;
+import android.os.SystemProperties;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
@@ -44,6 +45,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -216,11 +218,12 @@ public class PropImitationHooks {
         "PIXEL_2024_MIDYEAR_EXPERIENCE"
     );
 
-    private static volatile List<String> sCertifiedProps = new ArrayList<>();
+    private static volatile Map<String, String> sCertifiedProps = new HashMap<>();
     private static volatile String sStockFp, sNetflixModel;
 
     private static volatile String sProcessName;
     private static volatile boolean sIsPixelDevice, sIsGms, sIsFinsky;
+    private static volatile boolean sNativePropsSpoofed = false;
 
     public static void setProps(Context context) {
         final String packageName = context.getPackageName();
@@ -302,7 +305,7 @@ public class PropImitationHooks {
 
     private static void setPropValue(String key, String value) {
         try {
-            dlog("Setting prop " + key + " to " + value.toString());
+            dlog("Setting prop " + key + " to " + value);
             Class clazz = Build.class;
             if (key.startsWith("VERSION.")) {
                 clazz = Build.VERSION.class;
@@ -317,41 +320,58 @@ public class PropImitationHooks {
         }
     }
 
+    private static Map<String, String> parseArrayProps(String[] arr) {
+        Map<String, String> map = new HashMap<>();
+        for (String entry : arr) {
+            String[] kv = entry.split(":", 2);
+            if (kv.length == 2 && !kv[0].isEmpty()) {
+                map.put(kv[0], kv[1]);
+            }
+        }
+        return map;
+    }
+
     private static void setPlayIntegrityProps(Context context) {
         // Guard: isolated processes cannot access content providers (Settings.*).
         if (android.os.Process.isIsolated()) {
             dlog("Skipping setPlayIntegrityProps in isolated process");
             return;
         }
-        String savedProps = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.PIF_DATA);
-        if (savedProps == null || TextUtils.isEmpty(savedProps)) {
-            savedProps = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.FETCHED_PIF);
+        String savedProps = Settings.Secure.getString(
+                context.getContentResolver(), Settings.Secure.PIF_DATA);
+        if (TextUtils.isEmpty(savedProps)) {
+            savedProps = Settings.Secure.getString(
+                    context.getContentResolver(), Settings.Secure.FETCHED_PIF);
         }
 
-        if (savedProps == null || TextUtils.isEmpty(savedProps)) {
+        Map<String, String> props = new HashMap<>();
+        if (TextUtils.isEmpty(savedProps)) {
             dlog("Parsing props locally - fetched pif / user provided pif unavailable");
-            sCertifiedProps = Arrays.asList(context.getResources().getStringArray(R.array.config_certifiedBuildProperties));
+            props = parseArrayProps(context.getResources()
+                    .getStringArray(R.array.config_certifiedBuildProperties));
         } else {
             dlog("Parsing props fetched / provided by user");
             try {
-                JSONObject parsedProps = new JSONObject(savedProps);
-                Iterator<String> keys = parsedProps.keys();
+                JSONObject parsed = new JSONObject(savedProps);
+                Iterator<String> keys = parsed.keys();
                 while (keys.hasNext()) {
                     String key = keys.next();
-                    String value = parsedProps.getString(key);
-                    sCertifiedProps.add(key + ":" + value);
+                    props.put(key, parsed.getString(key));
                 }
             } catch (JSONException e) {
                 Log.e(TAG, "Error parsing JSON data", e);
                 dlog("Parsing props locally as fallback");
-                sCertifiedProps = Arrays.asList(context.getResources().getStringArray(R.array.config_certifiedBuildProperties));
+                props = parseArrayProps(context.getResources()
+                        .getStringArray(R.array.config_certifiedBuildProperties));
             }
         }
 
-        if (sCertifiedProps.isEmpty()) {
+        if (props.isEmpty()) {
             dlog("Certified props are not set");
             return;
         }
+
+        sCertifiedProps = props;
 
         final boolean was = isGmsAddAccountActivityOnTop();
         final TaskStackListener taskStackListener = new TaskStackListener() {
@@ -368,7 +388,13 @@ public class PropImitationHooks {
 
         if (!was) {
             dlog("Spoofing build for GMS / Finsky");
-            setCertifiedProps();
+            for (Map.Entry<String, String> entry : sCertifiedProps.entrySet()) {
+                setPropValue(entry.getKey(), entry.getValue());
+            }
+
+            if (!sNativePropsSpoofed) {
+                spoofNativeProperties(sCertifiedProps);
+            }
         } else {
             dlog("Skip spoofing build for GMS / Finsky, because GmsAddAccountActivityOnTop");
         }
@@ -380,15 +406,73 @@ public class PropImitationHooks {
         }
     }
 
-    private static void setCertifiedProps() {
-        for (String entry : sCertifiedProps) {
-            // Each entry must be of the format FIELD:value
-            final String[] fieldAndProp = entry.split(":", 2);
-            if (fieldAndProp.length != 2) {
-                Log.e(TAG, "Invalid entry in certified props: " + entry);
-                continue;
+    private static void spoofNativeProperties(Map<String, String> certifiedProps) {
+        Map<String, String> sysProps = new HashMap<>();
+
+        sysProps.put("ro.board.first_api_level", "32");
+
+        putPropIfPresent(sysProps, "ro.build.fingerprint", certifiedProps.get("FINGERPRINT"));
+        putPropIfPresent(sysProps, "ro.build.id", certifiedProps.get("ID"));
+        putPropIfPresent(sysProps, "ro.build.type", certifiedProps.get("TYPE"));
+        putPropIfPresent(sysProps, "ro.build.tags", certifiedProps.get("TAGS"));
+        putPropIfPresent(sysProps, "ro.build.version.incremental", certifiedProps.get("VERSION.INCREMENTAL"));
+        putPropIfPresent(sysProps, "ro.build.version.release", certifiedProps.get("VERSION.RELEASE"));
+        putPropIfPresent(sysProps, "ro.build.version.security_patch", certifiedProps.get("VERSION.SECURITY_PATCH"));
+        putPropIfPresent(sysProps, "ro.product.device", certifiedProps.get("DEVICE"));
+        putPropIfPresent(sysProps, "ro.product.name", certifiedProps.get("PRODUCT"));
+        putPropIfPresent(sysProps, "ro.product.brand", certifiedProps.get("BRAND"));
+        putPropIfPresent(sysProps, "ro.product.manufacturer", certifiedProps.get("MANUFACTURER"));
+        putPropIfPresent(sysProps, "ro.product.model", certifiedProps.get("MODEL"));
+        putPropIfPresent(sysProps, "ro.product.first_api_level", certifiedProps.get("VERSION.DEVICE_INITIAL_SDK_INT"));
+
+        for (Map.Entry<String, String> entry : certifiedProps.entrySet()) {
+            String key = entry.getKey();
+            if (key.contains(".") || key.startsWith("*")) {
+                sysProps.put(key, entry.getValue());
             }
-            setPropValue(fieldAndProp[0], fieldAndProp[1]);
+        }
+
+        String[] keys = new String[sysProps.size()];
+        String[] values = new String[sysProps.size()];
+        int idx = 0;
+        for (Map.Entry<String, String> entry : sysProps.entrySet()) {
+            keys[idx] = entry.getKey();
+            values[idx] = entry.getValue();
+            idx++;
+        }
+
+        try {
+            boolean ok = spoofProperties(keys, values, DEBUG);
+            if (ok) {
+                sNativePropsSpoofed = true;
+                dlog("Property area virtualization active (" + keys.length + " rules)");
+            } else {
+                Log.w(TAG, "Property area virtualization returned false");
+            }
+        } catch (Throwable t) {
+            Log.e(TAG, "Failed to run spoofProperties", t);
+        }
+    }
+
+    private static boolean spoofProperties(String[] keys, String[] values, boolean debug) {
+        try {
+            return SystemProperties.spoofProperties(keys, values, debug);
+        } catch (Throwable t) {
+            try {
+                return nativeSpoofProperties(keys, values, debug);
+            } catch (Throwable t2) {
+                Log.e(TAG, "Failed to spoof native properties", t2);
+                return false;
+            }
+        }
+    }
+
+    private static native boolean nativeSpoofProperties(
+            String[] keys, String[] values, boolean debug);
+
+    private static void putPropIfPresent(Map<String, String> map, String key, String value) {
+        if (!TextUtils.isEmpty(value)) {
+            map.putIfAbsent(key, value);
         }
     }
 
@@ -429,7 +513,7 @@ public class PropImitationHooks {
 
     private static boolean isCallerSafetyNet() {
         return sIsGms && Arrays.stream(Thread.currentThread().getStackTrace())
-                .anyMatch(elem -> elem.getClassName().contains("DroidGuard"));
+                .anyMatch(elem -> elem.getClassName().toLowerCase(Locale.ROOT).contains("droidguard"));
     }
 
     public static void onEngineGetCertificateChain() {

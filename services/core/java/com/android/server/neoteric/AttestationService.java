@@ -7,12 +7,14 @@
 
 package com.android.server.neoteric;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.os.Environment;
+import android.os.Process;
 import android.provider.Settings;
 import android.util.Log;
 
@@ -124,6 +126,7 @@ public final class AttestationService extends SystemService {
                 if (props != null && !Objects.equals(savedProps, props)) {
                     dlog("Found new props");
                     Settings.Secure.putString(mContext.getContentResolver(), Settings.Secure.FETCHED_PIF, props);
+                    restartPifTargets();
                     dlog("FetchGmsCertifiedProps completed");
                 } else {
                     dlog("No change in props");
@@ -131,6 +134,28 @@ public final class AttestationService extends SystemService {
             } catch (Exception e) {
                 Log.e(TAG, "Error in FetchGmsCertifiedProps", e);
             }
+        }
+    }
+
+    private void restartPifTargets() {
+        try {
+            ActivityManager am = mContext.getSystemService(android.app.ActivityManager.class);
+            if (am == null) return;
+            am.forceStopPackage("com.android.vending");
+            java.util.List<ActivityManager.RunningAppProcessInfo> procs =
+                    am.getRunningAppProcesses();
+            if (procs != null) {
+                for (ActivityManager.RunningAppProcessInfo proc : procs) {
+                    if ("com.google.android.gms.unstable".equals(proc.processName)
+                            || "com.android.vending".equals(proc.processName)) {
+                        Log.i(TAG, "Killing PIF target process " + proc.processName
+                                + " (pid=" + proc.pid + ")");
+                        Process.killProcess(proc.pid);
+                    }
+                }
+            }
+        } catch (Throwable t) {
+            Log.w(TAG, "Failed to restart PIF target processes", t);
         }
     }
 }
