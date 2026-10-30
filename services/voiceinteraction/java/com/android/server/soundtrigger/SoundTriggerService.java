@@ -518,6 +518,7 @@ public class SoundTriggerService extends SystemService {
         private final IBinder mClient;
         private final Identity mOriginatorIdentity;
         private final TreeMap<UUID, SoundModel> mLoadedModels = new TreeMap<>();
+        private boolean mDetached;
         private final Object mCallbacksLock = new Object();
         private final TreeMap<UUID, IRecognitionStatusCallback> mCallbacks = new TreeMap<>();
         private final EventLogger mEventLogger;
@@ -529,6 +530,9 @@ public class SoundTriggerService extends SystemService {
          */
         private void rearmAmbientMusic(UUID modelUuid) {
             synchronized (mLock) {
+                if (mDetached) {
+                    return;
+                }
                 SoundModel soundModel = mLoadedModels.get(modelUuid);
                 if (!(soundModel instanceof GenericSoundModel)) {
                     return;
@@ -1082,6 +1086,9 @@ public class SoundTriggerService extends SystemService {
                 mAppOpsManager.stopWatchingMode(mAppOpsListener);
             }
             mDeviceStateHandler.unregisterListener(mListener);
+            synchronized (mLock) {
+                mDetached = true;
+            }
             mSoundTriggerHelper.detach();
             detachSessionLogger(mEventLogger);
         }
