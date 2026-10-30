@@ -37,5 +37,7 @@
         android:scaleType="centerInside"
         android:soundEffectsEnabled="false"
         android:padding="4dp"
-        android:tint="@color/materialColorPrimary"/>
+        android:tint="@color/materialColorPrimary"
+        android:visibility="gone"/>
+
 </merge>

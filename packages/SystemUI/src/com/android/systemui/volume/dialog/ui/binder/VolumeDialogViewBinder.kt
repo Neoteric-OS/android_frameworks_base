@@ -18,6 +18,7 @@ package com.android.systemui.volume.dialog.ui.binder
 
 import android.app.Dialog
 import android.content.Context
+import android.content.res.Configuration
 import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
@@ -26,6 +27,7 @@ import android.view.WindowInsets
 import android.view.accessibility.AccessibilityEvent
 import androidx.compose.ui.util.lerp
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.dynamicanimation.animation.DynamicAnimation
@@ -39,6 +41,7 @@ import com.android.systemui.common.ui.view.onApplyWindowInsets
 import com.android.systemui.common.ui.view.updateMargin
 import com.android.systemui.dagger.qualifiers.Application
 import com.android.systemui.res.R
+import com.android.systemui.util.children
 import com.android.systemui.util.kotlin.awaitCancellationThenDispose
 import com.android.systemui.util.view.listenToComputeInternalInsets
 import com.android.systemui.volume.dialog.captions.ui.viewmodel.VolumeDialogCaptionsButtonViewModel
@@ -114,6 +117,10 @@ constructor(
         // Root view of the Volume Dialog.
         val root: ViewGroup = dialog.requireViewById(R.id.volume_dialog)
         val mainSliderContainer: View? = root.findViewById(R.id.volume_dialog_main_slider_container)
+        val bottomSection: ViewGroup? =
+            root.findViewById(R.id.volume_dialog_bottom_section_container)
+        val topSection: View? = root.findViewById(R.id.volume_dialog_top_section_container)
+        val expandContainer: View? = root.findViewById(R.id.volume_dialog_expand_container)
         root.accessibilityDelegate = Accessibility(viewModel)
         root.setOnHoverListener { _, event ->
             viewModel.onHover(
@@ -161,9 +168,12 @@ constructor(
                         bottom = insetsValues.bottom,
                     )
                     if (isVolumeDialogVertical) {
-                        mainSliderContainer?.updateMargin(
-                            top = getSliderVerticalMargin() - view.paddingTop,
-                            bottom = getSliderVerticalMargin() - view.paddingBottom,
+                        updateVerticalSliderMargins(
+                            view,
+                            mainSliderContainer,
+                            bottomSection,
+                            topSection,
+                            expandContainer,
                         )
                     } else {
                         mainSliderContainer?.updateMargin(
@@ -177,6 +187,21 @@ constructor(
                     WindowInsets.CONSUMED
                 }
                 .awaitCancellationThenDispose()
+        }
+
+        // Button and ringer drawer visibility can change after the first insets pass. Keep the
+        // slider margins in sync so the controls stay in the window and the whole dialog is
+        // centered in portrait.
+        root.viewTreeObserver.addOnGlobalLayoutListener {
+            if (isVolumeDialogVertical) {
+                updateVerticalSliderMargins(
+                    root,
+                    mainSliderContainer,
+                    bottomSection,
+                    topSection,
+                    expandContainer,
+                )
+            }
         }
 
         for (viewBinder in viewBinders) {
@@ -239,6 +264,70 @@ constructor(
                 }
             }
             .launchInTraced("VDVB#visibilityModel", this)
+    }
+
+    private fun updateVerticalSliderMargins(
+        root: View,
+        mainSliderContainer: View?,
+        bottomSection: ViewGroup?,
+        topSection: View?,
+        expandContainer: View?,
+    ) {
+        val slider = mainSliderContainer ?: return
+        val params = slider.layoutParams as? ConstraintLayout.LayoutParams ?: return
+        val resources = root.resources
+        val isLandscape =
+            resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+        val verticalMargin =
+            if (isLandscape) {
+                resources.getDimensionPixelSize(
+                    R.dimen.volume_dialog_slider_vertical_landscape_top_margin
+                )
+            } else {
+                getSliderVerticalMargin()
+            }
+
+        val bottomButtonsHeight =
+            bottomSection
+                ?.children
+                ?.filter { it.isVisible }
+                ?.sumOf { child ->
+                    child.height.takeIf { it > 0 }
+                        ?: resources.getDimensionPixelSize(R.dimen.volume_dialog_button_size)
+                } ?: 0
+        var bottomReserve =
+            bottomButtonsHeight +
+                resources.getDimensionPixelSize(R.dimen.volume_dialog_components_spacing)
+        if (topSection?.isVisible == true) {
+            bottomReserve +=
+                (topSection.height.takeIf { it > 0 }
+                    ?: resources.getDimensionPixelSize(R.dimen.volume_dialog_ringer_container_height)) +
+                    resources.getDimensionPixelSize(R.dimen.volume_dialog_pill_spacing)
+        }
+        if (expandContainer?.isVisible == true) {
+            bottomReserve +=
+                (expandContainer.height.takeIf { it > 0 }
+                    ?: resources.getDimensionPixelSize(R.dimen.volume_dialog_button_size) +
+                        2 * resources.getDimensionPixelSize(R.dimen.volume_dialog_background_margin)) +
+                    resources.getDimensionPixelSize(R.dimen.volume_dialog_pill_spacing)
+        }
+        // In portrait the slider sits above the bottom controls. Include their height in the
+        // bottom constraint so the complete dialog, rather than just the slider, is centered.
+        // Constraints are measured inside the root's inset padding. Do not subtract the bottom
+        // inset here, or the controls extend back into the navigation bar background.
+        val bottomMargin =
+            if (isLandscape) {
+                bottomReserve +
+                    resources.getDimensionPixelSize(R.dimen.volume_dialog_background_margin)
+            } else {
+                getSliderVerticalMargin() + bottomReserve
+            }
+        val topMargin = verticalMargin - root.paddingTop
+        if (params.topMargin != topMargin || params.bottomMargin != bottomMargin) {
+            params.topMargin = topMargin
+            params.bottomMargin = bottomMargin
+            slider.layoutParams = params
+        }
     }
 
     /**

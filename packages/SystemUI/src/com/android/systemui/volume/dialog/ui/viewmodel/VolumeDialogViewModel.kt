@@ -21,6 +21,7 @@ import android.content.res.Configuration
 import android.graphics.Rect
 import android.graphics.Region
 import android.view.View
+import android.view.ViewGroup
 import android.view.ViewTreeObserver.InternalInsetsInfo
 import com.android.systemui.res.R
 import com.android.systemui.statusbar.policy.ConfigurationController
@@ -99,6 +100,16 @@ constructor(
 
             child.getBoundsInWindow(boundsRect, false)
             internalInsetsInfo.touchableRegion.op(boundsRect, Region.Op.UNION)
+
+            if (child is ViewGroup) {
+                for (index in 0 until child.childCount) {
+                    val descendant = child.getChildAt(index)
+                    if (descendant.visibility == View.VISIBLE) {
+                        descendant.getBoundsInWindow(boundsRect, false)
+                        internalInsetsInfo.touchableRegion.op(boundsRect, Region.Op.UNION)
+                    }
+                }
+            }
         }
     }
 

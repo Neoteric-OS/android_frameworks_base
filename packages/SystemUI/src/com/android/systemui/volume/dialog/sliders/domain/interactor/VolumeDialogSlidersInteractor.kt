@@ -30,7 +30,11 @@ import com.android.systemui.volume.dialog.sliders.domain.model.VolumeDialogSlide
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
@@ -38,6 +42,13 @@ import kotlinx.coroutines.flow.runningReduce
 import kotlinx.coroutines.flow.stateIn
 
 private const val DEFAULT_STREAM = AudioManager.STREAM_MUSIC
+private val EXPANDABLE_STREAMS =
+    listOf(
+        AudioManager.STREAM_MUSIC,
+        AudioManager.STREAM_RING,
+        AudioManager.STREAM_NOTIFICATION,
+        AudioManager.STREAM_ALARM,
+    )
 
 /** Provides a state for the Sliders section of the Volume Dialog. */
 @VolumeDialogScope
@@ -50,19 +61,41 @@ constructor(
 ) {
 
     private val streamsSorter = StreamsSorter()
+    private val mutableIsExpanded = MutableStateFlow(false)
+    // Sliders shown before the first expansion; other expandable ones only show while expanded
+    private var collapsedSliders: Set<VolumeDialogSliderType>? = null
+    val isExpanded: StateFlow<Boolean> = mutableIsExpanded.asStateFlow()
+    val expandableSliders: List<VolumeDialogSliderType> =
+        EXPANDABLE_STREAMS.map { VolumeDialogSliderType.Stream(it) }
+
     val sliders: Flow<VolumeDialogSlidersModel> =
-        volumeDialogStateInteractor.volumeDialogState
-            .filter { it.streamModels.isNotEmpty() }
-            .map { stateModel ->
-                val sliderTypes =
-                    stateModel.streamModels.values
-                        .filter { streamModel -> shouldShowSliders(stateModel, streamModel) }
-                        .sortedWith(streamsSorter)
-                        .map { model -> model.toType() }
-                LinkedHashSet(sliderTypes)
-            }
-            .runningReduce { sliderTypes, newSliderTypes ->
-                sliderTypes.apply { addAll(newSliderTypes) }
+        combine(
+                volumeDialogStateInteractor.volumeDialogState
+                    .filter { it.streamModels.isNotEmpty() }
+                    .map { stateModel ->
+                        val sliderTypes =
+                            stateModel.streamModels.values
+                                .filter { streamModel ->
+                                    shouldShowSliders(stateModel, streamModel)
+                                }
+                                .sortedWith(streamsSorter)
+                                .map { model -> model.toType() }
+                        LinkedHashSet(sliderTypes)
+                    }
+                    .runningReduce { sliderTypes, newSliderTypes ->
+                        sliderTypes.apply { addAll(newSliderTypes) }
+                    },
+                volumeDialogStateInteractor.volumeDialogState,
+                mutableIsExpanded,
+            ) { sliderTypes, stateModel, isExpanded ->
+                if (isExpanded && collapsedSliders == null) collapsedSliders = sliderTypes.toSet()
+                val pinned = collapsedSliders ?: return@combine sliderTypes.toList()
+                val visible = sliderTypes.filter { it in pinned || it !in expandableSliders }
+                if (!isExpanded) return@combine visible
+                visible +
+                    expandableSliders.filter {
+                        it.audioStream in stateModel.streamModels && it !in visible
+                    }
             }
             .map { sliderTypes ->
                 val primarySlider = sliderTypes.firstOrNull()
@@ -74,6 +107,10 @@ constructor(
             }
             .stateIn(coroutineScope, SharingStarted.Eagerly, null)
             .filterNotNull()
+
+    fun setExpanded(isExpanded: Boolean) {
+        mutableIsExpanded.value = isExpanded
+    }
 
     private fun shouldShowSliders(
         stateModel: VolumeDialogStateModel,

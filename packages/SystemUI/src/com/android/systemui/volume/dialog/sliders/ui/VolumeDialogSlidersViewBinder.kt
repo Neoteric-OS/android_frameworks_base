@@ -23,11 +23,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import androidx.core.view.doOnPreDraw
 import androidx.compose.ui.util.fastForEachIndexed
+import com.android.app.animation.Interpolators
 import com.android.app.tracing.coroutines.launchInTraced
 import com.android.app.tracing.coroutines.launchTraced
 import com.android.internal.graphics.drawable.BackgroundBlurDrawable
 import com.android.systemui.res.R
+import com.android.systemui.statusbar.phone.ExpandableIndicator
 import com.android.systemui.util.children
 import com.android.systemui.volume.dialog.dagger.scope.VolumeDialogScope
 import com.android.systemui.volume.dialog.sliders.dagger.VolumeDialogSliderComponent
@@ -37,7 +40,12 @@ import com.android.systemui.volume.dialog.ui.viewmodel.VolumeDialogViewModel
 import com.android.systemui.window.domain.interactor.WindowRootViewBlurInteractor
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
+
+private const val EXPAND_DURATION_MS = 400L
+private const val COLLAPSE_DURATION_MS = 250L
 
 @VolumeDialogScope
 class VolumeDialogSlidersViewBinder
@@ -57,17 +65,41 @@ constructor(
         val background: View = view.requireViewById(R.id.volume_dialog_background)
         val bottomSection: View = view.requireViewById(R.id.volume_dialog_bottom_section_container)
         val topSection: View = view.requireViewById(R.id.volume_dialog_top_section_container)
+        val expandContainer: View? = view.findViewById(R.id.volume_dialog_expand_container)
 
         launchTraced("VDSVB#addTouchableBounds") {
             dialogViewModel.addTouchableBounds(mainSliderContainer, floatingSlidersContainer)
         }
 
+        view.findViewById<ExpandableIndicator>(R.id.volume_dialog_expand)?.let { button ->
+            if (button.layoutDirection == View.LAYOUT_DIRECTION_RTL) button.rotation = -90f
+            launchTraced("VDSVB#addExpandTouchableBounds") {
+                dialogViewModel.addTouchableBounds(button)
+            }
+            val expandView = expandContainer ?: button
+            viewModel.isExpandButtonVisible
+                .onEach { expandView.visibility = if (it) View.VISIBLE else View.GONE }
+                .launchInTraced("VDSVB#isExpandButtonVisible", this)
+            viewModel.isExpanded
+                .onEach { button.setExpanded(it) }
+                .launchInTraced("VDSVB#isExpanded", this)
+            button.setOnClickListener { viewModel.onExpandButtonClicked() }
+        }
+
+        var animateFloatingSliders = false
         viewModel.sliders
             .onEach { uiModel ->
                 bindSlider(
                     uiModel.sliderComponent,
                     mainSliderContainer,
-                    arrayOf(mainSliderContainer, background, bottomSection, topSection),
+                    listOfNotNull(
+                            mainSliderContainer,
+                            background,
+                            bottomSection,
+                            topSection,
+                            expandContainer,
+                        )
+                        .toTypedArray(),
                 )
 
                 val floatingSliderViewBinders = uiModel.floatingSliderComponent
@@ -77,10 +109,19 @@ constructor(
                     } else {
                         R.layout.volume_dialog_slider_floating_horizontal
                     }
-                floatingSlidersContainer.ensureChildCount(
-                    viewLayoutId = floatingSliderViewLayoutId,
-                    count = floatingSliderViewBinders.size,
-                )
+                if (animateFloatingSliders) {
+                    floatingSlidersContainer.animateChildCount(
+                        viewLayoutId = floatingSliderViewLayoutId,
+                        count = floatingSliderViewBinders.size,
+                        anchor = mainSliderContainer,
+                    )
+                } else {
+                    floatingSlidersContainer.ensureChildCount(
+                        viewLayoutId = floatingSliderViewLayoutId,
+                        count = floatingSliderViewBinders.size,
+                    )
+                    animateFloatingSliders = true
+                }
                 floatingSliderViewBinders.fastForEachIndexed { index, sliderComponent ->
                     val sliderContainer = floatingSlidersContainer.getChildAt(index)
                     if (viewModel.showBlur) {
@@ -140,13 +181,110 @@ constructor(
         )
     }
 
+    private val boundSliders = mutableMapOf<View, Pair<VolumeDialogSliderComponent, Job>>()
+
     private fun CoroutineScope.bindSlider(
         component: VolumeDialogSliderComponent,
         sliderContainer: View,
         viewsToAnimate: Array<View>,
     ) {
+        val bound = boundSliders[sliderContainer]
+        if (bound?.first === component) return
+        bound?.second?.cancel()
         with(component.sliderViewBinder()) { bind(sliderContainer) }
-        with(component.overscrollViewBinder()) { bind(sliderContainer, viewsToAnimate) }
+        boundSliders[sliderContainer] =
+            component to
+                launch {
+                    with(component.overscrollViewBinder()) { bind(sliderContainer, viewsToAnimate) }
+                }
+    }
+}
+
+/**
+ * Like [ensureChildCount], but slides added children out from behind [anchor], slides removed
+ * children back behind it and moves the remaining ones to their new positions.
+ */
+private fun ViewGroup.animateChildCount(@LayoutRes viewLayoutId: Int, count: Int, anchor: View) {
+    if (childCount == count) return
+    // Positions are relative to the anchor since the window resizes around it
+    val oldPositions =
+        children.associateWith { child ->
+            child.animate().cancel()
+            left + child.left + child.translationX - anchor.left
+        }
+    val removed = if (childCount > count) children.drop(count).toList() else emptyList()
+    val isCollapsing = removed.isNotEmpty()
+    // Hold the width until every slider settled so the shrinking window doesn't clip them
+    minimumWidth = if (isCollapsing) width else 0
+    removed.forEach { child ->
+        startViewTransition(child)
+        removeView(child)
+    }
+    ensureChildCount(viewLayoutId, count)
+
+    doOnPreDraw {
+        val anchorCenter = anchor.width / 2f
+        val entering = mutableListOf<View>()
+        for (child in children) {
+            val newPosition = left + child.left - anchor.left
+            val oldPosition = oldPositions[child]
+            if (oldPosition == null) {
+                child.translationX = anchorCenter - (newPosition + child.width / 2f)
+                child.alpha = 0f
+                entering += child
+            } else {
+                child.translationX = oldPosition - newPosition
+            }
+        }
+        removed.forEach { child ->
+            child.translationX =
+                oldPositions.getValue(child) - (left + child.left - anchor.left)
+        }
+
+        var runningAnimations = 0
+        val onAnimationEnd: () -> Unit = {
+            if (--runningAnimations == 0 && isCollapsing) minimumWidth = 0
+        }
+        val duration = if (isCollapsing) COLLAPSE_DURATION_MS else EXPAND_DURATION_MS
+        val startAnimations: () -> Unit = {
+            for (child in children) {
+                runningAnimations++
+                child
+                    .animate()
+                    .translationX(0f)
+                    .alpha(1f)
+                    .setDuration(duration)
+                    .setInterpolator(
+                        if (child in entering) {
+                            Interpolators.EMPHASIZED_DECELERATE
+                        } else {
+                            Interpolators.EMPHASIZED
+                        }
+                    )
+                    .withEndAction { onAnimationEnd() }
+                    .start()
+            }
+            removed.forEach { child ->
+                runningAnimations++
+                val position = left + child.left - anchor.left
+                child
+                    .animate()
+                    .translationX(anchorCenter - (position + child.width / 2f))
+                    .alpha(0f)
+                    .setDuration(duration)
+                    // Same curve as the remaining sliders so they keep their order and spacing
+                    .setInterpolator(Interpolators.EMPHASIZED)
+                    // Removed children don't invalidate their old parent on their own
+                    .setUpdateListener { invalidate() }
+                    .withEndAction {
+                        endViewTransition(child)
+                        onAnimationEnd()
+                    }
+                    .start()
+            }
+        }
+        // New sliders compose their icons a frame after their first layout, start once they did
+        if (entering.isEmpty()) startAnimations() else postOnAnimation { startAnimations() }
     }
 }
 

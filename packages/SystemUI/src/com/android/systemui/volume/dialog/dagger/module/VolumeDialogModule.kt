@@ -21,7 +21,6 @@ import com.android.systemui.volume.dialog.dagger.scope.VolumeDialog
 import com.android.systemui.volume.dialog.ringer.data.repository.VolumeDialogRingerFeedbackRepository
 import com.android.systemui.volume.dialog.ringer.data.repository.VolumeDialogRingerFeedbackRepositoryImpl
 import com.android.systemui.volume.dialog.ringer.ui.binder.VolumeDialogRingerViewBinder
-import com.android.systemui.volume.dialog.settings.ui.binder.VolumeDialogSettingsButtonViewBinder
 import com.android.systemui.volume.dialog.sliders.dagger.VolumeDialogSliderComponent
 import com.android.systemui.volume.dialog.sliders.ui.VolumeDialogSlidersViewBinder
 import com.android.systemui.volume.dialog.ui.binder.ViewBinder
@@ -45,13 +44,11 @@ interface VolumeDialogModule {
         fun provideViewBinders(
             slidersViewBinder: VolumeDialogSlidersViewBinder,
             ringerViewBinder: VolumeDialogRingerViewBinder,
-            settingsButtonViewBinder: VolumeDialogSettingsButtonViewBinder,
             captionsButtonViewBinder: VolumeDialogCaptionsButtonViewBinder,
         ): List<ViewBinder> =
             listOf(
                 slidersViewBinder,
                 ringerViewBinder,
-                settingsButtonViewBinder,
                 captionsButtonViewBinder,
             )
     }

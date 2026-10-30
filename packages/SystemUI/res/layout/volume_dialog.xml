@@ -24,33 +24,35 @@
     android:clipChildren="false"
     android:minWidth="@dimen/volume_dialog_window_width">
 
+    <!-- Drawn below the main slider so expanded sliders slide out from behind it -->
+    <LinearLayout
+        android:id="@+id/volume_dialog_floating_sliders_container"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/volume_dialog_floating_sliders_vertical_padding_negative"
+        android:layout_marginBottom="@dimen/volume_dialog_floating_sliders_vertical_padding_negative"
+        android:clipChildren="false"
+        android:clipToOutline="false"
+        android:clipToPadding="false"
+        android:divider="@drawable/volume_dialog_floating_sliders_spacer"
+        android:gravity="bottom|end"
+        android:orientation="horizontal"
+        android:showDividers="middle|beginning|end"
+        app:layout_constraintBottom_toBottomOf="@id/volume_dialog_main_slider_container"
+        app:layout_constraintEnd_toStartOf="@id/volume_dialog_background"
+        app:layout_constraintTop_toTopOf="@id/volume_dialog_main_slider_container"/>
+
     <View
         android:id="@+id/volume_dialog_background"
         android:layout_width="@dimen/volume_dialog_width"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/volume_dialog_background_top_margin"
+        android:layout_marginTop="@dimen/volume_dialog_window_margin_negative"
         android:layout_marginBottom="@dimen/volume_dialog_background_margin_negative"
         android:background="@drawable/volume_dialog_background"
         app:layout_constraintBottom_toBottomOf="@id/volume_dialog_bottom_section_container"
         app:layout_constraintEnd_toEndOf="@id/volume_dialog_main_slider_container"
         app:layout_constraintStart_toStartOf="@id/volume_dialog_main_slider_container"
         app:layout_constraintTop_toTopOf="@id/volume_dialog_main_slider_container"/>
-
-    <FrameLayout
-        android:id="@+id/volume_dialog_top_section_container"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="@dimen/volume_dialog_components_spacing"
-        android:clipChildren="false"
-        app:layout_constraintBottom_toTopOf="@id/volume_dialog_main_slider_container"
-        app:layout_constraintEnd_toEndOf="@id/volume_dialog_background"
-        app:layout_constraintHeight_default="spread"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_default="spread">
-
-        <include layout="@layout/volume_dialog_top_section"/>
-    </FrameLayout>
 
     <include
         android:id="@+id/volume_dialog_main_slider_container"
@@ -76,32 +78,52 @@
         android:layout_marginTop="@dimen/volume_dialog_components_spacing"
         android:clipChildren="false"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/volume_dialog_background"
-        app:layout_constraintHeight_default="wrap"
         app:layout_constraintStart_toStartOf="@id/volume_dialog_background"
         app:layout_constraintTop_toBottomOf="@id/volume_dialog_main_slider_container"
-        app:layout_constraintVertical_bias="0"
-        app:layout_constraintWidth_default="wrap">
+        app:layout_constraintWidth_default="wrap"
+        app:layout_constraintVertical_chainStyle="packed">
 
         <include layout="@layout/volume_dialog_bottom_section"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/volume_dialog_floating_sliders_container"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/volume_dialog_floating_sliders_vertical_padding_negative"
-        android:layout_marginBottom="@dimen/volume_dialog_floating_sliders_vertical_padding_negative"
+    <FrameLayout
+        android:id="@+id/volume_dialog_top_section_container"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/volume_dialog_ringer_container_height"
+        android:layout_marginTop="@dimen/volume_dialog_pill_spacing"
         android:clipChildren="false"
-        android:clipToOutline="false"
-        android:clipToPadding="false"
-        android:divider="@drawable/volume_dialog_floating_sliders_spacer"
-        android:gravity="bottom"
-        android:orientation="horizontal"
-        android:showDividers="middle|beginning|end"
-        app:layout_constraintBottom_toBottomOf="@id/volume_dialog_main_slider_container"
-        app:layout_constraintEnd_toStartOf="@id/volume_dialog_background"
-        app:layout_constraintTop_toTopOf="@id/volume_dialog_main_slider_container"/>
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/volume_dialog_bottom_section_container"
+        app:layout_constraintStart_toStartOf="@id/volume_dialog_background"
+        app:layout_constraintEnd_toEndOf="@id/volume_dialog_background">
 
+        <include layout="@layout/volume_dialog_top_section"/>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/volume_dialog_expand_container"
+        android:layout_width="@dimen/volume_dialog_width"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/volume_dialog_pill_spacing"
+        android:background="@drawable/volume_dialog_background"
+        android:padding="@dimen/volume_dialog_background_margin"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/volume_dialog_top_section_container"
+        app:layout_constraintStart_toStartOf="@id/volume_dialog_background"
+        app:layout_constraintEnd_toEndOf="@id/volume_dialog_background">
+
+    <com.android.systemui.statusbar.phone.ExpandableIndicator
+        android:id="@+id/volume_dialog_expand"
+        android:layout_width="@dimen/volume_dialog_button_size"
+        android:layout_height="@dimen/volume_dialog_button_size"
+        android:layout_gravity="center"
+        android:background="@drawable/ripple_drawable_20dp"
+        android:scaleType="centerInside"
+        android:soundEffectsEnabled="false"
+        android:padding="12dp"
+        android:rotation="90"
+        android:tint="@color/materialColorPrimary"/>
+    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

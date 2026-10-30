@@ -121,9 +121,13 @@ constructor(
      */
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (isShowing) {
-            if (event.action == MotionEvent.ACTION_OUTSIDE) {
-                visibilityInteractor.dismissDialog(Events.DISMISS_REASON_TOUCH_OUTSIDE)
-                return true
+            when (event.action) {
+                // Touches inside won't trigger onTouchEvent
+                MotionEvent.ACTION_OUTSIDE,
+                MotionEvent.ACTION_DOWN -> {
+                    visibilityInteractor.dismissDialog(Events.DISMISS_REASON_TOUCH_OUTSIDE)
+                    return false
+                }
             }
         }
         return false

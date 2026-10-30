@@ -35,7 +35,7 @@ data class RingerButtonUiModel(
                 backgroundColor = context.getColor(
                     internalR.color.materialColorSurfaceContainerHighest),
                 cornerRadius = context.resources.getDimensionPixelSize(
-                    R.dimen.volume_dialog_background_square_corner_radius),
+                    R.dimen.volume_dialog_button_size) / 2,
             )
         }
 
@@ -44,7 +44,7 @@ data class RingerButtonUiModel(
                 tintColor = context.getColor(internalR.color.materialColorOnPrimary),
                 backgroundColor = context.getColor(internalR.color.materialColorPrimary),
                 cornerRadius = context.resources.getDimensionPixelSize(
-                    R.dimen.volume_dialog_ringer_selected_button_background_radius),
+                    R.dimen.volume_dialog_button_size) / 2,
             )
         }
     }

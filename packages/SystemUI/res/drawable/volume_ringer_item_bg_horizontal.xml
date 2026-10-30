@@ -16,7 +16,7 @@
 <inset xmlns:android="http://schemas.android.com/apk/res/android"
     android:inset="8dp">
     <shape android:shape="rectangle">
-        <corners android:radius="@dimen/volume_dialog_background_square_corner_radius" />
+        <corners android:radius="@dimen/volume_dialog_ringer_selected_button_background_radius" />
         <solid android:color="@color/materialColorSurfaceContainerHighest" />
     </shape>
 </inset>

@@ -15,7 +15,7 @@
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@drawable/volume_dialog_floating_slider_background"
     android:paddingHorizontal="@dimen/volume_dialog_floating_sliders_horizontal_padding"
     android:paddingVertical="@dimen/volume_dialog_floating_sliders_vertical_padding">
