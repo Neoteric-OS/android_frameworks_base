@@ -33,12 +33,15 @@ import com.android.internal.org.bouncycastle.cert.X509v3CertificateBuilder;
 import com.android.internal.org.bouncycastle.operator.ContentSigner;
 import com.android.internal.org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
 
+import com.android.internal.util.PropImitationHooks;
+
 import java.security.PrivateKey;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @hide
@@ -205,12 +208,54 @@ public class KeyboxImitationHooks {
         return major * 10000 + minor * 100 + patch;
     }
 
+    private static boolean isPlayIntegrityCall() {
+        String packageName = ActivityThread.currentPackageName();
+        String processName = ActivityThread.currentProcessName();
+
+        if (packageName == null) {
+            Context context = ActivityThread.currentApplication();
+            if (context != null) {
+                packageName = context.getPackageName();
+            }
+        }
+
+        if ("com.google.android.gms".equals(packageName)
+                || "com.google.android.gms.unstable".equals(packageName)
+                || "com.android.vending".equals(packageName)
+                || (processName != null && (processName.startsWith("com.google.android.gms")
+                        || processName.startsWith("com.android.vending")))) {
+            return true;
+        }
+
+        try {
+            for (StackTraceElement elem : Thread.currentThread().getStackTrace()) {
+                if (elem.getClassName().toLowerCase(Locale.ROOT).contains("droidguard")) {
+                    return true;
+                }
+            }
+        } catch (Throwable ignored) {}
+
+        return false;
+    }
+
     private static int getPatchLevel() {
-        return convertPatchLevel(Build.VERSION.SECURITY_PATCH, false);
+        if (isPlayIntegrityCall()) {
+            String patchLevel = PropImitationHooks.getCertifiedSecurityPatch();
+            return convertPatchLevel(patchLevel != null ? patchLevel : Build.VERSION.SECURITY_PATCH,
+                    false);
+        } else {
+            return convertPatchLevel(Build.VERSION.SECURITY_PATCH, false);
+        }
     }
 
     private static int getPatchLevelLong() {
-        return convertPatchLevel(Build.VERSION.SECURITY_PATCH, true);
+        if (isPlayIntegrityCall()) {
+            String patchLevel = PropImitationHooks.getCertifiedSecurityPatch();
+            return convertPatchLevel(patchLevel != null ? patchLevel : Build.VERSION.SECURITY_PATCH,
+                    true);
+        } else {
+            return convertPatchLevel(Build.VERSION.SECURITY_PATCH, true);
+        }
     }
 
     private static int convertPatchLevel(String patchLevel, boolean longFormat) {
@@ -226,7 +271,7 @@ public class KeyboxImitationHooks {
             }
         } catch (Exception e) {
             Log.e(TAG, "Invalid patch level: " + patchLevel, e);
-            return 202404;
+            return 202610;
         }
     }
 

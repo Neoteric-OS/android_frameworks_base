@@ -406,6 +406,10 @@ public class PropImitationHooks {
         }
     }
 
+    public static String getCertifiedSecurityPatch() {
+        return sCertifiedProps.get("VERSION.SECURITY_PATCH");
+    }
+
     private static void spoofNativeProperties(Map<String, String> certifiedProps) {
         Map<String, String> sysProps = new HashMap<>();
 
