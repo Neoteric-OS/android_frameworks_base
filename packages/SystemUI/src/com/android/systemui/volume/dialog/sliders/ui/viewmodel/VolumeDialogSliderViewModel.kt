@@ -17,6 +17,10 @@
 package com.android.systemui.volume.dialog.sliders.ui.viewmodel
 
 import android.content.Context
+import android.app.ActivityManager
+import android.content.pm.PackageManager
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.PointerEvent
 import androidx.compose.ui.input.pointer.PointerEventType
@@ -32,8 +36,11 @@ import com.android.systemui.volume.dialog.sliders.dagger.VolumeDialogSliderScope
 import com.android.systemui.volume.dialog.sliders.domain.interactor.VolumeDialogSliderInputEventsInteractor
 import com.android.systemui.volume.dialog.sliders.domain.interactor.VolumeDialogSliderInteractor
 import com.android.systemui.volume.dialog.sliders.domain.model.VolumeDialogSliderType
+import com.android.systemui.volume.panel.component.appvolume.domain.interactor.AppVolumeInteractor
 import com.android.systemui.volume.dialog.sliders.shared.model.SliderInputEvent
 import com.android.systemui.volume.dialog.ui.VolumeDialogUiEvent
+import com.android.systemui.common.shared.model.Icon
+import com.android.systemui.common.shared.model.ContentDescription
 import javax.inject.Inject
 import kotlin.math.roundToInt
 import kotlinx.coroutines.CoroutineScope
@@ -47,6 +54,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 
@@ -76,12 +84,14 @@ constructor(
     private val systemClock: SystemClock,
     private val logger: VolumeDialogLogger,
     private val uiEventLogger: UiEventLogger,
+    private val appVolumeInteractor: AppVolumeInteractor,
+    private val packageManager: PackageManager,
 ) {
 
     private val userVolumeUpdates = MutableStateFlow<VolumeUpdate?>(null)
     private val model: Flow<VolumeDialogStreamModel> = interactor.slider
 
-    val state: StateFlow<VolumeDialogSliderStateModel?> =
+    private val streamState: StateFlow<VolumeDialogSliderStateModel?> by lazy {
         combine(
                 interactor.isDisabledByZenMode,
                 model,
@@ -104,6 +114,15 @@ constructor(
                             is VolumeDialogSliderType.AudioSharingStream -> {
                                 volumeDialogSliderIconProvider.getAudioSharingIcon(isMuted)
                             }
+                            is VolumeDialogSliderType.App ->
+                                volumeDialogSliderIconProvider.getStreamIcon(
+                                    stream = sliderType.audioStream,
+                                    level = level,
+                                    levelMin = levelMin,
+                                    levelMax = levelMax,
+                                    isMuted = isMuted,
+                                    isRoutedToBluetooth = routedToBluetooth,
+                                )
                         }
                     }
                 },
@@ -136,6 +155,67 @@ constructor(
                 )
             }
             .stateIn(coroutineScope, SharingStarted.Eagerly, null)
+    }
+
+    private val appInfo =
+        (sliderType as? VolumeDialogSliderType.App)?.let { type ->
+            runCatching {
+                packageManager.getApplicationInfoAsUser(
+                    type.packageName,
+                    0,
+                    ActivityManager.getCurrentUser(),
+                )
+            }.getOrNull() ?: runCatching { packageManager.getApplicationInfo(type.packageName, 0) }
+                .getOrNull()
+        }
+    private val appLabel =
+        appInfo?.let { packageManager.getApplicationLabel(it).toString() }
+            ?: (sliderType as? VolumeDialogSliderType.App)?.packageName.orEmpty()
+    private val appIcon =
+        appInfo?.let { runCatching { packageManager.getApplicationIcon(it) }.getOrNull() }
+            ?: runCatching {
+                    packageManager.getApplicationIcon(
+                        (sliderType as? VolumeDialogSliderType.App)?.packageName.orEmpty()
+                    )
+                }
+                .getOrNull()
+            ?: context.getDrawable(com.android.systemui.res.R.drawable.ic_app_volume)!!
+
+    val state: StateFlow<VolumeDialogSliderStateModel?> =
+        if (sliderType is VolumeDialogSliderType.App) {
+            appVolumeInteractor.activeAppVolumes
+                .mapNotNull { volumes ->
+                    volumes.firstOrNull { it.packageName == sliderType.packageName }
+                }
+                .distinctUntilChanged { old, new ->
+                    old.volume == new.volume && old.isMuted == new.isMuted
+                }
+                .map { app ->
+                    val drawable =
+                        appIcon.constantState?.newDrawable()?.mutate() ?: appIcon.mutate()
+                    if (app.isMuted || app.volume == 0f) {
+                        drawable.colorFilter =
+                            ColorMatrixColorFilter(ColorMatrix().apply { setSaturation(0f) })
+                    } else {
+                        drawable.clearColorFilter()
+                    }
+                    VolumeDialogSliderStateModel(
+                        value = app.volume * 100f,
+                        isDisabled = false,
+                        valueRange = 0f..100f,
+                        icon =
+                            Icon.Loaded(
+                                drawable = drawable,
+                                contentDescription = ContentDescription.Loaded(appLabel),
+                            ),
+                        label = appLabel,
+                        isAppVolume = true,
+                    )
+                }
+                .stateIn(coroutineScope, SharingStarted.Eagerly, null)
+        } else {
+            streamState
+        }
 
     init {
         userVolumeUpdates
@@ -151,8 +231,15 @@ constructor(
     fun setStreamVolume(volume: Float, fromUser: Boolean) {
         if (fromUser) {
             visibilityInteractor.resetDismissTimeout()
-            userVolumeUpdates.value =
-                VolumeUpdate(volume = volume, timestampMillis = getTimestampMillis())
+            if (sliderType is VolumeDialogSliderType.App) {
+                appVolumeInteractor.setAppVolume(
+                    sliderType.packageName,
+                    (volume / 100f).coerceIn(0f, 1f),
+                )
+            } else {
+                userVolumeUpdates.value =
+                    VolumeUpdate(volume = volume, timestampMillis = getTimestampMillis())
+            }
         }
     }
 

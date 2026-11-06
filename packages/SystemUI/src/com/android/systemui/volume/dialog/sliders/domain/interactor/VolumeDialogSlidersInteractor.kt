@@ -25,6 +25,7 @@ import com.android.systemui.volume.dialog.dagger.scope.VolumeDialogScope
 import com.android.systemui.volume.dialog.domain.interactor.VolumeDialogStateInteractor
 import com.android.systemui.volume.dialog.shared.model.VolumeDialogStateModel
 import com.android.systemui.volume.dialog.shared.model.VolumeDialogStreamModel
+import com.android.systemui.volume.panel.component.appvolume.domain.interactor.AppVolumeInteractor
 import com.android.systemui.volume.dialog.sliders.domain.model.VolumeDialogSliderType
 import com.android.systemui.volume.dialog.sliders.domain.model.VolumeDialogSlidersModel
 import javax.inject.Inject
@@ -38,8 +39,10 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.runningReduce
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.launchIn
 
 private const val DEFAULT_STREAM = AudioManager.STREAM_MUSIC
 private val EXPANDABLE_STREAMS =
@@ -57,11 +60,13 @@ class VolumeDialogSlidersInteractor
 constructor(
     volumeDialogStateInteractor: VolumeDialogStateInteractor,
     private val packageManager: PackageManager,
+    private val appVolumeInteractor: AppVolumeInteractor,
     @VolumeDialog private val coroutineScope: CoroutineScope,
 ) {
 
     private val streamsSorter = StreamsSorter()
     private val mutableIsExpanded = MutableStateFlow(false)
+    private val mutableIsAppVolumeOnly = MutableStateFlow(false)
     // Sliders shown before the first expansion; other expandable ones only show while expanded
     private var collapsedSliders: Set<VolumeDialogSliderType>? = null
     val isExpanded: StateFlow<Boolean> = mutableIsExpanded.asStateFlow()
@@ -87,7 +92,15 @@ constructor(
                     },
                 volumeDialogStateInteractor.volumeDialogState,
                 mutableIsExpanded,
-            ) { sliderTypes, stateModel, isExpanded ->
+                mutableIsAppVolumeOnly,
+                appVolumeInteractor.activeAppVolumes,
+            ) { sliderTypes, stateModel, isExpanded, isAppVolumeOnly, appVolumes ->
+                if (isAppVolumeOnly) {
+                    val appSliders = appVolumes.map { VolumeDialogSliderType.App(it.packageName) }
+                    if (appSliders.isNotEmpty()) {
+                        return@combine listOfNotNull(sliderTypes.firstOrNull()) + appSliders
+                    }
+                }
                 if (isExpanded && collapsedSliders == null) collapsedSliders = sliderTypes.toSet()
                 val pinned = collapsedSliders ?: return@combine sliderTypes.toList()
                 val visible = sliderTypes.filter { it in pinned || it !in expandableSliders }
@@ -108,8 +121,21 @@ constructor(
             .stateIn(coroutineScope, SharingStarted.Eagerly, null)
             .filterNotNull()
 
+    init {
+        appVolumeInteractor.activeAppVolumes
+            .onEach { if (it.isEmpty()) mutableIsAppVolumeOnly.value = false }
+            .launchIn(coroutineScope)
+    }
+
     fun setExpanded(isExpanded: Boolean) {
         mutableIsExpanded.value = isExpanded
+    }
+
+    val isAppVolumeOnly: StateFlow<Boolean> = mutableIsAppVolumeOnly.asStateFlow()
+
+    fun toggleAppVolumeOnly() {
+        mutableIsAppVolumeOnly.value = !mutableIsAppVolumeOnly.value
+        if (mutableIsAppVolumeOnly.value) mutableIsExpanded.value = false
     }
 
     private fun shouldShowSliders(

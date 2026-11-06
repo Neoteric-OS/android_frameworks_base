@@ -17,7 +17,9 @@
 package com.android.systemui.volume.dialog.sliders.ui
 
 import android.view.View
+import androidx.core.graphics.drawable.toBitmap
 import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.interaction.DragInteraction
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -30,9 +32,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
@@ -174,11 +178,38 @@ private fun VolumeDialogSlider(
                 trackSize = dimensions.trackSize,
                 trackCornerSize = dimensions.trackCornerSize,
                 icon = {
-                    Icon(
-                        icon = sliderStateModel.icon,
-                        tint = null,
-                        modifier = Modifier.size(dimensions.iconSize),
-                    )
+                    if (sliderStateModel.isAppVolume) {
+                        val density = LocalDensity.current
+                        val bitmap =
+                            remember(sliderStateModel.icon, dimensions.iconSize) {
+                                runCatching {
+                                    val sizePx = with(density) { dimensions.iconSize.roundToPx() }
+                                    sliderStateModel.icon.drawable
+                                        .toBitmap(width = sizePx, height = sizePx)
+                                        .asImageBitmap()
+                                }
+                                    .getOrNull()
+                            }
+                        if (bitmap != null) {
+                            Image(
+                                bitmap = bitmap,
+                                contentDescription = null,
+                                modifier = Modifier.size(dimensions.iconSize),
+                            )
+                        } else {
+                            Icon(
+                                icon = sliderStateModel.icon,
+                                tint = null,
+                                modifier = Modifier.size(dimensions.iconSize),
+                            )
+                        }
+                    } else {
+                        Icon(
+                            icon = sliderStateModel.icon,
+                            tint = null,
+                            modifier = Modifier.size(dimensions.iconSize),
+                        )
+                    }
                 },
             )
         },

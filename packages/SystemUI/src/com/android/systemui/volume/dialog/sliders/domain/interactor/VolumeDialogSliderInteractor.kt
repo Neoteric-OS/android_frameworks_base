@@ -32,6 +32,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.stateIn
@@ -59,18 +60,22 @@ constructor(
             flowOf(false)
         }
     val slider: Flow<VolumeDialogStreamModel> =
-        volumeDialogStateInteractor.volumeDialogState
-            .mapNotNull {
-                it.streamModels[sliderType.audioStream]?.run {
-                    if (level < levelMin || level > levelMax) {
-                        copy(level = level.coerceIn(levelMin, levelMax))
-                    } else {
-                        this
+        if (sliderType is VolumeDialogSliderType.App) {
+            emptyFlow()
+        } else {
+            volumeDialogStateInteractor.volumeDialogState
+                .mapNotNull {
+                    it.streamModels[sliderType.audioStream]?.run {
+                        if (level < levelMin || level > levelMax) {
+                            copy(level = level.coerceIn(levelMin, levelMax))
+                        } else {
+                            this
+                        }
                     }
                 }
-            }
-            .stateIn(coroutineScope, SharingStarted.Eagerly, null)
-            .filterNotNull()
+                .stateIn(coroutineScope, SharingStarted.Eagerly, null)
+                .filterNotNull()
+        }
 
     suspend fun setStreamVolume(userLevel: Int) {
         withContext(backgroundContext) {

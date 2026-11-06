@@ -30,6 +30,7 @@ import com.android.systemui.volume.panel.shared.model.filterData
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combineTransform
@@ -47,7 +48,7 @@ constructor(
     audioSharingInteractor: AudioSharingInteractor,
 ) {
 
-    val volumePanelSliders: StateFlow<List<SliderType>> =
+    private val defaultSliders: Flow<List<SliderType>> =
         combineTransform(
                 mediaOutputInteractor.activeMediaDeviceSessions,
                 mediaOutputInteractor.defaultActiveMediaSession.filterData(),
@@ -81,7 +82,9 @@ constructor(
                     emit(viewModels)
                 }
             }
-            .stateIn(scope, SharingStarted.Eagerly, emptyList())
+
+    val volumePanelSliders: StateFlow<List<SliderType>> =
+        defaultSliders.stateIn(scope, SharingStarted.Eagerly, emptyList())
 
     private fun MutableList<SliderType>.addSession(remoteMediaDeviceSession: MediaDeviceSession?) {
         if (remoteMediaDeviceSession?.canAdjustVolume == true) {

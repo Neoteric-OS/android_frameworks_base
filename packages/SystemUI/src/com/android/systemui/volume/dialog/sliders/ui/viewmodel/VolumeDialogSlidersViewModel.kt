@@ -83,7 +83,12 @@ constructor(
         sliderComponents.getOrPut(type) { sliderComponentFactory.create(type) }
 
     fun onExpandButtonClicked() {
-        slidersInteractor.setExpanded(!isExpanded.value)
+        if (slidersInteractor.isAppVolumeOnly.value) {
+            slidersInteractor.toggleAppVolumeOnly()
+            slidersInteractor.setExpanded(true)
+        } else {
+            slidersInteractor.setExpanded(!isExpanded.value)
+        }
         visibilityInteractor.resetDismissTimeout()
     }
 

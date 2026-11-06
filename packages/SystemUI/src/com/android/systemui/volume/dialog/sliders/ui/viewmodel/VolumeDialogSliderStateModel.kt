@@ -24,4 +24,5 @@ data class VolumeDialogSliderStateModel(
     val valueRange: ClosedFloatingPointRange<Float>,
     val icon: Icon.Loaded,
     val label: String,
+    val isAppVolume: Boolean = false,
 )

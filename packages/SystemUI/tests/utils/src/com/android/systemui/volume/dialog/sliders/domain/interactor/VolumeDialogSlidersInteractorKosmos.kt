@@ -20,12 +20,14 @@ import android.content.packageManager
 import com.android.systemui.kosmos.Kosmos
 import com.android.systemui.kosmos.applicationCoroutineScope
 import com.android.systemui.volume.dialog.domain.interactor.volumeDialogStateInteractor
+import com.android.systemui.volume.panel.component.appvolume.domain.interactor.appVolumeInteractor
 
 val Kosmos.volumeDialogSlidersInteractor: VolumeDialogSlidersInteractor by
     Kosmos.Fixture {
         VolumeDialogSlidersInteractor(
             volumeDialogStateInteractor,
             packageManager,
+            appVolumeInteractor,
             applicationCoroutineScope,
         )
     }
