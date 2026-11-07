@@ -174,6 +174,12 @@ private fun SharedTransitionScope.StandardToolbarLayout(
                     animatedVisibilityScope = animatedContentScope,
                 ),
         )
+
+        // Text feedback chip / build number
+        ToolbarTextFeedback(
+            viewModelFactory = viewModel.textFeedbackContentViewModelFactory,
+            modifier = Modifier.weight(1f).align(Alignment.CenterVertically),
+        )
     }
 }
 
