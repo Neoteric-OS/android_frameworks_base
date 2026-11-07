@@ -34,7 +34,7 @@
         android:layout_width="@dimen/volume_dialog_button_size"
         android:layout_height="@dimen/volume_dialog_button_size"
         android:layout_gravity="center"
-        android:background="@drawable/volume_ringer_item_bg_horizontal"
+        android:background="@drawable/volume_dialog_settings_bg_horizontal"
         android:contentDescription="@string/volume_panel_app_volume_title"
         android:src="@drawable/ic_app_volume"
         android:scaleType="centerInside"

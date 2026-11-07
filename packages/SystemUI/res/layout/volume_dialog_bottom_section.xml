@@ -32,12 +32,12 @@
         android:layout_width="@dimen/volume_dialog_button_size"
         android:layout_height="@dimen/volume_dialog_button_size"
         android:layout_gravity="center"
-        android:background="@drawable/volume_ringer_item_bg"
+        android:background="@drawable/ripple_drawable_20dp"
         android:contentDescription="@string/volume_panel_app_volume_title"
         android:src="@drawable/ic_app_volume"
         android:scaleType="centerInside"
         android:soundEffectsEnabled="false"
-        android:tint="@color/materialColorOnSurface"
+        android:tint="@color/materialColorPrimary"
         android:visibility="gone" />
 
     <ImageButton
