@@ -24,6 +24,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.Space
 import androidx.core.view.isVisible
+import com.android.settingslib.mobile.TelephonyIcons
 import com.android.settingslib.graph.SignalDrawable
 import com.android.systemui.common.ui.binder.IconViewBinder
 import com.android.systemui.kairos.BuildScope
@@ -39,6 +40,7 @@ import com.android.systemui.res.R
 import com.android.systemui.statusbar.StatusBarIconView
 import com.android.systemui.statusbar.pipeline.mobile.domain.model.SignalIconModel
 import com.android.systemui.statusbar.pipeline.mobile.ui.MobileViewLogger
+import com.android.systemui.statusbar.pipeline.mobile.ui.view.ModernStatusBarMobileView
 import com.android.systemui.statusbar.pipeline.mobile.ui.viewmodel.LocationBasedMobileViewModelKairos
 import com.android.systemui.statusbar.pipeline.shared.ui.binder.ModernStatusBarViewBinding
 import com.android.systemui.statusbar.pipeline.shared.ui.binder.ModernStatusBarViewVisibilityHelper
@@ -260,6 +262,11 @@ object MobileIconBinderKairos {
                     dataTypeId,
                 )
                 dataTypeId?.let { IconViewBinder.bind(dataTypeId, networkTypeView) }
+                val isVoWifi = dataTypeId?.resId == TelephonyIcons.VOWIFI.dataType
+                        || dataTypeId?.resId == TelephonyIcons.VOWIFI_CALLING.dataType
+                if (view is ModernStatusBarMobileView) {
+                    view.updateNetworkTypeDimensions(isVoWifi)
+                }
                 val prevVis = networkTypeContainer.visibility
                 networkTypeContainer.visibility =
                     if (dataTypeId != null) View.VISIBLE else View.GONE

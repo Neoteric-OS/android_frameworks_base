@@ -259,7 +259,8 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
         }
     }
 
-    private static Rect computeVisualBounds(Drawable d) {
+    @VisibleForTesting
+    public static Rect computeVisualBounds(Drawable d) {
         if (d == null) {
             return null;
         }

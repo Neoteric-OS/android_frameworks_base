@@ -20,6 +20,7 @@ import android.content.Context
 import android.content.res.Configuration
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import com.android.keyguard.AlphaOptimizedLinearLayout
@@ -27,6 +28,7 @@ import com.android.systemui.Flags
 import com.android.systemui.kairos.KairosNetwork
 import com.android.systemui.kairos.buildSpec
 import com.android.systemui.res.R
+import com.android.systemui.statusbar.StatusBarIconView
 import com.android.systemui.statusbar.StatusBarIconView.getVisibleStateString
 import com.android.systemui.statusbar.core.NewStatusBarIcons
 import com.android.systemui.statusbar.phone.StatusBarLocation
@@ -45,6 +47,58 @@ class ModernStatusBarMobileView(context: Context, attrs: AttributeSet?) :
     ModernStatusBarView(context, attrs) {
 
     var subId: Int = -1
+
+    var isVoWifi: Boolean = false
+        private set
+
+    fun updateNetworkTypeDimensions(isVoWifi: Boolean) {
+        this.isVoWifi = isVoWifi
+        applyNetworkTypeDimensions()
+    }
+
+    private fun applyNetworkTypeDimensions() {
+        val typeView = requireViewById<ImageView>(R.id.mobile_type)
+        val container = requireViewById<FrameLayout>(R.id.mobile_type_container)
+
+        if (isVoWifi) {
+            val drawable = typeView.drawable
+            val desiredHeight =
+                if (Flags.statusIconsInComposeRefresh()) {
+                    context.resources.getDimension(R.dimen.status_bar_composable_icon_height_sp)
+                } else {
+                    context.resources.getDimension(
+                        com.android.internal.R.dimen.status_bar_system_icon_size
+                    )
+                }
+
+            val visualBounds = StatusBarIconView.computeVisualBounds(drawable)
+            val visualHeight =
+                visualBounds?.height()?.toFloat()
+                    ?: drawable?.intrinsicHeight?.toFloat()?.takeIf { it > 0f }
+                    ?: desiredHeight
+
+            val intrinsicHeight =
+                drawable?.intrinsicHeight?.toFloat()?.takeIf { it > 0f } ?: visualHeight
+            val scale = desiredHeight / visualHeight
+            val targetHeight = Math.round(intrinsicHeight * scale)
+            val targetWidth =
+                drawable?.intrinsicWidth?.toFloat()?.let { Math.round(it * scale) }
+                    ?: ViewGroup.LayoutParams.WRAP_CONTENT
+
+            typeView.layoutParams.height = targetHeight
+            typeView.layoutParams.width = targetWidth
+            container.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+        } else {
+            typeView.layoutParams.height =
+                context.resources.getDimensionPixelSize(R.dimen.status_bar_mobile_type_size_updated)
+            typeView.layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
+            container.layoutParams.height =
+                context.resources.getDimensionPixelSize(
+                    R.dimen.status_bar_mobile_container_height_updated
+                )
+        }
+        requestLayout()
+    }
 
     override fun toString(): String {
         return "ModernStatusBarMobileView(" +
@@ -109,17 +163,9 @@ class ModernStatusBarMobileView(context: Context, attrs: AttributeSet?) :
                 context.resources.getDimensionPixelSize(
                     R.dimen.status_bar_mobile_type_container_margin_end
                 )
-            layoutParams.height =
-                context.resources.getDimensionPixelSize(
-                    R.dimen.status_bar_mobile_container_height_updated
-                )
         }
 
-        // RAT indicator
-        requireViewById<ImageView>(R.id.mobile_type).apply {
-            layoutParams.height =
-                context.resources.getDimensionPixelSize(R.dimen.status_bar_mobile_type_size_updated)
-        }
+        applyNetworkTypeDimensions()
 
         // Network traffic container
         requireViewById<FrameLayout>(R.id.network_traffic_container).apply {

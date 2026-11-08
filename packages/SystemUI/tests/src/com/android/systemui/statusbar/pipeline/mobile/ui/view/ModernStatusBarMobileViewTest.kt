@@ -18,17 +18,24 @@ package com.android.systemui.statusbar.pipeline.mobile.ui.view
 
 import android.content.res.ColorStateList
 import android.content.res.Configuration
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.drawable.BitmapDrawable
 import android.platform.test.annotations.EnableFlags
 import android.testing.AndroidTestingRunner
 import android.testing.TestableLooper
 import android.testing.TestableLooper.RunWithLooper
 import android.testing.ViewUtils
 import android.view.View
+import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.core.view.marginEnd
 import androidx.core.view.marginStart
 import androidx.test.filters.SmallTest
+import com.android.systemui.Flags
 import com.android.systemui.SysuiTestCase
 import com.android.systemui.log.table.logcatTableLogBuffer
 import com.android.systemui.res.R
@@ -292,6 +299,48 @@ class ModernStatusBarMobileViewTest : SysuiTestCase() {
         view.onConfigurationChanged(Configuration())
 
         assertThat(signal.layoutParams.height).isEqualTo(initialHeight + 10)
+    }
+
+    @Test
+    @EnableFlags(Flags.FLAG_STATUS_ICONS_IN_COMPOSE_REFRESH)
+    fun updateNetworkTypeDimensions_vowifi_scalesProperly() {
+        val view =
+            ModernStatusBarMobileView.constructAndBind(context, viewLogger, SLOT_NAME, viewModel)
+        val bitmap = Bitmap.createBitmap(24, 24, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        val paint = Paint().apply { color = Color.WHITE }
+        // 16x16 visual glyph inside 24x24 bitmap
+        canvas.drawRect(4f, 4f, 20f, 20f, paint)
+        val drawable = BitmapDrawable(context.resources, bitmap)
+        view.getNetTypeView().setImageDrawable(drawable)
+
+        view.updateNetworkTypeDimensions(true)
+
+        val desiredHeight = context.resources.getDimension(R.dimen.status_bar_composable_icon_height_sp)
+        val expectedScale = desiredHeight / 16f
+        val expectedHeight = Math.round(24f * expectedScale)
+        val expectedWidth = Math.round(24f * expectedScale)
+
+        assertThat(view.getNetTypeView().layoutParams.height).isEqualTo(expectedHeight)
+        assertThat(view.getNetTypeView().layoutParams.width).isEqualTo(expectedWidth)
+        assertThat(view.getNetTypeContainer().layoutParams.height).isEqualTo(ViewGroup.LayoutParams.WRAP_CONTENT)
+    }
+
+    @Test
+    fun updateNetworkTypeDimensions_notVowifi_resetsToDefaultDimensions() {
+        val view =
+            ModernStatusBarMobileView.constructAndBind(context, viewLogger, SLOT_NAME, viewModel)
+        view.updateNetworkTypeDimensions(true)
+        view.updateNetworkTypeDimensions(false)
+
+        val expectedHeight =
+            context.resources.getDimensionPixelSize(R.dimen.status_bar_mobile_type_size_updated)
+        val expectedContainerHeight =
+            context.resources.getDimensionPixelSize(R.dimen.status_bar_mobile_container_height_updated)
+
+        assertThat(view.getNetTypeView().layoutParams.height).isEqualTo(expectedHeight)
+        assertThat(view.getNetTypeView().layoutParams.width).isEqualTo(ViewGroup.LayoutParams.WRAP_CONTENT)
+        assertThat(view.getNetTypeContainer().layoutParams.height).isEqualTo(expectedContainerHeight)
     }
 
     @Test

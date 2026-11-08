@@ -48,6 +48,7 @@ import com.android.systemui.statusbar.core.NewStatusBarIcons
 import com.android.systemui.statusbar.phone.StatusBarLocation
 import com.android.systemui.statusbar.pipeline.mobile.domain.model.SignalIconModel
 import com.android.systemui.statusbar.pipeline.mobile.ui.MobileViewLogger
+import com.android.systemui.statusbar.pipeline.mobile.ui.view.ModernStatusBarMobileView
 import com.android.systemui.statusbar.pipeline.mobile.ui.viewmodel.LocationBasedMobileViewModel
 import com.android.systemui.statusbar.pipeline.shared.ui.binder.ModernStatusBarViewBinding
 import com.android.systemui.statusbar.pipeline.shared.ui.binder.ModernStatusBarViewVisibilityHelper
@@ -192,6 +193,11 @@ object MobileIconBinder {
                             )
                             dataTypeId?.let { IconViewBinder.bind(dataTypeId, networkTypeView) }
                             val isVoWifi = dataTypeId?.resId == TelephonyIcons.VOWIFI.dataType
+                                    || dataTypeId?.resId == TelephonyIcons.VOWIFI_CALLING.dataType
+
+                            if (view is ModernStatusBarMobileView) {
+                                view.updateNetworkTypeDimensions(isVoWifi)
+                            }
 
                             val shouldShowNetworkType =
                                 dataTypeId != null &&
