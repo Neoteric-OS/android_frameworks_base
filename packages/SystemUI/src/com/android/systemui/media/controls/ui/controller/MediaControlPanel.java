@@ -103,6 +103,7 @@ import com.android.systemui.media.controls.ui.viewmodel.SeekBarViewModel;
 import com.android.systemui.media.controls.util.MediaDataUtils;
 import com.android.systemui.media.controls.util.MediaUiEventLogger;
 import com.android.systemui.media.dialog.MediaOutputDialogManager;
+import com.android.systemui.media.MediaArtViewController;
 import com.android.systemui.monet.ColorScheme;
 import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.plugins.FalsingManager;
@@ -883,6 +884,15 @@ public class MediaControlPanel {
             Drawable artwork;
             boolean isArtworkBound;
             Icon artworkIcon = data.getArtwork();
+            if (artworkIcon != null && (Boolean.TRUE.equals(data.isPlaying()) || isPlaying())) {
+                Rect bounds = mContext.getSystemService(android.view.WindowManager.class).getCurrentWindowMetrics().getBounds();
+                int screenWidth = bounds.width();
+                int screenHeight = bounds.height();
+                Drawable albumArt = getScaledBackground(artworkIcon, screenWidth, screenHeight);
+                if (albumArt != null) {
+                    MediaArtViewController.get(mContext).setAlbumArt(albumArt);
+                }
+            }
             WallpaperColors wallpaperColors = getWallpaperColor(artworkIcon);
             boolean darkTheme = false;
             if (wallpaperColors != null) {

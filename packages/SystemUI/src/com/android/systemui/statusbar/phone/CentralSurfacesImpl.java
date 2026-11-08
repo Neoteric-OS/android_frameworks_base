@@ -78,6 +78,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceControl;
 import android.view.ThreadedRenderer;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.WindowManagerGlobal;
 import android.view.accessibility.AccessibilityManager;
@@ -144,6 +145,7 @@ import com.android.systemui.keyguard.KeyguardViewMediator;
 import com.android.systemui.keyguard.ScreenLifecycle;
 import com.android.systemui.keyguard.WakefulnessLifecycle;
 import com.android.systemui.log.SessionTracker;
+import com.android.systemui.media.MediaArtViewController;
 import com.android.systemui.media.NotificationMediaManager;
 import com.android.systemui.navigationbar.NavigationBarController;
 import com.android.systemui.navigationbar.views.NavigationBarView;
@@ -953,6 +955,26 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
                 (requestTopUi, componentTag) -> mMainExecutor.execute(
                         () -> mTopUiController.setRequestTopUi(requestTopUi, componentTag)
                 )));
+        attachMediaArtScrim();
+    }
+
+    private void attachMediaArtScrim() {
+        ViewGroup windowRootView = mNotificationShadeWindowController.getWindowRootView();
+        if (windowRootView == null) return;
+        View mediaArtScrim = MediaArtViewController.get(mContext).getMediaArtScrim();
+        if (mediaArtScrim.getParent() != null) {
+            ((ViewGroup) mediaArtScrim.getParent()).removeView(mediaArtScrim);
+        }
+        if (SceneContainerFlag.isEnabled()) {
+            windowRootView.addView(mediaArtScrim, 0);
+        } else {
+            ViewGroup targetView = windowRootView.findViewById(R.id.notification_container_parent);
+            if (targetView != null) {
+                targetView.addView(mediaArtScrim, 0);
+            } else {
+                windowRootView.addView(mediaArtScrim, 0);
+            }
+        }
     }
 
     @VisibleForTesting
@@ -1303,6 +1325,7 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
         mNotificationShadeWindowController.fetchWindowRootView();
         getNotificationShadeWindowViewController().setupExpandedStatusBar();
         getNotificationShadeWindowViewController().setupCommunalHubLayout();
+        attachMediaArtScrim();
     }
 
     protected NotificationPanelViewController getNotificationPanelViewController() {
