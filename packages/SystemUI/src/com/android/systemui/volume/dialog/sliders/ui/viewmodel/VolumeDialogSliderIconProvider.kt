@@ -167,7 +167,7 @@ constructor(
             AudioManager.STREAM_RING -> R.drawable.ic_ring_volume
             AudioManager.STREAM_NOTIFICATION -> R.drawable.ic_volume_ringer
             AudioManager.STREAM_ALARM -> R.drawable.ic_alarm
-            AudioManager.STREAM_VOICE_CALL -> com.android.internal.R.drawable.ic_phone
+            AudioManager.STREAM_VOICE_CALL -> R.drawable.ic_call
             AudioManager.STREAM_SYSTEM -> R.drawable.ic_volume_system
             AudioManager.STREAM_ASSISTANT -> R.drawable.ic_volume_voice_chat
             else -> error("Unsupported stream: $stream")
