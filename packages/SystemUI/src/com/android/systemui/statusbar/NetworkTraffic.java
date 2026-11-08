@@ -20,8 +20,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
@@ -35,7 +35,7 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.provider.Settings;
 import android.text.Spanned;
-import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.AbsoluteSizeSpan;
 import android.util.AttributeSet;
@@ -52,9 +52,7 @@ import com.android.systemui.res.R;
 import com.android.systemui.tuner.TunerService;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.stream.Stream;
 
 /** @hide */
 public class NetworkTraffic extends TextView implements TunerService.Tunable {
@@ -103,10 +101,11 @@ public class NetworkTraffic extends TextView implements TunerService.Tunable {
     private long mLastUpdateTime;
     private boolean mAutoHide;
     private long mAutoHideThreshold;
-    private int mUnits;
+    private int mUnits = 1;
     private int mTint = Color.WHITE;
 
     private Drawable mDrawable;
+    private int mDrawableResId = 0;
 
     private int mRefreshInterval = 2;
 
@@ -116,8 +115,16 @@ public class NetworkTraffic extends TextView implements TunerService.Tunable {
     private ConnectivityManager mConnectivityManager;
     private final Handler mTrafficHandler;
 
-    private AbsoluteSizeSpan mSpeedAbsoluteSizeSpan = new AbsoluteSizeSpan(8, true);
-    private AbsoluteSizeSpan mUnitAbsoluteSizeSpan = new AbsoluteSizeSpan(6, true);
+    private final AbsoluteSizeSpan mSpeedAbsoluteSizeSpan = new AbsoluteSizeSpan(8, true);
+    private final AbsoluteSizeSpan mUnitAbsoluteSizeSpan = new AbsoluteSizeSpan(6, true);
+
+    private final DecimalFormat mFormatZeroDotHashHash = new DecimalFormat("0.##");
+    private final DecimalFormat mFormatHashZeroDotHash = new DecimalFormat("#0.#");
+    private final DecimalFormat mFormatHashHashZero = new DecimalFormat("##0");
+
+    private String mGigaUnit = "";
+    private String mMegaUnit = "";
+    private String mKiloUnit = "";
 
     private boolean mEnabled = false;
     private boolean mConnectionAvailable = true;
@@ -138,6 +145,7 @@ public class NetworkTraffic extends TextView implements TunerService.Tunable {
     public NetworkTraffic(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mContext = context;
+        updateUnitStrings();
         setLines(2);
         String txtFont = getResources().getString(com.android.internal.R.string.config_bodyFontFamily);
         setTypeface(Typeface.create(txtFont, Typeface.BOLD));
@@ -182,15 +190,28 @@ public class NetworkTraffic extends TextView implements TunerService.Tunable {
                 long rxBytes = 0;
                 // Add interface stats, including stats from Clat's IPv4 interface
                 // (for applicable IPv6 networks). Stats are 0 if it doesn't exist.
-                final String[] ifaces = mLinkPropertiesMap.values().stream()
-                        .map(link -> link.getInterfaceName()).filter(iface -> iface != null)
-                        .flatMap(iface -> Stream.of(iface, CLAT_PREFIX + iface))
-                        .toArray(String[]::new);
-                for (String iface : ifaces) {
-                    final long ifaceTxBytes = TrafficStats.getTxBytes(iface);
-                    final long ifaceRxBytes = TrafficStats.getRxBytes(iface);
-                    txBytes += ifaceTxBytes;
-                    rxBytes += ifaceRxBytes;
+                for (LinkProperties link : mLinkPropertiesMap.values()) {
+                    final String iface = link.getInterfaceName();
+                    if (iface == null) {
+                        continue;
+                    }
+                    long bytes = TrafficStats.getTxBytes(iface);
+                    if (bytes > 0) {
+                        txBytes += bytes;
+                    }
+                    bytes = TrafficStats.getRxBytes(iface);
+                    if (bytes > 0) {
+                        rxBytes += bytes;
+                    }
+                    final String clatIface = CLAT_PREFIX + iface;
+                    bytes = TrafficStats.getTxBytes(clatIface);
+                    if (bytes > 0) {
+                        txBytes += bytes;
+                    }
+                    bytes = TrafficStats.getRxBytes(clatIface);
+                    if (bytes > 0) {
+                        rxBytes += bytes;
+                    }
                 }
 
                 final long txBytesDelta = txBytes - mLastTxBytes;
@@ -244,18 +265,16 @@ public class NetworkTraffic extends TextView implements TunerService.Tunable {
                     // Update view if there's anything new to show
                     if (!TextUtils.equals(output, getText())) {
                         setText(output);
-                        setTrafficDrawable();
                     }
+                } else {
+                    setText("");
                 }
 
                 updateVisibility();
 
-                if ((getVisibility() ==  View.VISIBLE) &&
-                        (mSubMode != submode || mTrafficActive != trafficactive)) {
-                    mSubMode = submode;
-                    mTrafficActive = trafficactive;
-                    setTrafficDrawable();
-                }
+                mSubMode = submode;
+                mTrafficActive = trafficactive;
+                setTrafficDrawable();
 
                 // Schedule periodic refresh
                 if (mEnabled && mAttached) {
@@ -265,62 +284,46 @@ public class NetworkTraffic extends TextView implements TunerService.Tunable {
             }
 
             private CharSequence formatOutput(long speed) {
-                DecimalFormat decimalFormat;
-                String unit;
-                String formatSpeed;
-                SpannableString spanUnitString;
-                SpannableString spanSpeedString;
-                String gunit, munit, kunit;
-
                 if (mUnits == 0) {
                     // speed is in bytes, convert to bits
                     speed = speed * 8;
-                    gunit = mContext.getString(R.string.gigabitspersecond_short);
-                    munit = mContext.getString(R.string.megabitspersecond_short);
-                    kunit = mContext.getString(R.string.kilobitspersecond_short);
-                } else {
-                    gunit = mContext.getString(R.string.gigabytespersecond_short);
-                    munit = mContext.getString(R.string.megabytespersecond_short);
-                    kunit = mContext.getString(R.string.kilobytespersecond_short);
                 }
+
+                final String formatSpeed;
+                final String unit;
 
                 if (speed >= Giga) {
-                    unit = gunit;
-                    decimalFormat = new DecimalFormat("0.##");
-                    formatSpeed = decimalFormat.format(speed / (float)Giga);
+                    unit = mGigaUnit;
+                    formatSpeed = mFormatZeroDotHashHash.format(speed / (float) Giga);
                 } else if (speed >= 100 * Mega) {
-                    decimalFormat = new DecimalFormat("##0");
-                    unit = munit;
-                    formatSpeed = decimalFormat.format(speed / (float)Mega);
+                    unit = mMegaUnit;
+                    formatSpeed = mFormatHashHashZero.format(speed / (float) Mega);
                 } else if (speed >= 10 * Mega) {
-                    decimalFormat = new DecimalFormat("#0.#");
-                    unit = munit;
-                    formatSpeed = decimalFormat.format(speed / (float)Mega);
+                    unit = mMegaUnit;
+                    formatSpeed = mFormatHashZeroDotHash.format(speed / (float) Mega);
                 } else if (speed >= Mega) {
-                    decimalFormat = new DecimalFormat("0.##");
-                    unit = munit;
-                    formatSpeed = decimalFormat.format(speed / (float)Mega);
+                    unit = mMegaUnit;
+                    formatSpeed = mFormatZeroDotHashHash.format(speed / (float) Mega);
                 } else if (speed >= 100 * Kilo) {
-                    decimalFormat = new DecimalFormat("##0");
-                    unit = kunit;
-                    formatSpeed = decimalFormat.format(speed / (float)Kilo);
+                    unit = mKiloUnit;
+                    formatSpeed = mFormatHashHashZero.format(speed / (float) Kilo);
                 } else if (speed >= 10 * Kilo) {
-                    decimalFormat = new DecimalFormat("#0.#");
-                    unit = kunit;
-                    formatSpeed = decimalFormat.format(speed / (float)Kilo);
+                    unit = mKiloUnit;
+                    formatSpeed = mFormatHashZeroDotHash.format(speed / (float) Kilo);
                 } else {
-                    decimalFormat = new DecimalFormat("0.##");
-                    unit = kunit;
-                    formatSpeed = decimalFormat.format(speed / (float)Kilo);
+                    unit = mKiloUnit;
+                    formatSpeed = mFormatZeroDotHashHash.format(speed / (float) Kilo);
                 }
-                spanSpeedString = new SpannableString(formatSpeed);
-                spanSpeedString.setSpan(mSpeedAbsoluteSizeSpan, 0, (formatSpeed).length(),
-                        Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 
-                spanUnitString = new SpannableString(unit);
-                spanUnitString.setSpan(mUnitAbsoluteSizeSpan, 0, (unit).length(),
+                final SpannableStringBuilder ssb = new SpannableStringBuilder(formatSpeed);
+                ssb.setSpan(mSpeedAbsoluteSizeSpan, 0, formatSpeed.length(),
                         Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-                return TextUtils.concat(spanSpeedString, "\n", spanUnitString);
+                ssb.append("\n");
+                final int unitStart = ssb.length();
+                ssb.append(unit);
+                ssb.setSpan(mUnitAbsoluteSizeSpan, unitStart, ssb.length(),
+                        Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                return ssb;
             }
         };
     }
@@ -337,20 +340,16 @@ public class NetworkTraffic extends TextView implements TunerService.Tunable {
                 public void onLinkPropertiesChanged(Network network,
                         LinkProperties linkProperties) {
                     if (mTrafficHandler != null) {
-                        Message msg = new Message();
-                        msg.what = MESSAGE_TYPE_ADD_NETWORK;
-                        msg.obj = new LinkPropertiesHolder(network, linkProperties);
-                        mTrafficHandler.sendMessage(msg);
+                        mTrafficHandler.obtainMessage(MESSAGE_TYPE_ADD_NETWORK,
+                                new LinkPropertiesHolder(network, linkProperties)).sendToTarget();
                     }
                 }
 
                 @Override
                 public void onLost(Network network) {
                     if (mTrafficHandler != null) {
-                        Message msg = new Message();
-                        msg.what = MESSAGE_TYPE_REMOVE_NETWORK;
-                        msg.obj = network;
-                        mTrafficHandler.sendMessage(msg);
+                        mTrafficHandler.obtainMessage(MESSAGE_TYPE_REMOVE_NETWORK, network)
+                                .sendToTarget();
                     }
                 }
             };
@@ -359,11 +358,13 @@ public class NetworkTraffic extends TextView implements TunerService.Tunable {
             new ConnectivityManager.NetworkCallback() {
         @Override
         public void onAvailable(Network network) {
+            mConnectionAvailable = true;
             updateViews();
         }
 
         @Override
         public void onLost(Network network) {
+            mConnectionAvailable = mConnectivityManager != null && mConnectivityManager.getActiveNetwork() != null;
             updateViews();
         }
     };
@@ -386,7 +387,7 @@ public class NetworkTraffic extends TextView implements TunerService.Tunable {
             mConnectivityManager.registerNetworkCallback(mRequest, mNetworkCallback);
             mConnectivityManager.registerDefaultNetworkCallback(mDefaultNetworkCallback);
 
-            mConnectionAvailable = mConnectivityManager.getActiveNetworkInfo() != null;
+            mConnectionAvailable = mConnectivityManager.getActiveNetwork() != null;
 
             IntentFilter filter = new IntentFilter();
             filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -400,15 +401,25 @@ public class NetworkTraffic extends TextView implements TunerService.Tunable {
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         if (mAttached) {
-            clearHandlerCallbacks();
+            mTrafficHandler.removeCallbacksAndMessages(null);
             mContext.unregisterReceiver(mIntentReceiver);
             mConnectivityManager.unregisterNetworkCallback(mDefaultNetworkCallback);
             mConnectivityManager.unregisterNetworkCallback(mNetworkCallback);
             Dependency.get(TunerService.class).removeTunable(this);
             mDrawable = null;
-            setCompoundDrawables(null, null, null, null);
+            mDrawableResId = 0;
+            setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, null, null);
+            mLinkPropertiesMap.clear();
+            mNetworksChanged = true;
             mAttached = false;
         }
+    }
+
+    @Override
+    protected void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        updateUnitStrings();
+        updateViews();
     }
 
     private void updateVisibility() {
@@ -424,7 +435,7 @@ public class NetworkTraffic extends TextView implements TunerService.Tunable {
             String action = intent.getAction();
             if (action == null) return;
             if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
-                mConnectionAvailable = mConnectivityManager.getActiveNetworkInfo() != null;
+                mConnectionAvailable = mConnectivityManager != null && mConnectivityManager.getActiveNetwork() != null;
                 updateViews();
             }
         }
@@ -452,12 +463,13 @@ public class NetworkTraffic extends TextView implements TunerService.Tunable {
             case NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD:
                 int autohidethreshold =
                         TunerService.parseInteger(newValue, 0);
-                mAutoHideThreshold = autohidethreshold * Kilo; /* Convert kB to Bytes */
+                mAutoHideThreshold = (long) autohidethreshold * Kilo; /* Convert kB to Bytes */
                 updateViews();
                 break;
             case NETWORK_TRAFFIC_UNITS:
                 mUnits =
                         TunerService.parseInteger(newValue, 1);
+                updateUnitStrings();
                 updateViews();
                 break;
             case NETWORK_TRAFFIC_REFRESH_INTERVAL:
@@ -480,9 +492,30 @@ public class NetworkTraffic extends TextView implements TunerService.Tunable {
         }
     }
 
+    private void updateUnitStrings() {
+        if (mUnits == 0) {
+            mGigaUnit = mContext.getString(R.string.gigabitspersecond_short);
+            mMegaUnit = mContext.getString(R.string.megabitspersecond_short);
+            mKiloUnit = mContext.getString(R.string.kilobitspersecond_short);
+        } else {
+            mGigaUnit = mContext.getString(R.string.gigabytespersecond_short);
+            mMegaUnit = mContext.getString(R.string.megabytespersecond_short);
+            mKiloUnit = mContext.getString(R.string.kilobytespersecond_short);
+        }
+    }
+
     private void updateViews() {
         if (mEnabled) {
             updateViewState();
+        } else {
+            clearHandlerCallbacks();
+            mTrafficActive = false;
+            mIsActive = false;
+            setText("");
+            setVisibility(View.GONE);
+            mDrawable = null;
+            mDrawableResId = 0;
+            setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, null, null);
         }
     }
 
@@ -492,15 +525,23 @@ public class NetworkTraffic extends TextView implements TunerService.Tunable {
     }
 
     private void clearHandlerCallbacks() {
-        mTrafficHandler.removeCallbacksAndMessages(null);
+        mTrafficHandler.removeMessages(MESSAGE_TYPE_PERIODIC_REFRESH);
+        mTrafficHandler.removeMessages(MESSAGE_TYPE_UPDATE_VIEW);
     }
 
     private void setTrafficDrawable() {
-        final int drawableResId;
+        final boolean visible = (getVisibility() == View.VISIBLE) && !TextUtils.isEmpty(getText());
+        if (!visible || mHideArrows) {
+            if (mDrawable != null) {
+                mDrawable = null;
+                mDrawableResId = 0;
+                setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, null, null);
+            }
+            return;
+        }
 
-        if (mHideArrows) {
-            drawableResId = 0;
-        } else if (!mTrafficActive) {
+        final int drawableResId;
+        if (!mTrafficActive) {
             drawableResId = R.drawable.stat_sys_network_traffic;
         } else if (mMode == MODE_UPSTREAM_ONLY || mSubMode == MODE_UPSTREAM_ONLY) {
             drawableResId = R.drawable.stat_sys_network_traffic_up;
@@ -511,20 +552,28 @@ public class NetworkTraffic extends TextView implements TunerService.Tunable {
         } else {
             drawableResId = 0;
         }
-        final Drawable drawable = mHideArrows ? null
-            : ResourcesCompat.getDrawable(getResources(), drawableResId, getContext().getTheme());
-        if (drawable != null) {
-            DrawableCompat.setTint(drawable, mTint);
+
+        if (mDrawableResId == drawableResId && mDrawable != null) {
+            return;
         }
-        if (mDrawable != drawable) {
-            mDrawable = drawable;
-            if ((getVisibility() ==  View.VISIBLE) && !TextUtils.isEmpty(getText())) {
-                setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, mDrawable, null);
+
+        mDrawableResId = drawableResId;
+        if (drawableResId != 0) {
+            mDrawable = ResourcesCompat.getDrawable(getResources(), drawableResId, getContext().getTheme());
+            if (mDrawable != null) {
+                mDrawable = mDrawable.mutate();
+                DrawableCompat.setTint(mDrawable, mTint);
             }
+        } else {
+            mDrawable = null;
         }
+        setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, mDrawable, null);
     }
 
     public void setTint(int tint) {
+        if (mTint == tint) {
+            return;
+        }
         mTint = tint;
         updateColors();
     }
