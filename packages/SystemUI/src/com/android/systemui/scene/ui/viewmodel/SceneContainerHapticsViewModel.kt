@@ -16,15 +16,18 @@
 
 package com.android.systemui.scene.ui.viewmodel
 
+import android.content.res.Resources
 import androidx.compose.ui.hapticfeedback.HapticFeedback
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import com.android.compose.animation.scene.ObservableTransitionState
 import com.android.compose.animation.scene.reveal.ContainerRevealHaptics
 import com.android.systemui.lifecycle.ExclusiveActivatable
+import com.android.systemui.res.R
 import com.android.systemui.scene.domain.interactor.SceneInteractor
 import com.android.systemui.scene.shared.model.Overlays
 import com.android.systemui.scene.shared.model.Scenes
 import com.android.systemui.scene.ui.composable.SceneContainer
+import com.android.systemui.shade.ShadeDisplayAware
 import com.android.systemui.shade.domain.interactor.ShadeInteractor
 import com.google.android.msdl.data.model.MSDLToken
 import com.google.android.msdl.domain.MSDLPlayer
@@ -42,6 +45,7 @@ constructor(
     sceneInteractor: SceneInteractor,
     shadeInteractor: ShadeInteractor,
     private val msdlPlayer: MSDLPlayer,
+    @ShadeDisplayAware private val resources: Resources,
 ) : ExclusiveActivatable() {
 
     /** Should haptics be played by pulling down the shade */
@@ -54,7 +58,9 @@ constructor(
             .distinctUntilChanged()
 
     override suspend fun onActivated() {
-        playShadePullHaptics()
+        if (resources.getBoolean(R.bool.config_vibrateOnIconAnimation)) {
+            playShadePullHaptics()
+        }
     }
 
     /**

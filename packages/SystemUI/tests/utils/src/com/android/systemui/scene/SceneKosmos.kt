@@ -181,6 +181,7 @@ val Kosmos.sceneContainerHapticsViewModelFactory by Fixture {
                 sceneInteractor = sceneInteractor,
                 shadeInteractor = shadeInteractor,
                 msdlPlayer = msdlPlayer,
+                resources = mainResources,
             )
         }
     }
