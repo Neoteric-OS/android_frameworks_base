@@ -20,6 +20,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -102,7 +103,7 @@ public class NetworkTraffic extends TextView implements TunerService.Tunable {
     private boolean mAutoHide;
     private long mAutoHideThreshold;
     private int mUnits = 1;
-    private int mTint = Color.WHITE;
+    private int mTint = 0;
 
     private Drawable mDrawable;
     private int mDrawableResId = 0;
@@ -375,6 +376,9 @@ public class NetworkTraffic extends TextView implements TunerService.Tunable {
 
         if (!mAttached) {
             mAttached = true;
+            if (mTint != 0) {
+                updateColors();
+            }
             final TunerService tunerService = Dependency.get(TunerService.class);
             tunerService.addTunable(this, NETWORK_TRAFFIC_ENABLED);
             tunerService.addTunable(this, NETWORK_TRAFFIC_MODE);
@@ -562,7 +566,9 @@ public class NetworkTraffic extends TextView implements TunerService.Tunable {
             mDrawable = ResourcesCompat.getDrawable(getResources(), drawableResId, getContext().getTheme());
             if (mDrawable != null) {
                 mDrawable = mDrawable.mutate();
-                DrawableCompat.setTint(mDrawable, mTint);
+                if (mTint != 0) {
+                    DrawableCompat.setTint(mDrawable, mTint);
+                }
             }
         } else {
             mDrawable = null;
@@ -579,10 +585,13 @@ public class NetworkTraffic extends TextView implements TunerService.Tunable {
     }
 
     private void updateColors() {
-        if (mDrawable != null) {
-            DrawableCompat.setTint(mDrawable, mTint);
+        if (mTint != 0) {
+            setCompoundDrawableTintList(ColorStateList.valueOf(mTint));
+            if (mDrawable != null) {
+                DrawableCompat.setTint(mDrawable, mTint);
+            }
+            setTextColor(mTint);
         }
-        setTextColor(mTint);
     }
 
     private static class LinkPropertiesHolder {
