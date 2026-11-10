@@ -68,3 +68,20 @@ val ConfigurationController.onConfigChanged: Flow<Configuration>
         addCallback(listener)
         awaitClose { removeCallback(listener) }
     }
+
+/**
+ * A [Flow] that emits whenever ui mode has changed.
+ *
+ * @see ConfigurationController.ConfigurationListener.onUiModeChanged
+ */
+val ConfigurationController.onUiModeChanged: Flow<Unit>
+    get() = conflatedCallbackFlow {
+        val listener =
+            object : ConfigurationController.ConfigurationListener {
+                override fun onUiModeChanged() {
+                    trySend(Unit)
+                }
+            }
+        addCallback(listener)
+        awaitClose { removeCallback(listener) }
+    }

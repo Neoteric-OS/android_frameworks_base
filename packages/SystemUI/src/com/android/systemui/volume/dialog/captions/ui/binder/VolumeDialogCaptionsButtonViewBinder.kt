@@ -16,14 +16,22 @@
 
 package com.android.systemui.volume.dialog.captions.ui.binder
 
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.InsetDrawable
 import android.graphics.drawable.TransitionDrawable
 import android.os.Handler
 import android.view.View
 import com.android.app.tracing.coroutines.launchInTraced
 import com.android.app.tracing.coroutines.launchTraced
+import com.android.internal.R as internalR
 import com.android.systemui.Flags
 import com.android.systemui.dagger.qualifiers.Background
 import com.android.systemui.res.R
+import com.android.systemui.statusbar.policy.ConfigurationController
+import com.android.systemui.statusbar.policy.onConfigChanged
+import com.android.systemui.statusbar.policy.onThemeChanged
+import com.android.systemui.statusbar.policy.onUiModeChanged
 import com.android.systemui.volume.CaptionsToggleImageButton
 import com.android.systemui.volume.Events
 import com.android.systemui.volume.dialog.captions.ui.viewmodel.VolumeDialogCaptionsButtonViewModel
@@ -32,6 +40,7 @@ import com.android.systemui.volume.dialog.ui.binder.ViewBinder
 import com.android.systemui.volume.dialog.ui.viewmodel.VolumeDialogViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.withIndex
 
@@ -43,6 +52,7 @@ constructor(
     private val viewModel: VolumeDialogCaptionsButtonViewModel,
     private val dialogViewModel: VolumeDialogViewModel,
     @Background private val bgHandler: Handler,
+    private val configurationController: ConfigurationController,
 ) : ViewBinder {
     override fun CoroutineScope.bind(view: View) {
         if (!Flags.captionsToggleInVolumeDialogV1()) {
@@ -69,43 +79,27 @@ constructor(
         viewModel.isEnable
             .withIndex()
             .onEach { (index, isEnabled) ->
-                captionsButton.apply {
-                    setImageResource(
-                        if (isEnabled) {
-                            R.drawable.ic_volume_odi_captions
-                        } else {
-                            R.drawable.ic_volume_odi_captions_disabled
-                        }
-                    )
-
-                    setColorFilter(
-                        captionsButton.context.getColor(
-                            if (isEnabled) {
-                                com.android.internal.R.color.materialColorOnPrimary
-                            } else {
-                                com.android.internal.R.color.materialColorOnSurface
-                            }
-                        )
-                    )
-
-                    val transition = background as TransitionDrawable
-                    transition.isCrossFadeEnabled = true
-                    if (index == 0) {
-                        if (isEnabled) {
-                            transition.startTransition(0)
-                        }
-                    } else {
-                        if (isEnabled) {
-                            transition.startTransition(DURATION_MILLIS)
-                        } else {
-                            transition.reverseTransition(DURATION_MILLIS)
-                        }
-                    }
-
-                    setCaptionsEnabled(isEnabled)
-                }
+                updateButtonAppearance(
+                    captionsButton,
+                    isEnabled,
+                    animateTransition = index > 0,
+                )
             }
             .launchInTraced("VDCBVB#isEnabled", this)
+
+        merge(
+                configurationController.onConfigChanged,
+                configurationController.onThemeChanged,
+                configurationController.onUiModeChanged,
+            )
+            .onEach {
+                updateButtonAppearance(
+                    captionsButton,
+                    viewModel.isEnable.value,
+                    animateTransition = false,
+                )
+            }
+            .launchInTraced("VDCBVB#onConfigChanged", this)
 
         captionsButton.setOnConfirmedTapListener(
             {
@@ -114,6 +108,65 @@ constructor(
             },
             bgHandler,
         )
+    }
+
+    private fun updateButtonAppearance(
+        captionsButton: CaptionsToggleImageButton,
+        isEnabled: Boolean,
+        animateTransition: Boolean = false,
+    ) {
+        val appContext = captionsButton.context.applicationContext
+        val surfaceContainerHighest =
+            appContext.getColor(internalR.color.materialColorSurfaceContainerHighest)
+        val primaryColor = appContext.getColor(internalR.color.materialColorPrimary)
+        val onSurfaceColor = appContext.getColor(internalR.color.materialColorOnSurface)
+        val onPrimaryColor = appContext.getColor(internalR.color.materialColorOnPrimary)
+
+        val transition = captionsButton.background as? TransitionDrawable
+        transition?.let {
+            val layer0Shape = it.getDrawable(0)?.mutate()?.findGradientDrawable()
+            val layer1Shape = it.getDrawable(1)?.mutate()?.findGradientDrawable()
+            layer0Shape?.setColor(surfaceContainerHighest)
+            layer1Shape?.setColor(primaryColor)
+            it.invalidateSelf()
+        }
+
+        captionsButton.apply {
+            setImageResource(
+                if (isEnabled) {
+                    R.drawable.ic_volume_odi_captions
+                } else {
+                    R.drawable.ic_volume_odi_captions_disabled
+                }
+            )
+
+            setColorFilter(if (isEnabled) onPrimaryColor else onSurfaceColor)
+
+            transition?.isCrossFadeEnabled = true
+            if (animateTransition) {
+                if (isEnabled) {
+                    transition?.startTransition(DURATION_MILLIS)
+                } else {
+                    transition?.reverseTransition(DURATION_MILLIS)
+                }
+            } else {
+                if (isEnabled) {
+                    transition?.startTransition(0)
+                } else {
+                    transition?.resetTransition()
+                }
+            }
+
+            setCaptionsEnabled(isEnabled)
+        }
+    }
+
+    private fun Drawable.findGradientDrawable(): GradientDrawable? {
+        var d: Drawable? = this
+        while (d is InsetDrawable) {
+            d = d.drawable
+        }
+        return d as? GradientDrawable
     }
 
     private companion object {

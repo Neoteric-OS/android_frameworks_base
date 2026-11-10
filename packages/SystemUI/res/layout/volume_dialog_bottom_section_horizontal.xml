@@ -22,7 +22,6 @@
         android:layout_width="@dimen/volume_dialog_button_size"
         android:layout_height="@dimen/volume_dialog_button_size"
         android:layout_marginEnd="-4dp"
-        android:tint="@color/materialColorPrimary"
         android:background="@drawable/volume_dialog_captions_button_transition_bg_horizontal"
         android:scaleType="centerInside"
         android:padding="12dp"
