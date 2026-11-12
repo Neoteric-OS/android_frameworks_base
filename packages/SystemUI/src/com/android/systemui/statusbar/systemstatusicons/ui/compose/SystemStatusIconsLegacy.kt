@@ -127,10 +127,17 @@ typealias MovableSystemStatusIconLegacy =
  * Returns a movable content for the given `TintedIconManager`. This can be used to guarantee that
  * the same one is always used (to prevent double registration with [StatusBarIconController]) when
  * used with a cache.
+ *
+ * @param keepIconGroupRegistered Whether to keep the icon group registered with the
+ *   [StatusBarIconController] when the AndroidView hosting it is released. This should only be
+ *   used when the [TintedIconManager] outlives the view hosting it (e.g. when it's cached in a
+ *   [com.android.systemui.shade.ui.composable.StatusIconContext]), so that the detached icon
+ *   container stays populated and up to date and re-hosting it does not re-inflate all its icons.
  */
 @RememberInComposition
 fun movableSystemStatusIconsLegacyAndroidView(
-    iconManager: TintedIconManager
+    iconManager: TintedIconManager,
+    keepIconGroupRegistered: Boolean = false,
 ): MovableSystemStatusIconLegacy {
     return movableContentOf {
         statusBarIconController: StatusBarIconController,
@@ -142,6 +149,7 @@ fun movableSystemStatusIconsLegacyAndroidView(
             iconManager,
             iconContainer,
             update,
+            keepIconGroupRegistered,
             modifier,
         )
     }
@@ -153,14 +161,35 @@ private fun SystemStatusIconsLegacyAndroidView(
     iconManager: TintedIconManager,
     iconContainer: StatusIconContainer,
     update: (StatusIconContainer) -> Unit,
+    keepIconGroupRegistered: Boolean,
     modifier: Modifier = Modifier,
 ) {
     AndroidView(
         factory = {
-            statusBarIconController.addIconGroup(iconManager)
+            // Only register if this manager is not already registered with a controller: when
+            // [keepIconGroupRegistered] is true, the group stays registered while the view
+            // hosting it is not composed (see onRelease), so re-hosting the same container must
+            // not re-add the group.
+            if (iconManager.controller == null) {
+                statusBarIconController.addIconGroup(iconManager)
+            }
             iconContainer
         },
-        onRelease = { statusBarIconController.removeIconGroup(iconManager) },
+        onRelease = {
+            if (!keepIconGroupRegistered) {
+                statusBarIconController.removeIconGroup(iconManager)
+            }
+            // Otherwise, keep the icon group registered when this AndroidView is released, e.g.
+            // when the QS scene header stops being composed while resting in the Shade scene.
+            // This keeps the detached container populated and continuously updated, so composing
+            // the header again (when expanding the shade) re-hosts the same icons instead of
+            // emptying the container and re-inflating all of them, which would make the icons
+            // blink.
+            //
+            // The registration is not leaked: with keepIconGroupRegistered=true, managers are
+            // only ever created (and cached) by the StatusIconContext, which lives as long as the
+            // window hosting the scene container.
+        },
         update = update,
         modifier = modifier,
     )

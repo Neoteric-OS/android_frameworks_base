@@ -134,6 +134,10 @@ public class NetworkTraffic extends TextView implements TunerService.Tunable {
     // Used to indicate that the set of sources contributing
     // to current stats have changed.
     private boolean mNetworksChanged = true;
+    // Set when (re-)attached to the window: the first stats recalculation then only
+    // baselines the counters instead of zeroing the displayed speed, so the last
+    // known reading stays visible until a fresh delta over a full interval exists.
+    private boolean mNeedsBaseline = false;
 
     public NetworkTraffic(Context context) {
         this(context, null);
@@ -180,12 +184,6 @@ public class NetworkTraffic extends TextView implements TunerService.Tunable {
             }
 
             private void recalculateStats() {
-                final long now = SystemClock.elapsedRealtime();
-                long timeDelta = now - mLastUpdateTime; /* ms */
-
-                if (timeDelta < mRefreshInterval * 1000 * 0.95f) {
-                    return;
-                }
                 // Sum tx and rx bytes from all sources of interest
                 long txBytes = 0;
                 long rxBytes = 0;
@@ -213,6 +211,27 @@ public class NetworkTraffic extends TextView implements TunerService.Tunable {
                     if (bytes > 0) {
                         rxBytes += bytes;
                     }
+                }
+
+                final long now = SystemClock.elapsedRealtime();
+                long timeDelta = now - mLastUpdateTime; /* ms */
+
+                if (mNeedsBaseline) {
+                    // Just (re-)attached: start a fresh measurement window from the current
+                    // totals instead of zeroing the displayed speed, so the last known
+                    // reading stays visible until a real delta over a full refresh interval
+                    // is available (otherwise the icon would blank for an interval after
+                    // every re-attach, e.g. when a header is re-hosted).
+                    mLastTxBytes = txBytes;
+                    mLastRxBytes = rxBytes;
+                    mLastUpdateTime = now;
+                    mNeedsBaseline = false;
+                    mNetworksChanged = false;
+                    return;
+                }
+
+                if (timeDelta < mRefreshInterval * 1000 * 0.95f) {
+                    return;
                 }
 
                 final long txBytesDelta = txBytes - mLastTxBytes;
@@ -376,6 +395,7 @@ public class NetworkTraffic extends TextView implements TunerService.Tunable {
 
         if (!mAttached) {
             mAttached = true;
+            mNeedsBaseline = true;
             if (mTint != 0) {
                 updateColors();
             }
@@ -396,6 +416,20 @@ public class NetworkTraffic extends TextView implements TunerService.Tunable {
             IntentFilter filter = new IntentFilter();
             filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
             mContext.registerReceiver(mIntentReceiver, filter, null, mTrafficHandler);
+
+            // A leftover reading from before the view was detached (e.g. a reused
+            // keyguard header carrying stats from the previous session) no longer
+            // describes the current traffic once it is older than a full refresh
+            // interval. Drop it so auto-hide starts hidden instead of flashing a
+            // stale "0 kbps" (or an old speed) until the next real measurement.
+            // Short detach gaps, like a movable icon group moving between header
+            // hosts, keep the reading so the shade doesn't blank when re-hosted.
+            final long elapsedNow = SystemClock.elapsedRealtime();
+            if (mLastUpdateTime != 0
+                    && elapsedNow - mLastUpdateTime > mRefreshInterval * 1000) {
+                mTxBytes = 0;
+                mRxBytes = 0;
+            }
 
             updateViews();
         }
@@ -524,8 +558,13 @@ public class NetworkTraffic extends TextView implements TunerService.Tunable {
     }
 
     private void updateViewState() {
+        // Post immediately instead of delaying: a view that was just re-attached (e.g. a header
+        // whose AndroidView got re-hosted) still holds the text and visibility from before it
+        // was detached, and delaying the first refresh by a second would briefly show that
+        // stale content. displayStatsAndReschedule() recomputes visibility right away, and the
+        // periodic refresh is rescheduled from there.
         mTrafficHandler.removeMessages(MESSAGE_TYPE_UPDATE_VIEW);
-        mTrafficHandler.sendEmptyMessageDelayed(MESSAGE_TYPE_UPDATE_VIEW, 1000);
+        mTrafficHandler.sendEmptyMessage(MESSAGE_TYPE_UPDATE_VIEW);
     }
 
     private void clearHandlerCallbacks() {

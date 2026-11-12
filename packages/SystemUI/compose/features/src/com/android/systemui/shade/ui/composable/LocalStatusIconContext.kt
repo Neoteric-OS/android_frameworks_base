@@ -100,7 +100,9 @@ fun rememberStatusIconContext(
                     StatusIconContainer(
                         ContextThemeWrapper(context, R.style.Theme_SystemUI_QuickSettings_Header),
                         null,
-                    )
+                    ).apply {
+                        setPropagateUpdatesToRoot(true)
+                    }
                 }
             }
 
@@ -114,7 +116,14 @@ fun rememberStatusIconContext(
                 tintedIconManager: TintedIconManager
             ): MovableSystemStatusIconLegacy {
                 return movableContentByIconManager.getOrPut(tintedIconManager) {
-                    movableSystemStatusIconsLegacyAndroidView(tintedIconManager)
+                    // The manager is cached here (and thus outlives the view hosting it), so keep
+                    // its icon group registered when the view is released. This way the detached
+                    // icon container stays populated and up to date, and re-hosting it does not
+                    // re-inflate all its icons.
+                    movableSystemStatusIconsLegacyAndroidView(
+                        tintedIconManager,
+                        keepIconGroupRegistered = true,
+                    )
                 }
             }
         }

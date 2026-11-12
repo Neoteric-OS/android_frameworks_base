@@ -190,6 +190,9 @@ public class StatusBarIconControllerImpl implements Tunable,
     @Override
     public void removeIconGroup(IconManager group) {
         group.destroy();
+        // Clear the controller so the manager knows it is no longer registered, and so it does
+        // not try to refresh itself (e.g. via setBlockList) while unregistered.
+        group.setController(null);
         mIconGroups.remove(group);
     }
 

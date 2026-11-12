@@ -32,6 +32,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewParent;
 
 import com.android.keyguard.AlphaOptimizedLinearLayout;
 import com.android.systemui.Flags;
@@ -73,6 +74,7 @@ public class StatusIconContainer extends AlphaOptimizedLinearLayout {
     private int mIconDotFrameWidth;
     private boolean mQsExpansionTransitioning;
     private boolean mShouldRestrictIcons = true;
+    private boolean mPropagateUpdatesToRoot;
     // Used to count which states want to be visible during layout
     private ArrayList<StatusIconState> mLayoutStates = new ArrayList<>();
     // So we can count and measure properly
@@ -108,6 +110,47 @@ public class StatusIconContainer extends AlphaOptimizedLinearLayout {
 
     public boolean isRestrictingIcons() {
         return mShouldRestrictIcons;
+    }
+
+    /** Forces native child updates through the Compose AndroidView host. */
+    public void setPropagateUpdatesToRoot(boolean propagate) {
+        mPropagateUpdatesToRoot = propagate;
+    }
+
+    @Override
+    public void requestLayout() {
+        super.requestLayout();
+        if (!mPropagateUpdatesToRoot) {
+            return;
+        }
+
+        View topmostParent = null;
+        ViewParent parent = getParent();
+        while (parent instanceof View) {
+            View parentView = (View) parent;
+            parentView.forceLayout();
+            parentView.invalidate();
+            topmostParent = parentView;
+            parent = parentView.getParent();
+        }
+        if (topmostParent != null) {
+            topmostParent.requestLayout();
+        }
+    }
+
+    @Override
+    public void onDescendantInvalidated(View child, View target) {
+        super.onDescendantInvalidated(child, target);
+        if (!mPropagateUpdatesToRoot) {
+            return;
+        }
+
+        ViewParent parent = getParent();
+        while (parent instanceof View) {
+            View parentView = (View) parent;
+            parentView.invalidate();
+            parent = parentView.getParent();
+        }
     }
 
     private void reloadDimens() {
@@ -413,8 +456,8 @@ public class StatusIconContainer extends AlphaOptimizedLinearLayout {
             View child = getChildAt(i);
             StatusIconState vs = getViewStateFromChild(child);
             if (vs != null) {
-                vs.applyToView(child);
                 vs.qsExpansionTransitioning = mQsExpansionTransitioning;
+                vs.applyToView(child);
             }
         }
     }

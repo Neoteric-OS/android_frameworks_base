@@ -141,6 +141,19 @@ public class IconManager implements DemoModeCommandReceiver {
         mController = controller;
     }
 
+    /**
+     * Returns the controller this manager is registered with, or {@code null} if it is not
+     * registered with any controller.
+     *
+     * <p>Note that the manager stays registered (and its icon container stays populated and up to
+     * date) even when the view hosting it is not composed, so that re-hosting the container does
+     * not re-inflate all of its icons.
+     */
+    @Nullable
+    public StatusBarIconController getController() {
+        return mController;
+    }
+
     /** Sets the list of slots that should be blocked from showing in the status bar. */
     public void setBlockList(@Nullable List<String> blockList) {
         Assert.isMainThread();
