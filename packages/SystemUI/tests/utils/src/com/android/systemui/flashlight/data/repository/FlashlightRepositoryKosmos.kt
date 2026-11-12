@@ -26,6 +26,7 @@ import com.android.systemui.kosmos.backgroundScope
 import com.android.systemui.kosmos.testDispatcher
 import com.android.systemui.shared.settings.data.repository.secureSettingsRepository
 import com.android.systemui.user.data.repository.userRepository
+import com.android.systemui.util.settings.fakeSettings
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.whenever
 
@@ -35,6 +36,7 @@ val Kosmos.flashlightRepository: FlashlightRepositoryImpl by
             backgroundScope,
             testDispatcher,
             secureSettingsRepository,
+            fakeSettings,
             cameraManager,
             dumpManager,
             packageManager,

@@ -191,7 +191,12 @@ fun VerticalFlashlightSlider(
                     onValueChange = {
                         if (isEnabled) {
                             hapticsViewModel.onValueChange(it)
-                            value = it.toInt()
+                            // Material3 can deliver a value slightly outside the range when
+                            // over-scrolling at the edges (e.g. flinging past the bottom).
+                            // Clamp it so we never forward an out-of-range level: values at or
+                            // below the minimum mean "torch off", and anything above the max
+                            // would make the flashlight repository throw past the camera call.
+                            value = it.toInt().coerceIn(valueRange)
                             atEnd = value != valueRange.first
                             onValueChange(value)
                         }
@@ -209,7 +214,7 @@ fun VerticalFlashlightSlider(
                             val thumbHeight by
                                 animateDpAsState(
                                     thumbHeight(
-                                        sliderState.value / sliderState.valueRange.endInclusive,
+                                        sliderState.coercedValueAsFraction,
                                         sliderState.isDragging,
                                     )
                                 )
@@ -301,7 +306,7 @@ private fun TrapezoidTrack(
 
         Canvas(
             modifier =
-                Modifier.width { (TRACK_LENGTH * (sliderState.value / maxSliderRange)).roundToPx() }
+                Modifier.width { (TRACK_LENGTH * sliderState.coercedValueAsFraction).roundToPx() }
                     .height { canvasHeight.roundToPx() }
                     .testTag(TRACK_TEST_TAG)
                     .motionTestValues {

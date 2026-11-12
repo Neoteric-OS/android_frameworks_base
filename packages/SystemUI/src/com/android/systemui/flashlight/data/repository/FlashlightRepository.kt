@@ -34,11 +34,13 @@ import com.android.systemui.user.data.repository.UserRepository
 import com.android.systemui.util.asIndenting
 import com.android.systemui.util.printSection
 import com.android.systemui.util.println
+import com.android.systemui.util.settings.SystemSettings
 import com.android.systemui.utils.coroutines.flow.conflatedCallbackFlow
 import java.io.PrintWriter
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
+import kotlin.math.roundToInt
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -86,6 +88,7 @@ constructor(
     @Background private val bgScope: CoroutineScope,
     @Background private val bgDispatcher: CoroutineDispatcher,
     private val secureSettings: SecureSettingsRepository,
+    private val systemSettings: SystemSettings,
     private val cameraManager: CameraManager,
     private val dumpManager: DumpManager,
     private val packageManager: PackageManager,
@@ -107,7 +110,7 @@ constructor(
                 val maxLevel: Int?,
             ) : Supported {
                 val hasAdjustableLevels: Boolean =
-                    defaultLevel != null && maxLevel != null && maxLevel > BASE_TORCH_LEVEL
+                    maxLevel != null && maxLevel > BASE_TORCH_LEVEL
             }
         }
     }
@@ -229,7 +232,10 @@ constructor(
             val cc = cameraManager.getCameraCharacteristics(selectedId)
             val default: Int? = cc.get(CameraCharacteristics.FLASH_INFO_STRENGTH_DEFAULT_LEVEL)
             val max: Int? = cc.get(CameraCharacteristics.FLASH_INFO_STRENGTH_MAXIMUM_LEVEL)
-            if (default != null) {
+            if (max != null && max > BASE_TORCH_LEVEL) {
+                defaultEnabledLevelForUser[currentUserId] =
+                    getCustomLevel(max) ?: (default ?: BASE_TORCH_LEVEL)
+            } else if (default != null) {
                 defaultEnabledLevelForUser[currentUserId] = default
             }
             flashlightInfo.emit(
@@ -269,9 +275,7 @@ constructor(
                                         if (enabled) {
                                             cameraManager.getTorchStrengthLevel(camId)
                                         } else {
-                                            defaultEnabledLevelForUser.getOrPut(currentUserId) {
-                                                initialDefaultLevel
-                                            }
+                                            getEnabledLevel(currentFlashlightInfo)
                                         },
                                         currentFlashlightInfo.maxLevel!!, // b/c hasAdjustableLevels
                                     )
@@ -403,9 +407,7 @@ constructor(
                     if (currentFlashlightInfo.hasAdjustableLevels && enabled) {
                         cameraManager.turnOnTorchWithStrengthLevel(
                             currentFlashlightInfo.cameraId,
-                            defaultEnabledLevelForUser.getOrPut(currentUserId) {
-                                initialDefaultLevel
-                            },
+                            getEnabledLevel(currentFlashlightInfo),
                         )
                     } else {
                         cameraManager.setTorchMode(currentFlashlightInfo.cameraId, enabled)
@@ -446,6 +448,9 @@ constructor(
                 }
                 if (persist) {
                     defaultEnabledLevelForUser[currentUserId] = level
+                    if (currentInfo.hasAdjustableLevels) {
+                        persistCustomLevel(level, currentInfo.maxLevel!!)
+                    }
                 }
             } catch (e: CameraAccessException) {
                 e.printStackTrace()
@@ -476,8 +481,37 @@ constructor(
     private val currentUserId: Int
         get() = userRepo.selectedUser.value.userInfo.id
 
+    /** Returns the custom persisted level, falling back to AOSP's in-memory/default level. */
+    private fun getEnabledLevel(info: FlashlightInfo.Supported.LoadedSuccessfully): Int {
+        val max = info.maxLevel ?: return initialDefaultLevel
+        return getCustomLevel(max)
+            ?: defaultEnabledLevelForUser.getOrPut(currentUserId) { initialDefaultLevel }
+    }
+
+    private fun getCustomLevel(maxLevel: Int): Int? {
+        val percent =
+            systemSettings.getFloatForUser(
+                FLASHLIGHT_BRIGHTNESS_SETTING,
+                Float.NaN,
+                currentUserId,
+            )
+        if (!percent.isFinite() || percent <= 0f || percent > 1f) {
+            return null
+        }
+        return (percent * maxLevel).roundToInt().coerceIn(BASE_TORCH_LEVEL, maxLevel)
+    }
+
+    private fun persistCustomLevel(level: Int, maxLevel: Int) {
+        systemSettings.putFloatForUser(
+            FLASHLIGHT_BRIGHTNESS_SETTING,
+            level.toFloat() / maxLevel.toFloat(),
+            currentUserId,
+        )
+    }
+
     private companion object {
         private const val BASE_TORCH_LEVEL = 1
+        private const val FLASHLIGHT_BRIGHTNESS_SETTING = "flashlight_brightness"
         private var RECONNECT_COOLDOWN = 2.seconds
         private val RECONNECT_TIMEOUT = 2.seconds
     }

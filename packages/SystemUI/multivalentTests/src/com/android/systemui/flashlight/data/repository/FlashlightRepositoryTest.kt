@@ -34,8 +34,10 @@ import com.android.systemui.kosmos.runCurrent
 import com.android.systemui.kosmos.runTest
 import com.android.systemui.testKosmos
 import com.android.systemui.user.data.repository.fakeUserRepository
+import com.android.systemui.util.settings.fakeSettings
 import com.google.common.truth.Truth.assertThat
 import java.util.concurrent.Executor
+import kotlin.math.roundToInt
 import kotlin.time.Duration.Companion.seconds
 import org.junit.Assert.assertThrows
 import org.junit.Test
@@ -141,11 +143,102 @@ class FlashlightRepositoryTest : SysuiTestCase() {
 
             val state by collectLastValue(underTest.state)
 
-            assertThat(state).isEqualTo(FlashlightModel.Available.Binary(false))
+            assertThat(state)
+                .isEqualTo(
+                    FlashlightModel.Available.Level(false, BASE_TORCH_LEVEL, DEFAULT_MAX_LEVEL)
+                )
 
             underTest.setEnabled(true)
 
-            assertThat(state).isEqualTo(FlashlightModel.Available.Binary(true))
+            assertThat(state)
+                .isEqualTo(
+                    FlashlightModel.Available.Level(true, BASE_TORCH_LEVEL, DEFAULT_MAX_LEVEL)
+                )
+        }
+
+    @Test
+    fun customPersistedPercent_available_usesCustomLevel() =
+        kosmos.runTest {
+            fakeUserRepository.setUserInfos(USER_INFOS)
+            fakeUserRepository.setSelectedUserInfo(USER_INFOS[0])
+            fakeSettings.putFloatForUser(
+                FLASHLIGHT_BRIGHTNESS_SETTING,
+                CUSTOM_LEVEL_PERCENT,
+                USER_INFOS[0].id,
+            )
+            injectCameraCharacteristics(true, CameraCharacteristics.LENS_FACING_BACK)
+
+            val state by collectLastValue(underTest.state)
+            startFlashlightRepository(true)
+
+            val expectedLevel = (CUSTOM_LEVEL_PERCENT * DEFAULT_MAX_LEVEL).roundToInt()
+            assertThat(state)
+                .isEqualTo(
+                    FlashlightModel.Available.Level(false, expectedLevel, DEFAULT_MAX_LEVEL)
+                )
+
+            underTest.setEnabled(true)
+
+            assertThat(state)
+                .isEqualTo(
+                    FlashlightModel.Available.Level(true, expectedLevel, DEFAULT_MAX_LEVEL)
+                )
+        }
+
+    @Test
+    fun setLevel_persistsCustomPercent() =
+        kosmos.runTest {
+            fakeUserRepository.setUserInfos(USER_INFOS)
+            fakeUserRepository.setSelectedUserInfo(USER_INFOS[0])
+            injectCameraCharacteristics(true, CameraCharacteristics.LENS_FACING_BACK)
+            val state by collectLastValue(underTest.state)
+            startFlashlightRepository(true)
+
+            underTest.setLevel(CUSTOM_LEVEL)
+
+            assertThat(
+                    fakeSettings.getFloatForUser(
+                        FLASHLIGHT_BRIGHTNESS_SETTING,
+                        Float.NaN,
+                        USER_INFOS[0].id,
+                    )
+                )
+                .isEqualTo(CUSTOM_LEVEL.toFloat() / DEFAULT_MAX_LEVEL.toFloat())
+        }
+
+    @Test
+    fun switchUser_secondUserCustomLevelUsedOnEnableAndDisable() =
+        kosmos.runTest {
+            fakeUserRepository.setUserInfos(USER_INFOS)
+            fakeUserRepository.setSelectedUserInfo(USER_INFOS[0])
+            injectCameraCharacteristics(true, CameraCharacteristics.LENS_FACING_BACK)
+
+            val state by collectLastValue(underTest.state)
+            startFlashlightRepository(true)
+
+            assertThat(state)
+                .isEqualTo(
+                    FlashlightModel.Available.Level(false, DEFAULT_DEFAULT_LEVEL, DEFAULT_MAX_LEVEL)
+                )
+
+            fakeSettings.putFloatForUser(
+                FLASHLIGHT_BRIGHTNESS_SETTING,
+                CUSTOM_LEVEL_PERCENT,
+                USER_INFOS[1].id,
+            )
+            fakeUserRepository.setSelectedUserInfo(USER_INFOS[1])
+
+            val expectedLevel = (CUSTOM_LEVEL_PERCENT * DEFAULT_MAX_LEVEL).roundToInt()
+
+            underTest.setEnabled(true)
+
+            assertThat(state)
+                .isEqualTo(FlashlightModel.Available.Level(true, expectedLevel, DEFAULT_MAX_LEVEL))
+
+            underTest.setEnabled(false)
+
+            assertThat(state)
+                .isEqualTo(FlashlightModel.Available.Level(false, expectedLevel, DEFAULT_MAX_LEVEL))
         }
 
     @Test
@@ -709,6 +802,9 @@ class FlashlightRepositoryTest : SysuiTestCase() {
         private const val DEFAULT_DEFAULT_LEVEL = 21
         private const val DEFAULT_MAX_LEVEL = 45
         private const val DEFAULT_ID = "ID"
+        private const val CUSTOM_LEVEL = 9
+        private const val CUSTOM_LEVEL_PERCENT = 0.6f
+        private const val FLASHLIGHT_BRIGHTNESS_SETTING = "flashlight_brightness"
         private val RECONNECT_COOLDOWN = 30.seconds
         private val USER_INFOS =
             listOf(
