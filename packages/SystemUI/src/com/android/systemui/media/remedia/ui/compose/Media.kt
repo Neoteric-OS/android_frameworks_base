@@ -1897,6 +1897,13 @@ private fun SecondaryActionContent(
             .size(48.dp)
             .onGloballyPositioned { buttonCoordinates = it }
             .padding(13.dp)
+    val buttonShape =
+        if (resId == MediaRes.NEXT_BTN || resId == MediaRes.PREV_BTN) {
+            IconButtonDefaults.standardShape
+        } else {
+            RectangleShape
+        }
+
     when (viewModel) {
         is MediaSecondaryActionViewModel.Action ->
             when (viewModel.icon) {
@@ -1912,6 +1919,7 @@ private fun SecondaryActionContent(
                         },
                         modifier = sharedModifier.sysuiResTag(resId),
                         enabled = viewModel.onClick != null,
+                        shape = buttonShape,
                         colors = IconButtonDefaults.iconButtonColors(contentColor = iconColor),
                         iconResource = viewModel.icon.resId,
                         contentDescription = viewModel.icon.contentDescription?.load(),
@@ -1929,6 +1937,7 @@ private fun SecondaryActionContent(
                         },
                         modifier = sharedModifier.sysuiResTag(resId),
                         enabled = viewModel.onClick != null,
+                        shape = buttonShape,
                         colors = IconButtonDefaults.iconButtonColors(contentColor = iconColor),
                         iconDrawable = viewModel.icon.drawable,
                         contentDescription = viewModel.icon.contentDescription?.load(),
