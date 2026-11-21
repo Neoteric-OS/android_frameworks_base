@@ -215,7 +215,7 @@ fun BrightnessSlider(
 		        }
 		    },
 		    modifier =
-		        modifier
+		        Modifier
                     .weight(1f)
 		            .sysuiResTag("slider")
 		            .semantics(mergeDescendants = true) {
@@ -285,8 +285,8 @@ fun BrightnessSlider(
 		                )
 
 		                layout(width, trackHeightPx) {
-		                    inactiveTrackPlaceable.place(0, 0)
-		                    activeTrackPlaceable.place(0, 0)
+		                    inactiveTrackPlaceable.placeRelative(0, 0)
+		                    activeTrackPlaceable.placeRelative(0, 0)
 		                }
 		            }
 		        )
